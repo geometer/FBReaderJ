@@ -900,10 +900,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final int areaX = area.XStart;
 				final int areaY = area.YEnd - getElementDescent(element) - getTextStyle().getVerticalAlign(metrics());
 				if (element instanceof ZLTextWord) {
+					final ZLTextPosition pos =
+						new ZLTextFixedPosition(info.ParagraphCursor.Index, wordIndex, 0);
+					final ZLTextHighlighting hl = getWordHilite(pos, hilites);
+					final ZLColor hlColor = hl != null ? hl.getForegroundColor() : null;
 					drawWord(
 						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
-						mySelection.isAreaSelected(area)
-							? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+						hlColor != null ? hlColor : getTextColor(getTextStyle().Hyperlink)
 					);
 				} else if (element instanceof ZLTextImageElement) {
 					final ZLTextImageElement imageElement = (ZLTextImageElement)element;
@@ -958,13 +961,26 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				? info.StartCharIndex : 0;
 			final int len = info.EndCharIndex - start;
 			final ZLTextWord word = (ZLTextWord)paragraph.getElement(info.EndElementIndex);
+			final ZLTextPosition pos =
+				new ZLTextFixedPosition(info.ParagraphCursor.Index, info.EndElementIndex, 0);
+			final ZLTextHighlighting hl = getWordHilite(pos, hilites);
+			final ZLColor hlColor = hl != null ? hl.getForegroundColor() : null;
 			drawWord(
 				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalAlign(metrics()),
 				word, start, len, area.AddHyphenationSign,
-				mySelection.isAreaSelected(area)
-					? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+				hlColor != null ? hlColor : getTextColor(getTextStyle().Hyperlink)
 			);
 		}
+	}
+
+	private ZLTextHighlighting getWordHilite(ZLTextPosition pos, List<ZLTextHighlighting> hilites) {
+		for (ZLTextHighlighting h : hilites) {
+			if (h.getStartPosition().compareToIgnoreChar(pos) <= 0
+				&& pos.compareToIgnoreChar(h.getEndPosition()) <= 0) {
+				return h;
+			}
+		}
+		return null;
 	}
 
 	private void buildInfos(ZLTextPage page, ZLTextWordCursor start, ZLTextWordCursor result) {
