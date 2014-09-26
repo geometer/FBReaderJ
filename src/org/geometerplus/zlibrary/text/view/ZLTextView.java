@@ -902,11 +902,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				if (element instanceof ZLTextWord) {
 					final ZLTextPosition pos =
 						new ZLTextFixedPosition(info.ParagraphCursor.Index, wordIndex, 0);
-					final boolean hlword = isWordPositionHighlighted(pos, hilites) ||
-						mySelection.isAreaSelected(area);
+					final ZLTextHighlighting hl = getWordHilite(pos, hilites);
+					final ZLColor hlColor = hl != null ? hl.getForegroundColor() : null;
 					drawWord(
-						areaX, areaY, (ZLTextWord)element, charIndex, -1, false, hlword
-							? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
+						hlColor != null ? hlColor : getTextColor(getTextStyle().Hyperlink)
 					);
 				} else if (element instanceof ZLTextImageElement) {
 					final ZLTextImageElement imageElement = (ZLTextImageElement)element;
@@ -963,24 +963,24 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			final ZLTextWord word = (ZLTextWord)paragraph.getElement(info.EndElementIndex);
 			final ZLTextPosition pos =
 				new ZLTextFixedPosition(info.ParagraphCursor.Index, info.EndElementIndex, 0);
-			final boolean hlword = isWordPositionHighlighted(pos, hilites) ||
-				mySelection.isAreaSelected(area);
+			final ZLTextHighlighting hl = getWordHilite(pos, hilites);
+			final ZLColor hlColor = hl != null ? hl.getForegroundColor() : null;
 			drawWord(
 				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalAlign(metrics()),
-				word, start, len, area.AddHyphenationSign, hlword
-					? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+				word, start, len, area.AddHyphenationSign,
+				hlColor != null ? hlColor : getTextColor(getTextStyle().Hyperlink)
 			);
 		}
 	}
 
-	private boolean isWordPositionHighlighted(ZLTextPosition pos, List<ZLTextHighlighting> hilites) {
+	private ZLTextHighlighting getWordHilite(ZLTextPosition pos, List<ZLTextHighlighting> hilites) {
 		for (ZLTextHighlighting h : hilites) {
 			if (h.getStartPosition().compareToIgnoreChar(pos) <= 0
 				&& pos.compareToIgnoreChar(h.getEndPosition()) <= 0) {
-				return true;
+				return h;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	private void buildInfos(ZLTextPage page, ZLTextWordCursor start, ZLTextWordCursor result) {
