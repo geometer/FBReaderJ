@@ -509,16 +509,19 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			previousInfo = info;
 		}
 
-		x = getLeftMargin();
-		y = getTopMargin();
-		index = 0;
-		for (ZLTextLineInfo info : lineInfos) {
-			drawHighlightings(page, info, labels[index], labels[index + 1], x, y);
-			y += info.Height + info.Descent + info.VSpaceAfter;
-			++index;
-			if (index == page.Column0Height) {
-				y = getTopMargin();
-				x += page.getTextWidth() + getSpaceBetweenColumns();
+		final List<ZLTextHighlighting> hilites = findHilites(page);
+		if (!hilites.isEmpty()) {
+			x = getLeftMargin();
+			y = getTopMargin();
+			index = 0;
+			for (ZLTextLineInfo info : lineInfos) {
+				drawHighlightings(page, hilites, info, labels[index], labels[index + 1], x, y);
+				y += info.Height + info.Descent + info.VSpaceAfter;
+				++index;
+				if (index == page.Column0Height) {
+					y = getTopMargin();
+					x += page.getTextWidth() + getSpaceBetweenColumns();
+				}
 			}
 		}
 
@@ -526,7 +529,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		y = getTopMargin();
 		index = 0;
 		for (ZLTextLineInfo info : lineInfos) {
-			drawTextLine(page, info, labels[index], labels[index + 1]);
+			drawTextLine(page, hilites, info, labels[index], labels[index + 1]);
 			y += info.Height + info.Descent + info.VSpaceAfter;
 			++index;
 			if (index == page.Column0Height) {
@@ -824,11 +827,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		preparePaintInfo();
 	}
 
-	private void drawHighlightings(ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y) {
-		if (from == to) {
-			return;
-		}
-
+	private List<ZLTextHighlighting> findHilites(ZLTextPage page) {
 		final LinkedList<ZLTextHighlighting> hilites = new LinkedList<ZLTextHighlighting>();
 		if (mySelection.intersects(page)) {
 			hilites.add(mySelection);
@@ -840,7 +839,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 			}
 		}
-		if (hilites.isEmpty()) {
+		return hilites;
+	}
+
+	private void drawHighlightings(ZLTextPage page, List<ZLTextHighlighting> hilites, ZLTextLineInfo info, int from, int to, int x, int y) {
+		if (from == to) {
 			return;
 		}
 
@@ -881,7 +884,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	protected abstract ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages();
 
 	private static final char[] SPACE = new char[] { ' ' };
-	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to) {
+	private void drawTextLine(ZLTextPage page, List<ZLTextHighlighting> hilites, ZLTextLineInfo info, int from, int to) {
 		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		int index = from;
