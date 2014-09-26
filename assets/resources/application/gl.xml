@@ -634,7 +634,8 @@
 			<node name="text" value="Texto normal"/>
 			<node name="hyperlink" value="Texto de ligazón"/>
 			<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
-			<node name="highlighting" value="Resultado da busca de fondos"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Resultado da busca de fondos"/>
 			<node name="footer" value="Rodapé"/>
 		</node>
 		<node name="margins" value="Marxes">

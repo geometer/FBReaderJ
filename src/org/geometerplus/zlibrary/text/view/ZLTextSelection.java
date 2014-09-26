@@ -276,6 +276,11 @@ class ZLTextSelection extends ZLTextHighlighting {
 		return myView.getSelectionBackgroundColor();
 	}
 
+	@Override
+	public ZLColor getForegroundColor() {
+		return myView.getSelectionForegroundColor();
+	}
+
 	private class Scroller implements Runnable {
 		private final ZLTextPage myPage;
 		private final boolean myScrollForward;

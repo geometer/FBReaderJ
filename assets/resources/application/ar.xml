@@ -642,7 +642,8 @@
 			<node name="text" value="النص العادي"/>
 			<node name="hyperlink" value="الروابط"/>
 			<node name="hyperlinkVisited" value="الروابط التي تمت زيارتها"/>
-			<node name="highlighting" value="خلفية نتائج البحث"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="خلفية نتائج البحث"/>
 			<node name="footer" value="الحاشية"/>
 		</node>
 		<node name="margins" value="الهوامش">

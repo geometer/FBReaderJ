@@ -634,7 +634,8 @@
 			<node name="text" value="普通文字"/>
 			<node name="hyperlink" value="超連結文字"/>
 			<node name="hyperlinkVisited" value="已按超連結文字"/>
-			<node name="highlighting" value="搜尋結果背景"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="搜尋結果背景"/>
 			<node name="footer" value="頁尾"/>
 		</node>
 		<node name="margins" value="邊距">
