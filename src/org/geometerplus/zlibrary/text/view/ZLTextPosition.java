@@ -44,13 +44,17 @@ public abstract class ZLTextPosition implements Comparable<ZLTextPosition> {
 			return e0 < e1 ? -1 : 1;
 		}
 
-		final int c0 = getCharIndex();
-		final int c1 = position.getCharIndex();
-		if (c0 != c1) {
-			return c0 < c1 ? -1 : 1;
+		return getCharIndex() - position.getCharIndex();
+	}
+
+	public int compareToIgnoreChar(ZLTextPosition position) {
+		final int p0 = getParagraphIndex();
+		final int p1 = position.getParagraphIndex();
+		if (p0 != p1) {
+			return p0 < p1 ? -1 : 1;
 		}
 
-		return 0;
+		return getElementIndex() - position.getElementIndex();
 	}
 
 	@Override
