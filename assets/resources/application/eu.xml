@@ -644,7 +644,8 @@
 			<node name="text" value="Testu normala"/>
 			<node name="hyperlink" value="Lotura testua"/>
 			<node name="hyperlinkVisited" value="Bisitatutako lotura testua"/>
-			<node name="highlighting" value="Bilaketaren emaitzaren atzeko planoa"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Bilaketaren emaitzaren atzeko planoa"/>
 			<node name="footer" value="Oin-oharra"/>
 		</node>
 		<node name="margins" value="Marjinak">

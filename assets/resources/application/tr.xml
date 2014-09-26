@@ -644,7 +644,8 @@
 			<node name="text" value="Normal metin"/>
 			<node name="hyperlink" value="Link"/>
 			<node name="hyperlinkVisited" value="Ziyaret edilmiş link"/>
-			<node name="highlighting" value="Arama sonuçları arkaplanı"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Arama sonuçları arkaplanı"/>
 			<node name="footer" value="Altbilgi"/>
 		</node>
 		<node name="margins" value="Aralıklar">
