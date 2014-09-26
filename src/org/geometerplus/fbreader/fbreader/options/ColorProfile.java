@@ -87,6 +87,10 @@ public class ColorProfile {
 		return new ZLColorOption("Colors", profileName + ':' + optionName, new ZLColor(r, g, b));
 	}
 
+	private static ZLColorOption createNullOption(String profileName, String optionName) {
+		return new ZLColorOption("Colors", profileName + ':' + optionName, null);
+	}
+
 	private ColorProfile(String name) {
 		Name = name;
 		if (NIGHT.equals(name)) {
@@ -103,7 +107,7 @@ public class ColorProfile {
 			HighlightingBackgroundOption =
 				createOption(name, "Highlighting", 96, 96, 128);
 			HighlightingForegroundOption =
-				createOption(name, "HighlightingForeground", 192, 192, 192);
+				createNullOption(name, "HighlightingForeground");
 			RegularTextOption =
 				createOption(name, "Text", 192, 192, 192);
 			HyperlinkTextOption =
@@ -126,7 +130,7 @@ public class ColorProfile {
 			HighlightingBackgroundOption =
 				createOption(name, "Highlighting", 255, 192, 128);
 			HighlightingForegroundOption =
-				createOption(name, "HighlightingForeground", 0, 0, 0);
+				createNullOption(name, "HighlightingForeground");
 			RegularTextOption =
 				createOption(name, "Text", 0, 0, 0);
 			HyperlinkTextOption =
