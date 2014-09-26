@@ -644,7 +644,8 @@
 			<node name="text" value="Normale tekst"/>
 			<node name="hyperlink" value="Hyperlink tekst"/>
 			<node name="hyperlinkVisited" value="Bezochte hyperlink tekst"/>
-			<node name="highlighting" value="Achtergrond zoekresultaten"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Achtergrond zoekresultaten"/>
 			<node name="footer" value="Voettekst"/>
 		</node>
 		<node name="margins" value="Marges">

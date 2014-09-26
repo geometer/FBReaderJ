@@ -653,7 +653,8 @@
 			<node name="text" value="Běžný text"/>
 			<node name="hyperlink" value="Hypertextový odkaz"/>
 			<node name="hyperlinkVisited" value="Navštívený hypertextový odkaz"/>
-			<node name="highlighting" value="Pozadí výsledků vyhledávání"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Pozadí výsledků vyhledávání"/>
 			<node name="footer" value="Patička"/>
 		</node>
 		<node name="margins" value="Okraje">

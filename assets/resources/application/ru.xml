@@ -649,7 +649,8 @@
 			<node name="text" value="Обычный текст"/>
 			<node name="hyperlink" value="Гиперссылка"/>
 			<node name="hyperlinkVisited" value="Посещенная ссылка"/>
-			<node name="highlighting" value="Фон результатов поиска"/>
+			<node name="highlightingForeground" value="Результаты поиска"/>
+			<node name="highlightingBackground" value="Фон результатов поиска"/>
 			<node name="footer" value="Подвал"/>
 		</node>
 		<node name="margins" value="Отступы">

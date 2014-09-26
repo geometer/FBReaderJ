@@ -634,7 +634,8 @@
 			<node name="text" value="Звичайний текст"/>
 			<node name="hyperlink" value="Посилання"/>
 			<node name="hyperlinkVisited" value="Переглянуті посилання"/>
-			<node name="highlighting" value="Фон результатів пошуку"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Фон результатів пошуку"/>
 			<node name="footer" value="Нижній колонтитул (підвал)"/>
 		</node>
 		<node name="margins" value="Відступи">

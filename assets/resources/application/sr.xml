@@ -644,7 +644,8 @@
 			<node name="text" value="Нормал текст"/>
 			<node name="hyperlink" value="Текст хипервезе"/>
 			<node name="hyperlinkVisited" value="Посећен текст хипервезе"/>
-			<node name="highlighting" value="Позадина резултата претраге"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Позадина резултата претраге"/>
 			<node name="footer" value="Подножје"/>
 		</node>
 		<node name="margins" value="Маргине">

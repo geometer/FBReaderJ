@@ -650,7 +650,8 @@
 			<node name="text" value="Text"/>
 			<node name="hyperlink" value="Hipervincle"/>
 			<node name="hyperlinkVisited" value="Hipervincle visitat"/>
-			<node name="highlighting" value="Fons dels resultats de cerca"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Fons dels resultats de cerca"/>
 			<node name="footer" value="Peu de pàgina"/>
 		</node>
 		<node name="margins" value="Marges">

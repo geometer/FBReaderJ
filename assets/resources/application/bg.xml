@@ -650,7 +650,8 @@
 			<node name="text" value="Нормален текст"/>
 			<node name="hyperlink" value="Препратка"/>
 			<node name="hyperlinkVisited" value="Посетена препратка"/>
-			<node name="highlighting" value="Фон на резултата от търсенето"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Фон на резултата от търсенето"/>
 			<node name="footer" value="Долен колонтитул"/>
 		</node>
 		<node name="margins" value="Граници">

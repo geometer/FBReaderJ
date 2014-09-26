@@ -634,7 +634,8 @@
 			<node name="text" value="Κανονικό κείμενο"/>
 			<node name="hyperlink" value="Υπερ-σύνδεσμοι"/>
 			<node name="hyperlinkVisited" value="Επισκεπτόμενοι Υπερ-σύνδεσμοι"/>
-			<node name="highlighting" value="Παρασκήνιο των αποτελεσμάτων"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Παρασκήνιο των αποτελεσμάτων"/>
 			<node name="footer" value="Υποσέλιδο"/>
 		</node>
 		<node name="margins" value="Άκρα">

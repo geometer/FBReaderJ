@@ -644,7 +644,8 @@
 			<node name="text" value="Almindelig tekst"/>
 			<node name="hyperlink" value="Hyperlink-tekst"/>
 			<node name="hyperlinkVisited" value="Besøgt hyperlink-tekst"/>
-			<node name="highlighting" value="Søgeresultat-baggrund"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Søgeresultat-baggrund"/>
 			<node name="footer" value="Sidefod"/>
 		</node>
 		<node name="margins" value="Margener">

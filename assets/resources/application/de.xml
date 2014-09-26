@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- German FBReaderJ resources, by Victor Massini -->
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
@@ -650,7 +650,8 @@
 			<node name="text" value="Normaler Text"/>
 			<node name="hyperlink" value="Hyperlinks"/>
 			<node name="hyperlinkVisited" value="Besuchte Hyperlinks"/>
-			<node name="highlighting" value="Hintergrund der Suchergebnisse"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Hintergrund der Suchergebnisse"/>
 			<node name="footer" value="Fußzeile"/>
 		</node>
 		<node name="margins" value="Ränder">

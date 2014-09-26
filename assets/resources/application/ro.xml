@@ -635,7 +635,8 @@
 			<node name="text" value="Text obisnuit"/>
 			<node name="hyperlink" value="Hyperlink Text"/>
 			<node name="hyperlinkVisited" value="Textul hyperlinkului vizitat"/>
-			<node name="highlighting" value="Rezultatele cautarii in fundal"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Rezultatele cautarii in fundal"/>
 			<node name="footer" value="Subsol"/>
 		</node>
 		<node name="margins" value="Margini">
