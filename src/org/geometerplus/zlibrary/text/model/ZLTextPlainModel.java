@@ -377,11 +377,20 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 			it.reset(index);
 			while (it.next()) {
 				if (it.getType() == ZLTextParagraph.Entry.TEXT) {
-					text += String.valueOf(
-						Arrays.copyOfRange(
-							it.getTextData(), it.getTextOffset(), it.getTextOffset() + it.getTextLength()
-						)
-					);
+					char[] textData = it.getTextData();
+					int textOffset = it.getTextOffset();
+					for (int textLength = it.getTextLength(); textLength > 0; text += " ") {
+						while (Character.isWhitespace(textData[textOffset]) && textLength > 0) {
+							textOffset++;
+							textLength--;
+						}
+						while (!Character.isWhitespace(textData[textOffset]) && textLength > 0) {
+							text += String.valueOf(textData[textOffset]);
+							textOffset++;
+							textLength--;
+						}
+					}
+					text += "\n";
 				}
 			}
 		}
