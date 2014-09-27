@@ -31,9 +31,9 @@ public:
 	size_t left() const;
 
 private:
-	unsigned char* myData;
+	unsigned char *myData;
 	size_t myOffset;
-	size_t myLength;
+	const size_t myLength;
 };
 
 #endif //__BITREADER_H__

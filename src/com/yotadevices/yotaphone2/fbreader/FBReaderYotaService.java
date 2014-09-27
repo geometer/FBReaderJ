@@ -123,7 +123,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
                             myFBReaderApp.initWindow();
                             initBookView(true);
                         }
-                    });
+                    }, null);
                     AndroidFontUtil.clearFontCache();
                 }
             }

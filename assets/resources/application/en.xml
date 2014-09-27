@@ -644,7 +644,8 @@
 			<node name="text" value="Regular text"/>
 			<node name="hyperlink" value="Hyperlink text"/>
 			<node name="hyperlinkVisited" value="Visited hyperlink text"/>
-			<node name="highlighting" value="Search results background"/>
+			<node name="highlightingForeground" value="Search results"/>
+			<node name="highlightingBackground" value="Search results background"/>
 			<node name="footer" value="Footer"/>
 		</node>
 		<node name="margins" value="Margins">
@@ -809,8 +810,11 @@
 			<node name="email" value="Send us an e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Follow us at twitter">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -1014,11 +1018,6 @@
 		<node name="browser" value="Browser"/>
 		<node name="defaultBrowser" value="Default Browser"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Unknown Error"/>
-		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method"/>
-		<node name="encryptedFile" value="DRM-protected File"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue"/>
@@ -1059,6 +1058,9 @@
 		</node>
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Read books in PDF format"/>
+		</node>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="Read books in DjVu format"/>
 		</node>
 	</node>
 	<node name="drm">

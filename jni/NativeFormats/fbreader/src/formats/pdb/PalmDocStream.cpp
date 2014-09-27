@@ -49,7 +49,7 @@ bool PalmDocStream::processRecord() {
 			myBufferLength = myHuffDecompressorPtr->decompress(*myBase, myBuffer, recordSize, myMaxRecordSize);
 			//if (myHuffDecompressorPtr->error()) {
 			//	myErrorCode = ERROR_UNKNOWN;
-			//} 
+			//}
 			break;
 		case 2:				// PalmDoc compression
 			myBufferLength = DocDecompressor().decompress(*myBase, myBuffer, recordSize, myMaxRecordSize);
@@ -73,16 +73,19 @@ bool PalmDocStream::processZeroRecord() {
 		default:
 			myErrorCode = ERROR_COMPRESSION;
 			return false;
-	}	
+	}
 	myBase->seek(2, false);									// myBase offset: ^ + 4
-	myTextLength = PdbUtil::readUnsignedLongBE(*myBase); 	// myBase offset: ^ + 8	
+	myTextLength = PdbUtil::readUnsignedLongBE(*myBase); 	// myBase offset: ^ + 8
 	myTextRecordNumber = PdbUtil::readUnsignedShort(*myBase); 	// myBase offset: ^ + 10
 
 	unsigned short endSectionIndex = header().Offsets.size();
 	myMaxRecordIndex = std::min(myTextRecordNumber, (unsigned short)(endSectionIndex - 1));
 	//TODO Insert in this point error message about uncompatible records and numRecords from Header
-	
-	myMaxRecordSize = 2 * PdbUtil::readUnsignedShort(*myBase); 	// myBase offset: ^ + 12
+
+	myMaxRecordSize = PdbUtil::readUnsignedShort(*myBase); 	// myBase offset: ^ + 12
+	if (myCompressionVersion == 17480) {
+		myMaxRecordSize *= 2;
+	}
 	if (myMaxRecordSize == 0) {
 		myErrorCode = ERROR_UNKNOWN;
 		return false;
@@ -102,7 +105,7 @@ bool PalmDocStream::processZeroRecord() {
 
 	if (header().Id == "BOOKMOBI") {
 		const unsigned short encrypted = PdbUtil::readUnsignedShort(*myBase); 		// myBase offset: ^ + 14
-		if (encrypted) { 										//Always = 2, if encrypted 
+		if (encrypted) { 										//Always = 2, if encrypted
 			myErrorCode = ERROR_ENCRYPTION;
 			return false;
 		}
@@ -116,21 +119,19 @@ bool PalmDocStream::processZeroRecord() {
 		unsigned long mobiHeaderLength;
 		unsigned long huffSectionIndex;
 		unsigned long huffSectionNumber;
-		unsigned short extraFlags;
+		unsigned long extraFlags = 0;
 		unsigned long initialOffset = header().Offsets[0];
-		
+
 		myBase->seek(initialOffset + 20, true); 										// myBase offset: ^ + 20
 		mobiHeaderLength = PdbUtil::readUnsignedLongBE(*myBase); 		// myBase offset: ^ + 24
 
-		myBase->seek(0x70 - 24, false); 								// myBase offset: ^ + 102 (0x70)
-		huffSectionIndex = PdbUtil::readUnsignedLongBE(*myBase); 		// myBase offset: ^ + 106 (0x74)
-		huffSectionNumber = PdbUtil::readUnsignedLongBE(*myBase);		// myBase offset: ^ + 110 (0x78)
+		myBase->seek(initialOffset + 112, true); 								// myBase offset: ^ + 112
+		huffSectionIndex = PdbUtil::readUnsignedLongBE(*myBase); 		// myBase offset: ^ + 116
+		huffSectionNumber = PdbUtil::readUnsignedLongBE(*myBase);		// myBase offset: ^ + 120
 
-		if (mobiHeaderLength >= 244) {
-			myBase->seek(0xF2 - 0x78, false); 							// myBase offset: ^ + 242 (0xF2) 
-			extraFlags = PdbUtil::readUnsignedShort(*myBase);			// myBase offset: ^ + 244 (0xF4)
-		} else {
-			extraFlags = 0;
+		if (16 + mobiHeaderLength >= 244) {
+			myBase->seek(initialOffset + 240, true); 							// myBase offset: ^ + 240
+			extraFlags = PdbUtil::readUnsignedLongBE(*myBase);			// myBase offset: ^ + 244
 		}
 		/*
 		std::cerr << "mobi header length: " <<  mobiHeaderLength << "\n";
@@ -138,7 +139,7 @@ bool PalmDocStream::processZeroRecord() {
 		std::cerr << "Huff's records number: " << huffSectionNumber << "\n";
 		std::cerr << "Huff's extraFlags    : " << extraFlags << "\n";
 		*/
-		const unsigned long endHuffSectionIndex = huffSectionIndex + huffSectionNumber; 
+		const unsigned long endHuffSectionIndex = huffSectionIndex + huffSectionNumber;
 		if (endHuffSectionIndex > endSectionIndex || huffSectionNumber <= 1) {
 			myErrorCode = ERROR_COMPRESSION;
 			return false;
@@ -147,9 +148,8 @@ bool PalmDocStream::processZeroRecord() {
 		std::vector<unsigned long>::const_iterator beginHuffSectionOffsetIt = header().Offsets.begin() + huffSectionIndex;
 		// point to first Huff section
 		std::vector<unsigned long>::const_iterator endHuffSectionOffsetIt =	header().Offsets.begin() + endHuffSectionIndex;
-		// point behind last Huff section 
+		// point behind last Huff section
 
-		
 		myHuffDecompressorPtr = new HuffDecompressor(*myBase, beginHuffSectionOffsetIt, endHuffSectionOffsetIt, endHuffDataOffset, extraFlags);
 		myBase->seek(initialOffset + 14, true);									// myBase offset: ^ + 14
 	}

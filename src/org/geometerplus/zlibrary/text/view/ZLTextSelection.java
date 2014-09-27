@@ -179,13 +179,6 @@ class ZLTextSelection extends ZLTextHighlighting {
 		}
 	}
 
-	boolean isAreaSelected(ZLTextElementArea area) {
-		return
-			!isEmpty()
-			&& myLeftMostRegionSoul.compareTo(area) <= 0
-			&& myRightMostRegionSoul.compareTo(area) >= 0;
-	}
-
 	@Override
 	public ZLTextPosition getStartPosition() {
 		if (isEmpty()) {
@@ -274,6 +267,11 @@ class ZLTextSelection extends ZLTextHighlighting {
 	@Override
 	public ZLColor getBackgroundColor() {
 		return myView.getSelectionBackgroundColor();
+	}
+
+	@Override
+	public ZLColor getForegroundColor() {
+		return myView.getSelectionForegroundColor();
 	}
 
 	private class Scroller implements Runnable {

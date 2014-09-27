@@ -58,7 +58,7 @@ HuffDecompressor::HuffDecompressor(
 	myData = new unsigned char[huffDataSize];
 	stream.seek(huffDataOffset, true);
 	if (huffDataSize == stream.read((char*)myData, huffDataSize)) {
-		myDicts = new unsigned char* [huffRecordsNumber - 1];
+		myDicts = new unsigned char*[huffRecordsNumber - 1];
 		for(size_t i = 0; i < huffRecordsNumber - 1; ++i) {
 			size_t shift = *(beginIt + i + 1) - huffDataOffset;
 			myDicts[i] = myData + shift;
@@ -95,7 +95,8 @@ size_t HuffDecompressor::decompress(ZLInputStream &stream, char *targetBuffer, s
 		if (stream.read((char*)sourceBuffer, compressedSize) == compressedSize) {
 			const size_t trailSize = sizeOfTrailingEntries(sourceBuffer, compressedSize);
 			if (trailSize < compressedSize) {
-				bitsDecompress(BitReader(sourceBuffer, compressedSize - trailSize));
+				BitReader reader(sourceBuffer, compressedSize - trailSize);
+				bitsDecompress(reader);
 			} else {
 				myErrorCode = ERROR_CORRUPTED_FILE;
 			}
@@ -110,7 +111,7 @@ size_t HuffDecompressor::decompress(ZLInputStream &stream, char *targetBuffer, s
 	return myTargetBufferPtr - myTargetBuffer;
 }
 
-void HuffDecompressor::bitsDecompress(BitReader bits, size_t depth) {
+void HuffDecompressor::bitsDecompress(BitReader &bits, size_t depth) {
 	if (depth > 32) {
 		myErrorCode = ERROR_CORRUPTED_FILE;
 		return;
@@ -137,7 +138,7 @@ void HuffDecompressor::bitsDecompress(BitReader bits, size_t depth) {
 		//	return false;
 		//}
 		if (!bits.eat(codelen)) {
-			return;
+			break;
 		}
 		const unsigned long dicno = r >> myEntryBits;
 		const unsigned long off1 = 16 + (r - (dicno << myEntryBits)) * 2;
@@ -151,10 +152,11 @@ void HuffDecompressor::bitsDecompress(BitReader bits, size_t depth) {
 				memcpy(myTargetBufferPtr, slice, sliceSize);
 				myTargetBufferPtr += sliceSize;
 			} else {
-				return;
+				break;
 			}
 		} else {
-			bitsDecompress(BitReader(slice, sliceSize), depth + 1);
+			BitReader reader(slice, sliceSize);
+			bitsDecompress(reader, depth + 1);
 		}
 	}
 }
@@ -169,6 +171,9 @@ size_t HuffDecompressor::sizeOfTrailingEntries(unsigned char* data, size_t size)
 			}
 		}
 		flags >>= 1;
+	}
+	if (myExtraFlags & 1) {
+		num += (data[size - num - 1] & 0x3) + 1;
 	}
 	return num;
 }

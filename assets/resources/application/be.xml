@@ -650,7 +650,8 @@
 			<node name="text" value="Звычайны тэкст"/>
 			<node name="hyperlink" value="Тэкст спасылкі"/>
 			<node name="hyperlinkVisited" value="Тэкст наведанай спасылкі"/>
-			<node name="highlighting" value="Фон вынікаў пошуку"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Фон вынікаў пошуку"/>
 			<node name="footer" value="Прыпятак"/>
 		</node>
 		<node name="margins" value="Палі">
@@ -815,8 +816,11 @@
 			<node name="email" value="Даслаць нам ліст">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Чытайце нас у Twitter">
-				<node name="url" value="http://twitter.com/fbreader_ru"/>
+				<node name="url" value="https://twitter.com/fbreader_ru"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -1020,11 +1024,6 @@
 		<node name="browser" value="Аглядальнік"/>
 		<node name="defaultBrowser" value="Стандартны аглядальнік"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Невядомая памылка"/>
-		<node name="unsupportedCompressionMethod" value="Непадтрыманы спосаб сьціску"/>
-		<node name="encryptedFile" value="Файл абаронены DRM (кіраваньнем лічбавымі правамі)"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Праблема FBReader"/>
@@ -1065,6 +1064,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

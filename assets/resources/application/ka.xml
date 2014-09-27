@@ -649,7 +649,8 @@
 			<node name="text" value="ჩვეულებრივი ტექსტი"/>
 			<node name="hyperlink" value="ჰიპერლინკი"/>
 			<node name="hyperlinkVisited" value="მონახულებული ლინკი"/>
-			<node name="highlighting" value="ძიების რეზულტატების ფონი"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="ძიების რეზულტატების ფონი"/>
 			<node name="footer" value="სარდაფი"/>
 		</node>
 		<node name="margins" value="დაშორებები">
@@ -814,8 +815,11 @@
 			<node name="email" value="მოგვწერეთ წერილი">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="გამოგვყევით ტვიტერზე">
-				<node name="url" value="http://twitter.com/fbreader_ru"/>
+				<node name="url" value="https://twitter.com/fbreader_ru"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -1019,11 +1023,6 @@
 		<node name="browser" value="ბრაუზერი"/>
 		<node name="defaultBrowser" value="ბრაუზერი"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="უცნობი შეცდომა"/>
-		<node name="unsupportedCompressionMethod" value="შეკუმშვის არამხარდაჭერილი მეთოდი"/>
-		<node name="encryptedFile" value="ფაილი დაცულია DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader-ის პრობლემა"/>
@@ -1064,6 +1063,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

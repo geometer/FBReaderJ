@@ -634,7 +634,8 @@
 			<node name="text" value="普通文字"/>
 			<node name="hyperlink" value="超連結文字"/>
 			<node name="hyperlinkVisited" value="已按超連結文字"/>
-			<node name="highlighting" value="搜尋結果背景"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="搜尋結果背景"/>
 			<node name="footer" value="頁尾"/>
 		</node>
 		<node name="margins" value="邊距">
@@ -799,8 +800,11 @@
 			<node name="email" value="Send us an e-mail" toBeTranslated="true">
 				<node name="url" value="mailto:contact@fbreader.org" toBeTranslated="true"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -1004,11 +1008,6 @@
 		<node name="browser" value="瀏覽"/>
 		<node name="defaultBrowser" value="預設瀏覽器"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="未知錯誤"/>
-		<node name="unsupportedCompressionMethod" value="未支援的壓縮方式"/>
-		<node name="encryptedFile" value="受DRM保護的文件"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
@@ -1049,6 +1048,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

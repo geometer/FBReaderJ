@@ -24,12 +24,12 @@
 #include <ZLLanguageUtil.h>
 #include <ZLImage.h>
 #include <ZLFileImage.h>
-#include <ZLLogger.h>
 
 #include "PdbPlugin.h"
 #include "PalmDocStream.h"
 #include "MobipocketHtmlBookReader.h"
 
+#include "../css/StyleSheetParser.h"
 #include "../txt/PlainTextFormat.h"
 #include "../../library/Book.h"
 #include "../../bookmodel/BookModel.h"
@@ -42,27 +42,17 @@ const std::string MobipocketPlugin::supportedFileType() const {
 //}
 
 void MobipocketPlugin::readDocumentInternal(const ZLFile &file, BookModel &model, const PlainTextFormat &format, const std::string &encoding, ZLInputStream &stream) const {
-	MobipocketHtmlBookReader(file, model, format, encoding).readDocument(stream);
+	MobipocketHtmlBookReader reader(file, model, format, encoding);
+
+	shared_ptr<StyleSheetParser> cssParser = reader.createCSSParser();
+	cssParser->parseStream(new PalmDocCssStream(file));
+
+	reader.readDocument(stream);
 }
 
 bool MobipocketPlugin::readModel(BookModel &model) const {
 	const Book &book = *model.book();
 	const ZLFile &file = book.file();
-
-	ZLLogger::Instance().registerClass("MobiCSS");
-	shared_ptr<ZLInputStream> cssStream = new PalmDocCssStream(file);
-	if (cssStream->open()) {
-		char *buffer = new char[1024];
-		while (true) {
-			const int len = cssStream->read(buffer, 1024);
-			if (len <= 0) {
-				break;
-			}
-			ZLLogger::Instance().println("MobiCSS", std::string(buffer, len));
-		}
-		delete[] buffer;
-		cssStream->close();
-	}
 
 	shared_ptr<ZLInputStream> stream = createStream(file);
 
@@ -336,4 +326,18 @@ std::string MobipocketPlugin::readAnnotation(const ZLFile &file) const {
 
 bool MobipocketPlugin::readUids(Book &/*book*/) const {
 	return true;
+}
+
+std::vector<shared_ptr<FileEncryptionInfo> > MobipocketPlugin::readEncryptionInfos(Book &book) const {
+	std::vector<shared_ptr<FileEncryptionInfo> > infos;
+
+	PalmDocContentStream pbStream(book.file());
+	if (pbStream.open()) {
+		pbStream.close();
+	} else if (pbStream.errorCode() == PalmDocContentStream::ERROR_ENCRYPTION) {
+		infos.push_back(new FileEncryptionInfo("", EncryptionMethod::KINDLE, "", ""));
+	} else {
+		infos.push_back(new FileEncryptionInfo("", EncryptionMethod::UNSUPPORTED, "", ""));
+	}
+	return infos;
 }

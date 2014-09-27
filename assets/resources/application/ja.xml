@@ -644,7 +644,8 @@
 			<node name="text" value="標準の文字"/>
 			<node name="hyperlink" value="リンク文字"/>
 			<node name="hyperlinkVisited" value="リンク文字 (訪問済み)"/>
-			<node name="highlighting" value="検索結果の背景"/>
+			<node name="highlightingForeground" value="検索結果の文字"/>
+			<node name="highlightingBackground" value="検索結果の背景"/>
 			<node name="footer" value="フッタ"/>
 		</node>
 		<node name="margins" value="マージン">
@@ -809,8 +810,11 @@
 			<node name="email" value="メール (英語かロシア語で)">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="FBReader Google+ コミュニティに参加">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="twitter でフォロー">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -1014,11 +1018,6 @@
 		<node name="browser" value="ブラウザ"/>
 		<node name="defaultBrowser" value="既定のブラウザ"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="不明なエラー"/>
-		<node name="unsupportedCompressionMethod" value="未対応の圧縮方式"/>
-		<node name="encryptedFile" value="DRM で保護されたファイル"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader の問題"/>
@@ -1059,6 +1058,9 @@
 		</node>
 		<node name="pdf" value="PDF">
 			<node name="summary" value="PDF 形式の本を読む"/>
+		</node>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="DjVu 形式の本を読む"/>
 		</node>
 	</node>
 	<node name="drm">

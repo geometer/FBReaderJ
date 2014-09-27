@@ -634,7 +634,8 @@
 			<node name="text" value="Zwykły tekst"/>
 			<node name="hyperlink" value="Odsyłacz"/>
 			<node name="hyperlinkVisited" value="Odwiedzony odsyłacz"/>
-			<node name="highlighting" value="Tło wyszukanych elementów"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Tło wyszukanych elementów"/>
 			<node name="footer" value="Stopka"/>
 		</node>
 		<node name="margins" value="Marginesy">
@@ -799,8 +800,11 @@
 			<node name="email" value="Send us an e-mail" toBeTranslated="true">
 				<node name="url" value="mailto:contact@fbreader.org" toBeTranslated="true"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -1004,11 +1008,6 @@
 		<node name="browser" value="Przeglądarka"/>
 		<node name="defaultBrowser" value="Domyślna przeglądarka"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Nieznany błąd"/>
-		<node name="unsupportedCompressionMethod" value="Niewspierana metoda komresji"/>
-		<node name="encryptedFile" value="Plik z zabezpieczeniem DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Problem z FBReaderem"/>
@@ -1049,6 +1048,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

@@ -169,7 +169,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 
 			private void enableSynchronisation() {
-				SyncOperations.enableSync(PreferenceActivity.this, syncOptions.Enabled.getValue());
+				SyncOperations.enableSync(PreferenceActivity.this, syncOptions);
 			}
 
 			@Override
@@ -230,6 +230,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		});
 		syncPreferences.add(syncScreen.addOption(syncOptions.UploadAllBooks, "uploadAllBooks", "values"));
 		syncPreferences.add(syncScreen.addOption(syncOptions.Positions, "positions", "values"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.ChangeCurrentBook, "changeCurrentBook"));
 		//syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo", "values"));
 		//syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks", "values"));
 		syncPreferences.run();
@@ -481,13 +482,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		backgroundSet.add(colorsScreen.addOption(profile.FillModeOption, "fillMode"));
 		backgroundSet.run();
 
-		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
 		colorsScreen.addOption(profile.VisitedHyperlinkTextOption, "hyperlinkVisited");
 		colorsScreen.addOption(profile.FooterFillOption, "footer");
 		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
 		colorsScreen.addOption(profile.SelectionForegroundOption, "selectionForeground");
+		colorsScreen.addOption(profile.HighlightingForegroundOption, "highlightingForeground");
+		colorsScreen.addOption(profile.HighlightingBackgroundOption, "highlightingBackground");
 
 		final Screen marginsScreen = createPreferenceScreen("margins");
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
@@ -710,6 +712,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "site"));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "email"));
+		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "googleplus"));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "twitter"));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "facebook"));
 		aboutScreen.addPreference(new ThirdPartyLibrariesPreference(this, aboutScreen.Resource, "thirdParty"));

@@ -60,21 +60,6 @@ bool PalmDocLikeStream::fillBuffer() {
 	return true;
 }
 
-/*
-const std::string &PalmDocLikeStream::error() const {
-	static const ZLResource &resource = ZLResource::resource("mobipocketPlugin");
-	switch (myErrorCode) {
-		default:
-		{
-			static const std::string EMPTY;
-			return EMPTY;
-		}
-		case ERROR_UNKNOWN:
-			return resource["unknown"].value();
-		case ERROR_COMPRESSION:
-			return resource["unsupportedCompressionMethod"].value();
-		case ERROR_ENCRYPTION:
-			return resource["encryptedFile"].value();
-	}
+PalmDocLikeStream::ErrorCode PalmDocLikeStream::errorCode() const {
+	return myErrorCode;
 }
-*/

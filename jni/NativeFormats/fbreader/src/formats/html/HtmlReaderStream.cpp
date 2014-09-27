@@ -58,7 +58,7 @@ void HtmlTextOnlyReader::endDocumentHandler() {
 }
 
 bool HtmlTextOnlyReader::tagHandler(const HtmlTag &tag) {
-	if (tag.Name == "SCRIPT") {
+	if (tag.Name == "script") {
 		myIgnoreText = tag.Start;
 	}
 	if ((myFilledSize < myMaxSize) && (myFilledSize > 0) && (myBuffer[myFilledSize - 1] != '\n')) {
