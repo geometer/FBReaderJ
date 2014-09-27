@@ -644,7 +644,7 @@
 			<node name="text" value="標準の文字"/>
 			<node name="hyperlink" value="リンク文字"/>
 			<node name="hyperlinkVisited" value="リンク文字 (訪問済み)"/>
-			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingForeground" value="検索結果の文字"/>
 			<node name="highlightingBackground" value="検索結果の背景"/>
 			<node name="footer" value="フッタ"/>
 		</node>
@@ -810,7 +810,7 @@
 			<node name="email" value="メール (英語かロシア語で)">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
-			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+			<node name="googleplus" value="FBReader Google+ コミュニティに参加">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
 			<node name="twitter" value="twitter でフォロー">
