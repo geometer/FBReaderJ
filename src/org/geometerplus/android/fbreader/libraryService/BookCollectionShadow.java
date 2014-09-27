@@ -440,6 +440,39 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized List<Note> notes(NoteQuery query) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeNoteList(
+				myInterface.notes(SerializerUtil.serialize(query))
+			);
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
+	public synchronized void saveNote(Note note) {
+		if (myInterface != null) {
+			try {
+				note.update(SerializerUtil.deserializeNote(
+					myInterface.saveNote(SerializerUtil.serialize(note))
+				));
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
+	public synchronized void deleteNote(Note note) {
+		if (myInterface != null) {
+			try {
+				myInterface.deleteNote(SerializerUtil.serialize(note));
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
 	public synchronized HighlightingStyle getHighlightingStyle(int styleId) {
 		if (myInterface == null) {
 			return null;

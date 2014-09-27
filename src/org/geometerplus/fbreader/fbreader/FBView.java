@@ -103,6 +103,13 @@ public final class FBView extends ZLTextView {
 			);
 			return true;
 		}
+		if (highlighting instanceof NoteHighlighting) {
+			myReader.runAction(
+				ActionCode.SELECTION_NOTE,
+				((NoteHighlighting)highlighting).Note
+			);
+			return true;
+		}
 
 		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, getContextWidth(), getContextHeight(),

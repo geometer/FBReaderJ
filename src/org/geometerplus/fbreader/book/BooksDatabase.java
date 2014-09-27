@@ -64,6 +64,7 @@ public abstract class BooksDatabase {
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 	protected abstract List<UID> listUids(long bookId);
 	protected abstract boolean hasVisibleBookmark(long bookId);
+	protected abstract boolean hasVisibleNote(long bookId);//???
 	protected abstract RationalNumber getProgress(long bookId);
 
 	protected abstract Long bookIdByUid(UID uid);
@@ -119,6 +120,31 @@ public abstract class BooksDatabase {
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
 
+	protected Note createNote(
+			long id, long bookId, String bookTitle, String text,
+			Date creationDate, Date modificationDate, Date accessDate, int accessCounter,
+			String modelId,
+			int start_paragraphIndex, int start_wordIndex, int start_charIndex,
+			int end_paragraphIndex, int end_wordIndex, int end_charIndex//,
+			//boolean isVisible,
+			//int styleId
+		) {
+			return new Note(
+				id, bookId, bookTitle, text,
+				creationDate, modificationDate, accessDate, accessCounter,
+				modelId,
+				start_paragraphIndex, start_wordIndex, start_charIndex,
+				end_paragraphIndex, end_wordIndex, end_charIndex//,
+				//isVisible,
+				//styleId
+			);
+		}
+	}
+
+	protected abstract List<Note> loadNotes(NoteQuery query);
+	protected abstract long saveNote(Note note);
+	protected abstract void deleteNote(Note note);
+
 	protected HighlightingStyle createStyle(int id, String name, int bgColor, int fgColor) {
 		return new HighlightingStyle(
 			id, name,
@@ -126,6 +152,7 @@ public abstract class BooksDatabase {
 			fgColor != -1 ? new ZLColor(fgColor) : null
 		);
 	}
+
 	protected abstract List<HighlightingStyle> loadStyles();
 	protected abstract void saveStyle(HighlightingStyle style);
 
