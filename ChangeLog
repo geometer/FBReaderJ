@@ -4,12 +4,12 @@
 * (planned) Automatic files download (from the book network)
 * (planned) Sync: single book upload
 * (planned) Editable notes (by Tamotsu Takahashi)
-
-===== 2.1.6 (Sep ??, 2014) =====
 * (planned) Fixed authors list/tags list editing
-* Updated Belarusian localization (by Uievaład Čorny)
 
-===== 2.1.5 (Sep 28, 2014) =====
+===== 2.1.6 (Sep 28, 2014) =====
+* Updated Belarusian localization (by Usievaład Čorny)
+
+===== 2.1.5 (Sep 27, 2014) =====
 * Fixed TTF loader (for Roman fonts)
 * Fast hyphenation for very long words (200+ characters)
 * Search results color option
@@ -351,7 +351,7 @@
 ===== 1.6.5 (Nov 04, 2012) =====
 * Fixed footnotes processing in rtf's
 * Updated Czech localization (by Marek Pavelka)
-* Added Belarusian localization (by Uievaład Čorny)
+* Added Belarusian localization (by Usievaład Čorny)
 
 ===== 1.6.4 (Oct 30, 2012) =====
 * Supported encoding & language detection for *.doc (ms-word) files
