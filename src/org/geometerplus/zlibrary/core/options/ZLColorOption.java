@@ -25,8 +25,12 @@ public final class ZLColorOption extends ZLOption {
 	private ZLColor myValue;
 	private String myStringValue;
 
+	private static String stringColorValue(ZLColor color) {
+		return String.valueOf(color != null ? color.intValue() : -1);
+	}
+
 	public ZLColorOption(String group, String optionName, ZLColor defaultValue) {
-		super(group, optionName, String.valueOf(defaultValue.intValue()));
+		super(group, optionName, stringColorValue(defaultValue));
 	}
 
 	public ZLColor getValue() {
@@ -34,7 +38,8 @@ public final class ZLColorOption extends ZLOption {
 		if (!stringValue.equals(myStringValue)) {
 			myStringValue = stringValue;
 			try {
-				myValue = new ZLColor(Integer.parseInt(stringValue));
+				final int intValue = Integer.parseInt(stringValue);
+				myValue = intValue != -1 ? new ZLColor(intValue) : null;
 			} catch (NumberFormatException e) {
 			}
 		}
@@ -46,7 +51,7 @@ public final class ZLColorOption extends ZLOption {
 			return;
 		}
 		myValue = value;
-		myStringValue = String.valueOf(value.intValue());
+		myStringValue = stringColorValue(value);
 		setConfigValue(myStringValue);
 	}
 }

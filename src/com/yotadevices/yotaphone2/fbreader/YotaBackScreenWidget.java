@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -120,7 +121,7 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
 		}
 		return myDefaultCoverBitmap;
 	}
-	
+
     private static final String DEBUG_TAG = "motion";
 
     /*@Override

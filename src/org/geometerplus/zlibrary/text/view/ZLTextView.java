@@ -561,16 +561,19 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			previousInfo = info;
 		}
 
-		x = getLeftMargin();
-		y = getTopMargin();
-		index = 0;
-		for (ZLTextLineInfo info : lineInfos) {
-			drawHighlightings(page, info, labels[index], labels[index + 1], x, y);
-			y += info.Height + info.Descent + info.VSpaceAfter;
-			++index;
-			if (index == page.Column0Height) {
-				y = getTopMargin();
-				x += page.getTextWidth() + getSpaceBetweenColumns();
+		final List<ZLTextHighlighting> hilites = findHilites(page);
+		if (!hilites.isEmpty()) {
+			x = getLeftMargin();
+			y = getTopMargin();
+			index = 0;
+			for (ZLTextLineInfo info : lineInfos) {
+				drawHighlightings(page, hilites, info, labels[index], labels[index + 1], x, y);
+				y += info.Height + info.Descent + info.VSpaceAfter;
+				++index;
+				if (index == page.Column0Height) {
+					y = getTopMargin();
+					x += page.getTextWidth() + getSpaceBetweenColumns();
+				}
 			}
 		}
 
@@ -578,7 +581,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		y = getTopMargin();
 		index = 0;
 		for (ZLTextLineInfo info : lineInfos) {
-			drawTextLine(page, info, labels[index], labels[index + 1]);
+			drawTextLine(page, hilites, info, labels[index], labels[index + 1]);
 			y += info.Height + info.Descent + info.VSpaceAfter;
 			++index;
 			if (index == page.Column0Height) {
@@ -880,13 +883,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		preparePaintInfo();
 	}
 
-	private void drawHighlightings(ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y) {
-		if (from == to) {
-			return;
-		}
-        mCurrentPageFirstHightling = null;
-
+	private List<ZLTextHighlighting> findHilites(ZLTextPage page) {
 		final LinkedList<ZLTextHighlighting> hilites = new LinkedList<ZLTextHighlighting>();
+		mCurrentPageFirstHightling = null;
+
 		if (mySelection.intersects(page)) {
 			hilites.add(mySelection);
 		}
@@ -900,14 +900,18 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 			}
 		}
-		if (hilites.isEmpty()) {
+		return hilites;
+	}
+
+	private void drawHighlightings(ZLTextPage page, List<ZLTextHighlighting> hilites, ZLTextLineInfo info, int from, int to, int x, int y) {
+		if (from == to) {
 			return;
 		}
 
 		final ZLTextElementArea fromArea = page.TextElementMap.get(from);
 		final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
 		for (ZLTextHighlighting h : hilites) {
-			final ZLColor bgColor = h.getBackgroundColor();
+			final ZLColor bgColor = DeviceType.Instance().isYotaPhone() ? getHighlightingBackgroundColor() : h.getBackgroundColor();
 			if (bgColor == null) {
 				continue;
 			}
@@ -941,7 +945,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	protected abstract ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages();
 
 	private static final char[] SPACE = new char[] { ' ' };
-	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to) {
+	private void drawTextLine(ZLTextPage page, List<ZLTextHighlighting> hilites, ZLTextLineInfo info, int from, int to) {
 		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		int index = from;
@@ -958,10 +962,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final int areaX = area.XStart;
 				final int areaY = area.YEnd - getElementDescent(element) - getTextStyle().getVerticalAlign(metrics());
 				if (element instanceof ZLTextWord) {
+					final ZLTextPosition pos =
+						new ZLTextFixedPosition(info.ParagraphCursor.Index, wordIndex, 0);
+					final ZLTextHighlighting hl = getWordHilite(pos, hilites);
+					final ZLColor hlColor = hl != null ?
+							DeviceType.Instance().isYotaPhone() ? getYotaHighlightingForegroundColor(hl) :
+									hl.getForegroundColor() : null;
 					drawWord(
 						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
-						mySelection.isAreaSelected(area)
-							? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+						hlColor != null ? hlColor : getTextColor(getTextStyle().Hyperlink)
 					);
 				} else if (element instanceof ZLTextImageElement) {
 					final ZLTextImageElement imageElement = (ZLTextImageElement)element;
@@ -1016,16 +1025,30 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				? info.StartCharIndex : 0;
 			final int len = info.EndCharIndex - start;
 			final ZLTextWord word = (ZLTextWord)paragraph.getElement(info.EndElementIndex);
+			final ZLTextPosition pos =
+				new ZLTextFixedPosition(info.ParagraphCursor.Index, info.EndElementIndex, 0);
+			final ZLTextHighlighting hl = getWordHilite(pos, hilites);
+			final ZLColor hlColor = hl != null ? hl.getForegroundColor() : null;
 			drawWord(
 				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalAlign(metrics()),
 				word, start, len, area.AddHyphenationSign,
-				mySelection.isAreaSelected(area)
-					? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+				hlColor != null ? hlColor : getTextColor(getTextStyle().Hyperlink)
 			);
 		}
 	}
 
+	private ZLTextHighlighting getWordHilite(ZLTextPosition pos, List<ZLTextHighlighting> hilites) {
+		for (ZLTextHighlighting h : hilites) {
+			if (h.getStartPosition().compareToIgnoreChar(pos) <= 0
+				&& pos.compareToIgnoreChar(h.getEndPosition()) <= 0) {
+				return h;
+			}
+		}
+		return null;
+	}
+
 	private void buildInfos(ZLTextPage page, ZLTextWordCursor start, ZLTextWordCursor result) {
+		final long startTime = System.currentTimeMillis();
 		result.setCursor(start);
 		int textAreaHeight = page.getTextHeight();
 		page.LineInfos.clear();
@@ -1083,6 +1106,16 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			&& getTextStyle().allowHyphenations();
 	}
 
+	private volatile ZLTextWord myCachedWord;
+	private volatile ZLTextHyphenationInfo myCachedInfo;
+	private final synchronized ZLTextHyphenationInfo getHyphenationInfo(ZLTextWord word) {
+		if (myCachedWord != word) {
+			myCachedWord = word;
+			myCachedInfo = ZLTextHyphenator.Instance().getInfo(word);
+		}
+		return myCachedInfo;
+	}
+
 	private ZLTextLineInfo processTextLine(
 		ZLTextPage page,
 		ZLTextParagraphCursor paragraphCursor,
@@ -1091,6 +1124,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int endIndex,
 		ZLTextLineInfo previousInfo
 	) {
+		final long startTime = System.currentTimeMillis();
 		final ZLPaintContext context = getContext();
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, getTextStyle());
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
@@ -1210,36 +1244,53 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				int spaceLeft = maxWidth - newWidth;
 				if ((word.Length > 3 && spaceLeft > 2 * context.getSpaceWidth())
 					|| info.EndElementIndex == startIndex) {
-					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.Instance().getInfo(word);
-					int hyphenationPosition = word.Length - 1;
+					ZLTextHyphenationInfo hyphenationInfo = getHyphenationInfo(word);
+					int hyphenationPosition = currentCharIndex;
 					int subwordWidth = 0;
-					for (; hyphenationPosition > currentCharIndex; hyphenationPosition--) {
-						if (hyphenationInfo.isHyphenationPossible(hyphenationPosition)) {
-							subwordWidth = getWordWidth(
+					for (int right = word.Length - 1, left = currentCharIndex; right > left; ) {
+						final int mid = (right + left + 1) / 2;
+						int m1 = mid;
+						while (m1 > left && !hyphenationInfo.isHyphenationPossible(m1)) {
+							--m1;
+						}
+						if (m1 > left) {
+							final int w = getWordWidth(
 								word,
 								currentCharIndex,
-								hyphenationPosition - currentCharIndex,
-								word.Data[word.Offset + hyphenationPosition - 1] != '-'
+								m1 - currentCharIndex,
+								word.Data[word.Offset + m1 - 1] != '-'
 							);
-							if (subwordWidth <= spaceLeft) {
-								break;
+							if (w < spaceLeft) {
+								left = mid;
+								hyphenationPosition = m1;
+								subwordWidth = w;
+							} else {
+								right = mid - 1;
 							}
+						} else {
+							left = mid;
 						}
 					}
 					if (hyphenationPosition == currentCharIndex && info.EndElementIndex == startIndex) {
-						hyphenationPosition = word.Length == currentCharIndex + 1 ? word.Length : word.Length - 1;
-						subwordWidth = getWordWidth(word, currentCharIndex, word.Length - currentCharIndex, false);
-						for (; hyphenationPosition > currentCharIndex + 1; hyphenationPosition--) {
-							subwordWidth = getWordWidth(
+						subwordWidth = getWordWidth(word, currentCharIndex, 1, false);
+						int right = word.Length == currentCharIndex + 1 ? word.Length : word.Length - 1;
+						int left = currentCharIndex + 1;
+						while (right > left) {
+							final int mid = (right + left + 1) / 2;
+							final int w = getWordWidth(
 								word,
 								currentCharIndex,
-								hyphenationPosition - currentCharIndex,
-								word.Data[word.Offset + hyphenationPosition - 1] != '-'
+								mid - currentCharIndex,
+								word.Data[word.Offset + mid - 1] != '-'
 							);
-							if (subwordWidth <= spaceLeft) {
-								break;
+							if (w <= spaceLeft) {
+								left = mid;
+								subwordWidth = w;
+							} else {
+								right = mid - 1;
 							}
 						}
+						hyphenationPosition = right;
 					}
 					if (hyphenationPosition > currentCharIndex) {
 						info.IsVisible = true;
@@ -1844,4 +1895,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
     public BookmarkHighlighting getCurrentBookmarkHighlighting() {
         return mCurrentPageFirstHightling;
     }
+
+	private ZLColor getYotaHighlightingForegroundColor(ZLTextHighlighting hl) {
+		if (hl instanceof BookmarkHighlighting) {
+			return myViewOptions.getColorProfile().HighlightingForegroundOption.getValue();
+		}
+		return hl.getForegroundColor();
+	}
 }

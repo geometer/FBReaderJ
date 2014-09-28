@@ -33,7 +33,7 @@ class StyleSheetTable {
 
 public:
 	typedef std::map<std::string,std::string> AttributeMap;
-	static shared_ptr<ZLTextStyleEntry> createControl(const AttributeMap &map);
+	static shared_ptr<ZLTextStyleEntry> createOrUpdateControl(const AttributeMap &map, shared_ptr<ZLTextStyleEntry> entry = 0);
 
 private:
 	void addMap(const std::string &tag, const std::string &aClass, const AttributeMap &map);

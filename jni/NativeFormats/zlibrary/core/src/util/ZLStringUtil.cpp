@@ -96,16 +96,22 @@ void ZLStringUtil::stripWhiteSpaces(std::string &str) {
 	str.erase(r_counter, length - r_counter);
 }
 
-std::vector<std::string> ZLStringUtil::split(const std::string &str, const std::string &delimiter) {
+std::vector<std::string> ZLStringUtil::split(const std::string &str, const std::string &delimiter, bool skipEmpty) {
 	std::vector<std::string> result;
 	std::size_t start = 0;
 	std::size_t index = str.find(delimiter);
 	while (index != std::string::npos) {
-		result.push_back(str.substr(start, index - start));
+		const std::string sub = str.substr(start, index - start);
+		if (!skipEmpty || sub.size() > 0) {
+			result.push_back(sub);
+		}
 		start = index + delimiter.length();
 		index = str.find(delimiter, start);
 	}
-	result.push_back(str.substr(start, index - start));
+	const std::string sub = str.substr(start, index - start);
+	if (!skipEmpty || sub.size() > 0) {
+		result.push_back(sub);
+	}
 	return result;
 }
 
@@ -176,4 +182,10 @@ unsigned long ZLStringUtil::parseHex(const std::string &str, int defaultValue) {
 
 	char *ptr;
 	return std::strtol(str.c_str(), &ptr, 16);
+}
+
+void ZLStringUtil::asciiToLowerInline(std::string &asciiString) {
+	for (int i = asciiString.size() - 1; i >= 0; --i) {
+		asciiString[i] = std::tolower(asciiString[i]);
+	}
 }

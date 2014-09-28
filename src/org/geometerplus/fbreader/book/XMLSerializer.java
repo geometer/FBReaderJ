@@ -327,10 +327,12 @@ class XMLSerializer extends AbstractSerializer {
 	public String serialize(HighlightingStyle style) {
 		final StringBuilder buffer = new StringBuilder();
 		final ZLColor bgColor = style.getBackgroundColor();
+		final ZLColor fgColor = style.getForegroundColor();
 		appendTag(buffer, "style", true,
 			"id", String.valueOf(style.Id),
 			"name", style.getName(),
-			"bg-color", bgColor != null ? String.valueOf(bgColor.intValue()) : "-1"
+			"bg-color", bgColor != null ? String.valueOf(bgColor.intValue()) : "-1",
+			"fg-color", fgColor != null ? String.valueOf(fgColor.intValue()) : "-1"
 		);
 		return buffer.toString();
 	}
@@ -1026,10 +1028,12 @@ class XMLSerializer extends AbstractSerializer {
 			if ("style".equals(localName)) {
 				final int id = parseIntSafe(attributes.getValue("id"), -1);
 				if (id != -1) {
-					final int rgb = parseIntSafe(attributes.getValue("bg-color"), -1);
-					final ZLColor color = rgb != -1 ? new ZLColor(rgb) : null;
+					final int bg = parseIntSafe(attributes.getValue("bg-color"), -1);
+					final int fg = parseIntSafe(attributes.getValue("fg-color"), -1);
 					myStyle = new HighlightingStyle(
-						id, attributes.getValue("name"), color
+						id, attributes.getValue("name"),
+						bg != -1 ? new ZLColor(bg) : null,
+						fg != -1 ? new ZLColor(fg) : null
 					);
 				}
 			}

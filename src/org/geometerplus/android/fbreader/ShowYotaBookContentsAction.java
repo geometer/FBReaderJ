@@ -19,7 +19,7 @@ public class ShowYotaBookContentsAction extends FBAndroidAction {
 		View button = BaseActivity.findViewById(viewId);
 
 		if (myContents == null) {
-			myContents = new YotaBookContentPopup(BaseActivity, button);
+			myContents = new YotaBookContentPopup(BaseActivity, button, false);
 		}
 		if (!myContents.isShowing()) {
 			myContents.show(Reader);

@@ -23,6 +23,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <stack>
 
 #include <ZLXMLReader.h>
 #include <ZLVideoEntry.h>
@@ -62,13 +63,17 @@ protected:
 	static void endParagraph(XHTMLReader &reader);
 };
 
-struct TagData {
-	std::vector<FBTextKind> TextKinds;
-	std::vector<shared_ptr<ZLTextStyleEntry> > StyleEntries;
-	bool PageBreakAfter;
-};
-
 class XHTMLReader : public ZLXMLReader {
+
+public:
+	struct TagData {
+		std::vector<FBTextKind> TextKinds;
+		std::vector<shared_ptr<ZLTextStyleEntry> > StyleEntries;
+		bool PageBreakAfter;
+		size_t ChildCount;
+
+		TagData();
+	};
 
 public:
 	static XHTMLTagAction *addAction(const std::string &tag, XHTMLTagAction *action);
@@ -125,6 +130,7 @@ private:
 	std::map<std::string,shared_ptr<StyleSheetParserWithCache> > myFileParsers;
 	XHTMLReadingState myReadState;
 	int myBodyCounter;
+	std::stack<int> myListNumStack;
 	bool myMarkNextImageAsCover;
 	shared_ptr<ZLVideoEntry> myVideoEntry;
 
@@ -137,6 +143,8 @@ private:
 	friend class XHTMLTagParagraphWithControlAction;
 	friend class XHTMLTagControlAction;
 	friend class XHTMLTagBodyAction;
+	friend class XHTMLTagListAction;
+	friend class XHTMLTagItemAction;
 	friend class XHTMLTagImageAction;
 	friend class XHTMLTagVideoAction;
 	friend class XHTMLTagSourceAction;

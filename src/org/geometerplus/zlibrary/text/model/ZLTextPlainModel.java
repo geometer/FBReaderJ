@@ -354,9 +354,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 					char[] textData = it.getTextData();
 					int textOffset = it.getTextOffset();
 					int textLength = it.getTextLength();
-					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1;
-						pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern, pos + 1)) {
-						myMarks.add(new ZLTextMark(index, offset + pos, pattern.getLength()));
+					for (ZLSearchUtil.Result res = ZLSearchUtil.find(textData, textOffset, textLength, pattern); res != null;
+						res = ZLSearchUtil.find(textData, textOffset, textLength, pattern, res.Start + 1)) {
+						myMarks.add(new ZLTextMark(index, offset + res.Start, res.Length));
 						++count;
 					}
 					offset += textLength;

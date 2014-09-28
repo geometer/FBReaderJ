@@ -51,6 +51,7 @@ public:
 		~HtmlTag();
 		void addAttribute(const std::string &name);
 		void setLastAttributeValue(const std::string &value);
+		const std::string *find(const std::string &name) const;
 
 	private:
 		HtmlTag(const HtmlTag&);

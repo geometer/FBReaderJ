@@ -119,8 +119,12 @@ public abstract class BooksDatabase {
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
 
-	protected HighlightingStyle createStyle(int id, String name, int color) {
-		return new HighlightingStyle(id, name, color != -1 ? new ZLColor(color) : null);
+	protected HighlightingStyle createStyle(int id, String name, int bgColor, int fgColor) {
+		return new HighlightingStyle(
+			id, name,
+			bgColor != -1 ? new ZLColor(bgColor) : null,
+			fgColor != -1 ? new ZLColor(fgColor) : null
+		);
 	}
 	protected abstract List<HighlightingStyle> loadStyles();
 	protected abstract void saveStyle(HighlightingStyle style);

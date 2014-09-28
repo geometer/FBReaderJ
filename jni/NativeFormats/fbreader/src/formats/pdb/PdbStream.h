@@ -31,10 +31,10 @@ class PdbStream : public ZLInputStream {
 public:
 	PdbStream(const ZLFile &file);
 	virtual ~PdbStream();
+	virtual void close();
 
 protected:
 	virtual bool open();
-	virtual void close();
 	void seek(int offset, bool absoluteOffset);
 	size_t offset() const;
 

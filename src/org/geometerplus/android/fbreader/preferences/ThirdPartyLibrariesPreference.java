@@ -24,6 +24,9 @@ import java.io.*;
 import android.content.Context;
 import android.preference.DialogPreference;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.view.View;
+import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -35,6 +38,11 @@ class ThirdPartyLibrariesPreference extends DialogPreference {
 		setTitle(resource.getResource(key).getValue());
 		setNegativeButtonText(null);
 		setPositiveButtonText(ZLResource.resource("dialog").getResource("button").getResource("ok").getValue());
+	}
+
+	@Override
+	protected View onCreateDialogView() {
+		final TextView textView = new TextView(getContext());
 		final StringBuilder html = new StringBuilder();
 		try {
 			final BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -47,6 +55,9 @@ class ThirdPartyLibrariesPreference extends DialogPreference {
 			reader.close();
 		} catch (IOException e) {
 		}
-		setDialogMessage(Html.fromHtml(html.toString()));
+		textView.setText(Html.fromHtml(html.toString()));
+		textView.setPadding(10, 10, 10, 10);
+		textView.setMovementMethod(new LinkMovementMethod());
+		return textView;
 	}
 }

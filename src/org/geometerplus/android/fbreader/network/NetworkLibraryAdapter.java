@@ -41,7 +41,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		super(activity);
 	}
 
-	private CoverManager myCoverManager;
+	protected CoverManager myCoverManager;
 
 	public View getView(int position, View view, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
@@ -82,7 +82,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		return view;
 	}
 
-	private void setupCover(final ImageView coverView, NetworkTree tree) {
+	protected void setupCover(final ImageView coverView, NetworkTree tree) {
 		if (myCoverManager.trySetCoverImage(coverView, tree)) {
 			return;
 		}

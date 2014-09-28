@@ -634,7 +634,8 @@
 			<node name="text" value="Κανονικό κείμενο"/>
 			<node name="hyperlink" value="Υπερ-σύνδεσμοι"/>
 			<node name="hyperlinkVisited" value="Επισκεπτόμενοι Υπερ-σύνδεσμοι"/>
-			<node name="highlighting" value="Παρασκήνιο των αποτελεσμάτων"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Παρασκήνιο των αποτελεσμάτων"/>
 			<node name="footer" value="Υποσέλιδο"/>
 		</node>
 		<node name="margins" value="Άκρα">
@@ -807,8 +808,11 @@
 			<node name="email" value="Email">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Twitter">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -1012,11 +1016,6 @@
 		<node name="browser" value="Browser"/>
 		<node name="defaultBrowser" value="Default-Browser"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Αγνωστό σφάλμα"/>
-		<node name="unsupportedCompressionMethod" value="Η μέθοδος συμπίεσης δεν υποστιρίζεται"/>
-		<node name="encryptedFile" value="Αρχείο με προστασία DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Πρόβλημα FBReader"/>
@@ -1057,6 +1056,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

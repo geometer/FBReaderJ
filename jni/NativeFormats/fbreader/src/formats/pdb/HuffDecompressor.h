@@ -39,7 +39,7 @@ public:
 private:
 	size_t sizeOfTrailingEntries(unsigned char* data, size_t size) const;
 	size_t readVariableWidthIntegerBE(unsigned char* ptr, size_t psize) const;
-	void bitsDecompress(BitReader bits, size_t depth = 0);
+	void bitsDecompress(BitReader &bits, size_t depth = 0);
 
 private:
 	unsigned long myEntryBits;

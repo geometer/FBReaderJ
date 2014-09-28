@@ -635,7 +635,8 @@
 			<node name="text" value="Text obisnuit"/>
 			<node name="hyperlink" value="Hyperlink Text"/>
 			<node name="hyperlinkVisited" value="Textul hyperlinkului vizitat"/>
-			<node name="highlighting" value="Rezultatele cautarii in fundal"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Rezultatele cautarii in fundal"/>
 			<node name="footer" value="Subsol"/>
 		</node>
 		<node name="margins" value="Margini">
@@ -800,8 +801,11 @@
 			<node name="email" value="Trimiteti-ne un e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Urmati-ne pe twitter">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader pe facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -1005,11 +1009,6 @@
 		<node name="browser" value="Browser"/>
 		<node name="defaultBrowser" value="Browser prestabilit"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Eroare necunoscuta"/>
-		<node name="unsupportedCompressionMethod" value="Metoda de compresie neacceptata"/>
-		<node name="encryptedFile" value="Fisier protejat prin DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Eroare in aplicatie"/>
@@ -1050,6 +1049,9 @@
 		</node>
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Citire carti in formatul PDF"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

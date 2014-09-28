@@ -1,15 +1,52 @@
-===== 2.1 (Sep ??, 2014) =====
-* New engine for mobipocket (a.k.a. Kindle) files
+===== 2.2 (Oct ??, 2014) =====
+* (planned) Tablet-oriented preferences dialog
+* (planned) Android L support
+* (planned) Automatic files download (from the book network)
+* (planned) Sync: single book upload
+* (planned) Editable notes (by Tamotsu Takahashi)
+
+===== 2.1.6 (Sep ??, 2014) =====
+* (planned) Fixed authors list/tags list editing
+
+===== 2.1.5 (Sep 28, 2014) =====
+* Fixed TTF loader (for Roman fonts)
+* Fast hyphenation for very long words (200+ characters)
+* Search results color option
+* Updated Czech localisation (by Marek Pavelka)
+* Updated German localisation (by Matthias Dill)
+* Updated Japanese localisation (by Tamotsu Takahashi)
+
+===== 2.1.4 (Sep 21, 2014) =====
+* CSS: fixed <ul>/<ol> top/bottom margin behaviour
+* Fixed loading of Google Roboto files (if added as external TTFs)
+* sync: 'missing book' toast replaced with notification
+
+===== 2.1.3 (Sep 18, 2014) =====
+* CSS: fixed multiple entries for same selector
+* CSS: fixed '0' (with no units) length value
+* CSS: 'margin' property support
+
+===== 2.1.2 (Sep 17, 2014) =====
+* Fixed ToC in mobi files
+* Minor fixes in mobi decompression
+* Updated French localisation (by Mathias Monnerville)
+
+===== 2.1.1 (Sep 12, 2014) =====
+* Fixed links behaviour in third-party libraries dialog
+* Internal changes: option name for bg fill mode changed
+
+===== 2.1 (Sep 11, 2014) =====
+* New engine for mobipocket (a.k.a. Kindle) files: added support for huffdic compression and CSS
 * Better background settings
 * DjVu plugin support
-* (planned) Fixed authors list/tags list editing
-* (planned) Automatic files download (from the book network)
-* (planned) Recently accessed books list (on the book network)
-* (planned) Do not start SyncService in synchronization is disabled
+* Do not start SyncService if synchronization is disabled
+* Sync: 'synchronize positions only' option
 * Tips are back but disabled by default
-* (planned) Tablet-oriented preferences dialog
+* Fixed numbered lists displaying in ePubs (by Tamotsu Takahashi)
+* Fixed text search for texts with zero-width spaces (e.g. Japanese texts)
 * Added Japanese localisation (by Tamotsu Takahashi and Naofumi Fukue)
-* Updated Dutch localization (by Frank Fesevur)
+* Updated Dutch localisation (by Frank Fesevur)
+* Updated Czech localisation (by Marek Pavelka)
 
 ===== 2.0.6 (Aug 23, 2014) =====
 * Version for old (2.*) devices does not use google services API
