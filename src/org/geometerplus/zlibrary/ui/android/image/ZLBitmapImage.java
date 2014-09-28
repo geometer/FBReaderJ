@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import java.io.InputStream;
-
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import android.graphics.Bitmap;
