@@ -806,7 +806,7 @@
 			<node name="twitter" value="Зафоловити нас на Твітері">
 				<node name="url" value="https://twitter.com/fbreader_ru"/>
 			</node>
-			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+			<node name="facebook" value="FBReader on Facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>

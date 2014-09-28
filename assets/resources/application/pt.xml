@@ -815,10 +815,10 @@
 			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Siga-nos no twitter">
+			<node name="twitter" value="Siga-nos no Twitter">
 				<node name="url" value="https://twitter.com/dennissheil"/>
 			</node>
-			<node name="facebook" value="FBReader no facebook">
+			<node name="facebook" value="FBReader no Facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Bibliotecas de terceiros"/>

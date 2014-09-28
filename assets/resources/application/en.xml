@@ -813,10 +813,10 @@
 			<node name="googleplus" value="Join FBReader Google+ community">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Follow us at twitter">
+			<node name="twitter" value="Follow us at Twitter">
 				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader on facebook">
+			<node name="facebook" value="FBReader on Facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Third-party libraries"/>

@@ -818,10 +818,10 @@
 			<node name="googleplus" value="Присоединяйтесь к сообществу FBReader на Google+">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Читайте нас в твиттере">
+			<node name="twitter" value="Читайте нас в Twitter">
 				<node name="url" value="https://twitter.com/fbreader_ru"/>
 			</node>
-			<node name="facebook" value="Страница FBReader на facebook">
+			<node name="facebook" value="Страница FBReader на Facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Сторонние библиотеки"/>
