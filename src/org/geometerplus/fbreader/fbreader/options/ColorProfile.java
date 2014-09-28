@@ -149,7 +149,7 @@ public class ColorProfile {
 			HighlightingBackgroundOption =
                     createOption(name, "Highlighting", 96, 96, 128);
 			HighlightingForegroundOption =
-					createNullOption(name, "HighlightingForeground");
+					createOption(name, "HighlightingForeground", 255, 255, 220);
             RegularTextOption =
                     createOption(name, "Text", 192, 192, 192);
             HyperlinkTextOption =
@@ -177,7 +177,7 @@ public class ColorProfile {
 			HighlightingBackgroundOption =
                     createOption(name, "Highlighting", 255, 192, 128);
 			HighlightingForegroundOption =
-					createNullOption(name, "HighlightingForeground");
+					createOption(name, "HighlightingForeground", 255, 255, 220);
             RegularTextOption =
                     createOption(name, "Text", 0, 0, 0);
             HyperlinkTextOption =
@@ -205,7 +205,7 @@ public class ColorProfile {
 			HighlightingBackgroundOption =
                     createOption(name, "Highlighting", 255, 192, 128);
 			HighlightingForegroundOption =
-					createNullOption(name, "HighlightingForeground");
+					createOption(name, "HighlightingForeground", 255, 255, 220);
             RegularTextOption =
                     createOption(name, "Text", 0, 0, 0);
             HyperlinkTextOption =
@@ -233,7 +233,7 @@ public class ColorProfile {
 			HighlightingBackgroundOption =
                     createOption(name, "Highlighting", 0, 0, 0);
 			HighlightingForegroundOption =
-					createNullOption(name, "HighlightingForeground");
+					createOption(name, "HighlightingForeground", 255, 255, 255);
             RegularTextOption =
                     createOption(name, "Text", 0, 0, 0);
             HyperlinkTextOption =
@@ -261,7 +261,7 @@ public class ColorProfile {
 			HighlightingBackgroundOption =
                     createOption(name, "Highlighting", 255, 255, 255);
 			HighlightingForegroundOption =
-					createNullOption(name, "HighlightingForeground");
+					createOption(name, "HighlightingForeground", 0, 0, 0);
             RegularTextOption =
                     createOption(name, "Text", 255, 255, 255);
             HyperlinkTextOption =

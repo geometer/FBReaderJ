@@ -29,16 +29,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.*;
-import android.text.TextUtils;
 import android.support.v4.app.NotificationCompat;
 import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yotadevices.yotaphone2.fbreader.FBReaderYotaService;
-import com.yotadevices.yotaphone2.fbreader.YotaSettingsPopup;
 
-import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;

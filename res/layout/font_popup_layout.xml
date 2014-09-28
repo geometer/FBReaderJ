@@ -4,7 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
-        android:layout_marginLeft="282dp"
+        android:layout_marginLeft="240dp"
         android:layout_width="24.6dp"
         android:layout_height="8.6dp"
         android:src="@drawable/popup_triangle"/>

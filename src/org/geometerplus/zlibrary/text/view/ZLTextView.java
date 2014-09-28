@@ -885,6 +885,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private List<ZLTextHighlighting> findHilites(ZLTextPage page) {
 		final LinkedList<ZLTextHighlighting> hilites = new LinkedList<ZLTextHighlighting>();
+		mCurrentPageFirstHightling = null;
+
 		if (mySelection.intersects(page)) {
 			hilites.add(mySelection);
 		}
@@ -905,12 +907,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (from == to) {
 			return;
 		}
-        mCurrentPageFirstHightling = null;
 
 		final ZLTextElementArea fromArea = page.TextElementMap.get(from);
 		final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
 		for (ZLTextHighlighting h : hilites) {
-			final ZLColor bgColor = h.getBackgroundColor();
+			final ZLColor bgColor = DeviceType.Instance().isYotaPhone() ? getHighlightingBackgroundColor() : h.getBackgroundColor();
 			if (bgColor == null) {
 				continue;
 			}
@@ -964,7 +965,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					final ZLTextPosition pos =
 						new ZLTextFixedPosition(info.ParagraphCursor.Index, wordIndex, 0);
 					final ZLTextHighlighting hl = getWordHilite(pos, hilites);
-					final ZLColor hlColor = hl != null ? hl.getForegroundColor() : null;
+					final ZLColor hlColor = hl != null ?
+							DeviceType.Instance().isYotaPhone() ? getYotaHighlightingForegroundColor(hl) :
+									hl.getForegroundColor() : null;
 					drawWord(
 						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
 						hlColor != null ? hlColor : getTextColor(getTextStyle().Hyperlink)
@@ -1892,4 +1895,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
     public BookmarkHighlighting getCurrentBookmarkHighlighting() {
         return mCurrentPageFirstHightling;
     }
+
+	private ZLColor getYotaHighlightingForegroundColor(ZLTextHighlighting hl) {
+		if (hl instanceof BookmarkHighlighting) {
+			return myViewOptions.getColorProfile().HighlightingForegroundOption.getValue();
+		}
+		return hl.getForegroundColor();
+	}
 }
