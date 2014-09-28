@@ -816,7 +816,7 @@
 			<node name="twitter" value="twitter でフォロー">
 				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader on facebook">
+			<node name="facebook" value="FBReader on Facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="外部ライブラリ"/>
