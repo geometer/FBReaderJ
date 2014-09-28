@@ -50,6 +50,13 @@ public:
 	void clear();
 
 private:
+	enum KeyRelation {
+		Ancestor, // "X Y" selector, X is ancestor for Y
+		Parent, // "X > Y" selector, X is parent for Y
+		PreviuosSibling, // "X + Y" selector, X is previous sibling for Y
+		Predecessor, // "Y ~ X", X is an ancestor for Y, or X is a sibling for Y that was occured before Y
+	};
+
 	struct Key {
 		Key(const std::string &tag, const std::string &aClass);
 
