@@ -19,12 +19,12 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.List;
-
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -32,10 +32,11 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 
+import org.geometerplus.android.fbreader.network.action.ActionCode;
+import org.geometerplus.fbreader.network.urlInfo.BookBuyUrlInfo;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -45,16 +46,16 @@ import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.urlInfo.RelatedUrlInfo;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
-import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 import org.geometerplus.android.util.UIUtil;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
 	private NetworkBookTree mTree;
@@ -67,6 +68,19 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 	private final AndroidImageSynchronizer mImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private final ActivityNetworkContext mNetworkContext = new ActivityNetworkContext(this);
+	private List<NetworkBookActions.NBAction> mBoookActions;
+
+	private View.OnClickListener mActionButtonListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			int actionCode = (Integer)v.getTag();
+			for (NetworkBookActions.NBAction action : mBoookActions) {
+				if (action.getActionCode() == actionCode) {
+					action.run(mTree);
+				}
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -77,6 +91,11 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 		SQLiteCookieDatabase.init(this);
 
 		setContentView(R.layout.yota_network_book_info);
+		ActionBar bar = getActionBar();
+		bar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+		bar.setLogo(new ColorDrawable(Color.WHITE));
+		bar.setDisplayHomeAsUpEnabled(true);
+		bar.setTitle(R.string.network_library);
 	}
 
 	@Override
@@ -149,22 +168,21 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 					}
 				}
 
-				runOnUiThread(myViewInitializer);
+				runOnUiThread(mViewInitializer);
 			}
 		}
 	};
 
-	private final Runnable myViewInitializer = new Runnable() {
+	private final Runnable mViewInitializer = new Runnable() {
 		public void run() {
 			if (mBook == null) {
 				finish();
 			} else {
-
 				setupDescription();
 				setupInfo();
 				setupCover();
-
-				invalidateOptionsMenu();
+				initBookActions();
+				initButtons();
 			}
 		}
 	};
@@ -186,9 +204,6 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 	}
 
 	private final void setupDescription() {
-		TextView title = (TextView)findViewById(R.id.yota_book_title);
-		title.setText(mBook.Title);
-
 		CharSequence description = mBook.getSummary();
 		if (description == null) {
 			description = mResource.getResource("noDescription").getValue();
@@ -198,70 +213,24 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 		descriptionView.setMovementMethod(new LinkMovementMethod());
 	}
 
-	private void setPairLabelTextFromResource(int id, String resourceKey) {
-		((TextView)findViewById(id).findViewById(R.id.book_info_key))
-				.setText(mResource.getResource(resourceKey).getValue());
-	}
-
-	private void setPairLabelTextFromResource(int id, String resourceKey, int param) {
-		((TextView)findViewById(id).findViewById(R.id.book_info_key))
-				.setText(mResource.getResource(resourceKey).getValue(param));
-	}
-
-	private void setPairValueText(int id, CharSequence text) {
-		final LinearLayout layout = (LinearLayout)findViewById(id);
-		((TextView)layout.findViewById(R.id.book_info_value)).setText(text);
-	}
-
 	private void setupInfo() {
-		setTextFromResource(R.id.network_book_info_title, "bookInfo");
-
-		setPairLabelTextFromResource(R.id.network_book_title, "title");
-		setPairLabelTextFromResource(R.id.network_book_authors, "authors");
-		setPairLabelTextFromResource(R.id.network_book_series_title, "series");
-		setPairLabelTextFromResource(R.id.network_book_series_index, "indexInSeries");
-		setPairLabelTextFromResource(R.id.network_book_catalog, "catalog");
-
-		setPairValueText(R.id.network_book_title, mBook.Title);
-
+		TextView title = (TextView)findViewById(R.id.yota_book_title);
+		title.setText(mBook.Title);
+		TextView author = (TextView)findViewById(R.id.yota_book_author);
 		if (mBook.Authors.size() > 0) {
-			findViewById(R.id.network_book_authors).setVisibility(View.VISIBLE);
-			final StringBuilder authorsText = new StringBuilder();
-			for (NetworkBookItem.AuthorData author : mBook.Authors) {
-				if (authorsText.length() > 0) {
-					authorsText.append(", ");
+			final StringBuilder buffer = new StringBuilder();
+			for (NetworkBookItem.AuthorData data : mBook.Authors) {
+				if (buffer.length() > 0) {
+					buffer.append(", ");
 				}
-				authorsText.append(author.DisplayName);
+				buffer.append(data.DisplayName);
 			}
-			setPairLabelTextFromResource(R.id.network_book_authors, "authors", mBook.Authors.size());
-			setPairValueText(R.id.network_book_authors, authorsText);
+			author.setText(buffer.toString());
 		} else {
-			findViewById(R.id.network_book_authors).setVisibility(View.GONE);
-		}
-
-		if (mBook.SeriesTitle != null) {
-			findViewById(R.id.network_book_series_title).setVisibility(View.VISIBLE);
-			setPairValueText(R.id.network_book_series_title, mBook.SeriesTitle);
-			final float indexInSeries = mBook.IndexInSeries;
-			if (indexInSeries > 0) {
-				final String seriesIndexString;
-				if (Math.abs(indexInSeries - Math.round(indexInSeries)) < 0.01) {
-					seriesIndexString = String.valueOf(Math.round(indexInSeries));
-				} else {
-					seriesIndexString = String.format("%.1f", indexInSeries);
-				}
-				setPairValueText(R.id.network_book_series_index, seriesIndexString);
-				findViewById(R.id.network_book_series_index).setVisibility(View.VISIBLE);
-			} else {
-				findViewById(R.id.network_book_series_index).setVisibility(View.GONE);
-			}
-		} else {
-			findViewById(R.id.network_book_series_title).setVisibility(View.GONE);
-			findViewById(R.id.network_book_series_index).setVisibility(View.GONE);
+			author.setVisibility(View.GONE);
 		}
 
 		if (mBook.Tags.size() > 0) {
-			findViewById(R.id.network_book_tags).setVisibility(View.VISIBLE);
 			final StringBuilder tagsText = new StringBuilder();
 			for (String tag : mBook.Tags) {
 				if (tagsText.length() > 0) {
@@ -269,18 +238,19 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 				}
 				tagsText.append(tag);
 			}
-			setPairLabelTextFromResource(R.id.network_book_tags, "tags", mBook.Tags.size());
-			setPairValueText(R.id.network_book_tags, tagsText);
-		} else {
-			findViewById(R.id.network_book_tags).setVisibility(View.GONE);
+			TextView genreTitle = (TextView)findViewById(R.id.yota_book_genre_title);
+			genreTitle.setVisibility(View.VISIBLE);
+			TextView genre = (TextView)findViewById(R.id.yota_book_genre);
+			genre.setText(tagsText.toString());
+			genre.setVisibility(View.VISIBLE);
 		}
-
-		setPairValueText(R.id.network_book_catalog, mBook.Link.getTitle());
 	}
 
 	private final void setupCover() {
-		final View rootView = findViewById(R.id.network_book_root);
-		final ImageView coverView = (ImageView)findViewById(R.id.network_book_cover);
+		final ImageView coverView = (ImageView)findViewById(R.id.yota_book_cover);
+
+		coverView.setVisibility(View.GONE);
+		coverView.setImageDrawable(null);
 
 		final DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -305,8 +275,6 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 							if (coverBitmap != null) {
 								coverView.setImageBitmap(coverBitmap);
 								coverView.setVisibility(View.VISIBLE);
-								rootView.invalidate();
-								rootView.requestLayout();
 							}
 						}
 					}
@@ -334,10 +302,12 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 	}
 
 	private void updateView() {
-		final View rootView = findViewById(R.id.network_book_root);
+		final View rootView = findViewById(R.id.root_view);
 		rootView.invalidate();
 		rootView.requestLayout();
-		invalidateOptionsMenu();
+
+		initBookActions();
+		initButtons();
 	}
 
 	@Override
@@ -371,25 +341,43 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 		});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	private void initBookActions() {
 		if (mTree != null) {
-			for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, mTree, mBookCollection, mConnection)) {
-				addMenuItem(menu, a.Code, a.getContextLabel(null), a.ShowAsAction);
+			mBoookActions = NetworkBookActions.getContextMenuActions(this, mTree, mBookCollection, mConnection);
+		}
+	}
+
+	private void initButtons() {
+		Button mActionButton = (Button)findViewById(R.id.yota_book_add_button);
+		for (NetworkBookActions.NBAction action : mBoookActions) {
+			int actionCode = action.getActionCode();
+			if (actionCode == ActionCode.BUY_DIRECTLY || actionCode == ActionCode.BUY_IN_BROWSER) {
+				mActionButton.setTag(actionCode);
+				final BookBuyUrlInfo reference = mTree.Book.buyInfo();
+				final String priceString = reference.Price != null ? String.valueOf(reference.Price) : "";
+				mActionButton.setText(getString(R.string.buy_book)+" "+priceString);
+				break;
+			}
+			if (actionCode == ActionCode.DOWNLOAD_BOOK) {
+				mActionButton.setTag(actionCode);
+				mActionButton.setText(getString(R.string.download_book));
+				break;
+			}
+			if (actionCode == ActionCode.READ_BOOK) {
+				mActionButton.setTag(actionCode);
+				mActionButton.setText(getString(R.string.read_book));
+				break;
 			}
 		}
-		return true;
+		mActionButton.setOnClickListener(mActionButtonListener);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, mTree, mBookCollection, mConnection)) {
-			if (a.Code == item.getItemId()) {
-				a.run(mTree);
-				YotaNetworkBookInfoActivity.this.updateView();
-				return true;
-			}
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
 		}
-		return false;
+		return super.onOptionsItemSelected(item);
 	}
 }

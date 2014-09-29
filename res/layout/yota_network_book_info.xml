@@ -3,7 +3,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white">
+            android:background="@android:color/white"
+			android:id="@+id/root_view">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -141,7 +142,8 @@
                     android:text=""
                     android:fontFamily="PT Serif Pro"
                     android:visibility="gone"
-                    android:gravity="left"/>
+                    android:gravity="left"
+					android:singleLine="true"/>
                 <TextView
                     android:id="@+id/yota_book_publisher_title"
                     android:textSize="17dp"

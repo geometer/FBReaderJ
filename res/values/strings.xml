@@ -34,4 +34,8 @@
 	<string name="permission_sync_label">FBReader sync interface</string>
     <string name="page">page</string>
     <string name="d_ago">%dd ago</string>
+	<string name="buy_book">BUY</string>
+	<string name="download_book">DOWNLOAD</string>
+	<string name="read_book">READ</string>
+	<string name="network_library">Network library</string>
 </resources>

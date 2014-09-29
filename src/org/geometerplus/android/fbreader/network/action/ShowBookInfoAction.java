@@ -22,6 +22,10 @@ package org.geometerplus.android.fbreader.network.action;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.yotadevices.yotaphone2.fbreader.YotaBookInfoActivity;
+
+import org.geometerplus.android.fbreader.network.YotaNetworkBookInfoActivity;
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
@@ -63,7 +67,7 @@ public class ShowBookInfoAction extends BookAction {
 	private void showBookInfo(NetworkTree tree) {
 		OrientationUtil.startActivityForResult(
 			myActivity,
-			new Intent(myActivity, NetworkBookInfoActivity.class)
+			new Intent(myActivity, DeviceType.Instance().isYotaPhone() ? YotaNetworkBookInfoActivity.class : NetworkBookInfoActivity.class)
 				.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey()),
 			1
 		);

@@ -174,7 +174,6 @@ public class YotaBookInfoActivity extends Activity implements IBookCollection.Li
     }
 
     private void setupBookInfo(Book book) {
-
         TextView title = (TextView)findViewById(R.id.yota_book_title);
         title.setText(book.getTitle());
 

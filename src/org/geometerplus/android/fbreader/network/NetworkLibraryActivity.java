@@ -86,7 +86,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 			bar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 			bar.setLogo(new ColorDrawable(Color.WHITE));
 			bar.setDisplayHomeAsUpEnabled(true);
-			bar.setTitle("Network library");
+			bar.setTitle(R.string.network_library);
 		}
 		AuthenticationActivity.initCredentialsCreator(this);
 		SQLiteCookieDatabase.init(this);
@@ -382,11 +382,22 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		final NetworkTree tree = getCurrentTree();
-		for (Action a : myOptionsMenuActions) {
-			if (a.Code == item.getItemId()) {
-				checkAndRun(a, tree);
-				break;
+		if (DeviceType.Instance().isYotaPhone()) {
+				switch (item.getItemId()) {
+					// Respond to the action bar's Up/Home button
+					case android.R.id.home:
+						if (!backInHistory())
+							finish();
+						break;
+			}
+		}
+		else {
+			final NetworkTree tree = getCurrentTree();
+			for (Action a : myOptionsMenuActions) {
+				if (a.Code == item.getItemId()) {
+					checkAndRun(a, tree);
+					break;
+				}
 			}
 		}
 		return true;
