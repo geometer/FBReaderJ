@@ -22,10 +22,11 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 import java.io.*;
 
-import android.os.*;
 import android.app.*;
-import android.net.Uri;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.*;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
@@ -229,6 +231,7 @@ public class BookDownloaderService extends Service {
 
 		final Notification notification = new Notification();
 		notification.icon = android.R.drawable.stat_sys_download;
+		notification.largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.fbreader);
 		notification.flags |= Notification.FLAG_ONGOING_EVENT;
 		notification.contentView = contentView;
 		notification.contentIntent = contentIntent;
