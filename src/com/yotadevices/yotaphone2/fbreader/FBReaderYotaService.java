@@ -11,8 +11,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
@@ -38,7 +40,10 @@ import org.geometerplus.android.fbreader.YotaTranslatePopup;
 import org.geometerplus.android.fbreader.YotaUpdateWidgetAction;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.TurnPageAction;
@@ -46,11 +51,19 @@ import org.geometerplus.fbreader.fbreader.VolumeKeyTurnPageAction;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * @author ASazonov
@@ -69,6 +82,8 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     private BSReadingActionBar mActionBar;
     private BSReadingStatusBar mStatusBar;
+	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
+
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
@@ -97,7 +112,6 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         ((YotaTranslateBSPopup)myFBReaderApp.getPopupById(YotaTranslateBSPopup.ID)).setRootView(mRootView);
         ((YotaDefineBSPopup)myFBReaderApp.getPopupById(YotaDefineBSPopup.ID)).setRootView(mRootView);
 
-	    ZLAndroidPaintContext.AntiAliasOption.setValue(false);
         registerActions();
     }
 
@@ -117,10 +131,12 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
                     myCurrentBook = myFBReaderApp.Collection.getRecentBook(0);
                 }
                 if (mWidget != null) {
+	                ZLAndroidPaintContext.AntiAliasOption.setValue(false);
                     myFBReaderApp.openBook(myCurrentBook, null, new Runnable() {
                         public void run() {
                             myFBReaderApp.initWindow();
                             initBookView(true);
+	                        updateCoverOnYotaWidget(myFBReaderApp.Model.Book);
                         }
                     }, null);
                     AndroidFontUtil.clearFontCache();
@@ -350,4 +366,59 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
                 break;
         }
     }
+	private void updateCoverOnYotaWidget(Book book) {
+		final ZLImage image = BookUtil.getCover(book);
+		if (image != null && image instanceof ZLImageProxy) {
+			((ZLImageProxy)image).startSynchronization(myImageSynchronizer, new Runnable() {
+				public void run() {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							sendCoverToYotaWidget(image);
+						}
+					});
+				}
+			});
+		} else {
+			sendCoverToYotaWidget(image);
+		}
+	}
+
+	private String getYotaCoverImagePath() {
+		final String cardPath = Paths.cardDirectory();
+		return cardPath == null ? null : cardPath + File.separatorChar + "Books" + File.separatorChar + "coverimage.png";
+	}
+
+	private void sendCoverToYotaWidget(ZLImage cover) {
+		final String filePath = getYotaCoverImagePath();
+		File coverFile = filePath != null ? new File(getYotaCoverImagePath()) : null;
+		if (coverFile != null && coverFile.exists()) {
+			coverFile.delete();
+		}
+		if (cover != null) {
+			final ZLAndroidImageData data =
+					((ZLAndroidImageManager) ZLAndroidImageManager.Instance()).getImageData(cover);
+			final DisplayMetrics metrics = getBsContext().getResources().getDisplayMetrics();
+
+			final int maxHeight = metrics.heightPixels * 2/3;
+			final int maxWidth = metrics.widthPixels * 2/3;
+			Intent i = new Intent(Consts.YOTA_WIDGET_SET_COVER_ACTION);
+			if (data != null) {
+				final Bitmap coverBitmap = data.getBitmap(maxWidth, maxHeight);
+				if (coverBitmap != null && coverFile != null) {
+					try {
+						FileOutputStream out = new FileOutputStream(coverFile);
+						coverBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+						out.close();
+						i.putExtra(Consts.YOTA_COVER_KEY, coverFile.getAbsolutePath());
+					} catch (IOException e) {
+
+					}
+				}
+			}
+			this.sendBroadcast(i);
+		} else {
+			Intent i = new Intent(Consts.YOTA_WIDGET_SET_COVER_ACTION);
+			this.sendBroadcast(i);
+		}
+	}
 }
