@@ -1041,19 +1041,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="ロシアの書店"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="音声読み上げ"/>
 		</node>
-		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
 			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
 		</node>
-		<node name="local-opds-scanner" value="ローカル OPDS スキャナ">
+		<node name="local_opds_scanner" value="ローカル OPDS スキャナ">
 			<node name="summary" value="LAN 内の本を探す"/>
 		</node>
 		<node name="bookshelf" value="本棚表示">
 			<node name="summary" value="サムネイル式のライブラリ表示"/>
 		</node>
-		<node name="opds-server" value="OPDS サーバ">
+		<node name="opds_server" value="OPDS サーバ">
 			<node name="summary" value="本体の中の本を提供"/>
 		</node>
 		<node name="widgets" value="Widgets">
