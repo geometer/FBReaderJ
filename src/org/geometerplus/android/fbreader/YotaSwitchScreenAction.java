@@ -59,9 +59,9 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		final View mainHiddenView = BaseActivity.findViewById(R.id.yota_main_hidden_view);
 
 		Reader.ViewOptions.YotaDrawOnBackScreen.setValue(toBack);
-		BaseActivity.refreshYotaScreen();
 
 		if (toBack) {
+			BaseActivity.refreshYotaScreen();
 			ZLAndroidPaintContext.AntiAliasOption.setValue(false);
 			Reader.getTextView().clearSelection();
 			BaseActivity.hideSelectionPanel();

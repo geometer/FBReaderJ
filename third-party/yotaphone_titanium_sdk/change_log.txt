@@ -11,4 +11,4 @@
 =========   Version 0.0.3 ===============
 
 	- Refactoring BSDrawer
-	- Change packageName to com.yotadevices.platinum
+	- Change packageName to com.yotadevices.sdk

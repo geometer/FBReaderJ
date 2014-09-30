@@ -1,6 +1,5 @@
 package com.yotadevices.sdk;
 
-import com.yotadevices.platinum.R;
 import com.yotadevices.sdk.Constants.SystemBSFlags;
 import com.yotadevices.sdk.utils.EinkUtils;
 
@@ -40,7 +39,8 @@ public class BSDrawer extends Drawer {
     public static final int SCREEN_HEIGHT = BS_SCREEN_HEIGHT;
 
     private static final int TYPE_DISPLAY_EPD = getDisplayTypeEPD();
-    private static int TYPE_LAYOUT_EPD = getLayoutTypeEpd();
+    public static int TYPE_LAYOUT_EPD = getLayoutTypeEpd("TYPE_EPD");
+    public static int TYPE_LAYOUT_NAVIGATION_BAR = getLayoutTypeEpd("TYPE_NAVIGATION_BAR");
 
     private WeakReference<BSActivity> mActivity;
 
@@ -55,6 +55,7 @@ public class BSDrawer extends Drawer {
 
     private int mStatusBarHeight;
     private int mNavigationBarHeight;
+    private int mLayoutType = TYPE_LAYOUT_EPD;
 
     public BSDrawer(BSActivity activity) {
         mActivity = new WeakReference<BSActivity>(activity);
@@ -65,6 +66,15 @@ public class BSDrawer extends Drawer {
         mStatusBarHeight = res.getDimensionPixelSize(R.dimen.status_bar_height);
 
         initDisplay();
+    }
+
+    public BSDrawer(BSActivity activity, int layoutType) {
+        this(activity);
+        mLayoutType = layoutType;
+    }
+
+    public void setLayoutType(int layoutType) {
+        mLayoutType = layoutType;
     }
 
     private void initDisplay() {
@@ -104,9 +114,9 @@ public class BSDrawer extends Drawer {
         }
     }
 
-    private static int getLayoutTypeEpd() {
+    private static int getLayoutTypeEpd(String type) {
         try {
-            Field field = android.view.WindowManager.LayoutParams.class.getDeclaredField("TYPE_EPD");
+            Field field = android.view.WindowManager.LayoutParams.class.getDeclaredField(type);
             return (Integer) field.get(null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,7 +151,7 @@ public class BSDrawer extends Drawer {
     }
 
     private LayoutParams getDefaultLayoutParams() {
-        return new LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, TYPE_LAYOUT_EPD,
+        return new LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, mLayoutType,
                 WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, -1);
     }
 
@@ -191,7 +201,7 @@ public class BSDrawer extends Drawer {
             // When BS layout is added we perform FULL update to remove all
             // ghosting
             // from previous BSActivity
-             EinkUtils.performSingleUpdate(mParentView, initialWaveform, initialDithering, 800);
+             EinkUtils.performSingleUpdate(mParentView, initialWaveform, initialDithering, 1000);
             isShowEpdView = true;
 
             if (isShowBlankView) {
@@ -297,7 +307,7 @@ public class BSDrawer extends Drawer {
         }
     }
 
-    ViewGroup getParentView() {
+    public ViewGroup getParentView() {
         return mParentView;
     }
 

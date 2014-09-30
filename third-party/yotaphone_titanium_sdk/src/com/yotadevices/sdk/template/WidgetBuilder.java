@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.yotadevices.platinum.R;
+import com.yotadevices.sdk.R;
 
 /**
  * Created by Alexei.Sazonov on 21.05.2014.

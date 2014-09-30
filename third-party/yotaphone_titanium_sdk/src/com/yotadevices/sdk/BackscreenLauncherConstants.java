@@ -15,6 +15,7 @@ public class BackscreenLauncherConstants {
     public static final int WIDGET_SIZE_MEDIUM_HALF = 2;
     public static final int WIDGET_SIZE_SMALL = 3;
     public static final int WIDGET_SIZE_TINY = 4;
+    public static final int WIDGET_SIZE_EXTRA_LARGE = 8;
 
     // Options values for widget display
     public static final int WIDGET_BACK_SCREEN = 0;

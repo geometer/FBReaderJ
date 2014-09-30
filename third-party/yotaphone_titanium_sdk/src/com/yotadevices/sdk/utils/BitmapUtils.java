@@ -30,22 +30,59 @@ public class BitmapUtils {
      * - Contrast and brightness adjustment <BR>
      * <BR>
      * This function is for back-compatibility
-     * 
-     * @param context
-     *            context
+     *
      * @param bitmap
      *            input bitmap
      * @return new bitmap
      */
     public static Bitmap prepareImageForBS(Bitmap bitmap) {
-        return BitmapUtils.changeBitmapContrastBrightness(BitmapUtils.sharpenBitmap(bitmap, 0.15f), 1.2f, -30);
+        return BitmapUtils.sharpenBitmap(BitmapUtils.changeBitmapContrastBrightness(bitmap, 1.2f, -30), 0.3f);
     }
 
+    /**
+     * Sharpens the Bitmap
+     *
+     * @param bitmap
+     *            input bitmap
+     * @param weight
+     *            Should >= 0. 0 is default
+     * @return new bitmap
+     */
     public static Bitmap sharpenBitmap(Bitmap bitmap, float weight) {
         com.yotadevices.yotaphone2.sdk.EpdUtils.sharpenBitmap(bitmap, weight);
         return bitmap;
     }
 
+    /**
+     * Dithers the Bitmap
+     *
+     * @param bitmap
+     *            input bitmap
+     * @param ditheringAlgorithm
+     *            Dithering algorithm to use. Can be DITHER_ATKINSON or DITHER_FLOYD_STEINBERG
+     * @param binary
+     *            true if resulting pircure should have only pure black and pure white pixels. Use this for drawing fast animations with WAVEFORM_A2;<br/>
+     *            false if resulting pircure should have full 16-colors greyscale. Use this for drawing beautiful well-detailed images.
+     * @return new bitmap<br/><br/>
+     *
+     * The palette of returned bitmap will consist only of following colors. Please notice that all transparency will be gone.<br/>
+     * 0xff000000<br/>
+     * 0xff101010<br/>
+     * 0xff212121<br/>
+     * 0xff313131<br/>
+     * 0xff434343<br/>
+     * 0xff535353<br/>
+     * 0xff646464<br/>
+     * 0xff747474<br/>
+     * 0xff8b8b8b<br/>
+     * 0xff9b9b9b<br/>
+     * 0xffacacac<br/>
+     * 0xffbbbbbb<br/>
+     * 0xffcecece<br/>
+     * 0xffdedede<br/>
+     * 0xffefefef<br/>
+     * 0xffffffff<br/>
+     */
     public static Bitmap ditherBitmap(Bitmap bitmap, int ditheringAlgorithm, boolean binary) {
         com.yotadevices.yotaphone2.sdk.EpdUtils.ditherBitmap(bitmap, ditheringAlgorithm, binary);
         return bitmap;
@@ -88,17 +125,12 @@ public class BitmapUtils {
      * @return new bitmap
      */
     public static Bitmap changeBitmapContrastBrightness(Bitmap bitmap, float contrast, float brightness) {
-        ColorMatrix cm = new ColorMatrix(new float[] { contrast, 0, 0, 0, brightness, 0, contrast, 0, 0, brightness, 0, 0, contrast, 0, brightness, 0, 0, 0, 1,
-                0 });
-
+        ColorMatrix cm = new ColorMatrix(new float[] { contrast, 0, 0, 0, brightness, 0, contrast, 0, 0, brightness, 0, 0, contrast, 0, brightness, 0, 0, 0, 1, 0 });
         Bitmap ret = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-
         Canvas canvas = new Canvas(ret);
-
         Paint paint = new Paint();
         paint.setColorFilter(new ColorMatrixColorFilter(cm));
         canvas.drawBitmap(bitmap, 0, 0, paint);
-
         return ret;
     }
 

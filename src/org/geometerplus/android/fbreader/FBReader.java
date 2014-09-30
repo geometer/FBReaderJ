@@ -185,7 +185,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 						}
 						hideBars();
 						if ((DeviceType.Instance() == DeviceType.YOTA_PHONE) || (DeviceType.Instance() == DeviceType.YOTA_PHONE2)) {
-							refreshYotaScreen();
 							updateCoverOnYotaWidget(myFBReaderApp.Model.Book);
 						}
 					}
@@ -415,6 +414,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 					}
 				});
 			}
+		} else if (FBReaderIntents.Action.SHARE.equals(intent.getAction())) {
+			final String subject = intent.getStringExtra(android.content.Intent.EXTRA_SUBJECT);
+			final String text = intent.getStringExtra(android.content.Intent.EXTRA_TEXT);
+			shareText(subject, text);
 		}
 	}
 
@@ -484,6 +487,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 					myFBReaderApp.openBook(b, null, null, FBReader.this);
 				}
 			});
+		} else if (FBReaderIntents.Action.SHARE.equals(intent.getAction())) {
+			final String subject = intent.getStringExtra(android.content.Intent.EXTRA_SUBJECT);
+			final String text = intent.getStringExtra(android.content.Intent.EXTRA_TEXT);
+			shareText(subject, text);
 		} else {
 			super.onNewIntent(intent);
 		}
@@ -723,6 +730,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		hideBars();
 
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
+		if (DeviceType.Instance().isYotaPhone()) {
+			closeYotaReaderOnBSIfActive();
+		}
 	}
 
 	@Override
@@ -1293,6 +1303,20 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		});
 	}
 
+	public void closeYotaReaderOnBSIfActive() {
+		Handler halder = new Handler(getMainLooper());
+		halder.postDelayed( new Runnable() {
+			@Override
+			public void run() {
+				Intent i = getIntent();
+				if (!myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue() &&
+						i != null && !FBReaderIntents.Action.SHARE.equals(i.getAction())) {
+					stopService(new Intent(FBReader.this, FBReaderYotaService.class));
+				}
+			}
+		}, 1000);
+	}
+
 	public void refreshYotaScreen() {
 		if (!myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
 			boolean isServiceRunning = false;
@@ -1408,5 +1432,20 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 			.setAutoCancel(true)
 			.build();
 		notificationManager.notify(0, notification);
+	}
+
+	private void shareText(final String subject, final String text) {
+		Handler halder = new Handler(getMainLooper());
+		halder.postDelayed( new Runnable() {
+			@Override
+			public void run() {
+				final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+				intent.putExtra(android.content.Intent.EXTRA_TEXT, text);
+				Intent chooser = Intent.createChooser(intent, null);;
+				startActivity(chooser);
+			}
+		}, 200);
 	}
 }

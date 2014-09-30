@@ -25,8 +25,9 @@ class BSAcivityIncomingMessagesHandler extends Handler {
 
     @Override
     public void handleMessage(Message msg) {
-        if (mBSActivity.get() == null)
-            throw new IllegalStateException("BSActivity that received message is null");
+        if (mBSActivity.get() == null) {
+            return;
+        }
         Log.d(mBSActivity.get().getClass().getSimpleName(), "Received from service: " + msg.what);
 
         switch (msg.what) {

@@ -4,7 +4,6 @@ import com.yotadevices.sdk.Constants.SystemBSFlags;
 import com.yotadevices.sdk.Constants.VolumeButtonsEvent;
 import com.yotadevices.sdk.exception.SuperNotCalledException;
 import com.yotadevices.sdk.helper.HelperConstant;
-import com.yotadevices.sdk.utils.EinkUtils;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -90,7 +89,7 @@ public class BSActivity extends Service {
     synchronized void doBindService() {
         if (!mIsBound) {
             Log.d(TAG, "Start Binding.");
-            mIsBound = bindService(getFrameworkIntent(), mConnection, Context.BIND_AUTO_CREATE);
+            mIsBound = bindService(getFrameworkIntent(), mConnection, Context.BIND_AUTO_CREATE | Context.BIND_WAIVE_PRIORITY);
             Log.d(TAG, "Binding..." + mIsBound);
         }
     }
@@ -315,6 +314,7 @@ public class BSActivity extends Service {
     }
 
     final void performSystemUIChange() {
+        checkBSActivityRunning();
         mDrawer.updateViewLayout(mSystemUiVisibility);
     }
 
@@ -352,7 +352,10 @@ public class BSActivity extends Service {
      */
     protected void onBSResume() {
         checkBSActivityRunning();
-        mDrawer.addBSParentView(mInitialWaveform, mInitialDithering);// show user UI on back screen
+        mDrawer.addBSParentView(mInitialWaveform, mInitialDithering);// show
+        // user UI
+        // on back
+        // screen
         isResumed = true;
         mCalled = true;
     }

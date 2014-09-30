@@ -133,6 +133,10 @@
 				<action android:name="android.fbreader.action.PLUGIN_CRASH"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
+			<intent-filter>
+				<action android:name="android.fbreader.action.SHARE"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
 		</activity>
 
         <activity-alias
@@ -359,6 +363,7 @@
 		<activity android:name="org.geometerplus.android.util.EditAuthorsDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 		<activity android:name="com.yotadevices.yotaphone2.fbreader.FileChooseActivity" android:exported="true" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/ActivityWithWhiteActionBar" android:logo="@drawable/r_color_logo"/>
         <service android:name="com.yotadevices.yotaphone2.fbreader.FBReaderYotaService" android:exported="true" android:launchMode="singleTask"/>
+		<service android:name="com.yotadevices.yotaphone2.fbreader.ShareFlipActivity" android:exported="true" />
 		<activity android:name="org.geometerplus.android.fbreader.network.YotaNetworkBookInfoActivity" android:process=":networkLibrary" android:theme="@style/ActivityWithWhiteActionBar" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="com.yotadevices.yotaphone2.fbreader.YotaBookInfoActivity" android:theme="@style/ActivityWithWhiteActionBar" android:logo="@drawable/r_color_logo" android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>

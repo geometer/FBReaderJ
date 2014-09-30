@@ -33,7 +33,7 @@ class BSRecord {
         return mContext.getSharedPreferences("_" + mName, Context.MODE_PRIVATE);
     }
 
-    void saveState() {
+    synchronized void saveState() {
         Parcel parcel = Parcel.obtain();
         try {
             mInstanceState.writeToParcel(parcel, 0);
@@ -48,7 +48,7 @@ class BSRecord {
         }
     }
 
-    void restoreState() {
+    synchronized void restoreState() {
         String savedState = getPreference().getString(PREF_NAME, null);
         if (savedState != null) {
             Parcel parcel = Parcel.obtain();

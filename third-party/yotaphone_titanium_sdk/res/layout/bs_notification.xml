@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bs_notif_pattern">
+
+    <RelativeLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="597.33dp"
+        android:layout_marginLeft="10.67dp"
+        android:layout_marginRight="10.67dp"
+        android:layout_marginTop="25.33dp"
+        android:background="@drawable/bs_notification_shape">
+
+        <FrameLayout
+            android:id="@+id/notification_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/dot_line">
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/dot_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/button_ok"
+            android:background="@drawable/bs_notif_dot_line" />
+
+
+        <TextView
+            android:id="@+id/button_ok"
+            android:layout_width="match_parent"
+            android:layout_height="66.67dp"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="PT Sans Yota Bold"
+            android:gravity="center"
+            android:text="@android:string/ok"
+            android:textColor="#000000"
+            android:textSize="16dp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -3,4 +3,6 @@
 <resources>
     <string name="application_is_updated_on_bs" comment="Please split the string in more lines if it is longer then 35 symbols">Application is updated on Back Screen</string>
     <string name="loading_data">Loading data...</string>
+    <string name="flip_popup_default_title">Flip your phone</string>
+    <string name="flip_popup_default_description">Application is active \nat the front screen</string>
 </resources>

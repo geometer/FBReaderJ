@@ -1,6 +1,6 @@
 package com.yotadevices.sdk.template;
 
-import com.yotadevices.platinum.R;
+import com.yotadevices.sdk.R;
 
 import android.app.PendingIntent;
 import android.content.Context;

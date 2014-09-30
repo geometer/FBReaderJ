@@ -13,7 +13,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.yotadevices.platinum.R;
+import com.yotadevices.sdk.R;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -291,7 +291,7 @@ public class RotationAlgorithm implements SensorEventListener {
     }
 
     //    private Resources getResourceContext() throws NameNotFoundException {
-    //        return mContext.getPackageManager().getResourcesForApplication("com.yotadevices.platinum");
+    //        return mContext.getPackageManager().getResourcesForApplication("com.yotadevices.sdk");
     //    }
     //
     //    private Resources getResourceByPath() throws Exception {
