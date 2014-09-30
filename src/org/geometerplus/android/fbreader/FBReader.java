@@ -502,6 +502,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 				}.start();
 				setTitleFromCurrentBook();
 				ZLViewWidget widget = myFBReaderApp.getViewWidget();
+				Book recentBook = getCollection().getRecentBook(0);
+				if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
+					if (!recentBook.equals(myFBReaderApp.Model.Book)) {
+						myFBReaderApp.openBook(recentBook, null, null, null);
+					}
+				}
 				if (widget != null) {
 					widget.repaint();
 				}
