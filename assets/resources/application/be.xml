@@ -1045,6 +1045,9 @@
 		<node name="tts-plus" value="TTS+">
 			<node name="summary" value="Чытайце ўголас"/>
 		</node>
+		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
+		</node>
 		<node name="local-opds-scanner" value="Лякальны праглядальнік OPDS">
 			<node name="summary" value="Пошук кніг у лякальнай сетцы"/>
 		</node>

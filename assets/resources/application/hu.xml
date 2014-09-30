@@ -1035,6 +1035,9 @@
 		<node name="tts-plus" value="TTS+">
 			<node name="summary" value="Hangos felolvasás"/>
 		</node>
+		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
+		</node>
 		<node name="local-opds-scanner" value="Helyi OPDS kereső">
 			<node name="summary" value="Könyvek keresése a helyi hálózaton"/>
 		</node>
