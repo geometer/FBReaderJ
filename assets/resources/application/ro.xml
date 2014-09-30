@@ -1033,19 +1033,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Librarie Rusa"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Citit cu voce tare"/>
 		</node>
-		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
 			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
 		</node>
-		<node name="local-opds-scanner" value="OPDS Scanare locala">
+		<node name="local_opds_scanner" value="OPDS Scanare locala">
 			<node name="summary" value="Uita-te pentru carti in reteaua locala"/>
 		</node>
 		<node name="bookshelf" value="Raft">
 			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
 		</node>
-		<node name="opds-server" value="Server OPDS">
+		<node name="opds_server" value="Server OPDS">
 			<node name="summary" value="Serviti carti de pe dispozitivul dvs."/>
 		</node>
 		<node name="widgets" value="Widget-uri">

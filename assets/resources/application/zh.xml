@@ -1032,19 +1032,19 @@
 		<node name="litres" value="LitRes" toBeTranslated="true">
 			<node name="summary" value="Russian book store" toBeTranslated="true"/>
 		</node>
-		<node name="tts-plus" value="TTS+" toBeTranslated="true">
+		<node name="tts_plus" value="TTS+" toBeTranslated="true">
 			<node name="summary" value="Read aloud" toBeTranslated="true"/>
 		</node>
-		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
 			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
 		</node>
-		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
+		<node name="local_opds_scanner" value="Local OPDS Scanner" toBeTranslated="true">
 			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
 		</node>
 		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
 			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
 		</node>
-		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
+		<node name="opds_server" value="OPDS Server" toBeTranslated="true">
 			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
 		</node>
 		<node name="widgets" value="Widgets" toBeTranslated="true">

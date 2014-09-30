@@ -1042,19 +1042,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Russische boekenwinkel"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Hardop voorlezen"/>
 		</node>
-		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
 			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
 		</node>
-		<node name="local-opds-scanner" value="Lokale OPDS-scanner">
+		<node name="local_opds_scanner" value="Lokale OPDS-scanner">
 			<node name="summary" value="Zoek naar boeken in het locale netwerk"/>
 		</node>
 		<node name="bookshelf" value="Boekenplank">
 			<node name="summary" value="Miniatuurweergaven tonen"/>
 		</node>
-		<node name="opds-server" value="OPDS-server">
+		<node name="opds_server" value="OPDS-server">
 			<node name="summary" value="Bied boeken aan vanaf jouw apparaat"/>
 		</node>
 		<node name="widgets" value="Widgets">

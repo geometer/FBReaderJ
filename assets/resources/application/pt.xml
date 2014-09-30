@@ -1044,19 +1044,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Seção de livros Russa"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Ler em voz alta"/>
 		</node>
-		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
 			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
 		</node>
-		<node name="local-opds-scanner" value="Local OPDS Scanner">
+		<node name="local_opds_scanner" value="Local OPDS Scanner">
 			<node name="summary" value="Procurar por livros na rede local"/>
 		</node>
 		<node name="bookshelf" value="Bookshelf">
 			<node name="summary" value="Thumbnail vista de biblioteca"/>
 		</node>
-		<node name="opds-server" value="Servidor OPDS">
+		<node name="opds_server" value="Servidor OPDS">
 			<node name="summary" value="Servir livros do seu dispositivo"/>
 		</node>
 		<node name="widgets" value="Widgets">

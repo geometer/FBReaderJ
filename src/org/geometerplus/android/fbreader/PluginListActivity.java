@@ -111,6 +111,7 @@ public class PluginListActivity extends ListActivity {
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.plugin_item, parent, false);
+			final ImageView iconView = (ImageView)view.findViewById(R.id.plugin_item_icon);
 			final TextView titleView = ViewUtil.findTextView(view, R.id.plugin_item_title);
 			final TextView summaryView = ViewUtil.findTextView(view, R.id.plugin_item_summary);
 			final Plugin plugin = getItem(position);
@@ -118,10 +119,12 @@ public class PluginListActivity extends ListActivity {
 				final ZLResource resource = myResource.getResource(plugin.Id);
 				titleView.setText(resource.getValue());
 				summaryView.setText(resource.getResource("summary").getValue());
+				iconView.setImageResource(R.drawable.fbreader);
 			} else {
 				final ZLResource resource = myResource.getResource("noMorePlugins");
 				titleView.setText(resource.getValue());
 				summaryView.setVisibility(View.GONE);
+				iconView.setVisibility(View.GONE);
 			}
 			return view;
 		}

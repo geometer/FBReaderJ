@@ -1048,19 +1048,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Руски магазин за книги"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Чети на глас"/>
 		</node>
-		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
 			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
 		</node>
-		<node name="local-opds-scanner" value="Локален OPDS сканер">
+		<node name="local_opds_scanner" value="Локален OPDS сканер">
 			<node name="summary" value="Търси книги в локалната мрежа"/>
 		</node>
 		<node name="bookshelf" value="Книжна лавица">
 			<node name="summary" value="Thumbnail library view"/>
 		</node>
-		<node name="opds-server" value="OPDS Сървър">
+		<node name="opds_server" value="OPDS Сървър">
 			<node name="summary" value="Обслужване книги от вашето устройство"/>
 		</node>
 		<node name="widgets" value="Джунджурийки">

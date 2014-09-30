@@ -1032,19 +1032,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Orosz könyváruház"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Hangos felolvasás"/>
 		</node>
-		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
 			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
 		</node>
-		<node name="local-opds-scanner" value="Helyi OPDS kereső">
+		<node name="local_opds_scanner" value="Helyi OPDS kereső">
 			<node name="summary" value="Könyvek keresése a helyi hálózaton"/>
 		</node>
 		<node name="bookshelf" value="Könyvespolc">
 			<node name="summary" value="Könyvtár előnézeti képes megjelenítése"/>
 		</node>
-		<node name="opds-server" value="OPDS szerver">
+		<node name="opds_server" value="OPDS szerver">
 			<node name="summary" value="Könyvmegosztó szerver indítása az eszközön"/>
 		</node>
 		<node name="widgets" value="Widgetek">
