@@ -349,6 +349,9 @@ public class YotaNetworkBookInfoActivity extends Activity implements NetworkLibr
 
 	private void initButtons() {
 		Button mActionButton = (Button)findViewById(R.id.yota_book_add_button);
+		if (mBoookActions.size() == 0) {
+			mActionButton.setVisibility(View.INVISIBLE);
+		}
 		for (NetworkBookActions.NBAction action : mBoookActions) {
 			int actionCode = action.getActionCode();
 			if (actionCode == ActionCode.BUY_DIRECTLY || actionCode == ActionCode.BUY_IN_BROWSER) {
