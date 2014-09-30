@@ -1044,6 +1044,9 @@
 		<node name="tts-plus" value="TTS+">
 			<node name="summary" value="音声読み上げ"/>
 		</node>
+		<node name="calibre-server-integration" value="Calibre connection" toBeTranslated="true">
+			<node name="summary" value="Connect Calibre server in you local network" toBeTranslated="true"/>
+		</node>
 		<node name="local-opds-scanner" value="ローカル OPDS スキャナ">
 			<node name="summary" value="LAN 内の本を探す"/>
 		</node>
