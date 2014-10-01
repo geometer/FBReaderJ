@@ -1,5 +1,5 @@
 <fbreader-plugins>
-	<plugin id="bookshelf" package="org.geometerplus.fbreader.plugin.bookshelf"/>
+	<!--plugin id="bookshelf" package="org.geometerplus.fbreader.plugin.bookshelf"/-->
 	<plugin id="tts_plus" package="com.hyperionics.fbreader.plugin.tts_plus"/>
 	<plugin id="pdf" package="org.geometerplus.fbreader.plugin.pdf"/>
 	<plugin id="djvu" package="org.geometerplus.fbreader.plugin.djvu"/>
