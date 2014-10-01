@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -119,7 +120,14 @@ public class PluginListActivity extends ListActivity {
 				final ZLResource resource = myResource.getResource(plugin.Id);
 				titleView.setText(resource.getValue());
 				summaryView.setText(resource.getResource("summary").getValue());
-				iconView.setImageResource(R.drawable.fbreader);
+				int iconId = R.drawable.fbreader;
+				try {
+					final Field f = R.drawable.class.getField("plugin_" + plugin.Id);
+					iconId = f.getInt(R.drawable.class);
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+				iconView.setImageResource(iconId);
 			} else {
 				final ZLResource resource = myResource.getResource("noMorePlugins");
 				titleView.setText(resource.getValue());
