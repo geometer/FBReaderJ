@@ -336,14 +336,14 @@
 				<node name="never" value="Ніколі"/>
 			</node>
 			<node name="uploadAllBooks" value="Заладаваць усе кнігі на сэрвэр"/>
-			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Зладаваць усе кнігі з сэрвэра"/>
+			<node name="downloadCurrentBook" value="Зладаваць гэтую кнігу з сэрвэра"/>
 			<node name="positions" value="Сынхранізаваць месцы чытаньня"/>
 			<node name="bookmarks" value="Сынхранізаваць закладкі"/>
 			<node name="metainfo" value="Сынхранізаваць мэтазьвесткі (назву, цэтлікі, інш.)"/>
-			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
-				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Зьмяніць гэтую кнігу">
+				<node name="summaryOn" value="Адчыніць гэтую кнігу на ўсіх прыладах"/>
+				<node name="summaryOff" value="Толькі сынхранізаваць пазыцыі, не мяняць кнігу аўтаматычна"/>
 			</node>
 		</node>
 		<node name="directories" value="Тэчкі">
@@ -621,30 +621,30 @@
 			<node name="background" value="Фон">
 				<node name="chooser">
 					<node name="solidColor" value="Суцэльны колер…"/>
-					<node name="predefined" value="Перадвызначаная выява…"/>
+					<node name="predefined" value="Перадвызначаная тэкстура…"/>
 					<node name="selectFile" value="Выбраць файл…"/>
 				</node>
 				<node name="solidColor" value="Суцэльны колер"/>
 				<node name="leather" value="Скура"/>
 				<node name="sepia" value="Сэпія"/>
 				<node name="wood" value="Драўніна"/>
-				<node name="sand" value="Sand" toBeTranslated="true"/>
-				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+				<node name="sand" value="Пясок"/>
+				<node name="hardpaper" value="Цьвёрдая папера"/>
 			</node>
-			<node name="fillMode" value="Fill mode" toBeTranslated="true">
-				<node name="tile" value="Tile" toBeTranslated="true"/>
-				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
-				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
-				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
-				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
-				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			<node name="fillMode" value="Рэжым запаўненьня">
+				<node name="tile" value="Кафля"/>
+				<node name="tileMirror" value="Люстраная кафля"/>
+				<node name="fullscreen" value="Поўны экран"/>
+				<node name="stretch" value="Расьцягнуць, каб запоўніць экран"/>
+				<node name="tileVertically" value="Расьцягнуць гарызантальна, закафляваць вэртыкальна"/>
+				<node name="tileHorizontally" value="Расьцягнуць вэртыкальна, закафляваць гарызантальна"/>
 			</node>
 			<node name="selectionBackground" value="Фон вылучэньня"/>
 			<node name="selectionForeground" value="Вылучаны тэкст"/>
 			<node name="text" value="Звычайны тэкст"/>
 			<node name="hyperlink" value="Тэкст спасылкі"/>
 			<node name="hyperlinkVisited" value="Тэкст наведанай спасылкі"/>
-			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingForeground" value="Вынікі пошуку"/>
 			<node name="highlightingBackground" value="Фон вынікаў пошуку"/>
 			<node name="footer" value="Прыпятак"/>
 		</node>
@@ -810,10 +810,10 @@
 			<node name="email" value="Даслаць нам ліст">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
-			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+			<node name="googleplus" value="Далучыцца да суполкі FBReader у Google+">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Чытайце нас у Twitter">
+			<node name="twitter" value="Падпішыцеся на нас у Twitter">
 				<node name="url" value="https://twitter.com/fbreader_ru"/>
 			</node>
 			<node name="facebook" value="FBReader у Facebook">

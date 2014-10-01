@@ -1055,7 +1055,7 @@
 			<node name="summary" value="Чтение вслух"/>
 		</node>
 		<node name="calibre_server_integration" value="Соединение с Calibre">
-			<node name="summary" value="Connect Calibre server in you local network"/>
+			<node name="summary" value="Поиск сервера Calibre в локальной сети"/>
 		</node>
 		<node name="local_opds_scanner" value="Поиск OPDS каталогов">
 			<node name="summary" value="Поиск книг в локальной сети"/>
