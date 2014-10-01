@@ -21,6 +21,7 @@ import android.view.View;
 import com.yotadevices.sdk.BSActivity;
 import com.yotadevices.sdk.Constants;
 import com.yotadevices.sdk.Drawer;
+import com.yotadevices.sdk.utils.BitmapUtils;
 import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.actions.ToggleBarsAction;
 
@@ -416,8 +417,12 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 				final Bitmap coverBitmap = data.getBitmap(maxWidth, maxHeight);
 				if (coverBitmap != null && coverFile != null) {
 					try {
+						Bitmap outBitmap = BitmapUtils.toGrayscale(coverBitmap, coverBitmap.getWidth(), coverBitmap.getHeight());
+						outBitmap = BitmapUtils.prepareImageForBS(outBitmap);
+						outBitmap = BitmapUtils.ditherBitmap(outBitmap, BitmapUtils.DITHER_ATKINSON, false);
+
 						FileOutputStream out = new FileOutputStream(coverFile);
-						coverBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+						outBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
 						out.close();
 						i.putExtra(Consts.YOTA_COVER_KEY, coverFile.getAbsolutePath());
 					} catch (IOException e) {
