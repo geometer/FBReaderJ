@@ -5,12 +5,13 @@
 	android:minHeight="?android:attr/listPreferredItemHeight"
 	android:orientation="horizontal"
 	android:paddingLeft="5dip"
-	android:gravity="top|left"
+	android:gravity="center_vertical|left"
 >
 	<ImageView
 		android:id="@+id/plugin_item_icon"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
+		android:gravity="center_vertical"
 		android:adjustViewBounds="false"
 	/>
 	<LinearLayout
