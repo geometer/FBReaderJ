@@ -492,6 +492,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 			final String subject = intent.getStringExtra(android.content.Intent.EXTRA_SUBJECT);
 			final String text = intent.getStringExtra(android.content.Intent.EXTRA_TEXT);
 			shareText(subject, text);
+			setIntent(intent);
 		} else {
 			super.onNewIntent(intent);
 		}
@@ -542,12 +543,17 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 				SetScreenOrientationAction.setOrientation(FBReader.this, zlibrary.getOrientationOption().getValue());
 			}
 		});
-
-		((PopupPanel)myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
-		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
-		((YotaSelectionPopup)myFBReaderApp.getPopupById(YotaSelectionPopup.ID)).setRootView(myRootView);
-		((YotaTranslatePopup)myFBReaderApp.getPopupById(YotaTranslatePopup.ID)).setRootView(myRootView);
-		((YotaDefinePopup)myFBReaderApp.getPopupById(YotaDefinePopup.ID)).setRootView(myRootView);
+		if (DeviceType.Instance().isYotaPhone()) {
+			if (myFBReaderApp.getTextView() != null) {
+				myFBReaderApp.getTextView().clearSelection();
+				myFBReaderApp.hideActivePopup();
+			}
+			((PopupPanel) myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
+			((PopupPanel) myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
+			((YotaSelectionPopup) myFBReaderApp.getPopupById(YotaSelectionPopup.ID)).setRootView(myRootView);
+			((YotaTranslatePopup) myFBReaderApp.getPopupById(YotaTranslatePopup.ID)).setRootView(myRootView);
+			((YotaDefinePopup) myFBReaderApp.getPopupById(YotaDefinePopup.ID)).setRootView(myRootView);
+		}
 	}
 
 	@Override

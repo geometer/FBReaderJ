@@ -32,7 +32,7 @@ public class YotaSelectionShareAction extends FBAndroidContextAction {
 
 					@Override
 					public void onPhoneRotatedToFS() {
-
+						//ShareFlipActivity.close();
 					}
 
 					@Override

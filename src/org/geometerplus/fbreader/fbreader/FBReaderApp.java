@@ -481,6 +481,9 @@ public final class FBReaderApp extends ZLApplication {
 			Collection.storePosition(myBook.getId(), myPosition);
 			myBook.setProgress(myProgress);
 			Collection.saveBook(myBook);
+			if (DeviceType.Instance().isYotaPhone()) {
+				FBReaderApp.this.runAction(ActionCode.YOTA_UPDATE_WIDGET);
+			}
 		}
 	}
 

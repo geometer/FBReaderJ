@@ -59,6 +59,5 @@ public class TurnPageAction extends FBAction {
 				preferences.AnimationSpeed.getValue()
 			);
 		}
-        Reader.runAction(ActionCode.YOTA_UPDATE_WIDGET);
 	}
 }

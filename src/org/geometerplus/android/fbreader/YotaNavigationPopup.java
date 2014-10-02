@@ -8,6 +8,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.geometerplus.fbreader.bookmodel.TOCTree;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -98,6 +99,7 @@ public class YotaNavigationPopup extends NavigationPopup {
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				hideChpaterPopup();
+				myFBReader.storePosition();
 			}
 
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

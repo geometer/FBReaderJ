@@ -97,11 +97,11 @@ public class NotificationBSActivity extends BSActivity {
         if (isFinishing()) {
             return;
         }
-        mOK.setVisibility(View.GONE);
-        mDotLine.setVisibility(View.GONE);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mMainLayout.getLayoutParams();
+        mOK.setVisibility(View.INVISIBLE);
+        mDotLine.setVisibility(View.INVISIBLE);
+        /*RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mMainLayout.getLayoutParams();
         lp.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, HEIGHT_LOCKED_DP, getBSDrawer().getBSContext().getResources().getDisplayMetrics());
-        mMainLayout.setLayoutParams(lp);
+        mMainLayout.setLayoutParams(lp);*/
     }
 
     private void showOKButton() {
@@ -110,8 +110,8 @@ public class NotificationBSActivity extends BSActivity {
         }
         mOK.setVisibility(View.VISIBLE);
         mDotLine.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mMainLayout.getLayoutParams();
+        /*RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mMainLayout.getLayoutParams();
         lp.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, HEIGHT_UNLOCKED_DP, getBSDrawer().getBSContext().getResources().getDisplayMetrics());
-        mMainLayout.setLayoutParams(lp);
+        mMainLayout.setLayoutParams(lp);*/
     }
 }

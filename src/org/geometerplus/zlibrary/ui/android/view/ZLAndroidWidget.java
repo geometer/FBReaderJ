@@ -285,10 +285,6 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			animator.scrollTo(x, y);
 			postInvalidate();
 		}
-        FBReaderApp app = (FBReaderApp)FBReaderApp.Instance();
-        if (app != null) {
-            app.runAction(ActionCode.YOTA_UPDATE_WIDGET);
-        }
 	}
 
 	@Override
@@ -453,7 +449,12 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		if (myPendingLongClickRunnable == null) {
 			myPendingLongClickRunnable = new LongClickRunnable();
 		}
-		postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
+		if (DeviceType.Instance().isYotaPhone()) {
+			postDelayed(myPendingLongClickRunnable, ViewConfiguration.getLongPressTimeout());
+		}
+		else {
+			postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
+		}
 	}
 
 	private class ShortClickRunnable implements Runnable {

@@ -194,14 +194,17 @@ public class BSDrawer extends Drawer {
             WindowManager wm = getWindowManager();
             LayoutParams lp = getDefaultLayoutParams();
 
-            if (mActivity.get() != null) {
-                applySystemIUVisibility(lp, mActivity.get().getSytemBSUiVisibility());
+            BSActivity activity = mActivity.get();
+            if (activity != null) {
+                activity.onPrepareLayoutParams(lp);
+                applySystemIUVisibility(lp, activity.getSytemBSUiVisibility());
             }
+
             wm.addView(mParentView, lp);
             // When BS layout is added we perform FULL update to remove all
             // ghosting
             // from previous BSActivity
-             EinkUtils.performSingleUpdate(mParentView, initialWaveform, initialDithering, 1000);
+            EinkUtils.performSingleUpdate(mParentView, initialWaveform, initialDithering, 1000);
             isShowEpdView = true;
 
             if (isShowBlankView) {

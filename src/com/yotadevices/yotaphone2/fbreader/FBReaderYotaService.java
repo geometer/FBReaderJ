@@ -126,7 +126,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         hideActionBar();
         hideStatusBar();
 
-        EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_NONE);
+        EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_ATKINSON_BINARY);
         EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_A2);
         getCollection().bindToService(this, new Runnable() {
             public void run() {
@@ -134,7 +134,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
                     myCurrentBook = myFBReaderApp.Collection.getRecentBook(0);
                 }
                 if (mWidget != null) {
-	                ZLAndroidPaintContext.AntiAliasOption.setValue(false);
+	                ZLAndroidPaintContext.AntiAliasOption.setValue(true);
                     myFBReaderApp.openBook(myCurrentBook, null, new Runnable() {
                         public void run() {
                             myFBReaderApp.initWindow();
@@ -149,6 +149,10 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 		                if (getViewWidget() != null) {
 			                getViewWidget().repaint();
 		                }
+	                }
+	                if (myFBReaderApp.getTextView() != null) {
+		                myFBReaderApp.getTextView().clearSelection();
+		                myFBReaderApp.hideActivePopup();
 	                }
                 }
             }
@@ -211,7 +215,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (intent.hasExtra(KEY_BACK_SCREEN_IS_ACTIVE)) {
             boolean isActive = intent.getBooleanExtra(KEY_BACK_SCREEN_IS_ACTIVE, false);
             if (isActive) {
-	            ZLAndroidPaintContext.AntiAliasOption.setValue(false);
+	            ZLAndroidPaintContext.AntiAliasOption.setValue(true);
 	            registerActions();
             }
             mWidget.setIsBsActive(isActive);

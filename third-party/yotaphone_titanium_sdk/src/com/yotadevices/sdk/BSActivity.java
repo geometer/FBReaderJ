@@ -18,6 +18,7 @@ import android.os.Messenger;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 
 public class BSActivity extends Service {
 
@@ -316,6 +317,10 @@ public class BSActivity extends Service {
     final void performSystemUIChange() {
         checkBSActivityRunning();
         mDrawer.updateViewLayout(mSystemUiVisibility);
+    }
+
+    protected void onPrepareLayoutParams(WindowManager.LayoutParams lp) {
+
     }
 
     /**
