@@ -26,6 +26,7 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
@@ -77,6 +78,13 @@ public class PluginListActivity extends ListActivity {
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ("plugin".equals(tag)) {
+				try {
+					if (Integer.valueOf(attributes.getValue("min-api")) > Build.VERSION.SDK_INT) {
+						return false;
+					}
+				} catch (Throwable t) {
+					// ignore
+				}
 				final String id = attributes.getValue("id");
 				final String packageName = attributes.getValue("package");
 				try {
