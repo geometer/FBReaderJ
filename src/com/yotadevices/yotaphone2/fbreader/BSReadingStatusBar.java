@@ -32,14 +32,16 @@ public class BSReadingStatusBar {
     private TextView mTotalPages;
     private TextView mPagesLeft;
 
+	private GaugeView mGauge;
+
     public BSReadingStatusBar(Context ctx, View root, FBReaderApp readerApp) {
         mContext = ctx;
         mRootView = root;
         mReader = readerApp;
         mLayoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPopupView = mLayoutInflater.inflate(R.layout.bs_status_bar_reading_mode, null);
-        GaugeView gauge = (GaugeView)mPopupView.findViewById(R.id.gauge_view);
-        gauge.init();
+        mGauge = (GaugeView)mPopupView.findViewById(R.id.gauge_view);
+	    mGauge.init();
 
         mBackToPage = (TextView)mPopupView.findViewById(R.id.back_to_page);
         mTotalPages = (TextView)mPopupView.findViewById(R.id.page_of_pages);
@@ -52,7 +54,7 @@ public class BSReadingStatusBar {
         mPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
     }
 
-    private void updateData() {
+    public void updateData() {
         final ZLTextView textView = mReader.getTextView();
         final ZLTextView.PagePosition pagePosition = textView.pagePosition();
 
@@ -64,6 +66,7 @@ public class BSReadingStatusBar {
 
         mPagesLeft.setText(pagePosition.Total - pagePosition.Current+" "+
                 mContext.getResources().getString(R.string.pages_left));
+	    mGauge.postInvalidate();
     }
 
     public void show() {

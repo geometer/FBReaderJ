@@ -297,7 +297,9 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     @Override
     public void refresh() {
-
+	    if (mStatusBar != null) {
+		    mStatusBar.updateData();
+	    }
     }
 
     @Override
