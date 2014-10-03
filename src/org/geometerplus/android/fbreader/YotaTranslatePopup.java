@@ -59,7 +59,7 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 			"</style></head><body>";
 	protected final String mHTMLClose = "</body></html>";
 	protected final String mHTMLHeader = "<div id=\"h1\"><b>%s</b></div>";
-	protected final String mHTMLText = "<div id=\"layer1\"><i>%s</i></div>";
+	protected final String mHTMLText = "<div id=\"layer1\"><i>%s \u2794 %s</i></div>";
 	protected final String mHTMLSubText = "<div id=\"layer2\">%s</div>";
 	private final String mLink = "<div id=\"layer3\"><a href=%s>%s</a></div>";
 	private final String mSuggest = "<div id=\"sugest\"><i>%s</i> <a href=%s>%s</a>?</div>";
@@ -141,7 +141,7 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 			String suggestion = null;
 			for (AbbyyTranslator.Translate t : results) {
 				if (t.Translation != null) {
-					data += String.format(mHTMLText, t.Language);
+					data += String.format(mHTMLText, t.LanguageFrom, t.LanguageTo);
 					data += String.format(mHTMLSubText, t.Translation);
                     if (!mOnBackScreen) {
                         data += String.format(mLink, t.ArticleURI, mContext.getString(R.string.open_in_lingvo));

@@ -16,7 +16,8 @@ import java.util.TreeMap;
 public class AbbyyTranslator extends AsyncTask<String, Integer, Boolean> {
 
     public static class Translate {
-        public String Language;
+        public String LanguageTo;
+	    public String LanguageFrom;
         public String Translation;
         public String Heading;
         public String ArticleURI;
@@ -96,7 +97,8 @@ public class AbbyyTranslator extends AsyncTask<String, Integer, Boolean> {
 
         while (data.moveToNext()) {
             Translate translate = new Translate();
-            translate.Language = data.getString(columns.get(TranslationContract.Translations.LANGUAGE_TO));
+            translate.LanguageTo = data.getString(columns.get(TranslationContract.Translations.LANGUAGE_TO));
+	        translate.LanguageFrom = data.getString(columns.get(TranslationContract.Translations.LANGUAGE_FROM));
             translate.Translation = data.getString(columns.get(TranslationContract.Translations.TRANSLATION));
             translate.Heading = data.getString(columns.get(TranslationContract.Translations.HEADING));
             translate.ArticleURI = data.getString(columns.get(TranslationContract.Translations.ARTICLE_URI));
