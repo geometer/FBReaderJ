@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.yotadevices.yotaphone2.fbreader.AbbyyTranslator;
 
@@ -34,16 +35,36 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 	protected View mContentView;
 	protected View mCloseButton;
 	protected WebView mWebView;
+	protected TextView mErrorView;
 	protected String mTextToTranslate;
 
-	protected final String mHTMLOpen = "<html><body>";
+	protected final String mHTMLOpen = "<html><head><style type=\"text/css\">" +
+			"   #h1 {" +
+			"font-size: 150%;" +
+			"   }" +
+			"   #layer1 {" +
+			"padding-top: 10px;" +
+			"   }" +
+			"   #layer2 {" +
+			"padding-top: 5px;" +
+			"padding-left: 30px;" +
+			"   }" +
+			"   #layer3 {" +
+			"padding-left: 30px;" +
+			"   }" +
+			"   #sugest {" +
+			"padding-top: 10px;" +
+			"padding-bottom: 20px;" +
+			"   }" +
+			"</style></head><body>";
 	protected final String mHTMLClose = "</body></html>";
-	protected final String mHTMLHeader = "<h3>%s</h3>";
-	protected final String mHTMLText = "<p>%s</p>";
-
-	private final String mLink = "<p><a href=%s>%s</a></p>";
-	private final String mSuggest = "<p>%s <a href=%s>%s</a>?</p>";
+	protected final String mHTMLHeader = "<div id=\"h1\"><b>%s</b></div>";
+	protected final String mHTMLText = "<div id=\"layer1\"><i>%s</i></div>";
+	protected final String mHTMLSubText = "<div id=\"layer2\">%s</div>";
+	private final String mLink = "<div id=\"layer3\"><a href=%s>%s</a></div>";
+	private final String mSuggest = "<div id=\"sugest\"><i>%s</i> <a href=%s>%s</a>?</div>";
     protected boolean mOnBackScreen = false;
+	protected int mWordsToDefine = 0;
 
 	public YotaTranslatePopup(FBReaderApp application, Context ctx, ContentResolver resolver) {
 		super(application);
@@ -60,6 +81,7 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 				hide_();
 			}
 		});
+		mErrorView = (TextView)mContentView.findViewById(R.id.error_view);
 		mWebView = (WebView)mContentView.findViewById(R.id.webview);
 		WebSettings settings = mWebView.getSettings();
 		settings.setDefaultTextEncodingName("utf-8");
@@ -96,9 +118,15 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
         if (mOnBackScreen) {
             mWebView.setInitialScale(150);
         }
+		mErrorView.setVisibility(View.GONE);
+		if (mWordsToDefine == 1) {
+			AbbyyTranslator translator = new AbbyyTranslator(mResolver, this);
+			translator.execute(mTextToTranslate);
+		}
+		else {
+			onTranslationError(Error.SELECT_ONE_WORD);
+		}
 		mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, 0);
-		AbbyyTranslator translator = new AbbyyTranslator(mResolver, this);
-		translator.execute(mTextToTranslate);
 	}
 
 	public void setTextToTranlate(String text) {
@@ -110,17 +138,20 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 		if (results.size() > 0) {
 			String source = String.format(mHTMLHeader, results.get(0).Heading);
 			String data = "";
+			String suggestion = null;
 			for (AbbyyTranslator.Translate t : results) {
 				if (t.Translation != null) {
-					data += String.format(mHTMLText, t.Translation);
+					data += String.format(mHTMLText, t.Language);
+					data += String.format(mHTMLSubText, t.Translation);
                     if (!mOnBackScreen) {
                         data += String.format(mLink, t.ArticleURI, mContext.getString(R.string.open_in_lingvo));
                     }
-				} else if (t.Heading != null && t.ArticleURI != null && !mOnBackScreen) {
-					data += String.format(mSuggest, mContext.getString(R.string.did_you_mean), t.ArticleURI, t.Heading);
+				} else if (t.Heading != null && t.ArticleURI != null && !mOnBackScreen && suggestion == null) {
+					suggestion = String.format(mSuggest, mContext.getString(R.string.did_you_mean), t.ArticleURI, t.Heading);
 				}
 			}
-			String html = mHTMLOpen + source + data + mHTMLClose;
+			if (suggestion == null) { suggestion = ""; }
+			String html = mHTMLOpen + source + suggestion + data + mHTMLClose;
 			String base64 = Base64.encodeToString(html.getBytes(), Base64.DEFAULT);
 			mWebView.loadData(base64, "text/html; charset=utf-8", "base64");
 		}
@@ -131,21 +162,30 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 		String errorText = "";
 		switch (error) {
 			case NOTHING_TO_TRANSLATE:
-				errorText = String.format(mHTMLHeader, mContext.getString(R.string.nothing_to_translate));
+				errorText = mContext.getString(R.string.nothing_to_translate);
 				break;
 			case TRANSLATION_NOT_FOUND:
-				errorText = String.format(mHTMLHeader, mContext.getString(R.string.nothing_was_found));
+				errorText = mContext.getString(R.string.nothing_was_found);
 				break;
 			case UNKNOWN_ERROR:
-				errorText = String.format(mHTMLHeader, mContext.getString(R.string.unknown_error));
+				errorText = mContext.getString(R.string.unknown_error);
 				break;
 			case LINGVO_INTERNAL_ERROR:
-				errorText = String.format(mHTMLHeader, mContext.getString(R.string.lingvo_error));
+				errorText = mContext.getString(R.string.lingvo_error);
+				break;
+			case NO_DICTIONARIES:
+				errorText = mContext.getString(R.string.no_dictionaries);
+				break;
+			case SELECT_ONE_WORD:
+				errorText = mContext.getString(R.string.select_only_one_word);
 				break;
 		}
-		String html = mHTMLOpen + errorText + mHTMLClose;
-		String base64 = Base64.encodeToString(html.getBytes(), Base64.DEFAULT);
-		mWebView.loadData(base64, "text/html; charset=utf-8", "base64");
+		mErrorView.setVisibility(View.VISIBLE);
+		mErrorView.setText(errorText);
+	}
+
+	public void setNumWordsToDefine(int words) {
+		mWordsToDefine = words;
 	}
 
 	public void setRootView(View root) {

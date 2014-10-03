@@ -34,6 +34,8 @@ public class OxfordDefinition {
 		public enum Error {
 			NOTHING_TO_DEFINE,
 			INCORRECT_REQUEST,
+			SELECT_ONE_WORD,
+			NOT_FOUND,
 			NO_CONNECTION
 		}
 		public void onObtainDefinition(Definition result);
@@ -76,7 +78,14 @@ public class OxfordDefinition {
 				HttpResponse response = client.execute(request);
 				int status = response.getStatusLine().getStatusCode();
 				if (status != HttpStatus.SC_OK) {
-					mError = DefinitionResult.Error.INCORRECT_REQUEST;
+					switch (status) {
+						case HttpStatus.SC_NOT_FOUND:
+							mError = DefinitionResult.Error.NOT_FOUND;
+							break;
+						default:
+							mError = DefinitionResult.Error.INCORRECT_REQUEST;
+							break;
+					}
 					return Boolean.FALSE;
 				}
 				InputStream is = response.getEntity().getContent();

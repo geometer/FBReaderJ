@@ -1,7 +1,6 @@
 package com.yotadevices.yotaphone2.fbreader;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -30,7 +29,9 @@ public class AbbyyTranslator extends AsyncTask<String, Integer, Boolean> {
             NOTHING_TO_TRANSLATE,
             TRANSLATION_NOT_FOUND,
             UNKNOWN_ERROR,
-	        LINGVO_INTERNAL_ERROR
+	        LINGVO_INTERNAL_ERROR,
+	        NO_DICTIONARIES,
+	        SELECT_ONE_WORD
         }
         public void onTranslationComplete(List<Translate> results);
         public void onTranslationError(Error error);
@@ -66,13 +67,22 @@ public class AbbyyTranslator extends AsyncTask<String, Integer, Boolean> {
         final Uri toTranslate = createTranslationUri(params[0]);
         String[] args = {""};
 	    Cursor data = null;
+
 	    try {
 		    data = mResolver.query(toTranslate, projection, null, null, null);
 	    }
 	    catch (NullPointerException e) {
-		    //a strange error in Abby Lingvo
-		    mError = TranslateCompletitionResult.Error.LINGVO_INTERNAL_ERROR;
-		    return Boolean.FALSE;
+		    //First run may prevent null pointer exception, let's try once again :-/
+		    try {
+			    Thread.sleep(500);
+			    data = mResolver.query(toTranslate, projection, null, null, null);
+		    }
+		    catch (InterruptedException ex) {}
+		    catch (NullPointerException ex) {
+			    //a strange error in Abby Lingvo
+			    mError = TranslateCompletitionResult.Error.LINGVO_INTERNAL_ERROR;
+			    return Boolean.FALSE;
+		    }
 	    }
         if (data == null) {
             mError = TranslateCompletitionResult.Error.UNKNOWN_ERROR;
@@ -97,8 +107,15 @@ public class AbbyyTranslator extends AsyncTask<String, Integer, Boolean> {
         if (mTranslationResult.size() > 0) {
             return Boolean.TRUE;
         }
-        mError = TranslateCompletitionResult.Error.TRANSLATION_NOT_FOUND;
-        return Boolean.FALSE;
+	    data = mResolver.query(TranslationContract.Directions.CONTENT_URI, null, null, null, null);
+	    if (data != null) {
+		    if (data.getCount() > 0) {
+			    mError = TranslateCompletitionResult.Error.TRANSLATION_NOT_FOUND;
+			    return Boolean.FALSE;
+		    }
+	    }
+	    mError = TranslateCompletitionResult.Error.NO_DICTIONARIES;
+	    return Boolean.FALSE;
     }
 
     @Override

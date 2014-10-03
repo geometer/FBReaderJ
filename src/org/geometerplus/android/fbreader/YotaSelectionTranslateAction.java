@@ -17,10 +17,10 @@ public class YotaSelectionTranslateAction extends FBAndroidContextAction {
     protected void run(Object... params) {
         final FBView fbview = Reader.getTextView();
         final String text = fbview.getSelectedText();
-        boolean oneWordSelected = fbview.getCountOfSelectedWords() == 1;
 	    final String ID = mOnBackScreen ? YotaTranslateBSPopup.ID : YotaTranslatePopup.ID;
         YotaTranslatePopup translatePopup = (YotaTranslatePopup)Reader.getPopupById(ID);
         translatePopup.setTextToTranlate(text);
+	    translatePopup.setNumWordsToDefine(fbview.getCountOfSelectedWords());
         translatePopup.setOnBackScreen(mOnBackScreen);
         fbview.clearSelection();
 

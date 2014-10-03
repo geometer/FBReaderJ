@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.util.Base64;
 import android.view.Gravity;
+import android.view.View;
 
 import com.yotadevices.sdk.Drawer;
 import com.yotadevices.sdk.utils.EinkUtils;
@@ -22,17 +23,22 @@ public class YotaDefinePopup extends YotaTranslatePopup implements OxfordDefinit
 
 	@Override
 	protected void show_() {
-        ConnectionManager.getInstance().startNetworkMonitoring(mContext);
-        if (ConnectionManager.getInstance().connected()) {
-            if (mOnBackScreen) {
-                mWebView.setInitialScale(150);
-            }
-            mWebView.loadData("<h3>Loading, please wait...</h3>", "text/html; charset=utf-8", "");
-            OxfordDefinition.getDefinition(mTextToTranslate, this);
-        }
-        else {
-            onDefinitionError(OxfordDefinition.DefinitionResult.Error.NO_CONNECTION);
-        }
+		mErrorView.setVisibility(View.GONE);
+		if (mWordsToDefine == 1) {
+			ConnectionManager.getInstance().startNetworkMonitoring(mContext);
+			if (ConnectionManager.getInstance().connected()) {
+				if (mOnBackScreen) {
+					mWebView.setInitialScale(150);
+				}
+				mWebView.loadData("<h3>Loading, please wait...</h3>", "text/html; charset=utf-8", "");
+				OxfordDefinition.getDefinition(mTextToTranslate, this);
+			} else {
+				onDefinitionError(OxfordDefinition.DefinitionResult.Error.NO_CONNECTION);
+			}
+		}
+		else {
+			onDefinitionError(OxfordDefinition.DefinitionResult.Error.SELECT_ONE_WORD);
+		}
         mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, 0);
     }
 
@@ -61,19 +67,24 @@ public class YotaDefinePopup extends YotaTranslatePopup implements OxfordDefinit
         String errorText = "";
         switch (error) {
             case NOTHING_TO_DEFINE:
-                errorText = String.format(mHTMLHeader, mContext.getString(R.string.nothing_to_define));
+                errorText = mContext.getString(R.string.nothing_to_define);
                 break;
             case INCORRECT_REQUEST:
-                errorText = String.format(mHTMLHeader, mContext.getString(R.string.incorrect_request));
+                errorText = mContext.getString(R.string.incorrect_request);
                 break;
             case NO_CONNECTION:
-                errorText = String.format(mHTMLHeader, mContext.getString(R.string.no_connection));
+                errorText = mContext.getString(R.string.no_connection);
                 break;
+            case NOT_FOUND:
+	            errorText = mContext.getString(R.string.only_english);
+	            break;
+            case SELECT_ONE_WORD:
+	            errorText = mContext.getString(R.string.select_only_one_word);
+	            break;
         }
-        String html = mHTMLOpen + errorText + mHTMLClose;
-        String base64 = Base64.encodeToString(html.getBytes(), Base64.DEFAULT);
-        mWebView.loadData(base64, "text/html; charset=utf-8", "base64");
-
+		mWebView.loadData("", "text/html; charset=utf-8", "");
+		mErrorView.setVisibility(View.VISIBLE);
+		mErrorView.setText(errorText);
     }
 
 	@Override
