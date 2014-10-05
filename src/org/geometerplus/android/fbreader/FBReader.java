@@ -548,12 +548,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 				myFBReaderApp.getTextView().clearSelection();
 				myFBReaderApp.hideActivePopup();
 			}
-			((PopupPanel) myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
-			((PopupPanel) myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
 			((YotaSelectionPopup) myFBReaderApp.getPopupById(YotaSelectionPopup.ID)).setRootView(myRootView);
 			((YotaTranslatePopup) myFBReaderApp.getPopupById(YotaTranslatePopup.ID)).setRootView(myRootView);
 			((YotaDefinePopup) myFBReaderApp.getPopupById(YotaDefinePopup.ID)).setRootView(myRootView);
 		}
+		((PopupPanel) myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
+		((PopupPanel) myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
 	}
 
 	@Override
