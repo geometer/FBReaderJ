@@ -24,6 +24,7 @@ import java.util.*;
 
 import android.os.Environment;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
@@ -110,6 +111,9 @@ public abstract class Paths {
 		final String downloadsDirectory = DownloadsDirectoryOption.getValue();
 		if (!"".equals(downloadsDirectory) && !path.contains(downloadsDirectory)) {
 			path.add(downloadsDirectory);
+		}
+		if (DeviceType.Instance().isYotaPhone()) {
+			path.add(cardDirectory() + "/Download");
 		}
 		return path;
 	}
