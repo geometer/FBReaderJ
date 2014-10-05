@@ -91,10 +91,13 @@ public class YotaBookInfoActivity extends Activity implements IBookCollection.Li
             setupBookInfo(mBook);
             setupAnnotation(mBook);
         }
-
         Button add = (Button)findViewById(R.id.yota_book_add_button);
-        add.setOnClickListener(mOnAddBookAction);
-
+	    if (mDontReloadBook) {
+		    add.setVisibility(View.INVISIBLE);
+	    }
+	    else {
+		    add.setOnClickListener(mOnAddBookAction);
+	    }
         mCollection.bindToService(this, null);
         mCollection.addListener(this);
     }

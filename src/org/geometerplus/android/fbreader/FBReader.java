@@ -363,7 +363,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 			myFBReaderApp.addAction(ActionCode.YOTA_FONT_SETTINGS, new ShowYotaSettingsAction(this, myFBReaderApp));
 			myFBReaderApp.addAction(ActionCode.YOTA_SEARCH_ACTION, new ShowYotaBookContentsAction(this, myFBReaderApp));
-			myFBReaderApp.addAction(ActionCode.YOTA_ADD_BOOKMARK, new ShowBookmarksAction(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.YOTA_ADD_BOOKMARK, new YotaToggleBookmark(this, myFBReaderApp));
 		}
 		else {
 			myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionShowPanelAction(this, myFBReaderApp));
@@ -953,9 +953,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		if (DeviceType.Instance().isYotaPhone()) {
+			myMenuItemMap.clear();
 			addMenuItem(menu, ActionCode.YOTA_FONT_SETTINGS, R.drawable.yota_font_settings_icon, "Font settings", true);
-			addMenuItem(menu, ActionCode.YOTA_SEARCH_ACTION, R.drawable.yota_search_icon, "Font settings", true);
-			addMenuItem(menu, ActionCode.YOTA_ADD_BOOKMARK, R.drawable.yota_bookmark_icon, "Font settings", true);
+			addMenuItem(menu, ActionCode.YOTA_SEARCH_ACTION, R.drawable.yota_search_icon, "Contents", true);
+			addMenuItem(menu, ActionCode.YOTA_ADD_BOOKMARK, R.drawable.yota_bookmark_icon, "Add bookmark", true);
 			refresh();
 		}
 		else {
@@ -1254,8 +1255,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 							menuItem.setCheckable(false);
 							break;
 					}
+					if (actionId.equals(ActionCode.YOTA_ADD_BOOKMARK)) {
+						refreshYotaBookmarkState(menuItem);
+					}
 				}
-
 				if (myNavigationPopup != null) {
 					myNavigationPopup.update();
 				}
@@ -1458,5 +1461,14 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 				startActivity(chooser);
 			}
 		}, 200);
+	}
+
+	private void refreshYotaBookmarkState(MenuItem item) {
+		final ZLTextView textView = myFBReaderApp.getTextView();
+			if (textView.hasBookmarks()) {
+				item.setIcon(R.drawable.yota_delete_bookmark_icon);
+			} else {
+				item.setIcon(R.drawable.yota_bookmark_icon);
+			}
 	}
 }
