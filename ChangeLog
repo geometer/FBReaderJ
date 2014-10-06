@@ -1,4 +1,5 @@
 ===== 2.2 (Oct ??, 2014) =====
+* (planned) Bookshelf library view (plugin)
 * (planned) Tablet-oriented preferences dialog
 * (planned) Android L support
 * (planned) Automatic files download (from the book network)
@@ -6,10 +7,11 @@
 * (planned) Editable notes (by Tamotsu Takahashi)
 * (planned) Fixed authors list/tags list editing
 
-===== 2.1.7 (Oct ??, 2014) =====
+===== 2.1.7 (Oct 07, 2014) =====
 * Fixed Calibre server integration
 * Updated Belarusian localization (by Usievaład Čorny)
 * Updated Czech localisation (by Marek Pavelka)
+* Updated Japanese localisation (by Tamotsu Takahashi)
 
 ===== 2.1.6 (Sep 28, 2014) =====
 * Updated Belarusian localization (by Usievaład Čorny)
