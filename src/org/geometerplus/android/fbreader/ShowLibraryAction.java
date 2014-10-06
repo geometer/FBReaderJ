@@ -42,7 +42,7 @@ class ShowLibraryAction extends FBAndroidAction {
 			new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY);
 		final Intent internalIntent = new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
 		if (DeviceType.Instance().isYotaPhone()) {
-			internalIntent.setClassName("com.yotadevies.yotaphone2.yotareader.collection", "com.yotadevices.yotaphone2.yotareader.collection.CollectionActivity");
+			internalIntent.setClassName("com.yotadevices.yotaphone2.yotareader.collection", "com.yotadevices.yotaphone2.yotareader.collection.CollectionActivity");
 		}
 
 		if (PackageUtil.canBeStarted(BaseActivity, externalIntent, true)) {
