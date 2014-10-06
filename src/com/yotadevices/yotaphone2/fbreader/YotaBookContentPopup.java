@@ -100,6 +100,7 @@ public class YotaBookContentPopup {
 		mPopup.setContentView(mPopupView);
 		mPopup.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
 		mPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+
 		mPopup.setFocusable(true);
 		mPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			@Override

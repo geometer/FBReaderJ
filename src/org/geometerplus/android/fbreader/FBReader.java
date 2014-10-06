@@ -29,6 +29,7 @@ import java.util.*;
 
 import android.app.*;
 import android.content.*;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -43,6 +44,7 @@ import android.widget.TextView;
 import com.yotadevices.sdk.utils.BitmapUtils;
 import com.yotadevices.yotaphone2.fbreader.Consts;
 import com.yotadevices.yotaphone2.fbreader.FBReaderYotaService;
+import com.yotadevices.yotaphone2.fbreader.YotaSettingsPopup;
 
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 import org.geometerplus.fbreader.Paths;
@@ -341,6 +343,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		if (myFBReaderApp.getPopupById(YotaDefinePopup.ID) == null) {
 			new YotaDefinePopup(myFBReaderApp, this, getContentResolver());
 		}
+		if (myFBReaderApp.getPopupById(YotaSettingsPopup.ID) == null) {
+			new YotaSettingsPopup(myFBReaderApp, this);
+		}
 		myFBReaderApp.setFrontScreenActionMap();
 		myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
@@ -499,6 +504,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 	}
 
 	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		myFBReaderApp.updatePopup(YotaSettingsPopup.ID);
+	}
+
+	@Override
 	protected void onStart() {
 		super.onStart();
 
@@ -551,6 +562,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 			((YotaSelectionPopup) myFBReaderApp.getPopupById(YotaSelectionPopup.ID)).setRootView(myRootView);
 			((YotaTranslatePopup) myFBReaderApp.getPopupById(YotaTranslatePopup.ID)).setRootView(myRootView);
 			((YotaDefinePopup) myFBReaderApp.getPopupById(YotaDefinePopup.ID)).setRootView(myRootView);
+			//((YotaSettingsPopup)myFBReaderApp.getPopupById(YotaSettingsPopup.ID)).setRootView(myRootView);
 		}
 		((PopupPanel) myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
 		((PopupPanel) myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);

@@ -165,6 +165,13 @@ public abstract class ZLApplication {
 		}
 	}
 
+	public final void updatePopup(String id) {
+		myActivePopup = myPopups.get(id);
+		if (myActivePopup != null) {
+			myActivePopup.update();
+		}
+	}
+
 	public final void addAction(String actionId, ZLAction action) {
 		myIdToActionMap.put(actionId, action);
 	}

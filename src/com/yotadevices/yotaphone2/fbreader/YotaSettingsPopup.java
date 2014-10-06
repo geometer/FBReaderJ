@@ -1,6 +1,7 @@
 package com.yotadevices.yotaphone2.fbreader;
 
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
@@ -10,19 +11,21 @@ import android.widget.SeekBar;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import java.util.TreeMap;
 
-public class YotaSettingsPopup {
+public class YotaSettingsPopup extends ZLApplication.PopupPanel{
+	public final static String ID = "YotaSettingsPopup";
 	private final android.widget.PopupWindow mPopup;
-	private final FBReader mFBReader;
+	private FBReader mFBReader;
 	private FBReaderApp mReaderApp;
-	private final View mRootView;
-	private final View mPopupView;
-	private final SeekBar mBrightnessSlide;
+	private View mRootView;
+	private View mPopupView;
+	private SeekBar mBrightnessSlide;
 
 	private final static int[] FONT_RADIO_BUTTONS_IDS =
 			{R.id.font1, R.id.font2, R.id.font3, R.id.font4, R.id.font5};
@@ -37,6 +40,28 @@ public class YotaSettingsPopup {
 	private TreeMap<Integer, RadioButton> mFontSizeGroup = new TreeMap<Integer, RadioButton>();
 	private TreeMap<Integer, RadioButton> mFontTypeGroup = new TreeMap<Integer, RadioButton>();
 	private TreeMap<Integer, RadioButton> mThemeGroup    = new TreeMap<Integer, RadioButton>();
+
+	@Override
+	public String getId() {
+		return ID;
+	}
+
+	@Override
+	protected void update() {
+		if (mPopup.isShowing()) {
+			mPopup.update();
+		}
+	}
+
+	@Override
+	protected void hide_() {
+		hide();
+	}
+
+	@Override
+	protected void show_() {
+		show();
+	}
 
 	public interface OnSortingModeChangeListener {
 		public void onSortMethodChanged(int sortMethod);
@@ -107,21 +132,21 @@ public class YotaSettingsPopup {
 		}
 	};
 
-	public YotaSettingsPopup(FBReader ctx, View root) {
-		mFBReader = ctx;
-		mRootView = root;
-
-		mPopupView = View.inflate(ctx, R.layout.yota_settings_popup, null);
+	public YotaSettingsPopup(FBReaderApp app, FBReader reader) {
+		super(app);
+		mFBReader = reader;
+		mReaderApp = app;
+		mPopupView = View.inflate(reader, R.layout.yota_settings_popup, null);
 
 		initRadioButtons(mPopupView, FONT_RADIO_BUTTONS_IDS, mOnFontSizeSelectListener, mFontSizeGroup);
 		initRadioButtons(mPopupView, FONT_TYPE_RADIO_BUTTONS_IDS, mOnFontTypeSelectListener, mFontTypeGroup);
 		initRadioButtons(mPopupView, THEME_RADIO_BUTTONS_IDS, mOnThemeSelectListener, mThemeGroup);
 
 		mBrightnessSlide = (SeekBar)mPopupView.findViewById(R.id.brighness_seekbar);
-		mPopup = new android.widget.PopupWindow(ctx);
+		mPopup = new android.widget.PopupWindow(mFBReader);
 		mPopup.setBackgroundDrawable(new ColorDrawable(0));
 		mPopup.setContentView(mPopupView);
-		mPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+		mPopup.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
 		mPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
 
 		final View clickableArea = mPopupView.findViewById(R.id.clickable_area);
@@ -144,7 +169,6 @@ public class YotaSettingsPopup {
 				mFBReader.hideBars();
 			}
 		});
-
 	}
 
 	private void initRadioButtons(View root, int[] buttons, View.OnClickListener listener, TreeMap<Integer, RadioButton> buttonsGroup) {
@@ -233,13 +257,17 @@ public class YotaSettingsPopup {
 		});
 	}
 
-	public void show(FBReaderApp readerApp) {
-		mReaderApp = readerApp;
+	public void show() {
 		setupFontSizes();
 		setupFontTypes();
 		setupTheme();
 		setupBrightness();
 		mPopup.showAsDropDown(mRootView, 0, 0);
+	}
+
+
+	public void setRootView(View root) {
+		mRootView = root;
 	}
 
 	public void hide() {
