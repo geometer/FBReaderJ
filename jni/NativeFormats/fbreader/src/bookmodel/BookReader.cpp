@@ -35,6 +35,8 @@
 
 BookReader::BookReader(BookModel &model) : myModel(model) {
 	myCurrentTextModel = 0;
+	myPopupTextModel = 0;
+	myAsideCount = 0;
 
 	myInsideTitle = false;
 	mySectionContainsRegularContents = false;
@@ -45,19 +47,40 @@ BookReader::~BookReader() {
 
 void BookReader::setMainTextModel() {
 	myCurrentTextModel = myModel.myBookTextModel;
+	myPopupTextModel = 0;//???
 }
 
 void BookReader::setFootnoteTextModel(const std::string &id) {
+	myCurrentTextModel = makeFootnoteTextModel(id);
+	myPopupTextModel = myCurrentTextModel;
+	myAsideCount++;
+}
+
+int BookReader::asideCount() {
+	return myAsideCount;
+}
+
+void BookReader::setPopupTextModel(const std::string &id) {
+	if (myPopupTextModel == 0) {
+		myPopupTextModel = makeFootnoteTextModel(id);
+	} else {
+		myModel.myFootnotes.insert(std::make_pair(id, myPopupTextModel));
+	}
+}
+
+shared_ptr<ZLTextModel> BookReader::makeFootnoteTextModel(const std::string &id) {
 	std::map<std::string,shared_ptr<ZLTextModel> >::iterator it = myModel.myFootnotes.find(id);
+	shared_ptr<ZLTextModel> model;
 	if (it != myModel.myFootnotes.end()) {
-		myCurrentTextModel = (*it).second;
+		model = (*it).second;
 	} else {
 		if (myFootnotesAllocator.isNull()) {
 			myFootnotesAllocator = new ZLCachedMemoryAllocator(8192, Library::Instance().cacheDirectory(), "footnotes");
 		}
-		myCurrentTextModel = new ZLTextPlainModel(id, myModel.myBookTextModel->language(), myFootnotesAllocator, myModel.myFontManager);
-		myModel.myFootnotes.insert(std::make_pair(id, myCurrentTextModel));
+		model = new ZLTextPlainModel(id, myModel.myBookTextModel->language(), myFootnotesAllocator, myModel.myFontManager);
+		myModel.myFootnotes.insert(std::make_pair(id, model));
 	}
+	return model;
 }
 
 bool BookReader::paragraphIsOpen() const {
@@ -74,6 +97,10 @@ bool BookReader::paragraphIsOpen() const {
 
 void BookReader::unsetTextModel() {
 	myCurrentTextModel = 0;
+}
+
+void BookReader::unsetPopupTextModel() {
+	myPopupTextModel = 0;
 }
 
 void BookReader::pushKind(FBTextKind kind) {
@@ -201,6 +228,12 @@ void BookReader::addHyperlinkLabel(const std::string &label, int paragraphNumber
 	myModel.myInternalHyperlinks.insert(std::make_pair(
 		label, BookModel::Label(myCurrentTextModel, paragraphNumber)
 	));
+	if (myPopupTextModel != 0) {
+		myModel.myInternalHyperlinks.insert(std::make_pair(
+			label + "?popup",
+			BookModel::Label(myPopupTextModel, myPopupTextModel->paragraphsNumber()/*TODO*/)
+		));
+	}
 }
 
 void BookReader::addData(const std::string &data) {
@@ -220,6 +253,10 @@ void BookReader::addContentsData(const std::string &data) {
 
 void BookReader::flushTextBufferToParagraph() {
 	myCurrentTextModel->addText(myBuffer);
+	if (myPopupTextModel != 0 && myPopupTextModel != myCurrentTextModel) {
+		((ZLTextPlainModel&)*myPopupTextModel).createParagraph(ZLTextParagraph::TEXT_PARAGRAPH);
+		myPopupTextModel->addText(myBuffer);
+	}
 	myBuffer.clear();
 }
 

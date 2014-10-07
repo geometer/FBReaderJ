@@ -87,12 +87,17 @@ public abstract class ZLApplication {
 
 	public interface SynchronousExecutor {
 		void execute(Runnable action, Runnable uiPostAction);
+		void textThenPost(String positiveButton, Runnable postAction);
 		void executeAux(String key, Runnable action);
 	}
 
 	private final SynchronousExecutor myDummyExecutor = new SynchronousExecutor() {
 		public void execute(Runnable action, Runnable uiPostAction) {
 			action.run();
+		}
+
+		public void textThenPost(String positiveButton, Runnable postAction) {
+			postAction.run();
 		}
 
 		public void executeAux(String key, Runnable action) {
@@ -103,6 +108,14 @@ public abstract class ZLApplication {
 	protected SynchronousExecutor createExecutor(String key) {
 		if (myWindow != null) {
 			return myWindow.createExecutor(key);
+		} else {
+			return myDummyExecutor;
+		}
+	}
+
+	protected SynchronousExecutor createExecutor(String key, String parameter) {
+		if (myWindow != null) {
+			return myWindow.createExecutor(key, parameter);
 		} else {
 			return myDummyExecutor;
 		}

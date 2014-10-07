@@ -173,9 +173,9 @@ a.external {
 footnote {
 	fbreader-id: 16;
 	fbreader-name: "Footnote";
-	font-size: 0.7em;
+	/*font-size: 0.7em;
 	vertical-align: 0.5em;
-	hyphens: none;
+	hyphens: none;*/
 }
 
 i {

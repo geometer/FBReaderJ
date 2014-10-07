@@ -23,8 +23,10 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
@@ -109,11 +111,11 @@ public abstract class UIUtil {
 		}).start();
 	}
 
-	public static ZLApplication.SynchronousExecutor createExecutor(final Activity activity, final String key) {
+	public static ZLApplication.SynchronousExecutor createExecutor(final Activity activity, final String key, final String parameter) {
 		return new ZLApplication.SynchronousExecutor() {
 			private final ZLResource myResource =
 				ZLResource.resource("dialog").getResource("waitMessage");
-			private final String myMessage = myResource.getResource(key).getValue();
+			private final String myMessage = myResource.getResource(key).getValue().replace("%s", parameter != null ? parameter : "");
 			private volatile ProgressDialog myProgress;
 
 			public void execute(final Runnable action, final Runnable uiPostAction) {
@@ -144,6 +146,38 @@ public abstract class UIUtil {
 				});
 			}
 
+			public void textThenPost(final String positiveButton, final Runnable postAction) {
+				activity.runOnUiThread(new Runnable() {
+					public void run() {
+						AlertDialog.Builder myBuilder = new AlertDialog.Builder(activity);
+						myBuilder.setMessage(myMessage);
+						myBuilder.setCancelable(true);
+						myBuilder.setPositiveButton(myResource.getResource(positiveButton).getValue(),
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface d, int i) {
+									postAction.run();
+								}
+							}
+						);
+						myBuilder.show();
+						final Thread runner = new Thread() {
+							public void run() {
+								/* sleep until interrupted */
+								while (true) {
+									try {
+										Thread.sleep(1000);
+									} catch (InterruptedException e) {
+										break;
+									}
+								}
+							}
+						};
+						runner.start();
+					}
+				});
+			}
+
 			private void setMessage(final ProgressDialog progress, final String message) {
 				if (progress == null) {
 					return;
@@ -161,6 +195,10 @@ public abstract class UIUtil {
 				setMessage(myProgress, myMessage);
 			}
 		};
+	}
+
+	public static ZLApplication.SynchronousExecutor createExecutor(final Activity activity, final String key) {
+		return createExecutor(activity, key, null);
 	}
 
 	public static void showMessageText(final Activity activity, final String text) {

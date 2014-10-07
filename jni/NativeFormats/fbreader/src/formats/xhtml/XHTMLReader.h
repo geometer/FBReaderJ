@@ -70,6 +70,7 @@ public:
 		std::vector<FBTextKind> TextKinds;
 		std::vector<shared_ptr<ZLTextStyleEntry> > StyleEntries;
 		bool PageBreakAfter;
+		bool InFootnote;
 		size_t ChildCount;
 
 		TagData();
@@ -143,6 +144,7 @@ private:
 	friend class XHTMLTagParagraphWithControlAction;
 	friend class XHTMLTagControlAction;
 	friend class XHTMLTagBodyAction;
+	friend class XHTMLTagAsideAction;
 	friend class XHTMLTagListAction;
 	friend class XHTMLTagItemAction;
 	friend class XHTMLTagImageAction;

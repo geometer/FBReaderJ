@@ -210,27 +210,44 @@ public final class FBReaderApp extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
-	public void tryOpenFootnote(String id) {
+	public void openInternalLink(BookModel.Label label) {
+		if (label.ModelId == null) {
+			if (getTextView() == BookTextView) {
+				addInvisibleBookmark();
+				myJumpEndPosition = new ZLTextFixedPosition(label.ParagraphIndex, 0, 0);
+				myJumpTimeStamp = new Date();
+			}
+			BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
+			setView(BookTextView);
+		} else {
+			setFootnoteModel(label.ModelId);
+			setView(FootnoteView);
+			FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
+		}
+		getViewWidget().repaint();
+		storePosition();
+	}
+
+	public void tryOpenFootnote(final String id) {
 		if (Model != null) {
 			myJumpEndPosition = null;
 			myJumpTimeStamp = null;
-			BookModel.Label label = Model.getLabel(id);
+			final BookModel.Label label = Model.getLabel(id);
 			if (label != null) {
-				if (label.ModelId == null) {
-					if (getTextView() == BookTextView) {
-						addInvisibleBookmark();
-						myJumpEndPosition = new ZLTextFixedPosition(label.ParagraphIndex, 0, 0);
-						myJumpTimeStamp = new Date();
+				BookModel.Label popupLabel = Model.getLabel(id + "?popup");
+				if (popupLabel != null) {
+					ZLTextModel popupModel = setFootnoteModel(popupLabel.ModelId);
+					if (popupModel != null) {
+						final SynchronousExecutor executor = createExecutor("footnoteText", popupModel.getText());
+						executor.textThenPost("footnoteButton", new Runnable() {
+							public void run() {
+								openInternalLink(label);
+							}
+						});
+						return;
 					}
-					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
-					setView(BookTextView);
-				} else {
-					setFootnoteModel(label.ModelId);
-					setView(FootnoteView);
-					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
 				}
-				getViewWidget().repaint();
-				storePosition();
+				openInternalLink(label);
 			}
 		}
 	}
@@ -276,13 +293,14 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private void setFootnoteModel(String modelId) {
+	private ZLTextModel setFootnoteModel(String modelId) {
 		final ZLTextModel model = Model.getFootnoteModel(modelId);
 		FootnoteView.setModel(model);
 		if (model != null) {
 			myFootnoteModelId = modelId;
 			setBookmarkHighlightings(FootnoteView, modelId);
 		}
+		return model;
 	}
 
 	private synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
