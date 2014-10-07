@@ -18,6 +18,11 @@ public class ShowYotaSettingsAction extends FBAndroidAction {
 		View button = BaseActivity.findViewById(viewId);
 		YotaSettingsPopup settingsPopup = (YotaSettingsPopup)Reader.getPopupById(YotaSettingsPopup.ID);
 		settingsPopup.setRootView(button);
-		Reader.showPopup(YotaSettingsPopup.ID);
+		if (settingsPopup.isShowing()) {
+			Reader.hideActivePopup();
+		}
+		else {
+			Reader.showPopup(YotaSettingsPopup.ID);
+		}
 	}
 }

@@ -48,15 +48,17 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class YotaBookContentPopup {
+public class YotaBookContentPopup extends ZLApplication.PopupPanel {
 	private final static int ACTION_BAR_HEIGHT = 72;
+	public final static String ID = "YotaBookContentPopup";
 
 	private final android.widget.PopupWindow mPopup;
-	private final View mRootView;
+	private View mRootView;
 	private final View mPopupView;
 	private ListView mContentsListView;
 	private ListView mBookmarksListView;
 	private final Context mFBReader;
+	private final FBReaderApp mFBReaderApp;
 	private TOCAdapter myAdapter;
 
 	private volatile Book mBook;
@@ -72,13 +74,14 @@ public class YotaBookContentPopup {
 	private Handler mHandler;
 	private final boolean mOnBackScreen;
 
-	public YotaBookContentPopup(Context fbreader, View root, boolean onBackScreen) {
-		mRootView = root;
-		mFBReader = fbreader;
+	public YotaBookContentPopup(FBReaderApp app, Context context, boolean onBackScreen) {
+		super(app);
+		mFBReader = context;
+		mFBReaderApp = app;
 		mHandler = new Handler(Looper.getMainLooper());
 		mOnBackScreen = onBackScreen;
 
-		mPopupView = View.inflate(fbreader, onBackScreen ? R.layout.yota_bs_book_content_popup :
+		mPopupView = View.inflate(context, onBackScreen ? R.layout.yota_bs_book_content_popup :
 				R.layout.yota_book_content_popup, null);
 
 		mContentsListView = (ListView)mPopupView.findViewById(R.id.contents_list);
@@ -95,7 +98,7 @@ public class YotaBookContentPopup {
 		mBookmarks = (RadioButton)mPopupView.findViewById(R.id.bookmarks);
 		mBookmarks.setOnClickListener(mOnTabSwitch);
 
-		mPopup = new android.widget.PopupWindow(fbreader);
+		mPopup = new android.widget.PopupWindow(context);
 		mPopup.setBackgroundDrawable(new ColorDrawable(0));
 		mPopup.setContentView(mPopupView);
 		mPopup.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
@@ -122,13 +125,13 @@ public class YotaBookContentPopup {
 		mHandler.post(action);
 	}
 
-	public void show(FBReaderApp readerApp) {
-		final TOCTree root = readerApp.Model.TOCTree;
-		mBook = readerApp.Model.Book;
+	public void show() {
+		final TOCTree root = mFBReaderApp.Model.TOCTree;
+		mBook = mFBReaderApp.Model.Book;
 		myAdapter = new TOCAdapter(root);
-		TOCTree treeToSelect = readerApp.getCurrentTOCElement();
+		TOCTree treeToSelect = mFBReaderApp.getCurrentTOCElement();
 		myAdapter.selectItem(treeToSelect);
-		mBookTextView = readerApp.getTextView();
+		mBookTextView = mFBReaderApp.getTextView();
 		if (mOnBackScreen) {
 			mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, ACTION_BAR_HEIGHT);
 		}
@@ -214,6 +217,26 @@ public class YotaBookContentPopup {
 			((FBReaderApp)FBReaderApp.Instance()).openBook(book, bookmark, null, null);
 		}
 		hide();
+	}
+
+	@Override
+	public String getId() {
+		return ID;
+	}
+
+	@Override
+	protected void update() {
+
+	}
+
+	@Override
+	protected void hide_() {
+		hide();
+	}
+
+	@Override
+	protected void show_() {
+		show();
 	}
 
 
@@ -387,4 +410,9 @@ public class YotaBookContentPopup {
 			}
 		}
 	}
+
+	public void setRootView(View root) {
+		mRootView = root;
+	}
+
 }

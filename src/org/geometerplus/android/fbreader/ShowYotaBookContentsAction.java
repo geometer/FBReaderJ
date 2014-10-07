@@ -3,11 +3,11 @@ package org.geometerplus.android.fbreader;
 import android.view.View;
 
 import com.yotadevices.yotaphone2.fbreader.YotaBookContentPopup;
+import com.yotadevices.yotaphone2.fbreader.YotaSettingsPopup;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 public class ShowYotaBookContentsAction extends FBAndroidAction {
-	private YotaBookContentPopup myContents = null;
 
 	ShowYotaBookContentsAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader);
@@ -15,16 +15,10 @@ public class ShowYotaBookContentsAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object... params) {
-		Integer viewId = (Integer)params[0];
+		Integer viewId = (Integer) params[0];
 		View button = BaseActivity.findViewById(viewId);
-
-		if (myContents == null) {
-			myContents = new YotaBookContentPopup(BaseActivity, button, false);
-		}
-		if (!myContents.isShowing()) {
-			myContents.show(Reader);
-		} else {
-			myContents.hide();
-		}
+		YotaBookContentPopup contentPopup = (YotaBookContentPopup) Reader.getPopupById(YotaBookContentPopup.ID);
+		contentPopup.setRootView(button);
+		Reader.showPopup(YotaBookContentPopup.ID);
 	}
 }

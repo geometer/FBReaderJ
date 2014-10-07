@@ -164,13 +164,14 @@ public class BSReadingActionBar {
 		@Override
 		public void onClick(View v) {
 			if (mContentsPopup == null) {
-				mContentsPopup = new YotaBookContentPopup(mContext, mRootView, true);
+				mContentsPopup = new YotaBookContentPopup(mReader, mContext, true);
+				mContentsPopup.setRootView(mRootView);
 			}
 			if (mContentsPopup.isShowing()) {
 				mContentsPopup.hide();
 			}
 			else {
-				mContentsPopup.show(mReader);
+				mContentsPopup.show();
 			}
 		}
 	};
