@@ -74,8 +74,8 @@ public class BSReadingActionBar {
                     authorString.append(authors.get(i).DisplayName);
                     authorString.append(", ");
                 }
+	            authorString.append(authors.get(authors.size() - 1));
             }
-            authorString.append(authors.get(authors.size() - 1));
             mBookAuthor.setText(authorString.toString());
             mBookTitle.setText(currentBook.getTitle().toUpperCase());
         }
