@@ -29,6 +29,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.*;
 import android.widget.*;
 
@@ -346,6 +347,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		//Debug.waitForDebugger();
 		super.onCreateOptionsMenu(menu);
 		if (!DeviceType.Instance().isYotaPhone()) {
 			if (myOptionsMenuActions.isEmpty()) {
@@ -359,6 +361,18 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				);
 			}
 		}
+		else {
+			if (myOptionsMenuActions.isEmpty()) {
+				myOptionsMenuActions.add(new RunSearchAction(this, false));
+			}
+			for (Action a : myOptionsMenuActions) {
+				final MenuItem item = menu.add(0, a.Code, Menu.NONE, "");
+				item.setShowAsAction(
+						a.ShowAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER
+				);
+				item.setIcon(R.drawable.yota_search_icon);
+			}
+		}
 		return true;
 	}
 
@@ -369,12 +383,14 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		final NetworkTree tree = getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			final MenuItem item = menu.findItem(a.Code);
-			if (a.isVisible(tree)) {
-				item.setVisible(true);
-				item.setEnabled(a.isEnabled(tree));
-				item.setTitle(a.getOptionsLabel(tree));
-			} else {
-				item.setVisible(false);
+			if (item != null) {
+				if (a.isVisible(tree)) {
+					item.setVisible(true);
+					item.setEnabled(a.isEnabled(tree));
+					item.setTitle(a.getOptionsLabel(tree));
+				} else {
+					item.setVisible(false);
+				}
 			}
 		}
 		return true;
@@ -391,13 +407,12 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 						break;
 			}
 		}
-		else {
-			final NetworkTree tree = getCurrentTree();
-			for (Action a : myOptionsMenuActions) {
-				if (a.Code == item.getItemId()) {
-					checkAndRun(a, tree);
-					break;
-				}
+
+		final NetworkTree tree = getCurrentTree();
+		for (Action a : myOptionsMenuActions) {
+			if (a.Code == item.getItemId()) {
+				checkAndRun(a, tree);
+				break;
 			}
 		}
 		return true;
