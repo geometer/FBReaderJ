@@ -367,8 +367,8 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     private FontSettingsPopup.OnFontChangeListener mOnFontChangedListener = new FontSettingsPopup.OnFontChangeListener() {
         @Override
         public void fontChanged() {
-            hideActionBar();
-            hideStatusBar();
+            //hideActionBar();
+            //hideStatusBar();
             //EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
         }
     };

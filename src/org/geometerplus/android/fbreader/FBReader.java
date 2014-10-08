@@ -555,7 +555,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		if (DeviceType.Instance().isYotaPhone()) {
 			if (myFBReaderApp.getTextView() != null) {
 				myFBReaderApp.getTextView().clearSelection();
-				myFBReaderApp.hideActivePopup();
 			}
 			((YotaSelectionPopup) myFBReaderApp.getPopupById(YotaSelectionPopup.ID)).setRootView(myRootView);
 			((YotaTranslatePopup) myFBReaderApp.getPopupById(YotaTranslatePopup.ID)).setRootView(myRootView);
@@ -776,6 +775,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 	@Override
 	protected void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
+		if (DeviceType.Instance().isYotaPhone()) {
+			myFBReaderApp.hideActivePopup();
+		}
 		PopupPanel.removeAllWindows(myFBReaderApp, this);
 		super.onStop();
 	}
@@ -1016,7 +1018,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		return myNavigationPopup != null;
 	}
 
-	public void hideBars() {
+	public  void hideBars() {
 		if (myNavigationPopup != null) {
 			myNavigationPopup.stopNavigation();
 			myNavigationPopup = null;
@@ -1047,7 +1049,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		setStatusBarVisibility(false);
 	}
 
-	void showBars() {
+	public void showBars() {
 		setStatusBarVisibility(true);
 
 		getActionBar().show();

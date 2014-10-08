@@ -135,7 +135,6 @@ public class YotaSettingsPopup extends ZLApplication.PopupPanel{
 
 	public YotaSettingsPopup(FBReaderApp app, FBReader reader) {
 		super(app);
-		mFBReader = reader;
 		mReaderApp = app;
 		mPopupView = View.inflate(reader, R.layout.yota_settings_popup, null);
 
@@ -144,7 +143,7 @@ public class YotaSettingsPopup extends ZLApplication.PopupPanel{
 		initRadioButtons(mPopupView, THEME_RADIO_BUTTONS_IDS, mOnThemeSelectListener, mThemeGroup);
 
 		mBrightnessSlide = (SeekBar)mPopupView.findViewById(R.id.brighness_seekbar);
-		mPopup = new android.widget.PopupWindow(mFBReader);
+		mPopup = new android.widget.PopupWindow(reader);
 		mPopup.setBackgroundDrawable(new ColorDrawable(0));
 		mPopup.setContentView(mPopupView);
 		mPopup.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
@@ -167,7 +166,9 @@ public class YotaSettingsPopup extends ZLApplication.PopupPanel{
 		mPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			@Override
 			public void onDismiss() {
-				mFBReader.hideBars();
+				if (mFBReader !=null ) {
+					mFBReader.hideBars();
+				}
 			}
 		});
 	}
@@ -267,8 +268,9 @@ public class YotaSettingsPopup extends ZLApplication.PopupPanel{
 	}
 
 
-	public void setRootView(View root) {
+	public void setRootView(View root, FBReader fbreader) {
 		mRootView = root;
+		mFBReader = fbreader;
 	}
 
 	public void hide() {

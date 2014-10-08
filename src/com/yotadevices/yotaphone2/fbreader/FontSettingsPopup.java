@@ -211,6 +211,7 @@ public class FontSettingsPopup {
             mListener.fontChanged();
             Pair<TextView, ImageView> fontView = mFontViews.get(fontSize);
             fontView.second.setVisibility(View.VISIBLE);
+	        setupFontSizes();
         }
     };
 
@@ -228,6 +229,7 @@ public class FontSettingsPopup {
 	        mReader.clearTextCaches();
 	        mReader.getViewWidget().repaint();
 	        mListener.fontChanged();
+	        setupFontStyle();
 
         }
     };
@@ -247,6 +249,7 @@ public class FontSettingsPopup {
                 mReader.getViewWidget().repaint();
                 mListener.fontChanged();
             }
+	        setupTheme();
         }
     };
 
