@@ -24,10 +24,10 @@ public class BSReadingStatusBar {
     private final View mRootView;
     private final View mPopupView;
     private final FBReaderApp mReader;
-
+	private boolean mFirstStart = true;
     private final static int STATUS_BAR_HEIGHT = 117;
-    //private final static int SYSTEM_NAVIGATION_BAR = 80;
-    private final static int SYSTEM_NAVIGATION_BAR = 0;
+    private final static int SYSTEM_NAVIGATION_BAR = 80;
+    //private final static int SYSTEM_NAVIGATION_BAR = 0;
     private TextView mBackToPage;
     private TextView mTotalPages;
     private TextView mPagesLeft;
@@ -71,7 +71,9 @@ public class BSReadingStatusBar {
 
     public void show() {
         updateData();
-        int yOffset = mRootView.getHeight() - (STATUS_BAR_HEIGHT + SYSTEM_NAVIGATION_BAR);
+
+		int yOffset = mRootView.getHeight() - (STATUS_BAR_HEIGHT + (mFirstStart ? 0 : SYSTEM_NAVIGATION_BAR));
+	    mFirstStart = false;
         mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, yOffset);
     }
 

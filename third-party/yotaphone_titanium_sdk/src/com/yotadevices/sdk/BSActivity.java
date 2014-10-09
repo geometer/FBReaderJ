@@ -56,7 +56,7 @@ public class BSActivity extends Service {
     private Handler mIncomingHandler;
     private final Handler h = new Handler(); // for UI thread actions
     private Drawer.Waveform mInitialWaveform = Drawer.Waveform.WAVEFORM_GC_FULL;
-    private Drawer.Dithering mInitialDithering = Drawer.Dithering.BLACK_AND_WHITE_ONLY;
+    private Drawer.Dithering mInitialDithering = Drawer.Dithering.DITHER_ATKINSON_BINARY;
 
     /**
      * Target we publish for clients to send messages to IncomingHandler.

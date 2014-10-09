@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
@@ -123,8 +124,6 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         super.onBSResume();
         registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         setBSContentView(mRootView);
-        hideActionBar();
-        hideStatusBar();
 
         EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_ATKINSON_BINARY);
         EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_A2);
@@ -136,11 +135,17 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
                 if (mWidget != null) {
 	                ZLAndroidPaintContext.AntiAliasOption.setValue(true);
                     myFBReaderApp.openBook(myCurrentBook, null, new Runnable() {
-                        public void run() {
-                            myFBReaderApp.initWindow();
-                            initBookView(true);
-	                        updateCoverOnYotaWidget(myFBReaderApp.Model.Book);
-                        }
+	                    public void run() {
+		                    myFBReaderApp.initWindow();
+		                    initBookView(true);
+		                    updateCoverOnYotaWidget(myFBReaderApp.Model.Book);
+		                    if (firstStart()) {
+			                    showActionBar();
+			                    showStatusBar();
+		                    } else {
+			                    hideStatusBar();
+		                    }
+	                    }
                     }, null);
                     AndroidFontUtil.clearFontCache();
 	                if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
@@ -155,6 +160,18 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 		                myFBReaderApp.hideActivePopup();
 	                }
                 }
+	            if (!firstStart()) {
+		            showActionBar();
+		            showStatusBar();
+		            mHandler.postDelayed(new Runnable() {
+			            @Override
+			            public void run() {
+				            hideActionBar();
+				            hideStatusBar();
+			            }
+		            }, 1500);
+	            }
+	            setNotFirstStart();
             }
         });
     }
@@ -336,7 +353,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     }
 
     public void showStatusBar() {
-        //setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE);
+        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE);
         if (mStatusBar == null) {
             mStatusBar = new BSReadingStatusBar(getBsContext(), mRootView, myFBReaderApp);
         }
@@ -353,7 +370,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (mStatusBar != null) {
             mStatusBar.hide();
         }
-        //setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION | Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR);
+        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION | Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR);
     }
 
     public BSReadingActionBar geActionBar() {
@@ -441,5 +458,18 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 			Intent i = new Intent(Consts.YOTA_WIDGET_SET_COVER_ACTION);
 			this.sendBroadcast(i);
 		}
+	}
+
+	private boolean firstStart() {
+		final SharedPreferences prefs = getSharedPreferences(Consts.YOTA_READER_BS_SETTINGS, MODE_PRIVATE);
+		final boolean firstStart = prefs.getBoolean(Consts.YOTA_READER_FIRST_START, true);
+		return firstStart;
+	}
+
+	private void setNotFirstStart() {
+		final SharedPreferences prefs = getSharedPreferences(Consts.YOTA_READER_BS_SETTINGS, MODE_PRIVATE);
+		final SharedPreferences.Editor ed = prefs.edit();
+		ed.putBoolean(Consts.YOTA_READER_FIRST_START, false);
+		ed.commit();
 	}
 }
