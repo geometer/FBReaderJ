@@ -29,23 +29,23 @@ bool StyleSheetTable::isEmpty() const {
 	return myControlMap.empty() && myPageBreakBeforeMap.empty() && myPageBreakAfterMap.empty();
 }
 
-void StyleSheetTable::addMap(shared_ptr<CSSSelector> selector, const AttributeMap &map) {
-	if (!selector.isNull() && selector->Next.isNull() && !map.empty()) {
-		const Key key(selector->Tag, selector->Class);
-		myControlMap[key] = createOrUpdateControl(map, myControlMap[key]);
+void StyleSheetTable::addMap(shared_ptr<CSSSelector> selectorPtr, const AttributeMap &map) {
+	if (!selectorPtr.isNull() && !map.empty()) {
+		const CSSSelector &selector = *selectorPtr;
+		myControlMap[selector] = createOrUpdateControl(map, myControlMap[selector]);
 
 		const std::string &pbb = value(map, "page-break-before");
 		if (pbb == "always" || pbb == "left" || pbb == "right") {
-			myPageBreakBeforeMap[key] = true;
+			myPageBreakBeforeMap[selector] = true;
 		} else if (pbb == "avoid") {
-			myPageBreakBeforeMap[key] = false;
+			myPageBreakBeforeMap[selector] = false;
 		}
 
 		const std::string &pba = value(map, "page-break-after");
 		if (pba == "always" || pba == "left" || pba == "right") {
-			myPageBreakAfterMap[key] = true;
+			myPageBreakAfterMap[selector] = true;
 		} else if (pba == "avoid") {
-			myPageBreakAfterMap[key] = false;
+			myPageBreakAfterMap[selector] = false;
 		}
 	}
 }
@@ -96,17 +96,17 @@ void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Featu
 }
 
 bool StyleSheetTable::doBreakBefore(const std::string &tag, const std::string &aClass) const {
-	std::map<Key,bool>::const_iterator it = myPageBreakBeforeMap.find(Key(tag, aClass));
+	std::map<CSSSelector,bool>::const_iterator it = myPageBreakBeforeMap.find(CSSSelector(tag, aClass));
 	if (it != myPageBreakBeforeMap.end()) {
 		return it->second;
 	}
 
-	it = myPageBreakBeforeMap.find(Key("", aClass));
+	it = myPageBreakBeforeMap.find(CSSSelector("", aClass));
 	if (it != myPageBreakBeforeMap.end()) {
 		return it->second;
 	}
 
-	it = myPageBreakBeforeMap.find(Key(tag, ""));
+	it = myPageBreakBeforeMap.find(CSSSelector(tag, ""));
 	if (it != myPageBreakBeforeMap.end()) {
 		return it->second;
 	}
@@ -115,17 +115,17 @@ bool StyleSheetTable::doBreakBefore(const std::string &tag, const std::string &a
 }
 
 bool StyleSheetTable::doBreakAfter(const std::string &tag, const std::string &aClass) const {
-	std::map<Key,bool>::const_iterator it = myPageBreakAfterMap.find(Key(tag, aClass));
+	std::map<CSSSelector,bool>::const_iterator it = myPageBreakAfterMap.find(CSSSelector(tag, aClass));
 	if (it != myPageBreakAfterMap.end()) {
 		return it->second;
 	}
 
-	it = myPageBreakAfterMap.find(Key("", aClass));
+	it = myPageBreakAfterMap.find(CSSSelector("", aClass));
 	if (it != myPageBreakAfterMap.end()) {
 		return it->second;
 	}
 
-	it = myPageBreakAfterMap.find(Key(tag, ""));
+	it = myPageBreakAfterMap.find(CSSSelector(tag, ""));
 	if (it != myPageBreakAfterMap.end()) {
 		return it->second;
 	}
@@ -134,8 +134,8 @@ bool StyleSheetTable::doBreakAfter(const std::string &tag, const std::string &aC
 }
 
 shared_ptr<ZLTextStyleEntry> StyleSheetTable::control(const std::string &tag, const std::string &aClass) const {
-	std::map<Key,shared_ptr<ZLTextStyleEntry> >::const_iterator it =
-		myControlMap.find(Key(tag, aClass));
+	std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> >::const_iterator it =
+		myControlMap.find(CSSSelector(tag, aClass));
 	return it != myControlMap.end() ? it->second : 0;
 }
 

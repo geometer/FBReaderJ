@@ -51,6 +51,10 @@ private:
 	CSSSelector(const std::string &simple);
 
 public:
+	CSSSelector(const std::string &tag, const std::string &clazz);
+	bool operator < (const CSSSelector &selector) const;
+
+public:
 	std::string Tag;
 	std::string Class;
 	shared_ptr<Component> Next;
