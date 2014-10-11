@@ -33,6 +33,7 @@
 
 StyleSheetParser::StyleSheetParser(const std::string &pathPrefix) : myPathPrefix(pathPrefix) {
 	//ZLLogger::Instance().registerClass("CSS-IMPORT");
+	ZLLogger::Instance().registerClass("CSS-SELECTOR");
 	reset();
 }
 
@@ -263,14 +264,15 @@ void StyleSheetMultiStyleParser::storeData(const std::string &selector, const St
 
 	const std::vector<std::string> ids = ZLStringUtil::split(s, ",", true);
 	for (std::vector<std::string>::const_iterator it = ids.begin(); it != ids.end(); ++it) {
-		std::string id = *it;
-		ZLStringUtil::stripWhiteSpaces(id);
-		if (!id.empty()) {
-			const std::size_t index = id.find('.');
-			if (index == std::string::npos) {
-				store(id, std::string(), map);
-			} else {
-				store(id.substr(0, index), id.substr(index + 1), map);
+		ZLLogger::Instance().println("CSS-SELECTOR", "STRING = '" + *it + "'");
+		shared_ptr<CSSSelector> selector = CSSSelector::parse(*it);
+		if (!selector.isNull()) {
+			ZLLogger::Instance().println("CSS-SELECTOR", "SELE = '" + selector->Tag + "." + selector->Class + "'");
+			store(selector, map);
+			while (!selector->Next.isNull()) {
+				shared_ptr<CSSSelector> s = selector->Next->Selector;
+				selector = s;
+				ZLLogger::Instance().println("CSS-SELECTOR", "SUB SELE = '" + selector->Tag + "." + selector->Class + "'");
 			}
 		}
 	}
@@ -328,16 +330,16 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 StyleSheetTableParser::StyleSheetTableParser(const std::string &pathPrefix, StyleSheetTable &styleTable, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap, encryptionMap), myStyleTable(styleTable) {
 }
 
-void StyleSheetTableParser::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
-	myStyleTable.addMap(tag, aClass, map);
+void StyleSheetTableParser::store(shared_ptr<CSSSelector> selector, const StyleSheetTable::AttributeMap &map) {
+	myStyleTable.addMap(selector, map);
 }
 
 StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap, encryptionMap) {
 	myProcessedFiles.insert(file.path());
 }
 
-void StyleSheetParserWithCache::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
-	myEntries.push_back(new Entry(tag, aClass, map));
+void StyleSheetParserWithCache::store(shared_ptr<CSSSelector> selector, const StyleSheetTable::AttributeMap &map) {
+	myEntries.push_back(new Entry(selector, map));
 }
 
 void StyleSheetParserWithCache::importCSS(const std::string &path) {
@@ -362,7 +364,7 @@ void StyleSheetParserWithCache::importCSS(const std::string &path) {
 void StyleSheetParserWithCache::applyToTables(StyleSheetTable &table, FontMap &fontMap) const {
 	for (std::list<shared_ptr<Entry> >::const_iterator it = myEntries.begin(); it != myEntries.end(); ++it) {
 		const Entry &entry = **it;
-		table.addMap(entry.Tag, entry.Class, entry.Map);
+		table.addMap(entry.Selector, entry.Map);
 	}
 	fontMap.merge(*myFontMap);
 }
