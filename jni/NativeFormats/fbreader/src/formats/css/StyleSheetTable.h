@@ -29,6 +29,8 @@
 #include <ZLTextParagraph.h>
 #include <ZLTextStyleEntry.h>
 
+class CSSSelector;
+
 class StyleSheetTable {
 
 public:
@@ -36,7 +38,7 @@ public:
 	static shared_ptr<ZLTextStyleEntry> createOrUpdateControl(const AttributeMap &map, shared_ptr<ZLTextStyleEntry> entry = 0);
 
 private:
-	void addMap(const std::string &tag, const std::string &aClass, const AttributeMap &map);
+	void addMap(shared_ptr<CSSSelector> selector, const AttributeMap &map);
 
 	static void setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature featureId, const AttributeMap &map, const std::string &attributeName);
 	static const std::string &value(const AttributeMap &map, const std::string &name);
@@ -50,13 +52,6 @@ public:
 	void clear();
 
 private:
-	enum KeyRelation {
-		Ancestor, // "X Y" selector, X is ancestor for Y
-		Parent, // "X > Y" selector, X is parent for Y
-		PreviuosSibling, // "X + Y" selector, X is previous sibling for Y
-		Predecessor, // "Y ~ X", X is an ancestor for Y, or X is a sibling for Y that was occured before Y
-	};
-
 	struct Key {
 		Key(const std::string &tag, const std::string &aClass);
 
@@ -78,7 +73,11 @@ inline StyleSheetTable::Key::Key(const std::string &tag, const std::string &aCla
 }
 
 inline bool StyleSheetTable::Key::operator < (const StyleSheetTable::Key &key) const {
-	return (TagName < key.TagName) || ((TagName == key.TagName) && (ClassName < key.ClassName));
+	const int diff = TagName.compare(key.TagName);
+	if (diff != 0) {
+		return diff < 0;
+	}
+	return ClassName < key.ClassName;
 }
 
 #endif /* __STYLESHEETTABLE_H__ */
