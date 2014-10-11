@@ -27,6 +27,7 @@
 #include <FileEncryptionInfo.h>
 
 #include "StyleSheetTable.h"
+#include "CSSSelector.h"
 #include "FontMap.h"
 
 class ZLFile;
@@ -89,7 +90,7 @@ protected:
 	StyleSheetMultiStyleParser(const std::string &pathPrefix, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap);
 
 protected:
-	virtual void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) = 0;
+	virtual void store(shared_ptr<CSSSelector> selector, const StyleSheetTable::AttributeMap &map) = 0;
 
 private:
 	void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
@@ -106,7 +107,7 @@ public:
 	StyleSheetTableParser(const std::string &pathPrexix, StyleSheetTable &styleTable, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap);
 
 private:
-	void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
+	void store(shared_ptr<CSSSelector> selector, const StyleSheetTable::AttributeMap &map);
 
 private:
 	StyleSheetTable &myStyleTable;
@@ -116,11 +117,10 @@ class StyleSheetParserWithCache : public StyleSheetMultiStyleParser {
 
 private:
 	struct Entry {
-		const std::string Tag;
-		const std::string Class;
+		shared_ptr<CSSSelector> Selector;
 		const StyleSheetTable::AttributeMap Map;
 
-		Entry(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
+		Entry(shared_ptr<CSSSelector> selector, const StyleSheetTable::AttributeMap &map);
 	};
 
 public:
@@ -128,7 +128,7 @@ public:
 	void applyToTables(StyleSheetTable &table, FontMap &fontMap) const;
 
 private:
-	void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
+	void store(shared_ptr<CSSSelector> selector, const StyleSheetTable::AttributeMap &map);
 	void importCSS(const std::string &path);
 
 private:
@@ -136,7 +136,7 @@ private:
 	std::set<std::string> myProcessedFiles;
 };
 
-inline StyleSheetParserWithCache::Entry::Entry(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) : Tag(tag), Class(aClass), Map(map) {
+inline StyleSheetParserWithCache::Entry::Entry(shared_ptr<CSSSelector> selector, const StyleSheetTable::AttributeMap &map) : Selector(selector), Map(map) {
 }
 
 #endif /* __STYLESHEETPARSER_H__ */
