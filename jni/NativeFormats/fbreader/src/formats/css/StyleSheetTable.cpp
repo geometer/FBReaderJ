@@ -23,14 +23,15 @@
 
 #include "StyleSheetTable.h"
 #include "StyleSheetUtil.h"
+#include "CSSSelector.h"
 
 bool StyleSheetTable::isEmpty() const {
 	return myControlMap.empty() && myPageBreakBeforeMap.empty() && myPageBreakAfterMap.empty();
 }
 
-void StyleSheetTable::addMap(const std::string &tag, const std::string &aClass, const AttributeMap &map) {
-	if ((!tag.empty() || !aClass.empty()) && !map.empty()) {
-		const Key key(tag, aClass);
+void StyleSheetTable::addMap(shared_ptr<CSSSelector> selector, const AttributeMap &map) {
+	if (!selector.isNull() && selector->Next.isNull() && !map.empty()) {
+		const Key key(selector->Tag, selector->Class);
 		myControlMap[key] = createOrUpdateControl(map, myControlMap[key]);
 
 		const std::string &pbb = value(map, "page-break-before");
