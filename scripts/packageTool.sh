@@ -25,11 +25,13 @@ updateVersion() {
 			variant=1
 			;;
 	esac
-		
-	major=`echo $version | cut -d . -f 1`
-	minor=`echo $version | cut -d . -f 2`
-	micro=`echo $version | cut -d . -f 3`
-	local=`echo $version | cut -d . -f 4`
+
+	fixed=`echo $version | sed "s/ beta.*//"`
+
+	major=`echo $fixed | cut -d . -f 1`
+	minor=`echo $fixed | cut -d . -f 2`
+	micro=`echo $fixed | cut -d . -f 3`
+	local=`echo $fixed | cut -d . -f 4`
 	if [ "$branch" == "nook" ]; then
 		version=$version-nst
 	elif [ "$branch" == "kindle" ]; then
@@ -37,10 +39,14 @@ updateVersion() {
 	fi
 	
 	if [ "$micro" == "" ]; then
-     micro=0
+    micro=0
   fi
+	if [ "$version" != "$fixed" ]; then
+		minor=$(($minor - 1))
+		micro=$(($micro + 50))
+	fi
 	if [ "$local" == "" ]; then
-     local=0
+    local=0
   fi
 	intversion=$((1000000*$major+10000*$minor+100*$micro+10*$variant+$local))
 	sed "s/@INTVERSION@/$intversion/" AndroidManifest.xml.pattern | sed "s/@VERSION@/$version/" > AndroidManifest.xml
