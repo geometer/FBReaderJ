@@ -270,8 +270,7 @@ void StyleSheetMultiStyleParser::storeData(const std::string &selector, const St
 			ZLLogger::Instance().println("CSS-SELECTOR", "SELE = '" + selector->Tag + "." + selector->Class + "'");
 			store(selector, map);
 			while (!selector->Next.isNull()) {
-				shared_ptr<CSSSelector> s = selector->Next->Selector;
-				selector = s;
+				selector = selector->Next->Selector;
 				ZLLogger::Instance().println("CSS-SELECTOR", "SUB SELE = '" + selector->Tag + "." + selector->Class + "'");
 			}
 		}
