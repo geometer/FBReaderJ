@@ -48,6 +48,7 @@ public:
 	bool doBreakBefore(const std::string &tag, const std::string &aClass) const;
 	bool doBreakAfter(const std::string &tag, const std::string &aClass) const;
 	shared_ptr<ZLTextStyleEntry> control(const std::string &tag, const std::string &aClass) const;
+	std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > allControls(const std::string &tag, const std::string &aClass) const;
 
 	void clear();
 

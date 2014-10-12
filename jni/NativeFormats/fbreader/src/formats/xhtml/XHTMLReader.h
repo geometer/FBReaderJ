@@ -32,6 +32,7 @@
 #include "../css/StyleSheetTable.h"
 #include "../css/StyleSheetParser.h"
 #include "../../bookmodel/FBTextKind.h"
+#include "XHTMLTagInfo.h"
 
 class ZLFile;
 
@@ -70,7 +71,7 @@ public:
 		std::vector<FBTextKind> TextKinds;
 		std::vector<shared_ptr<ZLTextStyleEntry> > StyleEntries;
 		bool PageBreakAfter;
-		size_t ChildCount;
+		XHTMLTagInfoList Children;
 
 		TagData();
 	};
@@ -106,7 +107,9 @@ private:
 	void beginParagraph(bool restarted = false);
 	void endParagraph();
 	void restartParagraph();
-	bool addTextStyleEntry(const std::string tag, const std::string aClass);
+	const XHTMLTagInfoList &tagInfos(size_t depth) const;
+	bool matches(const shared_ptr<CSSSelector::Component> next, int depth = 0, int pos = -1) const;
+	void addTextStyleEntry(const std::string tag, const std::string aClass);
 	void addTextStyleEntry(const ZLTextStyleEntry &entry);
 
 	void pushTextKind(FBTextKind kind);

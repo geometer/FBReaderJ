@@ -20,6 +20,7 @@
 #include <cstdlib>
 
 #include <ZLStringUtil.h>
+#include <ZLLogger.h>
 
 #include "StyleSheetTable.h"
 #include "StyleSheetUtil.h"
@@ -137,6 +138,30 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::control(const std::string &tag, co
 	std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> >::const_iterator it =
 		myControlMap.find(CSSSelector(tag, aClass));
 	return it != myControlMap.end() ? it->second : 0;
+}
+
+static std::string STR0(const CSSSelector& selector) {
+	return selector.Tag + "." + selector.Class;
+}
+
+static std::string STR1(const CSSSelector& selector) {
+	if (selector.Next.isNull()) {
+		return STR0(selector);
+	}
+	return STR0(selector) + " " + ZLStringUtil::numberToString(selector.Next->Delimiter) + " " + STR1(*(selector.Next->Selector));
+}
+
+std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > StyleSheetTable::allControls(const std::string &tag, const std::string &aClass) const {
+	const CSSSelector key(tag, aClass);
+	std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > pairs;
+
+	std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> >::const_iterator it =
+		myControlMap.lower_bound(key);
+	for (std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> >::const_iterator jt = it; jt != myControlMap.end() && key.weakEquals(jt->first); ++jt) {
+		ZLLogger::Instance().print("CSS-SELECTOR", STR1(key) + " => " + STR1(jt->first));
+		pairs.push_back(*jt);
+	}
+	return pairs;
 }
 
 const std::string &StyleSheetTable::value(const AttributeMap &map, const std::string &name) {

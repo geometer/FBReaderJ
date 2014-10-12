@@ -45,7 +45,7 @@ void CSSSelector::update(shared_ptr<CSSSelector> &selector, const char *&start, 
 		Relation rel = Ancestor;
 		switch (delimiter) {
 			case '+':
-				rel = Previuos;
+				rel = Previous;
 				break;
 			case '~':
 				rel = Predecessor;
@@ -69,7 +69,7 @@ shared_ptr<CSSSelector> CSSSelector::parse(const std::string &data) {
 	char delimiter = '?';
 
 	for (const char *ptr = start; ptr < end; ++ptr) {
-		if (*ptr == '+' || *ptr == '<' || *ptr == '~') {
+		if (*ptr == '+' || *ptr == '>' || *ptr == '~') {
 			if (wordStart != 0) {
 				update(selector, wordStart, ptr, delimiter);
 			}
@@ -88,6 +88,10 @@ shared_ptr<CSSSelector> CSSSelector::parse(const std::string &data) {
 	}
 
 	return selector;
+}
+
+bool CSSSelector::weakEquals(const CSSSelector &selector) const {
+	return Tag == selector.Tag && Class == selector.Class;
 }
 
 bool CSSSelector::operator < (const CSSSelector &selector) const {
