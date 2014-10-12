@@ -26,7 +26,7 @@ updateVersion() {
 			;;
 	esac
 
-	fixed=`echo $version | sed "s/ beta.*//"`
+	fixed=`echo $version | sed "s/ *beta */./"`
 
 	major=`echo $fixed | cut -d . -f 1`
 	minor=`echo $fixed | cut -d . -f 2`
