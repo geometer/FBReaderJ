@@ -21,6 +21,11 @@
 
 #include "CSSSelector.h"
 
+CSSSelector::CSSSelector(const std::string &tag, const std::string &clazz) {
+	Tag = tag;
+	Class = clazz;
+}
+
 CSSSelector::CSSSelector(const std::string &simple) {
 	const std::size_t index = simple.find('.');
 	if (index == std::string::npos) {
@@ -40,7 +45,7 @@ void CSSSelector::update(shared_ptr<CSSSelector> &selector, const char *&start, 
 		Relation rel = Ancestor;
 		switch (delimiter) {
 			case '+':
-				rel = Previuos;
+				rel = Previous;
 				break;
 			case '~':
 				rel = Predecessor;
@@ -64,7 +69,7 @@ shared_ptr<CSSSelector> CSSSelector::parse(const std::string &data) {
 	char delimiter = '?';
 
 	for (const char *ptr = start; ptr < end; ++ptr) {
-		if (*ptr == '+' || *ptr == '<' || *ptr == '~') {
+		if (*ptr == '+' || *ptr == '>' || *ptr == '~') {
 			if (wordStart != 0) {
 				update(selector, wordStart, ptr, delimiter);
 			}
@@ -83,4 +88,30 @@ shared_ptr<CSSSelector> CSSSelector::parse(const std::string &data) {
 	}
 
 	return selector;
+}
+
+bool CSSSelector::weakEquals(const CSSSelector &selector) const {
+	return Tag == selector.Tag && Class == selector.Class;
+}
+
+bool CSSSelector::operator < (const CSSSelector &selector) const {
+	int diff = Tag.compare(selector.Tag);
+	if (diff != 0) {
+		return diff < 0;
+	}
+	diff = Class.compare(selector.Class);
+	if (diff != 0) {
+		return diff < 0;
+	}
+	if (selector.Next.isNull()) {
+		return false;
+	}
+	if (Next.isNull()) {
+		return true;
+	}
+	diff = Next->Delimiter - selector.Next->Delimiter;
+	if (diff != 0) {
+		return diff < 0;
+	}
+	return *(Next->Selector) < *(selector.Next->Selector);
 }
