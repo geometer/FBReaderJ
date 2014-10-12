@@ -154,6 +154,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/util/MiscUtil.cpp \
 	NativeFormats/fbreader/src/formats/util/XMLTextStream.cpp \
 	NativeFormats/fbreader/src/formats/xhtml/XHTMLReader.cpp \
+	NativeFormats/fbreader/src/formats/xhtml/XHTMLTagInfo.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocBookReader.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocMetaInfoReader.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocPlugin.cpp \
