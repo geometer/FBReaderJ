@@ -17,7 +17,6 @@
  * 02110-1301, USA.
  */
 
-#include <cstring>
 #include <cctype>
 
 #include <ZLFile.h>
@@ -342,7 +341,7 @@ void XHTMLTagListAction::doAtEnd(XHTMLReader &reader) {
 void XHTMLTagItemAction::doAtStart(XHTMLReader &reader, const char**) {
 	bool restart = true;
 	if (reader.myTagDataStack.size() >= 2) {
-		restart = reader.myTagDataStack[reader.myTagDataStack.size() - 2]->ChildCount > 1;
+		restart = reader.myTagDataStack[reader.myTagDataStack.size() - 2]->Children.size() > 1;
 	}
 	if (restart) {
 		endParagraph(reader);
@@ -677,14 +676,55 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 	return readDocument(file.inputStream(myEncryptionMap));
 }
 
-bool XHTMLReader::addTextStyleEntry(const std::string tag, const std::string aClass) {
-	shared_ptr<ZLTextStyleEntry> entry = myStyleSheetTable.control(tag, aClass);
-	if (!entry.isNull()) {
-		addTextStyleEntry(*(entry->start()));
-		myTagDataStack.back()->StyleEntries.push_back(entry);
+const XHTMLTagInfoList &XHTMLReader::tagInfos(size_t depth) const {
+	static const XHTMLTagInfoList EMPTY;
+	if (myTagDataStack.size() < depth + 2) {
+		return EMPTY;
+	}
+	return myTagDataStack[myTagDataStack.size() - depth - 2]->Children;
+}
+
+bool XHTMLReader::matches(const shared_ptr<CSSSelector::Component> next, int depth, int pos) const {
+	if (next.isNull()) {
 		return true;
 	}
-	return false;
+
+	// TODO: check next->Selector.Next
+	const CSSSelector &selector = *(next->Selector);
+	switch (next->Delimiter) {
+		default:
+			return false;
+		case CSSSelector::Parent:
+			return tagInfos(depth + 1).matches(selector, -1) && matches(selector.Next, depth + 1);
+		case CSSSelector::Ancestor:
+			for (size_t i = 1; i < myTagDataStack.size() - depth - 1; ++i) {
+				if (tagInfos(depth + i).matches(selector, -1) && matches(selector.Next, i)) {
+					return true;
+				}
+			}
+			return false;
+		case CSSSelector::Predecessor:
+		{
+			const int index = tagInfos(depth).find(selector, 0, pos);
+			return index != -1 && matches(selector.Next, depth, index);
+		}
+		case CSSSelector::Previous:
+			return tagInfos(depth).matches(selector, pos - 1) && matches(selector.Next, depth, pos - 1);
+	}
+}
+
+void XHTMLReader::addTextStyleEntry(const std::string tag, const std::string aClass) {
+	std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > controls =
+		myStyleSheetTable.allControls(tag, aClass);
+	for (std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > >::const_iterator it = controls.begin(); it != controls.end(); ++it) {
+		if (matches(it->first.Next)) {
+			shared_ptr<ZLTextStyleEntry> entry = it->second;
+			if (!entry.isNull()) {
+				addTextStyleEntry(*(entry->start()));
+				myTagDataStack.back()->StyleEntries.push_back(entry);
+			}
+		}
+	}
 }
 
 void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
@@ -732,17 +772,6 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		return;
 	}
 
-	if (!myTagDataStack.empty()) {
-		myTagDataStack.back()->ChildCount += 1;
-	}
-	myTagDataStack.push_back(new TagData());
-
-	static const std::string HASH = "#";
-	const char *id = attributeValue(attributes, "id");
-	if (id != 0) {
-		myModelReader.addHyperlinkLabel(myReferenceAlias + HASH + id);
-	}
-
 	std::vector<std::string> classesList;
 	const char *aClasses = attributeValue(attributes, "class");
 	if (aClasses != 0) {
@@ -750,6 +779,17 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		for (std::vector<std::string>::const_iterator it = split.begin(); it != split.end(); ++it) {
 			classesList.push_back(*it);
 		}
+	}
+
+	if (!myTagDataStack.empty()) {
+		myTagDataStack.back()->Children.push_back(XHTMLTagInfo(sTag, classesList));
+	}
+	myTagDataStack.push_back(new TagData());
+
+	static const std::string HASH = "#";
+	const char *id = attributeValue(attributes, "id");
+	if (id != 0) {
+		myModelReader.addHyperlinkLabel(myReferenceAlias + HASH + id);
 	}
 
 	bool breakBefore = myStyleSheetTable.doBreakBefore(sTag, "");
@@ -951,5 +991,5 @@ const std::string &XHTMLReader::fileAlias(const std::string &fileName) const {
 	return it->second;
 }
 
-XHTMLReader::TagData::TagData() : PageBreakAfter(false), ChildCount(0) {
+XHTMLReader::TagData::TagData() : PageBreakAfter(false) {
 }
