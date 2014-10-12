@@ -29,7 +29,7 @@
 #include <ZLTextParagraph.h>
 #include <ZLTextStyleEntry.h>
 
-class CSSSelector;
+#include "CSSSelector.h"
 
 class StyleSheetTable {
 
@@ -48,36 +48,17 @@ public:
 	bool doBreakBefore(const std::string &tag, const std::string &aClass) const;
 	bool doBreakAfter(const std::string &tag, const std::string &aClass) const;
 	shared_ptr<ZLTextStyleEntry> control(const std::string &tag, const std::string &aClass) const;
+	std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > allControls(const std::string &tag, const std::string &aClass) const;
 
 	void clear();
 
 private:
-	struct Key {
-		Key(const std::string &tag, const std::string &aClass);
-
-		const std::string TagName;
-		const std::string ClassName;
-
-		bool operator < (const Key &key) const;
-	};
-
-	std::map<Key,shared_ptr<ZLTextStyleEntry> > myControlMap;
-	std::map<Key,bool> myPageBreakBeforeMap;
-	std::map<Key,bool> myPageBreakAfterMap;
+	std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> > myControlMap;
+	std::map<CSSSelector,bool> myPageBreakBeforeMap;
+	std::map<CSSSelector,bool> myPageBreakAfterMap;
 
 friend class StyleSheetTableParser;
 friend class StyleSheetParserWithCache;
 };
-
-inline StyleSheetTable::Key::Key(const std::string &tag, const std::string &aClass) : TagName(tag), ClassName(aClass) {
-}
-
-inline bool StyleSheetTable::Key::operator < (const StyleSheetTable::Key &key) const {
-	const int diff = TagName.compare(key.TagName);
-	if (diff != 0) {
-		return diff < 0;
-	}
-	return ClassName < key.ClassName;
-}
 
 #endif /* __STYLESHEETTABLE_H__ */
