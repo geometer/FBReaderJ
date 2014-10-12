@@ -30,7 +30,7 @@ public:
 	enum Relation {
 		Ancestor, // "X Y" selector, X is ancestor for Y
 		Parent, // "X > Y" selector, X is parent for Y
-		Previuos, // "X + Y" selector, X is previous sibling for Y
+		Previous, // "X + Y" selector, X is previous sibling for Y
 		Predecessor, // "X ~ Y", X is a sibling for Y that was occured before Y
 	};
 
@@ -49,6 +49,11 @@ private:
 
 private:
 	CSSSelector(const std::string &simple);
+
+public:
+	CSSSelector(const std::string &tag, const std::string &clazz);
+	bool weakEquals(const CSSSelector &selector) const;
+	bool operator < (const CSSSelector &selector) const;
 
 public:
 	std::string Tag;
