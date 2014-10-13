@@ -20,7 +20,6 @@
 #include <cstdlib>
 
 #include <ZLStringUtil.h>
-#include <ZLLogger.h>
 
 #include "StyleSheetTable.h"
 #include "StyleSheetUtil.h"
@@ -84,15 +83,21 @@ static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntr
 	return false;
 }
 
-void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature featureId, const AttributeMap &map, const std::string &attributeName) {
-	StyleSheetTable::AttributeMap::const_iterator it = map.find(attributeName);
-	if (it == map.end()) {
-		return;
-	}
+static bool trySetLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature featureId, const std::string &value) {
 	short size;
 	ZLTextStyleEntry::SizeUnit unit;
-	if (parseLength(it->second, size, unit)) {
+	if (::parseLength(value, size, unit)) {
 		entry.setLength(featureId, size, unit);
+		return true;
+	}
+	return false;
+}
+
+void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature featureId, const AttributeMap &map, const std::string &attributeName) {
+	StyleSheetTable::AttributeMap::const_iterator it = map.find(attributeName);
+	if (it != map.end()) {
+		::trySetLength(entry, featureId, it->second);
+		return;
 	}
 }
 
@@ -140,17 +145,6 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::control(const std::string &tag, co
 	return it != myControlMap.end() ? it->second : 0;
 }
 
-static std::string STR0(const CSSSelector& selector) {
-	return selector.Tag + "." + selector.Class;
-}
-
-static std::string STR1(const CSSSelector& selector) {
-	if (selector.Next.isNull()) {
-		return STR0(selector);
-	}
-	return STR0(selector) + " " + ZLStringUtil::numberToString(selector.Next->Delimiter) + " " + STR1(*(selector.Next->Selector));
-}
-
 std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > StyleSheetTable::allControls(const std::string &tag, const std::string &aClass) const {
 	const CSSSelector key(tag, aClass);
 	std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > pairs;
@@ -158,7 +152,6 @@ std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > StyleSheetTab
 	std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> >::const_iterator it =
 		myControlMap.lower_bound(key);
 	for (std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> >::const_iterator jt = it; jt != myControlMap.end() && key.weakEquals(jt->first); ++jt) {
-		ZLLogger::Instance().print("CSS-SELECTOR", STR1(key) + " => " + STR1(jt->first));
 		pairs.push_back(*jt);
 	}
 	return pairs;
@@ -261,7 +254,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 		} else if (fontSize == "larger") {
 			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_LARGER, true);
 			doSetFontSize = false;
-		} else if (!parseLength(fontSize, size, unit)) {
+		} else if (!::parseLength(fontSize, size, unit)) {
 			doSetFontSize = false;
 		}
 		if (doSetFontSize) {
@@ -269,9 +262,9 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 		}
 	}
 
-	StyleSheetTable::AttributeMap::const_iterator it = styles.find("margin");
-	if (it != styles.end()) {
-		std::vector<std::string> split = ZLStringUtil::split(it->second, " ", true);
+	const std::string margin = value(styles, "margin");
+	if (!margin.empty()) {
+		std::vector<std::string> split = ZLStringUtil::split(margin, " ", true);
 		if (split.size() > 0) {
 			switch (split.size()) {
 				case 1:
@@ -285,20 +278,10 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 					break;
 			}
 		}
-		short size;
-		ZLTextStyleEntry::SizeUnit unit;
-		if (parseLength(split[0], size, unit)) {
-			entry->setLength(ZLTextStyleEntry::LENGTH_SPACE_BEFORE, size, unit);
-		}
-		if (parseLength(split[1], size, unit)) {
-			entry->setLength(ZLTextStyleEntry::LENGTH_RIGHT_INDENT, size, unit);
-		}
-		if (parseLength(split[2], size, unit)) {
-			entry->setLength(ZLTextStyleEntry::LENGTH_SPACE_AFTER, size, unit);
-		}
-		if (parseLength(split[3], size, unit)) {
-			entry->setLength(ZLTextStyleEntry::LENGTH_LEFT_INDENT, size, unit);
-		}
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_BEFORE, split[0]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_RIGHT_INDENT, split[1]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_AFTER, split[2]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_LEFT_INDENT, split[3]);
 	}
 	setLength(*entry, ZLTextStyleEntry::LENGTH_LEFT_INDENT, styles, "margin-left");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_RIGHT_INDENT, styles, "margin-right");
@@ -307,6 +290,22 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 	setLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_BEFORE, styles, "padding-top");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_AFTER, styles, "margin-bottom");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_AFTER, styles, "padding-bottom");
+
+	const std::string verticalAlign = value(styles, "vertical-align");
+	if (!verticalAlign.empty()) {
+		static const char* values[] = { "sub", "super", "top", "text-top", "middle", "bottom", "text-bottom", "initial", "inherit" };
+		int index = sizeof(values) / sizeof(const char*) - 1;
+		for (; index >= 0; --index) {
+			if (verticalAlign == values[index]) {
+				break;
+			}
+		}
+		if (index >= 0) {
+			entry->setVerticalAlignCode((unsigned char)index);
+		} else {
+			::trySetLength(*entry, ZLTextStyleEntry::LENGTH_VERTICAL_ALIGN, verticalAlign);
+		}
+	}
 
 	return entry;
 }

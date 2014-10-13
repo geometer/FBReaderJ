@@ -26,7 +26,7 @@
 //#include <ZLLanguageUtil.h>
 #include <ZLUnicodeUtil.h>
 //#include <ZLStringUtil.h>
-#include <ZLLogger.h>
+//#include <ZLLogger.h>
 #include <FontManager.h>
 
 #include "ZLTextModel.h"
@@ -251,7 +251,8 @@ void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry, const std::vector
 			len += 4; // each supported length
 		}
 	}
-	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE)) {
+	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE) ||
+			entry.isFeatureSupported(ZLTextStyleEntry::NON_LENGTH_VERTICAL_ALIGN)) {
 		len += 2;
 	}
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
@@ -288,9 +289,10 @@ void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry, const std::vector
 			*address++ = 0;
 		}
 	}
-	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE)) {
+	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE) ||
+			entry.isFeatureSupported(ZLTextStyleEntry::NON_LENGTH_VERTICAL_ALIGN)) {
 		*address++ = entry.myAlignmentType;
-		*address++ = 0;
+		*address++ = entry.myVerticalAlignCode;
 	}
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
 		address = ZLCachedMemoryAllocator::writeUInt16(address, myFontManager.familyListIndex(fontFamilies));
