@@ -68,10 +68,12 @@ public:
 		LENGTH_SPACE_BEFORE =               3,
 		LENGTH_SPACE_AFTER =                4,
 		LENGTH_FONT_SIZE =                  5,
-		NUMBER_OF_LENGTHS =                 6,
+		LENGTH_VERTICAL_ALIGN =             6,
+		NUMBER_OF_LENGTHS =                 7,
 		ALIGNMENT_TYPE =                    NUMBER_OF_LENGTHS,
 		FONT_FAMILY =                       NUMBER_OF_LENGTHS + 1,
 		FONT_STYLE_MODIFIER =               NUMBER_OF_LENGTHS + 2,
+		NON_LENGTH_VERTICAL_ALIGN =         NUMBER_OF_LENGTHS + 3,
 	};
 
 private:
@@ -102,6 +104,9 @@ public:
 	const std::vector<std::string> &fontFamilies() const;
 	void setFontFamilies(const std::vector<std::string> &fontFamilies);
 
+	unsigned char verticalAlignCode() const;
+	void setVerticalAlignCode(unsigned char code);
+
 	shared_ptr<ZLTextStyleEntry> start() const;
 	shared_ptr<ZLTextStyleEntry> end() const;
 	shared_ptr<ZLTextStyleEntry> inherited() const;
@@ -115,6 +120,7 @@ private:
 	unsigned char mySupportedFontModifier;
 	unsigned char myFontModifier;
 	std::vector<std::string> myFontFamilies;
+	unsigned char myVerticalAlignCode;
 
 	friend class ZLTextModel;
 };
@@ -165,6 +171,12 @@ inline void ZLTextStyleEntry::setFontFamilies(const std::vector<std::string> &fo
 		myFeatureMask |= 1 << FONT_FAMILY;
 		myFontFamilies = fontFamilies;
 	}
+}
+
+inline unsigned char ZLTextStyleEntry::verticalAlignCode() const { return myVerticalAlignCode; }
+inline void ZLTextStyleEntry::setVerticalAlignCode(unsigned char code) {
+	myFeatureMask |= 1 << NON_LENGTH_VERTICAL_ALIGN;
+	myVerticalAlignCode = code;
 }
 
 #endif /* __ZLTEXTSTYLEENTRY_H__ */
