@@ -817,13 +817,13 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
 		addTextStyleEntry("", *it);
 		addTextStyleEntry(sTag, *it);
-		const char *style = attributeValue(attributes, "style");
-		if (style != 0) {
-			//ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
-			shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseSingleEntry(style);
-			addTextStyleEntry(*entry);
-			myTagDataStack.back()->StyleEntries.push_back(entry);
-		}
+	}
+	const char *style = attributeValue(attributes, "style");
+	if (style != 0) {
+		//ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
+		shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseSingleEntry(style);
+		addTextStyleEntry(*entry);
+		myTagDataStack.back()->StyleEntries.push_back(entry);
 	}
 }
 
