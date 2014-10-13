@@ -7,6 +7,10 @@
 * (planned) Editable notes (by Tamotsu Takahashi)
 * (planned) Fixed authors list/tags list editing
 
+===== 2.2 beta 1 (Oct ??, 2014) =====
+* Fixed "style" attribute support in ePubs
+* Added "vertical-align" CSS property support (lengths, "sub" and "super" values)
+
 ===== 2.2 beta 0 (Oct 12, 2014) =====
 * Added combined CSS selectors support (http://www.w3.org/TR/css3-selectors/#combinators)
 

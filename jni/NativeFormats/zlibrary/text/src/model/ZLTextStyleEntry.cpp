@@ -29,6 +29,7 @@ shared_ptr<ZLTextStyleEntry> ZLTextStyleEntry::start() const {
 	clone->mySupportedFontModifier = mySupportedFontModifier;
 	clone->myFontModifier = myFontModifier;
 	clone->myFontFamilies = myFontFamilies;
+	clone->myVerticalAlignCode = myVerticalAlignCode;
 	return clone;
 }
 
@@ -52,5 +53,6 @@ shared_ptr<ZLTextStyleEntry> ZLTextStyleEntry::inherited() const {
 	clone->mySupportedFontModifier = mySupportedFontModifier;
 	clone->myFontModifier = myFontModifier;
 	clone->myFontFamilies = myFontFamilies;
+	clone->myVerticalAlignCode = myVerticalAlignCode;
 	return clone;
 }
