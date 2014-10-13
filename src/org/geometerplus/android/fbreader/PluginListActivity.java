@@ -19,12 +19,14 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
@@ -76,6 +78,13 @@ public class PluginListActivity extends ListActivity {
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ("plugin".equals(tag)) {
+				try {
+					if (Integer.valueOf(attributes.getValue("min-api")) > Build.VERSION.SDK_INT) {
+						return false;
+					}
+				} catch (Throwable t) {
+					// ignore
+				}
 				final String id = attributes.getValue("id");
 				final String packageName = attributes.getValue("package");
 				try {
@@ -111,6 +120,7 @@ public class PluginListActivity extends ListActivity {
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.plugin_item, parent, false);
+			final ImageView iconView = (ImageView)view.findViewById(R.id.plugin_item_icon);
 			final TextView titleView = ViewUtil.findTextView(view, R.id.plugin_item_title);
 			final TextView summaryView = ViewUtil.findTextView(view, R.id.plugin_item_summary);
 			final Plugin plugin = getItem(position);
@@ -118,10 +128,19 @@ public class PluginListActivity extends ListActivity {
 				final ZLResource resource = myResource.getResource(plugin.Id);
 				titleView.setText(resource.getValue());
 				summaryView.setText(resource.getResource("summary").getValue());
+				int iconId = R.drawable.fbreader;
+				try {
+					final Field f = R.drawable.class.getField("plugin_" + plugin.Id);
+					iconId = f.getInt(R.drawable.class);
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+				iconView.setImageResource(iconId);
 			} else {
 				final ZLResource resource = myResource.getResource("noMorePlugins");
 				titleView.setText(resource.getValue());
 				summaryView.setVisibility(View.GONE);
+				iconView.setVisibility(View.GONE);
 			}
 			return view;
 		}

@@ -1,19 +1,35 @@
 ===== 2.2 (Oct ??, 2014) =====
+* (planned) Bookshelf library view (plugin)
 * (planned) Tablet-oriented preferences dialog
 * (planned) Android L support
 * (planned) Automatic files download (from the book network)
 * (planned) Sync: single book upload
 * (planned) Editable notes (by Tamotsu Takahashi)
-
-===== 2.1.6 (Sep ??, 2014) =====
 * (planned) Fixed authors list/tags list editing
 
-===== 2.1.5 (Sep 28, 2014) =====
+===== 2.2 beta 1 (Oct ??, 2014) =====
+* Fixed "style" attribute support in ePubs
+* Added "vertical-align" CSS property support (lengths, "sub" and "super" values)
+
+===== 2.2 beta 0 (Oct 12, 2014) =====
+* Added combined CSS selectors support (http://www.w3.org/TR/css3-selectors/#combinators)
+
+===== 2.1.7 (Oct 07, 2014) =====
+* Fixed Calibre server integration
+* Updated Belarusian localization (by Usievaład Čorny)
 * Updated Czech localisation (by Marek Pavelka)
-* Updated German localisation (by Matthias Dill)
+* Updated Japanese localisation (by Tamotsu Takahashi)
+
+===== 2.1.6 (Sep 28, 2014) =====
+* Updated Belarusian localization (by Usievaład Čorny)
+
+===== 2.1.5 (Sep 27, 2014) =====
 * Fixed TTF loader (for Roman fonts)
 * Fast hyphenation for very long words (200+ characters)
 * Search results color option
+* Updated Czech localisation (by Marek Pavelka)
+* Updated German localisation (by Matthias Dill)
+* Updated Japanese localisation (by Tamotsu Takahashi)
 
 ===== 2.1.4 (Sep 21, 2014) =====
 * CSS: fixed <ul>/<ol> top/bottom margin behaviour
@@ -349,7 +365,7 @@
 ===== 1.6.5 (Nov 04, 2012) =====
 * Fixed footnotes processing in rtf's
 * Updated Czech localization (by Marek Pavelka)
-* Added Belarusian localization (by Uievaład Čorny)
+* Added Belarusian localization (by Usievaład Čorny)
 
 ===== 1.6.4 (Oct 30, 2012) =====
 * Supported encoding & language detection for *.doc (ms-word) files

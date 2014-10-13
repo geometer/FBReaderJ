@@ -815,10 +815,10 @@
 			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Siga-nos no twitter">
+			<node name="twitter" value="Siga-nos no Twitter">
 				<node name="url" value="https://twitter.com/dennissheil"/>
 			</node>
-			<node name="facebook" value="FBReader no facebook">
+			<node name="facebook" value="FBReader no Facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Bibliotecas de terceiros"/>
@@ -879,7 +879,7 @@
 		<node name="redownloadFileBox" value="Redescarregar arquivo">
 			<node name="message" value="O arquivo já existe. Você quer descarregá-lo novamente?"/>
 		</node>
-		<node name="waitMessage" value="Em espera">
+		<node name="waitMessage">
 			<node name="tryConnect" value="A tentar ligar, por favor, espere…"/>
 			<node name="downloadingFile" value="Descarregar livro %s"/>
 			<node name="search" value="Pesquisando. Por favor, aguarde…"/>
@@ -989,7 +989,7 @@
 			<node name="title" value="Plug-in %s para ficheiros não instalado. Instalar agora?"/>
 		</node>
 	</node>
-	<node name="errorMessage" value="Mensagem de erro">
+	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Erro %s em código nativo durante a leitura '%s'"/>
 		<node name="errorReadingFile" value="Ocorreu um erro durante a leitura '%s'"/>
 		<node name="errorReadingZip" value="Ocorreu um erro durante a extração de '%s'"/>
@@ -1035,7 +1035,7 @@
 			<node name="title" value="Problema com FBReader"/>
 		</node>
 	</node>
-	<node name="links" value="Hiperligações">
+	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Instalar plug-ins">
@@ -1043,16 +1043,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Seção de livros Russa"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Ler em voz alta"/>
 		</node>
-		<node name="local-opds-scanner" value="Local OPDS Scanner">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
+			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+		</node>
+		<node name="local_opds_scanner" value="Local OPDS Scanner">
 			<node name="summary" value="Procurar por livros na rede local"/>
 		</node>
 		<node name="bookshelf" value="Bookshelf">
 			<node name="summary" value="Thumbnail vista de biblioteca"/>
 		</node>
-		<node name="opds-server" value="Servidor OPDS">
+		<node name="opds_server" value="Servidor OPDS">
 			<node name="summary" value="Servir livros do seu dispositivo"/>
 		</node>
 		<node name="widgets" value="Widgets">
@@ -1065,14 +1068,14 @@
 			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
-	<node name="drm" value="DRM">
+	<node name="drm">
 		<node name="encryptedSection" value="Seção Encriptada"/>
 	</node>
-	<node name="yota" value="yota">
+	<node name="yota">
 		<node name="frontScreenMessage" value="Girar o dispositivo para ler o seu livro. Para regressar o texto a este ecrã. Pressione o botão indicado."/>
 		<node name="frontScreenButton" value="Mudar para este ecrã"/>
 	</node>
-	<node name="hint" value="Dica">
+	<node name="hint">
 		<node name="positiveLength" value="Exemplo: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="Exemplo: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="Exemplo: 125%%"/>

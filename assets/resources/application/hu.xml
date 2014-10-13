@@ -806,7 +806,7 @@
 			<node name="twitter" value="Kövessen Twitteren">
 				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+			<node name="facebook" value="FBReader on Facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
@@ -1031,16 +1031,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Orosz könyváruház"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Hangos felolvasás"/>
 		</node>
-		<node name="local-opds-scanner" value="Helyi OPDS kereső">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
+			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+		</node>
+		<node name="local_opds_scanner" value="Helyi OPDS kereső">
 			<node name="summary" value="Könyvek keresése a helyi hálózaton"/>
 		</node>
 		<node name="bookshelf" value="Könyvespolc">
 			<node name="summary" value="Könyvtár előnézeti képes megjelenítése"/>
 		</node>
-		<node name="opds-server" value="OPDS szerver">
+		<node name="opds_server" value="OPDS szerver">
 			<node name="summary" value="Könyvmegosztó szerver indítása az eszközön"/>
 		</node>
 		<node name="widgets" value="Widgetek">
