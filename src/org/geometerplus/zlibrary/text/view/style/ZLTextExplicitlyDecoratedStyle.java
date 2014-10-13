@@ -176,7 +176,42 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	@Override
 	protected int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize) {
 		// TODO: implement
-		return Parent.getVerticalAlign(metrics);
+		if (myEntry.isFeatureSupported(LENGTH_VERTICAL_ALIGN)) {
+			return myEntry.getLength(LENGTH_VERTICAL_ALIGN, metrics, fontSize);
+		} else if (myEntry.isFeatureSupported(NON_LENGTH_VERTICAL_ALIGN)) {
+			switch (myEntry.getVerticalAlignCode()) {
+				default:
+					return Parent.getVerticalAlign(metrics);
+				case 0: // sub
+					return ZLTextStyleEntry.compute(
+						new ZLTextStyleEntry.Length((short)-50, ZLTextStyleEntry.SizeUnit.EM_100),
+						metrics, fontSize, LENGTH_VERTICAL_ALIGN
+					);
+				case 1: // super
+					return ZLTextStyleEntry.compute(
+						new ZLTextStyleEntry.Length((short)50, ZLTextStyleEntry.SizeUnit.EM_100),
+						metrics, fontSize, LENGTH_VERTICAL_ALIGN
+					);
+				/*
+				case 2: // top
+					return 0;
+				case 3: // text-top
+					return 0;
+				case 4: // middle
+					return 0;
+				case 5: // bottom
+					return 0;
+				case 6: // text-bottom
+					return 0;
+				case 7: // initial
+					return 0;
+				case 8: // inherit
+					return 0;
+				*/
+			}
+		} else {
+			return Parent.getVerticalAlign(metrics);
+		}
 	}
 	@Override
 	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
