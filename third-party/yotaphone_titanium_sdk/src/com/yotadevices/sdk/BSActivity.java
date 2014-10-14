@@ -370,8 +370,10 @@ public class BSActivity extends Service {
      * BS.
      */
     protected void onBSPause() {
-        checkBSActivityRunning();
-        mDrawer.removeBSParentView();
+        //checkBSActivityRunning();
+	    if (mDrawer != null) {
+		    mDrawer.removeBSParentView();
+	    }
         isResumed = false;
         mCalled = true;
     }
