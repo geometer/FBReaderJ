@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white">
         <ImageView
-            android:layout_marginLeft="280dp"
+            android:layout_marginLeft="320dp"
             android:layout_width="24.6dp"
             android:layout_height="8.6dp"
             android:src="@drawable/popup_triangle"/>

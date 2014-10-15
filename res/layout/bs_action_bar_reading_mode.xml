@@ -21,7 +21,7 @@
             <LinearLayout
                 android:id="@+id/title"
                 android:layout_marginRight="20dp"
-                android:layout_width="142dp"
+                android:layout_width="182dp"
                 android:layout_height="36dp"
                 android:gravity="top"
                 android:orientation="vertical">
@@ -55,7 +55,7 @@
                 android:layout_height="36dp" />
             <ImageView
                 android:id="@+id/search_action"
-                android:src="@drawable/yota_bs_action_search"
+                android:src="@drawable/bookmark_action"
                 android:layout_gravity="top"
                 android:scaleType="center"
                 android:layout_width="42dp"
@@ -66,7 +66,8 @@
                 android:layout_gravity="top"
                 android:scaleType="center"
                 android:layout_width="42dp"
-                android:layout_height="36dp" />
+                android:layout_height="36dp"
+	            android:visibility="gone"/>
         </LinearLayout>
     <ImageView
         android:layout_width="match_parent"

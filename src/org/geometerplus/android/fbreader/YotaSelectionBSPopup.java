@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ public class YotaSelectionBSPopup extends YotaSelectionPopup {
             else {
                 view.setTextColor(mContext.getResources().getColorStateList(R.color.yota_white_selection_bspopup_item_text));
             }
+	        view.setTextSize(16, TypedValue.COMPLEX_UNIT_DIP);
             view.setTag(codes[i]);
             view.setOnClickListener(this);
 	        view.getPaint().setAntiAlias(false);
