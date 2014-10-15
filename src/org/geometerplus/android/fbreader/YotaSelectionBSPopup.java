@@ -43,7 +43,7 @@ public class YotaSelectionBSPopup extends YotaSelectionPopup {
             else {
                 view.setTextColor(mContext.getResources().getColorStateList(R.color.yota_white_selection_bspopup_item_text));
             }
-	        view.setTextSize(16, TypedValue.COMPLEX_UNIT_DIP);
+	        view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
             view.setTag(codes[i]);
             view.setOnClickListener(this);
 	        view.getPaint().setAntiAlias(false);
