@@ -12,7 +12,7 @@ apply plugin: 'android'
 android {
     compileSdkVersion 19
     buildToolsVersion "19.1.0"
-    project.archivesBaseName = "YD_FBReader";
+    project.archivesBaseName = "YD_YotaReader";
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
