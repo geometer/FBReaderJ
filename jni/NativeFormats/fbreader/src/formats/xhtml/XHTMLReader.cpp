@@ -697,17 +697,36 @@ bool XHTMLReader::matches(const shared_ptr<CSSSelector::Component> next, int dep
 		case CSSSelector::Parent:
 			return tagInfos(depth + 1).matches(selector, -1) && matches(selector.Next, depth + 1);
 		case CSSSelector::Ancestor:
-			for (size_t i = 1; i < myTagDataStack.size() - depth - 1; ++i) {
-				if (tagInfos(depth + i).matches(selector, -1) && matches(selector.Next, i)) {
-					return true;
+			if (selector.Next.isNull() || selector.Next->Delimiter == CSSSelector::Ancestor) {
+				for (size_t i = 1; i < myTagDataStack.size() - depth - 1; ++i) {
+					if (tagInfos(depth + i).matches(selector, -1)) {
+						return matches(selector.Next, i);
+					}
 				}
+				return false;
+			} else {
+				for (size_t i = 1; i < myTagDataStack.size() - depth - 1; ++i) {
+					if (tagInfos(depth + i).matches(selector, -1) && matches(selector.Next, i)) {
+						return true;
+					}
+				}
+				return false;
 			}
-			return false;
 		case CSSSelector::Predecessor:
-		{
-			const int index = tagInfos(depth).find(selector, 0, pos);
-			return index != -1 && matches(selector.Next, depth, index);
-		}
+			if (!selector.Next.isNull() && selector.Next->Delimiter == CSSSelector::Previous) {
+				while (true) {
+					// it is guaranteed that pos will be decreased on each step
+					pos = tagInfos(depth).find(selector, 1, pos);
+					if (pos == -1) {
+						return false;
+					} else if (matches(selector.Next, depth, pos)) {
+						return true;
+					}
+				}
+			} else {
+				const int index = tagInfos(depth).find(selector, 0, pos);
+				return index != -1 && matches(selector.Next, depth, index);
+			}
 		case CSSSelector::Previous:
 			return tagInfos(depth).matches(selector, pos - 1) && matches(selector.Next, depth, pos - 1);
 	}
