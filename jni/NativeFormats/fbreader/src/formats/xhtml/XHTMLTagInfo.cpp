@@ -26,6 +26,9 @@ XHTMLTagInfo::XHTMLTagInfo(const std::string &tag, const std::vector<std::string
 }
 
 bool XHTMLTagInfo::matches(const CSSSelector &selector) const {
+	if (selector.Tag == "*") {
+		return selector.Class.empty();
+	}
 	if (!selector.Tag.empty() && selector.Tag != Tag) {
 		return false;
 	}
