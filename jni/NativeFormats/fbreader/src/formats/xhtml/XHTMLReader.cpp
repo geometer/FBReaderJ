@@ -37,6 +37,10 @@
 #include "../../bookmodel/BookReader.h"
 #include "../../bookmodel/BookModel.h"
 
+static const std::string ANY = "*";
+static const std::string EMPTY = "";
+static const XHTMLTagInfoList EMPTY_INFO_LIST;
+
 std::map<std::string,XHTMLTagAction*> XHTMLReader::ourTagActions;
 std::map<shared_ptr<XHTMLReader::FullNamePredicate>,XHTMLTagAction*> XHTMLReader::ourNsTagActions;
 
@@ -431,7 +435,7 @@ void XHTMLTagImageAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 	}
 	const std::string imageName = imageFile.name(false);
 	bookReader(reader).addImageReference(imageName, 0, reader.myMarkNextImageAsCover);
-	bookReader(reader).addImage(imageName, new ZLFileImage(imageFile, "", 0, 0, reader.myEncryptionMap->info(imageFile.path())));
+	bookReader(reader).addImage(imageName, new ZLFileImage(imageFile, EMPTY, 0, 0, reader.myEncryptionMap->info(imageFile.path())));
 	reader.myMarkNextImageAsCover = false;
 	if (flagParagraphIsOpen && reader.myCurrentParagraphIsEmpty) {
 		bookReader(reader).addControl(IMAGE, false);
@@ -677,9 +681,8 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 }
 
 const XHTMLTagInfoList &XHTMLReader::tagInfos(size_t depth) const {
-	static const XHTMLTagInfoList EMPTY;
 	if (myTagDataStack.size() < depth + 2) {
-		return EMPTY;
+		return EMPTY_INFO_LIST;
 	}
 	return myTagDataStack[myTagDataStack.size() - depth - 2]->Children;
 }
@@ -732,7 +735,7 @@ bool XHTMLReader::matches(const shared_ptr<CSSSelector::Component> next, int dep
 	}
 }
 
-void XHTMLReader::addTextStyleEntry(const std::string tag, const std::string aClass) {
+void XHTMLReader::addTextStyleEntry(const std::string &tag, const std::string &aClass) {
 	std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > controls =
 		myStyleSheetTable.allControls(tag, aClass);
 	for (std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > >::const_iterator it = controls.begin(); it != controls.end(); ++it) {
@@ -811,8 +814,8 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		myModelReader.addHyperlinkLabel(myReferenceAlias + HASH + id);
 	}
 
-	bool breakBefore = myStyleSheetTable.doBreakBefore(sTag, "");
-	myTagDataStack.back()->PageBreakAfter = myStyleSheetTable.doBreakAfter(sTag, "");
+	bool breakBefore = myStyleSheetTable.doBreakBefore(sTag, EMPTY);
+	myTagDataStack.back()->PageBreakAfter = myStyleSheetTable.doBreakAfter(sTag, EMPTY);
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
 		// TODO: use 3-value logic (yes, no, inherit)
 		if (myStyleSheetTable.doBreakBefore(sTag, *it)) {
@@ -832,9 +835,10 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		action->doAtStart(*this, attributes);
 	}
 
-	addTextStyleEntry(sTag, "");
+	addTextStyleEntry(ANY, EMPTY);
+	addTextStyleEntry(sTag, EMPTY);
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
-		addTextStyleEntry("", *it);
+		addTextStyleEntry(EMPTY, *it);
 		addTextStyleEntry(sTag, *it);
 	}
 	const char *style = attributeValue(attributes, "style");
