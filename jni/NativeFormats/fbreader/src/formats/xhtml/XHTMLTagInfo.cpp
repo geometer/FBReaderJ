@@ -40,7 +40,7 @@ bool XHTMLTagInfo::matches(const CSSSelector &selector) const {
 
 int XHTMLTagInfoList::find(const CSSSelector &selector, int from, int to) const {
 	if (from < 0) {
-		from += size();
+		from = std::max(from + (int)size(), 0);
 	}
 	if (to <= 0) {
 		to += size();
