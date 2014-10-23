@@ -3,7 +3,7 @@
 <resources>
   <string name="of">από</string>
   <string name="pages_left">σελίδες που απομένουν</string>
-  <string name="back_to_page">Πίσω στη σελίδα</string>
+  <string name="back_to_page">Επιστροφή στη σελίδα</string>
   <string name="yota_book_description">Περιγραφή</string>
   <string name="yota_add_to_collection">ΠΡΟΣΘΗΚΗ</string>
   <string name="yota_book_details">Λεπτομέρειες</string>

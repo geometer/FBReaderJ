@@ -3,7 +3,7 @@
 <resources>
   <string name="of">/</string>
   <string name="pages_left">sayfa kaldı</string>
-  <string name="back_to_page">Sayfaya dön</string>
+  <string name="back_to_page">Şu sayfaya dön:</string>
   <string name="yota_book_description">Açıklama</string>
   <string name="yota_add_to_collection">EKLE</string>
   <string name="yota_book_details">Ayrıntılar</string>

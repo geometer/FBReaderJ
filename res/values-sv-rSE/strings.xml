@@ -5,14 +5,14 @@
   <string name="pages_left">sidor kvar</string>
   <string name="back_to_page">Tillbaka till sida</string>
   <string name="yota_book_description">Beskrivning</string>
-  <string name="yota_add_to_collection">ADD</string>
+  <string name="yota_add_to_collection">LÄGG TILL</string>
   <string name="yota_book_details">Information</string>
   <string name="yota_book_language_tille">Språk</string>
   <string name="yota_book_cat_tille">Kategori</string>
   <string name="yota_book_publisher_tille">Utgivare</string>
   <string name="yota_book_seller_tille">Försäljare</string>
   <string name="yota_book_published_tille">Publicerad</string>
-  <string name="highlight">Höjdpunkt</string>
+  <string name="highlight">Markera</string>
   <string name="copy">Kopiera</string>
   <string name="share">Dela</string>
   <string name="define">Förklaring</string>
