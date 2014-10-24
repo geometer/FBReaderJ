@@ -816,7 +816,7 @@
 			<node name="twitter" value="Twitter-en jarraitu">
 				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+			<node name="facebook" value="FBReader on Facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
@@ -1047,16 +1047,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Liburu-denda errusiarra"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Ozen irakurri"/>
 		</node>
-		<node name="local-opds-scanner" value="Bertako OPDS Eskanerra">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
+			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+		</node>
+		<node name="local_opds_scanner" value="Bertako OPDS Eskanerra">
 			<node name="summary" value="Bilatu liburuak bertako sarean"/>
 		</node>
 		<node name="bookshelf" value="Apalategia">
 			<node name="summary" value="Iruditxoen liburutegi-bista"/>
 		</node>
-		<node name="opds-server" value="OPDS Zerbitzaria">
+		<node name="opds_server" value="OPDS Zerbitzaria">
 			<node name="summary" value="Gailutik eskeini liburuak"/>
 		</node>
 		<node name="widgets" value="Widgetak">
