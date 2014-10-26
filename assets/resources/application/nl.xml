@@ -813,10 +813,10 @@
 			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Volg ons op twitter">
+			<node name="twitter" value="Volg ons op Twitter">
 				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader op facebook">
+			<node name="facebook" value="FBReader op Facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Bibliotheken van derden"/>
@@ -1041,16 +1041,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Russische boekenwinkel"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Hardop voorlezen"/>
 		</node>
-		<node name="local-opds-scanner" value="Lokale OPDS-scanner">
+		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
+			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+		</node>
+		<node name="local_opds_scanner" value="Lokale OPDS-scanner">
 			<node name="summary" value="Zoek naar boeken in het locale netwerk"/>
 		</node>
 		<node name="bookshelf" value="Boekenplank">
 			<node name="summary" value="Miniatuurweergaven tonen"/>
 		</node>
-		<node name="opds-server" value="OPDS-server">
+		<node name="opds_server" value="OPDS-server">
 			<node name="summary" value="Bied boeken aan vanaf jouw apparaat"/>
 		</node>
 		<node name="widgets" value="Widgets">

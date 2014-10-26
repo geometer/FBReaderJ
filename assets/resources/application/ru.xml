@@ -818,10 +818,10 @@
 			<node name="googleplus" value="Присоединяйтесь к сообществу FBReader на Google+">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Читайте нас в твиттере">
+			<node name="twitter" value="Читайте нас в Twitter">
 				<node name="url" value="https://twitter.com/fbreader_ru"/>
 			</node>
-			<node name="facebook" value="Страница FBReader на facebook">
+			<node name="facebook" value="Страница FBReader на Facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Сторонние библиотеки"/>
@@ -1050,16 +1050,19 @@
 		<node name="litres" value="ЛитРес">
 			<node name="summary" value="Дополнительные возможности при покупке в магазине ЛитРес"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Чтение вслух"/>
 		</node>
-		<node name="local-opds-scanner" value="Поиск OPDS каталогов">
+		<node name="calibre_server_integration" value="Соединение с Calibre">
+			<node name="summary" value="Поиск сервера Calibre в локальной сети"/>
+		</node>
+		<node name="local_opds_scanner" value="Поиск OPDS каталогов">
 			<node name="summary" value="Поиск книг в локальной сети"/>
 		</node>
 		<node name="bookshelf" value="Книжная полка">
 			<node name="summary" value="Красивый внешний вид для библиотеки"/>
 		</node>
-		<node name="opds-server" value="Сервер OPDS">
+		<node name="opds_server" value="Сервер OPDS">
 			<node name="summary" value="Раздача книг другим устройствам"/>
 		</node>
 		<node name="widgets" value="Виджеты">

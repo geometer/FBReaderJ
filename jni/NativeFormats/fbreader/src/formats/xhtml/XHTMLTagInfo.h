@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.image;
+#ifndef __XHTMLTAGINFO_H__
+#define __XHTMLTAGINFO_H__
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
+#include <string>
+#include <vector>
 
-import android.graphics.Bitmap;
+class CSSSelector;
 
-public class ZLBitmapImage implements ZLImage {
-	private final Bitmap myBitmap;
+struct XHTMLTagInfo {
+	const std::string Tag;
+	const std::vector<std::string> Classes;
 
-	public ZLBitmapImage(Bitmap bitmap) {
-		myBitmap = bitmap;
-	}
+	XHTMLTagInfo(const std::string &tag, const std::vector<std::string> &classes);
+	bool matches(const CSSSelector &selector) const;
+};
 
-	public Bitmap getBitmap() {
-		return myBitmap;
-	}
+class XHTMLTagInfoList : public std::vector<XHTMLTagInfo> {
 
-	@Override
-	public String getURI() {
-		return "bitmap image";
-	}
-}
+public:
+	int find(const CSSSelector &selector, int from, int to) const;
+	bool matches(const CSSSelector &selector, int index) const;
+};
+
+#endif /* __XHTMLTAGINFO_H__ */
