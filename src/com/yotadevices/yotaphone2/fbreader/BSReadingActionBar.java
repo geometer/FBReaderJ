@@ -17,6 +17,7 @@ import com.yotadevices.sdk.utils.EinkUtils;
 import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -183,10 +184,7 @@ public class BSReadingActionBar {
     private View.OnClickListener mOpenCollection = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i = new Intent();
-            i.setClassName("com.yotadevices.yotaphone2.yotareader.collection",
-                    "com.yotadevices.yotaphone2.yotareader.collection.CollectionBSActivity");
-            mContext.startService(i);
+	        mReader.runAction(ActionCode.SHOW_LIBRARY);
         }
     };
 }

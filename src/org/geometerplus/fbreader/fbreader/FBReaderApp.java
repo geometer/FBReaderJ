@@ -176,6 +176,9 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			if (book == null || !book.File.exists()) {
 				book = Collection.getBookByFile(BookUtil.getHelpFile());
+				if (DeviceType.Instance().isYotaPhone()) {
+					runAction(ActionCode.SHOW_LIBRARY);
+				}
 			}
 			if (book == null) {
 				return;
