@@ -2,8 +2,6 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Context;
 
-import com.yotadevices.sdk.Drawer;
-import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.FBReaderYotaService;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;

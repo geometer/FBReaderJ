@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.yotadevices.sdk.utils.RotationAlgorithm;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -76,6 +77,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 			RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).issueStandardToastAndVibration();
 
 		} else {
+			((ZLAndroidLibrary) ZLibrary.Instance()).setDisplayMetrics(null);
 			ZLAndroidPaintContext.AntiAliasOption.setValue(true);
 			Reader.setFrontScreenActionMap();
 			FBReaderApp.Instance().setWindow(BaseActivity);
