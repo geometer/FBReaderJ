@@ -25,19 +25,18 @@ import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.util.*;
-
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
-
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.network.sync.SyncData;
+import org.geometerplus.android.fbreader.util.VersionDependentViewUtil.FBReaderAppInterface;
 
-public final class FBReaderApp extends ZLApplication {
+public final class FBReaderApp extends ZLApplication implements FBReaderAppInterface {
 	public interface ExternalFileOpener {
 		public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark);
 	}
