@@ -143,7 +143,7 @@
             android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize"
             android:name="org.geometerplus.android.fbreader.FBReaderLauncher"
             android:targetActivity="org.geometerplus.android.fbreader.FBReader"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -157,7 +157,7 @@
             android:icon="@drawable/yota_reader_icon"
             android:logo="@null"
             android:targetActivity="org.geometerplus.android.fbreader.FBReader"
-            android:enabled="false"
+            android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
