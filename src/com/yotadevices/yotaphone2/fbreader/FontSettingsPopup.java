@@ -41,7 +41,7 @@ public class FontSettingsPopup {
     private final OnFontChangeListener mListener;
 
     private final static int ACTION_BAR_HEIGHT = 72;
-    private final static float[] FONT_SIZES = {14, 16, 20, 21.3f, 24};
+    private final static float[] FONT_SIZES = {16, 18, 22, 26, 28};
 
     private ArrayList<Pair<TextView, ImageView>> mFontViews = new ArrayList<Pair<TextView, ImageView>>(5);
 
@@ -68,7 +68,7 @@ public class FontSettingsPopup {
         lv.setOnClickListener(mOnFontSizeListener);
         TextView tv = (TextView)lv.findViewById(R.id.font_example);
         ImageView iv = (ImageView)lv.findViewById(R.id.line);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[0]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[0] / 1.2f);
         mFontViews.add(new Pair<TextView, ImageView>(tv, iv));
 
         lv = (LinearLayout)mPopupView.findViewById(R.id.font2);
@@ -76,7 +76,7 @@ public class FontSettingsPopup {
         lv.setOnClickListener(mOnFontSizeListener);
         tv = (TextView)lv.findViewById(R.id.font_example);
         iv = (ImageView)lv.findViewById(R.id.line);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[1]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[1] / 1.2f);
         mFontViews.add(new Pair<TextView, ImageView>(tv, iv));
 
         lv = (LinearLayout)mPopupView.findViewById(R.id.font3);
@@ -84,7 +84,7 @@ public class FontSettingsPopup {
         lv.setOnClickListener(mOnFontSizeListener);
         tv = (TextView)lv.findViewById(R.id.font_example);
         iv = (ImageView)lv.findViewById(R.id.line);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[2]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[2] / 1.2f);
         mFontViews.add(new Pair<TextView, ImageView>(tv, iv));
 
         lv = (LinearLayout)mPopupView.findViewById(R.id.font4);
@@ -92,7 +92,7 @@ public class FontSettingsPopup {
         lv.setOnClickListener(mOnFontSizeListener);
         tv = (TextView)lv.findViewById(R.id.font_example);
         iv = (ImageView)lv.findViewById(R.id.line);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[3]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[3] / 1.2f);
         mFontViews.add(new Pair<TextView, ImageView>(tv, iv));
 
         lv = (LinearLayout)mPopupView.findViewById(R.id.font5);
@@ -100,7 +100,7 @@ public class FontSettingsPopup {
         lv.setOnClickListener(mOnFontSizeListener);
         tv = (TextView)lv.findViewById(R.id.font_example);
         iv = (ImageView)lv.findViewById(R.id.line);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[4]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[4] / 1.2f);
         mFontViews.add(new Pair<TextView, ImageView>(tv, iv));
 
         tv = (TextView)mPopupView.findViewById(R.id.font_serif);
@@ -165,7 +165,7 @@ public class FontSettingsPopup {
     private void setupFontSizes() {
         final ZLIntegerRangeOption option =
                 mReader.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption;
-        float fontSize = convertPixelsToDp(option.getValue(), mContext) / 1.2f;
+        float fontSize = convertPixelsToDp(option.getValue(), mContext);
         int matched = -1;
         for (int i = 0; i < FONT_SIZES.length - 1; ++i) {
             float curValue = FONT_SIZES[i];
@@ -201,7 +201,7 @@ public class FontSettingsPopup {
         @Override
         public void onClick(View v) {
             Integer fontSize = (Integer)v.getTag();
-            float px = convertDpToPixel((FONT_SIZES[fontSize] * 1.2f), mContext);
+            float px = convertDpToPixel((FONT_SIZES[fontSize]), mContext);
             final ZLIntegerRangeOption option =
                     mReader.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption;
             option.setValue((int)px);

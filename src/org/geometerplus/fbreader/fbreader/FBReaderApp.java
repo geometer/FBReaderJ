@@ -74,7 +74,6 @@ public final class FBReaderApp extends ZLApplication {
 	public final IBookCollection Collection;
 
 	private SyncData mySyncData = new SyncData();
-
 	public FBReaderApp(IBookCollection collection) {
 		Collection = collection;
 
@@ -177,6 +176,9 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			if (book == null || !book.File.exists()) {
 				book = Collection.getBookByFile(BookUtil.getHelpFile());
+				if (DeviceType.Instance().isYotaPhone()) {
+					runAction(ActionCode.SHOW_LIBRARY);
+				}
 			}
 			if (book == null) {
 				return;
@@ -470,7 +472,6 @@ public final class FBReaderApp extends ZLApplication {
 		private final Book myBook;
 		private final ZLTextPosition myPosition;
 		private final RationalNumber myProgress;
-
 		PositionSaver(Book book, ZLTextPosition position, RationalNumber progress) {
 			myBook = book;
 			myPosition = position;
@@ -482,6 +483,7 @@ public final class FBReaderApp extends ZLApplication {
 			myBook.setProgress(myProgress);
 			Collection.saveBook(myBook);
 			if (DeviceType.Instance().isYotaPhone()) {
+				FBReaderApp.this.runAction(ActionCode.YOTA_PERFORM_FULL_UPDATE);
 				FBReaderApp.this.runAction(ActionCode.YOTA_UPDATE_WIDGET);
 			}
 		}

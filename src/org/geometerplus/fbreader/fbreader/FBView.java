@@ -65,7 +65,7 @@ public final class FBView extends ZLTextView {
 
 	private TapZoneMap getZoneMap() {
 		final PageTurningOptions prefs = myReader.PageTurningOptions;
-		String id = prefs.TapZoneMap.getValue();
+		String id = DeviceType.Instance().isYotaPhone() ? "yotaphone" : prefs.TapZoneMap.getValue();
 		if ("".equals(id)) {
 			id = prefs.Horizontal.getValue() ? "right_to_left" : "up";
 		}
@@ -697,7 +697,10 @@ public final class FBView extends ZLTextView {
 	@Override
 	protected ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages() {
 		if (myReader.ImageOptions.MatchBackground.getValue()) {
-			if (ColorProfile.DAY.equals(myViewOptions.getColorProfile().Name)) {
+			if (ColorProfile.DAY.equals(myViewOptions.getColorProfile().Name) ||
+					ColorProfile.YOTA_FS_WHITE.equals(myViewOptions.getColorProfile().Name) ||
+					ColorProfile.YOTA_FS_SEPIA.equals(myViewOptions.getColorProfile().Name) ||
+					ColorProfile.YOTA_BS_WHITE.equals(myViewOptions.getColorProfile().Name)) {
 				return ZLPaintContext.ColorAdjustingMode.DARKEN_TO_BACKGROUND;
 			} else {
 				return ZLPaintContext.ColorAdjustingMode.LIGHTEN_TO_BACKGROUND;

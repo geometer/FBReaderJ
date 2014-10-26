@@ -134,6 +134,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return myMetrics;
 	}
 
+	public void setDisplayMetrics(DisplayMetrics metrics) {
+		myMetrics = metrics;
+	}
+
 	@Override
 	public int getDisplayDPI() {
 		final DisplayMetrics metrics = getMetrics();

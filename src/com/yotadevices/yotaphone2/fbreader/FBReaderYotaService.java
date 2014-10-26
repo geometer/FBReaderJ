@@ -25,6 +25,7 @@ import com.yotadevices.sdk.Drawer;
 import com.yotadevices.sdk.utils.BitmapUtils;
 import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.actions.ProcessHyperlinkBSAction;
+import com.yotadevices.yotaphone2.fbreader.actions.ShowBSLibraryAction;
 import com.yotadevices.yotaphone2.fbreader.actions.ToggleBarsAction;
 
 import org.geometerplus.android.fbreader.SelectionBookmarkAction;
@@ -41,6 +42,7 @@ import org.geometerplus.android.fbreader.YotaSelectionShowPanelAction;
 import org.geometerplus.android.fbreader.YotaSelectionTranslateAction;
 import org.geometerplus.android.fbreader.YotaTranslateBSPopup;
 import org.geometerplus.android.fbreader.YotaTranslatePopup;
+import org.geometerplus.android.fbreader.YotaUpdateBackScreen;
 import org.geometerplus.android.fbreader.YotaUpdateWidgetAction;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -57,12 +59,14 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
@@ -128,58 +132,60 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
         EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_ATKINSON_BINARY);
         EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_A2);
+	    ((ZLAndroidLibrary)ZLibrary.Instance()).setDisplayMetrics(getBsContext().getResources().getDisplayMetrics());
         getCollection().bindToService(this, new Runnable() {
-            public void run() {
-                if (myCurrentBook == null) {
-                    myCurrentBook = myFBReaderApp.Collection.getRecentBook(0);
-                }
-                if (mWidget != null) {
-	                ZLAndroidPaintContext.AntiAliasOption.setValue(true);
-                    myFBReaderApp.openBook(myCurrentBook, null, new Runnable() {
-	                    public void run() {
-		                    myFBReaderApp.initWindow();
-		                    initBookView(true);
-		                    updateCoverOnYotaWidget(myFBReaderApp.Model.Book);
-		                    if (firstStart()) {
-			                    showActionBar();
-			                    showStatusBar();
-		                    } else {
-			                    hideStatusBar();
-		                    }
-	                    }
-                    }, null);
-                    AndroidFontUtil.clearFontCache();
-	                if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
-		                ZLTextHyphenator.Instance().load(myFBReaderApp.Model.Book.getLanguage());
-		                myFBReaderApp.clearTextCaches();
-		                if (getViewWidget() != null) {
-			                getViewWidget().repaint();
-		                }
-	                }
-	                if (myFBReaderApp.getTextView() != null) {
-		                myFBReaderApp.getTextView().clearSelection();
-		                myFBReaderApp.hideActivePopup();
-	                }
-                }
-	            if (!firstStart()) {
-		            showActionBar();
-		            showStatusBar();
-		            mHandler.postDelayed(new Runnable() {
-			            @Override
-			            public void run() {
-				            hideActionBar();
-				            hideStatusBar();
-			            }
-		            }, 1500);
-	            }
-	            setNotFirstStart();
-            }
+	        public void run() {
+		        if (myCurrentBook == null) {
+			        myCurrentBook = myFBReaderApp.Collection.getRecentBook(0);
+		        }
+		        if (mWidget != null) {
+			        ZLAndroidPaintContext.AntiAliasOption.setValue(true);
+			        myFBReaderApp.openBook(myCurrentBook, null, new Runnable() {
+				        public void run() {
+					        myFBReaderApp.initWindow();
+					        initBookView(true);
+					        updateCoverOnYotaWidget(myFBReaderApp.Model.Book);
+					        if (firstStart()) {
+						        showActionBar();
+						        showStatusBar();
+					        } else {
+						        hideStatusBar();
+					        }
+				        }
+			        }, null);
+			        AndroidFontUtil.clearFontCache();
+			        if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
+				        ZLTextHyphenator.Instance().load(myFBReaderApp.Model.Book.getLanguage());
+				        myFBReaderApp.clearTextCaches();
+				        if (getViewWidget() != null) {
+					        getViewWidget().repaint();
+				        }
+			        }
+			        if (myFBReaderApp.getTextView() != null) {
+				        myFBReaderApp.getTextView().clearSelection();
+				        myFBReaderApp.hideActivePopup();
+			        }
+		        }
+		        if (!firstStart()) {
+			        showActionBar();
+			        showStatusBar();
+			        mHandler.postDelayed(new Runnable() {
+				        @Override
+				        public void run() {
+					        hideActionBar();
+					        hideStatusBar();
+				        }
+			        }, 1500);
+		        }
+		        setNotFirstStart();
+	        }
         });
     }
 
     @Override
     protected void onBSPause() {
         super.onBSPause();
+	    ((ZLAndroidLibrary)ZLibrary.Instance()).setDisplayMetrics(null);
     }
 
     @Override
@@ -219,7 +225,8 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         myFBReaderApp.addAction(ActionCode.SELECTION_DEFINE, new YotaSelectionDefineAction(getBsContext(), myFBReaderApp, true));
 	    myFBReaderApp.addAction(ActionCode.SELECTION_SHARE, new YotaSelectionShareAction(getBsContext(), myFBReaderApp));
 	    myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkBSAction(this, myFBReaderApp));
-
+		myFBReaderApp.addAction(ActionCode.YOTA_PERFORM_FULL_UPDATE, new YotaUpdateBackScreen(this, myFBReaderApp));
+	    myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowBSLibraryAction(this, myFBReaderApp));
     }
 
     private Context getBsContext() {
@@ -246,7 +253,12 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     }
 
 	public void performSingleFullUpdate() {
-		EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
+		mHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
+			}
+		});
 	}
 
     private BookCollectionShadow getCollection() {

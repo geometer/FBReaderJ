@@ -24,6 +24,7 @@ import java.util.*;
 import android.graphics.*;
 import android.util.FloatMath;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
@@ -96,7 +97,7 @@ abstract class AnimationProvider {
 		final int minDiff = myDirection.IsHorizontal ?
 			(myWidth > myHeight ? myWidth / 4 : myWidth / 3) :
 			(myHeight > myWidth ? myHeight / 4 : myHeight / 3);
-		boolean forward = Math.abs(diff) > Math.min(minDiff, dpi / 2);
+		boolean forward = Math.abs(diff) > Math.min(minDiff, DeviceType.Instance().isYotaPhone() ? dpi / 3 : dpi / 2);
 
 		myMode = forward ? Mode.AnimatedScrollingForward : Mode.AnimatedScrollingBackward;
 
