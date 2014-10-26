@@ -218,7 +218,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 		final ZLAndroidLibrary zlibrary = getZLibrary();
 
-		VersionDependentViewUtil.doAtOnCreate(this, myFBReaderApp);
 		setContentView(R.layout.main);
 		myRootView = (RelativeLayout)findViewById(R.id.root_view);
 		myMainView = (ZLAndroidWidget)findViewById(R.id.main_view);
@@ -230,6 +229,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		if (myFBReaderApp == null) {
 			myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
 		}
+		VersionDependentViewUtil.doAtOnCreate(this, myFBReaderApp);
 		getCollection().bindToService(this, null);
 		myBook = null;
 
