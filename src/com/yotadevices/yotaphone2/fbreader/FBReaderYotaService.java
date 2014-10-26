@@ -24,6 +24,7 @@ import com.yotadevices.sdk.Constants;
 import com.yotadevices.sdk.Drawer;
 import com.yotadevices.sdk.utils.BitmapUtils;
 import com.yotadevices.sdk.utils.EinkUtils;
+import com.yotadevices.yotaphone2.fbreader.actions.ProcessHyperlinkBSAction;
 import com.yotadevices.yotaphone2.fbreader.actions.ToggleBarsAction;
 
 import org.geometerplus.android.fbreader.SelectionBookmarkAction;
@@ -217,6 +218,8 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(getBsContext(), myFBReaderApp, true));
         myFBReaderApp.addAction(ActionCode.SELECTION_DEFINE, new YotaSelectionDefineAction(getBsContext(), myFBReaderApp, true));
 	    myFBReaderApp.addAction(ActionCode.SELECTION_SHARE, new YotaSelectionShareAction(getBsContext(), myFBReaderApp));
+	    myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkBSAction(this, myFBReaderApp));
+
     }
 
     private Context getBsContext() {
