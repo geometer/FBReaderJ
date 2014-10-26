@@ -964,7 +964,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 	public void setWindowTitle(final String title) {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				setTitle(title);
+				VersionDependentViewUtil.setTitle(FBReader.this, title);
 			}
 		});
 	}
