@@ -182,7 +182,7 @@ public abstract class VersionDependentViewUtil {
 		i.getRootView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 	}
 
-	public void setTitle(FBReaderInterface i, CharSequence title) {
+	public static void setTitle(FBReaderInterface i, CharSequence title) {
 		i.getActivity().setTitle(title);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setTitleNew(i.getActivity(), title);
