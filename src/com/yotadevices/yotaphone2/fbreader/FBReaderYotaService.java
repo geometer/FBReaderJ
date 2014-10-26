@@ -41,6 +41,7 @@ import org.geometerplus.android.fbreader.YotaSelectionShowPanelAction;
 import org.geometerplus.android.fbreader.YotaSelectionTranslateAction;
 import org.geometerplus.android.fbreader.YotaTranslateBSPopup;
 import org.geometerplus.android.fbreader.YotaTranslatePopup;
+import org.geometerplus.android.fbreader.YotaUpdateBackScreen;
 import org.geometerplus.android.fbreader.YotaUpdateWidgetAction;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -219,7 +220,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         myFBReaderApp.addAction(ActionCode.SELECTION_DEFINE, new YotaSelectionDefineAction(getBsContext(), myFBReaderApp, true));
 	    myFBReaderApp.addAction(ActionCode.SELECTION_SHARE, new YotaSelectionShareAction(getBsContext(), myFBReaderApp));
 	    myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkBSAction(this, myFBReaderApp));
-
+		myFBReaderApp.addAction(ActionCode.YOTA_PERFORM_FULL_UPDATE, new YotaUpdateBackScreen(this, myFBReaderApp));
     }
 
     private Context getBsContext() {
@@ -246,7 +247,12 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     }
 
 	public void performSingleFullUpdate() {
-		EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
+		mHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
+			}
+		});
 	}
 
     private BookCollectionShadow getCollection() {
