@@ -15,7 +15,6 @@
 			<node name="somethingWrongMessage" value="Algo foi mal para&#10;%s"/>
 			<node name="couldntCreateDirectoryMessage" value="Non foi posíbel crear o cartafol&#10;%s"/>
 			<node name="couldntCreateFileMessage" value="Non foi posíbel crear o ficheiro&#10;%s"/>
-			<node name="couldntConnectToNetworkMessage" value="Non foi posíbel conectar á rede"/>
 			<node name="couldntConnectMessage" value="Non foi posíbel conectar co equipo&#10;%s"/>
 			<node name="couldntResolveHostMessage" value="Non foi posíbel atopar o equipo&#10;%s"/>
 			<node name="authenticationFailed" value="Produciuse un fallo de autenticación"/>
@@ -23,6 +22,7 @@
 			<node name="invalidURL" value="URL incorrecto"/>
 			<node name="hostCantBeReached" value="O equipo %s&#10;non pode ser acadado"/>
 			<node name="connectionRefused" value="A conexión foi rexeitada por&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">
