@@ -92,7 +92,7 @@ public class NetworkLibrary {
 	private final Map<String,WeakReference<ZLImage>> myImageMap =
 		Collections.synchronizedMap(new HashMap<String,WeakReference<ZLImage>>());
 
-	public List<String> linkIds() {
+	public List<String> allIds() {
 		final ArrayList<String> ids = new ArrayList<String>();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
@@ -123,7 +123,10 @@ public class NetworkLibrary {
 		if (link == null) {
 			return;
 		}
-		final String id = link.getUrl(UrlInfo.Type.Catalog);
+		setLinkActive(link.getUrl(UrlInfo.Type.Catalog), active);
+	}
+
+	public void setLinkActive(String id, boolean active) {
 		if (id == null) {
 			return;
 		}
@@ -145,8 +148,8 @@ public class NetworkLibrary {
 		invalidateChildren();
 	}
 
-	public void setActiveIds(Collection<String> ids) {
-		activeIdsOption().setValue(new ArrayList<String>(ids));
+	public void setActiveIds(List<String> ids) {
+		activeIdsOption().setValue(ids);
 		invalidateChildren();
 	}
 
@@ -602,7 +605,6 @@ public class NetworkLibrary {
 		}
 		NetworkDatabase.Instance().saveLink(link);
 		setLinkActive(link, true);
-		invalidateChildren();
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {

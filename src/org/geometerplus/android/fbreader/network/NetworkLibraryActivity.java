@@ -151,8 +151,12 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		if (FBReaderIntents.Action.OPEN_NETWORK_CATALOG.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
-				final NetworkTree tree =
-					NetworkLibrary.Instance().getCatalogTreeByUrl(uri.toString());
+				final String id = uri.toString();
+				final NetworkLibrary library = NetworkLibrary.Instance();
+				library.setLinkActive(id, true);
+				library.synchronize();
+
+				final NetworkTree tree = library.getCatalogTreeByUrl(id);
 				if (tree != null) {
 					checkAndRun(new OpenCatalogAction(this, myNetworkContext), tree);
 					return true;

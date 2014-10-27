@@ -72,7 +72,7 @@ public class TopupMenuActivity extends MenuActivity {
 
 	@Override
 	protected String getAction() {
-		return "android.fbreader.action.network.TOPUP";
+		return Util.TOPUP_ACTION;
 	}
 
 	@Override
