@@ -15,7 +15,6 @@
 			<node name="somethingWrongMessage" value="Zeozer txarto doa honekin %s"/>
 			<node name="couldntCreateDirectoryMessage" value="Ezin izan da sortu %s direktorioa"/>
 			<node name="couldntCreateFileMessage" value="Ezin izan da sortu %s fitxategia"/>
-			<node name="couldntConnectToNetworkMessage" value="Ezin izan da konektatu sarera"/>
 			<node name="couldntConnectMessage" value="Ezin izan da konektatu %s zerbitzarira"/>
 			<node name="couldntResolveHostMessage" value="Ezin izan da %s zerbitzarira ebatzi"/>
 			<node name="authenticationFailed" value="Huts egin du egiaztatzeak"/>
@@ -23,6 +22,7 @@
 			<node name="invalidURL" value="Baliogabeko URL-a"/>
 			<node name="hostCantBeReached" value="Ezin izan da konektatu %s zerbitzarira"/>
 			<node name="connectionRefused" value="%s (e)k konexioa ukatu du"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

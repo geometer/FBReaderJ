@@ -15,7 +15,6 @@
 			<node name="somethingWrongMessage" value="برای %s موردی مشکل دارد"/>
 			<node name="couldntCreateDirectoryMessage" value="نمیتواند یک پوشه %s ایجاد کند"/>
 			<node name="couldntCreateFileMessage" value="نمیتواند یک فایل %s ایجاد کند"/>
-			<node name="couldntConnectToNetworkMessage" value="نمیتواند به شبکه وصل شود"/>
 			<node name="couldntConnectMessage" value="نمیتواند به میزبان %s وصل شود"/>
 			<node name="couldntResolveHostMessage" value="نمیتواند هاست %s را حل کند"/>
 			<node name="authenticationFailed" value="تائید اعتبار ناموفق بود"/>
@@ -23,6 +22,7 @@
 			<node name="invalidURL" value="آدرس اشتباه است"/>
 			<node name="hostCantBeReached" value="میزبان %s قابل دسترسی نیست"/>
 			<node name="connectionRefused" value="اتصال توسط %s رد شد"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

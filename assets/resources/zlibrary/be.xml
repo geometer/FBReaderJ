@@ -16,7 +16,6 @@
 			<node name="somethingWrongMessage" value="Нешта ня так з «%s»"/>
 			<node name="couldntCreateDirectoryMessage" value="Немагчыма стварыць тэчку «%s»"/>
 			<node name="couldntCreateFileMessage" value="Немагчыма стварыць файл «%s»"/>
-			<node name="couldntConnectToNetworkMessage" value="Немагчыма злучыцца зь сеткай"/>
 			<node name="couldntConnectMessage" value="Немагчыма злучыцца з вузлом «%s»"/>
 			<node name="couldntResolveHostMessage" value="Немагчыма знайсьці вузел «%s»"/>
 			<node name="authenticationFailed" value="Спраўджаньне няўдалае"/>
@@ -24,6 +23,7 @@
 			<node name="invalidURL" value="Хібны адрас"/>
 			<node name="hostCantBeReached" value="Вузел %s недаступны"/>
 			<node name="connectionRefused" value="Злучэньне скінутае %s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

@@ -34,7 +34,6 @@ import org.geometerplus.fbreader.network.sync.SyncUtil;
 import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
 class SyncNetworkContext extends ServiceNetworkContext {
-	private volatile ConnectivityManager myConnectivityManager;
 	private final SyncOptions mySyncOptions;
 	private final ZLEnumOption<SyncOptions.Condition> myFeatureOption;
 
@@ -59,14 +58,6 @@ class SyncNetworkContext extends ServiceNetworkContext {
 		super.perform(request, socketTimeout, connectionTimeout);
 	}
 
-	private ConnectivityManager getConnectivityManager() {
-		if (myConnectivityManager == null) {
-			myConnectivityManager =
-				(ConnectivityManager)getContext().getSystemService(Service.CONNECTIVITY_SERVICE);
-		}
-		return myConnectivityManager;
-	}
-
 	private boolean canPerformRequest() {
 		if (!mySyncOptions.Enabled.getValue()) {
 			return false;
@@ -78,20 +69,12 @@ class SyncNetworkContext extends ServiceNetworkContext {
 				return false;
 			case always:
 			{
-				final ConnectivityManager cm = getConnectivityManager();
-				if (cm == null) {
-					return false;
-				}
-				final NetworkInfo info = cm.getActiveNetworkInfo();
+				final NetworkInfo info = getActiveNetworkInfo();
 				return info != null && info.isConnected();
 			}
 			case viaWifi:
 			{
-				final ConnectivityManager cm = getConnectivityManager();
-				if (cm == null) {
-					return false;
-				}
-				final NetworkInfo info = cm.getActiveNetworkInfo();
+				final NetworkInfo info = getActiveNetworkInfo();
 				return
 					info != null &&
 					info.isConnected() &&

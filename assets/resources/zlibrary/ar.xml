@@ -15,7 +15,6 @@
 			<node name="somethingWrongMessage" value="Something goes wrong for %s" toBeTranslated="true"/>
 			<node name="couldntCreateDirectoryMessage" value="لا يمكن إنشاء المجلد %s"/>
 			<node name="couldntCreateFileMessage" value="لا يمكن إنشاء الملف %s"/>
-			<node name="couldntConnectToNetworkMessage" value="لا يمكن الإتصال بالشبكة"/>
 			<node name="couldntConnectMessage" value="لايمكن الإتصال بالمضيف %s"/>
 			<node name="couldntResolveHostMessage" value="Couldn't resolve host %s" toBeTranslated="true"/>
 			<node name="authenticationFailed" value="Authentication failed" toBeTranslated="true"/>
@@ -23,6 +22,7 @@
 			<node name="invalidURL" value="Invalid URL" toBeTranslated="true"/>
 			<node name="hostCantBeReached" value="Host %s cannot be reached" toBeTranslated="true"/>
 			<node name="connectionRefused" value="Connection was refused by %s" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">
