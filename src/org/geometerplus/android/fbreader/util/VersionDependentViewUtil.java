@@ -117,9 +117,9 @@ public abstract class VersionDependentViewUtil {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 				setupMenuInActionBar(menuItem, showInActionBar);
 			}
-			menuItem.setOnMenuItemClickListener(myMenuListener);
-			myMenuItemMap.put(menuItem, actionId);
 		}
+		menuItem.setOnMenuItemClickListener(myMenuListener);
+		myMenuItemMap.put(menuItem, actionId);
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
