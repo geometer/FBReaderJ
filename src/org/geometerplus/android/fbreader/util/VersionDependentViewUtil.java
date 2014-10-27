@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.*;
 import android.widget.TextView;
 
@@ -61,6 +62,13 @@ public abstract class VersionDependentViewUtil {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				myShowStatusBarFlag ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
 				);
+		fbreader.getActivity().setTitle(fbreaderapp.getTitle());
+		myMenuListener = new MenuItem.OnMenuItemClickListener() {
+			public boolean onMenuItemClick(MenuItem item) {
+				fbreaderapp.runAction(myMenuItemMap.get(item));
+				return true;
+			}
+		};
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -83,13 +91,6 @@ public abstract class VersionDependentViewUtil {
 		});
 		bar.setCustomView(fbreader.getTitleView());
 		bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
-		fbreader.getActivity().setTitle(fbreaderapp.getTitle());
-		myMenuListener = new MenuItem.OnMenuItemClickListener() {
-			public boolean onMenuItemClick(MenuItem item) {
-				fbreaderapp.runAction(myMenuItemMap.get(item));
-				return true;
-			}
-		};
 	}
 
 	public static void doAtOnStartRunnable(final FBReaderInterface fbreader, final Intent i) {
