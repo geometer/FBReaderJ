@@ -17,7 +17,6 @@
 			<node name="somethingWrongMessage" value="Грешка при работа с %s"/>
 			<node name="couldntCreateDirectoryMessage" value="Невъзможност на създаване на каталог %s"/>
 			<node name="couldntCreateFileMessage" value="Невъзможност на създаване на файл %s"/>
-			<node name="couldntConnectToNetworkMessage" value="Невъзможност на свързване с мрежата"/>
 			<node name="couldntConnectMessage" value="Невъзможност за връзка със сайта %s"/>
 			<node name="couldntResolveHostMessage" value="Не бе намерен сайтът %s"/>
 			<node name="authenticationFailed" value="Грешка при ауторизацията"/>
@@ -25,6 +24,7 @@
 			<node name="invalidURL" value="Неправилен URL"/>
 			<node name="hostCantBeReached" value="Сайтът %s е недостъпен"/>
 			<node name="connectionRefused" value="Връзката е пекъсната от сайта %s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">
