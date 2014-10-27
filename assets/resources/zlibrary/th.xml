@@ -16,7 +16,6 @@
 			<node name="somethingWrongMessage" value="พบข้อผิดพลาดเกี่ยวกับ&#10;%s"/>
 			<node name="couldntCreateDirectoryMessage" value=" ไม่สามารถสร้างไดเรคทอรี&#10;%s"/>
 			<node name="couldntCreateFileMessage" value="ไม่สามารถสร้างไฟล์&#10;%s"/>
-			<node name="couldntConnectToNetworkMessage" value="ไม่สามารถเชื่อมต่อไปยังเครือข่าย"/>
 			<node name="couldntConnectMessage" value="ไม่สามารถเชื่อมต่อไปยังโฮสต์&#10;%s"/>
 			<node name="couldntResolveHostMessage" value="ไม่สามารถตรวจเจอโฮสต์&#10;%s"/>
 			<node name="authenticationFailed" value="ไม่ผ่านการตรวจสอบสิทธิ์"/>
@@ -24,6 +23,7 @@
 			<node name="invalidURL" value="URL ไมถูกต้องุ"/>
 			<node name="hostCantBeReached" value="โฮสต์ %s&#10;ไม่สามารถเข้าถึงได้"/>
 			<node name="connectionRefused" value="การเชื่อมต่อถูกปฏิเสธโดย&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

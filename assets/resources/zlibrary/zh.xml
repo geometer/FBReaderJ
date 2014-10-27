@@ -16,7 +16,6 @@
 			<node name="somethingWrongMessage" value="出错 %s"/>
 			<node name="couldntCreateDirectoryMessage" value="无法创建目录 %s"/>
 			<node name="couldntCreateFileMessage" value="无法创建文件 %s"/>
-			<node name="couldntConnectToNetworkMessage" value="无法连接到网络"/>
 			<node name="couldntConnectMessage" value="无法连接到主机%s"/>
 			<node name="couldntResolveHostMessage" value="无法解析主机 %s"/>
 			<node name="authenticationFailed" value="无法辨识"/>
@@ -24,6 +23,7 @@
 			<node name="invalidURL" value="无效网址"/>
 			<node name="hostCantBeReached" value="网站无法访问 %s"/>
 			<node name="connectionRefused" value="连接被拒绝&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

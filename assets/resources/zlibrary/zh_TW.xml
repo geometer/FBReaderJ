@@ -16,7 +16,6 @@
 			<node name="somethingWrongMessage" value="出錯&#10;%s"/>
 			<node name="couldntCreateDirectoryMessage" value="無法創建目錄&#10;%s"/>
 			<node name="couldntCreateFileMessage" value="無法創建檔案&#10;%s"/>
-			<node name="couldntConnectToNetworkMessage" value="無法連接網絡"/>
 			<node name="couldntConnectMessage" value="無法連接主機"/>
 			<node name="couldntResolveHostMessage" value="無法解析主機&#10;%s"/>
 			<node name="authenticationFailed" value="驗證失敗"/>
@@ -24,6 +23,7 @@
 			<node name="invalidURL" value="網址無效"/>
 			<node name="hostCantBeReached" value="未能連接主機 %s&#10;"/>
 			<node name="connectionRefused" value="連接被拒 &#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

@@ -15,7 +15,6 @@
 			<node name="somethingWrongMessage" value="Wystąplił błąd dla&#10;%s"/>
 			<node name="couldntCreateDirectoryMessage" value="Nie udało się stworzyć katalogu&#10;%s"/>
 			<node name="couldntCreateFileMessage" value="Nie udało się stworzyć pliku&#10;%s"/>
-			<node name="couldntConnectToNetworkMessage" value="Nie udało się połączyć z siecią"/>
 			<node name="couldntConnectMessage" value="Nie udało się połączyć z serwerem&#10;%s"/>
 			<node name="couldntResolveHostMessage" value="Nie udało się odnaleźć serwera&#10;%s"/>
 			<node name="authenticationFailed" value="Nieudane uwierzytelnianie"/>
@@ -23,6 +22,7 @@
 			<node name="invalidURL" value="Nieprawidłowy URL"/>
 			<node name="hostCantBeReached" value="Serwer %s&#10;jest niedostępny"/>
 			<node name="connectionRefused" value="Połączenie zostało odrzucone przez&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

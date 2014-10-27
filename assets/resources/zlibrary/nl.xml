@@ -16,7 +16,6 @@
 			<node name="somethingWrongMessage" value="Er gaat iets mis bij&#10;%s"/>
 			<node name="couldntCreateDirectoryMessage" value="Kan geen map %s niet maken"/>
 			<node name="couldntCreateFileMessage" value="Kan bestand %s niet maken"/>
-			<node name="couldntConnectToNetworkMessage" value="Kan geen verbinding met het netwerk maken"/>
 			<node name="couldntConnectMessage" value="Kan geen verbinding met host %s maken"/>
 			<node name="couldntResolveHostMessage" value="Hostnaam %s niet gevonden"/>
 			<node name="authenticationFailed" value="Authenticatie mislukt"/>
@@ -24,6 +23,7 @@
 			<node name="invalidURL" value="Ongeldige URL"/>
 			<node name="hostCantBeReached" value="Host %s is onbereikbaar"/>
 			<node name="connectionRefused" value="Verbinding was geweigerd door&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">
