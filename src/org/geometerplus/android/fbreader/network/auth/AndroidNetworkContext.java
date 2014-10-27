@@ -106,7 +106,7 @@ public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
 	protected void perform(ZLNetworkRequest request, int socketTimeout, int connectionTimeout) throws ZLNetworkException {
 		final NetworkInfo info = getActiveNetworkInfo();
-		if (info == null || info.isConnected()) {
+		if (info == null || !info.isConnected()) {
 			throw ZLNetworkException.forCode("networkNotAvailable");
 		}
 		
