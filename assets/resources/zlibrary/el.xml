@@ -16,7 +16,6 @@
 			<node name="somethingWrongMessage" value="Σφάλμα διακομιστή στο &#10;%s"/>
 			<node name="couldntCreateDirectoryMessage" value="Ο φάκελος&#10;%s δεν μπόρεσε να δημιουργηθεί."/>
 			<node name="couldntCreateFileMessage" value="Το αρχείο&#10;%s δεν μπόρεσε να δημιουργηθεί."/>
-			<node name="couldntConnectToNetworkMessage" value="Δεν υπάρχει σύδεση στο δίκτυο."/>
 			<node name="couldntConnectMessage" value="Δεν υπάρχει σύνδεση στον διακομιστή&#10;%s"/>
 			<node name="couldntResolveHostMessage" value="Το όνομα του διακομιστή&#10;%s δεν μπόρεσε να αφαιρεθεί."/>
 			<node name="authenticationFailed" value="Η πιστοποίηση απέτυχε."/>
@@ -24,6 +23,7 @@
 			<node name="invalidURL" value="Μή έγκυρο URL."/>
 			<node name="hostCantBeReached" value="η σύνδεση με τον διακομιστή %s&#10; δεν είναι δυνατή."/>
 			<node name="connectionRefused" value="Η σύνδεση στο&#10;%s&#10;απορήφθηκε."/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

@@ -15,7 +15,6 @@
 			<node name="somethingWrongMessage" value="どこかがおかしいようです: %s"/>
 			<node name="couldntCreateDirectoryMessage" value="ディレクトリ %s を作成できませんでした"/>
 			<node name="couldntCreateFileMessage" value="ファイル %s を作成できませんでした"/>
-			<node name="couldntConnectToNetworkMessage" value="ネットワークに接続できませんでした"/>
 			<node name="couldntConnectMessage" value="ホスト %s に接続できませんでした"/>
 			<node name="couldntResolveHostMessage" value="ホスト名 %s が解決できませんでした"/>
 			<node name="authenticationFailed" value="認証失敗"/>
@@ -23,6 +22,7 @@
 			<node name="invalidURL" value="不正な URL"/>
 			<node name="hostCantBeReached" value="ホスト %s に到達できません"/>
 			<node name="connectionRefused" value="接続が %s に拒否されました"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">
