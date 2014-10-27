@@ -16,7 +16,6 @@
 			<node name="somethingWrongMessage" value="Սխալ %s-ի հետ աշխատելիս"/>
 			<node name="couldntCreateDirectoryMessage" value="Չհաջողվեց ստեղծել %s գրացուցակը"/>
 			<node name="couldntCreateFileMessage" value="Չհաջողվեց ստեղծել %s նիշքը"/>
-			<node name="couldntConnectToNetworkMessage" value="Չհաջողվեց կապ հաստատել ցանցի հետ"/>
 			<node name="couldntConnectMessage" value="Չհաջողվեց կապ հաստատել %s կայքի հետ"/>
 			<node name="couldntResolveHostMessage" value="%s կայքը չգտնվեց"/>
 			<node name="authenticationFailed" value="Հեղինակացման սխալ"/>
@@ -24,6 +23,7 @@
 			<node name="invalidURL" value="Սխալ URL"/>
 			<node name="hostCantBeReached" value="%s կայքն անհասանելի է"/>
 			<node name="connectionRefused" value="%s կայքի հետ կապն ավարտվեց"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

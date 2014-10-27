@@ -16,7 +16,6 @@
 			<node name="somethingWrongMessage" value="Помилка при роботі з&#10;%s"/>
 			<node name="couldntCreateDirectoryMessage" value="Не вдалося створити теку&#10;%s"/>
 			<node name="couldntCreateFileMessage" value="Не вдалося створити файл&#10;%s"/>
-			<node name="couldntConnectToNetworkMessage" value="Не вдалося з’єднатися з мережею"/>
 			<node name="couldntConnectMessage" value="Не вдалося з’єднатися з сайтом&#10;%s"/>
 			<node name="couldntResolveHostMessage" value="Не вдається знайти сайт&#10;%s"/>
 			<node name="authenticationFailed" value="Помилка авторизації"/>
@@ -24,6 +23,7 @@
 			<node name="invalidURL" value="Неправильний URL"/>
 			<node name="hostCantBeReached" value="Сайт %s недоступний"/>
 			<node name="connectionRefused" value="З’єднання закрите сайтом&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">
