@@ -66,8 +66,12 @@
             -post-build
             -pre-clean
     -->
-    <import file="custom_rules.xml" optional="true"/>
 
+    <path id="java.compiler.classpath.path">
+        <fileset dir="../../yapps_yotacommons/Artifacts" includes="*.jar" />
+    </path>
+    <property name="java.compiler.classpath" refid="java.compiler.classpath.path" />
+    
     <target name="-pre-compile">
         <path id="project.all.jars.path">
             <path path="${toString:project.all.jars.path}"/>

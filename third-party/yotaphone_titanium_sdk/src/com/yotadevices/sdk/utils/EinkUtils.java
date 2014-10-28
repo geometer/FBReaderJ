@@ -76,14 +76,16 @@ public class EinkUtils {
     }
 
     public static void setViewWaveform(View view, Drawer.Waveform waveform) {
-        if (view != null) {
-            view.setEpdViewWaveFormMode(waveform.ordinal());
-        }
+        //if (view != null) {
+        //    view.setEpdViewWaveFormMode(waveform.ordinal());
+        //}
+	    com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewWaveFormMode(view, waveform.ordinal());
     }
 
     public static Drawer.Waveform getViewWaveform(View view) {
         if (view != null) {
-            return Drawer.Waveform.values()[view.getEpdViewWaveformMode()];
+            //return Drawer.Waveform.values()[view.getEpdViewWaveformMode()];
+	        return  Drawer.Waveform.values()[com.yotadevices.yotaphone2.sdk.EpdUtils.getEpdViewWaveformMode(view)];
         } else {
             return Drawer.Waveform.WAVEFORM_DEFAULT;
         }
@@ -91,19 +93,21 @@ public class EinkUtils {
 
     public static void disableViewDithering(View view) {
         if (view != null) {
-            view.setEpdViewDithering(Drawer.Dithering.DITHER_NONE.ordinal());
+            //view.setEpdViewDithering(Drawer.Dithering.DITHER_NONE.ordinal());
+	        com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewDithering(view, Drawer.Dithering.DITHER_NONE.ordinal());
         }
     }
 
     public static void setViewDithering(View view, Drawer.Dithering dithering) {
         if (view != null) {
-            view.setEpdViewDithering(dithering.ordinal());
+	        com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewDithering(view, dithering.ordinal());
         }
     }
 
     public static Drawer.Dithering getViewDithering(View view) {
         if (view != null) {
-            return Drawer.Dithering.values()[view.getEpdViewDithering()];
+            //return Drawer.Dithering.values()[view.getEpdViewDithering()];
+	        return Drawer.Dithering.values()[com.yotadevices.yotaphone2.sdk.EpdUtils.getEpdViewDithering(view)];
         } else {
             return Drawer.Dithering.DITHER_DEFAULT;
         }

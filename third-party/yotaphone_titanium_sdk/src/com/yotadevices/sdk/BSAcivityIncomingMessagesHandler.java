@@ -61,6 +61,12 @@ class BSAcivityIncomingMessagesHandler extends Handler {
         case AnswerFramework.MESSAGE_SYSTEM_UI_CHANGE:
             mBSActivity.get().performSystemUIChange();
             break;
+        case AnswerFramework.MESSAGE_ON_KEY_PRESS:
+            mBSActivity.get().performKeyPress(msg.arg1);
+            break;
+        case AnswerFramework.MESSAGE_ACTIVITY_START:
+            mBSActivity.get().performBSCreate();
+            break;
         default:
             super.handleMessage(msg);
         }

@@ -16,6 +16,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
@@ -42,9 +43,11 @@ public class BSActivity extends Service {
     boolean mCalled;
     boolean isResumed;
     boolean isFinishing;
+    boolean isAttached;
     boolean isBSLock;
     boolean dispatchOnHandleIntent;
     private int mSystemUiVisibility = SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE;
+    private int mFeatureWindow = 0;
 
     private int mResultCode;
     private Intent mResultData;
@@ -65,8 +68,11 @@ public class BSActivity extends Service {
     /** Messenger for communicating with service. */
     Messenger mService = null;
 
+    /**
+     * @hide
+     */
     @Override
-    public void onCreate() {
+    public final void onCreate() {
         super.onCreate();
         TAG = getClass().getSimpleName();
 
@@ -75,10 +81,6 @@ public class BSActivity extends Service {
 
         mDrawer = new BSDrawer(this);
         mRecord = new BSRecord(getApplicationContext(), TAG);
-        isResumed = false;
-        isFinishing = false;
-        dispatchOnHandleIntent = false;
-        isBSLock = false;
     }
 
     private void cleanResource() {
@@ -107,12 +109,18 @@ public class BSActivity extends Service {
         return new Intent(HelperConstant.FRAMEWORK_SDK_ACTION);
     }
 
+    /**
+     * @hide
+     */
     @Override
     @Deprecated
     public final void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
     }
 
+    /**
+     * @hide
+     */
     @Override
     public final int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
@@ -135,33 +143,46 @@ public class BSActivity extends Service {
         sendRequest(InnerConstants.RequestFramework.REQUEST_SET_INTENT);
     }
 
+    /**
+     * @hide
+     */
     @Override
     public final IBinder onBind(Intent arg0) {
         return null;
     }
 
+    /**
+     * @hide
+     */
     @Override
-    public void onTaskRemoved(Intent rootIntent) {
+    public final void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
         performFnishWithRequest(false);
         doUnbindService();
         performBSDestroy();
         cleanResource();
+        onBSTaskRemoved(rootIntent);
     }
 
+    /**
+     * @hide
+     */
     @Override
-    public void onDestroy() {
+    public final void onDestroy() {
         super.onDestroy();
-        if (!isFinishing) {
+        if (!isFinishing && isAttached) {
             // user can stop bsActivity using stopService method
             performFnishWithRequest(false);
         }
         doUnbindService();
-        performBSDestroy();
+        if (isAttached) {
+            performBSDestroy();
+        }
         cleanResource();
     }
 
     /**
+     * @hide
      * Method is deprecated. Please to use {@link #onStartCommand}.
      * 
      * @param intent
@@ -204,15 +225,18 @@ public class BSActivity extends Service {
         }
     }
 
-    private final void performBSCreate() {
+    final void performBSCreate() {
         if (DEBUG_BS_LIFECIRCLE) {
             Log.v(TAG, "onBSCreate.");
         }
+
+        mDrawer.showBlankView();// TODO:
         mCalled = false;
         onBSCreate();
         if (!mCalled) {
             throw new SuperNotCalledException("BSActivity " + TAG + " did not call through to super.onBSCreate()");
         }
+        sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVE);
     }
 
     void performBSActivated(boolean isBsLock) {
@@ -319,6 +343,29 @@ public class BSActivity extends Service {
         mDrawer.updateViewLayout(mSystemUiVisibility);
     }
 
+    final void performKeyPress(int keyCode) {
+        String key = null;
+        boolean value = false;
+        switch (keyCode) {
+        case KeyEvent.KEYCODE_BACK:
+            key = InnerConstants.EXTRA_OVERRIDE_KEY_BACK;
+            value = onBackPressed();
+            break;
+        case KeyEvent.KEYCODE_HOME:
+            key = InnerConstants.EXTRA_OVERRIDE_KEY_HOME;
+            value = onHomePressed();
+            break;
+        default:
+            break;
+        }
+
+        Bundle bundle = getDefaultBundle();
+        if (key != null) {
+            bundle.putBoolean(key, value);
+        }
+        sendToFramework(InnerConstants.RequestFramework.HANDLE_ON_KEY_PRESS, bundle);
+    }
+
     protected void onPrepareLayoutParams(WindowManager.LayoutParams lp) {
 
     }
@@ -349,6 +396,11 @@ public class BSActivity extends Service {
      * drawing is not permitted yet
      */
     protected void onBSCreate() {
+        isResumed = false;
+        isFinishing = false;
+        dispatchOnHandleIntent = false;
+        isBSLock = false;
+        isAttached = true;
         mCalled = true;
     }
 
@@ -370,10 +422,10 @@ public class BSActivity extends Service {
      * BS.
      */
     protected void onBSPause() {
-        //checkBSActivityRunning();
-	    if (mDrawer != null) {
-		    mDrawer.removeBSParentView();
-	    }
+        // checkBSActivityRunning();
+        if (mDrawer != null) {
+            mDrawer.removeBSParentView();
+        }
         isResumed = false;
         mCalled = true;
     }
@@ -392,6 +444,20 @@ public class BSActivity extends Service {
      */
     protected void onBSDestroy() {
         mCalled = true;
+    }
+
+    /**
+     * This is called if the service is currently running and the user has
+     * removed a task that comes from the service's application. If you have set
+     * ServiceInfo.FLAG_STOP_WITH_TASK then you will not receive this callback;
+     * instead, the service will simply be stopped.
+     * 
+     * @param rootIntent
+     *            The original root Intent that was used to launch the task that
+     *            is being removed.
+     */
+    protected void onBSTaskRemoved(Intent rootIntent) {
+
     }
 
     /**
@@ -507,6 +573,12 @@ public class BSActivity extends Service {
      */
     public Context getContext() {
         return getApplicationContext();
+    }
+
+    public void setFeature(int feature) {
+        if (mFeatureWindow != feature) {
+            mFeatureWindow = feature;
+        }
     }
 
     public void setSystemBSUiVisibility(int visibility) {
@@ -645,6 +717,14 @@ public class BSActivity extends Service {
 
     }
 
+    protected boolean onBackPressed() {
+        return false;
+    }
+
+    protected boolean onHomePressed() {
+        return false;
+    }
+
     void performFnishWithRequest(boolean stopped) {
         sendRequest(InnerConstants.RequestFramework.REQUEST_SET_FINISH);
         performFnish(stopped);
@@ -659,11 +739,17 @@ public class BSActivity extends Service {
     }
 
     void sendRequest(int what) {
+        Bundle bundle = getDefaultBundle();
+        bundle.putInt(InnerConstants.EXTRA_SYSTEM_BS_UI_FLAG, mSystemUiVisibility);
+        bundle.putInt(InnerConstants.EXTRA_SYSTEM_FEATURE, mFeatureWindow);
+        sendToFramework(what, bundle);
+    }
+
+    private Bundle getDefaultBundle() {
         Bundle bundle = new Bundle();
         bundle.putString(InnerConstants.EXTRA_SERVICE_NAME, getClass().getName());
         bundle.putString(InnerConstants.EXTRA_PACKAGE_NAME, getPackageName());
-        bundle.putInt(InnerConstants.EXTRA_SYSTEM_BS_UI_FLAG, mSystemUiVisibility);
-        sendToFramework(what, bundle);
+        return bundle;
     }
 
     private void sendToFramework(int what, Bundle bundle) {
@@ -679,7 +765,9 @@ public class BSActivity extends Service {
 
             switch (what) {
             case InnerConstants.RequestFramework.REQUEST_SET_ACTIVE:
+            case InnerConstants.RequestFramework.REQUEST_CAN_START:
                 msg.replyTo = mMessenger;
+                bundle.putParcelable(InnerConstants.EXTRA_BS_ACTIVITY_INTENT, getIntent());
                 break;
             case InnerConstants.RequestFramework.REQUEST_SET_INTENT:
                 bundle.putParcelable(InnerConstants.EXTRA_BS_ACTIVITY_INTENT, getIntent());
@@ -709,6 +797,7 @@ public class BSActivity extends Service {
 
             msg.setData(bundle);
             mService.send(msg);
+            Log.d(TAG, "sending command to framework: " + what);
         } catch (Exception e) {
             Log.d(TAG, "Error while send msg", e);
             if (!isFinishing) {
@@ -726,8 +815,7 @@ public class BSActivity extends Service {
             if (mService == null) {
                 Log.d(TAG, "Attached.");
                 mService = new Messenger(service);
-                performBSCreate();
-                sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVE);
+                sendRequest(InnerConstants.RequestFramework.REQUEST_CAN_START);
             }
         }
 
@@ -737,5 +825,4 @@ public class BSActivity extends Service {
             Log.d(TAG, "Disconnected.");
         }
     };
-
 }

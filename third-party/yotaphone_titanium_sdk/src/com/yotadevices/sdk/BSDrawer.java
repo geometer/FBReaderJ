@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.display.DisplayManager;
+import android.os.Handler;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -53,7 +54,6 @@ public class BSDrawer extends Drawer {
     private boolean isShowBlankView;
     private LayoutInflater mEpdInflater;
 
-    private int mStatusBarHeight;
     private int mNavigationBarHeight;
     private int mLayoutType = TYPE_LAYOUT_EPD;
 
@@ -63,8 +63,6 @@ public class BSDrawer extends Drawer {
         final Resources res = mContext.getResources();
 
         mNavigationBarHeight = res.getDimensionPixelSize(R.dimen.navigation_panel_height);
-        mStatusBarHeight = res.getDimensionPixelSize(R.dimen.status_bar_height);
-
         initDisplay();
     }
 
@@ -133,12 +131,13 @@ public class BSDrawer extends Drawer {
         mEpdInflater = (LayoutInflater) mEpdContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mParentView = createParentEpdView(mEpdContext);
         mBlankView = createParentEpdView(mEpdContext);
-        showBlankView();
     }
 
-    private void showBlankView() {
-        getWindowManager().addView(mBlankView, getDefaultLayoutParams());
-        isShowBlankView = true;
+    public void showBlankView() {
+        if (!isShowBSParentView()) {
+            getWindowManager().addView(mBlankView, getDefaultLayoutParams());
+            isShowBlankView = true;
+        }
     }
 
     private void hideBlankView() {
@@ -158,10 +157,10 @@ public class BSDrawer extends Drawer {
     private LayoutParams applySystemIUVisibility(LayoutParams lp, int visibility) {
         if (lp != null) {
             boolean hideNavigation = (visibility & SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION) != 0;
-            boolean hideStatusBar = (visibility & SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR) != 0;
+            boolean translucentNavigation = (visibility & SystemBSFlags.SYSTEM_BS_UI_FLAG_TRANSLUCENT_NAVIGATION) != 0;
 
-            int y = hideStatusBar ? 0 : mStatusBarHeight;
-            int height = BS_SCREEN_HEIGHT - y - (hideNavigation ? 0 : mNavigationBarHeight);
+            int y = 0;
+            int height = BS_SCREEN_HEIGHT - y - ((hideNavigation || translucentNavigation) ? 0 : mNavigationBarHeight);
 
             lp.y = y;
             lp.height = height;
@@ -199,12 +198,21 @@ public class BSDrawer extends Drawer {
                 activity.onPrepareLayoutParams(lp);
                 applySystemIUVisibility(lp, activity.getSytemBSUiVisibility());
             }
-
+            EinkUtils.setViewDithering(mParentView, initialDithering);
+            EinkUtils.setViewWaveform(mParentView, initialWaveform);
             wm.addView(mParentView, lp);
+            mParentView.post(new Runnable() {
+                @Override
+                public void run() {
+                    EinkUtils.setViewDithering(mParentView, Dithering.DITHER_DEFAULT);
+                    EinkUtils.setViewWaveform(mParentView, Waveform.WAVEFORM_DEFAULT);
+                }
+            });
+
             // When BS layout is added we perform FULL update to remove all
             // ghosting
             // from previous BSActivity
-            EinkUtils.performSingleUpdate(mParentView, initialWaveform, initialDithering, 1000);
+            //EinkUtils.performSingleUpdate(mParentView, initialWaveform, initialDithering, 0);
             isShowEpdView = true;
 
             if (isShowBlankView) {

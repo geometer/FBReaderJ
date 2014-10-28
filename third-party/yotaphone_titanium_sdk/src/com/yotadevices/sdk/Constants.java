@@ -206,8 +206,18 @@ public final class Constants {
 
     public static class SystemBSFlags {
         public final static int SYSTEM_BS_UI_FLAG_VISIBLE = 0;
+
+        @Deprecated
+        /**
+         * It's deprecated. No effect
+         */
         public final static int SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR = 0x00000001;
         public final static int SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION = 0x00000002;
+        public final static int SYSTEM_BS_UI_FLAG_TRANSLUCENT_NAVIGATION = 0x00000004;
+    }
+
+    public static class Feature {
+        public final static int FEATURE_OVERRIDE_BACK_PRESS = 0x00000001;
     }
 
     public static final String YOTAPHONE_EXTRA_BACK = "com.yotadevices.yotaphone.EXTRA_BACK";

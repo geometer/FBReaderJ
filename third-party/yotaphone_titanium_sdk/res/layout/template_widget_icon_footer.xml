@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="6.6dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="11dp"
         android:layout_above="@id/bottom_line"
         android:src="@drawable/template_icon"/>
     <TextView
@@ -73,7 +73,7 @@
         android:layout_above="@id/bottom_line"
         android:layout_marginBottom="8dp"
         android:text="info"
-        android:textSize="12dp"
+        android:textSize="14dp"
         android:singleLine="true"
         android:fontFamily="PT Sans Yota"
         android:textStyle="bold"
@@ -87,7 +87,7 @@
         android:layout_alignWithParentIfMissing="true"
         android:gravity="right"
         android:text="info"
-        android:textSize="12dp"
+        android:textSize="14dp"
         android:layout_marginLeft="6.6dp"
         android:layout_marginBottom="8dp"
         android:singleLine="true"

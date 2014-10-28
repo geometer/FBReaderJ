@@ -7,31 +7,37 @@
     <ImageView
         android:id="@+id/flip_popup_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/flip_popup_title"
-        android:src="@drawable/popup_img_rotatethephone" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="12dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/bs_flip_content_image" />
 
     <TextView
         android:id="@+id/flip_popup_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/flip_popup_image"
+        android:layout_marginTop="10dp"
         android:fontFamily="Roboto Yota"
+        android:gravity="center"
+        android:maxLines="2"
         android:text="@string/flip_popup_default_title"
         android:textColor="@android:color/black"
-        android:textSize="37.33sp" />
+        android:textSize="33.33dp" />
 
     <TextView
         android:id="@+id/flip_popup_description"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/flip_popup_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
-        android:fontFamily="PT Sans Yota"
+        android:layout_marginTop="4.33dp"
+        android:fontFamily="Roboto Yota"
         android:gravity="center"
+        android:maxLines="2"
         android:text="@string/flip_popup_default_description"
         android:textColor="@android:color/black"
-        android:textSize="21.33sp"
-        android:textStyle="bold" />
-</RelativeLayout>
+        android:textSize="20dp" />
+
+</RelativeLayout>

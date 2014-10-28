@@ -8,6 +8,7 @@
             <flag name="small" value="8" />
             <flag name="tiny" value="16" />
             <flag name="extra_large" value="32" />
+            <flag name="full_screen" value="64" />
         </attr>
         <attr name="icon_frontscreen" format="reference" />
         <attr name="category">

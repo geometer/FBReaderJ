@@ -4,8 +4,8 @@
 
     <stroke
         android:height="3dp"
-        android:dashWidth="3dp"
+        android:dashWidth="2dp"
         android:color="@android:color/black"
-        android:dashGap="3dp" />
+        android:dashGap="6dp" />
 
 </shape>

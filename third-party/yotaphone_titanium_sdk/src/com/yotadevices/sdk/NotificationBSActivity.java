@@ -1,38 +1,30 @@
 package com.yotadevices.sdk;
 
-import android.util.TypedValue;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.yotadevices.sdk.R;
 import com.yotadevices.sdk.utils.EinkUtils;
 
 public class NotificationBSActivity extends BSActivity {
-    private static final float HEIGHT_LOCKED_DP = 529.66f;
-    private static final float HEIGHT_UNLOCKED_DP = 597.33f;
-
     private RelativeLayout mMainLayout;
     private FrameLayout mNotifLayout;
-    private TextView mOK;
-    private View mDotLine;
+    private ImageView mOK;
+    private ImageView mCancel;
+    private ImageView mAction;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION | Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR);
+    protected void onBSCreate() {
+        super.onBSCreate();
+        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION);
     }
 
     @Override
     protected void onBSResume() {
         super.onBSResume();
-        if (isBackScreenLocked()) {
-            hideOKButton();
-        } else {
-            showOKButton();
-        }
     }
 
     @Override
@@ -62,8 +54,9 @@ public class NotificationBSActivity extends BSActivity {
     private void setViews() {
         mMainLayout = (RelativeLayout) findViewById(R.id.main_layout);
         mNotifLayout = (FrameLayout) findViewById(R.id.notification_layout);
-        mOK = (TextView) findViewById(R.id.button_ok);
-        mDotLine = findViewById(R.id.dot_line);
+        mOK = (ImageView) findViewById(R.id.button_ok);
+        mCancel = (ImageView) findViewById(R.id.button_cancel);
+        mAction = (ImageView) findViewById(R.id.button_action);
         mOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,45 +66,39 @@ public class NotificationBSActivity extends BSActivity {
         EinkUtils.setViewWaveform(mMainLayout, Drawer.Waveform.WAVEFORM_GC_PARTIAL);
     }
 
-    @Override
-    protected void onBSLock() {
-        super.onBSLock();
-        hideOKButton();
-    }
-
-    @Override
-    protected void onBSUnlock() {
-        super.onBSUnlock();
-        showOKButton();
-    }
-
-    protected void setOKButtonText(String string) {
-        mOK.setText(string);
-    }
-
     protected void setOnOKClickListener(View.OnClickListener l) {
         mOK.setOnClickListener(l);
     }
 
-    private void hideOKButton() {
-        if (isFinishing()) {
-            return;
-        }
-        mOK.setVisibility(View.INVISIBLE);
-        mDotLine.setVisibility(View.INVISIBLE);
-        /*RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mMainLayout.getLayoutParams();
-        lp.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, HEIGHT_LOCKED_DP, getBSDrawer().getBSContext().getResources().getDisplayMetrics());
-        mMainLayout.setLayoutParams(lp);*/
+    protected void setOnCancelClickListener(View.OnClickListener l) {
+        mCancel.setOnClickListener(l);
     }
 
-    private void showOKButton() {
-        if (isFinishing()) {
-            return;
-        }
-        mOK.setVisibility(View.VISIBLE);
-        mDotLine.setVisibility(View.VISIBLE);
-        /*RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mMainLayout.getLayoutParams();
-        lp.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, HEIGHT_UNLOCKED_DP, getBSDrawer().getBSContext().getResources().getDisplayMetrics());
-        mMainLayout.setLayoutParams(lp);*/
+    protected void setOnActionClickListener(View.OnClickListener l) {
+        mAction.setOnClickListener(l);
+    }
+
+    protected void setOKDrawable(Drawable drawable) {
+        mOK.setImageDrawable(drawable);
+    }
+
+    protected void setCancelDrawable(Drawable drawable) {
+        mCancel.setImageDrawable(drawable);
+    }
+
+    protected void setActionDrawable(Drawable drawable) {
+        mAction.setImageDrawable(drawable);
+    }
+
+    protected void setOKVisibility(int visibility) {
+        mOK.setVisibility(visibility);
+    }
+
+    protected void setCancelVisibility(int visibility) {
+        mCancel.setVisibility(visibility);
+    }
+
+    protected void setActionVisibility(int visibility) {
+        mAction.setVisibility(visibility);
     }
 }

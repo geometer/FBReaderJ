@@ -9,6 +9,7 @@ import android.widget.RemoteViews;
 
 public class FooterIconWidgetBuilder extends WidgetBuilder {
     protected PendingIntent mMoreViewPendingIntent;
+    protected PendingIntent mLeftPendingIntent;
 
     private CharSequence mLeftText;
     private CharSequence mRightText;
@@ -60,12 +61,21 @@ public class FooterIconWidgetBuilder extends WidgetBuilder {
         return this;
     }
 
+    public FooterIconWidgetBuilder setLeftAction(PendingIntent intent) {
+        mLeftPendingIntent = intent;
+        return this;
+    }
+
     @Override
     public RemoteViews apply(Context context) {
         if (!mLoadingData) {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.template_widget_icon_footer);
             remoteViews.setTextViewText(R.id.left_text, mLeftText);
             remoteViews.setImageViewResource(R.id.icon, mIconResource);
+            if (mLeftPendingIntent != null) {
+                remoteViews.setOnClickPendingIntent(R.id.left_text, mLeftPendingIntent);
+                remoteViews.setOnClickPendingIntent(R.id.icon, mLeftPendingIntent);
+            }
             remoteViews.removeAllViews(R.id.content);
             remoteViews.addView(R.id.content, mContentView);
             if (mRightText == null) {

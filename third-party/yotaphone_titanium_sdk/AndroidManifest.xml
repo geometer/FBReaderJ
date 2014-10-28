@@ -18,9 +18,4 @@
         android:minSdkVersion="19"
         android:targetSdkVersion="19" />
 
-    <service
-        android:name="com.yotadevices.sdk.FlipBSActivity"
-        android:exported="false" >
-    </service>
-
 </manifest>
