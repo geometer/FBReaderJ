@@ -20,6 +20,8 @@
 package org.geometerplus.fbreader.network;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -64,6 +66,15 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 
 	public final String getSiteName() {
 		return mySiteName;
+	}
+
+	public final String getHostName() {
+		final String catalogUrl = getUrl(UrlInfo.Type.Catalog);
+		if (catalogUrl == null) {
+			return null;
+		}
+		final Matcher m = Pattern.compile("^[a-zA-Z]+://([^/]+).*").matcher(catalogUrl);
+		return m.matches() ? m.group(1) : null;
 	}
 
 	public final String getTitle() {
