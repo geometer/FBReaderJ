@@ -219,10 +219,10 @@ public class NetworkLibrary {
 		return null;
 	}
 
-	public INetworkLink getLinkBySiteName(String siteName) {
+	public INetworkLink getLinkByStringId(String stringId) {
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				if (siteName.equals(link.getSiteName())) {
+				if (stringId.equals(link.getStringId())) {
 					return link;
 				}
 			}

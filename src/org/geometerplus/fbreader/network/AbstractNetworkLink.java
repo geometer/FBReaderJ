@@ -68,6 +68,17 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		return mySiteName;
 	}
 
+	public final String getStringId() {
+		if (mySiteName != null) {
+			return mySiteName;
+		}
+		final String hostName = getHostName();
+		if (hostName != null) {
+			return hostName;
+		}
+		return "CATALOG_" + myId;
+	}
+
 	public final String getHostName() {
 		final String catalogUrl = getUrl(UrlInfo.Type.Catalog);
 		if (catalogUrl == null) {
