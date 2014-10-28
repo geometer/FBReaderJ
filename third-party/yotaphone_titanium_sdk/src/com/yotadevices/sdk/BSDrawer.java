@@ -201,13 +201,13 @@ public class BSDrawer extends Drawer {
             EinkUtils.setViewDithering(mParentView, initialDithering);
             EinkUtils.setViewWaveform(mParentView, initialWaveform);
             wm.addView(mParentView, lp);
-            mParentView.post(new Runnable() {
+            mParentView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     EinkUtils.setViewDithering(mParentView, Dithering.DITHER_DEFAULT);
                     EinkUtils.setViewWaveform(mParentView, Waveform.WAVEFORM_DEFAULT);
                 }
-            });
+            }, 500);
 
             // When BS layout is added we perform FULL update to remove all
             // ghosting
