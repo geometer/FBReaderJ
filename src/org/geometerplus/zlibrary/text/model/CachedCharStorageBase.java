@@ -44,7 +44,7 @@ abstract class CachedCharStorageBase implements CharStorage {
 	}
 
 	public char[] block(int index) {
-		if (index < 0 && index >= myArray.size()) {
+		if (index < 0 || index >= myArray.size()) {
 			return null;
 		}
 		char[] block = myArray.get(index).get();
