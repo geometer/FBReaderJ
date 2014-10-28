@@ -59,11 +59,6 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 		myHasChanges = false;
 	}
 
-	public final void setSiteName(String name) {
-		myHasChanges = myHasChanges || !MiscUtil.equals(mySiteName, name);
-		mySiteName = name;
-	}
-
 	public final void setSummary(String summary) {
 		myHasChanges = myHasChanges || !MiscUtil.equals(mySummary, summary);
 		mySummary = summary;
