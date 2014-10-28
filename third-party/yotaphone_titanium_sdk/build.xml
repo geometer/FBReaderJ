@@ -68,7 +68,7 @@
     -->
 
     <path id="java.compiler.classpath.path">
-        <fileset dir="../../yapps_yotacommons/Artifacts" includes="*.jar" />
+        <fileset dir="artifacts" includes="*.jar" />
     </path>
     <property name="java.compiler.classpath" refid="java.compiler.classpath.path" />
     

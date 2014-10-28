@@ -7,9 +7,9 @@
 		android:installLocation="auto"
 >
 	<uses-sdk
-			android:minSdkVersion="5"
-            android:maxSdkVersion="10"
-			android:targetSdkVersion="9"
+			android:minSdkVersion="19"
+			android:maxSdkVersion="19"
+			android:targetSdkVersion="19"
 	/>
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true"/>
 	<uses-permission android:name="android.permission.INTERNET"/>

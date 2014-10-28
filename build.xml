@@ -86,6 +86,6 @@
 		<delete dir="libs/mips-r2-sf" />
 		<echo message="DONE (Deleting native libraries)" />
 	</target>
-
+	<import file="./third-party/yotaphone_titanium_sdk/customrules/custom_rules.xml" optional="true" />
 	<import file="${sdk.dir}/tools/ant/build.xml" />
 </project>
