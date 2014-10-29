@@ -40,7 +40,6 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	/**
 	 * Creates new NetworkLink instance.
 	 *
-	 * @param siteName   name of the corresponding website. Must be not <code>null</code>.
 	 * @param title      title of the corresponding library item. Must be not <code>null</code>.
 	 * @param summary    description of the corresponding library item. Can be <code>null</code>.
 	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
