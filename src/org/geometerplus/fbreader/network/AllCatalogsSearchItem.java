@@ -48,8 +48,7 @@ public class AllCatalogsSearchItem extends SearchItem {
 		}
 		for (INetworkLink link : NetworkLibrary.Instance().activeLinks()) {
 			if (containsCyrillicLetters) {
-				final String siteName = link.getSiteName();
-				if ("qumran.en".equals(siteName) || "qumran.de".equals(siteName)) {
+				if ("ebooks.qumran.org".equals(link.getHostName())) {
 					continue;
 				}
 			}

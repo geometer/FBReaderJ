@@ -39,18 +39,18 @@ public abstract class NetworkDatabase {
 
 	protected abstract void executeAsTransaction(Runnable actions);
 
-	protected INetworkLink createLink(int id, INetworkLink.Type type, String predefinedId, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
-		if (siteName == null || title == null || infos.getInfo(UrlInfo.Type.Catalog) == null) {
+	protected INetworkLink createLink(int id, INetworkLink.Type type, String predefinedId, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		if (title == null || infos.getInfo(UrlInfo.Type.Catalog) == null) {
 			return null;
 		}
 		switch (type) {
 			default:
 				return new OPDSCustomNetworkLink(
-					id, type, siteName, title, summary, language, infos
+					id, type, title, summary, language, infos
 				);
 			case Predefined:
 				return new OPDSPredefinedNetworkLink(
-					id, predefinedId, siteName, title, summary, language, infos
+					id, predefinedId, title, summary, language, infos
 				);
 		}
 	}
