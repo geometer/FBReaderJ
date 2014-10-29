@@ -34,10 +34,6 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 	public String Account;
 	public String BookId;
 
-	public LitResPurchaseXMLReader(String hostName) {
-		super(hostName);
-	}
-
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
@@ -60,7 +56,7 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 					setException(ZLNetworkException.forCode(NetworkException.ERROR_INTERNAL));
 				}
 			} else {
-				setException(ZLNetworkException.forCode(NetworkException.ERROR_SOMETHING_WRONG, HostName));
+				setException(ZLNetworkException.forCode(NetworkException.ERROR_SOMETHING_WRONG, LitResUtil.HOST_NAME));
 			}
 		}
 		return true;

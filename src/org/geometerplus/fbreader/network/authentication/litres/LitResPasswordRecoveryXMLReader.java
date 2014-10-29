@@ -28,10 +28,6 @@ class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
 	private static final String TAG_PASSWORD_RECOVERY_OK = "catalit-pass-recover-ok";
 	private static final String TAG_PASSWORD_RECOVERY_FAILED = "catalit-pass-recover-failed";
 
-	public LitResPasswordRecoveryXMLReader(String hostName) {
-		super(hostName);
-	}
-
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
@@ -47,7 +43,7 @@ class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
 		} else if (TAG_PASSWORD_RECOVERY_OK == tag) {
 			// NOP
 		} else {
-			setException(ZLNetworkException.forCode(NetworkException.ERROR_SOMETHING_WRONG, HostName));
+			setException(ZLNetworkException.forCode(NetworkException.ERROR_SOMETHING_WRONG, LitResUtil.HOST_NAME));
 		}
 		return true;
 	}

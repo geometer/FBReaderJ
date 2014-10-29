@@ -270,15 +270,14 @@ public class AddCustomCatalogActivity extends Activity {
 		}
 
 		setTextById(R.id.add_custom_catalog_url, textUrl);
-		final String siteName = uri.getHost();
-		if (isEmptyString(siteName)) {
+		if (isEmptyString(uri.getHost())) {
 			setErrorByKey("invalidUrl");
 			return;
 		}
 		final UrlInfoCollection<UrlInfoWithDate> infos = new UrlInfoCollection<UrlInfoWithDate>();
 		infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, textUrl, MimeType.APP_ATOM_XML));
 		myLink = new OPDSCustomNetworkLink(
-			ICustomNetworkLink.INVALID_ID, myType, siteName, null, null, null, infos
+			ICustomNetworkLink.INVALID_ID, myType, null, null, null, infos
 		);
 
 		final Runnable loadInfoRunnable = new Runnable() {
