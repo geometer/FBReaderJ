@@ -26,7 +26,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.view.Window;
 
-import org.geometerplus.fbreader.book.Note;
+import org.geometerplus.fbreader.book.Bookmark;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -36,7 +36,7 @@ public class NoteActivity extends PreferenceActivity {
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	//private boolean myExistingNote;
-	private Note myNote;
+	private Bookmark myNote;
 
 	@Override
 	protected void onCreate(Bundle icicle) {

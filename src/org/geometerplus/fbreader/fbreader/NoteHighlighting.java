@@ -27,13 +27,13 @@ import org.geometerplus.fbreader.book.*;
 
 public final class NoteHighlighting extends ZLTextSimpleHighlighting {
 	final IBookCollection Collection;
-	final Note Bookmark;
+	final Bookmark Bookmark;
 
-	private static ZLTextPosition startPosition(Note bookmark) {
+	private static ZLTextPosition startPosition(Bookmark bookmark) {
 		return new ZLTextFixedPosition(bookmark.getParagraphIndex(), bookmark.getElementIndex(), 0);
 	}
 
-	private static ZLTextPosition endPosition(Note bookmark) {
+	private static ZLTextPosition endPosition(Bookmark bookmark) {
 		final ZLTextPosition end = bookmark.getEnd();
 		if (end != null) {
 			return end;
@@ -42,7 +42,7 @@ public final class NoteHighlighting extends ZLTextSimpleHighlighting {
 		return bookmark;
 	}
 
-	NoteHighlighting(ZLTextView view, IBookCollection collection, Note bookmark) {
+	NoteHighlighting(ZLTextView view, IBookCollection collection, Bookmark bookmark) {
 		super(view, startPosition(bookmark), endPosition(bookmark));
 		Collection = collection;
 		Bookmark = bookmark;

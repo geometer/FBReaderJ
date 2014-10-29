@@ -35,9 +35,6 @@ abstract class AbstractSerializer {
 	public abstract String serialize(Bookmark bookmark);
 	public abstract Bookmark deserializeBookmark(String data);
 
-	public abstract String serialize(Note note);
-	public abstract Note deserializeNote(String data);
-
 	public abstract String serialize(HighlightingStyle style);
 	public abstract HighlightingStyle deserializeStyle(String data);
 }

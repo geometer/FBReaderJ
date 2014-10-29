@@ -302,19 +302,19 @@ public class LibraryService extends Service {
 		}
 
 		public List<String> notes(String query) {
-			return SerializerUtil.serializeNoteList(myCollection.notes(
+			return SerializerUtil.serializeBookmarkList(myCollection.notes(
 				SerializerUtil.deserializeNoteQuery(query)
 			));
 		}
 
 		public String saveNote(String serialized) {
-			final Note note = SerializerUtil.deserializeNote(serialized);
+			final Bookmark note = SerializerUtil.deserializeBookmark(serialized);
 			myCollection.saveNote(note);
 			return SerializerUtil.serialize(note);
 		}
 
 		public void deleteNote(String serialized) {
-			myCollection.deleteNote(SerializerUtil.deserializeNote(serialized));
+			myCollection.deleteNote(SerializerUtil.deserializeBookmark(serialized));
 		}
 
 		public String getHighlightingStyle(int styleId) {

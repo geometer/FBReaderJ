@@ -440,12 +440,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Note> notes(NoteQuery query) {
+	public synchronized List<Bookmark> notes(NoteQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
 		try {
-			return SerializerUtil.deserializeNoteList(
+			return SerializerUtil.deserializeBookmarkList(
 				myInterface.notes(SerializerUtil.serialize(query))
 			);
 		} catch (RemoteException e) {
@@ -453,10 +453,10 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized void saveNote(Note note) {
+	public synchronized void saveNote(Bookmark note) {
 		if (myInterface != null) {
 			try {
-				note.update(SerializerUtil.deserializeNote(
+				note.update(SerializerUtil.deserializeBookmark(
 					myInterface.saveNote(SerializerUtil.serialize(note))
 				));
 			} catch (RemoteException e) {
@@ -464,7 +464,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized void deleteNote(Note note) {
+	public synchronized void deleteNote(Bookmark note) {
 		if (myInterface != null) {
 			try {
 				myInterface.deleteNote(SerializerUtil.serialize(note));

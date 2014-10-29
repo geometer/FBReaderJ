@@ -89,9 +89,9 @@ public interface IBookCollection {
 	void saveBookmark(Bookmark bookmark);
 	void deleteBookmark(Bookmark bookmark);
 
-	List<Note> notes(NoteQuery query);
-	void saveNote(Note note);
-	void deleteNote(Note note);
+	List<Bookmark> notes(NoteQuery query);
+	void saveNote(Bookmark note);
+	void deleteNote(Bookmark note);
 
 	HighlightingStyle getHighlightingStyle(int styleId);
 	List<HighlightingStyle> highlightingStyles();

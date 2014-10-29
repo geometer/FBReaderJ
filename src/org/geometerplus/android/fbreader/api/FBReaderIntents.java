@@ -98,19 +98,19 @@ public abstract class FBReaderIntents {
 		return getBookmarkExtra(intent, Key.BOOKMARK);
 	}
 
-	public static void putNoteExtra(Intent intent, String key, Note note) {
+	public static void putNoteExtra(Intent intent, String key, Bookmark note) {
 		intent.putExtra(key, SerializerUtil.serialize(note));
 	}
 
-	public static void putNoteExtra(Intent intent, Note note) {
+	public static void putNoteExtra(Intent intent, Bookmark note) {
 		putNoteExtra(intent, Key.NOTE, note);
 	}
 
-	public static Note getNoteExtra(Intent intent, String key) {
-		return SerializerUtil.deserializeNote(intent.getStringExtra(key));
+	public static Bookmark getNoteExtra(Intent intent, String key) {
+		return SerializerUtil.deserializeBookmark(intent.getStringExtra(key));
 	}
 
-	public static Note getNoteExtra(Intent intent) {
+	public static Bookmark getNoteExtra(Intent intent) {
 		return getNoteExtra(intent, Key.NOTE);
 	}
 }

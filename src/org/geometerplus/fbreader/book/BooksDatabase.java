@@ -120,7 +120,7 @@ public abstract class BooksDatabase {
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
 
-	protected Note createNote(
+	protected Bookmark createNote(
 			long id, long bookId, String bookTitle, String text,
 			Date creationDate, Date modificationDate, Date accessDate, int accessCounter,
 			String modelId,
@@ -129,7 +129,7 @@ public abstract class BooksDatabase {
 			//boolean isVisible,
 			//int styleId
 		) {
-		return new Note(
+		return new Bookmark(
 			id, bookId, bookTitle, text,
 			creationDate, modificationDate, accessDate, accessCounter,
 			modelId,
@@ -141,9 +141,9 @@ public abstract class BooksDatabase {
 		);
 	}
 
-	protected abstract List<Note> loadNotes(NoteQuery query);
-	protected abstract long saveNote(Note note);
-	protected abstract void deleteNote(Note note);
+	protected abstract List<Bookmark> loadNotes(NoteQuery query);
+	protected abstract long saveNote(Bookmark note);
+	protected abstract void deleteNote(Bookmark note);
 
 	protected HighlightingStyle createStyle(int id, String name, int bgColor, int fgColor) {
 		return new HighlightingStyle(

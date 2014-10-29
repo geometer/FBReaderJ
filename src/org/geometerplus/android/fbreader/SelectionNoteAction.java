@@ -21,7 +21,7 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
 
-import org.geometerplus.fbreader.book.Note;
+import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -35,11 +35,11 @@ public class SelectionNoteAction extends FBAndroidAction {
 	@Override
 	protected void run(Object ... params) {
 		final boolean existingNote;
-		final Note note;
+		final Bookmark note;
 
 		if (params.length != 0) {
 			existingNote = true;
-			note = (Note)params[0];
+			note = (Bookmark)params[0];
 			//UIUtil.showMessageText(BaseActivity,note.getText());
 		} else {
 			existingNote = false;

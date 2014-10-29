@@ -858,8 +858,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<Note> loadNotes(NoteQuery query) {
-		final LinkedList<Note> list = new LinkedList<Note>();
+	protected List<Bookmark> loadNotes(NoteQuery query) {
+		final LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		final StringBuilder sql = new StringBuilder("SELECT")
 			.append(" bm.note_id,bm.book_id,b.title,bm.note_text,")
 			.append("bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,")
@@ -987,7 +987,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected long saveNote(Note note) {
+	protected long saveNote(Bookmark note) {
 		SQLiteStatement statement;
 		if (note.getId() == -1) {
 			statement = get(
@@ -1001,9 +1001,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 		statement.bindLong(1, note.getBookId());
 		statement.bindString(2, note.getText());
-		SQLiteUtil.bindDate(statement, 3, note.getDate(Note.DateType.Creation));
-		SQLiteUtil.bindDate(statement, 4, note.getDate(Note.DateType.Modification));
-		SQLiteUtil.bindDate(statement, 5, note.getDate(Note.DateType.Access));
+		SQLiteUtil.bindDate(statement, 3, note.getDate(Bookmark.DateType.Creation));
+		SQLiteUtil.bindDate(statement, 4, note.getDate(Bookmark.DateType.Modification));
+		SQLiteUtil.bindDate(statement, 5, note.getDate(Bookmark.DateType.Access));
 		statement.bindLong(6, note.getAccessCount());
 		SQLiteUtil.bindString(statement, 7, note.ModelId);
 		statement.bindLong(8, note.ParagraphIndex);
@@ -1033,7 +1033,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected void deleteNote(Note note) {
+	protected void deleteNote(Bookmark note) {
 		final SQLiteStatement statement = get("DELETE FROM Notes WHERE note_id=?");
 		statement.bindLong(1, note.getId());
 		statement.execute();

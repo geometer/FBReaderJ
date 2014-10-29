@@ -685,11 +685,11 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public List<Note> notes(NoteQuery query) {
+	public List<Bookmark> notes(NoteQuery query) {
 		return myDatabase.loadNotes(query);
 	}
 
-	public void saveNote(Note note) {
+	public void saveNote(Bookmark note) {
 		if (note != null) {
 			note.setId(myDatabase.saveNote(note));
 			//if (note.IsVisible) {
@@ -702,7 +702,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public void deleteNote(Note note) {
+	public void deleteNote(Bookmark note) {
 		if (note != null && note.getId() != -1) {
 			myDatabase.deleteNote(note);
 			//if (note.IsVisible) {
