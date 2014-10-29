@@ -53,7 +53,6 @@ public abstract class FBReaderIntents {
 	public interface Key {
 		String BOOK                     = "fbreader.book";
 		String BOOKMARK                 = "fbreader.bookmark";
-		String NOTE                     = "fbreader.note";
 		String PLUGIN                   = "fbreader.plugin";
 		String TYPE                     = "fbreader.type";
 	}
@@ -96,21 +95,5 @@ public abstract class FBReaderIntents {
 
 	public static Bookmark getBookmarkExtra(Intent intent) {
 		return getBookmarkExtra(intent, Key.BOOKMARK);
-	}
-
-	public static void putNoteExtra(Intent intent, String key, Bookmark note) {
-		intent.putExtra(key, SerializerUtil.serialize(note));
-	}
-
-	public static void putNoteExtra(Intent intent, Bookmark note) {
-		putNoteExtra(intent, Key.NOTE, note);
-	}
-
-	public static Bookmark getNoteExtra(Intent intent, String key) {
-		return SerializerUtil.deserializeBookmark(intent.getStringExtra(key));
-	}
-
-	public static Bookmark getNoteExtra(Intent intent) {
-		return getNoteExtra(intent, Key.NOTE);
 	}
 }

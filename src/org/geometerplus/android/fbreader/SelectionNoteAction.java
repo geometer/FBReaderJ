@@ -48,7 +48,7 @@ public class SelectionNoteAction extends FBAndroidAction {
 
 		final Intent intent =
 			new Intent(BaseActivity.getApplicationContext(), NoteActivity.class);
-		FBReaderIntents.putNoteExtra(intent, note);
+		FBReaderIntents.putBookmarkExtra(intent, note);
 		intent.putExtra(NoteActivity.EXISTING_NOTE_KEY, existingNote);
 		//UIUtil.showMessageText(BaseActivity,note.getText());
 		OrientationUtil.startActivity(BaseActivity, intent);

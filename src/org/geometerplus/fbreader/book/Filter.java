@@ -113,12 +113,6 @@ public abstract class Filter {
 		}
 	}
 
-	public final static class HasNote extends Filter {
-		public boolean matches(Book book) {
-			return book != null && book.HasNote;
-		}
-	}
-
 	public final static class HasPhysicalFile extends Filter {
 		public boolean matches(Book book) {
 			return book != null && book.File.getPhysicalFile() != null;

@@ -112,10 +112,6 @@ class XMLSerializer extends AbstractSerializer {
 			appendTag(buffer, "filter", true,
 				"type", "has-bookmark"
 			);
-		} else if (filter instanceof Filter.HasNote) {
-			appendTag(buffer, "filter", true,
-				"type", "has-note"
-			);
 		} else if (filter instanceof Filter.HasPhysicalFile) {
 			appendTag(buffer, "filter", true,
 				"type", "has-physical-file"
@@ -784,8 +780,6 @@ class XMLSerializer extends AbstractSerializer {
 						myFilter = new Filter.ByTitlePrefix(attributes.getValue("prefix"));
 					} else if ("has-bookmark".equals(type)) {
 						myFilter = new Filter.HasBookmark();
-					} else if ("has-note".equals(type)) {
-						myFilter = new Filter.HasNote();
 					} else if ("has-physical-file".equals(type)) {
 						myFilter = new Filter.HasPhysicalFile();
 					} else {

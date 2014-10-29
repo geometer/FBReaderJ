@@ -50,7 +50,7 @@ public class NoteActivity extends PreferenceActivity {
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
 				//myExistingNote = getIntent().getBooleanExtra(EXISTING_NOTE_KEY, false);
-				myNote = FBReaderIntents.getNoteExtra(getIntent());
+				myNote = FBReaderIntents.getBookmarkExtra(getIntent());
 				if (myNote == null) {
 					finish();
 					return;
