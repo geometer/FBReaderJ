@@ -50,7 +50,7 @@ public abstract class NetworkDatabase {
 				);
 			case Predefined:
 				return new OPDSPredefinedNetworkLink(
-					id, predefinedId, siteName, title, summary, language, infos
+					id, predefinedId, title, summary, language, infos
 				);
 		}
 	}

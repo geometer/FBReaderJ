@@ -152,7 +152,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				}
 
 				statement.bindString(1, link.getTitle());
-				statement.bindString(2, link.getSiteName());
+				statement.bindString(2, link.getStringId());
 				SQLiteUtil.bindString(statement, 3, link.getSummary());
 				SQLiteUtil.bindString(statement, 4, link.getLanguage());
 

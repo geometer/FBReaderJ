@@ -23,11 +23,13 @@ import org.geometerplus.fbreader.network.IPredefinedNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPredefinedNetworkLink {
+	static final String ID_PREFIX = "urn:fbreader-org-catalog:";
+
 	private final String myPredefinedId;
 
-	public OPDSPredefinedNetworkLink(int id, String predifinedId, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(id, siteName, title, summary, language, infos);
-		myPredefinedId = predifinedId;
+	public OPDSPredefinedNetworkLink(int id, String predefinedId, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		super(id, getStringIdInternal(predefinedId), title, summary, language, infos);
+		myPredefinedId = predefinedId;
 	}
 
 	public Type getType() {
@@ -36,5 +38,17 @@ public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPrede
 
 	public String getPredefinedId() {
 		return myPredefinedId;
+	}
+
+	private static String getStringIdInternal(String predefinedId) {
+		if (predefinedId.startsWith(ID_PREFIX)) {
+			return predefinedId.substring(ID_PREFIX.length());
+		}
+		return predefinedId;
+	}
+
+	@Override
+	public String getStringId() {
+		return getStringIdInternal(myPredefinedId);
 	}
 }
