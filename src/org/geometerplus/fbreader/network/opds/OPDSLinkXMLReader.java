@@ -68,15 +68,11 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			myExtraData.clear();
 		}
 
-		private static final String ENTRY_ID_PREFIX = "urn:fbreader-org-catalog:";
-
 		public boolean processFeedEntry(OPDSEntry entry) {
 			final String id = entry.Id.Uri;
-			if (id == null || id.length() <= ENTRY_ID_PREFIX.length()
-					|| !id.startsWith(ENTRY_ID_PREFIX)) {
+			if (id == null) {
 				return false;
 			}
-			final String siteName = id.substring(ENTRY_ID_PREFIX.length());
 			final CharSequence title = entry.Title;
 			final CharSequence summary = entry.Content;
 			final String language = entry.DCLanguage;
@@ -124,8 +120,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				}
 			}
 
-			if (siteName != null && title != null && infos.getInfo(UrlInfo.Type.Catalog) != null) {
-				final INetworkLink l = link(id, siteName, title, summary, language, infos);
+			if (title != null && infos.getInfo(UrlInfo.Type.Catalog) != null) {
+				final INetworkLink l = link(id, title, summary, language, infos);
 				if (l != null) {
 					myLinks.add(l);
 				}
@@ -135,7 +131,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 		private INetworkLink link(
 			String id,
-			String siteName,
 			CharSequence title,
 			CharSequence summary,
 			String language,
@@ -150,7 +145,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				final OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
 					OPDSNetworkLink.INVALID_ID,
 					id,
-					siteName,
 					titleString,
 					summaryString,
 					language,
@@ -173,7 +167,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				return new RSSNetworkLink(
 					OPDSNetworkLink.INVALID_ID,
 					id,
-					siteName,
 					titleString,
 					summaryString,
 					language,

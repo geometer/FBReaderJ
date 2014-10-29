@@ -23,18 +23,16 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 
-
 class LitResUtil {
+	public static final String HOST_NAME = "litres.ru";
 
 	public static String url(String path) {
-		String url = "://robot.litres.ru/" + path;
-		if (ZLNetworkUtil.hasParameter(url, "sid") ||
-				ZLNetworkUtil.hasParameter(url, "pwd")) {
-			url = "https" + url;
+		final String url = "://robot.litres.ru/" + path;
+		if (ZLNetworkUtil.hasParameter(url, "sid") || ZLNetworkUtil.hasParameter(url, "pwd")) {
+			return "https" + url;
 		} else {
-			url = "http" + url;
+			return "http" + url;
 		}
-		return url;
 	}
 
 	public static String url(INetworkLink link, String path) {

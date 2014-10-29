@@ -34,13 +34,13 @@ public abstract class NetworkAuthenticationManager {
 	private static final HashMap<String,NetworkAuthenticationManager> ourManagers = new HashMap<String,NetworkAuthenticationManager>();
 
 	public static NetworkAuthenticationManager createManager(INetworkLink link, Class<? extends NetworkAuthenticationManager> managerClass) {
-		NetworkAuthenticationManager mgr = ourManagers.get(link.getSiteName());
+		NetworkAuthenticationManager mgr = ourManagers.get(link.getStringId());
 		if (mgr == null) {
 			if (managerClass == LitResAuthenticationManager.class) {
 				mgr = new LitResAuthenticationManager((OPDSNetworkLink)link);
 			}
 			if (mgr != null) {
-				ourManagers.put(link.getSiteName(), mgr);
+				ourManagers.put(link.getStringId(), mgr);
 			}
 		}
 		return mgr;
@@ -52,7 +52,7 @@ public abstract class NetworkAuthenticationManager {
 
 	protected NetworkAuthenticationManager(INetworkLink link) {
 		Link = link;
-		UserNameOption = new ZLStringOption(link.getSiteName(), "userName", "");
+		UserNameOption = new ZLStringOption(link.getStringId(), "userName", "");
 	}
 
 	public String getUserName() {

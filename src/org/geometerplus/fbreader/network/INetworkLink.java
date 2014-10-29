@@ -64,7 +64,9 @@ public interface INetworkLink extends Comparable<INetworkLink> {
 	int getId();
 	void setId(int id);
 
-	String getSiteName();
+	String getStringId();
+	String getShortName();
+	String getHostName();
 	String getTitle();
 	String getSummary();
 

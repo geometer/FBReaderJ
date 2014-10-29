@@ -19,9 +19,10 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.List;
+
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
+import android.content.*;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
@@ -133,5 +134,33 @@ public abstract class Util implements UserRegistrationConstants {
 					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
 			);
 		}
+	}
+
+	private static final BroadcastReceiver catalogInfoReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			System.err.println("received catalog infos");
+			final List<String> urls =
+				getResultExtras(true).getStringArrayList("fbreader.catalog.ids");
+			if (urls == null || urls.isEmpty()) {
+				System.err.println("empty catalog infos");
+				return;
+			}
+			for (String u : urls) {
+				System.err.println("catalog info: " + u);
+			}
+		}
+	};
+
+	static void requestCatalogPlugins(Activity activity) {
+		activity.sendOrderedBroadcast(
+			new Intent(EXTRA_CATALOG_ACTION),
+			null,
+			catalogInfoReceiver,
+			null,
+			Activity.RESULT_OK,
+			null,
+			null
+		);
 	}
 }

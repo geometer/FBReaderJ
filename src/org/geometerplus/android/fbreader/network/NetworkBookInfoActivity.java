@@ -131,7 +131,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				if (url != null && "litres-book".equals(url.getScheme())) {
 					myBook = OPDSBookItem.create(
 						myNetworkContext,
-						library.getLinkBySiteName("litres.ru"),
+						library.getLinkByStringId("litres.ru"),
 						url.toString().replace("litres-book://", "http://")
 					);
 					if (myBook != null) {

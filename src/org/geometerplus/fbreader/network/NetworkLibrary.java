@@ -219,10 +219,10 @@ public class NetworkLibrary {
 		return null;
 	}
 
-	public INetworkLink getLinkBySiteName(String siteName) {
+	public INetworkLink getLinkByStringId(String stringId) {
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				if (siteName.equals(link.getSiteName())) {
+				if (stringId.equals(link.getStringId())) {
 					return link;
 				}
 			}
@@ -385,7 +385,8 @@ public class NetworkLibrary {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				if (host.contains(link.getSiteName())) {
+				if (link instanceof IPredefinedNetworkLink &&
+					((IPredefinedNetworkLink)link).servesHost(host)) {
 					url = link.rewriteUrl(url, externalUrl);
 				}
 			}

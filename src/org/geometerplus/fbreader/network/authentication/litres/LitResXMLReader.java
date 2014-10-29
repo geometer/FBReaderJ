@@ -55,7 +55,6 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	private LinkedList<String> myTags = new LinkedList<String>();
 
 	public LitResXMLReader(OPDSNetworkLink link) {
-		super(link.getSiteName());
 		Link = link;
 	}
 
