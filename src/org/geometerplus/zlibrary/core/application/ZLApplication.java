@@ -37,10 +37,15 @@ public abstract class ZLApplication {
 	private volatile ZLApplicationWindow myWindow;
 	private volatile ZLView myView;
 	private volatile String myTitle;
+	private volatile String myAuthor;
 
-	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
+    private HashMap<String,ZLAction> myIdToActionMap;
+    private final HashMap<String,ZLAction> myFrontScreenActionMap = new HashMap<String,ZLAction>();
+    private final HashMap<String,ZLAction> myBackScreenActionMap = new HashMap<String,ZLAction>();
+    private final Stack<HashMap<String,ZLAction> > myStackofActionMaps = new Stack<HashMap<String, ZLAction>>();
 
-	protected ZLApplication() {
+    protected ZLApplication() {
+        setFrontScreenActionMap();
 		ourInstance = this;
 	}
 
@@ -72,6 +77,14 @@ public abstract class ZLApplication {
 		myTitle = title;
 		if (myWindow != null) {
 			myWindow.setWindowTitle(title);
+		}
+	}
+
+	protected void setTitle(String title, String author) {
+		myTitle = title;
+		myAuthor = author;
+		if (myWindow != null) {
+			myWindow.setWindowTitle(title, author);
 		}
 	}
 
@@ -152,6 +165,13 @@ public abstract class ZLApplication {
 		}
 	}
 
+	public final void updatePopup(String id) {
+		myActivePopup = myPopups.get(id);
+		if (myActivePopup != null) {
+			myActivePopup.update();
+		}
+	}
+
 	public final void addAction(String actionId, ZLAction action) {
 		myIdToActionMap.put(actionId, action);
 	}
@@ -159,6 +179,14 @@ public abstract class ZLApplication {
 	public final void removeAction(String actionId) {
 		myIdToActionMap.remove(actionId);
 	}
+
+    public final void setFrontScreenActionMap() {
+        myIdToActionMap = myFrontScreenActionMap;
+    }
+
+    public final void setBackScreenActionMap() {
+        myIdToActionMap = myBackScreenActionMap;
+    }
 
 	public final void runAction(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
@@ -262,7 +290,6 @@ public abstract class ZLApplication {
 	public final PopupPanel getPopupById(String id) {
 		return myPopups.get(id);
 	}
-
 	public int getBatteryLevel() {
 		return (myWindow != null) ? myWindow.getBatteryLevel() : 0;
 	}

@@ -74,6 +74,7 @@ public interface ActionCode {
 	String SELECTION_COPY_TO_CLIPBOARD = "selectionCopyToClipboard";
 	String SELECTION_SHARE = "selectionShare";
 	String SELECTION_TRANSLATE = "selectionTranslate";
+    String SELECTION_DEFINE = "selectionDefine";
 	String SELECTION_BOOKMARK = "selectionBookmark";
 
 	String OPEN_VIDEO = "video";
@@ -83,4 +84,10 @@ public interface ActionCode {
 
 	String YOTA_SWITCH_TO_BACK_SCREEN = "yotaSwitchToBackScreen";
 	String YOTA_SWITCH_TO_FRONT_SCREEN = "yotaSwitchToFrontScreen";
+    String YOTA_UPDATE_WIDGET = "yotaUpdateWidget";
+	String YOTA_FONT_SETTINGS = "yotaFontSettings";
+	String YOTA_SEARCH_ACTION = "yotaSearchAction";
+	String YOTA_ADD_BOOKMARK = "yotaAddBookmark";
+	String YOTA_PERFORM_FULL_UPDATE = "yotaPerformFullUpdate";
+	String YOTA_UPDATE_BOOK_COVER = "yotaUpdateBookCover";
 }

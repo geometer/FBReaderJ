@@ -74,13 +74,10 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	private final Map<ExternalFormatPlugin,Connection> myConnections =
 		new HashMap<ExternalFormatPlugin,Connection>();
 
-	public AndroidImageSynchronizer(Activity activity) {
+	public AndroidImageSynchronizer(Context activity) {
 		myContext = activity;
 	}
 
-	public AndroidImageSynchronizer(Service service) {
-		myContext = service;
-	}
 
 	@Override
 	public void startImageLoading(ZLImageProxy image, Runnable postAction) {

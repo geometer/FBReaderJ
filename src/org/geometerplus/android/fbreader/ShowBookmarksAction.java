@@ -22,6 +22,8 @@ package org.geometerplus.android.fbreader;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
+import com.yotadevices.yotaphone2.fbreader.YotaBookContentPopup;
+
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;

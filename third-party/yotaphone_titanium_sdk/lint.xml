@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="DuplicateUsesFeature" severity="ignore" />
+    <issue id="IconMixedNinePatch" severity="ignore" />
+    <issue id="InconsistentLayout" severity="ignore" />
+    <issue id="JavascriptInterface" severity="ignore" />
+    <issue id="ManifestTypo" severity="ignore" />
+    <issue id="MissingApplicationIcon" severity="ignore" />
+    <issue id="MissingQuantity" severity="ignore" />
+    <issue id="NotSibling" severity="ignore" />
+    <issue id="ParcelCreator" severity="ignore" />
+    <issue id="ServiceCast" severity="ignore" />
+    <issue id="UnusedQuantity" severity="ignore" />
+</lint>

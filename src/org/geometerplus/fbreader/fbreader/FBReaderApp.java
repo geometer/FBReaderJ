@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
@@ -73,7 +74,6 @@ public final class FBReaderApp extends ZLApplication {
 	public final IBookCollection Collection;
 
 	private SyncData mySyncData = new SyncData();
-
 	public FBReaderApp(IBookCollection collection) {
 		Collection = collection;
 
@@ -100,6 +100,8 @@ public final class FBReaderApp extends ZLApplication {
 			public void onBuildEvent(IBookCollection.Status status) {
 			}
 		});
+
+        setFrontScreenActionMap();
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
@@ -160,8 +162,9 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(Book book, final Bookmark bookmark, Runnable postAction, Notifier notifier) {
+        final Book recentBook = Collection.getRecentBook(0);
 		if (Model != null) {
-			if (book == null || bookmark == null && book.File.equals(Model.Book.File)) {
+			if (book == null || bookmark == null && book.File.equals(Model.Book.File) && Model.Book.equals(recentBook)) {
 				return;
 			}
 		}
@@ -173,6 +176,9 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			if (book == null || !book.File.exists()) {
 				book = Collection.getBookByFile(BookUtil.getHelpFile());
+				if (DeviceType.Instance().isYotaPhone()) {
+					runAction(ActionCode.SHOW_LIBRARY);
+				}
 			}
 			if (book == null) {
 				return;
@@ -302,6 +308,9 @@ public final class FBReaderApp extends ZLApplication {
 
 		onViewChanged();
 		storePosition();
+		if (DeviceType.Instance().isYotaPhone()) {
+			runAction(ActionCode.YOTA_UPDATE_BOOK_COVER, book);
+		}
 
 		BookTextView.setModel(null);
 		FootnoteView.setModel(null);
@@ -342,16 +351,32 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			Collection.addBookToRecentList(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
-			if (!book.authors().isEmpty()) {
-				boolean first = true;
-				for (Author a : book.authors()) {
-					title.append(first ? " (" : ", ");
-					title.append(a.DisplayName);
-					first = false;
+			if (!DeviceType.Instance().isYotaPhone()) {
+				if (!book.authors().isEmpty()) {
+					boolean first = true;
+					for (Author a : book.authors()) {
+						title.append(first ? " (" : ", ");
+						title.append(a.DisplayName);
+						first = false;
+					}
+					title.append(")");
 				}
-				title.append(")");
+				setTitle(title.toString());
 			}
-			setTitle(title.toString());
+			else {
+				final StringBuilder authors = new StringBuilder("");
+				if (!book.authors().isEmpty()) {
+					boolean next = false;
+					for (Author a : book.authors()) {
+						if (next) {
+							authors.append(", ");
+						}
+						authors.append(a.DisplayName);
+						next = true;
+					}
+				}
+				setTitle(title.toString(), authors.toString());
+			}
 		} catch (BookReadingException e) {
 			processException(e);
 		}
@@ -450,7 +475,6 @@ public final class FBReaderApp extends ZLApplication {
 		private final Book myBook;
 		private final ZLTextPosition myPosition;
 		private final RationalNumber myProgress;
-
 		PositionSaver(Book book, ZLTextPosition position, RationalNumber progress) {
 			myBook = book;
 			myPosition = position;
@@ -461,6 +485,10 @@ public final class FBReaderApp extends ZLApplication {
 			Collection.storePosition(myBook.getId(), myPosition);
 			myBook.setProgress(myProgress);
 			Collection.saveBook(myBook);
+			if (DeviceType.Instance().isYotaPhone()) {
+				FBReaderApp.this.runAction(ActionCode.YOTA_PERFORM_FULL_UPDATE);
+				FBReaderApp.this.runAction(ActionCode.YOTA_UPDATE_WIDGET);
+			}
 		}
 	}
 
@@ -675,7 +703,9 @@ public final class FBReaderApp extends ZLApplication {
 		} else {
 			ZLTextHyphenator.Instance().load(Model.Book.getLanguage());
 			clearTextCaches();
-			getViewWidget().repaint();
+            if (getViewWidget() != null) {
+                getViewWidget().repaint();
+            }
 		}
 	}
 }

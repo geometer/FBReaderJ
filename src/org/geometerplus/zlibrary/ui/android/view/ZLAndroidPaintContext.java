@@ -58,13 +58,13 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private final Paint myFillPaint = new Paint();
 	private final Paint myOutlinePaint = new Paint();
 
-	static class Geometry {
+	public static class Geometry {
 		final Size ScreenSize;
 		final Size AreaSize;
 		final int LeftMargin;
 		final int TopMargin;
 
-		Geometry(int screenWidth, int screenHeight, int width, int height, int leftMargin, int topMargin) {
+		public Geometry(int screenWidth, int screenHeight, int width, int height, int leftMargin, int topMargin) {
 			ScreenSize = new Size(screenWidth, screenHeight);
 			AreaSize = new Size(width, height);
 			LeftMargin = leftMargin;
@@ -77,7 +77,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
 
-	ZLAndroidPaintContext(Canvas canvas, Geometry geometry, int scrollbarWidth) {
+	public ZLAndroidPaintContext(Canvas canvas, Geometry geometry, int scrollbarWidth) {
 		myCanvas = canvas;
 		myGeometry = geometry;
 		myScrollbarWidth = scrollbarWidth;

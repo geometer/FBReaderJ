@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.Bookmark;
@@ -52,7 +53,9 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 					.replace("%s", bookmark.getText())
 			);
 		}
-
+        if (!existingBookmark && DeviceType.Instance().isYotaPhone()) {
+            return;
+        }
 		final Intent intent =
 			new Intent(BaseActivity.getApplicationContext(), StyleListActivity.class);
 		FBReaderIntents.putBookmarkExtra(intent, bookmark);

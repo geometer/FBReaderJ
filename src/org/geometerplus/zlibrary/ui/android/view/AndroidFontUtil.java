@@ -114,6 +114,11 @@ public final class AndroidFontUtil {
 		if ("monospace".equalsIgnoreCase(fontFamily) || "droid mono".equalsIgnoreCase(fontFamily)) {
 			return "monospace";
 		}
+
+		if ("yota-sans".equalsIgnoreCase(fontFamily) || "yota sans".equalsIgnoreCase(fontFamily)) {
+			return "PT Sans Yota";
+		}
+
 		return "sans-serif";
 	}
 

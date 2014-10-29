@@ -23,6 +23,7 @@ import java.util.*;
 
 import android.os.Build;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
@@ -58,7 +59,7 @@ public class PluginCollection {
 	}
 
 	private PluginCollection() {
-		if (Build.VERSION.SDK_INT >= 8) {
+		if (Build.VERSION.SDK_INT >= 8 && !DeviceType.Instance().isYotaPhone()) {
 			myExternalPlugins.add(new DjVuPlugin());
 			myExternalPlugins.add(new PDFPlugin());
 		}

@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.FileObserver;
+import android.os.RemoteException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;

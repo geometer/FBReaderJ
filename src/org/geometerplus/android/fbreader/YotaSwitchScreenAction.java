@@ -24,13 +24,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.yotadevices.sdk.utils.RotationAlgorithm;
-import com.yotadevices.fbreader.FBReaderYotaService;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
+
+import java.util.HashMap;
 
 class YotaSwitchScreenAction extends FBAndroidAction {
 	private final boolean mySwitchToBack;
@@ -55,18 +60,30 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		final View mainHiddenView = BaseActivity.findViewById(R.id.yota_main_hidden_view);
 
 		Reader.ViewOptions.YotaDrawOnBackScreen.setValue(toBack);
-		BaseActivity.refreshYotaScreen();
 
 		if (toBack) {
+			BaseActivity.refreshYotaScreen();
+			ZLAndroidPaintContext.AntiAliasOption.setValue(false);
 			Reader.getTextView().clearSelection();
 			BaseActivity.hideSelectionPanel();
-			setupHiddenView(mainHiddenView);
-			mainView.setVisibility(View.GONE);
-			mainHiddenView.setVisibility(View.VISIBLE);
-			RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).turnScreenOffIfRotated();
+			if (BaseActivity.barsAreShown()) {
+				BaseActivity.hideBars();
+			}
+		    //setupHiddenView(mainHiddenView);
+			//mainView.setVisibility(View.GONE);
+			//mainHiddenView.setVisibility(View.VISIBLE);
+			Reader.setBackScreenActionMap();
+//			RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).turnScreenOffIfRotated();
+//			RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).issueStandardToastAndVibration();
+
 		} else {
-			mainView.setVisibility(View.VISIBLE);
-			mainHiddenView.setVisibility(View.GONE);
+			((ZLAndroidLibrary) ZLibrary.Instance()).setDisplayMetrics(null);
+			ZLAndroidPaintContext.AntiAliasOption.setValue(true);
+			Reader.setFrontScreenActionMap();
+			FBReaderApp.Instance().setWindow(BaseActivity);
+			FBReaderApp.Instance().initWindow();
+			//mainView.setVisibility(View.VISIBLE);
+			//mainHiddenView.setVisibility(View.GONE);
 		}
 
 		Reader.clearTextCaches();

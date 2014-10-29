@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.Paths;
 
 public class FileFirstLevelTree extends FirstLevelTree {
-	FileFirstLevelTree(RootTree root) {
+	public FileFirstLevelTree(RootTree root) {
 		super(root, ROOT_FILE);
 	}
 

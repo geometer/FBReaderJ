@@ -22,6 +22,9 @@ package org.geometerplus.android.fbreader;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
+import com.yotadevices.yotaphone2.fbreader.FileChooseActivity;
+
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -37,8 +40,11 @@ class ShowLibraryAction extends FBAndroidAction {
 	protected void run(Object ... params) {
 		final Intent externalIntent =
 			new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY);
-		final Intent internalIntent =
-			new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
+		final Intent internalIntent = new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
+		if (DeviceType.Instance().isYotaPhone()) {
+			internalIntent.setClassName("com.yotadevices.yotaphone2.yotareader.collection", "com.yotadevices.yotaphone2.yotareader.collection.CollectionActivity");
+		}
+
 		if (PackageUtil.canBeStarted(BaseActivity, externalIntent, true)) {
 			try {
 				startLibraryActivity(externalIntent);

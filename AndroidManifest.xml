@@ -7,8 +7,9 @@
 		android:installLocation="auto"
 >
 	<uses-sdk
-			android:minSdkVersion="11"
-			android:targetSdkVersion="14"
+			android:minSdkVersion="19"
+			android:maxSdkVersion="19"
+			android:targetSdkVersion="19"
 	/>
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
@@ -20,10 +21,12 @@
 	<uses-permission android:name="fbreader.permission.CONFIG"/>
 	<uses-permission android:name="fbreader.permission.SYNC"/>
 	<uses-permission android:name="com.yotadevices.framework.permission.ACCESS_BACKSCREEN"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 	<permission android:name="fbreader.permission.LIBRARY" android:description="@string/permission_library_description" android:label="@string/permission_library_label"/>
 	<permission android:name="fbreader.permission.CONFIG" android:description="@string/permission_config_description" android:label="@string/permission_config_label"/>
 	<permission android:name="fbreader.permission.SYNC" android:description="@string/permission_sync_description" android:label="@string/permission_sync_label"/>
 	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:logo="@drawable/fbreader_bw" android:label="FBReader">
+		<uses-library android:name="com.yotadevices.yotaphone2.sdk" android:required="true" />
 		<activity android:name="org.geometerplus.android.fbreader.error.BookReadingErrorActivity" android:theme="@style/FBReader.Dialog" android:process=":error" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.ERROR"/>
@@ -57,11 +60,7 @@
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</service>
-		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
+		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
@@ -135,7 +134,38 @@
 				<action android:name="android.fbreader.action.PLUGIN_CRASH"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
+			<intent-filter>
+				<action android:name="android.fbreader.action.SHARE"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
 		</activity>
+
+        <activity-alias
+            android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name="org.geometerplus.android.fbreader.FBReaderLauncher"
+            android:targetActivity="org.geometerplus.android.fbreader.FBReader"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name="com.yotadevices.yotaphone2.fbreader.YotaReader"
+            android:label="Yota Reader"
+            android:icon="@drawable/yota_reader_icon"
+            android:logo="@null"
+            android:targetActivity="org.geometerplus.android.fbreader.FBReader"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
 		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CANCEL_MENU"/>
@@ -266,7 +296,7 @@
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.network.auth.WebAuthorisationScreen" android:process=":networkLibrary" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize" android:exported="false"/>
-		<activity android:name="org.geometerplus.android.fbreader.network.NetworkLibraryPrimaryActivity" android:process=":networkLibrary" android:launchMode="singleTask" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
+		<activity android:name="org.geometerplus.android.fbreader.network.NetworkLibraryPrimaryActivity" android:exported="true" android:process=":networkLibrary" android:launchMode="singleTask" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.network.NetworkSearchActivity"/>
 			<intent-filter>
 				<action android:name="android.fbreader.action.OPEN_NETWORK_CATALOG"/>
@@ -332,7 +362,25 @@
 		<activity android:name="org.geometerplus.android.util.FolderListDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.util.EditTagsDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.util.EditAuthorsDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
-		<service android:name="com.yotadevices.fbreader.FBReaderYotaService" android:exported="false" android:launchMode="singleTask"/>
+		<activity android:name="com.yotadevices.yotaphone2.fbreader.FileChooseActivity" android:exported="true" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/ActivityWithWhiteActionBar" android:logo="@drawable/yota_reader_icon"/>
+        <service android:name="com.yotadevices.yotaphone2.fbreader.FBReaderYotaService" android:exported="true" android:launchMode="singleTask"/>
+		<service android:name="com.yotadevices.yotaphone2.fbreader.ShareFlipActivity" android:exported="true" />
+		<activity android:name="org.geometerplus.android.fbreader.network.YotaNetworkBookInfoActivity" android:process=":networkLibrary" android:theme="@style/ActivityWithWhiteActionBar" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="com.yotadevices.yotaphone2.fbreader.YotaBookInfoActivity" android:theme="@style/ActivityWithWhiteActionBar" android:logo="@drawable/yota_reader_icon" android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="android.fbreader.action.BOOK_INFO"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <receiver
+            android:name="com.yotadevices.yotaphone2.fbreader.P2BReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="yotaphone.intent.action.IS_BS_SUPPORTED" />
+                <action android:name="yotaphone.intent.action.P2B" />
+            </intent-filter>
+        </receiver>
 		<uses-library android:required="false" android:name="com.yotadevices.platinum"/>
 		<meta-data android:name="com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
 		<meta-data android:name="com.yotadevices.BS_TITLE" android:value="FBReader"/>

@@ -21,24 +21,22 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 
-class VolumeKeyTurnPageAction extends FBAction {
+public class VolumeKeyTurnPageAction extends FBAction {
 	private final boolean myForward;
 
-	VolumeKeyTurnPageAction(FBReaderApp fbreader, boolean forward) {
+	public VolumeKeyTurnPageAction(FBReaderApp fbreader, boolean forward) {
 		super(fbreader);
 		myForward = forward;
 	}
 
 	@Override
 	protected void run(Object ... params) {
-		if (!Reader.ViewOptions.YotaDrawOnBackScreen.getValue()) {
-			final PageTurningOptions preferences = Reader.PageTurningOptions;
-			Reader.getViewWidget().startAnimatedScrolling(
-				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
-				preferences.Horizontal.getValue()
-					? FBView.Direction.rightToLeft : FBView.Direction.up,
-				preferences.AnimationSpeed.getValue()
-			);
-		}
+        final PageTurningOptions preferences = Reader.PageTurningOptions;
+        Reader.getViewWidget().startAnimatedScrolling(
+            myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+            preferences.Horizontal.getValue()
+                ? FBView.Direction.rightToLeft : FBView.Direction.up,
+            preferences.AnimationSpeed.getValue()
+        );
 	}
 }

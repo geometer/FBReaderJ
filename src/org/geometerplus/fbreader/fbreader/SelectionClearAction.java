@@ -26,6 +26,7 @@ public class SelectionClearAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
+        //here is how to reset selection
 		Reader.getTextView().clearSelection();
 	}
 }

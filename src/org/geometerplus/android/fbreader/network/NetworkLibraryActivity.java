@@ -21,18 +21,24 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.*;
 import android.widget.*;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -75,11 +81,23 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				NetworkLibrary.Instance().clearExpiredCache(25);
 			}
 		});
-
+		if (DeviceType.Instance().isYotaPhone()) {
+			setTheme(R.style.ActivityWithWhiteActionBar);
+			ActionBar bar = getActionBar();
+			bar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+			bar.setLogo(new ColorDrawable(Color.WHITE));
+			bar.setDisplayHomeAsUpEnabled(true);
+			bar.setTitle(R.string.network_library);
+		}
 		AuthenticationActivity.initCredentialsCreator(this);
 		SQLiteCookieDatabase.init(this);
-
-		setListAdapter(new NetworkLibraryAdapter(this));
+		if (DeviceType.Instance().isYotaPhone()) {
+			setListAdapter(new YotaNetworkLibraryAdapter(this));
+			getListView().setDividerHeight(0);
+		}
+		else {
+			setListAdapter(new NetworkLibraryAdapter(this));
+		}
 		final Intent intent = getIntent();
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -333,17 +351,31 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		//Debug.waitForDebugger();
 		super.onCreateOptionsMenu(menu);
+		if (!DeviceType.Instance().isYotaPhone()) {
+			if (myOptionsMenuActions.isEmpty()) {
+				fillOptionsMenuList();
+			}
 
-		if (myOptionsMenuActions.isEmpty()) {
-			fillOptionsMenuList();
+			for (Action a : myOptionsMenuActions) {
+				final MenuItem item = menu.add(0, a.Code, Menu.NONE, "");
+				item.setShowAsAction(
+						a.ShowAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER
+				);
+			}
 		}
-
-		for (Action a : myOptionsMenuActions) {
-			final MenuItem item = menu.add(0, a.Code, Menu.NONE, "");
-			item.setShowAsAction(
-				a.ShowAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER
-			);
+		else {
+			if (myOptionsMenuActions.isEmpty()) {
+				myOptionsMenuActions.add(new RunSearchAction(this, false));
+			}
+			for (Action a : myOptionsMenuActions) {
+				final MenuItem item = menu.add(0, a.Code, Menu.NONE, "");
+				item.setShowAsAction(
+						a.ShowAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER
+				);
+				item.setIcon(R.drawable.yota_search_icon);
+			}
 		}
 		return true;
 	}
@@ -355,12 +387,14 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		final NetworkTree tree = getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			final MenuItem item = menu.findItem(a.Code);
-			if (a.isVisible(tree)) {
-				item.setVisible(true);
-				item.setEnabled(a.isEnabled(tree));
-				item.setTitle(a.getOptionsLabel(tree));
-			} else {
-				item.setVisible(false);
+			if (item != null) {
+				if (a.isVisible(tree)) {
+					item.setVisible(true);
+					item.setEnabled(a.isEnabled(tree));
+					item.setTitle(a.getOptionsLabel(tree));
+				} else {
+					item.setVisible(false);
+				}
 			}
 		}
 		return true;
@@ -368,6 +402,16 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		if (DeviceType.Instance().isYotaPhone()) {
+				switch (item.getItemId()) {
+					// Respond to the action bar's Up/Home button
+					case android.R.id.home:
+						if (!backInHistory())
+							finish();
+						break;
+			}
+		}
+
 		final NetworkTree tree = getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			if (a.Code == item.getItemId()) {

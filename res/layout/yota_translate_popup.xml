@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#7F000000">
+	<FrameLayout
+		android:id="@+id/content"
+		android:layout_above="@+id/close_button"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginBottom="20dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginTop="68dp"
+		android:paddingLeft="10dp"
+		android:paddingRight="15dp"
+		android:paddingTop="15dp"
+		android:paddingBottom="15dp"
+	    android:background="@android:color/white"
+	    >
+	    <WebView
+	        android:id="@+id/webview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent">
+	    </WebView>
+		<TextView
+			android:id="@+id/error_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:fontFamily="serif"
+			android:textSize="24dp"
+			android:textColor="@android:color/black"
+			android:visibility="gone"/>
+	</FrameLayout>
+    <ImageView
+        android:id="@+id/close_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:scaleType="center"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/yota_translate_popup_close_button"/>
+</RelativeLayout>

@@ -54,16 +54,10 @@ public class HighlightingStyle {
 	public ZLColor getBackgroundColor() {
 		return myBackgroundColor;
 	}
+	public ZLColor getForegroundColor() { return myForegroundColor; }
 
 	public void setBackgroundColor(ZLColor bgColor) {
 		myBackgroundColor = bgColor;
 	}
-
-	public ZLColor getForegroundColor() {
-		return myForegroundColor;
-	}
-
-	public void setForegroundColor(ZLColor fgColor) {
-		myForegroundColor = fgColor;
-	}
+	public void setForegroundColor(ZLColor fgColor) { myForegroundColor = fgColor; }
 }

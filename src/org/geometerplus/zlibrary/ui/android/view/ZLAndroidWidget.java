@@ -23,9 +23,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.*;
 import android.widget.TextView;
 
+import org.geometerplus.android.util.DeviceType;
+import org.geometerplus.fbreader.fbreader.ActionCode;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.options.Config;
@@ -101,11 +105,15 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	@Override
 	protected void onDraw(final Canvas canvas) {
 		final Context context = getContext();
-		if (context instanceof FBReader) {
+        if ((context instanceof FBReader)) {
 			((FBReader)context).createWakeLock();
-		} else {
-			System.err.println("A surprise: view's context is not an FBReader");
 		}
+
+//		if ((context instanceof FBReader)) {
+//			((FBReader)context).createWakeLock();
+//		} else {
+//			System.err.println("A surprise: view's context is not an FBReader");
+//		}
 		super.onDraw(canvas);
 
 		if (myHShift != 0) {
@@ -121,7 +129,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				showHint(canvas);
+				if (!DeviceType.Instance().isYotaPhone()) {
+					showHint(canvas);
+				}
 			}
 		});
 	}
@@ -337,6 +347,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		);
 		view.paint(context, index);
 	}
+	
+	protected Canvas createCanvas(Bitmap bitmap) {
+		return new Canvas(bitmap);
+	}
 
 	private void drawFooter(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
@@ -435,7 +449,12 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		if (myPendingLongClickRunnable == null) {
 			myPendingLongClickRunnable = new LongClickRunnable();
 		}
-		postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
+		if (DeviceType.Instance().isYotaPhone()) {
+			postDelayed(myPendingLongClickRunnable, ViewConfiguration.getLongPressTimeout());
+		}
+		else {
+			postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
+		}
 	}
 
 	private class ShortClickRunnable implements Runnable {
@@ -502,7 +521,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 				break;
 			case MotionEvent.ACTION_MOVE:
 			{
-				final int slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+				int slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+//				if (DeviceType.Instance().isYotaPhone()) {
+//					slop = slop * 2;
+//				}
 				final boolean isAMove =
 					Math.abs(myPressedX - x) > slop || Math.abs(myPressedY - y) > slop;
 				if (isAMove) {

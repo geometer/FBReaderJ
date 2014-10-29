@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:id="@+id/main_layout"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/notification_layout"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_above="@+id/button_ok"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="29.33dp"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/button_ok"
+        android:layout_width="62.67dp"
+        android:layout_height="62.67dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/bs_ok_button"
+        android:layout_marginBottom="86.67dp" />
+
+    <ImageView
+        android:id="@+id/button_cancel"
+        android:layout_width="62.67dp"
+        android:layout_marginStart="20dp"
+        android:layout_height="62.67dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="86.67dp" />
+
+    <ImageView
+        android:id="@+id/button_action"
+        android:layout_width="62.67dp"
+        android:layout_height="62.67dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="86.67dp" />
+
+</RelativeLayout>

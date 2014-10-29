@@ -23,6 +23,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.*;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.network.*;
@@ -442,7 +443,9 @@ public class NetworkLibrary {
 			//);
 			new SearchCatalogTree(myRootTree, mySearchItem);
 			// normal catalog items to be inserted here
-			new ManageCatalogsItemTree(myRootTree);
+			if (!DeviceType.Instance().isYotaPhone()) {
+				new ManageCatalogsItemTree(myRootTree);
+			}
 			new AddCustomCatalogItemTree(myRootTree);
 		}
 

@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader.options;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class MiscOptions {
@@ -35,7 +36,7 @@ public class MiscOptions {
 
 	public MiscOptions() {
 		AllowScreenBrightnessAdjustment =
-			new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
+			new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", !DeviceType.Instance().isYotaPhone());
 		TextSearchPattern =
 			new ZLStringOption("TextSearch", "Pattern", "");
 

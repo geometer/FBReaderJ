@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bs_popup_pattern"
+    android:paddingBottom="0dp"
+    android:paddingLeft="@dimen/popup_flip_padding_side"
+    android:paddingRight="@dimen/popup_flip_padding_side"
+    android:paddingTop="@dimen/popup_flip_padding_top" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="597.33dp"
+        android:background="@drawable/flip_popup_bg" >
+
+        <ImageView
+            android:id="@+id/flip_popup_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/flip_popup_title"
+            android:src="@drawable/popup_img_rotatethephone" />
+
+        <TextView
+            android:id="@+id/flip_popup_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="Roboto Yota"
+            android:text="@string/flip_popup_default_title"
+            android:textColor="@android:color/black"
+            android:textSize="37.33sp" />
+
+        <TextView
+            android:id="@+id/flip_popup_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/flip_popup_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="42dp"
+            android:fontFamily="PT Sans Yota"
+            android:gravity="center"
+            android:text="@string/flip_popup_default_description"
+            android:textColor="@android:color/black"
+            android:textSize="21.33sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/flip_popup_line"
+            android:layout_width="fill_parent"
+            android:layout_above="@+id/flip_popup_ok_btn"
+            android:layout_height="3dp"
+            android:layout_marginTop="15.33dp"
+            android:background="@drawable/dot_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/flip_popup_ok_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:fontFamily="PT Sans Yota"
+            android:text="OK"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

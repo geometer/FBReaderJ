@@ -35,6 +35,7 @@ public class TapZoneMap {
 		ourPredefinedMaps.add("left_to_right");
 		ourPredefinedMaps.add("down");
 		ourPredefinedMaps.add("up");
+		ourPredefinedMaps.add("yotaphone");
 		ourMapsOption = new ZLStringListOption("TapZones", "List", ourPredefinedMaps, "\000");
 	}
 	private static final Map<String,TapZoneMap> ourMaps = new HashMap<String,TapZoneMap>();

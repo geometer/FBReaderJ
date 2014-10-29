@@ -21,10 +21,10 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 
-class TurnPageAction extends FBAction {
+public class TurnPageAction extends FBAction {
 	private final boolean myForward;
 
-	TurnPageAction(FBReaderApp fbreader, boolean forward) {
+	public TurnPageAction(FBReaderApp fbreader, boolean forward) {
 		super(fbreader);
 		myForward = forward;
 	}

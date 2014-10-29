@@ -86,6 +86,10 @@ public abstract class NetworkBookActions {
 		public void run(NetworkTree tree) {
 			runActionStatic(myActivity, (NetworkBookTree)tree, myId, myCollection);
 		}
+
+		public int getActionCode() {
+			return myId;
+		}
 	}
 
 	public static int getBookStatus(NetworkBookItem book, IBookCollection collection, BookDownloaderServiceConnection connection) {

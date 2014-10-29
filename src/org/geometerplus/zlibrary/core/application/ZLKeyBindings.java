@@ -58,6 +58,8 @@ public final class ZLKeyBindings {
 			final String keymapFilename;
 			if (deviceType == DeviceType.NOOK || deviceType == DeviceType.NOOK12) {
 				keymapFilename = "keymap-nook.xml";
+			} else if (deviceType.isYotaPhone()) {
+				keymapFilename = "keymap-yotaphone2.xml";
 			} else {
 				keymapFilename = "keymap.xml";
 			}

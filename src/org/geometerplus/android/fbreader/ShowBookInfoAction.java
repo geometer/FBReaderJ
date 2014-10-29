@@ -21,6 +21,9 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
 
+import com.yotadevices.yotaphone2.fbreader.YotaBookInfoActivity;
+
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -38,8 +41,9 @@ class ShowBookInfoAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
+		final boolean yotaPhone = DeviceType.Instance().isYotaPhone();
 		final Intent intent =
-			new Intent(BaseActivity.getApplicationContext(), BookInfoActivity.class)
+			new Intent(BaseActivity.getApplicationContext(), yotaPhone ? YotaBookInfoActivity.class : BookInfoActivity.class)
 				.putExtra(BookInfoActivity.FROM_READING_MODE_KEY, true);
 		FBReaderIntents.putBookExtra(intent, Reader.getCurrentBook());
 		OrientationUtil.startActivity(BaseActivity, intent);

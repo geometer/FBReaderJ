@@ -34,7 +34,7 @@ public class FileTree extends LibraryTree {
 	private final String mySummary;
 	private final boolean myIsSelectable;
 
-	FileTree(LibraryTree parent, ZLFile file, String name, String summary) {
+	public FileTree(LibraryTree parent, ZLFile file, String name, String summary) {
 		super(parent);
 		myFile = file;
 		myName = name;

@@ -1,0 +1,81 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.12.+'
+    }
+}
+
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+    project.archivesBaseName = "YD_YotaReader";
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            jniLibs.srcDirs = ['libs']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+    }
+    defaultConfig {
+        applicationId "org.geometerplus.zlibrary.ui.android"
+        minSdkVersion 19
+        targetSdkVersion 19
+        versionCode 2015120
+        versionName "2.0.22"
+    }
+    signingConfigs {
+        release {
+            storeFile file("sign/yotadevices.keystore")
+            storePassword "yotadevices"
+            keyPassword "yotadevices"
+            keyAlias "yotadevices"
+        }
+        debug {
+            storeFile file("sign/yotadevices.keystore")
+            storePassword "yotadevices"
+            keyPassword "yotadevices"
+            keyAlias "yotadevices"
+        }
+    }
+    buildTypes {
+        release {
+            runProguard false
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                def file = variant.outputFile
+                variant.outputFile = new File(file.parent, file.name.replace("-release", ""))
+            }
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/build.gradle'
+    }
+}
+
+dependencies {
+	compile 'com.google.android.gms:play-services:4+'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+	compile project(':third-party:yotaphone_titanium_sdk')
+    compile project(':third-party:AmbilWarna')
+    compile project(':third-party:android-filechooser:code')
+    compile project(':third-party:drag-sort-listview:library')
+}

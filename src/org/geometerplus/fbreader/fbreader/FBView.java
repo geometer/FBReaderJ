@@ -19,8 +19,11 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import android.util.Log;
+
 import java.util.*;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
@@ -62,7 +65,7 @@ public final class FBView extends ZLTextView {
 
 	private TapZoneMap getZoneMap() {
 		final PageTurningOptions prefs = myReader.PageTurningOptions;
-		String id = prefs.TapZoneMap.getValue();
+		String id = DeviceType.Instance().isYotaPhone() ? "yotaphone" : prefs.TapZoneMap.getValue();
 		if ("".equals(id)) {
 			id = prefs.Horizontal.getValue() ? "right_to_left" : "up";
 		}
@@ -76,6 +79,12 @@ public final class FBView extends ZLTextView {
 		if (super.onFingerSingleTap(x, y)) {
 			return true;
 		}
+
+        if (!isSelectionEmpty() && DeviceType.Instance().isYotaPhone()) {
+            clearSelection();
+            myReader.hideActivePopup();
+            return true;
+        }
 
 		final ZLTextRegion hyperlinkRegion = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
 		if (hyperlinkRegion != null) {
@@ -227,7 +236,7 @@ public final class FBView extends ZLTextView {
 
 	public boolean onFingerLongPress(int x, int y) {
 		if (super.onFingerLongPress(x, y)) {
-			return true;
+			return true; // myReader.ViewOptions.YotaDrawOnBackScreen.getValue()
 		}
 
 		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
@@ -630,7 +639,8 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public Footer getFooterArea() {
-		if (myViewOptions.ScrollbarType.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
+		if (myViewOptions.ScrollbarType.getValue() == SCROLLBAR_SHOW_AS_FOOTER &&
+                !DeviceType.Instance().isYotaPhone()) {
 			if (myFooter == null) {
 				myFooter = new Footer();
 				myReader.addTimerTask(myFooter.UpdateTask, 15000);
@@ -687,7 +697,10 @@ public final class FBView extends ZLTextView {
 	@Override
 	protected ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages() {
 		if (myReader.ImageOptions.MatchBackground.getValue()) {
-			if (ColorProfile.DAY.equals(myViewOptions.getColorProfile().Name)) {
+			if (ColorProfile.DAY.equals(myViewOptions.getColorProfile().Name) ||
+					ColorProfile.YOTA_FS_WHITE.equals(myViewOptions.getColorProfile().Name) ||
+					ColorProfile.YOTA_FS_SEPIA.equals(myViewOptions.getColorProfile().Name) ||
+					ColorProfile.YOTA_BS_WHITE.equals(myViewOptions.getColorProfile().Name)) {
 				return ZLPaintContext.ColorAdjustingMode.DARKEN_TO_BACKGROUND;
 			} else {
 				return ZLPaintContext.ColorAdjustingMode.LIGHTEN_TO_BACKGROUND;

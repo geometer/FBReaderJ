@@ -21,12 +21,17 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
 
+import org.geometerplus.android.util.DeviceType;
+import org.geometerplus.fbreader.fbreader.BookmarkHighlighting;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.options.ViewOptions;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
+import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -59,16 +64,25 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private ZLTextRegion.Soul mySelectedRegionSoul;
 	private boolean myHighlightSelectedRegion = true;
+    private BookmarkHighlighting mCurrentPageFirstHightling = null;
 
 	private final ZLTextSelection mySelection = new ZLTextSelection(this);
 	private final Set<ZLTextHighlighting> myHighlightings =
 		Collections.synchronizedSet(new TreeSet<ZLTextHighlighting>());
 
+    private final ViewOptions myViewOptions;
+
 	public ZLTextView(ZLApplication application) {
 		super(application);
+        myViewOptions = ((FBReaderApp)application).ViewOptions;
 	}
 
-	public synchronized void setModel(ZLTextModel model) {
+    @Override
+    public FooterArea getFooterArea() {
+        return null;
+    }
+
+    public synchronized void setModel(ZLTextModel model) {
 		ZLTextParagraphCursorCache.clear();
 
 		mySelection.clear();
@@ -83,8 +97,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			if (paragraphsNumber > 0) {
 				myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
 			}
-		}
-		Application.getViewWidget().reset();
+        }
+        if (Application.getViewWidget() != null) {
+            Application.getViewWidget().reset();
+        }
 	}
 
 	public ZLTextModel getModel() {
@@ -439,6 +455,43 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		context.drawPolygonalLine(xs, ys);
 	}
 
+    private void drawLeftSelectionCursor(ZLPaintContext context, ZLTextSelection.Point pt) {
+        if (pt == null || myViewOptions.YotaDrawOnBackScreen.getValue()) {
+            return;
+        }
+
+        final int w = ZLTextSelectionCursor.getWidth() / 2;
+        final int h = ZLTextSelectionCursor.getHeight();
+        final int a = ZLTextSelectionCursor.getAccent();
+        final int[] xs = { pt.X, pt.X, pt.X - w, pt.X - w};
+        final int[] ys = { pt.Y - a, pt.Y + h, pt.Y + h, pt.Y };
+        final ZLColor fillColor = myViewOptions.getColorProfile().SelectionCursorFillOption.getValue();
+        final ZLColor lineColor = myViewOptions.getColorProfile().SelectionCursorOption.getValue();
+        context.setFillColor(fillColor, 255);
+        context.fillPolygon(xs, ys);
+        context.setLineColor(lineColor);
+        context.drawPolygonalLine(xs, ys);
+    }
+
+    private void drawRightSelectionCursor(ZLPaintContext context, ZLTextSelection.Point pt) {
+        if (pt == null || myViewOptions.YotaDrawOnBackScreen.getValue()) {
+            return;
+        }
+
+        final int w = ZLTextSelectionCursor.getWidth() / 2;
+        final int h = ZLTextSelectionCursor.getHeight();
+        final int a = ZLTextSelectionCursor.getAccent();
+        final int[] xs = { pt.X, pt.X + w, pt.X + w, pt.X};
+        final int[] ys = { pt.Y - a, pt.Y, pt.Y + h, pt.Y + h};
+        final ZLColor fillColor = myViewOptions.getColorProfile().SelectionCursorFillOption.getValue();
+        final ZLColor lineColor = myViewOptions.getColorProfile().SelectionCursorOption.getValue();
+        context.setFillColor(fillColor, 255);
+        context.fillPolygon(xs, ys);
+        context.setLineColor(lineColor);
+        context.drawPolygonalLine(xs, ys);
+    }
+
+
 	@Override
 	public synchronized void preparePage(ZLPaintContext context, PageIndex pageIndex) {
 		setContext(context);
@@ -541,9 +594,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (selectedElementRegion != null && myHighlightSelectedRegion) {
 			selectedElementRegion.draw(context);
 		}
-
-		drawSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Left));
-		drawSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Right));
+        if (DeviceType.Instance().isYotaPhone()) {
+	        drawLeftSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Left));
+	        drawRightSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Right));
+        } else {
+	        drawSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Left));
+	        drawSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Right));
+        }
 	}
 
 	private ZLTextPage getPage(PageIndex pageIndex) {
@@ -660,7 +717,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return charsPerLine * linesPerPage;
 	}
 
-	private synchronized int computeTextPageNumber(int textSize) {
+	public synchronized int computeTextPageNumber(int textSize) {
 		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 1;
 		}
@@ -828,12 +885,17 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private List<ZLTextHighlighting> findHilites(ZLTextPage page) {
 		final LinkedList<ZLTextHighlighting> hilites = new LinkedList<ZLTextHighlighting>();
+		mCurrentPageFirstHightling = null;
+
 		if (mySelection.intersects(page)) {
 			hilites.add(mySelection);
 		}
 		synchronized (myHighlightings) {
 			for (ZLTextHighlighting h : myHighlightings) {
 				if (h.intersects(page)) {
+                    if (page == myCurrentPage && h instanceof BookmarkHighlighting) {
+                        mCurrentPageFirstHightling = (BookmarkHighlighting)h;
+                    }
 					hilites.add(h);
 				}
 			}
@@ -849,7 +911,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final ZLTextElementArea fromArea = page.TextElementMap.get(from);
 		final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
 		for (ZLTextHighlighting h : hilites) {
-			final ZLColor bgColor = h.getBackgroundColor();
+			final ZLColor bgColor = DeviceType.Instance().isYotaPhone() ? getHighlightingBackgroundColor() : h.getBackgroundColor();
 			if (bgColor == null) {
 				continue;
 			}
@@ -903,7 +965,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					final ZLTextPosition pos =
 						new ZLTextFixedPosition(info.ParagraphCursor.Index, wordIndex, 0);
 					final ZLTextHighlighting hl = getWordHilite(pos, hilites);
-					final ZLColor hlColor = hl != null ? hl.getForegroundColor() : null;
+					final ZLColor hlColor = hl != null ?
+							DeviceType.Instance().isYotaPhone() ? getYotaHighlightingForegroundColor(hl) :
+									hl.getForegroundColor() : null;
 					drawWord(
 						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
 						hlColor != null ? hlColor : getTextColor(getTextStyle().Hyperlink)
@@ -1553,7 +1617,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public void clearCaches() {
 		resetMetrics();
 		rebuildPaintInfo();
-		Application.getViewWidget().reset();
+        if (Application != null && Application.getViewWidget() != null) {
+            Application.getViewWidget().reset();
+        }
 		myCharWidth = -1;
 	}
 
@@ -1820,5 +1886,20 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				return cursor != null && !cursor.isNull() && !cursor.isStartOfText();
 			}
 		}
+	}
+
+    public boolean hasBookmarks() {
+        return mCurrentPageFirstHightling != null;
+    }
+
+    public BookmarkHighlighting getCurrentBookmarkHighlighting() {
+        return mCurrentPageFirstHightling;
+    }
+
+	private ZLColor getYotaHighlightingForegroundColor(ZLTextHighlighting hl) {
+		if (hl instanceof BookmarkHighlighting) {
+			return myViewOptions.getColorProfile().HighlightingForegroundOption.getValue();
+		}
+		return hl.getForegroundColor();
 	}
 }

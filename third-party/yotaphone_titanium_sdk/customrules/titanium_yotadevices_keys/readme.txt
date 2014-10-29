@@ -1,0 +1,2 @@
+login = yotadevices
+password = yotadevices

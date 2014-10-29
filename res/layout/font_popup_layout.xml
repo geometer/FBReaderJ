@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_marginLeft="280dp"
+        android:layout_width="24.6dp"
+        android:layout_height="8.6dp"
+        android:src="@drawable/popup_triangle"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="174dp"
+        android:orientation="vertical"
+        android:background="@android:color/black">
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:orientation="horizontal">
+            <include layout="@layout/font_list_item"
+                android:layout_width="45.3dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font1" />
+            <include layout="@layout/font_list_item"
+                android:layout_width="73.3dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font2" />
+            <include layout="@layout/font_list_item"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font3" />
+            <include layout="@layout/font_list_item"
+                android:layout_width="72.6dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font4" />
+            <include layout="@layout/font_list_item"
+                android:layout_width="52.6dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font5" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="28.3dp"
+            android:layout_marginTop="23.3dp"
+            android:layout_marginLeft="56dp"
+            android:gravity="top"
+            android:layout_marginRight="58.6dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/font_serif"
+                    android:fontFamily="PT Serif Pro"
+                    android:textStyle="bold"
+                    android:text="PT Serif"
+                    android:textSize="16dp"
+                    android:layout_gravity="bottom"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_marginTop="4dp"
+                    android:id="@+id/serif_line"
+                    android:src="@drawable/single_line_50_length"
+                    android:layout_width="59dp"
+                    android:visibility="invisible"
+                    android:layout_height="2.6dp"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/font_sans"
+                    android:fontFamily="PT Sans Yota"
+                    android:textStyle="bold"
+                    android:text="PT Sans"
+                    android:textSize="16dp"
+                    android:textColor="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_marginTop="4dp"
+                    android:id="@+id/sans_line"
+                    android:src="@drawable/single_line_50_length"
+                    android:layout_width="58dp"
+                    android:layout_gravity="right"
+                    android:visibility="invisible"
+                    android:layout_height="2.6dp"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="28.3dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginLeft="62dp"
+            android:gravity="top"
+            android:layout_marginRight="62dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/theme_white"
+                    android:fontFamily="PT Serif Pro"
+                    android:textStyle="bold"
+                    android:text="White"
+                    android:textSize="16dp"
+                    android:layout_gravity="bottom"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_marginTop="4dp"
+                    android:id="@+id/theme_white_line"
+                    android:src="@drawable/single_line_50_length"
+                    android:layout_width="46dp"
+                    android:visibility="invisible"
+                    android:layout_height="2.6dp"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/theme_black"
+                    android:fontFamily="PT Serif Pro"
+                    android:textStyle="bold"
+                    android:text="Black"
+                    android:textSize="16dp"
+                    android:textColor="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_marginTop="4dp"
+                    android:id="@+id/theme_black_line"
+                    android:src="@drawable/single_line_50_length"
+                    android:layout_width="40dp"
+                    android:layout_gravity="right"
+                    android:visibility="invisible"
+                    android:layout_height="2.6dp"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

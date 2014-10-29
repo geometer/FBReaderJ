@@ -187,4 +187,21 @@ final class ZLTextPage {
 		cursor.setCursor(info.ParagraphCursor);
 		cursor.moveTo(info.EndElementIndex, info.EndCharIndex);
 	}
+
+    /**
+     * Function checks if there is such position inside this page
+     * @param position position to find inside page
+     * @return -1 if page before position, 0 if position inside page, 1 if page is after position
+     */
+    int hasTextPosition(ZLTextFixedPosition position) {
+        if (position.compareTo(StartCursor) >= 0 && position.compareTo(EndCursor) <= 0) {
+            return 0;
+        }
+        else if (position.compareTo(StartCursor) < 0) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
 }

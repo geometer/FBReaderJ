@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white">
+    <LinearLayout
+        android:id="@+id/tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/contents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="5dp"
+            android:gravity="center"
+            android:textColor="@drawable/red_text_radiobutton"
+            android:background="@drawable/yota_fs_underline_radio_button"
+            android:button="@android:color/transparent"
+            android:textSize="18dp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:checked="true"
+            android:text="Contents"/>
+        <RadioButton
+            android:id="@+id/bookmarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="5dp"
+            android:gravity="center"
+            android:textColor="@drawable/red_text_radiobutton"
+            android:background="@drawable/yota_fs_underline_radio_button"
+            android:button="@android:color/transparent"
+            android:textSize="18dp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:checked="false"
+            android:text="Bookmarks"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/contents_list"
+        android:layout_below="@id/tab_bar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <ListView
+        android:id="@+id/bookmarks_list"
+        android:layout_below="@id/tab_bar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+</RelativeLayout>
