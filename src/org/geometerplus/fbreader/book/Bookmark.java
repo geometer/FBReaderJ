@@ -24,7 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.text.view.*;
 
-public final class Bookmark extends ZLTextFixedPosition {
+public class Bookmark extends ZLTextFixedPosition {
 	public enum DateType {
 		Creation,
 		Modification,
