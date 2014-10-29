@@ -41,9 +41,9 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
 
-	OPDSNetworkLink(int id, String siteName, String title, String summary, String language,
+	OPDSNetworkLink(int id, String title, String summary, String language,
 			UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(id, siteName, title, summary, language, infos);
+		super(id, title, summary, language, infos);
 	}
 
 	final void setRelationAliases(Map<RelationAlias,String> relationAliases) {
