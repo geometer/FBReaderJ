@@ -23,12 +23,12 @@ import org.geometerplus.fbreader.network.IPredefinedNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPredefinedNetworkLink {
-	static final String ID_PREFIX = "urn:fbreader-org-catalog:";
+	private static final String ID_PREFIX = "urn:fbreader-org-catalog:";
 
 	private final String myPredefinedId;
 
 	public OPDSPredefinedNetworkLink(int id, String predefinedId, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(id, getStringIdInternal(predefinedId), title, summary, language, infos);
+		super(id, title, summary, language, infos);
 		myPredefinedId = predefinedId;
 	}
 
@@ -40,15 +40,20 @@ public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPrede
 		return myPredefinedId;
 	}
 
-	private static String getStringIdInternal(String predefinedId) {
-		if (predefinedId.startsWith(ID_PREFIX)) {
-			return predefinedId.substring(ID_PREFIX.length());
+	@Override
+	public String getShortName() {
+		if (myPredefinedId.startsWith(ID_PREFIX)) {
+			return myPredefinedId.substring(ID_PREFIX.length());
 		}
-		return predefinedId;
+		return myPredefinedId;
 	}
 
 	@Override
 	public String getStringId() {
-		return getStringIdInternal(myPredefinedId);
+		return getShortName();
+	}
+
+	public boolean servesHost(String hostname) {
+		return hostname != null && hostname.matches(getShortName());
 	}
 }

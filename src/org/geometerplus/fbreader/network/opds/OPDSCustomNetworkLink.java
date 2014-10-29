@@ -35,15 +35,8 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 	private final Type myType;
 	private boolean myHasChanges;
 
-	private static String removeWWWPrefix(String siteName) {
-		if (siteName != null && siteName.startsWith("www.")) {
-			return siteName.substring(4);
-		}
-		return siteName;
-	}
-
-	public OPDSCustomNetworkLink(int id, Type type, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(id, removeWWWPrefix(siteName), title, summary, language, infos);
+	public OPDSCustomNetworkLink(int id, Type type, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		super(id, title, summary, language, infos);
 		myType = type;
 	}
 

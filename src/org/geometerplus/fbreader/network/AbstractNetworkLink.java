@@ -32,7 +32,6 @@ import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 public abstract class AbstractNetworkLink implements INetworkLink {
 	private int myId;
 
-	protected String mySiteName;
 	protected String myTitle;
 	protected String mySummary;
 	protected final String myLanguage;
@@ -47,9 +46,8 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
 	 * @param infos      collection of URL infos; must always contain one URL with <code>UrlInfo.Type.Catalog</code> identifier
 	 */
-	public AbstractNetworkLink(int id, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+	public AbstractNetworkLink(int id, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
 		myId = id;
-		mySiteName = siteName;
 		myTitle = title;
 		mySummary = summary;
 		myLanguage = language != null ? language : "multi";
@@ -64,8 +62,8 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		myId = id;
 	}
 
-	public final String getSiteName() {
-		return mySiteName;
+	public String getShortName() {
+		return getHostName();
 	}
 
 	public String getStringId() {
@@ -140,7 +138,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 			icon = icon.replaceAll("\n", "");
 		}
 		return "AbstractNetworkLink: {"
-			+ "siteName=" + mySiteName
+			+ "id=" + getStringId()
 			+ "; title=" + myTitle
 			+ "; summary=" + mySummary
 			+ "; icon=" + icon

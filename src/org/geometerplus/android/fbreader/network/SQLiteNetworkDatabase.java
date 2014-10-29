@@ -87,16 +87,15 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	protected synchronized List<INetworkLink> listLinks() {
 		final List<INetworkLink> links = new LinkedList<INetworkLink>();
 
-		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,type,predefined_id,title,site_name,summary,language FROM Links", null);
+		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,type,predefined_id,title,summary,language FROM Links", null);
 		final UrlInfoCollection<UrlInfoWithDate> linksMap = new UrlInfoCollection<UrlInfoWithDate>();
 		while (cursor.moveToNext()) {
 			final int id = cursor.getInt(0);
 			final INetworkLink.Type type = INetworkLink.Type.byIndex(cursor.getInt(1));
 			final String predefinedId = cursor.getString(2);
 			final String title = cursor.getString(3);
-			final String siteName = cursor.getString(4);
-			final String summary = cursor.getString(5);
-			final String language = cursor.getString(6);
+			final String summary = cursor.getString(4);
+			final String language = cursor.getString(5);
 
 			linksMap.clear();
 			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,mime,update_time FROM LinkUrls WHERE link_id = " + id, null);
@@ -115,7 +114,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			}
 			linksCursor.close();
 
-			final INetworkLink l = createLink(id, type, predefinedId, siteName, title, summary, language, linksMap);
+			final INetworkLink l = createLink(id, type, predefinedId, title, summary, language, linksMap);
 			if (l != null) {
 				links.add(l);
 			}
