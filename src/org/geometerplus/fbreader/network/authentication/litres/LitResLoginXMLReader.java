@@ -33,10 +33,6 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 	public String Sid;
 	public boolean CanRebill;
 
-	public LitResLoginXMLReader(String hostName) {
-		super(hostName);
-	}
-
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
@@ -53,7 +49,7 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 			}
 			CanRebill = stringCanRebill != null && !"0".equals(stringCanRebill) && !"no".equalsIgnoreCase(stringCanRebill);
 		} else {
-			setException(ZLNetworkException.forCode(ZLNetworkException.ERROR_SOMETHING_WRONG, HostName));
+			setException(ZLNetworkException.forCode(ZLNetworkException.ERROR_SOMETHING_WRONG, LitResUtil.HOST_NAME));
 		}
 		return true;
 	}

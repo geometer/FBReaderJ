@@ -43,7 +43,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentCodeVersion = 8;
+		final int currentCodeVersion = 9;
 		if (version >= currentCodeVersion) {
 			return;
 		}
@@ -65,6 +65,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				updateTables6();
 			case 7:
 				updateTables7();
+			case 8:
+				updateTables8();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.endTransaction();
@@ -87,16 +89,15 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	protected synchronized List<INetworkLink> listLinks() {
 		final List<INetworkLink> links = new LinkedList<INetworkLink>();
 
-		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,type,predefined_id,title,site_name,summary,language FROM Links", null);
+		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,type,predefined_id,title,summary,language FROM Links", null);
 		final UrlInfoCollection<UrlInfoWithDate> linksMap = new UrlInfoCollection<UrlInfoWithDate>();
 		while (cursor.moveToNext()) {
 			final int id = cursor.getInt(0);
 			final INetworkLink.Type type = INetworkLink.Type.byIndex(cursor.getInt(1));
 			final String predefinedId = cursor.getString(2);
 			final String title = cursor.getString(3);
-			final String siteName = cursor.getString(4);
-			final String summary = cursor.getString(5);
-			final String language = cursor.getString(6);
+			final String summary = cursor.getString(4);
+			final String language = cursor.getString(5);
 
 			linksMap.clear();
 			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,mime,update_time FROM LinkUrls WHERE link_id = " + id, null);
@@ -115,7 +116,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			}
 			linksCursor.close();
 
-			final INetworkLink l = createLink(id, type, predefinedId, siteName, title, summary, language, linksMap);
+			final INetworkLink l = createLink(id, type, predefinedId, title, summary, language, linksMap);
 			if (l != null) {
 				links.add(l);
 			}
@@ -137,24 +138,22 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				if (link.getId() == INetworkLink.INVALID_ID) {
 					if (myInsertCustomLinkStatement == null) {
 						myInsertCustomLinkStatement = myDatabase.compileStatement(
-							"INSERT INTO Links (title,site_name,summary,language,predefined_id,type) VALUES (?,?,?,?,?,?)"
+							"INSERT INTO Links (title,summary,language,predefined_id,type) VALUES (?,?,?,?,?)"
 						);
 					}
 					statement = myInsertCustomLinkStatement;
 				} else {
 					if (myUpdateCustomLinkStatement == null) {
 						myUpdateCustomLinkStatement = myDatabase.compileStatement(
-							"UPDATE Links SET title = ?, site_name = ?, summary = ?, language = ?"
-								+ " WHERE link_id = ?"
+							"UPDATE Links SET title=?,summary=?,language=? WHERE link_id=?"
 						);
 					}
 					statement = myUpdateCustomLinkStatement;
 				}
 
 				statement.bindString(1, link.getTitle());
-				statement.bindString(2, link.getSiteName());
-				SQLiteUtil.bindString(statement, 3, link.getSummary());
-				SQLiteUtil.bindString(statement, 4, link.getLanguage());
+				SQLiteUtil.bindString(statement, 2, link.getSummary());
+				SQLiteUtil.bindString(statement, 3, link.getLanguage());
 
 				final long id;
 				final UrlInfoCollection<UrlInfoWithDate> linksMap =
@@ -162,19 +161,19 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 				if (statement == myInsertCustomLinkStatement) {
 					if (link instanceof IPredefinedNetworkLink) {
-						statement.bindString(5, ((IPredefinedNetworkLink)link).getPredefinedId());
+						statement.bindString(4, ((IPredefinedNetworkLink)link).getPredefinedId());
 					} else {
-						SQLiteUtil.bindString(statement, 5, null);
+						SQLiteUtil.bindString(statement, 4, null);
 					}
-					statement.bindLong(6, link.getType().Index);
+					statement.bindLong(5, link.getType().Index);
 					id = statement.executeInsert();
 					link.setId((int)id);
 				} else {
 					id = link.getId();
-					statement.bindLong(5, id);
+					statement.bindLong(4, id);
 					statement.execute();
 
-					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,mime,update_time FROM LinkUrls WHERE link_id = " + link.getId(), null);
+					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,mime,update_time FROM LinkUrls WHERE link_id=" + id, null);
 					while (linksCursor.moveToNext()) {
 						try {
 							linksMap.addInfo(
@@ -387,5 +386,20 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	private void updateTables7() {
 		myDatabase.execSQL("ALTER TABLE LinkUrls ADD COLUMN mime TEXT");
+	}
+
+	private void updateTables8() {
+		myDatabase.execSQL("ALTER TABLE Links RENAME TO Links_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE Links(" +
+				"link_id INTEGER PRIMARY KEY," +
+				"title TEXT NOT NULL," +
+				"summary TEXT," +
+				"language TEXT," +
+				"predefined_id TEXT," +
+				"is_enabled INTEGER)," +
+				"type INTEGER");
+		myDatabase.execSQL("INSERT INTO Links (link_id,title,summary,language,predefined_id,is_enabled,type) SELECT link_id,title,summary,language,predefined_id,is_enabled,type FROM Links_Obsolete");
+		myDatabase.execSQL("DROP TABLE Links_Obsolete");
 	}
 }
