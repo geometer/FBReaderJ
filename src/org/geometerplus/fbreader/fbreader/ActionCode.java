@@ -89,4 +89,5 @@ public interface ActionCode {
 	String YOTA_SEARCH_ACTION = "yotaSearchAction";
 	String YOTA_ADD_BOOKMARK = "yotaAddBookmark";
 	String YOTA_PERFORM_FULL_UPDATE = "yotaPerformFullUpdate";
+	String YOTA_UPDATE_BOOK_COVER = "yotaUpdateBookCover";
 }

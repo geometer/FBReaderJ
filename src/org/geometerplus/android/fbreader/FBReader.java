@@ -188,9 +188,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 							action.run();
 						}
 						hideBars();
-						if ((DeviceType.Instance() == DeviceType.YOTA_PHONE) || (DeviceType.Instance() == DeviceType.YOTA_PHONE2)) {
-							updateCoverOnYotaWidget(myFBReaderApp.Model.Book);
-						}
 					}
 				}, FBReader.this);
 				AndroidFontUtil.clearFontCache();
@@ -373,6 +370,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 			myFBReaderApp.addAction(ActionCode.YOTA_FONT_SETTINGS, new ShowYotaSettingsAction(this, myFBReaderApp));
 			myFBReaderApp.addAction(ActionCode.YOTA_SEARCH_ACTION, new ShowYotaBookContentsAction(this, myFBReaderApp));
 			myFBReaderApp.addAction(ActionCode.YOTA_ADD_BOOKMARK, new YotaToggleBookmark(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_BOOK_COVER, new YotaUpdateBookCoverAction(this, myFBReaderApp, false));
 		}
 		else {
 			myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionShowPanelAction(this, myFBReaderApp));
@@ -1371,12 +1369,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		}
 	}
 
-	private void updateCoverOnYotaWidget(Book book) {
+	public void updateCoverOnYotaWidget(Book book) {
 		final ZLImage image = BookUtil.getCover(book);
 		if (image != null && image instanceof ZLImageProxy) {
-			((ZLImageProxy)image).startSynchronization(myImageSynchronizer, new Runnable() {
+			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
-					runOnUiThread(new Runnable() {
+					((ZLImageProxy)image).startSynchronization(myImageSynchronizer, new Runnable() {
 						public void run() {
 							sendCoverToYotaWidget(image);
 						}

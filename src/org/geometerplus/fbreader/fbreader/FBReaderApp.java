@@ -308,6 +308,9 @@ public final class FBReaderApp extends ZLApplication {
 
 		onViewChanged();
 		storePosition();
+		if (DeviceType.Instance().isYotaPhone()) {
+			runAction(ActionCode.YOTA_UPDATE_BOOK_COVER, book);
+		}
 
 		BookTextView.setModel(null);
 		FootnoteView.setModel(null);

@@ -43,6 +43,7 @@ import org.geometerplus.android.fbreader.YotaSelectionTranslateAction;
 import org.geometerplus.android.fbreader.YotaTranslateBSPopup;
 import org.geometerplus.android.fbreader.YotaTranslatePopup;
 import org.geometerplus.android.fbreader.YotaUpdateBackScreen;
+import org.geometerplus.android.fbreader.YotaUpdateBookCoverAction;
 import org.geometerplus.android.fbreader.YotaUpdateWidgetAction;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -144,7 +145,6 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 				        public void run() {
 					        myFBReaderApp.initWindow();
 					        initBookView(true);
-					        updateCoverOnYotaWidget(myFBReaderApp.Model.Book);
 					        if (firstStart()) {
 						        showActionBar();
 						        showStatusBar();
@@ -227,6 +227,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 	    myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkBSAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.YOTA_PERFORM_FULL_UPDATE, new YotaUpdateBackScreen(this, myFBReaderApp));
 	    myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowBSLibraryAction(this, myFBReaderApp));
+	    myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_BOOK_COVER, new YotaUpdateBookCoverAction(this, myFBReaderApp, true));
     }
 
     private Context getBsContext() {
@@ -415,12 +416,14 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
                 break;
         }
     }
-	private void updateCoverOnYotaWidget(Book book) {
+
+	public void updateCoverOnYotaWidget(Book book) {
 		final ZLImage image = BookUtil.getCover(book);
 		if (image != null && image instanceof ZLImageProxy) {
-			((ZLImageProxy)image).startSynchronization(myImageSynchronizer, new Runnable() {
+			runOnUiThread( new Runnable() {
+				@Override
 				public void run() {
-					runOnUiThread(new Runnable() {
+					((ZLImageProxy)image).startSynchronization(myImageSynchronizer, new Runnable() {
 						public void run() {
 							sendCoverToYotaWidget(image);
 						}
