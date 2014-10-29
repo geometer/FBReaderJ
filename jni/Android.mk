@@ -105,6 +105,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2UidReader.cpp \
 	NativeFormats/fbreader/src/formats/css/CSSInputStream.cpp \
+	NativeFormats/fbreader/src/formats/css/CSSSelector.cpp \
 	NativeFormats/fbreader/src/formats/css/StringInputStream.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetTable.cpp \
@@ -153,6 +154,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/util/MiscUtil.cpp \
 	NativeFormats/fbreader/src/formats/util/XMLTextStream.cpp \
 	NativeFormats/fbreader/src/formats/xhtml/XHTMLReader.cpp \
+	NativeFormats/fbreader/src/formats/xhtml/XHTMLTagInfo.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocBookReader.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocMetaInfoReader.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocPlugin.cpp \

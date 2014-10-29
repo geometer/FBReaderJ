@@ -23,28 +23,29 @@
 
 #include "StyleSheetTable.h"
 #include "StyleSheetUtil.h"
+#include "CSSSelector.h"
 
 bool StyleSheetTable::isEmpty() const {
 	return myControlMap.empty() && myPageBreakBeforeMap.empty() && myPageBreakAfterMap.empty();
 }
 
-void StyleSheetTable::addMap(const std::string &tag, const std::string &aClass, const AttributeMap &map) {
-	if ((!tag.empty() || !aClass.empty()) && !map.empty()) {
-		const Key key(tag, aClass);
-		myControlMap[key] = createOrUpdateControl(map, myControlMap[key]);
+void StyleSheetTable::addMap(shared_ptr<CSSSelector> selectorPtr, const AttributeMap &map) {
+	if (!selectorPtr.isNull() && !map.empty()) {
+		const CSSSelector &selector = *selectorPtr;
+		myControlMap[selector] = createOrUpdateControl(map, myControlMap[selector]);
 
 		const std::string &pbb = value(map, "page-break-before");
 		if (pbb == "always" || pbb == "left" || pbb == "right") {
-			myPageBreakBeforeMap[key] = true;
+			myPageBreakBeforeMap[selector] = true;
 		} else if (pbb == "avoid") {
-			myPageBreakBeforeMap[key] = false;
+			myPageBreakBeforeMap[selector] = false;
 		}
 
 		const std::string &pba = value(map, "page-break-after");
 		if (pba == "always" || pba == "left" || pba == "right") {
-			myPageBreakAfterMap[key] = true;
+			myPageBreakAfterMap[selector] = true;
 		} else if (pba == "avoid") {
-			myPageBreakAfterMap[key] = false;
+			myPageBreakAfterMap[selector] = false;
 		}
 	}
 }
@@ -82,30 +83,36 @@ static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntr
 	return false;
 }
 
-void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature featureId, const AttributeMap &map, const std::string &attributeName) {
-	StyleSheetTable::AttributeMap::const_iterator it = map.find(attributeName);
-	if (it == map.end()) {
-		return;
-	}
+static bool trySetLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature featureId, const std::string &value) {
 	short size;
 	ZLTextStyleEntry::SizeUnit unit;
-	if (parseLength(it->second, size, unit)) {
+	if (::parseLength(value, size, unit)) {
 		entry.setLength(featureId, size, unit);
+		return true;
+	}
+	return false;
+}
+
+void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature featureId, const AttributeMap &map, const std::string &attributeName) {
+	StyleSheetTable::AttributeMap::const_iterator it = map.find(attributeName);
+	if (it != map.end()) {
+		::trySetLength(entry, featureId, it->second);
+		return;
 	}
 }
 
 bool StyleSheetTable::doBreakBefore(const std::string &tag, const std::string &aClass) const {
-	std::map<Key,bool>::const_iterator it = myPageBreakBeforeMap.find(Key(tag, aClass));
+	std::map<CSSSelector,bool>::const_iterator it = myPageBreakBeforeMap.find(CSSSelector(tag, aClass));
 	if (it != myPageBreakBeforeMap.end()) {
 		return it->second;
 	}
 
-	it = myPageBreakBeforeMap.find(Key("", aClass));
+	it = myPageBreakBeforeMap.find(CSSSelector("", aClass));
 	if (it != myPageBreakBeforeMap.end()) {
 		return it->second;
 	}
 
-	it = myPageBreakBeforeMap.find(Key(tag, ""));
+	it = myPageBreakBeforeMap.find(CSSSelector(tag, ""));
 	if (it != myPageBreakBeforeMap.end()) {
 		return it->second;
 	}
@@ -114,17 +121,17 @@ bool StyleSheetTable::doBreakBefore(const std::string &tag, const std::string &a
 }
 
 bool StyleSheetTable::doBreakAfter(const std::string &tag, const std::string &aClass) const {
-	std::map<Key,bool>::const_iterator it = myPageBreakAfterMap.find(Key(tag, aClass));
+	std::map<CSSSelector,bool>::const_iterator it = myPageBreakAfterMap.find(CSSSelector(tag, aClass));
 	if (it != myPageBreakAfterMap.end()) {
 		return it->second;
 	}
 
-	it = myPageBreakAfterMap.find(Key("", aClass));
+	it = myPageBreakAfterMap.find(CSSSelector("", aClass));
 	if (it != myPageBreakAfterMap.end()) {
 		return it->second;
 	}
 
-	it = myPageBreakAfterMap.find(Key(tag, ""));
+	it = myPageBreakAfterMap.find(CSSSelector(tag, ""));
 	if (it != myPageBreakAfterMap.end()) {
 		return it->second;
 	}
@@ -133,9 +140,21 @@ bool StyleSheetTable::doBreakAfter(const std::string &tag, const std::string &aC
 }
 
 shared_ptr<ZLTextStyleEntry> StyleSheetTable::control(const std::string &tag, const std::string &aClass) const {
-	std::map<Key,shared_ptr<ZLTextStyleEntry> >::const_iterator it =
-		myControlMap.find(Key(tag, aClass));
+	std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> >::const_iterator it =
+		myControlMap.find(CSSSelector(tag, aClass));
 	return it != myControlMap.end() ? it->second : 0;
+}
+
+std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > StyleSheetTable::allControls(const std::string &tag, const std::string &aClass) const {
+	const CSSSelector key(tag, aClass);
+	std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > pairs;
+
+	std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> >::const_iterator it =
+		myControlMap.lower_bound(key);
+	for (std::map<CSSSelector,shared_ptr<ZLTextStyleEntry> >::const_iterator jt = it; jt != myControlMap.end() && key.weakEquals(jt->first); ++jt) {
+		pairs.push_back(*jt);
+	}
+	return pairs;
 }
 
 const std::string &StyleSheetTable::value(const AttributeMap &map, const std::string &name) {
@@ -235,7 +254,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 		} else if (fontSize == "larger") {
 			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_LARGER, true);
 			doSetFontSize = false;
-		} else if (!parseLength(fontSize, size, unit)) {
+		} else if (!::parseLength(fontSize, size, unit)) {
 			doSetFontSize = false;
 		}
 		if (doSetFontSize) {
@@ -243,9 +262,9 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 		}
 	}
 
-	StyleSheetTable::AttributeMap::const_iterator it = styles.find("margin");
-	if (it != styles.end()) {
-		std::vector<std::string> split = ZLStringUtil::split(it->second, " ", true);
+	const std::string margin = value(styles, "margin");
+	if (!margin.empty()) {
+		std::vector<std::string> split = ZLStringUtil::split(margin, " ", true);
 		if (split.size() > 0) {
 			switch (split.size()) {
 				case 1:
@@ -259,20 +278,10 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 					break;
 			}
 		}
-		short size;
-		ZLTextStyleEntry::SizeUnit unit;
-		if (parseLength(split[0], size, unit)) {
-			entry->setLength(ZLTextStyleEntry::LENGTH_SPACE_BEFORE, size, unit);
-		}
-		if (parseLength(split[1], size, unit)) {
-			entry->setLength(ZLTextStyleEntry::LENGTH_RIGHT_INDENT, size, unit);
-		}
-		if (parseLength(split[2], size, unit)) {
-			entry->setLength(ZLTextStyleEntry::LENGTH_SPACE_AFTER, size, unit);
-		}
-		if (parseLength(split[3], size, unit)) {
-			entry->setLength(ZLTextStyleEntry::LENGTH_LEFT_INDENT, size, unit);
-		}
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_BEFORE, split[0]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_RIGHT_INDENT, split[1]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_AFTER, split[2]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_LEFT_INDENT, split[3]);
 	}
 	setLength(*entry, ZLTextStyleEntry::LENGTH_LEFT_INDENT, styles, "margin-left");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_RIGHT_INDENT, styles, "margin-right");
@@ -281,6 +290,22 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 	setLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_BEFORE, styles, "padding-top");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_AFTER, styles, "margin-bottom");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_AFTER, styles, "padding-bottom");
+
+	const std::string verticalAlign = value(styles, "vertical-align");
+	if (!verticalAlign.empty()) {
+		static const char* values[] = { "sub", "super", "top", "text-top", "middle", "bottom", "text-bottom", "initial", "inherit" };
+		int index = sizeof(values) / sizeof(const char*) - 1;
+		for (; index >= 0; --index) {
+			if (verticalAlign == values[index]) {
+				break;
+			}
+		}
+		if (index >= 0) {
+			entry->setVerticalAlignCode((unsigned char)index);
+		} else {
+			::trySetLength(*entry, ZLTextStyleEntry::LENGTH_VERTICAL_ALIGN, verticalAlign);
+		}
+	}
 
 	return entry;
 }

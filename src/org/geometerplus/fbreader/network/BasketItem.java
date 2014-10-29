@@ -42,7 +42,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 			Accessibility.ALWAYS,
 			FLAGS_DEFAULT & ~FLAGS_GROUP
 		);
-		myBooksInBasketOption = new ZLStringListOption(Link.getSiteName(), "Basket", Collections.<String>emptyList(), ",");
+		myBooksInBasketOption = new ZLStringListOption(Link.getStringId(), "Basket", Collections.<String>emptyList(), ",");
 	}
 
 	public void addItem(NetworkBookItem book) {
@@ -73,7 +73,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 
 	@Override
 	public String getStringId() {
-		return "@Basket:" + Link.getSiteName();
+		return "@Basket:" + Link.getStringId();
 	}
 
 	public long getGeneration() {

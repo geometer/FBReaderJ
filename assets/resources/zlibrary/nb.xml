@@ -15,7 +15,6 @@
 			<node name="somethingWrongMessage" value="Noe gikk galt med %s"/>
 			<node name="couldntCreateDirectoryMessage" value="Kan ikke lage katalogen %s"/>
 			<node name="couldntCreateFileMessage" value="Kan ikke lage filen %s"/>
-			<node name="couldntConnectToNetworkMessage" value="Kan ikke koble til nettverket"/>
 			<node name="couldntConnectMessage" value="Kan ikke koble til tjeneren %s"/>
 			<node name="couldntResolveHostMessage" value="Kan ikke slå opp tjeneren %s"/>
 			<node name="authenticationFailed" value="Autentisering mislyktes"/>
@@ -23,6 +22,7 @@
 			<node name="invalidURL" value="Ugyldig URL"/>
 			<node name="hostCantBeReached" value="Tjeneren %s kan ikke nås"/>
 			<node name="connectionRefused" value="Koblingen ble avslått av %s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="color">

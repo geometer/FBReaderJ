@@ -34,10 +34,12 @@ public abstract class ZLTextStyleEntry {
 		int LENGTH_SPACE_BEFORE               = 3;
 		int LENGTH_SPACE_AFTER                = 4;
 		int LENGTH_FONT_SIZE                  = 5;
-		int NUMBER_OF_LENGTHS                 = 6;
+		int LENGTH_VERTICAL_ALIGN             = 6;
+		int NUMBER_OF_LENGTHS                 = 7;
 		int ALIGNMENT_TYPE                    = NUMBER_OF_LENGTHS;
 		int FONT_FAMILY                       = NUMBER_OF_LENGTHS + 1;
 		int FONT_STYLE_MODIFIER               = NUMBER_OF_LENGTHS + 2;
+		int NON_LENGTH_VERTICAL_ALIGN         = NUMBER_OF_LENGTHS + 3;
 	}
 
 	public interface FontModifier {
@@ -83,6 +85,7 @@ public abstract class ZLTextStyleEntry {
 	private List<FontEntry> myFontEntries;
 	private byte mySupportedFontModifiers;
 	private byte myFontModifiers;
+	private byte myVerticalAlignCode;
 
 	static boolean isFeatureSupported(short mask, int featureId) {
 		return (mask & (1 << featureId)) != 0;
@@ -110,6 +113,7 @@ public abstract class ZLTextStyleEntry {
 			case Feature.LENGTH_SPACE_BEFORE:
 			case Feature.LENGTH_SPACE_AFTER:
 				return metrics.FullHeight;
+			case Feature.LENGTH_VERTICAL_ALIGN:
 			case Feature.LENGTH_FONT_SIZE:
 				return fontSize;
 		}
@@ -177,6 +181,15 @@ public abstract class ZLTextStyleEntry {
 			return ZLBoolean3.B3_UNDEFINED;
 		}
 		return (myFontModifiers & modifier) == 0 ? ZLBoolean3.B3_FALSE : ZLBoolean3.B3_TRUE;
+	}
+
+	public final void setVerticalAlignCode(byte code) {
+		myFeatureMask |= 1 << Feature.NON_LENGTH_VERTICAL_ALIGN;
+		myVerticalAlignCode = code;
+	}
+
+	public final byte getVerticalAlignCode() {
+		return myVerticalAlignCode;
 	}
 
 	@Override

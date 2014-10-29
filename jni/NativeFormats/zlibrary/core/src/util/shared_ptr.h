@@ -216,17 +216,27 @@ inline const shared_ptr<T> &shared_ptr<T>::operator = (T *t) {
 template<class T>
 inline const shared_ptr<T> &shared_ptr<T>::operator = (const shared_ptr<T> &t) {
 	if (&t != this) {
+		const bool flag = !t.isNull();
+		if (flag) {
+			t.myStorage->addReference();
+		}
 		detachStorage();
 		attachStorage(t.myStorage);
+		if (flag) {
+			t.myStorage->removeReference();
+		}
 	}
 	return *this;
 }
 template<class T>
 inline const shared_ptr<T> &shared_ptr<T>::operator = (const weak_ptr<T> &t) {
-	detachStorage();
 	if (!t.isNull()) {
+		t.myStorage->addReference();
+		detachStorage();
 		attachStorage(t.myStorage);
+		t.myStorage->removeReference();
 	} else {
+		detachStorage();
 		attachStorage(0);
 	}
 	return *this;
@@ -365,7 +375,7 @@ inline T& weak_ptr<T>::operator * () const {
 }
 template<class T>
 inline bool weak_ptr<T>::isNull() const {
-	return (myStorage == 0) || (myStorage->pointer() == 0);
+	return myStorage == 0 || myStorage->pointer() == 0;
 }
 template<class T>
 inline void weak_ptr<T>::reset() {

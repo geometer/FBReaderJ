@@ -653,7 +653,7 @@
 			<node name="text" value="Běžný text"/>
 			<node name="hyperlink" value="Hypertextový odkaz"/>
 			<node name="hyperlinkVisited" value="Navštívený hypertextový odkaz"/>
-			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingForeground" value="Výsledky hledání"/>
 			<node name="highlightingBackground" value="Pozadí výsledků vyhledávání"/>
 			<node name="footer" value="Patička"/>
 		</node>
@@ -1050,16 +1050,19 @@
 		<node name="litres" value="LitRes">
 			<node name="summary" value="Ruské knihkupectví"/>
 		</node>
-		<node name="tts-plus" value="TTS+">
+		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Čte nahlas"/>
 		</node>
-		<node name="local-opds-scanner" value="Local OPDS Scanner">
+		<node name="calibre-server-integration" value="Připojení Calibre">
+			<node name="summary" value="Připojit server Calibre ve vaší místní síti"/>
+		</node>
+		<node name="local_opds_scanner" value="Local OPDS Scanner">
 			<node name="summary" value="Hledá knihy v místní síti"/>
 		</node>
 		<node name="bookshelf" value="Bookshelf">
 			<node name="summary" value="Zobrazí knihovnu v režimu náhledů"/>
 		</node>
-		<node name="opds-server" value="OPDS Server">
+		<node name="opds_server" value="OPDS Server">
 			<node name="summary" value="Dodá knihy z vašeho zařízení"/>
 		</node>
 		<node name="widgets" value="Widgety">
