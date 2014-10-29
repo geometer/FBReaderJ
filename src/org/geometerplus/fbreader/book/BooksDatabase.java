@@ -129,16 +129,15 @@ public abstract class BooksDatabase {
 			//boolean isVisible,
 			//int styleId
 		) {
-			return new Note(
-				id, bookId, bookTitle, text,
-				creationDate, modificationDate, accessDate, accessCounter,
-				modelId,
-				start_paragraphIndex, start_wordIndex, start_charIndex,
-				end_paragraphIndex, end_wordIndex, end_charIndex//,
-				//isVisible,
-				//styleId
-			);
-		}
+		return new Note(
+			id, bookId, bookTitle, text,
+			creationDate, modificationDate, accessDate, accessCounter,
+			modelId,
+			start_paragraphIndex, start_wordIndex, start_charIndex,
+			end_paragraphIndex, end_wordIndex, end_charIndex//,
+			//isVisible,
+			//styleId
+		);
 	}
 
 	protected abstract List<Note> loadNotes(NoteQuery query);

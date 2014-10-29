@@ -53,4 +53,9 @@ public final class NoteHighlighting extends ZLTextSimpleHighlighting {
 		final HighlightingStyle bmStyle = Collection.getHighlightingStyle(3);
 		return bmStyle != null ? bmStyle.getBackgroundColor() : null;
 	}
+
+	@Override
+	public ZLColor getForegroundColor() {
+		return null;
+	}
 }
