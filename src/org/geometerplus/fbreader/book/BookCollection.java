@@ -695,7 +695,6 @@ public class BookCollection extends AbstractBookCollection {
 			//if (note.IsVisible) {
 				final Book book = getBookById(note.getBookId());
 				if (book != null) {
-					book.HasNote = true;
 					fireBookEvent(BookEvent.NotesUpdated, book);
 				}
 			//}
@@ -708,7 +707,6 @@ public class BookCollection extends AbstractBookCollection {
 			//if (note.IsVisible) {
 				final Book book = getBookById(note.getBookId());
 				if (book != null) {
-					book.HasNote = myDatabase.hasVisibleNote(note.getBookId());
 					fireBookEvent(BookEvent.NotesUpdated, book);
 				}
 			//}

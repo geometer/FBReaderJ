@@ -64,7 +64,6 @@ public abstract class BooksDatabase {
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 	protected abstract List<UID> listUids(long bookId);
 	protected abstract boolean hasVisibleBookmark(long bookId);
-	protected abstract boolean hasVisibleNote(long bookId);//???
 	protected abstract RationalNumber getProgress(long bookId);
 
 	protected abstract Long bookIdByUid(UID uid);

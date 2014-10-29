@@ -52,7 +52,6 @@ public class Book extends TitledEntity {
 	private volatile RationalNumber myProgress;
 
 	public volatile boolean HasBookmark;
-	public volatile boolean HasNote;
 
 	private volatile boolean myIsSaved;
 
@@ -153,10 +152,6 @@ public class Book extends TitledEntity {
 			HasBookmark = book.HasBookmark;
 			myIsSaved = false;
 		}
-		if (HasNote != book.HasNote) {
-			HasNote = book.HasNote;
-			myIsSaved = false;
-		}
 	}
 
 	public void reloadInfoFromFile() {
@@ -218,7 +213,6 @@ public class Book extends TitledEntity {
 		myUids = database.listUids(myId);
 		myProgress = database.getProgress(myId);
 		HasBookmark = database.hasVisibleBookmark(myId);
-		HasNote = database.hasVisibleNote(myId);
 		myIsSaved = true;
 		if (myUids == null || myUids.isEmpty()) {
 			try {

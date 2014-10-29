@@ -328,18 +328,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 
-		cursor = myDatabase.rawQuery(
-			"SELECT book_id FROM Notes GROUP by book_id",
-			null
-		);
-		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
-			if (book != null) {
-				book.HasNote = true;
-			}
-		}
-		cursor.close();
-
 		return booksByFileId;
 	}
 
@@ -795,17 +783,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT bookmark_id FROM Bookmarks WHERE book_id = " + bookId +
 			" AND visible = 1 LIMIT 1", null
-		);
-		final boolean result = cursor.moveToNext();
-		cursor.close();
-		return result;
-	}
-
-	@Override
-	protected boolean hasVisibleNote(long bookId) {
-		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT note_id FROM Notes WHERE book_id = " + bookId +
-			/*" AND visible = 1"*/ " LIMIT 1", null
 		);
 		final boolean result = cursor.moveToNext();
 		cursor.close();

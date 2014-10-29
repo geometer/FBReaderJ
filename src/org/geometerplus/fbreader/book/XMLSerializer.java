@@ -224,10 +224,6 @@ class XMLSerializer extends AbstractSerializer {
 			appendTag(buffer, "has-bookmark", true);
 		}
 
-		if (book.HasNote) {
-			appendTag(buffer, "has-note", true);
-		}
-
 		// TODO: serialize description (?)
 		// TODO: serialize cover (?)
 
@@ -506,7 +502,6 @@ class XMLSerializer extends AbstractSerializer {
 		private final StringBuilder mySeriesTitle = new StringBuilder();
 		private final StringBuilder mySeriesIndex = new StringBuilder();
 		private boolean myHasBookmark;
-		private boolean myHasNote;
 		private RationalNumber myProgress;
 
 		private Book myBook;
@@ -532,7 +527,6 @@ class XMLSerializer extends AbstractSerializer {
 			myTags.clear();
 			myLabels.clear();
 			myHasBookmark = false;
-			myHasNote = false;
 			myProgress = null;
 
 			myState = State.READ_NOTHING;
@@ -565,7 +559,6 @@ class XMLSerializer extends AbstractSerializer {
 			myBook.setSeriesInfoWithNoCheck(string(mySeriesTitle), string(mySeriesIndex));
 			myBook.setProgressWithNoCheck(myProgress);
 			myBook.HasBookmark = myHasBookmark;
-			myBook.HasNote = myHasNote;
 		}
 
 		@Override
@@ -609,8 +602,6 @@ class XMLSerializer extends AbstractSerializer {
 						myState = State.READ_SERIES_INDEX;
 					} else if ("has-bookmark".equals(localName)) {
 						myHasBookmark = true;
-					} else if ("has-note".equals(localName)) {
-						myHasNote = true;
 					} else if ("link".equals(localName)) {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
