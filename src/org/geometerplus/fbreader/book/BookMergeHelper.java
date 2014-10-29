@@ -27,7 +27,6 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
-//TODO: notes
 class BookMergeHelper {
 	private final IBookCollection myCollection;
 
