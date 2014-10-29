@@ -106,7 +106,7 @@ public final class FBView extends ZLTextView {
 		if (highlighting instanceof NoteHighlighting) {
 			myReader.runAction(
 				ActionCode.SELECTION_NOTE,
-				((NoteHighlighting)highlighting).Note
+				((NoteHighlighting)highlighting).Bookmark
 			);
 			return true;
 		}

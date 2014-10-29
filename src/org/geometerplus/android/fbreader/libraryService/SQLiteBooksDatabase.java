@@ -1001,9 +1001,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 		statement.bindLong(1, note.getBookId());
 		statement.bindString(2, note.getText());
-		SQLiteUtil.bindDate(statement, 3, note.getDate(Bookmark.DateType.Creation));
-		SQLiteUtil.bindDate(statement, 4, note.getDate(Bookmark.DateType.Modification));
-		SQLiteUtil.bindDate(statement, 5, note.getDate(Bookmark.DateType.Access));
+		SQLiteUtil.bindDate(statement, 3, note.getDate(Note.DateType.Creation));
+		SQLiteUtil.bindDate(statement, 4, note.getDate(Note.DateType.Modification));
+		SQLiteUtil.bindDate(statement, 5, note.getDate(Note.DateType.Access));
 		statement.bindLong(6, note.getAccessCount());
 		SQLiteUtil.bindString(statement, 7, note.ModelId);
 		statement.bindLong(8, note.ParagraphIndex);

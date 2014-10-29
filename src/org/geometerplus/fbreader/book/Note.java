@@ -21,11 +21,17 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
-import org.geometerplus.fbreader.book.Bookmark.DateType;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.text.view.*;
 
 public final class Note extends ZLTextFixedPosition {
+	public enum DateType {
+		Creation,
+		Modification,
+		Access,
+		Latest
+	}
+
 	private long myId;
 	private final long myBookId;
 	private final String myBookTitle;
@@ -37,9 +43,10 @@ public final class Note extends ZLTextFixedPosition {
 	private Date myLatestDate;
 	private ZLTextFixedPosition myEnd;
 	private int myLength;
-	//private int myStyleId;
+	private int myStyleId;
 
 	public final String ModelId;
+	public final boolean IsVisible;
 
 	private Note(long bookId, Note original) {
 		super(original);
@@ -54,9 +61,9 @@ public final class Note extends ZLTextFixedPosition {
 		myLatestDate = original.myLatestDate;
 		myEnd = original.myEnd;
 		myLength = original.myLength;
-		//myStyleId = original.myStyleId;
+		myStyleId = original.myStyleId;
 		ModelId = original.ModelId;
-		//IsVisible = original.IsVisible;
+		IsVisible = original.IsVisible;
 	}
 
 	Note(
@@ -64,9 +71,9 @@ public final class Note extends ZLTextFixedPosition {
 		Date creationDate, Date modificationDate, Date accessDate, int accessCount,
 		String modelId,
 		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
-		int end_paragraphIndex, int end_elementIndex, int end_charIndex
-		//,boolean isVisible,
-		//int styleId
+		int end_paragraphIndex, int end_elementIndex, int end_charIndex,
+		boolean isVisible,
+		int styleId
 	) {
 		super(start_paragraphIndex, start_elementIndex, start_charIndex);
 
@@ -85,7 +92,7 @@ public final class Note extends ZLTextFixedPosition {
 		}
 		myAccessCount = accessCount;
 		ModelId = modelId;
-		//IsVisible = isVisible;
+		IsVisible = isVisible;
 
 		if (end_charIndex >= 0) {
 			myEnd = new ZLTextFixedPosition(end_paragraphIndex, end_elementIndex, end_charIndex);
@@ -93,10 +100,10 @@ public final class Note extends ZLTextFixedPosition {
 			myLength = end_paragraphIndex;
 		}
 
-		//myStyleId = styleId;
+		myStyleId = styleId;
 	}
 
-	public Note(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text/*, boolean isVisible*/) {
+	public Note(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text) {
 		super(start);
 
 		myId = -1;
@@ -105,9 +112,9 @@ public final class Note extends ZLTextFixedPosition {
 		myText = text;
 		myCreationDate = new Date();
 		ModelId = modelId;
-		//IsVisible = isVisible;
+		IsVisible = true;
 		myEnd = new ZLTextFixedPosition(end);
-		//myStyleId = 1;
+		myStyleId = 3;
 	}
 
 	public void findEnd(ZLTextView view) {
@@ -156,6 +163,10 @@ mainLoop:
 
 	public long getBookId() {
 		return myBookId;
+	}
+
+	public int getStyleId() {
+		return myStyleId;
 	}
 
 	public String getText() {
@@ -240,5 +251,28 @@ mainLoop:
 			ElementIndex == other.ElementIndex &&
 			CharIndex == other.CharIndex &&
 			MiscUtil.equals(myText, other.myText);
+	}
+
+	private static class Buffer {
+		final StringBuilder Builder = new StringBuilder();
+		final ZLTextWordCursor Cursor;
+
+		Buffer(ZLTextWordCursor cursor) {
+			Cursor = new ZLTextWordCursor(cursor);
+		}
+
+		boolean isEmpty() {
+			return Builder.length() == 0;
+		}
+
+		void append(Buffer buffer) {
+			Builder.append(buffer.Builder);
+			Cursor.setCursor(buffer.Cursor);
+			buffer.Builder.delete(0, buffer.Builder.length());
+		}
+
+		void append(CharSequence data) {
+			Builder.append(data);
+		}
 	}
 }

@@ -27,30 +27,30 @@ import org.geometerplus.fbreader.book.*;
 
 public final class NoteHighlighting extends ZLTextSimpleHighlighting {
 	final IBookCollection Collection;
-	final Note Note;
+	final Note Bookmark;
 
-	private static ZLTextPosition startPosition(Note note) {
-		return new ZLTextFixedPosition(note.getParagraphIndex(), note.getElementIndex(), 0);
+	private static ZLTextPosition startPosition(Note bookmark) {
+		return new ZLTextFixedPosition(bookmark.getParagraphIndex(), bookmark.getElementIndex(), 0);
 	}
 
-	private static ZLTextPosition endPosition(Note note) {
-		final ZLTextPosition end = note.getEnd();
+	private static ZLTextPosition endPosition(Note bookmark) {
+		final ZLTextPosition end = bookmark.getEnd();
 		if (end != null) {
 			return end;
 		}
-		// TODO: compute end and save note
-		return note;
+		// TODO: compute end and save bookmark
+		return bookmark;
 	}
 
-	NoteHighlighting(ZLTextView view, IBookCollection collection, Note note) {
-		super(view, startPosition(note), endPosition(note));
+	NoteHighlighting(ZLTextView view, IBookCollection collection, Note bookmark) {
+		super(view, startPosition(bookmark), endPosition(bookmark));
 		Collection = collection;
-		Note = note;
+		Bookmark = bookmark;
 	}
 
 	@Override
 	public ZLColor getBackgroundColor() {
-		final HighlightingStyle bmStyle = Collection.getHighlightingStyle(3);
+		final HighlightingStyle bmStyle = Collection.getHighlightingStyle(Bookmark.getStyleId());
 		return bmStyle != null ? bmStyle.getBackgroundColor() : null;
 	}
 

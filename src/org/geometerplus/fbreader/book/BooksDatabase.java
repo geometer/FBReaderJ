@@ -134,7 +134,8 @@ public abstract class BooksDatabase {
 			creationDate, modificationDate, accessDate, accessCounter,
 			modelId,
 			start_paragraphIndex, start_wordIndex, start_charIndex,
-			end_paragraphIndex, end_wordIndex, end_charIndex//,
+			end_paragraphIndex, end_wordIndex, end_charIndex,
+			true, 3
 			//isVisible,
 			//styleId
 		);

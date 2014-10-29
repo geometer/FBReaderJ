@@ -375,9 +375,9 @@ class XMLSerializer extends AbstractSerializer {
 		appendTagWithContent(buffer, "text", note.getText());
 		appendTag(
 			buffer, "history", true, //DateType???
-			"date-creation", formatDate(note.getDate(Bookmark.DateType.Creation)),
-			"date-modification", formatDate(note.getDate(Bookmark.DateType.Modification)),
-			"date-access", formatDate(note.getDate(Bookmark.DateType.Access)),
+			"date-creation", formatDate(note.getDate(Note.DateType.Creation)),
+			"date-modification", formatDate(note.getDate(Note.DateType.Modification)),
+			"date-access", formatDate(note.getDate(Note.DateType.Access)),
 			"access-count", String.valueOf(note.getAccessCount())
 		);
 		appendTag(
@@ -1231,7 +1231,8 @@ class XMLSerializer extends AbstractSerializer {
 				myCreationDate, myModificationDate, myAccessDate, myAccessCount,
 				myModelId,
 				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
-				myEndParagraphIndex, myEndElementIndex, myEndCharIndex
+				myEndParagraphIndex, myEndElementIndex, myEndCharIndex,
+				true, 3
 				//,myIsVisible,
 				//myStyle
 			);
