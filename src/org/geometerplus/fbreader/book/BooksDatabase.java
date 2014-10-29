@@ -141,7 +141,7 @@ public abstract class BooksDatabase {
 		);
 	}
 
-	protected abstract List<Bookmark> loadNotes(NoteQuery query);
+	protected abstract List<Bookmark> loadNotes(BookmarkQuery query);
 	protected abstract long saveNote(Bookmark note);
 	protected abstract void deleteNote(Bookmark note);
 

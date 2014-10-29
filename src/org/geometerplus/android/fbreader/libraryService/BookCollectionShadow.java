@@ -440,7 +440,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Bookmark> notes(NoteQuery query) {
+	public synchronized List<Bookmark> notes(BookmarkQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}

@@ -89,7 +89,7 @@ public interface IBookCollection {
 	void saveBookmark(Bookmark bookmark);
 	void deleteBookmark(Bookmark bookmark);
 
-	List<Bookmark> notes(NoteQuery query);
+	List<Bookmark> notes(BookmarkQuery query);
 	void saveNote(Bookmark note);
 	void deleteNote(Bookmark note);
 

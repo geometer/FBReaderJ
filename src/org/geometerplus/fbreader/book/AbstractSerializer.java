@@ -26,9 +26,6 @@ abstract class AbstractSerializer {
 	public abstract String serialize(BookmarkQuery query);
 	public abstract BookmarkQuery deserializeBookmarkQuery(String data);
 
-	public abstract String serialize(NoteQuery query);
-	public abstract NoteQuery deserializeNoteQuery(String data);
-
 	public abstract String serialize(Book book);
 	public abstract Book deserializeBook(String data);
 

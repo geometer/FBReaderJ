@@ -858,7 +858,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<Bookmark> loadNotes(NoteQuery query) {
+	protected List<Bookmark> loadNotes(BookmarkQuery query) {
 		final LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		final StringBuilder sql = new StringBuilder("SELECT")
 			.append(" bm.note_id,bm.book_id,b.title,bm.note_text,")

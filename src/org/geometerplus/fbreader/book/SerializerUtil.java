@@ -43,14 +43,6 @@ public abstract class SerializerUtil {
 		return xml != null ? defaultSerializer.deserializeBookmarkQuery(xml) : null;
 	}
 
-	public static String serialize(NoteQuery query) {
-		return query != null ? defaultSerializer.serialize(query) : null;
-	}
-
-	public static NoteQuery deserializeNoteQuery(String xml) {
-		return xml != null ? defaultSerializer.deserializeNoteQuery(xml) : null;
-	}
-
 	public static String serialize(Book book) {
 		return book != null ? defaultSerializer.serialize(book) : null;
 	}

@@ -167,34 +167,6 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
-	public String serialize(NoteQuery query) {
-		final StringBuilder buffer = new StringBuilder();
-		appendTag(buffer, "query", false,
-			//"visible", String.valueOf(query.Visible),
-			"limit", String.valueOf(query.Limit),
-			"page", String.valueOf(query.Page)
-		);
-		if (query.Book != null) {
-			serialize(buffer, query.Book);
-		}
-		closeTag(buffer, "query");
-		return buffer.toString();
-	}
-
-	@Override
-	public NoteQuery deserializeNoteQuery(String xml) {
-		try {
-			final NoteQueryDeserializer deserializer = new NoteQueryDeserializer();
-			Xml.parse(xml, deserializer);
-			return deserializer.getQuery();
-		} catch (SAXException e) {
-			System.err.println(xml);
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
 	public String serialize(Book book) {
 		final StringBuilder buffer = new StringBuilder();
 		serialize(buffer, book);
@@ -889,53 +861,6 @@ class XMLSerializer extends AbstractSerializer {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if ("query".equals(localName)) {
 				myVisible = parseBoolean(attributes.getValue("visible"));
-				myLimit = parseInt(attributes.getValue("limit"));
-				myPage = parseInt(attributes.getValue("page"));
-			} else {
-				myBookDeserializer.startElement(uri, localName, qName, attributes);
-			}
-		}
-
-		@Override
-		public void endElement(String uri, String localName, String qName) throws SAXException {
-			if (!"query".equals(localName)) {
-				myBookDeserializer.endElement(uri, localName, qName);
-			}
-		}
-
-		@Override
-		public void characters(char[] ch, int start, int length) {
-			myBookDeserializer.characters(ch, start, length);
-		}
-	}
-
-	private static final class NoteQueryDeserializer extends DefaultHandler {
-		//private boolean myVisible;
-		private int myLimit;
-		private int myPage;
-		private final BookDeserializer myBookDeserializer = new BookDeserializer();
-		private NoteQuery myQuery;
-
-		NoteQuery getQuery() {
-			return myQuery;
-		}
-
-		@Override
-		public void startDocument() {
-			myQuery = null;
-			myBookDeserializer.startDocument();
-		}
-
-		@Override
-		public void endDocument() {
-			myBookDeserializer.endDocument();
-			myQuery = new NoteQuery(myBookDeserializer.getBook(), /*myVisible,*/ myLimit, myPage);
-		}
-
-		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if ("query".equals(localName)) {
-				//myVisible = parseBoolean(attributes.getValue("visible"));
 				myLimit = parseInt(attributes.getValue("limit"));
 				myPage = parseInt(attributes.getValue("page"));
 			} else {

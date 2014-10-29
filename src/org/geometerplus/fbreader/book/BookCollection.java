@@ -685,7 +685,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public List<Bookmark> notes(NoteQuery query) {
+	public List<Bookmark> notes(BookmarkQuery query) {
 		return myDatabase.loadNotes(query);
 	}
 

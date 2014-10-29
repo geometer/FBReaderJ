@@ -303,7 +303,7 @@ public class LibraryService extends Service {
 
 		public List<String> notes(String query) {
 			return SerializerUtil.serializeBookmarkList(myCollection.notes(
-				SerializerUtil.deserializeNoteQuery(query)
+				SerializerUtil.deserializeBookmarkQuery(query)
 			));
 		}
 

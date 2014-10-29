@@ -305,7 +305,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	private void setNoteHighlightings(ZLTextView view, String modelId) {
 		view.removeHighlightings(NoteHighlighting.class);
-		for (NoteQuery query = new NoteQuery(Model.Book, 20); ; query = query.next()) {
+		for (BookmarkQuery query = new BookmarkQuery(Model.Book, 20); ; query = query.next()) {
 			final List<Bookmark> notes = Collection.notes(query);
 			if (notes.isEmpty()) {
 				break;
