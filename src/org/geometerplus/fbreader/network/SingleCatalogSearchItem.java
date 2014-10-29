@@ -29,7 +29,7 @@ public class SingleCatalogSearchItem extends SearchItem {
 	public SingleCatalogSearchItem(INetworkLink link) {
 		super(
 			link,
-			NetworkLibrary.resource().getResource("search").getResource("summary").getValue().replace("%s", link.getSiteName())
+			NetworkLibrary.resource().getResource("search").getResource("summary").getValue().replace("%s", link.getShortName())
 		);
 	}
 
