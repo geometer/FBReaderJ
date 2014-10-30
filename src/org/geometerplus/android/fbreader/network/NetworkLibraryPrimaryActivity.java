@@ -27,7 +27,5 @@ public class NetworkLibraryPrimaryActivity extends NetworkLibraryActivity {
 		super.onCreate(icicle);
 
 		myNetworkContext.reloadCookie();
-
-		Util.requestCatalogPlugins(this);
 	}
 }
