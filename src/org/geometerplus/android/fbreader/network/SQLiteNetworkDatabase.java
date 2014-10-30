@@ -397,8 +397,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				"summary TEXT," +
 				"language TEXT," +
 				"predefined_id TEXT," +
-				"is_enabled INTEGER)," +
-				"type INTEGER");
+				"is_enabled INTEGER," +
+				"type INTEGER)");
 		myDatabase.execSQL("INSERT INTO Links (link_id,title,summary,language,predefined_id,is_enabled,type) SELECT link_id,title,summary,language,predefined_id,is_enabled,type FROM Links_Obsolete");
 		myDatabase.execSQL("DROP TABLE Links_Obsolete");
 	}
