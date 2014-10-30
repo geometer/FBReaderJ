@@ -140,11 +140,9 @@ public abstract class Util implements UserRegistrationConstants {
 	private static final BroadcastReceiver catalogInfoReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			System.err.println("received catalog infos");
 			final List<String> urls =
 				getResultExtras(true).getStringArrayList("fbreader.catalog.ids");
 			if (urls == null || urls.isEmpty()) {
-				System.err.println("empty catalog infos");
 				return;
 			}
 			final NetworkLibrary library = NetworkLibrary.Instance();
@@ -167,12 +165,11 @@ public abstract class Util implements UserRegistrationConstants {
 							link.reloadInfo(new QuietNetworkContext(), false, false);
 							library.addCustomLink(link);
 						} catch (ZLNetworkException e) {
+							e.printStackTrace();
 						}
 					}
 				};
 				new Thread(loader).start();
-
-				System.err.println("catalog info: " + u);
 			}
 		}
 	};
