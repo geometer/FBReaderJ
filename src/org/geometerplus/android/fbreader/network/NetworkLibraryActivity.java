@@ -95,6 +95,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 						Util.initLibrary(NetworkLibraryActivity.this, myNetworkContext, new Runnable() {
 							public void run() {
 								NetworkLibrary.Instance().runBackgroundUpdate(false);
+								Util.requestCatalogPlugins(NetworkLibraryActivity.this);
 								if (intent != null) {
 									openTreeByIntent(intent);
 								}

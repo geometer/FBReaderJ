@@ -174,7 +174,7 @@ public abstract class Util implements UserRegistrationConstants {
 		}
 	};
 
-	static void requestCatalogPlugins(Activity activity) {
+	public static void requestCatalogPlugins(Activity activity) {
 		activity.sendOrderedBroadcast(
 			new Intent(EXTRA_CATALOG_ACTION),
 			null,
