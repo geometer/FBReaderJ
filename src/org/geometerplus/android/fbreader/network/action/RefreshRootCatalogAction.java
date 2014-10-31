@@ -26,10 +26,10 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.fbreader.network.Util;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class RefreshRootCatalogAction extends RootAction {
-	public RefreshRootCatalogAction(Activity activity) {
+	public RefreshRootCatalogAction(NetworkLibraryActivity activity) {
 		super(activity, ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh);
 	}
 
@@ -41,6 +41,6 @@ public class RefreshRootCatalogAction extends RootAction {
 	@Override
 	public void run(NetworkTree tree) {
 		NetworkLibrary.Instance().runBackgroundUpdate(true);
-		Util.requestCatalogPlugins(myActivity);
+		((NetworkLibraryActivity)myActivity).requestCatalogPlugins();
 	}
 }
