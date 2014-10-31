@@ -22,22 +22,24 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -95,7 +97,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 						Util.initLibrary(NetworkLibraryActivity.this, myNetworkContext, new Runnable() {
 							public void run() {
 								NetworkLibrary.Instance().runBackgroundUpdate(false);
-								Util.requestCatalogPlugins(NetworkLibraryActivity.this);
+								requestCatalogPlugins();
 								if (intent != null) {
 									openTreeByIntent(intent);
 								}
@@ -151,18 +153,27 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	private boolean openTreeByIntent(Intent intent) {
 		if (FBReaderIntents.Action.OPEN_NETWORK_CATALOG.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
-			if (uri != null) {
-				final String id = uri.toString();
-				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.setLinkActive(id, true);
-				library.synchronize();
-
-				final NetworkTree tree = library.getCatalogTreeByUrl(id);
-				if (tree != null) {
-					checkAndRun(new OpenCatalogAction(this, myNetworkContext), tree);
-					return true;
-				}
+			if (uri == null) {
+				return false;
 			}
+			final String id = uri.toString();
+			addCustomLink(id, new Runnable() {
+				public void run() {
+					final NetworkLibrary library = NetworkLibrary.Instance();
+					library.setLinkActive(id, true);
+					library.synchronize();
+					onLibraryChanged(NetworkLibrary.ChangeListener.Code.SomeCode, new Object[0]);
+
+					final NetworkTree tree = library.getCatalogTreeByUrl(id);
+					if (tree != null) {
+						checkAndRun(
+							new OpenCatalogAction(NetworkLibraryActivity.this, myNetworkContext),
+							tree
+						);
+					}
+				}
+			});
+			return true;
 		}
 		return false;
 	}
@@ -509,5 +520,64 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	}
 
 	public void onScrollStateChanged(AbsListView view, int state) {
+	}
+
+	private final BroadcastReceiver myCatalogInfoReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			final List<String> urls =
+				getResultExtras(true).getStringArrayList("fbreader.catalog.ids");
+			if (urls == null || urls.isEmpty()) {
+				return;
+			}
+			for (String u : urls) {
+				addCustomLink(u, null);
+			}
+		}
+	};
+
+	private void addCustomLink(String url, final Runnable postAction) {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		if (library.getLinkByUrl(url) != null) {
+			if (postAction != null) {
+				runOnUiThread(postAction);
+			}
+			return;
+		}
+
+		final ICustomNetworkLink link = new OPDSCustomNetworkLink(
+			INetworkLink.INVALID_ID,
+			INetworkLink.Type.Custom,
+			null, null, null,
+			new UrlInfoCollection<UrlInfoWithDate>(new UrlInfoWithDate(
+				UrlInfo.Type.Catalog, url, MimeType.APP_ATOM_XML
+			))
+		);
+		final Runnable loader = new Runnable() {
+			public void run() {
+				try {
+					link.reloadInfo(myNetworkContext, false, false);
+					library.addCustomLink(link);
+					if (postAction != null) {
+						runOnUiThread(postAction);
+					}
+				} catch (ZLNetworkException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		new Thread(loader).start();
+	}
+
+	public void requestCatalogPlugins() {
+		sendOrderedBroadcast(
+			new Intent(Util.EXTRA_CATALOG_ACTION),
+			null,
+			myCatalogInfoReceiver,
+			null,
+			RESULT_OK,
+			null,
+			null
+		);
 	}
 }
