@@ -8,7 +8,7 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.2 beta 2 (Oct 30, 2014) =====
+===== 2.2 beta 2 (Nov 01, 2014) =====
 * Added '*' selector support in CSS
 * Optimised combined selectors processing
 * Works with OPDS plugins (https://github.com/geometer/OpdsPluginPrototype)
