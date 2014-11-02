@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.tree;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -46,7 +46,8 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	// we store the key separately because
 	// it will be changed in case of myCurrentTree.removeSelf() call
 	private FBTree.Key myCurrentKey;
-	private ArrayList<FBTree.Key> myHistory;
+	private final List<FBTree.Key> myHistory =
+		Collections.synchronizedList(new ArrayList<FBTree.Key>());
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -103,8 +104,10 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			FBTree parent = null;
-			while (parent == null && !myHistory.isEmpty()) {
-				parent = getTreeByKey(myHistory.remove(myHistory.size() - 1));
+			synchronized (myHistory) {
+				while (parent == null && !myHistory.isEmpty()) {
+					parent = getTreeByKey(myHistory.remove(myHistory.size() - 1));
+				}
 			}
 			if (parent == null) {
 				parent = myCurrentTree.Parent;
@@ -185,9 +188,11 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 			});
 		}
 
-		myHistory = (ArrayList<FBTree.Key>)intent.getSerializableExtra(HISTORY_KEY);
-		if (myHistory == null) {
-			myHistory = new ArrayList<FBTree.Key>();
+		myHistory.clear();
+		final ArrayList<FBTree.Key> history =
+			(ArrayList<FBTree.Key>)intent.getSerializableExtra(HISTORY_KEY);
+		if (history != null) {
+			myHistory.addAll(history);
 		}
 		onCurrentTreeChanged();
 	}
@@ -206,7 +211,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 						SELECTED_TREE_KEY_KEY,
 						treeToSelect != null ? treeToSelect.getUniqueKey() : null
 					)
-					.putExtra(HISTORY_KEY, myHistory)
+					.putExtra(HISTORY_KEY, new ArrayList<FBTree.Key>(myHistory))
 				);
 				break;
 			case CANNOT_OPEN:
