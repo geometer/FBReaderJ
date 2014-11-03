@@ -136,4 +136,20 @@ public abstract class Util implements UserRegistrationConstants {
 			);
 		}
 	}
+
+	public static Uri rewriteUri(Uri uri) {
+		if (uri == null) {
+			return null;
+		}
+
+		if ("http".equals(uri.getScheme()) &&
+			"www.litres.ru".equals(uri.getHost()) &&
+			"/pages/biblio_book/".equals(uri.getPath())) {
+			final String bookId = uri.getQueryParameter("art");
+			if (bookId != null && !"".equals(bookId)) {
+				return Uri.parse("litres-book://data.fbreader.org/catalogs/litres2/full.php5?id=" + bookId);
+			}
+		}
+		return uri;
+	}
 }

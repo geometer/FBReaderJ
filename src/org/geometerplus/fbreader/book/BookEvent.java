@@ -25,6 +25,5 @@ public enum BookEvent {
 	Removed,
 	Opened,
 	BookmarksUpdated,
-	BookmarkStyleChanged,
-	CoverSynchronized
+	BookmarkStyleChanged
 }
