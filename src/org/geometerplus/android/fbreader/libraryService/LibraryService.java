@@ -321,28 +321,26 @@ public class LibraryService extends Service {
 			return null;
 		}
 
-		private Bitmap getResizedBitmap(Bitmap bitmap, int newWidth, int newHeight) {
-			if (newWidth <= 0 || newHeight <= 0) {
+		private Bitmap getResizedBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+			if (maxWidth <= 0 || maxHeight <= 0) {
 				return null;
-			}
-			final int bWidth = bitmap.getWidth();
-			final int bHeight = bitmap.getHeight();
-			if (newWidth == bWidth && newHeight == bHeight) {
-				return bitmap;
 			}
 
-			if (newWidth > bWidth && newHeight > bHeight) {
+			final int bWidth = bitmap.getWidth();
+			final int bHeight = bitmap.getHeight();
+			if (maxWidth > bWidth && maxHeight > bHeight) {
 				return null;
 			}
+
 			final int w, h;
-			if (bWidth * newHeight > bHeight * newWidth) {
-				w = newWidth;
-				h = Math.max(1, bHeight * w / bWidth);
+			if (bWidth * maxHeight > bHeight * maxWidth) {
+				w = maxWidth;
+				h = Math.max(1, (int)(bHeight * (w + .5f) / bWidth));
 			} else {
-				h = newHeight;
-				w = Math.max(1, bWidth * h / bHeight);
+				h = maxHeight;
+				w = Math.max(1, (int)(bWidth * (h + .5f) / bHeight));
 			}
-			if (w == bWidth && h == bHeight) {
+			if (2 * w <= bWidth && 2 * h <= bHeight) {
 				return bitmap;
 			}
 			return Bitmap.createScaledBitmap(bitmap, w, h, false);
