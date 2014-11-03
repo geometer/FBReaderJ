@@ -49,26 +49,26 @@ public class BitmapCache {
 		}
 	};
 
-	private final LruCache<String,Container> myLruCache;
+	private final LruCache<Long,Container> myLruCache;
 
 	public BitmapCache(float factor) {
-		myLruCache = new LruCache<String,Container>((int)(factor * Runtime.getRuntime().maxMemory())) {
+		myLruCache = new LruCache<Long,Container>((int)(factor * Runtime.getRuntime().maxMemory())) {
 			@Override
-			protected int sizeOf(String key, Container container) {
+			protected int sizeOf(Long key, Container container) {
 				return container.size();
 			}
 		};
 	}
 
-	public Container get(String key) {
+	public Container get(Long key) {
 		return myLruCache.get(key);
 	}
 
-	public void put(String key, Bitmap bitmap) {
+	public void put(Long key, Bitmap bitmap) {
 		myLruCache.put(key, bitmap != null ? new Container(bitmap) : NULL);
 	}
 
-	public void remove(String key) {
+	public void remove(Long key) {
 		myLruCache.remove(key);
 	}
 }
