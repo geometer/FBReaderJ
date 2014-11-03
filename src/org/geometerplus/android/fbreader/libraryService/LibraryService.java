@@ -50,6 +50,7 @@ public class LibraryService extends Service {
 
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
+	static final String COVER_READY_ACTION = "fbreader.library_service.cover_ready";
 
 	private final BitmapCache myCoversCache = new BitmapCache(0.2f);
 
@@ -273,9 +274,15 @@ public class LibraryService extends Service {
 		}
 
 		@Override
-		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
+		public Bitmap getCover(final String bookString, final int maxWidth, final int maxHeight, boolean[] delayed) {
 			delayed[0] = false;
-			final BitmapCache.Container container = myCoversCache.get(book);
+
+			final Book book = SerializerUtil.deserializeBook(bookString);
+			if (book == null || book.getId() == -1) {
+				return null;
+			}
+
+			final BitmapCache.Container container = myCoversCache.get(book.getId());
 			if (container != null) {
 				if (container.Bitmap == null) {
 					return null;
@@ -284,14 +291,14 @@ public class LibraryService extends Service {
 				if (bitmap != null) {
 					return bitmap;
 				} else {
-					myCoversCache.remove(book);
+					myCoversCache.remove(book.getId());
 				}
 			}
 
 			final ZLImage image =
-				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
+				myCollection.getCover(book, maxWidth, maxHeight);
 			if (image == null) {
-				myCoversCache.put(book, null);
+				myCoversCache.put(book.getId(), null);
 				return null;
 			}
 
@@ -300,7 +307,7 @@ public class LibraryService extends Service {
 			final ZLAndroidImageData data = manager.getImageData(image);
 			if (data != null) {
 				final Bitmap bitmap = data.getBitmap(maxWidth, maxHeight);
-				myCoversCache.put(book, bitmap);
+				myCoversCache.put(book.getId(), bitmap);
 				return bitmap;
 			}
 
@@ -309,15 +316,17 @@ public class LibraryService extends Service {
 					@Override
 					public void run() {
 						final ZLAndroidImageData data = manager.getImageData(image);
-						myCoversCache.put(book, data != null ? data.getBitmap(maxWidth, maxHeight) : null);
-						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
+						myCoversCache.put(book.getId(), data != null ? data.getBitmap(maxWidth, maxHeight) : null);
+						final Intent intent = new Intent(COVER_READY_ACTION);
+						intent.putExtra("book", bookString);
+						sendBroadcast(intent);
 					}
 				});
 				delayed[0] = true;
 				return null;
 			}
 
-			myCoversCache.put(book, null);
+			myCoversCache.put(book.getId(), null);
 			return null;
 		}
 
