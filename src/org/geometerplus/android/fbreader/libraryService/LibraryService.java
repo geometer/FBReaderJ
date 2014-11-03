@@ -290,27 +290,35 @@ public class LibraryService extends Service {
 
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
-			if (image == null || !(image instanceof ZLImageProxy)) {
+			if (image == null) {
 				myCoversCache.put(book, null);
 				return null;
 			}
 
-			final ZLImageProxy imageProxy = (ZLImageProxy)image;
-			myImageSynchronizer.synchronize(imageProxy, new Runnable() {
-				@Override
-				public void run() {
-					final ZLAndroidImageManager manager =
-						(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-					final ZLAndroidImageData data = manager.getImageData(image);
-					myCoversCache.put(book, data !=  null ? data.getBitmap(maxWidth, maxHeight) : null);
-					myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
-				}
-			});
-			if (!imageProxy.isSynchronized()) {
+			final ZLAndroidImageManager manager =
+				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+			final ZLAndroidImageData data = manager.getImageData(image);
+			if (data != null) {
+				final Bitmap bitmap = data.getBitmap(maxWidth, maxHeight);
+				myCoversCache.put(book, bitmap);
+				return bitmap;
+			}
+
+			if (image instanceof ZLImageProxy) {
+				myImageSynchronizer.synchronize((ZLImageProxy)image, new Runnable() {
+					@Override
+					public void run() {
+						final ZLAndroidImageData data = manager.getImageData(image);
+						myCoversCache.put(book, data != null ? data.getBitmap(maxWidth, maxHeight) : null);
+						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
+					}
+				});
 				delayed[0] = true;
 				return null;
 			}
-			return myCoversCache.get(book).Bitmap;
+
+			myCoversCache.put(book, null);
+			return null;
 		}
 
 		private Bitmap getResizedBitmap(Bitmap bitmap, int newWidth, int newHeight) {
