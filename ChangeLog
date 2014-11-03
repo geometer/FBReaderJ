@@ -1,13 +1,19 @@
-===== 2.2 (Oct ??, 2014) =====
+===== 2.2 (Nov ??, 2014) =====
 * (planned) Bookshelf library view (plugin)
 * (planned) Tablet-oriented preferences dialog
-* (planned) Android L support
+* (planned) Material Design support
 * (planned) Automatic files download (from the book network)
 * (planned) Sync: single book upload
 * (planned) Editable notes (by Tamotsu Takahashi)
 * (planned) Fixed authors list/tags list editing
+* (planned) CSS selectors priority
 
-===== 2.2 beta 1 (Oct ??, 2014) =====
+===== 2.2 beta 2 (Nov 02, 2014) =====
+* Added '*' selector support in CSS
+* Optimised combined selectors processing
+* Works with OPDS plugins (https://github.com/geometer/OpdsPluginPrototype)
+
+===== 2.2 beta 1 (Oct 14, 2014) =====
 * Fixed "style" attribute support in ePubs
 * Added "vertical-align" CSS property support (lengths, "sub" and "super" values)
 

@@ -65,7 +65,7 @@ public class OPDSSyncNetworkLink extends OPDSNetworkLink implements ISyncNetwork
 	}
 
 	private OPDSSyncNetworkLink(int id, String title, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(id, SyncOptions.DOMAIN, title, null, null, infos);
+		super(id, title, null, null, infos);
 	}
 
 	public String getSummary() {

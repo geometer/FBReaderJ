@@ -27,7 +27,10 @@ public class UrlInfoCollection<T extends UrlInfo> implements Serializable {
 
 	private final LinkedList<T> myInfos = new LinkedList<T>();
 
-	public UrlInfoCollection() {
+	public UrlInfoCollection(T ... elements) {
+		for (T info : elements) {
+			addInfo(info);
+		}
 	}
 
 	public UrlInfoCollection(UrlInfoCollection<? extends T> other) {

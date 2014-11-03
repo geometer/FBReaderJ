@@ -103,7 +103,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	@Override
 	public String getTreeTitle() {
 		final INetworkLink link = getLink();
-		return link != null ? getName() + " - " + link.getSiteName() : getName();
+		return link != null ? getName() + " - " + link.getTitle() : getName();
 	}
 
 	@Override

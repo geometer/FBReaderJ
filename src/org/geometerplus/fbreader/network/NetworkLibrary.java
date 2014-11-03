@@ -92,7 +92,7 @@ public class NetworkLibrary {
 	private final Map<String,WeakReference<ZLImage>> myImageMap =
 		Collections.synchronizedMap(new HashMap<String,WeakReference<ZLImage>>());
 
-	public List<String> linkIds() {
+	public List<String> allIds() {
 		final ArrayList<String> ids = new ArrayList<String>();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
@@ -123,7 +123,11 @@ public class NetworkLibrary {
 		if (link == null) {
 			return;
 		}
-		final String id = link.getUrl(UrlInfo.Type.Catalog);
+		setLinkActive(link.getUrl(UrlInfo.Type.Catalog), active);
+		myChildrenAreInvalid = true;
+	}
+
+	public void setLinkActive(String id, boolean active) {
 		if (id == null) {
 			return;
 		}
@@ -145,8 +149,8 @@ public class NetworkLibrary {
 		invalidateChildren();
 	}
 
-	public void setActiveIds(Collection<String> ids) {
-		activeIdsOption().setValue(new ArrayList<String>(ids));
+	public void setActiveIds(List<String> ids) {
+		activeIdsOption().setValue(ids);
 		invalidateChildren();
 	}
 
@@ -216,10 +220,10 @@ public class NetworkLibrary {
 		return null;
 	}
 
-	public INetworkLink getLinkBySiteName(String siteName) {
+	public INetworkLink getLinkByStringId(String stringId) {
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				if (siteName.equals(link.getSiteName())) {
+				if (stringId.equals(link.getStringId())) {
 					return link;
 				}
 			}
@@ -382,7 +386,8 @@ public class NetworkLibrary {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				if (host.contains(link.getSiteName())) {
+				if (link instanceof IPredefinedNetworkLink &&
+					((IPredefinedNetworkLink)link).servesHost(host)) {
 					url = link.rewriteUrl(url, externalUrl);
 				}
 			}
@@ -588,7 +593,16 @@ public class NetworkLibrary {
 	public void addCustomLink(ICustomNetworkLink link) {
 		final int id = link.getId();
 		if (id == ICustomNetworkLink.INVALID_ID) {
-			myLinks.add(link);
+			synchronized (myLinks) {
+				final INetworkLink existing = getLinkByUrl(link.getUrl(UrlInfo.Type.Catalog));
+				if (existing == null) {
+					myLinks.add(link);
+				} else {
+					setLinkActive(existing, true);
+					fireModelChangedEvent(ChangeListener.Code.SomeCode);
+					return;
+				}
+			}
 		} else {
 			synchronized (myLinks) {
 				for (int i = myLinks.size() - 1; i >= 0; --i) {
@@ -602,7 +616,7 @@ public class NetworkLibrary {
 		}
 		NetworkDatabase.Instance().saveLink(link);
 		setLinkActive(link, true);
-		invalidateChildren();
+		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {

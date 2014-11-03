@@ -79,9 +79,9 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	public LitResAuthenticationManager(OPDSNetworkLink link) {
 		super(link);
 
-		mySidOption = new ZLStringOption(link.getSiteName(), "sid", "");
-		myUserIdOption = new ZLStringOption(link.getSiteName(), "userId", "");
-		myCanRebillOption = new ZLBooleanOption(link.getSiteName(), "canRebill", false);
+		mySidOption = new ZLStringOption(LitResUtil.HOST_NAME, "sid", "");
+		myUserIdOption = new ZLStringOption(LitResUtil.HOST_NAME, "userId", "");
+		myCanRebillOption = new ZLBooleanOption(LitResUtil.HOST_NAME, "canRebill", false);
 	}
 
 	public synchronized boolean initUser(String username, String sid, String userId, boolean canRebill) {
@@ -149,7 +149,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 
 		try {
-			final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.getSiteName());
+			final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader();
 			final Map<String,String> params = new HashMap<String,String>();
 			final String url = parseUrl(Link.getUrl(UrlInfo.Type.SignIn), params);
 			if (url == null) {
@@ -183,7 +183,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 
 		try {
-			final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.getSiteName());
+			final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader();
 			final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
 			for (Map.Entry<String,String> entry : params.entrySet()) {
 				request.addPostParameter(entry.getKey(), entry.getValue());
@@ -236,7 +236,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			throw ZLNetworkException.forCode(NetworkException.ERROR_BOOK_NOT_PURCHASED); // TODO: more correct error message???
 		}
 
-		final LitResPurchaseXMLReader xmlReader = new LitResPurchaseXMLReader(Link.getSiteName());
+		final LitResPurchaseXMLReader xmlReader = new LitResPurchaseXMLReader();
 
 		ZLNetworkException exception = null;
 		try {
@@ -260,7 +260,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				throw exception;
 			}
 			if (xmlReader.BookId == null || !xmlReader.BookId.equals(book.Id)) {
-				throw ZLNetworkException.forCode(NetworkException.ERROR_SOMETHING_WRONG, Link.getSiteName());
+				throw ZLNetworkException.forCode(NetworkException.ERROR_SOMETHING_WRONG, LitResUtil.HOST_NAME);
 			}
 			myPurchasedBooks.addToStart(book);
 			final BasketItem basket = book.Link.getBasketItem();
@@ -441,7 +441,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		final LitResNetworkRequest request = new LitResNetworkRequest(
 			LitResUtil.url(Link, query),
-			new LitResPurchaseXMLReader(Link.getSiteName())
+			new LitResPurchaseXMLReader()
 		);
 		request.addPostParameter("sid", sid);
 		request.addPostParameter("art", "0");
@@ -459,7 +459,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (url == null) {
 			throw ZLNetworkException.forCode(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
-		final LitResPasswordRecoveryXMLReader xmlReader = new LitResPasswordRecoveryXMLReader(Link.getSiteName());
+		final LitResPasswordRecoveryXMLReader xmlReader = new LitResPasswordRecoveryXMLReader();
 		final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
 		request.addPostParameter("mail", email);
 		myNetworkContext.perform(request);

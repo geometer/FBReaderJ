@@ -39,10 +39,10 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 
 	public RSSNetworkLink(
 		int id, String predefinedId,
-		String siteName, String title, String summary,
+		String title, String summary,
 		String language, UrlInfoCollection<UrlInfoWithDate> infos
 	) {
-		super(id, siteName, title, summary, language, infos);
+		super(id, title, summary, language, infos);
 		myPredefinedId = predefinedId;
 	}
 
@@ -133,5 +133,9 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 	@Override
 	public String rewriteUrl(String url, boolean isUrlExternal) {
 		return url;
+	}
+
+	public boolean servesHost(String hostname) {
+		return false;
 	}
 }

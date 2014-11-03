@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -29,8 +31,8 @@ import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
@@ -38,6 +40,8 @@ import org.geometerplus.android.util.PackageUtil;
 public abstract class Util implements UserRegistrationConstants {
 	static final String AUTHORIZATION_ACTION = "android.fbreader.action.network.AUTHORIZATION";
 	static final String SIGNIN_ACTION = "android.fbreader.action.network.SIGNIN";
+	static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
+	static final String EXTRA_CATALOG_ACTION = "android.fbreader.action.network.EXTRA_CATALOG";
 
 	public static final String ADD_CATALOG_ACTION = "android.fbreader.action.ADD_OPDS_CATALOG";
 	public static final String ADD_CATALOG_URL_ACTION = "android.fbreader.action.ADD_OPDS_CATALOG_URL";
