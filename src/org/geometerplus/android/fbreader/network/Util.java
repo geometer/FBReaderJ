@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.fbreader.network.*;
@@ -65,7 +66,10 @@ public abstract class Util implements UserRegistrationConstants {
 
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						if (!library.isInitialized()) {
-							library.initialize(nc);
+							try {
+								library.initialize(nc);
+							} catch (ZLNetworkException e) {
+							}
 						}
 						if (action != null) {
 							action.run();
