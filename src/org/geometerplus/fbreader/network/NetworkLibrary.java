@@ -277,7 +277,7 @@ public class NetworkLibrary {
 		return myIsInitialized;
 	}
 
-	public synchronized void initialize(ZLNetworkContext nc) {
+	public synchronized void initialize(ZLNetworkContext nc) throws ZLNetworkException {
 		if (myIsInitialized) {
 			return;
 		}
@@ -287,7 +287,7 @@ public class NetworkLibrary {
 		} catch (ZLNetworkException e) {
 			removeAllLoadedLinks();
 			fireModelChangedEvent(ChangeListener.Code.InitializationFailed, e.getMessage());
-			return;
+			throw e;
 		}
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
