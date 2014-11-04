@@ -124,7 +124,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				if (SQLiteNetworkDatabase.Instance() == null) {
 					new SQLiteNetworkDatabase(getApplication());
 				}
-				library.initialize(myNetworkContext);
+				try {
+					library.initialize(myNetworkContext);
+				} catch (ZLNetworkException e) {
+				}
 			}
 
 			if (myBook == null) {
