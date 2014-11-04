@@ -34,13 +34,14 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie2;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
 
 public class WebAuthorisationScreen extends Activity {
 	public static final String COMPLETE_URL_KEY = "android.fbreader.data.complete.url";
+
+	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -105,7 +106,7 @@ public class WebAuthorisationScreen extends Activity {
 	}
 
 	private void storeCookies(String host, Map<String,String> cookies) {
-		final ZLNetworkManager.CookieStore store = new QuietNetworkContext().cookieStore();
+		final ZLNetworkManager.CookieStore store = myNetworkContext.cookieStore();
 
 		for (Map.Entry<String,String> entry : cookies.entrySet()) {
 			final BasicClientCookie2 c =
