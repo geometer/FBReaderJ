@@ -70,3 +70,24 @@ std::vector<std::string> StyleSheetUtil::splitCommaSeparatedList(const std::stri
 
 	return split;
 }
+
+ZLTextStyleEntry::DisplayCode StyleSheetUtil::displayCode(const std::string &data) {
+	if (data.empty()) {
+		return ZLTextStyleEntry::DC_NOT_DEFINED;
+	}
+
+	static const char* values[] = {
+		"inline", "block", "flex", "inline-block", "inline-flex",
+		"inline-table", "list-item", "run-in", "table", "table-caption",
+		"table-column-group", "table-header-group", "table-footer-group",
+		"table-row-group", "table-cell", "table-column", "table-row",
+		"none", "initial", "inherit"
+	};
+	int index = sizeof(values) / sizeof(const char*) - 1;
+	for (; index >= 0; --index) {
+		if (data == values[index]) {
+			return (ZLTextStyleEntry::DisplayCode)index;
+		}
+	}
+	return ZLTextStyleEntry::DC_NOT_DEFINED;
+}
