@@ -10,7 +10,7 @@
 
 ===== 2.2 beta 3 (Nov ??, 2014) =====
 * Added 'padding' and 'padding-*' CSS property support
-* Added (initial) support of 'display:block' CSS property value
+* Added support of 'display:block' CSS property value
 
 ===== 2.2 beta 2 (Nov 02, 2014) =====
 * Added '*' selector support in CSS
