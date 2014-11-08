@@ -123,17 +123,17 @@ void BookReader::addControl(FBTextKind kind, bool start) {
 	}
 }
 
-void BookReader::addStyleEntry(const ZLTextStyleEntry &entry, const std::vector<std::string> &fontFamilies) {
+void BookReader::addStyleEntry(const ZLTextStyleEntry &entry, const std::vector<std::string> &fontFamilies, unsigned char depth) {
 	if (paragraphIsOpen()) {
 		flushTextBufferToParagraph();
-		myCurrentTextModel->addStyleEntry(entry, fontFamilies);
+		myCurrentTextModel->addStyleEntry(entry, fontFamilies, depth);
 	}
 }
 
-void BookReader::addStyleEntry(const ZLTextStyleEntry &entry) {
+void BookReader::addStyleEntry(const ZLTextStyleEntry &entry, unsigned char depth) {
 	if (paragraphIsOpen()) {
 		flushTextBufferToParagraph();
-		myCurrentTextModel->addStyleEntry(entry);
+		myCurrentTextModel->addStyleEntry(entry, depth);
 	}
 }
 

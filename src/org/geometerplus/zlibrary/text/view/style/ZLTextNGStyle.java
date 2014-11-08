@@ -105,12 +105,20 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 	}
 
 	@Override
-	protected int getLeftIndentInternal(ZLTextMetrics metrics, int fontSize) {
-		return myDescription.getLeftIndent(metrics, Parent.getLeftIndent(metrics), fontSize);
+	protected int getLeftMarginInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDescription.getLeftMargin(metrics, Parent.getLeftMargin(metrics), fontSize);
 	}
 	@Override
-	protected int getRightIndentInternal(ZLTextMetrics metrics, int fontSize) {
-		return myDescription.getRightIndent(metrics, Parent.getRightIndent(metrics), fontSize);
+	protected int getRightMarginInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDescription.getRightMargin(metrics, Parent.getRightMargin(metrics), fontSize);
+	}
+	@Override
+	protected int getLeftPaddingInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDescription.getLeftPadding(metrics, Parent.getLeftPadding(metrics), fontSize);
+	}
+	@Override
+	protected int getRightPaddingInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDescription.getRightPadding(metrics, Parent.getRightPadding(metrics), fontSize);
 	}
 	@Override
 	protected int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize) {
