@@ -42,6 +42,8 @@ public abstract class ZLTextStyleEntry {
 		int FONT_FAMILY                       = NUMBER_OF_LENGTHS + 1;
 		int FONT_STYLE_MODIFIER               = NUMBER_OF_LENGTHS + 2;
 		int NON_LENGTH_VERTICAL_ALIGN         = NUMBER_OF_LENGTHS + 3;
+		// not transferred at the moment
+		int DISPLAY                           = NUMBER_OF_LENGTHS + 4;
 	}
 
 	public interface FontModifier {
