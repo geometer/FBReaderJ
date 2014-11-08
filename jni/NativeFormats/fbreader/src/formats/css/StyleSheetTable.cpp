@@ -330,6 +330,8 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 		}
 	}
 
+	entry->setDisplayCode(StyleSheetUtil::displayCode(value(styles, "display")));
+
 	return entry;
 }
 

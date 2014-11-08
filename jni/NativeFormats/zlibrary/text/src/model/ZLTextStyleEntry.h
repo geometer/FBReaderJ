@@ -76,6 +76,31 @@ public:
 		FONT_FAMILY =                       NUMBER_OF_LENGTHS + 1,
 		FONT_STYLE_MODIFIER =               NUMBER_OF_LENGTHS + 2,
 		NON_LENGTH_VERTICAL_ALIGN =         NUMBER_OF_LENGTHS + 3,
+		DISPLAY =                           NUMBER_OF_LENGTHS + 4 // 11; max = 15
+	};
+
+	enum DisplayCode {
+		DC_NOT_DEFINED = -1,
+		DC_INLINE,
+		DC_BLOCK,
+		DC_FLEX,
+		DC_INLINE_BLOCK,
+		DC_INLINE_FLEX,
+		DC_INLINE_TABLE,
+		DC_LIST_ITEM,
+		DC_RUN_IN,
+		DC_TABLE,
+		DC_TABLE_CAPTION,
+		DC_TABLE_COLUMN_GROUP,
+		DC_TABLE_HEADER_GROUP,
+		DC_TABLE_FOOTER_GROUP,
+		DC_TABLE_ROW_GROUP,
+		DC_TABLE_CELL,
+		DC_TABLE_COLUMN,
+		DC_TABLE_ROW,
+		DC_NONE,
+		DC_INITIAL,
+		DC_INHERIT
 	};
 
 private:
@@ -109,6 +134,9 @@ public:
 	unsigned char verticalAlignCode() const;
 	void setVerticalAlignCode(unsigned char code);
 
+	DisplayCode displayCode() const;
+	void setDisplayCode(DisplayCode code);
+
 	shared_ptr<ZLTextStyleEntry> start() const;
 	shared_ptr<ZLTextStyleEntry> end() const;
 	shared_ptr<ZLTextStyleEntry> inherited() const;
@@ -123,11 +151,12 @@ private:
 	unsigned char myFontModifier;
 	std::vector<std::string> myFontFamilies;
 	unsigned char myVerticalAlignCode;
+	DisplayCode myDisplayCode;
 
 	friend class ZLTextModel;
 };
 
-inline ZLTextStyleEntry::ZLTextStyleEntry(unsigned char entryKind) : myEntryKind(entryKind), myFeatureMask(0), myAlignmentType(ALIGN_UNDEFINED), mySupportedFontModifier(0), myFontModifier(0) {}
+inline ZLTextStyleEntry::ZLTextStyleEntry(unsigned char entryKind) : myEntryKind(entryKind), myFeatureMask(0), myAlignmentType(ALIGN_UNDEFINED), mySupportedFontModifier(0), myFontModifier(0), myDisplayCode(DC_NOT_DEFINED) {}
 inline ZLTextStyleEntry::~ZLTextStyleEntry() {}
 
 inline unsigned char ZLTextStyleEntry::entryKind() const { return myEntryKind; }
@@ -179,6 +208,14 @@ inline unsigned char ZLTextStyleEntry::verticalAlignCode() const { return myVert
 inline void ZLTextStyleEntry::setVerticalAlignCode(unsigned char code) {
 	myFeatureMask |= 1 << NON_LENGTH_VERTICAL_ALIGN;
 	myVerticalAlignCode = code;
+}
+
+inline ZLTextStyleEntry::DisplayCode ZLTextStyleEntry::displayCode() const { return myDisplayCode; }
+inline void ZLTextStyleEntry::setDisplayCode(DisplayCode code) {
+	if (code != DC_NOT_DEFINED) {
+		myFeatureMask |= 1 << DISPLAY;
+		myDisplayCode = code;
+	}
 }
 
 #endif /* __ZLTEXTSTYLEENTRY_H__ */
