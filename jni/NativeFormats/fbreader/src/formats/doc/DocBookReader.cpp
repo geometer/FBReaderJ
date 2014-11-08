@@ -87,7 +87,7 @@ void DocBookReader::handleHardLinebreak() {
 	}
 	myModelReader.beginParagraph();
 	if (!myCurrentStyleEntry.isNull()) {
-		myModelReader.addStyleEntry(*myCurrentStyleEntry);
+		myModelReader.addStyleEntry(*myCurrentStyleEntry, 0);
 	}
 	for (std::size_t i = 0; i < myKindStack.size(); ++i) {
 		myModelReader.addControl(myKindStack.at(i), true);
@@ -276,7 +276,7 @@ void DocBookReader::handleParagraphStyle(const OleMainStream::Style &styleInfo) 
 			break;
 	}
 	myCurrentStyleEntry = entry;
-	myModelReader.addStyleEntry(*myCurrentStyleEntry);
+	myModelReader.addStyleEntry(*myCurrentStyleEntry, 0);
 
 	// we should have the same font style, as for the previous paragraph,
 	// if it has the same StyleIdCurrent

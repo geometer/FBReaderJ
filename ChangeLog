@@ -8,6 +8,9 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.2 beta 3 (Nov ??, 2014) =====
+* Added 'padding' and 'padding-*' CSS property support
+
 ===== 2.2 beta 2 (Nov 02, 2014) =====
 * Added '*' selector support in CSS
 * Optimised combined selectors processing

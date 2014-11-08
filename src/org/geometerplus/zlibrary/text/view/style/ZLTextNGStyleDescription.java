@@ -88,24 +88,32 @@ public class ZLTextNGStyleDescription {
 		);
 	}
 
-	int getLeftIndent(ZLTextMetrics metrics, int base, int fontSize) {
+	int getLeftMargin(ZLTextMetrics metrics, int base, int fontSize) {
 		final ZLTextStyleEntry.Length length = parseLength(MarginLeftOption.getValue());
 		if (length == null) {
 			return base;
 		}
-		return ZLTextStyleEntry.compute(
-			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_LEFT_INDENT
+		return base + ZLTextStyleEntry.compute(
+			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_MARGIN_LEFT
 		);
 	}
 
-	int getRightIndent(ZLTextMetrics metrics, int base, int fontSize) {
+	int getRightMargin(ZLTextMetrics metrics, int base, int fontSize) {
 		final ZLTextStyleEntry.Length length = parseLength(MarginRightOption.getValue());
 		if (length == null) {
 			return base;
 		}
-		return ZLTextStyleEntry.compute(
-			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_RIGHT_INDENT
+		return base + ZLTextStyleEntry.compute(
+			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_MARGIN_RIGHT
 		);
+	}
+
+	int getLeftPadding(ZLTextMetrics metrics, int base, int fontSize) {
+		return base;
+	}
+
+	int getRightPadding(ZLTextMetrics metrics, int base, int fontSize) {
+		return base;
 	}
 
 	int getFirstLineIndent(ZLTextMetrics metrics, int base, int fontSize) {

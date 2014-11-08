@@ -28,14 +28,16 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 public abstract class ZLTextStyleEntry {
 	public interface Feature {
-		int LENGTH_LEFT_INDENT                = 0;
-		int LENGTH_RIGHT_INDENT               = 1;
-		int LENGTH_FIRST_LINE_INDENT          = 2;
-		int LENGTH_SPACE_BEFORE               = 3;
-		int LENGTH_SPACE_AFTER                = 4;
-		int LENGTH_FONT_SIZE                  = 5;
-		int LENGTH_VERTICAL_ALIGN             = 6;
-		int NUMBER_OF_LENGTHS                 = 7;
+		int LENGTH_PADDING_LEFT               = 0;
+		int LENGTH_PADDING_RIGHT              = 1;
+		int LENGTH_MARGIN_LEFT                = 2;
+		int LENGTH_MARGIN_RIGHT               = 3;
+		int LENGTH_FIRST_LINE_INDENT          = 4;
+		int LENGTH_SPACE_BEFORE               = 5;
+		int LENGTH_SPACE_AFTER                = 6;
+		int LENGTH_FONT_SIZE                  = 7;
+		int LENGTH_VERTICAL_ALIGN             = 8;
+		int NUMBER_OF_LENGTHS                 = 9;
 		int ALIGNMENT_TYPE                    = NUMBER_OF_LENGTHS;
 		int FONT_FAMILY                       = NUMBER_OF_LENGTHS + 1;
 		int FONT_STYLE_MODIFIER               = NUMBER_OF_LENGTHS + 2;
@@ -78,6 +80,7 @@ public abstract class ZLTextStyleEntry {
 		}
 	}
 
+	public final short Depth;
 	private short myFeatureMask;
 
 	private Length[] myLengths = new Length[Feature.NUMBER_OF_LENGTHS];
@@ -91,7 +94,8 @@ public abstract class ZLTextStyleEntry {
 		return (mask & (1 << featureId)) != 0;
 	}
 
-	protected ZLTextStyleEntry() {
+	protected ZLTextStyleEntry(short depth) {
+		Depth = depth;
 	}
 
 	public final boolean isFeatureSupported(int featureId) {
@@ -106,8 +110,10 @@ public abstract class ZLTextStyleEntry {
 	private static int fullSize(ZLTextMetrics metrics, int fontSize, int featureId) {
 		switch (featureId) {
 			default:
-			case Feature.LENGTH_LEFT_INDENT:
-			case Feature.LENGTH_RIGHT_INDENT:
+			case Feature.LENGTH_MARGIN_LEFT:
+			case Feature.LENGTH_MARGIN_RIGHT:
+			case Feature.LENGTH_PADDING_LEFT:
+			case Feature.LENGTH_PADDING_RIGHT:
 			case Feature.LENGTH_FIRST_LINE_INDENT:
 				return metrics.FullWidth;
 			case Feature.LENGTH_SPACE_BEFORE:
