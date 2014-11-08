@@ -106,7 +106,7 @@ private:
 
 	void beginParagraph(bool restarted = false);
 	void endParagraph();
-	void restartParagraph();
+	void restartParagraph(bool addEmptyLine);
 	const XHTMLTagInfoList &tagInfos(size_t depth) const;
 	bool matches(const shared_ptr<CSSSelector::Component> next, int depth = 0, int pos = -1) const;
 
