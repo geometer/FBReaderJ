@@ -735,16 +735,24 @@ bool XHTMLReader::matches(const shared_ptr<CSSSelector::Component> next, int dep
 	}
 }
 
-void XHTMLReader::addTextStyleEntry(const std::string &tag, const std::string &aClass, unsigned char depth) {
+void XHTMLReader::applySingleEntry(shared_ptr<ZLTextStyleEntry> entry, ZLTextStyleEntry::DisplayCode &code) {
+	if (entry.isNull()) {
+		return;
+	}
+	addTextStyleEntry(*(entry->start()), myTagDataStack.size());
+	myTagDataStack.back()->StyleEntries.push_back(entry);
+	const ZLTextStyleEntry::DisplayCode dc = entry->displayCode();
+	if (dc != ZLTextStyleEntry::DC_NOT_DEFINED) {
+		code = dc;
+	}
+}
+
+void XHTMLReader::applyTagStyles(const std::string &tag, const std::string &aClass, ZLTextStyleEntry::DisplayCode &code) {
 	std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > controls =
 		myStyleSheetTable.allControls(tag, aClass);
 	for (std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > >::const_iterator it = controls.begin(); it != controls.end(); ++it) {
 		if (matches(it->first.Next)) {
-			shared_ptr<ZLTextStyleEntry> entry = it->second;
-			if (!entry.isNull()) {
-				addTextStyleEntry(*(entry->start()), depth);
-				myTagDataStack.back()->StyleEntries.push_back(entry);
-			}
+			applySingleEntry(it->second, code);
 		}
 	}
 }
@@ -835,19 +843,20 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		action->doAtStart(*this, attributes);
 	}
 
-	const unsigned char depth = myTagDataStack.size();
-	addTextStyleEntry(ANY, EMPTY, depth);
-	addTextStyleEntry(sTag, EMPTY, depth);
+	ZLTextStyleEntry::DisplayCode displayCode = ZLTextStyleEntry::DC_NOT_DEFINED;
+	applyTagStyles(ANY, EMPTY, displayCode);
+	applyTagStyles(sTag, EMPTY, displayCode);
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
-		addTextStyleEntry(EMPTY, *it, depth);
-		addTextStyleEntry(sTag, *it, depth);
+		applyTagStyles(EMPTY, *it, displayCode);
+		applyTagStyles(sTag, *it, displayCode);
 	}
 	const char *style = attributeValue(attributes, "style");
 	if (style != 0) {
 		//ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
-		shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseSingleEntry(style);
-		addTextStyleEntry(*entry, depth);
-		myTagDataStack.back()->StyleEntries.push_back(entry);
+		applySingleEntry(myStyleParser->parseSingleEntry(style), displayCode);
+	}
+	if (displayCode == ZLTextStyleEntry::DC_BLOCK) {
+		restartParagraph();
 	}
 }
 
