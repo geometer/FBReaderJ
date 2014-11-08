@@ -798,7 +798,7 @@ void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry, unsigned char
 void XHTMLReader::startElementHandler(const char *tag, const char **attributes) {
 	const std::string sTag = ZLUnicodeUtil::toLower(tag);
 	if (sTag == "br") {
-		restartParagraph();
+		restartParagraph(true);
 		return;
 	}
 
@@ -856,7 +856,7 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		applySingleEntry(myStyleParser->parseSingleEntry(style), displayCode);
 	}
 	if (displayCode == ZLTextStyleEntry::DC_BLOCK) {
-		restartParagraph();
+		restartParagraph(false);
 	}
 }
 
@@ -870,11 +870,17 @@ void XHTMLReader::endElementHandler(const char *tag) {
 	const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = tagData.StyleEntries;
 	size_t entryCount = entries.size();
 	const unsigned char depth = myTagDataStack.size();
+	ZLTextStyleEntry::DisplayCode displayCode = ZLTextStyleEntry::DC_NOT_DEFINED;
 	for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
-		shared_ptr<ZLTextStyleEntry> endEntry = (*jt)->end();
+		shared_ptr<ZLTextStyleEntry> entry = *jt;
+		shared_ptr<ZLTextStyleEntry> endEntry = entry->end();
 		if (!endEntry.isNull()) {
 			addTextStyleEntry(*endEntry, depth);
 			++entryCount;
+		}
+		const ZLTextStyleEntry::DisplayCode dc = entry->displayCode();
+		if (dc != ZLTextStyleEntry::DC_NOT_DEFINED) {
+			displayCode = dc;
 		}
 	}
 
@@ -890,6 +896,8 @@ void XHTMLReader::endElementHandler(const char *tag) {
 
 	if (tagData.PageBreakAfter) {
 		myModelReader.insertEndOfSectionParagraph();
+	} else if (displayCode == ZLTextStyleEntry::DC_BLOCK) {
+		restartParagraph(false);
 	}
 
 	myTagDataStack.pop_back();
@@ -917,8 +925,8 @@ void XHTMLReader::endParagraph() {
 	myModelReader.endParagraph();
 }
 
-void XHTMLReader::restartParagraph() {
-	if (myCurrentParagraphIsEmpty) {
+void XHTMLReader::restartParagraph(bool addEmptyLine) {
+	if (addEmptyLine && myCurrentParagraphIsEmpty) {
 		myModelReader.addFixedHSpace(1);
 	}
 	const unsigned char depth = myTagDataStack.size();
@@ -959,7 +967,7 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 		case XHTML_READ_BODY:
 			if (myPreformatted) {
 				if (*text == '\r' || *text == '\n') {
-					restartParagraph();
+					restartParagraph(true);
 					text += 1;
 					len -= 1;
 				}
