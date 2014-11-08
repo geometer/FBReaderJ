@@ -111,12 +111,22 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	}
 
 	@Override
-	public int getLeftIndent(ZLTextMetrics metrics) {
+	public int getLeftMargin(ZLTextMetrics metrics) {
 		return 0;
 	}
 
 	@Override
-	public int getRightIndent(ZLTextMetrics metrics) {
+	public int getRightMargin(ZLTextMetrics metrics) {
+		return 0;
+	}
+
+	@Override
+	public int getLeftPadding(ZLTextMetrics metrics) {
+		return 0;
+	}
+
+	@Override
+	public int getRightPadding(ZLTextMetrics metrics) {
 		return 0;
 	}
 

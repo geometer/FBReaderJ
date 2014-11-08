@@ -63,16 +63,40 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		return allEntries;
 	}
 
+	private ZLTextStyle myTreeParent;
+	private ZLTextStyle computeTreeParent() {
+		if (myEntry.Depth == 0) {
+			return Parent.Parent;
+		}
+		int count = 0;
+		ZLTextStyle p = Parent;
+		for (; p != p.Parent; p = p.Parent) {
+			if (p instanceof ZLTextExplicitlyDecoratedStyle) {
+				if (((ZLTextExplicitlyDecoratedStyle)p).myEntry.Depth != myEntry.Depth) {
+					return p;
+				}
+			} else {
+				if (++count > 1) {
+					return p;
+				}
+			}
+		}
+		return p;
+	}
+	private ZLTextStyle getTreeParent() {
+		if (myTreeParent == null) {
+			myTreeParent = computeTreeParent();
+		}
+		return myTreeParent;
+	}
+
 	@Override
 	protected int getFontSizeInternal(ZLTextMetrics metrics) {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontSizeOption.getValue()) {
 			return Parent.getFontSize(metrics);
 		}
 
-		// Yes, Parent.Parent, not Parent (parent = current tag pre-defined size,
-		// we want to override it)
-		// TODO: use _previous_tag_value_
-		final int baseFontSize = Parent.Parent.getFontSize(metrics);
+		final int baseFontSize = getTreeParent().getFontSize(metrics);
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
 			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
 				return baseFontSize;
@@ -136,26 +160,48 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	}
 
 	@Override
-	public int getLeftIndentInternal(ZLTextMetrics metrics, int fontSize) {
+	public int getLeftMarginInternal(ZLTextMetrics metrics, int fontSize) {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
-			return Parent.getLeftIndent(metrics);
+			return Parent.getLeftMargin(metrics);
 		}
 
-		if (!myEntry.isFeatureSupported(LENGTH_LEFT_INDENT)) {
-			return Parent.getLeftIndent(metrics);
+		if (!myEntry.isFeatureSupported(LENGTH_MARGIN_LEFT)) {
+			return Parent.getLeftMargin(metrics);
 		}
-		return myEntry.getLength(LENGTH_LEFT_INDENT, metrics, fontSize);
+		return getTreeParent().getLeftMargin(metrics) + myEntry.getLength(LENGTH_MARGIN_LEFT, metrics, fontSize);
 	}
 	@Override
-	public int getRightIndentInternal(ZLTextMetrics metrics, int fontSize) {
+	public int getRightMarginInternal(ZLTextMetrics metrics, int fontSize) {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
-			return Parent.getRightIndent(metrics);
+			return Parent.getRightMargin(metrics);
 		}
 
-		if (!myEntry.isFeatureSupported(LENGTH_RIGHT_INDENT)) {
-			return Parent.getRightIndent(metrics);
+		if (!myEntry.isFeatureSupported(LENGTH_MARGIN_RIGHT)) {
+			return Parent.getRightMargin(metrics);
 		}
-		return myEntry.getLength(LENGTH_RIGHT_INDENT, metrics, fontSize);
+		return getTreeParent().getRightMargin(metrics) + myEntry.getLength(LENGTH_MARGIN_RIGHT, metrics, fontSize);
+	}
+	@Override
+	public int getLeftPaddingInternal(ZLTextMetrics metrics, int fontSize) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getLeftPadding(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_PADDING_LEFT)) {
+			return Parent.getLeftPadding(metrics);
+		}
+		return getTreeParent().getLeftPadding(metrics) + myEntry.getLength(LENGTH_PADDING_LEFT, metrics, fontSize);
+	}
+	@Override
+	public int getRightPaddingInternal(ZLTextMetrics metrics, int fontSize) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getRightPadding(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_PADDING_RIGHT)) {
+			return Parent.getRightPadding(metrics);
+		}
+		return getTreeParent().getRightPadding(metrics) + myEntry.getLength(LENGTH_PADDING_RIGHT, metrics, fontSize);
 	}
 	@Override
 	protected int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize) {

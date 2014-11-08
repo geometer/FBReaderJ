@@ -41,8 +41,17 @@ public abstract class ZLTextStyle {
 	public abstract boolean isUnderline();
 	public abstract boolean isStrikeThrough();
 
-	public abstract int getLeftIndent(ZLTextMetrics metrics);
-	public abstract int getRightIndent(ZLTextMetrics metrics);
+	public final int getLeftIndent(ZLTextMetrics metrics) {
+		return getLeftMargin(metrics) + getLeftPadding(metrics);
+	}
+	public final int getRightIndent(ZLTextMetrics metrics) {
+		return getRightMargin(metrics) + getRightPadding(metrics);
+	}
+	public abstract int getLeftMargin(ZLTextMetrics metrics);
+	public abstract int getRightMargin(ZLTextMetrics metrics);
+	public abstract int getLeftPadding(ZLTextMetrics metrics);
+	public abstract int getRightPadding(ZLTextMetrics metrics);
+
 	public abstract int getFirstLineIndent(ZLTextMetrics metrics);
 	public abstract int getLineSpacePercent();
 	public abstract int getVerticalAlign(ZLTextMetrics metrics);

@@ -465,11 +465,12 @@ bool HtmlBookReader::tagHandler(const HtmlTag &tag) {
 
 	if (tag.Start) {
 		for (std::vector<shared_ptr<TagData> >::const_iterator it = myTagDataStack.begin(); it != myTagDataStack.end(); ++it) {
+			const unsigned char depth = it - myTagDataStack.begin() + 1;
 			const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = (*it)->StyleEntries;
 			const bool inheritedOnly = it + 1 != myTagDataStack.end();
 			for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
 				shared_ptr<ZLTextStyleEntry> entry = inheritedOnly ? (*jt)->inherited() : *jt;
-				myBookReader.addStyleEntry(*entry);
+				myBookReader.addStyleEntry(*entry, depth);
 			}
 		}
 	}
