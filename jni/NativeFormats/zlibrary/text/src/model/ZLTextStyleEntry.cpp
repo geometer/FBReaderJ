@@ -45,7 +45,14 @@ shared_ptr<ZLTextStyleEntry> ZLTextStyleEntry::end() const {
 
 shared_ptr<ZLTextStyleEntry> ZLTextStyleEntry::inherited() const {
 	ZLTextStyleEntry *clone = new ZLTextStyleEntry(myEntryKind);
-	clone->myFeatureMask = myFeatureMask & ~(1 << LENGTH_SPACE_BEFORE) & ~(1 << LENGTH_SPACE_AFTER);
+	static const unsigned short skip =
+		//(1 << LENGTH_MARGIN_LEFT) |
+		//(1 << LENGTH_MARGIN_RIGHT) |
+		//(1 << LENGTH_PADDING_LEFT) |
+		//(1 << LENGTH_PADDING_RIGHT) |
+		(1 << LENGTH_SPACE_BEFORE) |
+		(1 << LENGTH_SPACE_AFTER);
+	clone->myFeatureMask = myFeatureMask & ~skip;
 	for (int i = 0; i < NUMBER_OF_LENGTHS; ++i) {
 		clone->myLengths[i] = myLengths[i];
 	}
