@@ -147,14 +147,16 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 				}
 				dataOffset = 0;
 			}
-			byte type = (byte)data[dataOffset];
+			short first = (short)data[dataOffset];
+			byte type = (byte)first;
 			if (type == 0) {
 				data = myStorage.block(++myDataIndex);
 				if (data == null) {
 					return false;
 				}
 				dataOffset = 0;
-				type = (byte)data[0];
+				first = (short)data[0];
+				type = (byte)first;
 			}
 			myType = type;
 			++dataOffset;
@@ -205,9 +207,10 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 				case ZLTextParagraph.Entry.STYLE_CSS:
 				case ZLTextParagraph.Entry.STYLE_OTHER:
 				{
+					final short depth = (short)((first >> 8) & 0xFF);
 					final ZLTextStyleEntry entry =
 						type == ZLTextParagraph.Entry.STYLE_CSS
-							? new ZLTextCSSStyleEntry()
+							? new ZLTextCSSStyleEntry(depth)
 							: new ZLTextOtherStyleEntry();
 
 					final short mask = (short)data[dataOffset++];

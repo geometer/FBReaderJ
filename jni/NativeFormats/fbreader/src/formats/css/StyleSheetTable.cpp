@@ -279,12 +279,35 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 			}
 		}
 		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_BEFORE, split[0]);
-		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_RIGHT_INDENT, split[1]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_MARGIN_RIGHT, split[1]);
 		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_AFTER, split[2]);
-		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_LEFT_INDENT, split[3]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_MARGIN_LEFT, split[3]);
 	}
-	setLength(*entry, ZLTextStyleEntry::LENGTH_LEFT_INDENT, styles, "margin-left");
-	setLength(*entry, ZLTextStyleEntry::LENGTH_RIGHT_INDENT, styles, "margin-right");
+	const std::string padding = value(styles, "padding");
+	if (!padding.empty()) {
+		std::vector<std::string> split = ZLStringUtil::split(padding, " ", true);
+		if (split.size() > 0) {
+			switch (split.size()) {
+				case 1:
+					split.push_back(split[0]);
+					// go through
+				case 2:
+					split.push_back(split[0]);
+					// go through
+				case 3:
+					split.push_back(split[1]);
+					break;
+			}
+		}
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_BEFORE, split[0]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_PADDING_RIGHT, split[1]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_AFTER, split[2]);
+		::trySetLength(*entry, ZLTextStyleEntry::LENGTH_PADDING_LEFT, split[3]);
+	}
+	setLength(*entry, ZLTextStyleEntry::LENGTH_MARGIN_LEFT, styles, "margin-left");
+	setLength(*entry, ZLTextStyleEntry::LENGTH_MARGIN_RIGHT, styles, "margin-right");
+	setLength(*entry, ZLTextStyleEntry::LENGTH_PADDING_LEFT, styles, "padding-left");
+	setLength(*entry, ZLTextStyleEntry::LENGTH_PADDING_RIGHT, styles, "padding-right");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_FIRST_LINE_INDENT, styles, "text-indent");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_BEFORE, styles, "margin-top");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_SPACE_BEFORE, styles, "padding-top");
