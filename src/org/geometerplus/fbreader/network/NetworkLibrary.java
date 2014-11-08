@@ -124,6 +124,7 @@ public class NetworkLibrary {
 			return;
 		}
 		setLinkActive(link.getUrl(UrlInfo.Type.Catalog), active);
+		myChildrenAreInvalid = true;
 	}
 
 	public void setLinkActive(String id, boolean active) {
@@ -276,7 +277,7 @@ public class NetworkLibrary {
 		return myIsInitialized;
 	}
 
-	public synchronized void initialize(ZLNetworkContext nc) {
+	public synchronized void initialize(ZLNetworkContext nc) throws ZLNetworkException {
 		if (myIsInitialized) {
 			return;
 		}
@@ -286,7 +287,7 @@ public class NetworkLibrary {
 		} catch (ZLNetworkException e) {
 			removeAllLoadedLinks();
 			fireModelChangedEvent(ChangeListener.Code.InitializationFailed, e.getMessage());
-			return;
+			throw e;
 		}
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
@@ -592,7 +593,16 @@ public class NetworkLibrary {
 	public void addCustomLink(ICustomNetworkLink link) {
 		final int id = link.getId();
 		if (id == ICustomNetworkLink.INVALID_ID) {
-			myLinks.add(link);
+			synchronized (myLinks) {
+				final INetworkLink existing = getLinkByUrl(link.getUrl(UrlInfo.Type.Catalog));
+				if (existing == null) {
+					myLinks.add(link);
+				} else {
+					setLinkActive(existing, true);
+					fireModelChangedEvent(ChangeListener.Code.SomeCode);
+					return;
+				}
+			}
 		} else {
 			synchronized (myLinks) {
 				for (int i = myLinks.size() - 1; i >= 0; --i) {
@@ -606,6 +616,7 @@ public class NetworkLibrary {
 		}
 		NetworkDatabase.Instance().saveLink(link);
 		setLinkActive(link, true);
+		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {

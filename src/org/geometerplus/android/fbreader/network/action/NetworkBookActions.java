@@ -28,7 +28,6 @@ import android.net.Uri;
 import android.content.Intent;
 import android.content.DialogInterface;
 
-import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -42,6 +41,7 @@ import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 import org.geometerplus.android.fbreader.network.*;
+import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 
 public abstract class NetworkBookActions {
 	private static boolean useFullReferences(NetworkBookItem book) {
@@ -192,7 +192,7 @@ public abstract class NetworkBookActions {
 				book.Link.getBasketItem().remove(book);
 				return true;
 			case ActionCode.OPEN_BASKET:
-				new OpenCatalogAction(activity, new QuietNetworkContext())
+				new OpenCatalogAction(activity, new ActivityNetworkContext(activity))
 					.run(NetworkLibrary.Instance().getFakeBasketTree(book.Link.getBasketItem()));
 				return true;
 		}

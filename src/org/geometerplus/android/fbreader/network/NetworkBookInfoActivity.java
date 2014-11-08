@@ -34,6 +34,7 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -123,17 +124,24 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				if (SQLiteNetworkDatabase.Instance() == null) {
 					new SQLiteNetworkDatabase(getApplication());
 				}
-				library.initialize(myNetworkContext);
+				try {
+					library.initialize(myNetworkContext);
+				} catch (ZLNetworkException e) {
+				}
 			}
 
 			if (myBook == null) {
-				final Uri url = getIntent().getData();
-				if (url != null && "litres-book".equals(url.getScheme())) {
-					myBook = OPDSBookItem.create(
-						myNetworkContext,
-						library.getLinkByStringId("litres.ru"),
-						url.toString().replace("litres-book://", "http://")
-					);
+				final Uri uri = Util.rewriteUri(getIntent().getData());
+				if (uri != null && "litres-book".equals(uri.getScheme())) {
+					try {
+						myBook = OPDSBookItem.create(
+							myNetworkContext,
+							library.getLinkByStringId("litres.ru"),
+							uri.toString().replace("litres-book://", "http://")
+						);
+					} catch (ZLNetworkException e) {
+						UIUtil.showMessageText(NetworkBookInfoActivity.this, e.getMessage());
+					}
 					if (myBook != null) {
 						myTree = library.getFakeBookTree(myBook);
 					}
@@ -437,7 +445,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code, Object[] params) {
 		if (code == NetworkLibrary.ChangeListener.Code.InitializationFailed) {
-			// TODO: implement
+			UIUtil.showMessageText(this, (String)params[0]);
 			return;
 		}
 

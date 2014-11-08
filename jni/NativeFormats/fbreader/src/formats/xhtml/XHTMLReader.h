@@ -106,11 +106,13 @@ private:
 
 	void beginParagraph(bool restarted = false);
 	void endParagraph();
-	void restartParagraph();
+	void restartParagraph(bool addEmptyLine);
 	const XHTMLTagInfoList &tagInfos(size_t depth) const;
 	bool matches(const shared_ptr<CSSSelector::Component> next, int depth = 0, int pos = -1) const;
-	void addTextStyleEntry(const std::string &tag, const std::string &aClass);
-	void addTextStyleEntry(const ZLTextStyleEntry &entry);
+
+	void applySingleEntry(shared_ptr<ZLTextStyleEntry> entry, ZLTextStyleEntry::DisplayCode &code);
+	void applyTagStyles(const std::string &tag, const std::string &aClass, ZLTextStyleEntry::DisplayCode &code);
+	void addTextStyleEntry(const ZLTextStyleEntry &entry, unsigned char depth);
 
 	void pushTextKind(FBTextKind kind);
 

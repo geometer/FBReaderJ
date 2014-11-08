@@ -42,6 +42,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
+import org.geometerplus.android.util.BitmapCache;
 
 public class LibraryService extends Service {
 	private static SQLiteBooksDatabase ourDatabase;
@@ -49,6 +50,9 @@ public class LibraryService extends Service {
 
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
+	static final String COVER_READY_ACTION = "fbreader.library_service.cover_ready";
+
+	private final BitmapCache myCoversCache = new BitmapCache(0.2f);
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
@@ -270,19 +274,85 @@ public class LibraryService extends Service {
 		}
 
 		@Override
-		public Bitmap getCover(String book, int maxWidth, int maxHeight, boolean[] delayed) {
-			final ZLImage image =
-				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
-			if (image == null) {
+		public Bitmap getCover(final String bookString, final int maxWidth, final int maxHeight, boolean[] delayed) {
+			delayed[0] = false;
+
+			final Book book = SerializerUtil.deserializeBook(bookString);
+			if (book == null || book.getId() == -1) {
 				return null;
 			}
-			if (image instanceof ZLImageProxy) {
-				myImageSynchronizer.synchronize((ZLImageProxy)image, null);
+
+			final BitmapCache.Container container = myCoversCache.get(book.getId());
+			if (container != null) {
+				if (container.Bitmap == null) {
+					return null;
+				}
+				final Bitmap bitmap = getResizedBitmap(container.Bitmap, maxWidth, maxHeight);
+				if (bitmap != null) {
+					return bitmap;
+				} else {
+					myCoversCache.remove(book.getId());
+				}
 			}
+
+			final ZLImage image =
+				myCollection.getCover(book, maxWidth, maxHeight);
+			if (image == null) {
+				myCoversCache.put(book.getId(), null);
+				return null;
+			}
+
 			final ZLAndroidImageManager manager =
 				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 			final ZLAndroidImageData data = manager.getImageData(image);
-			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
+			if (data != null) {
+				final Bitmap bitmap = data.getBitmap(maxWidth, maxHeight);
+				myCoversCache.put(book.getId(), bitmap);
+				return bitmap;
+			}
+
+			if (image instanceof ZLImageProxy) {
+				myImageSynchronizer.synchronize((ZLImageProxy)image, new Runnable() {
+					@Override
+					public void run() {
+						final ZLAndroidImageData data = manager.getImageData(image);
+						myCoversCache.put(book.getId(), data != null ? data.getBitmap(maxWidth, maxHeight) : null);
+						final Intent intent = new Intent(COVER_READY_ACTION);
+						intent.putExtra("book", bookString);
+						sendBroadcast(intent);
+					}
+				});
+				delayed[0] = true;
+				return null;
+			}
+
+			myCoversCache.put(book.getId(), null);
+			return null;
+		}
+
+		private Bitmap getResizedBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+			if (maxWidth <= 0 || maxHeight <= 0) {
+				return null;
+			}
+
+			final int bWidth = bitmap.getWidth();
+			final int bHeight = bitmap.getHeight();
+			if (maxWidth > bWidth && maxHeight > bHeight) {
+				return null;
+			}
+
+			final int w, h;
+			if (bWidth * maxHeight > bHeight * maxWidth) {
+				w = maxWidth;
+				h = Math.max(1, (int)(bHeight * (w + .5f) / bWidth));
+			} else {
+				h = maxHeight;
+				w = Math.max(1, (int)(bWidth * (h + .5f) / bHeight));
+			}
+			if (2 * w <= bWidth && 2 * h <= bHeight) {
+				return bitmap;
+			}
+			return Bitmap.createScaledBitmap(bitmap, w, h, false);
 		}
 
 		public List<String> bookmarks(String query) {

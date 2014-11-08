@@ -22,17 +22,18 @@ package org.geometerplus.android.fbreader.network;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.*;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.net.Uri;
 
-import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.options.Config;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
-import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
@@ -65,7 +66,10 @@ public abstract class Util implements UserRegistrationConstants {
 
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						if (!library.isInitialized()) {
-							library.initialize(nc);
+							try {
+								library.initialize(nc);
+							} catch (ZLNetworkException e) {
+							}
 						}
 						if (action != null) {
 							action.run();
@@ -137,55 +141,19 @@ public abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	private static final BroadcastReceiver catalogInfoReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			System.err.println("received catalog infos");
-			final List<String> urls =
-				getResultExtras(true).getStringArrayList("fbreader.catalog.ids");
-			if (urls == null || urls.isEmpty()) {
-				System.err.println("empty catalog infos");
-				return;
-			}
-			final NetworkLibrary library = NetworkLibrary.Instance();
-			for (String u : urls) {
-				if (library.getLinkByUrl(u) != null) {
-					continue;
-				}
+	public static Uri rewriteUri(Uri uri) {
+		if (uri == null) {
+			return null;
+		}
 
-				final ICustomNetworkLink link = new OPDSCustomNetworkLink(
-					INetworkLink.INVALID_ID,
-					INetworkLink.Type.Custom,
-					null, null, null,
-					new UrlInfoCollection<UrlInfoWithDate>(new UrlInfoWithDate(
-						UrlInfo.Type.Catalog, u, MimeType.APP_ATOM_XML
-					))
-				);
-				final Runnable loader = new Runnable() {
-					public void run() {
-						try {
-							link.reloadInfo(new QuietNetworkContext(), false, false);
-							library.addCustomLink(link);
-						} catch (ZLNetworkException e) {
-						}
-					}
-				};
-				new Thread(loader).start();
-
-				System.err.println("catalog info: " + u);
+		if ("http".equals(uri.getScheme()) &&
+			"www.litres.ru".equals(uri.getHost()) &&
+			"/pages/biblio_book/".equals(uri.getPath())) {
+			final String bookId = uri.getQueryParameter("art");
+			if (bookId != null && !"".equals(bookId)) {
+				return Uri.parse("litres-book://data.fbreader.org/catalogs/litres2/full.php5?id=" + bookId);
 			}
 		}
-	};
-
-	static void requestCatalogPlugins(Activity activity) {
-		activity.sendOrderedBroadcast(
-			new Intent(EXTRA_CATALOG_ACTION),
-			null,
-			catalogInfoReceiver,
-			null,
-			Activity.RESULT_OK,
-			null,
-			null
-		);
+		return uri;
 	}
 }
