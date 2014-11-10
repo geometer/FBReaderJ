@@ -8,9 +8,13 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.2 beta 3 (Nov ??, 2014) =====
+===== 2.1.8 (Nov 11, 2014) =====
+* All changes from 2.2 beta 0,1,2,3
+
+===== 2.2 beta 3 (Nov 10, 2014) =====
 * Added 'padding' and 'padding-*' CSS property support
 * Added support of 'display:block' CSS property value
+* Synchronization process optimization for large (300+ books) collections
 
 ===== 2.2 beta 2 (Nov 02, 2014) =====
 * Added '*' selector support in CSS
