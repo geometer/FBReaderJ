@@ -161,19 +161,30 @@ public class SyncService extends Service implements IBookCollection.Listener {
 
 		try {
 			myBookUploadContext.reloadCookie();
-			myBookUploadContext.perform(new PostRequest("all.hashes", null) {
-				@Override
-				public void processResponse(Object response) {
-					final Map<String,List<String>> map = (Map<String,List<String>>)response;
-					myActualHashesFromServer.addAll(map.get("actual"));
-					myDeletedHashesFromServer.addAll(map.get("deleted"));
-					myHashTablesAreInitialized = true;
-				}
-			});
-			log(String.format("RECEIVED: %s/%s HASHES", myActualHashesFromServer.size(), myDeletedHashesFromServer.size()));
+			final int pageSize = 300;
+			final Map<String,String> data = new HashMap<String,String>();
+			data.put("page_size", String.valueOf(pageSize));
+			for (int pageNo = 0; !myHashTablesAreInitialized; ++pageNo) {
+				data.put("page_no", String.valueOf(pageNo));
+				myBookUploadContext.perform(new PostRequest("all.hashes.paged", data) {
+					@Override
+					public void processResponse(Object response) {
+						final Map<String,List<String>> map = (Map<String,List<String>>)response;
+						final List<String> actualHashes = map.get("actual");
+						myActualHashesFromServer.addAll(actualHashes);
+						myDeletedHashesFromServer.addAll(map.get("deleted"));
+						if (actualHashes.size() < pageSize) {
+							myHashTablesAreInitialized = true;
+						}
+					}
+				});
+				log(String.format("RECEIVED: %s/%s HASHES (%s)", myActualHashesFromServer.size(), myDeletedHashesFromServer.size(), myHashTablesAreInitialized ? "complete" : "partial"));
+			}
 		} catch (SyncronizationDisabledException e) {
+			clearHashTables();
 			throw e;
 		} catch (Exception e) {
+			clearHashTables();
 			e.printStackTrace();
 		}
 	}
