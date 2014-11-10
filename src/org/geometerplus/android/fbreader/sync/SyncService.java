@@ -171,9 +171,10 @@ public class SyncService extends Service implements IBookCollection.Listener {
 					public void processResponse(Object response) {
 						final Map<String,List<String>> map = (Map<String,List<String>>)response;
 						final List<String> actualHashes = map.get("actual");
+						final List<String> deletedHashes = map.get("deleted");
 						myActualHashesFromServer.addAll(actualHashes);
-						myDeletedHashesFromServer.addAll(map.get("deleted"));
-						if (actualHashes.size() < pageSize) {
+						myDeletedHashesFromServer.addAll(deletedHashes);
+						if (actualHashes.size() < pageSize && deletedHashes.size() < pageSize) {
 							myHashTablesAreInitialized = true;
 						}
 					}
