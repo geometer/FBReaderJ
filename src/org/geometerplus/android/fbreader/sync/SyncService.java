@@ -316,18 +316,18 @@ public class SyncService extends Service implements IBookCollection.Listener {
 				// ignore
 			}
 
-			if (hashes != null) {
+			if (hashes != null && !hashes.isEmpty()) {
 				myActualHashesFromServer.addAll(hashes);
+				if (!hashes.contains(myHash)) {
+					myCollection.setHash(myBook, hashes.get(0));
+				}
 			}
 			if (error != null) {
 				log("UPLOAD FAILURE: " + error);
 				if ("ALREADY_UPLOADED".equals(code)) {
 					Result = Status.AlreadyUploaded;
-					if (hashes != null && !hashes.isEmpty() && !hashes.contains(myHash)) {
-						myCollection.setHash(myBook, hashes.get(0));
-					}
 				}
-			} else if (id != null && hashes != null) {
+			} else if (id != null) {
 				log("UPLOADED SUCCESSFULLY: " + id);
 				Result = Status.Uploaded;
 			} else {
