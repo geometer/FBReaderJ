@@ -754,4 +754,12 @@ public class BookCollection extends AbstractBookCollection {
 		}
 		return hash;
 	}
+
+	public void setHash(Book book, String hash) {
+		try {
+			myDatabase.setHash(book.getId(), hash);
+		} catch (BooksDatabase.NotAvailable e) {
+			// ignore
+		}
+	}
 }
