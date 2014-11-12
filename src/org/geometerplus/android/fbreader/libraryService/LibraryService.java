@@ -390,6 +390,10 @@ public class LibraryService extends Service {
 		public String getHash(String book, boolean force) {
 			return myCollection.getHash(SerializerUtil.deserializeBook(book), force);
 		}
+
+		public void setHash(String book, String hash) {
+			myCollection.setHash(SerializerUtil.deserializeBook(book), hash);
+		}
 	}
 
 	private volatile LibraryImplementation myLibrary;
