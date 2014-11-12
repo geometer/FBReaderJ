@@ -40,12 +40,15 @@ import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
+
 import org.geometerplus.zlibrary.text.view.ZLTextView;
+
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
+
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
@@ -53,6 +56,7 @@ import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.tips.TipsManager;
+
 import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.httpd.DataService;
@@ -72,8 +76,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 	public static void openBookActivity(Context context, Book book, Bookmark bookmark) {
 		final Intent intent = new Intent(context, FBReader.class)
-		.setAction(FBReaderIntents.Action.VIEW)
-		.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			.setAction(FBReaderIntents.Action.VIEW)
+			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		FBReaderIntents.putBookExtra(intent, book);
 		FBReaderIntents.putBookmarkExtra(intent, bookmark);
 		context.startActivity(intent);
@@ -102,7 +106,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
-			new LinkedList<PluginApi.ActionInfo>();
+		new LinkedList<PluginApi.ActionInfo>();
 	private final BroadcastReceiver myPluginInfoReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -117,9 +121,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 					index = 0;
 					for (PluginApi.ActionInfo info : myPluginActions) {
 						myFBReaderApp.addAction(
-								PLUGIN_ACTION_PREFIX + index++,
-								new RunPluginAction(FBReader.this, myFBReaderApp, info.getId())
-								);
+							PLUGIN_ACTION_PREFIX + index++,
+							new RunPluginAction(FBReader.this, myFBReaderApp, info.getId())
+						);
 					}
 				}
 			}
