@@ -3,6 +3,7 @@
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Matthias Dill 2014/04/14 -->
+<!-- Updated by Matthias Dill 2014/10/28 -->
 <!-- info: http://www.localeplanet.com/icu/ -->
 <resources>
 	<node name="dialog">
@@ -27,7 +28,7 @@
 			<node name="invalidURL" value="Die URL ist ungültig."/>
 			<node name="hostCantBeReached" value="Der Server %s&#10; kann nicht erreicht werden."/>
 			<node name="connectionRefused" value="Die Verbindung zu&#10;%s&#10;wurde verweigert."/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Keine Verbindung zu einem Netzwerk vorhanden"/>
 		</node>
 	</node>
 	<node name="color">
