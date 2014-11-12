@@ -6,6 +6,7 @@
 <!-- Updated by Ingolf Kübler 2012/07/01 -->
 <!-- Updated by Matthias Dill 2014/06/10 -->
 <!-- Updated by Matthias Dill 2014/08/11 -->
+<!-- Updated by Matthias Dill 2014/10/07 -->
 <resources>
 	<node name="library" value="FBReader Bibliothek">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
@@ -650,7 +651,7 @@
 			<node name="text" value="Normaler Text"/>
 			<node name="hyperlink" value="Hyperlinks"/>
 			<node name="hyperlinkVisited" value="Besuchte Hyperlinks"/>
-			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingForeground" value="Suchergebnisse"/>
 			<node name="highlightingBackground" value="Hintergrund der Suchergebnisse"/>
 			<node name="footer" value="Fußzeile"/>
 		</node>
@@ -1051,8 +1052,8 @@
 		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Vorlesen"/>
 		</node>
-		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
-			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+		<node name="calibre_server_integration" value="Calibre">
+			<node name="summary" value="Verbindung zu einem Calibre Server im lokalen Netzwerk"/>
 		</node>
 		<node name="local_opds_scanner" value="Lokaler OPDS Scanner">
 			<node name="summary" value="Suche Bücher im lokalen Netzwerk"/>
