@@ -161,19 +161,31 @@ public class SyncService extends Service implements IBookCollection.Listener {
 
 		try {
 			myBookUploadContext.reloadCookie();
-			myBookUploadContext.perform(new PostRequest("all.hashes", null) {
-				@Override
-				public void processResponse(Object response) {
-					final Map<String,List<String>> map = (Map<String,List<String>>)response;
-					myActualHashesFromServer.addAll(map.get("actual"));
-					myDeletedHashesFromServer.addAll(map.get("deleted"));
-					myHashTablesAreInitialized = true;
-				}
-			});
-			log(String.format("RECEIVED: %s/%s HASHES", myActualHashesFromServer.size(), myDeletedHashesFromServer.size()));
+			final int pageSize = 300;
+			final Map<String,String> data = new HashMap<String,String>();
+			data.put("page_size", String.valueOf(pageSize));
+			for (int pageNo = 0; !myHashTablesAreInitialized; ++pageNo) {
+				data.put("page_no", String.valueOf(pageNo));
+				myBookUploadContext.perform(new PostRequest("all.hashes.paged", data) {
+					@Override
+					public void processResponse(Object response) {
+						final Map<String,List<String>> map = (Map<String,List<String>>)response;
+						final List<String> actualHashes = map.get("actual");
+						final List<String> deletedHashes = map.get("deleted");
+						myActualHashesFromServer.addAll(actualHashes);
+						myDeletedHashesFromServer.addAll(deletedHashes);
+						if (actualHashes.size() < pageSize && deletedHashes.size() < pageSize) {
+							myHashTablesAreInitialized = true;
+						}
+					}
+				});
+				log(String.format("RECEIVED: %s/%s HASHES (%s)", myActualHashesFromServer.size(), myDeletedHashesFromServer.size(), myHashTablesAreInitialized ? "complete" : "partial"));
+			}
 		} catch (SyncronizationDisabledException e) {
+			clearHashTables();
 			throw e;
 		} catch (Exception e) {
+			clearHashTables();
 			e.printStackTrace();
 		}
 	}
@@ -274,10 +286,14 @@ public class SyncService extends Service implements IBookCollection.Listener {
 	}
 
 	private final class UploadRequest extends ZLNetworkRequest.FileUpload {
+		private final Book myBook;
+		private final String myHash;
 		Status Result = Status.Failure;
 
-		UploadRequest(File file) {
+		UploadRequest(File file, Book book, String hash) {
 			super(SyncOptions.BASE_URL + "app/book.upload", file, false);
+			myBook = book;
+			myHash = hash;
 		}
 
 		@Override
@@ -299,14 +315,20 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			} catch (Exception e) {
 				// ignore
 			}
+
+			if (hashes != null) {
+				myActualHashesFromServer.addAll(hashes);
+			}
 			if (error != null) {
 				log("UPLOAD FAILURE: " + error);
 				if ("ALREADY_UPLOADED".equals(code)) {
 					Result = Status.AlreadyUploaded;
+					if (hashes != null && !hashes.isEmpty() && !hashes.contains(myHash)) {
+						myCollection.setHash(myBook, hashes.get(0));
+					}
 				}
 			} else if (id != null && hashes != null) {
 				log("UPLOADED SUCCESSFULLY: " + id);
-				myActualHashesFromServer.addAll(hashes);
 				Result = Status.Uploaded;
 			} else {
 				log("UNEXPECED RESPONSE: " + response);
@@ -360,7 +382,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			final String status = (String)result.get("status");
 			if ((force && !"found".equals(status)) || "not found".equals(status)) {
 				try {
-					final UploadRequest uploadRequest = new UploadRequest(file);
+					final UploadRequest uploadRequest = new UploadRequest(file, book, hash);
 					uploadRequest.addHeader("Referer", verificationRequest.getURL());
 					uploadRequest.addHeader("X-CSRFToken", csrfToken);
 					myBookUploadContext.perform(uploadRequest);

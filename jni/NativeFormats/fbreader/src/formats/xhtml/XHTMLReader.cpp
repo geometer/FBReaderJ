@@ -735,23 +735,32 @@ bool XHTMLReader::matches(const shared_ptr<CSSSelector::Component> next, int dep
 	}
 }
 
-void XHTMLReader::addTextStyleEntry(const std::string &tag, const std::string &aClass) {
+void XHTMLReader::applySingleEntry(shared_ptr<ZLTextStyleEntry> entry) {
+	if (entry.isNull()) {
+		return;
+	}
+	addTextStyleEntry(*(entry->start()), myTagDataStack.size());
+	shared_ptr<TagData> data = myTagDataStack.back();
+	data->StyleEntries.push_back(entry);
+	const ZLTextStyleEntry::DisplayCode dc = entry->displayCode();
+	if (dc != ZLTextStyleEntry::DC_NOT_DEFINED) {
+		data->DisplayCode = dc;
+	}
+}
+
+void XHTMLReader::applyTagStyles(const std::string &tag, const std::string &aClass) {
 	std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > > controls =
 		myStyleSheetTable.allControls(tag, aClass);
 	for (std::vector<std::pair<CSSSelector,shared_ptr<ZLTextStyleEntry> > >::const_iterator it = controls.begin(); it != controls.end(); ++it) {
 		if (matches(it->first.Next)) {
-			shared_ptr<ZLTextStyleEntry> entry = it->second;
-			if (!entry.isNull()) {
-				addTextStyleEntry(*(entry->start()));
-				myTagDataStack.back()->StyleEntries.push_back(entry);
-			}
+			applySingleEntry(it->second);
 		}
 	}
 }
 
-void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
+void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry, unsigned char depth) {
 	if (!entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
-		myModelReader.addStyleEntry(entry);
+		myModelReader.addStyleEntry(entry, depth);
 		return;
 	}
 
@@ -772,7 +781,7 @@ void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
 	}
 
 	if (!doFixFamiliesList) {
-		myModelReader.addStyleEntry(entry);
+		myModelReader.addStyleEntry(entry, depth);
 	} else {
 		std::vector<std::string> realFamilies;
 		for (std::vector<std::string>::const_iterator it = families.begin(); it != families.end(); ++it) {
@@ -783,14 +792,14 @@ void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
 				realFamilies.push_back(*it);
 			}
 		}
-		myModelReader.addStyleEntry(entry, realFamilies);
+		myModelReader.addStyleEntry(entry, realFamilies, depth);
 	}
 }
 
 void XHTMLReader::startElementHandler(const char *tag, const char **attributes) {
 	const std::string sTag = ZLUnicodeUtil::toLower(tag);
 	if (sTag == "br") {
-		restartParagraph();
+		restartParagraph(true);
 		return;
 	}
 
@@ -807,6 +816,7 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		myTagDataStack.back()->Children.push_back(XHTMLTagInfo(sTag, classesList));
 	}
 	myTagDataStack.push_back(new TagData());
+	TagData &tagData = *myTagDataStack.back();
 
 	static const std::string HASH = "#";
 	const char *id = attributeValue(attributes, "id");
@@ -815,7 +825,7 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 	}
 
 	bool breakBefore = myStyleSheetTable.doBreakBefore(sTag, EMPTY);
-	myTagDataStack.back()->PageBreakAfter = myStyleSheetTable.doBreakAfter(sTag, EMPTY);
+	tagData.PageBreakAfter = myStyleSheetTable.doBreakAfter(sTag, EMPTY);
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
 		// TODO: use 3-value logic (yes, no, inherit)
 		if (myStyleSheetTable.doBreakBefore(sTag, *it)) {
@@ -823,7 +833,7 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		}
 		// TODO: use 3-value logic (yes, no, inherit)
 		if (myStyleSheetTable.doBreakAfter(sTag, *it)) {
-			myTagDataStack.back()->PageBreakAfter = true;
+			tagData.PageBreakAfter = true;
 		}
 	}
 	if (breakBefore) {
@@ -835,18 +845,19 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		action->doAtStart(*this, attributes);
 	}
 
-	addTextStyleEntry(ANY, EMPTY);
-	addTextStyleEntry(sTag, EMPTY);
+	applyTagStyles(ANY, EMPTY);
+	applyTagStyles(sTag, EMPTY);
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
-		addTextStyleEntry(EMPTY, *it);
-		addTextStyleEntry(sTag, *it);
+		applyTagStyles(EMPTY, *it);
+		applyTagStyles(sTag, *it);
 	}
 	const char *style = attributeValue(attributes, "style");
 	if (style != 0) {
 		//ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
-		shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseSingleEntry(style);
-		addTextStyleEntry(*entry);
-		myTagDataStack.back()->StyleEntries.push_back(entry);
+		applySingleEntry(myStyleParser->parseSingleEntry(style));
+	}
+	if (tagData.DisplayCode == ZLTextStyleEntry::DC_BLOCK) {
+		restartParagraph(false);
 	}
 }
 
@@ -859,10 +870,12 @@ void XHTMLReader::endElementHandler(const char *tag) {
 	const TagData &tagData = *myTagDataStack.back();
 	const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = tagData.StyleEntries;
 	size_t entryCount = entries.size();
+	const unsigned char depth = myTagDataStack.size();
 	for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
-		shared_ptr<ZLTextStyleEntry> endEntry = (*jt)->end();
+		shared_ptr<ZLTextStyleEntry> entry = *jt;
+		shared_ptr<ZLTextStyleEntry> endEntry = entry->end();
 		if (!endEntry.isNull()) {
-			addTextStyleEntry(*endEntry);
+			addTextStyleEntry(*endEntry, depth);
 			++entryCount;
 		}
 	}
@@ -879,6 +892,8 @@ void XHTMLReader::endElementHandler(const char *tag) {
 
 	if (tagData.PageBreakAfter) {
 		myModelReader.insertEndOfSectionParagraph();
+	} else if (tagData.DisplayCode == ZLTextStyleEntry::DC_BLOCK) {
+		restartParagraph(false);
 	}
 
 	myTagDataStack.pop_back();
@@ -894,9 +909,10 @@ void XHTMLReader::beginParagraph(bool restarted) {
 		}
 		const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = (*it)->StyleEntries;
 		bool inheritedOnly = !restarted || it + 1 != myTagDataStack.end();
+		const unsigned char depth = it - myTagDataStack.begin() + 1;
 		for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
 			shared_ptr<ZLTextStyleEntry> entry = inheritedOnly ? (*jt)->inherited() : (*jt)->start();
-			addTextStyleEntry(*entry);
+			addTextStyleEntry(*entry, depth);
 		}
 	}
 }
@@ -905,17 +921,18 @@ void XHTMLReader::endParagraph() {
 	myModelReader.endParagraph();
 }
 
-void XHTMLReader::restartParagraph() {
-	if (myCurrentParagraphIsEmpty) {
+void XHTMLReader::restartParagraph(bool addEmptyLine) {
+	if (addEmptyLine && myCurrentParagraphIsEmpty) {
 		myModelReader.addFixedHSpace(1);
 	}
+	const unsigned char depth = myTagDataStack.size();
 	ZLTextStyleEntry spaceAfterBlocker(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
 	spaceAfterBlocker.setLength(
 		ZLTextStyleEntry::LENGTH_SPACE_AFTER,
 		0,
 		ZLTextStyleEntry::SIZE_UNIT_PIXEL
 	);
-	addTextStyleEntry(spaceAfterBlocker);
+	addTextStyleEntry(spaceAfterBlocker, depth);
 	endParagraph();
 	beginParagraph(true);
 	ZLTextStyleEntry spaceBeforeBlocker(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
@@ -924,7 +941,7 @@ void XHTMLReader::restartParagraph() {
 		0,
 		ZLTextStyleEntry::SIZE_UNIT_PIXEL
 	);
-	addTextStyleEntry(spaceBeforeBlocker);
+	addTextStyleEntry(spaceBeforeBlocker, depth);
 }
 
 void XHTMLReader::pushTextKind(FBTextKind kind) {
@@ -946,7 +963,7 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 		case XHTML_READ_BODY:
 			if (myPreformatted) {
 				if (*text == '\r' || *text == '\n') {
-					restartParagraph();
+					restartParagraph(true);
 					text += 1;
 					len -= 1;
 				}
@@ -1014,5 +1031,5 @@ const std::string &XHTMLReader::fileAlias(const std::string &fileName) const {
 	return it->second;
 }
 
-XHTMLReader::TagData::TagData() : PageBreakAfter(false) {
+XHTMLReader::TagData::TagData() : PageBreakAfter(false), DisplayCode(ZLTextStyleEntry::DC_INLINE) {
 }

@@ -33,23 +33,18 @@ import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
-	public static OPDSBookItem create(ZLNetworkContext nc, INetworkLink link, String url) {
+	public static OPDSBookItem create(ZLNetworkContext nc, INetworkLink link, String url) throws ZLNetworkException {
 		if (link == null || url == null) {
 			return null;
 		}
 
 		final CreateBookHandler handler = new CreateBookHandler(link, url);
-		try {
-			nc.perform(new ZLNetworkRequest.Get(url) {
-				@Override
-				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-					new OPDSXMLReader(handler, true).read(inputStream);
-				}
-			});
-		} catch (ZLNetworkException e) {
-			e.printStackTrace();
-			// ignore
-		}
+		nc.perform(new ZLNetworkRequest.Get(url) {
+			@Override
+			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
+				new OPDSXMLReader(handler, true).read(inputStream);
+			}
+		});
 		return handler.getBook();
 	}
 

@@ -23,16 +23,17 @@ import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
 
-import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 
-import org.geometerplus.android.fbreader.network.BookDownloader;
-import org.geometerplus.android.fbreader.network.BookDownloaderService;
+import org.geometerplus.android.fbreader.network.*;
+import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.image.ImageViewActivity;
+import org.geometerplus.android.util.UIUtil;
 
 class ProcessHyperlinkAction extends FBAndroidAction {
 	ProcessHyperlinkAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -104,9 +105,15 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		new Thread(new Runnable() {
 			public void run() {
 				if (!url.startsWith("fbreader-action:")) {
-					nLibrary.initialize(new QuietNetworkContext());
+					try {
+						nLibrary.initialize(new ActivityNetworkContext(BaseActivity));
+					} catch (ZLNetworkException e) {
+						e.printStackTrace();
+						UIUtil.showMessageText(BaseActivity, e.getMessage());
+						return;
+					}
 				}
-				intent.setData(Uri.parse(nLibrary.rewriteUrl(url, externalUrl)));
+				intent.setData(Util.rewriteUri(Uri.parse(nLibrary.rewriteUrl(url, externalUrl))));
 				BaseActivity.runOnUiThread(new Runnable() {
 					public void run() {
 						try {

@@ -1,4 +1,4 @@
-===== 2.2 (Oct ??, 2014) =====
+===== 2.2 (Nov ??, 2014) =====
 * (planned) Bookshelf library view (plugin)
 * (planned) Tablet-oriented preferences dialog
 * (planned) Material Design support
@@ -8,9 +8,25 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.2 beta 2 (Oct ??, 2014) =====
+===== 2.2 beta 4 (Nov ??, 2014) =====
+* Updated German localisation (by Matthias Dill)
+
+===== 2.1.9 (Nov 12, 2014) =====
+* Bookshelf link disabled till 2.2 release
+* Synchronisation: fixed (rare) multiple uploads of the same book 
+
+===== 2.1.8 (Nov 11, 2014) =====
+* All changes from 2.2 beta 0,1,2,3
+
+===== 2.2 beta 3 (Nov 10, 2014) =====
+* Added 'padding' and 'padding-*' CSS property support
+* Added support of 'display:block' CSS property value
+* Synchronization process optimization for large (300+ books) collections
+
+===== 2.2 beta 2 (Nov 02, 2014) =====
 * Added '*' selector support in CSS
 * Optimised combined selectors processing
+* Works with OPDS plugins (https://github.com/geometer/OpdsPluginPrototype)
 
 ===== 2.2 beta 1 (Oct 14, 2014) =====
 * Fixed "style" attribute support in ePubs

@@ -76,6 +76,7 @@ public interface IBookCollection {
 	void removeBook(Book book, boolean deleteFromDisk);
 
 	String getHash(Book book, boolean force);
+	void setHash(Book book, String hash);
 
 	ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId);
 	void storePosition(long bookId, ZLTextPosition position);

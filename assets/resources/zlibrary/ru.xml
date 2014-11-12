@@ -15,7 +15,6 @@
 			<node name="somethingWrongMessage" value="Ошибка при работе с %s"/>
 			<node name="couldntCreateDirectoryMessage" value="Не удалось создать каталог %s"/>
 			<node name="couldntCreateFileMessage" value="Не удалось создать файл %s"/>
-			<node name="couldntConnectToNetworkMessage" value="Не удалось соединиться с сетью"/>
 			<node name="couldntConnectMessage" value="Не удалось соединиться с сайтом %s"/>
 			<node name="couldntResolveHostMessage" value="Не удаётся найти сайт %s"/>
 			<node name="authenticationFailed" value="Ошибка авторизации"/>
@@ -23,6 +22,7 @@
 			<node name="invalidURL" value="Неправильный URL"/>
 			<node name="hostCantBeReached" value="Сайт %s недоступен"/>
 			<node name="connectionRefused" value="Соединение закрыто сайтом %s"/>
+			<node name="networkNotAvailable" value="Нет соединения с сетью"/>
 		</node>
 	</node>
 	<node name="color">

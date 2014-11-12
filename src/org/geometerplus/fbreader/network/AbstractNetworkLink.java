@@ -20,6 +20,8 @@
 package org.geometerplus.fbreader.network;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -30,7 +32,6 @@ import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 public abstract class AbstractNetworkLink implements INetworkLink {
 	private int myId;
 
-	protected String mySiteName;
 	protected String myTitle;
 	protected String mySummary;
 	protected final String myLanguage;
@@ -39,15 +40,13 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	/**
 	 * Creates new NetworkLink instance.
 	 *
-	 * @param siteName   name of the corresponding website. Must be not <code>null</code>.
 	 * @param title      title of the corresponding library item. Must be not <code>null</code>.
 	 * @param summary    description of the corresponding library item. Can be <code>null</code>.
 	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
 	 * @param infos      collection of URL infos; must always contain one URL with <code>UrlInfo.Type.Catalog</code> identifier
 	 */
-	public AbstractNetworkLink(int id, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+	public AbstractNetworkLink(int id, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
 		myId = id;
-		mySiteName = siteName;
 		myTitle = title;
 		mySummary = summary;
 		myLanguage = language != null ? language : "multi";
@@ -62,8 +61,25 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		myId = id;
 	}
 
-	public final String getSiteName() {
-		return mySiteName;
+	public String getShortName() {
+		return getHostName();
+	}
+
+	public String getStringId() {
+		final String hostName = getHostName();
+		if (hostName != null) {
+			return hostName;
+		}
+		return "CATALOG_" + myId;
+	}
+
+	public final String getHostName() {
+		final String catalogUrl = getUrl(UrlInfo.Type.Catalog);
+		if (catalogUrl == null) {
+			return null;
+		}
+		final Matcher m = Pattern.compile("^[a-zA-Z]+://([^/]+).*").matcher(catalogUrl);
+		return m.matches() ? m.group(1) : null;
 	}
 
 	public final String getTitle() {
@@ -121,7 +137,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 			icon = icon.replaceAll("\n", "");
 		}
 		return "AbstractNetworkLink: {"
-			+ "siteName=" + mySiteName
+			+ "id=" + getStringId()
 			+ "; title=" + myTitle
 			+ "; summary=" + mySummary
 			+ "; icon=" + icon

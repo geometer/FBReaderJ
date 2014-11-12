@@ -26,7 +26,6 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public interface ICustomNetworkLink extends INetworkLink {
-	void setSiteName(String name);
 	void setTitle(String title);
 	void setSummary(String summary);
 
@@ -38,7 +37,7 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void reloadInfo(ZLNetworkContext nc, boolean urlsOnly, boolean quietly) throws ZLNetworkException;
 
 	// returns true if next methods have changed link's data:
-	//   setSiteName, setTitle, setSummary, setIcon, setLink, removeLink
+	//   setTitle, setSummary, setIcon, setLink, removeLink
 	boolean hasChanges();
 
 	// resets hasChanged() result
