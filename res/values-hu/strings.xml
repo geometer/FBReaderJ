@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Az alkalmazás elindíthatja az FBReader szinkronizálási folyamatát</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">oldal</string>
+  <string name="d_ago">%d napja</string>
+  <string name="buy_book">MEGVÁSÁRLÁS</string>
+  <string name="download_book">LETÖLTÉS</string>
+  <string name="read_book">OLVASÁS</string>
+  <string name="network_library">Hálózati könyvtár</string>
+  <string name="no_dictionaries">Telepítsen legalább egy szótárat az ABBYY Lingvo számára</string>
+  <string name="only_english">Sajnáljuk, a definíció csak angol szavakhoz érhető el</string>
+  <string name="select_only_one_word">Csak egy szót jelöljön ki</string>
+  <string name="bookmark">Könyvjelző</string>
 </resources>

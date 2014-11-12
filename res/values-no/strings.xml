@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Appen kan starte FBReader-synkroniseringsprosess</string>
   <string name="permission_sync_label">FBReader-synkroniseringsgrensesnitt</string>
   <string name="page">side</string>
+  <string name="d_ago">%dd siden</string>
+  <string name="buy_book">KJØP</string>
+  <string name="download_book">LAST NED</string>
+  <string name="read_book">LES</string>
+  <string name="network_library">Nettverksbibliotek</string>
+  <string name="no_dictionaries">Installer minst én ordliste for ABBYY Lingvo</string>
+  <string name="only_english">Beklager, definisjoner er bare tilgjengelige for engelske ord</string>
+  <string name="select_only_one_word">Velg bare ett ord</string>
+  <string name="bookmark">Bokmerke</string>
 </resources>

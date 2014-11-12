@@ -33,4 +33,13 @@
   <string name="permission_sync_description">بإمكان التطبيق بدء عملية مزامنة FBReader</string>
   <string name="permission_sync_label">واجهة مزامنة FBReader</string>
   <string name="page">صفحة</string>
+  <string name="d_ago">%dي مضى</string>
+  <string name="buy_book">شراء</string>
+  <string name="download_book">تنزيل</string>
+  <string name="read_book">قراءة</string>
+  <string name="network_library">مكتبة الشبكة</string>
+  <string name="no_dictionaries">يرجى تثبيت قاموس واحد على الأقل على ABBYY Lingvo</string>
+  <string name="only_english">عذرًا، التعريف المتاح للكلمات الإنجليزية فقط</string>
+  <string name="select_only_one_word">يرجى تحديد كلمة واحدة فقط</string>
+  <string name="bookmark">إشارة مرجعية</string>
 </resources>

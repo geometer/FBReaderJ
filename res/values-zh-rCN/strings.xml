@@ -33,4 +33,13 @@
   <string name="permission_sync_description">此应用程序可启动 FBReader 同步过程</string>
   <string name="permission_sync_label">FBReader 同步界面</string>
   <string name="page">页</string>
+  <string name="d_ago">%d 天前</string>
+  <string name="buy_book">购买</string>
+  <string name="download_book">下载</string>
+  <string name="read_book">阅读</string>
+  <string name="network_library">网络书库</string>
+  <string name="no_dictionaries">请在 ABBYY Lingvo 中至少安装一个词典</string>
+  <string name="only_english">抱歉，目前仅提供英文单词定义</string>
+  <string name="select_only_one_word">请只选择一个单词</string>
+  <string name="bookmark">书签</string>
 </resources>

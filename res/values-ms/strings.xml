@@ -12,7 +12,7 @@
   <string name="yota_book_publisher_tille">Penerbit</string>
   <string name="yota_book_seller_tille">Penjual</string>
   <string name="yota_book_published_tille">Diterbitkan</string>
-  <string name="highlight">Sorotan</string>
+  <string name="highlight">Sorotkan</string>
   <string name="copy">Salin</string>
   <string name="share">Kongsi</string>
   <string name="define">Takrif</string>
@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Aplikasi boleh memulakan proses penyegerakan FBReader</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">halaman</string>
+  <string name="d_ago">%d-h yang lalu</string>
+  <string name="buy_book">BELI</string>
+  <string name="download_book">MUAT TURUN</string>
+  <string name="read_book">BACA</string>
+  <string name="network_library">Perpustakaan Rangkaian</string>
+  <string name="no_dictionaries">Sila pasangkan sekurang-kurangnya satu kamus untuk ABBYY Lingvo</string>
+  <string name="only_english">Harap maaf, definisi hanya tersedia untuk perkataan Bahasa Inggeris</string>
+  <string name="select_only_one_word">Sila hanya pilih satu perkataan</string>
+  <string name="bookmark">Bookmark</string>
 </resources>

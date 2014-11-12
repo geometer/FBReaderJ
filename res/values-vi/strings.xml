@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Ứng dụng có thể bắt đầu quá trình đồng bộ FBReader</string>
   <string name="permission_sync_label">Giao diện đồng bộ FBReader</string>
   <string name="page">trang</string>
+  <string name="d_ago">%dn trước</string>
+  <string name="buy_book">MUA</string>
+  <string name="download_book">TẢI VỀ</string>
+  <string name="read_book">ĐỌC</string>
+  <string name="network_library">Thư viện mạng</string>
+  <string name="no_dictionaries">Vui lòng cài đặt ít nhất một từ điển vào ABBYY Lingvo</string>
+  <string name="only_english">Rất tiếc, định nghĩa chỉ có sẵn cho các từ tiếng Anh</string>
+  <string name="select_only_one_word">Vui lòng chọn ít nhất một từ</string>
+  <string name="bookmark">Bookmark</string>
 </resources>
