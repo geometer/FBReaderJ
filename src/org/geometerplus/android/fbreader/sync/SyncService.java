@@ -286,10 +286,14 @@ public class SyncService extends Service implements IBookCollection.Listener {
 	}
 
 	private final class UploadRequest extends ZLNetworkRequest.FileUpload {
+		private final Book myBook;
+		private final String myHash;
 		Status Result = Status.Failure;
 
-		UploadRequest(File file) {
+		UploadRequest(File file, Book book, String hash) {
 			super(SyncOptions.BASE_URL + "app/book.upload", file, false);
+			myBook = book;
+			myHash = hash;
 		}
 
 		@Override
@@ -311,14 +315,20 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			} catch (Exception e) {
 				// ignore
 			}
+
+			if (hashes != null) {
+				myActualHashesFromServer.addAll(hashes);
+			}
 			if (error != null) {
 				log("UPLOAD FAILURE: " + error);
 				if ("ALREADY_UPLOADED".equals(code)) {
 					Result = Status.AlreadyUploaded;
+					if (hashes != null && !hashes.isEmpty() && !hashes.contains(myHash)) {
+						myCollection.setHash(myBook, hashes.get(0));
+					}
 				}
 			} else if (id != null && hashes != null) {
 				log("UPLOADED SUCCESSFULLY: " + id);
-				myActualHashesFromServer.addAll(hashes);
 				Result = Status.Uploaded;
 			} else {
 				log("UNEXPECED RESPONSE: " + response);
@@ -372,7 +382,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			final String status = (String)result.get("status");
 			if ((force && !"found".equals(status)) || "not found".equals(status)) {
 				try {
-					final UploadRequest uploadRequest = new UploadRequest(file);
+					final UploadRequest uploadRequest = new UploadRequest(file, book, hash);
 					uploadRequest.addHeader("Referer", verificationRequest.getURL());
 					uploadRequest.addHeader("X-CSRFToken", csrfToken);
 					myBookUploadContext.perform(uploadRequest);
