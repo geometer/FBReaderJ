@@ -36,7 +36,7 @@ public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
 	public Map<String,String> authenticate(URI uri, String realm, Map<String,String> params) {
 		if (!"https".equalsIgnoreCase(uri.getScheme())) {
-			return Collections.singletonMap("error", "Connection is not secure");
+			return errorMap("Connection is not secure");
 		}
 
 		String authUrl = null;
