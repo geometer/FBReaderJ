@@ -107,8 +107,8 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 				public void run() {
 					try {
 						pluginImage.setRealImage(new ZLBitmapImage(connection.Reader.readBitmap(pluginImage.File.getPath(), Integer.MAX_VALUE, Integer.MAX_VALUE)));
-					} catch (Exception e) {
-						e.printStackTrace();
+					} catch (Throwable t) {
+						t.printStackTrace();
 					}
 					if (postAction != null) {
 						postAction.run();
