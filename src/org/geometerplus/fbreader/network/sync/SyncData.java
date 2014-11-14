@@ -34,12 +34,14 @@ public class SyncData {
 	public final static class ServerBookInfo {
 		public final List<String> Hashes;
 		public final String Title;
-		public final boolean Downloadable;
+		public final String Url;
+		public final int Size;
 
-		private ServerBookInfo(List<String> hashes, String title, boolean downloadable) {
+		private ServerBookInfo(List<String> hashes, String title, String url, int size) {
 			Hashes = Collections.unmodifiableList(hashes);
 			Title = title;
-			Downloadable = downloadable;
+			Url = url;
+			Size = size;
 		}
 	}
 
@@ -53,6 +55,10 @@ public class SyncData {
 		new ZLStringListOption("SyncData", "ServerBookHashes", Collections.<String>emptyList(), ";");
 	private final ZLStringOption myServerBookTitle =
 		new ZLStringOption("SyncData", "ServerBookTitle", "");
+	private final ZLStringOption myServerBookUrl =
+		new ZLStringOption("SyncData", "ServerBookUrl", "");
+	private final ZLIntegerOption myServerBookSize =
+		new ZLIntegerOption("SyncData", "ServerBookSize", 0);
 
 	private Map<String,Object> position2Map(ZLTextFixedPosition.WithTimestamp pos) {
 		final Map<String,Object> map = new HashMap<String,Object>();
@@ -151,6 +157,11 @@ public class SyncData {
 		if (currentBook != null) {
 			myServerBookHashes.setValue((List<String>)currentBook.get("all_hashes"));
 			myServerBookTitle.setValue((String)currentBook.get("title"));
+			myServerBookUrl.setValue((String)currentBook.get("url"));
+			final Long size = (Long)currentBook.get("size");
+			if (size != null) {
+				myServerBookSize.setValue((int)(long)size);
+			}
 		} else {
 			myServerBookHashes.setValue(Collections.<String>emptyList());
 		}
@@ -176,8 +187,10 @@ public class SyncData {
 			return null;
 		}
 		return new ServerBookInfo(
-			// TODO: get downloadable info from server
-			hashes, myServerBookTitle.getValue(), true
+			hashes,
+			myServerBookTitle.getValue(),
+			myServerBookUrl.getValue(),
+			myServerBookSize.getValue()
 		);
 	}
 
