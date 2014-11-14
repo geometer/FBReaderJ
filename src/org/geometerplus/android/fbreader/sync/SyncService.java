@@ -81,9 +81,38 @@ public class SyncService extends Service implements IBookCollection.Listener {
 
 	private final List<Book> myQueue = Collections.synchronizedList(new LinkedList<Book>());
 
-	private final Set<String> myActualHashesFromServer = new HashSet<String>();
-	private final Set<String> myDeletedHashesFromServer = new HashSet<String>();
-	private volatile boolean myHashTablesAreInitialized = false;
+	private static final class Hashes {
+		final Set<String> Actual = new HashSet<String>();
+		final Set<String> Deleted = new HashSet<String>();
+		volatile boolean Initialised = false;
+
+		void clear() {
+			Actual.clear();
+			Deleted.clear();
+			Initialised = false;
+		}
+
+		void addAll(Collection<String> actual, Collection<String> deleted) {
+			if (actual != null) {
+				Actual.addAll(actual);
+			}
+			if (deleted != null) {
+				Deleted.addAll(deleted);
+			}
+		}
+
+		@Override
+		public String toString() {
+			return String.format(
+				"%s/%s HASHES (%s)",
+				Actual.size(),
+				Deleted.size(),
+				Initialised ? "complete" : "partial"
+			);
+		}
+	};
+
+	private final Hashes myHashesFromServer = new Hashes();
 
 	private PendingIntent syncIntent() {
 		return PendingIntent.getService(
@@ -148,14 +177,8 @@ public class SyncService extends Service implements IBookCollection.Listener {
 		}
 	}
 
-	private synchronized void clearHashTables() {
-		myActualHashesFromServer.clear();
-		myDeletedHashesFromServer.clear();
-		myHashTablesAreInitialized = false;
-	}
-
 	private synchronized void initHashTables() {
-		if (myHashTablesAreInitialized) {
+		if (myHashesFromServer.Initialised) {
 			return;
 		}
 
@@ -164,7 +187,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			final int pageSize = 500;
 			final Map<String,String> data = new HashMap<String,String>();
 			data.put("page_size", String.valueOf(pageSize));
-			for (int pageNo = 0; !myHashTablesAreInitialized; ++pageNo) {
+			for (int pageNo = 0; !myHashesFromServer.Initialised; ++pageNo) {
 				data.put("page_no", String.valueOf(pageNo));
 				myBookUploadContext.perform(new PostRequest("all.hashes.paged", data) {
 					@Override
@@ -172,20 +195,19 @@ public class SyncService extends Service implements IBookCollection.Listener {
 						final Map<String,List<String>> map = (Map<String,List<String>>)response;
 						final List<String> actualHashes = map.get("actual");
 						final List<String> deletedHashes = map.get("deleted");
-						myActualHashesFromServer.addAll(actualHashes);
-						myDeletedHashesFromServer.addAll(deletedHashes);
+						myHashesFromServer.addAll(actualHashes, deletedHashes);
 						if (actualHashes.size() < pageSize && deletedHashes.size() < pageSize) {
-							myHashTablesAreInitialized = true;
+							myHashesFromServer.Initialised = true;
 						}
 					}
 				});
-				log(String.format("RECEIVED: %s/%s HASHES (%s)", myActualHashesFromServer.size(), myDeletedHashesFromServer.size(), myHashTablesAreInitialized ? "complete" : "partial"));
+				log("RECEIVED: " + myHashesFromServer.toString());
 			}
 		} catch (SyncronizationDisabledException e) {
-			clearHashTables();
+			myHashesFromServer.clear();
 			throw e;
 		} catch (Exception e) {
-			clearHashTables();
+			myHashesFromServer.clear();
 			e.printStackTrace();
 		}
 	}
@@ -207,7 +229,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 
 						final Map<Status,Integer> statusCounts = new HashMap<Status,Integer>();
 						try {
-							clearHashTables();
+							myHashesFromServer.clear();
 							for (BookQuery q = new BookQuery(new Filter.Empty(), 20);; q = q.next()) {
 								final List<Book> books = myCollection.books(q);
 								if (books.isEmpty()) {
@@ -317,7 +339,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			}
 
 			if (hashes != null && !hashes.isEmpty()) {
-				myActualHashesFromServer.addAll(hashes);
+				myHashesFromServer.addAll(hashes, null);
 				if (!hashes.contains(myHash)) {
 					myCollection.setHash(myBook, hashes.get(0));
 				}
@@ -353,9 +375,9 @@ public class SyncService extends Service implements IBookCollection.Listener {
 		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {
 			return Status.HashNotComputed;
-		} else if (myActualHashesFromServer.contains(hash)) {
+		} else if (myHashesFromServer.Actual.contains(hash)) {
 			return Status.AlreadyUploaded;
-		} else if (!force && myDeletedHashesFromServer.contains(hash)) {
+		} else if (!force && myHashesFromServer.Actual.contains(hash)) {
 			return Status.ToBeDeleted;
 		} else if (!force && book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
 			return Status.FailedPreviuousTime;
@@ -394,10 +416,10 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			} else {
 				final List<String> hashes = (List<String>)result.get("hashes");
 				if ("found".equals(status)) {
-					myActualHashesFromServer.addAll(hashes);
+					myHashesFromServer.addAll(hashes, null);
 					return Status.AlreadyUploaded;
 				} else /* if ("deleted".equals(status)) */ {
-					myDeletedHashesFromServer.addAll(hashes);
+					myHashesFromServer.addAll(null, hashes);
 					return Status.ToBeDeleted;
 				}
 			}
