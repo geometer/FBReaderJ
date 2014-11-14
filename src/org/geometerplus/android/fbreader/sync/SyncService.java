@@ -161,7 +161,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 
 		try {
 			myBookUploadContext.reloadCookie();
-			final int pageSize = 300;
+			final int pageSize = 500;
 			final Map<String,String> data = new HashMap<String,String>();
 			data.put("page_size", String.valueOf(pageSize));
 			for (int pageNo = 0; !myHashTablesAreInitialized; ++pageNo) {
