@@ -51,14 +51,47 @@ public class SyncData {
 		new ZLStringOption("SyncData", "CurrentBookHash", "");
 	private final ZLStringOption myCurrentBookTimestamp =
 		new ZLStringOption("SyncData", "CurrentBookTimestamp", "");
-	private final ZLStringListOption myServerBookHashes =
-		new ZLStringListOption("SyncData", "ServerBookHashes", Collections.<String>emptyList(), ";");
-	private final ZLStringOption myServerBookTitle =
-		new ZLStringOption("SyncData", "ServerBookTitle", "");
-	private final ZLStringOption myServerBookUrl =
-		new ZLStringOption("SyncData", "ServerBookUrl", "");
-	private final ZLIntegerOption myServerBookSize =
-		new ZLIntegerOption("SyncData", "ServerBookSize", 0);
+
+	private static class ServerBook {
+		final ZLStringListOption Hashes =
+			new ZLStringListOption("SyncData", "ServerBookHashes", Collections.<String>emptyList(), ";");
+		final ZLStringOption Title =
+			new ZLStringOption("SyncData", "ServerBookTitle", "");
+		final ZLStringOption Url =
+			new ZLStringOption("SyncData", "ServerBookUrl", "");
+		final ZLIntegerOption Size =
+			new ZLIntegerOption("SyncData", "ServerBookSize", 0);
+
+		void init(Map<String,Object> book) {
+			if (book == null) {
+				reset();
+			} else {
+				Hashes.setValue((List<String>)book.get("all_hashes"));
+				Title.setValue((String)book.get("title"));
+
+				final String url = (String)book.get("url");
+				Url.setValue(url != null ? url : "");
+				final Long size = (Long)book.get("size");
+				Size.setValue(size != null ? (int)(long)size : 0);
+			}
+		}
+
+		void reset() {
+			Hashes.setValue(Collections.<String>emptyList());
+			Title.setValue("");
+			Url.setValue("");
+			Size.setValue(0);
+		}
+
+		ServerBookInfo getInfo() {
+			final List<String> hashes = Hashes.getValue();
+			if (hashes.size() == 0) {
+				return null;
+			}
+			return new ServerBookInfo(hashes, Title.getValue(), Url.getValue(), Size.getValue());
+		}
+	}
+	private final ServerBook myServerBook = new ServerBook();
 
 	private Map<String,Object> position2Map(ZLTextFixedPosition.WithTimestamp pos) {
 		final Map<String,Object> map = new HashMap<String,Object>();
@@ -99,7 +132,7 @@ public class SyncData {
 				myCurrentBookHash.setValue(newHash);
 				if (oldHash.length() != 0) {
 					myCurrentBookTimestamp.setValue(String.valueOf(System.currentTimeMillis()));
-					myServerBookHashes.setValue(Collections.<String>emptyList());
+					myServerBook.reset();
 				}
 			}
 			final String currentBookHash = newHash != null ? newHash : oldHash;
@@ -153,18 +186,7 @@ public class SyncData {
 			}
 		}
 
-		final Map<String,Object> currentBook = (Map<String,Object>)data.get("currentbook");
-		if (currentBook != null) {
-			myServerBookHashes.setValue((List<String>)currentBook.get("all_hashes"));
-			myServerBookTitle.setValue((String)currentBook.get("title"));
-			myServerBookUrl.setValue((String)currentBook.get("url"));
-			final Long size = (Long)currentBook.get("size");
-			if (size != null) {
-				myServerBookSize.setValue((int)(long)size);
-			}
-		} else {
-			myServerBookHashes.setValue(Collections.<String>emptyList());
-		}
+		myServerBook.init((Map<String,Object>)data.get("currentbook"));
 
 		return data.size() > 1;
 	}
@@ -182,16 +204,7 @@ public class SyncData {
 	}
 
 	public ServerBookInfo getServerBookInfo() {
-		final List<String> hashes = myServerBookHashes.getValue();
-		if (hashes.size() == 0) {
-			return null;
-		}
-		return new ServerBookInfo(
-			hashes,
-			myServerBookTitle.getValue(),
-			myServerBookUrl.getValue(),
-			myServerBookSize.getValue()
-		);
+		return myServerBook.getInfo();
 	}
 
 	public ZLTextFixedPosition.WithTimestamp getAndCleanPosition(String hash) {
