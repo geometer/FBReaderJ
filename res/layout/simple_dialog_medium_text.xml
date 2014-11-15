@@ -11,12 +11,12 @@
 		android:orientation="vertical"
 	>
 		<TextView
-			android:id="@+id/buy_book_text"
+			android:id="@+id/simple_dialog_text"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="10dp"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 		/>
-		<include layout="@layout/ok_cancel_buttons" android:id="@+id/buy_book_buttons" />
+		<include layout="@layout/ok_cancel_buttons" android:id="@+id/simple_dialog_buttons" />
 	</LinearLayout>
 </ScrollView>
