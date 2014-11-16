@@ -843,6 +843,7 @@
 			<node name="skip" value="Omet"/>
 			<node name="buy" value="Compra"/>
 			<node name="buyAndDownload" value="Compra i descarrega"/>
+			<node name="download" value="Descarregar"/>
 			<node name="continue" value="Continua"/>
 			<node name="editUrl" value="Edita URL"/>
 			<node name="tryAgain" value="Torna a intentar-ho"/>

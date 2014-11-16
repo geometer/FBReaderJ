@@ -843,6 +843,7 @@
 			<node name="skip" value="Пропусни"/>
 			<node name="buy" value="Купи"/>
 			<node name="buyAndDownload" value="Купи и свали"/>
+			<node name="download" value="Свали"/>
 			<node name="continue" value="Продължи"/>
 			<node name="editUrl" value="Редактирай URL"/>
 			<node name="tryAgain" value="Повтори"/>

@@ -837,6 +837,7 @@
 			<node name="skip" value="今回はしない"/>
 			<node name="buy" value="購入"/>
 			<node name="buyAndDownload" value="購入してダウンロード"/>
+			<node name="download" value="ダウンロード"/>
 			<node name="continue" value="続行"/>
 			<node name="editUrl" value="URL 編集"/>
 			<node name="tryAgain" value="もう一度"/>
