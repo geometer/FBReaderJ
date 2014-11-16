@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
@@ -353,6 +354,7 @@ public class BookDownloaderService extends Service {
 			public void run() {
 				boolean success = false;
 				try {
+					SQLiteCookieDatabase.init(BookDownloaderService.this);
 					myNetworkContext.perform(request);
 					success = true;
 				} catch (ZLNetworkException e) {
