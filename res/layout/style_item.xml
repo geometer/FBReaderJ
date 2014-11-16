@@ -32,9 +32,10 @@
 		android:layout_weight="3"
 	/>
 	<Button
+		android:id="@+id/style_item_edit_button"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
-		android:id="@+id/style_item_edit_button"
+		style="?android:attr/buttonBarButtonStyle"
 		android:focusable="false"
 		android:focusableInTouchMode="false"
 	/>
