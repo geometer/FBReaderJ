@@ -688,7 +688,7 @@ public class NetworkLibrary {
 					return image;
 				}
 			}
-			final ZLImage image = new NetworkImage(url, mimeType);
+			final ZLImage image = new NetworkImage(url);
 			myImageMap.put(url, new WeakReference<ZLImage>(image));
 			return image;
 		}

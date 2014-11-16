@@ -34,7 +34,7 @@ import org.geometerplus.zlibrary.core.network.CookieDatabase;
 import org.geometerplus.android.util.SQLiteUtil;
 
 public class SQLiteCookieDatabase extends CookieDatabase {
-	public static void init(Context context) {
+	public static synchronized void init(Context context) {
 		if (getInstance() == null) {
 			new SQLiteCookieDatabase(context);
 		}
