@@ -827,6 +827,7 @@
 			<node name="skip" value="跳过"/>
 			<node name="buy" value="购买"/>
 			<node name="buyAndDownload" value="购买并下载"/>
+			<node name="download" value="下载"/>
 			<node name="continue" value="继续"/>
 			<node name="editUrl" value="编辑 URL"/>
 			<node name="tryAgain" value="再次尝试"/>

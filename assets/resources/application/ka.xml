@@ -842,6 +842,7 @@
 			<node name="skip" value="ჯერ არა"/>
 			<node name="buy" value="ყიდვა"/>
 			<node name="buyAndDownload" value="ყიდვა და გადმოწერა"/>
+			<node name="download" value="გადმოწერა"/>
 			<node name="continue" value="გაგრძელება"/>
 			<node name="editUrl" value="URL-ის შეცვლა"/>
 			<node name="tryAgain" value="გამეორება"/>
