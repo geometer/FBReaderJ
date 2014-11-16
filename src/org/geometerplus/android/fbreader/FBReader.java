@@ -24,13 +24,12 @@ import java.io.StringWriter;
 import java.util.*;
 
 import android.annotation.TargetApi;
-import android.app.*;
+import android.app.Activity;
+import android.app.SearchManager;
 import android.content.*;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.*;
-import android.support.v4.app.NotificationCompat;
 import android.view.*;
 import android.widget.RelativeLayout;
 
@@ -46,26 +45,22 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 import org.geometerplus.zlibrary.ui.android.library.*;
-import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
-import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.fbreader.fbreader.ActionCode;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
-import org.geometerplus.fbreader.network.NetworkImage;
-import org.geometerplus.fbreader.network.sync.SyncData;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.network.BookDownloaderService;
-import org.geometerplus.android.fbreader.sync.MissingBookActivity;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
@@ -1064,66 +1059,4 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myFBReaderApp.useSyncInfo(myResumeTimestamp + 10 * 1000 > System.currentTimeMillis(), myNotifier);
 		}
 	};
-
-	private static class AppNotifier implements FBReaderApp.Notifier {
-		private final Activity myActivity;
-
-		AppNotifier(Activity activity) {
-			myActivity = activity;
-		}
-
-		@Override
-		public void showMissingBookNotification(final SyncData.ServerBookInfo info) {
-			new Thread() {
-				public void run() {
-					showMissingBookNotificationInternal(info);
-				}
-			}.start();
-		}
-
-		private void showMissingBookNotificationInternal(SyncData.ServerBookInfo info) {
-			final String errorTitle = MissingBookActivity.errorTitle();
-
-			final NotificationManager notificationManager =
-				(NotificationManager)myActivity.getSystemService(NOTIFICATION_SERVICE);
-			final NotificationCompat.Builder builder = new NotificationCompat.Builder(myActivity)
-				.setSmallIcon(R.drawable.fbreader)
-				.setTicker(errorTitle)
-				.setContentTitle(errorTitle)
-				.setContentText(info.Title)
-				.setAutoCancel(false);
-
-			if (info.ThumbnailUrl != null) {
-				SQLiteCookieDatabase.init(myActivity);
-				final NetworkImage thumbnail = new NetworkImage(info.ThumbnailUrl);
-				thumbnail.synchronize();
-				try {
-					builder.setLargeIcon(
-						BitmapFactory.decodeStream(thumbnail.getRealImage().inputStream())
-					);
-				} catch (Throwable t) {
-					// ignore
-				}
-			}
-
-			Uri uri = null;
-			try {
-				uri = Uri.parse(info.DownloadUrl);
-			} catch (Exception e) {
-			}
-			if (uri != null) {
-				final Intent downloadIntent = new Intent(myActivity, MissingBookActivity.class);
-				downloadIntent
-					.setData(uri)
-					.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
-					.putExtra(BookDownloaderService.Key.BOOK_MIME, info.Mimetype)
-					.putExtra(BookDownloaderService.Key.BOOK_KIND, UrlInfo.Type.Book)
-					.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title);
-				builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, downloadIntent, 0));
-			} else {
-				builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, new Intent(), 0));
-			}
-			notificationManager.notify(NotificationIds.MISSING_BOOK_ID, builder.build());
-		}
-	}
 }
