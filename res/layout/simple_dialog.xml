@@ -11,7 +11,7 @@
 		<TextView
 			android:id="@+id/simple_dialog_text"
 			android:paddingTop="7dp"
-			android:paddingBottom="0dp"
+			android:paddingBottom="17dp"
 			android:paddingLeft="24dp"
 			android:paddingRight="20dp"
 			android:layout_width="fill_parent"
