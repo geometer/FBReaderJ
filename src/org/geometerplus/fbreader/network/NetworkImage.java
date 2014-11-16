@@ -32,31 +32,23 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.Paths;
 
 public final class NetworkImage extends ZLImageSelfSynchronizableProxy {
-	private MimeType myMimeType;
 	public final String Url;
 
-	public NetworkImage(String url, MimeType mimeType) {
-		myMimeType = mimeType;
+	public NetworkImage(String url) {
 		Url = url;
 		new File(Paths.networkCacheDirectory()).mkdirs();
 	}
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static String makeImageFilePath(String url, MimeType mimeType) {
+	public static String makeImageFilePath(String url) {
 		final Uri uri = Uri.parse(url);
 
-		String host = uri.getHost();
-		if (host == null) {
-			host = "host.unknown";
-		}
+		final StringBuilder path = new StringBuilder(Paths.networkCacheDirectory());
+		path.append(File.separator);
 
-		final StringBuilder path = new StringBuilder(host);
-		if (host.startsWith("www.")) {
-			path.delete(0, 4);
-		}
-		path.insert(0, File.separator);
-		path.insert(0, Paths.networkCacheDirectory());
+		final String host = uri.getHost();
+		path.append(host != null ? host : "host.unknown");
 
 		int index = path.length();
 
@@ -80,29 +72,6 @@ public final class NetworkImage extends ZLImageSelfSynchronizableProxy {
 				}
 			}
 			++index;
-		}
-
-		String ext = null;
-		if (MimeType.IMAGE_PNG.equals(mimeType)) {
-			ext = ".png";
-		} else if (MimeType.IMAGE_JPEG.equals(mimeType)) {
-			if (path.length() > 5 && path.substring(path.length() - 5).equals(".jpeg")) {
-				ext = ".jpeg";
-			} else {
-				ext = ".jpg";
-			}
-		}
-
-		if (ext == null) {
-			int j = path.lastIndexOf(".");
-			if (j > nameIndex) {
-				ext = path.substring(j);
-				path.delete(j, path.length());
-			} else {
-				ext = "";
-			}
-		} else if (path.length() > ext.length() && path.substring(path.length() - ext.length()).equals(ext)) {
-			path.delete(path.length() - ext.length(), path.length());
 		}
 
 		String query = uri.getQuery();
@@ -130,13 +99,13 @@ public final class NetworkImage extends ZLImageSelfSynchronizableProxy {
 				index = j + 1;
 			}
 		}
-		return path.append(ext).toString();
+		return path.toString();
 	}
 
 	private volatile String myStoredFilePath;
 	private String getFilePath() {
 		if (myStoredFilePath == null) {
-			myStoredFilePath = makeImageFilePath(Url, myMimeType);
+			myStoredFilePath = makeImageFilePath(Url);
 		}
 		return myStoredFilePath;
 	}
