@@ -1066,15 +1066,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	private final FBReaderApp.Notifier myNotifier = new FBReaderApp.Notifier() {
 		@Override
 		public void showMissingBookNotification(SyncData.ServerBookInfo info) {
-			final String errorMessage = MissingBookActivity.errorMessage(info.Title);
+			final String errorTitle = MissingBookActivity.errorTitle();
 
 			final NotificationManager notificationManager =
 				(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 			final NotificationCompat.Builder builder = new NotificationCompat.Builder(FBReader.this)
 				.setSmallIcon(R.drawable.fbreader)
-				.setTicker(info.Title)
-				.setContentTitle(info.Title)
-				.setContentText(errorMessage)
+				.setTicker(errorTitle)
+				.setContentTitle(errorTitle)
+				.setContentText(info.Title)
 				.setAutoCancel(false);
 
 			if (info.ThumbnailUrl != null) {

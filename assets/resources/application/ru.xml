@@ -1023,6 +1023,7 @@
 		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги"/>
 		<node name="videoServiceNotWorking" value="Просмотр видео не работает"/>
 		<node name="videoPlayerNotFound" value="Не удалось отыскать видеопроигрыватель"/>
+		<node name="bookIsMissingTitle" value="Отсутствует книга"/>
 		<node name="bookIsMissing" value="Не удалось найти на этом устройстве книгу «%s»"/>
 	</node>
 	<node name="external">

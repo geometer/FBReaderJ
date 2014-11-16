@@ -1014,6 +1014,7 @@
 		<node name="emptyNetworkSearchResults" value="Кнігі ня знойдзеныя, прабачце"/>
 		<node name="videoServiceNotWorking" value="Відэаслужба недаступная, прабачце"/>
 		<node name="videoPlayerNotFound" value="На прыладзе не ўсталяваны прайгравальнік, прабачце"/>
+		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
 		<node name="bookIsMissing" value="Кніга «%s» ня знойдзена на прыладзе, прабачце"/>
 	</node>
 	<node name="external">

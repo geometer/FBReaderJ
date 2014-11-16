@@ -1016,6 +1016,7 @@
 		<node name="emptyNetworkSearchResults" value="Nenhum livro encontrado, desculpe"/>
 		<node name="videoServiceNotWorking" value="Serviço de vídeo não disponível, desculpe"/>
 		<node name="videoPlayerNotFound" value="Não há nenhum leitor de vídeo instalado neste dispositivo, desculpe"/>
+		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
 		<node name="bookIsMissing" value="O livro '%s' não foi encontrado no dispositivo, desculpe"/>
 	</node>
 	<node name="external" value="Externo">
