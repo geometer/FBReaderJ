@@ -1067,14 +1067,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		final NotificationManager notificationManager =
 			(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
-		final Notification notification = new NotificationCompat.Builder(this)
+		final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
 			.setSmallIcon(R.drawable.fbreader)
 			.setTicker(info.Title)
 			.setContentTitle(info.Title)
 			.setContentText(errorMessage)
 			.setContentIntent(pendingIntent)
-			.setAutoCancel(true)
-			.build();
-		notificationManager.notify(NetworkNotifications.MISSING_BOOK_ID, notification);
+			.setAutoCancel(true);
+		notificationManager.notify(NetworkNotifications.MISSING_BOOK_ID, builder.build());
 	}
 }
