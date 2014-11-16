@@ -1193,14 +1193,29 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		} catch (Exception e) {
 		}
 		if (uri != null) {
-			final Intent downloadIntent = new Intent(this, MissingBookActivity.class);
+			final boolean useBigNotification =
+				Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+
+			final Intent downloadIntent = useBigNotification
+				? new Intent(this, BookDownloaderService.class)
+				: new Intent(this, MissingBookActivity.class);
 			downloadIntent
 				.setData(uri)
 				.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
 				.putExtra(BookDownloaderService.Key.BOOK_MIME, info.Mimetype)
 				.putExtra(BookDownloaderService.Key.BOOK_KIND, UrlInfo.Type.Book)
 				.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title);
-			builder.setContentIntent(PendingIntent.getActivity(this, 0, downloadIntent, 0));
+			if (useBigNotification) {
+				builder.setStyle(new NotificationCompat.BigTextStyle().bigText(errorMessage));
+				builder.addAction(
+					android.R.drawable.stat_sys_download,
+					ZLResource.resource("dialog").getResource("button")
+						.getResource("download").getValue(),
+					PendingIntent.getService(this, 0, downloadIntent, 0)
+				);
+			} else {
+				builder.setContentIntent(PendingIntent.getActivity(this, 0, downloadIntent, 0));
+			}
 		} else {
 			builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
 		}
