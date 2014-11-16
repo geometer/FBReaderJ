@@ -29,7 +29,6 @@ public class MissingNativeLibraryActivity extends SimpleDialogActivity {
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setSimpleContentView(false);
 
 		final ZLResource resource = ZLResource.resource("crash").getResource("missingNativeLibrary");
 
