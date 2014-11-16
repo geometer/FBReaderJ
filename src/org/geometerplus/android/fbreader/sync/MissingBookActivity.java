@@ -17,40 +17,45 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.error;
+package org.geometerplus.android.fbreader.sync;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
-import org.geometerplus.zlibrary.ui.android.error.ErrorUtil;
+import org.geometerplus.android.fbreader.network.BookDownloaderService;
+import org.geometerplus.android.fbreader.network.NetworkNotifications;
 import org.geometerplus.android.fbreader.util.SimpleDialogActivity;
 
-public class BookReadingErrorActivity extends SimpleDialogActivity implements ErrorKeys {
+public class MissingBookActivity extends SimpleDialogActivity {
+	public static String errorMessage(String title) {
+		return ZLResource.resource("errorMessage").getResource("bookIsMissing").getValue()
+			.replace("%s", title);
+	}
+
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 
-		final ZLResource resource = ZLResource.resource("error").getResource("bookReading");
-		setTitle(resource.getResource("title").getValue());
-
-		textView().setText(getIntent().getStringExtra(MESSAGE));
+		final Intent intent = getIntent();
+		final String title = intent.getStringExtra(BookDownloaderService.Key.BOOK_TITLE);
+		setTitle(title);
+		textView().setText(errorMessage(title));
+		intent.setClass(this, BookDownloaderService.class);
 
 		okButton().setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				final Intent sendIntent = new Intent(Intent.ACTION_SEND);
-				sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "issues@fbreader.org" });
-				sendIntent.putExtra(Intent.EXTRA_TEXT, getIntent().getStringExtra(STACKTRACE));
-				sendIntent.putExtra(Intent.EXTRA_SUBJECT, "FBReader " + new ErrorUtil(BookReadingErrorActivity.this).getVersionName() + " book reading issue report");
-				sendIntent.setType("message/rfc822");
-				startActivity(sendIntent);
+				final NotificationManager notificationManager =
+					(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+				notificationManager.cancel(NetworkNotifications.MISSING_BOOK_ID);
+				startService(intent);
 				finish();
 			}
 		});
 		cancelButton().setOnClickListener(finishListener());
-		setButtonTexts("sendReport", "cancel");
+		setButtonTexts("download", "cancel");
 	}
 }
