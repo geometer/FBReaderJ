@@ -1207,12 +1207,18 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 				.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title);
 			if (useBigNotification) {
 				builder.setStyle(new NotificationCompat.BigTextStyle().bigText(errorMessage));
+				final ZLResource buttonResource =
+					ZLResource.resource("dialog").getResource("button");
+				final PendingIntent pi =
+					PendingIntent.getService(this, 0, downloadIntent, 0);
 				builder.addAction(
-					android.R.drawable.stat_sys_download,
-					ZLResource.resource("dialog").getResource("button")
-						.getResource("download").getValue(),
-					PendingIntent.getService(this, 0, downloadIntent, 0)
+					android.R.drawable.stat_sys_download_done,
+					buttonResource.getResource("download").getValue(),
+					pi
 				);
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					builder.setFullScreenIntent(pi, true);
+				}
 			} else {
 				builder.setContentIntent(PendingIntent.getActivity(this, 0, downloadIntent, 0));
 			}
