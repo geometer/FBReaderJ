@@ -29,6 +29,10 @@ import org.geometerplus.android.fbreader.network.BookDownloaderService;
 import org.geometerplus.android.fbreader.util.SimpleDialogActivity;
 
 public class MissingBookActivity extends SimpleDialogActivity {
+	public static String errorTitle() {
+		return ZLResource.resource("errorMessage").getResource("bookIsMissingTitle").getValue();
+	}
+
 	public static String errorMessage(String title) {
 		return ZLResource.resource("errorMessage").getResource("bookIsMissing").getValue()
 			.replace("%s", title);
@@ -40,7 +44,7 @@ public class MissingBookActivity extends SimpleDialogActivity {
 
 		final Intent intent = getIntent();
 		final String title = intent.getStringExtra(BookDownloaderService.Key.BOOK_TITLE);
-		setTitle(title);
+		setTitle(errorTitle());
 		textView().setText(errorMessage(title));
 		intent.setClass(this, BookDownloaderService.class);
 

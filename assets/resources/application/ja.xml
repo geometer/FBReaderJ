@@ -1013,6 +1013,7 @@
 		<node name="emptyNetworkSearchResults" value="申し訳ありませんが、本が見当たりません"/>
 		<node name="videoServiceNotWorking" value="申し訳ありませんが、ビデオサービスが利用できません"/>
 		<node name="videoPlayerNotFound" value="このデバイスにはビデオプレイヤがインストールされていないようです"/>
+		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
 		<node name="bookIsMissing" value="申し訳ありませんが、本体内に '%s' という本が見当たりません"/>
 	</node>
 	<node name="external">
