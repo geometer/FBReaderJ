@@ -45,10 +45,13 @@ import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 public class BookDownloaderService extends Service {
 	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this);
 
-	public static final String BOOK_MIME = "fbreader.book.mime";
+	public interface Key {
+		String BOOK_TITLE = "org.geometerplus.android.fbreader.network.Title";
+		String BOOK_MIME = "fbreader.book.mime";
+	}
+
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
-	public static final String TITLE_KEY = "org.geometerplus.android.fbreader.network.Title";
 
 	public static final String SHOW_NOTIFICATIONS_KEY = "org.geometerplus.android.fbreader.network.ShowNotifications";
 
@@ -112,7 +115,7 @@ public class BookDownloaderService extends Service {
 		final int notifications = intent.getIntExtra(SHOW_NOTIFICATIONS_KEY, 0);
 
 		final String url = uri.toString();
-		final MimeType mime = MimeType.get(intent.getStringExtra(BOOK_MIME));
+		final MimeType mime = MimeType.get(intent.getStringExtra(Key.BOOK_MIME));
 		UrlInfo.Type referenceType = (UrlInfo.Type)intent.getSerializableExtra(REFERENCE_TYPE_KEY);
 		if (referenceType == null) {
 			referenceType = UrlInfo.Type.Book;
@@ -165,7 +168,7 @@ public class BookDownloaderService extends Service {
 			startActivity(getFBReaderIntent(fileFile));
 			return;
 		}
-		String title = intent.getStringExtra(TITLE_KEY);
+		String title = intent.getStringExtra(Key.BOOK_TITLE);
 		if (title == null || title.length() == 0) {
 			title = fileFile.getName();
 		}

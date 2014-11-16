@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-class NetworkNotifications {
+public class NetworkNotifications {
 	private static NetworkNotifications ourInstance;
 
 	public static NetworkNotifications Instance() {
@@ -32,10 +32,8 @@ class NetworkNotifications {
 	//private static final int CATALOG_LOADING = 0;
 	//private static final int NETWORK_SEARCH = 1;
 
-	private static final int BOOK_DOWNLOADING_START = 0x10000000;
-	private static final int BOOK_DOWNLOADING_END   = 0x1fffffff;
-
-	private volatile int myBookDownloadingId = BOOK_DOWNLOADING_START;
+	public static final int MISSING_BOOK_ID = 0x0fffffff;
+	private volatile int myBookDownloadingId = 0x10000000;
 
 	private NetworkNotifications() {
 	}
@@ -49,12 +47,6 @@ class NetworkNotifications {
 	}*/
 
 	public synchronized int getBookDownloadingId() {
-		final int id = myBookDownloadingId;
-		if (myBookDownloadingId == BOOK_DOWNLOADING_END) {
-			myBookDownloadingId = BOOK_DOWNLOADING_START;
-		} else {
-			++myBookDownloadingId;
-		}
-		return id;
+		return ++myBookDownloadingId;
 	}
 }
