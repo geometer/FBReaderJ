@@ -17,36 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.android.fbreader;
 
-public class NetworkNotifications {
-	private static NetworkNotifications ourInstance;
-
-	public static NetworkNotifications Instance() {
-		if (ourInstance == null) {
-			ourInstance = new NetworkNotifications();
-		}
-		return ourInstance;
-	}
-
-	//private static final int CATALOG_LOADING = 0;
-	//private static final int NETWORK_SEARCH = 1;
-
+public abstract class NotificationIds {
 	public static final int MISSING_BOOK_ID = 0x0fffffff;
-	private volatile int myBookDownloadingId = 0x10000000;
+	private static final int DOWNLOAD_ID_MIN = 0x10000000;
+	private static final int DOWNLOAD_ID_MAX = 0x1fffffff;
 
-	private NetworkNotifications() {
+	private NotificationIds() {
 	}
 
-	/*public int getCatalogLoadingId() {
-		return CATALOG_LOADING;
-	}*/
-
-	/*public int getNetworkSearchId() {
-		return NETWORK_SEARCH;
-	}*/
-
-	public synchronized int getBookDownloadingId() {
-		return ++myBookDownloadingId;
+	public static int getDownloadId(String url) {
+		return DOWNLOAD_ID_MIN + url.hashCode() % (DOWNLOAD_ID_MAX - DOWNLOAD_ID_MIN + 1);
 	}
 }
