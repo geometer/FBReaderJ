@@ -51,7 +51,7 @@ public abstract class ZLApplication {
 				widget.reset();
 				widget.repaint();
 			}
-			onViewChanged();
+			hideActivePopup();
 		}
 	}
 
@@ -125,10 +125,6 @@ public abstract class ZLApplication {
 		for (PopupPanel popup : popupPanels()) {
 			popup.update();
 		}
-	}
-
-	public final void onViewChanged() {
-		hideActivePopup();
 	}
 
 	public final void hideActivePopup() {
