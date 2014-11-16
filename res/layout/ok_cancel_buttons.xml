@@ -2,13 +2,18 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:minHeight="54dip"
+	android:paddingTop="4dp"
 	android:orientation="vertical">
+	<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="?android:attr/listDivider"
+	/>
 	<LinearLayout
 		style="?android:attr/buttonBarStyle"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:paddingTop="4dp"
 		android:paddingStart="2dp"
 		android:paddingEnd="2dp"
 		android:measureWithLargestChild="true"
