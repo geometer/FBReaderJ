@@ -111,6 +111,12 @@ public class BookDownloaderService extends Service {
 		}
 		intent.setData(null);
 
+		if (intent.getBooleanExtra(Key.FROM_SYNC, false)) {
+			final NotificationManager notificationManager =
+				(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+			notificationManager.cancel(NetworkNotifications.MISSING_BOOK_ID);
+		}
+
 		final int notifications = intent.getIntExtra(Key.SHOW_NOTIFICATIONS, 0);
 
 		final String url = uri.toString();
