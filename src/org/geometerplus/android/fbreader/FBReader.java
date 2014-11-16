@@ -72,7 +72,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.*;
 
-public final class FBReader extends Activity implements ZLApplicationWindow, FBReaderApp.Notifier {
+public final class FBReader extends Activity implements ZLApplicationWindow {
 	static final int ACTION_BAR_COLOR = Color.DKGRAY;
 
 	public static final int REQUEST_PREFERENCES = 1;
@@ -177,7 +177,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 							refreshYotaScreen();
 						}
 					}
-				}, FBReader.this);
+				}, myNotifier);
 				AndroidFontUtil.clearFontCache();
 			}
 		});
@@ -349,7 +349,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 				myOpenBookIntent = null;
 				getCollection().bindToService(this, new Runnable() {
 					public void run() {
-						myFBReaderApp.openBook(null, null, null, FBReader.this);
+						myFBReaderApp.openBook(null, null, null, myNotifier);
 					}
 				});
 			}
@@ -417,7 +417,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 					if (b.equals(book)) {
 						b = myFBReaderApp.Collection.getRecentBook(1);
 					}
-					myFBReaderApp.openBook(b, null, null, FBReader.this);
+					myFBReaderApp.openBook(b, null, null, myNotifier);
 				}
 			});
 		} else {
@@ -587,19 +587,19 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		} else if (myFBReaderApp.getCurrentServerBook(null) != null) {
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
-					myFBReaderApp.useSyncInfo(true, FBReader.this);
+					myFBReaderApp.useSyncInfo(true, myNotifier);
 				}
 			});
 		} else if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
-					myFBReaderApp.openBook(myFBReaderApp.ExternalBook, null, null, FBReader.this);
+					myFBReaderApp.openBook(myFBReaderApp.ExternalBook, null, null, myNotifier);
 				}
 			});
 		} else {
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
-					myFBReaderApp.useSyncInfo(true, FBReader.this);
+					myFBReaderApp.useSyncInfo(true, myNotifier);
 				}
 			});
 		}
@@ -1137,7 +1137,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 	private BroadcastReceiver mySyncUpdateReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
-			myFBReaderApp.useSyncInfo(myResumeTimestamp + 10 * 1000 > System.currentTimeMillis(), FBReader.this);
+			myFBReaderApp.useSyncInfo(myResumeTimestamp + 10 * 1000 > System.currentTimeMillis(), myNotifier);
 		}
 	};
 
@@ -1148,7 +1148,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 			final NotificationManager notificationManager =
 				(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-			final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+			final NotificationCompat.Builder builder = new NotificationCompat.Builder(FBReader.this)
 				.setSmallIcon(R.drawable.fbreader)
 				.setTicker(info.Title)
 				.setContentTitle(info.Title)
@@ -1165,8 +1165,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 					Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
 
 				final Intent downloadIntent = useBigNotification
-					? new Intent(this, BookDownloaderService.class)
-					: new Intent(this, MissingBookActivity.class);
+					? new Intent(FBReader.this, BookDownloaderService.class)
+					: new Intent(FBReader.this, MissingBookActivity.class);
 				downloadIntent
 					.setData(uri)
 					.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
@@ -1178,7 +1178,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 					final ZLResource buttonResource =
 						ZLResource.resource("dialog").getResource("button");
 					final PendingIntent pi =
-						PendingIntent.getService(this, 0, downloadIntent, 0);
+						PendingIntent.getService(FBReader.this, 0, downloadIntent, 0);
 					builder.addAction(
 						android.R.drawable.stat_sys_download_done,
 						buttonResource.getResource("download").getValue(),
@@ -1188,10 +1188,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 						builder.setFullScreenIntent(pi, true);
 					}
 				} else {
-					builder.setContentIntent(PendingIntent.getActivity(this, 0, downloadIntent, 0));
+					builder.setContentIntent(PendingIntent.getActivity(FBReader.this, 0, downloadIntent, 0));
 				}
 			} else {
-				builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
+				builder.setContentIntent(PendingIntent.getActivity(FBReader.this, 0, new Intent(), 0));
 			}
 			notificationManager.notify(NetworkNotifications.MISSING_BOOK_ID, builder.build());
 		}
