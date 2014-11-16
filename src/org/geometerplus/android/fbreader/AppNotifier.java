@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.ArrayList;
+
 import android.app.*;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -38,6 +40,8 @@ import org.geometerplus.android.fbreader.sync.MissingBookActivity;
 
 class AppNotifier implements FBReaderApp.Notifier {
 	private final Activity myActivity;
+	private final ArrayList<String> myLatestHashes = new ArrayList<String>();
+	private volatile long myLatestNotificationStamp;
 
 	AppNotifier(Activity activity) {
 		myActivity = activity;
@@ -45,6 +49,15 @@ class AppNotifier implements FBReaderApp.Notifier {
 
 	@Override
 	public void showMissingBookNotification(final SyncData.ServerBookInfo info) {
+		synchronized (this) {
+			myLatestHashes.retainAll(info.Hashes);
+			if (!myLatestHashes.isEmpty() &&
+				myLatestNotificationStamp > System.currentTimeMillis() - 5 * 60 * 1000) {
+				return;
+			}
+			myLatestHashes.addAll(info.Hashes);
+			myLatestNotificationStamp = System.currentTimeMillis();
+		}
 		new Thread() {
 			public void run() {
 				showMissingBookNotificationInternal(info);
