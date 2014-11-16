@@ -1065,7 +1065,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private final FBReaderApp.Notifier myNotifier = new FBReaderApp.Notifier() {
 		@Override
-		public void showMissingBookNotification(SyncData.ServerBookInfo info) {
+		public void showMissingBookNotification(final SyncData.ServerBookInfo info) {
+			new Thread() {
+				public void run() {
+					showMissingBookNotificationInternal(info);
+				}
+			}.start();
+		}
+
+		private void showMissingBookNotificationInternal(SyncData.ServerBookInfo info) {
 			final String errorTitle = MissingBookActivity.errorTitle();
 
 			final NotificationManager notificationManager =
