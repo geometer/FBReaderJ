@@ -2,16 +2,17 @@
 * (planned) Bookshelf library view (plugin)
 * (planned) Tablet-oriented preferences dialog
 * (planned) Material Design support
-* (planned) Automatic files download (from the book network)
 * (planned) Sync: single book upload
 * (planned) Editable notes (by Tamotsu Takahashi)
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.2 beta 4 (Nov ??, 2014) =====
+===== 2.2 beta 4 (Nov 16, 2014) =====
+* Missing book download (from the book network)
+* Material design support in themes
 * Updated German localisation (by Matthias Dill)
 
-===== 2.1.9 (Nov 12, 2014) =====
+===== 2.1.8.1 (Nov 12, 2014) =====
 * Bookshelf link disabled till 2.2 release
 * Synchronisation: fixed (rare) multiple uploads of the same book 
 
