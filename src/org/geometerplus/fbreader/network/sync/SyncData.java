@@ -29,18 +29,23 @@ import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.IBookCollection;
+import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 
 public class SyncData {
 	public final static class ServerBookInfo {
 		public final List<String> Hashes;
 		public final String Title;
-		public final String Url;
+		public final String DownloadUrl;
+		public final String Mimetype;
+		public final String ThumbnailUrl;
 		public final int Size;
 
-		private ServerBookInfo(List<String> hashes, String title, String url, int size) {
+		private ServerBookInfo(List<String> hashes, String title, String downloadUrl, String mimetype, String thumbnailUrl, int size) {
 			Hashes = Collections.unmodifiableList(hashes);
 			Title = title;
-			Url = url;
+			DownloadUrl = downloadUrl;
+			Mimetype = mimetype;
+			ThumbnailUrl = thumbnailUrl;
 			Size = size;
 		}
 	}
@@ -57,8 +62,12 @@ public class SyncData {
 			new ZLStringListOption("SyncData", "ServerBookHashes", Collections.<String>emptyList(), ";");
 		final ZLStringOption Title =
 			new ZLStringOption("SyncData", "ServerBookTitle", "");
-		final ZLStringOption Url =
-			new ZLStringOption("SyncData", "ServerBookUrl", "");
+		final ZLStringOption DownloadUrl =
+			new ZLStringOption("SyncData", "ServerBookDownloadUrl", "");
+		final ZLStringOption Mimetype =
+			new ZLStringOption("SyncData", "ServerBookMimetype", "");
+		final ZLStringOption ThumbnailUrl =
+			new ZLStringOption("SyncData", "ServerBookThumbnailUrl", "");
 		final ZLIntegerOption Size =
 			new ZLIntegerOption("SyncData", "ServerBookSize", 0);
 
@@ -69,8 +78,12 @@ public class SyncData {
 				Hashes.setValue((List<String>)book.get("all_hashes"));
 				Title.setValue((String)book.get("title"));
 
-				final String url = (String)book.get("url");
-				Url.setValue(url != null ? url : "");
+				final String downloadUrl = (String)book.get("download_url");
+				DownloadUrl.setValue(downloadUrl != null ? downloadUrl : "");
+				final String mimetype = (String)book.get("mimetype");
+				Mimetype.setValue(mimetype != null ? mimetype : "");
+				final String thumbnailUrl = (String)book.get("thumbnail_url");
+				ThumbnailUrl.setValue(thumbnailUrl != null ? thumbnailUrl : "");
 				final Long size = (Long)book.get("size");
 				Size.setValue(size != null ? (int)(long)size : 0);
 			}
@@ -79,8 +92,15 @@ public class SyncData {
 		void reset() {
 			Hashes.setValue(Collections.<String>emptyList());
 			Title.setValue("");
-			Url.setValue("");
+			DownloadUrl.setValue("");
+			Mimetype.setValue("");
+			ThumbnailUrl.setValue("");
 			Size.setValue(0);
+		}
+
+		private static String fullUrl(ZLStringOption option) {
+			final String value = option.getValue();
+			return !"".equals(value) ? SyncOptions.BASE_URL + value : null;
 		}
 
 		ServerBookInfo getInfo() {
@@ -88,7 +108,14 @@ public class SyncData {
 			if (hashes.size() == 0) {
 				return null;
 			}
-			return new ServerBookInfo(hashes, Title.getValue(), Url.getValue(), Size.getValue());
+			return new ServerBookInfo(
+				hashes,
+				Title.getValue(),
+				fullUrl(DownloadUrl),
+				Mimetype.getValue(),
+				fullUrl(ThumbnailUrl),
+				Size.getValue()
+			);
 		}
 	}
 	private final ServerBook myServerBook = new ServerBook();
