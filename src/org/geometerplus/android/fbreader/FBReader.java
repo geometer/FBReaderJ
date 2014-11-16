@@ -68,7 +68,6 @@ import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
-import org.geometerplus.android.fbreader.network.NetworkNotifications;
 import org.geometerplus.android.fbreader.sync.MissingBookActivity;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
@@ -1257,7 +1256,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			} else {
 				builder.setContentIntent(PendingIntent.getActivity(FBReader.this, 0, new Intent(), 0));
 			}
-			notificationManager.notify(NetworkNotifications.MISSING_BOOK_ID, builder.build());
+			notificationManager.notify(NotificationIds.MISSING_BOOK_ID, builder.build());
 		}
 	};
 }
