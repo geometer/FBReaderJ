@@ -837,6 +837,7 @@
 			<node name="skip" value="Spring over"/>
 			<node name="buy" value="Køb"/>
 			<node name="buyAndDownload" value="Køb og overfør"/>
+			<node name="download" value="Overføre"/>
 			<node name="continue" value="Fortsæt"/>
 			<node name="editUrl" value="Rediger URL"/>
 			<node name="tryAgain" value="Prøv igen"/>
