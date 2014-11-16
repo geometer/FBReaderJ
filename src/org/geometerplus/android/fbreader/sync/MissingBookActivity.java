@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.sync;
 
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +26,6 @@ import android.view.View;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
-import org.geometerplus.android.fbreader.network.NetworkNotifications;
 import org.geometerplus.android.fbreader.util.SimpleDialogActivity;
 
 public class MissingBookActivity extends SimpleDialogActivity {
@@ -48,9 +46,6 @@ public class MissingBookActivity extends SimpleDialogActivity {
 
 		okButton().setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				final NotificationManager notificationManager =
-					(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-				notificationManager.cancel(NetworkNotifications.MISSING_BOOK_ID);
 				startService(intent);
 				finish();
 			}
