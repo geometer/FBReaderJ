@@ -827,6 +827,7 @@
 			<node name="skip" value="ข้าม"/>
 			<node name="buy" value="ซื้อ"/>
 			<node name="buyAndDownload" value="ซื้อและดาวน์โหลด"/>
+			<node name="download" value="ดาวน์โหลด"/>
 			<node name="continue" value="ต่อไป"/>
 			<node name="editUrl" value="แก้ไข URL"/>
 			<node name="tryAgain" value="ลองใหม่อีกครั้ง"/>

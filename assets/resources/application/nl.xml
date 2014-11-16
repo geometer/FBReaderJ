@@ -837,6 +837,7 @@
 			<node name="skip" value="Overslaan"/>
 			<node name="buy" value="Kopen"/>
 			<node name="buyAndDownload" value="Kopen en downloaden"/>
+			<node name="download" value="Download"/>
 			<node name="continue" value="Doorgaan"/>
 			<node name="editUrl" value="URL bewerken"/>
 			<node name="tryAgain" value="Probeer opnieuw"/>

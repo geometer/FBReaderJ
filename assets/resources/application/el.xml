@@ -835,6 +835,7 @@
 			<node name="skip" value="Παράλειψη"/>
 			<node name="buy" value="Αγορά"/>
 			<node name="buyAndDownload" value="Αγορά και εγκατάσταση"/>
+			<node name="download" value="Λήψη"/>
 			<node name="continue" value="Συνέχεια"/>
 			<node name="editUrl" value="επεξεργασία URL"/>
 			<node name="tryAgain" value="Δοκιμάστε ξανά"/>

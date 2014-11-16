@@ -839,6 +839,7 @@
 			<node name="skip" value="Saltar"/>
 			<node name="buy" value="Comprar"/>
 			<node name="buyAndDownload" value="Comprar e descarregar"/>
+			<node name="download" value="Descarregar"/>
 			<node name="continue" value="Continuar"/>
 			<node name="editUrl" value="Editar URL"/>
 			<node name="tryAgain" value="Tentar novamente"/>

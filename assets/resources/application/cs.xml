@@ -846,6 +846,7 @@
 			<node name="skip" value="Přeskočit"/>
 			<node name="buy" value="Zakoupit"/>
 			<node name="buyAndDownload" value="Zakoupit a stáhnout"/>
+			<node name="download" value="Stáhnout"/>
 			<node name="continue" value="Pokračovat"/>
 			<node name="editUrl" value="Upravit adresu"/>
 			<node name="tryAgain" value="Zkusit znovu"/>
@@ -1054,7 +1055,7 @@
 		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Čte nahlas"/>
 		</node>
-		<node name="calibre-server-integration" value="Připojení Calibre">
+		<node name="calibre_server_integration" value="Připojení Calibre">
 			<node name="summary" value="Připojit server Calibre ve vaší místní síti"/>
 		</node>
 		<node name="local_opds_scanner" value="Local OPDS Scanner">

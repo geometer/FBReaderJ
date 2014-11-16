@@ -842,6 +842,7 @@
 			<node name="skip" value="Ոչ այժմ"/>
 			<node name="buy" value="Գնել"/>
 			<node name="buyAndDownload" value="Գնել և բեռնել"/>
+			<node name="download" value="Ներբեռնել"/>
 			<node name="continue" value="Շարունակել"/>
 			<node name="editUrl" value="Փոխել URL-ը"/>
 			<node name="tryAgain" value="Կրկնել"/>

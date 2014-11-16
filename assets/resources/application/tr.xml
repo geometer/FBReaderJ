@@ -837,6 +837,7 @@
 			<node name="skip" value="Atla"/>
 			<node name="buy" value="Satın al"/>
 			<node name="buyAndDownload" value="Satın al ve indir"/>
+			<node name="download" value="İndir"/>
 			<node name="continue" value="Devam et"/>
 			<node name="editUrl" value="URL\'yi düzenle"/>
 			<node name="tryAgain" value="Tekrar dene"/>

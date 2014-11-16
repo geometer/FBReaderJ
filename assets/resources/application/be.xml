@@ -837,6 +837,7 @@
 			<node name="skip" value="Прапусьціць"/>
 			<node name="buy" value="Купіць"/>
 			<node name="buyAndDownload" value="Купіць і зладаваць"/>
+			<node name="download" value="Зладаваць"/>
 			<node name="continue" value="Працягнуць"/>
 			<node name="editUrl" value="Рэдагаваць адрас"/>
 			<node name="tryAgain" value="Паспрабаваць зноў"/>

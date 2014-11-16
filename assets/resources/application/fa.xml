@@ -837,6 +837,7 @@
 			<node name="skip" value="پريدن"/>
 			<node name="buy" value="خريد"/>
 			<node name="buyAndDownload" value="خريد و دانلود"/>
+			<node name="download" value="دانلود"/>
 			<node name="continue" value="ادامه"/>
 			<node name="editUrl" value="ويرايش URL"/>
 			<node name="tryAgain" value="تلاش مجدد"/>

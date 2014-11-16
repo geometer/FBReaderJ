@@ -827,6 +827,7 @@
 			<node name="skip" value="Kihagyás"/>
 			<node name="buy" value="Vásárlás"/>
 			<node name="buyAndDownload" value="Vásárlás és letöltés"/>
+			<node name="download" value="Letöltés"/>
 			<node name="continue" value="Folytatás"/>
 			<node name="editUrl" value="URL szerkesztése"/>
 			<node name="tryAgain" value="Próbálja újra"/>

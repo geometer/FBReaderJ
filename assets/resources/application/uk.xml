@@ -827,6 +827,7 @@
 			<node name="skip" value="Пропустити"/>
 			<node name="buy" value="Придбати"/>
 			<node name="buyAndDownload" value="Придбати та завантажити"/>
+			<node name="download" value="Завантажити"/>
 			<node name="continue" value="Продовжити"/>
 			<node name="editUrl" value="Змінити URL"/>
 			<node name="tryAgain" value="Повторити"/>

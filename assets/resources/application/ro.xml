@@ -828,6 +828,7 @@
 			<node name="skip" value="Sari peste"/>
 			<node name="buy" value="Cumpara"/>
 			<node name="buyAndDownload" value="Cumpar si Descarca"/>
+			<node name="download" value="Descarca"/>
 			<node name="continue" value="Continua"/>
 			<node name="editUrl" value="Editati URL-ul"/>
 			<node name="tryAgain" value="Încercati din nou"/>
