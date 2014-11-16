@@ -827,6 +827,7 @@
 			<node name="skip" value="Bỏ qua"/>
 			<node name="buy" value="Mua"/>
 			<node name="buyAndDownload" value="Mua và Tải về"/>
+			<node name="download" value="Tải về"/>
 			<node name="continue" value="Tiếp tục"/>
 			<node name="editUrl" value="Sửa URL"/>
 			<node name="tryAgain" value="Thử lại"/>
