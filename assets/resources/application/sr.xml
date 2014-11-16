@@ -837,6 +837,7 @@
 			<node name="skip" value="Прескочи"/>
 			<node name="buy" value="Купи"/>
 			<node name="buyAndDownload" value="Купи и преузми"/>
+			<node name="download" value="Преузми"/>
 			<node name="continue" value="Настави"/>
 			<node name="editUrl" value="Уреди адресу"/>
 			<node name="tryAgain" value="Пробај опет"/>

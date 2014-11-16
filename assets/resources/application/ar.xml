@@ -835,6 +835,7 @@
 			<node name="skip" value="تجاهل"/>
 			<node name="buy" value="شراء"/>
 			<node name="buyAndDownload" value="شراء وتحميل"/>
+			<node name="download" value="تحميل"/>
 			<node name="continue" value="متابعة"/>
 			<node name="editUrl" value="تعديل الرابط"/>
 			<node name="tryAgain" value="إعادة المحاولة"/>

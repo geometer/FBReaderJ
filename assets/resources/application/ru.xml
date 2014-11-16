@@ -842,6 +842,7 @@
 			<node name="skip" value="Не сейчас"/>
 			<node name="buy" value="Купить"/>
 			<node name="buyAndDownload" value="Купить и скачать"/>
+			<node name="download" value="Скачать"/>
 			<node name="continue" value="Продолжить"/>
 			<node name="editUrl" value="Изменить URL"/>
 			<node name="tryAgain" value="Повторить"/>
