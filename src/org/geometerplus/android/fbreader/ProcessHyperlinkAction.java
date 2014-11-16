@@ -96,7 +96,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		final boolean externalUrl;
 		if (BookDownloader.acceptsUri(Uri.parse(url))) {
 			intent.setClass(BaseActivity, BookDownloader.class);
-			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
+			intent.putExtra(BookDownloaderService.Key.SHOW_NOTIFICATIONS, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
 		} else {
 			externalUrl = true;
