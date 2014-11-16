@@ -1141,57 +1141,59 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		}
 	};
 
-	@Override
-	public void showMissingBookNotification(SyncData.ServerBookInfo info) {
-		final String errorMessage = MissingBookActivity.errorMessage(info.Title);
+	private final FBReaderApp.Notifier myNotifier = new FBReaderApp.Notifier() {
+		@Override
+		public void showMissingBookNotification(SyncData.ServerBookInfo info) {
+			final String errorMessage = MissingBookActivity.errorMessage(info.Title);
 
-		final NotificationManager notificationManager =
-			(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-		final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-			.setSmallIcon(R.drawable.fbreader)
-			.setTicker(info.Title)
-			.setContentTitle(info.Title)
-			.setContentText(errorMessage)
-			.setAutoCancel(false);
+			final NotificationManager notificationManager =
+				(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+			final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+				.setSmallIcon(R.drawable.fbreader)
+				.setTicker(info.Title)
+				.setContentTitle(info.Title)
+				.setContentText(errorMessage)
+				.setAutoCancel(false);
 
-		Uri uri = null;
-		try {
-			uri = Uri.parse(info.DownloadUrl);
-		} catch (Exception e) {
-		}
-		if (uri != null) {
-			final boolean useBigNotification =
-				Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+			Uri uri = null;
+			try {
+				uri = Uri.parse(info.DownloadUrl);
+			} catch (Exception e) {
+			}
+			if (uri != null) {
+				final boolean useBigNotification =
+					Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
 
-			final Intent downloadIntent = useBigNotification
-				? new Intent(this, BookDownloaderService.class)
-				: new Intent(this, MissingBookActivity.class);
-			downloadIntent
-				.setData(uri)
-				.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
-				.putExtra(BookDownloaderService.Key.BOOK_MIME, info.Mimetype)
-				.putExtra(BookDownloaderService.Key.BOOK_KIND, UrlInfo.Type.Book)
-				.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title);
-			if (useBigNotification) {
-				builder.setStyle(new NotificationCompat.BigTextStyle().bigText(errorMessage));
-				final ZLResource buttonResource =
-					ZLResource.resource("dialog").getResource("button");
-				final PendingIntent pi =
-					PendingIntent.getService(this, 0, downloadIntent, 0);
-				builder.addAction(
-					android.R.drawable.stat_sys_download_done,
-					buttonResource.getResource("download").getValue(),
-					pi
-				);
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-					builder.setFullScreenIntent(pi, true);
+				final Intent downloadIntent = useBigNotification
+					? new Intent(this, BookDownloaderService.class)
+					: new Intent(this, MissingBookActivity.class);
+				downloadIntent
+					.setData(uri)
+					.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
+					.putExtra(BookDownloaderService.Key.BOOK_MIME, info.Mimetype)
+					.putExtra(BookDownloaderService.Key.BOOK_KIND, UrlInfo.Type.Book)
+					.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title);
+				if (useBigNotification) {
+					builder.setStyle(new NotificationCompat.BigTextStyle().bigText(errorMessage));
+					final ZLResource buttonResource =
+						ZLResource.resource("dialog").getResource("button");
+					final PendingIntent pi =
+						PendingIntent.getService(this, 0, downloadIntent, 0);
+					builder.addAction(
+						android.R.drawable.stat_sys_download_done,
+						buttonResource.getResource("download").getValue(),
+						pi
+					);
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+						builder.setFullScreenIntent(pi, true);
+					}
+				} else {
+					builder.setContentIntent(PendingIntent.getActivity(this, 0, downloadIntent, 0));
 				}
 			} else {
-				builder.setContentIntent(PendingIntent.getActivity(this, 0, downloadIntent, 0));
+				builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
 			}
-		} else {
-			builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
+			notificationManager.notify(NetworkNotifications.MISSING_BOOK_ID, builder.build());
 		}
-		notificationManager.notify(NetworkNotifications.MISSING_BOOK_ID, builder.build());
-	}
+	};
 }
