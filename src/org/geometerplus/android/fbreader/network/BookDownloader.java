@@ -63,8 +63,8 @@ public class BookDownloader extends Activity {
 			return;
 		}
 
-		if (!intent.hasExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY)) {
-			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY,
+		if (!intent.hasExtra(BookDownloaderService.Key.SHOW_NOTIFICATIONS)) {
+			intent.putExtra(BookDownloaderService.Key.SHOW_NOTIFICATIONS,
 				BookDownloaderService.Notifications.ALREADY_DOWNLOADING);
 		}
 		if ("epub".equals(uri.getScheme())) {
