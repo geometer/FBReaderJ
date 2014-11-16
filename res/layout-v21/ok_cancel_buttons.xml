@@ -8,24 +8,23 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
+		android:gravity="right"
 		android:paddingTop="4dp"
 		android:paddingStart="2dp"
 		android:paddingEnd="2dp"
 		android:measureWithLargestChild="true"
 	>
 		<Button
-			android:id="@+id/ok_button"
+			android:id="@+id/cancel_button"
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"
-			android:layout_weight="1"
 			android:singleLine="true"
 			style="?android:attr/buttonBarButtonStyle"
 		/>
 		<Button
-			android:id="@+id/cancel_button"
+			android:id="@+id/ok_button"
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"
-			android:layout_weight="1"
 			android:singleLine="true"
 			style="?android:attr/buttonBarButtonStyle"
 		/>
