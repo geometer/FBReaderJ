@@ -115,6 +115,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	private Intent myCancelIntent = null;
 	private Intent myOpenBookIntent = null;
 
+	private final FBReaderApp.Notifier myNotifier = new AppNotifier(this);
+
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
 		new LinkedList<PluginApi.ActionInfo>();
@@ -1183,7 +1185,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	};
 
-	private final FBReaderApp.Notifier myNotifier = new FBReaderApp.Notifier() {
+	private static class AppNotifier implements FBReaderApp.Notifier {
+		private final Activity myActivity;
+
+		AppNotifier(Activity activity) {
+			myActivity = activity;
+		}
+
 		@Override
 		public void showMissingBookNotification(final SyncData.ServerBookInfo info) {
 			new Thread() {
@@ -1198,8 +1206,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			final String errorMessage = MissingBookActivity.errorMessage(info.Title);
 
 			final NotificationManager notificationManager =
-				(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-			final NotificationCompat.Builder builder = new NotificationCompat.Builder(FBReader.this)
+				(NotificationManager)myActivity.getSystemService(NOTIFICATION_SERVICE);
+			final NotificationCompat.Builder builder = new NotificationCompat.Builder(myActivity)
 				.setSmallIcon(R.drawable.fbreader)
 				.setTicker(errorTitle)
 				.setContentTitle(errorTitle)
@@ -1207,7 +1215,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				.setAutoCancel(false);
 
 			if (info.ThumbnailUrl != null) {
-				SQLiteCookieDatabase.init(FBReader.this);
+				SQLiteCookieDatabase.init(myActivity);
 				final NetworkImage thumbnail = new NetworkImage(info.ThumbnailUrl);
 				thumbnail.synchronize();
 				try {
@@ -1229,8 +1237,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
 
 				final Intent downloadIntent = useBigNotification
-					? new Intent(FBReader.this, BookDownloaderService.class)
-					: new Intent(FBReader.this, MissingBookActivity.class);
+					? new Intent(myActivity, BookDownloaderService.class)
+					: new Intent(myActivity, MissingBookActivity.class);
 				downloadIntent
 					.setData(uri)
 					.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
@@ -1242,7 +1250,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					final ZLResource buttonResource =
 						ZLResource.resource("dialog").getResource("button");
 					final PendingIntent pi =
-						PendingIntent.getService(FBReader.this, 0, downloadIntent, 0);
+						PendingIntent.getService(myActivity, 0, downloadIntent, 0);
 					builder.addAction(
 						android.R.drawable.stat_sys_download_done,
 						buttonResource.getResource("download").getValue(),
@@ -1252,12 +1260,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 						builder.setFullScreenIntent(pi, true);
 					}
 				} else {
-					builder.setContentIntent(PendingIntent.getActivity(FBReader.this, 0, downloadIntent, 0));
+					builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, downloadIntent, 0));
 				}
 			} else {
-				builder.setContentIntent(PendingIntent.getActivity(FBReader.this, 0, new Intent(), 0));
+				builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, new Intent(), 0));
 			}
 			notificationManager.notify(NotificationIds.MISSING_BOOK_ID, builder.build());
 		}
-	};
+	}
 }
