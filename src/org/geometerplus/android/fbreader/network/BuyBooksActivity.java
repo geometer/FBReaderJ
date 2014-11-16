@@ -104,8 +104,6 @@ public class BuyBooksActivity extends SimpleDialogActivity implements NetworkLib
 			return;
 		}
 
-		setSimpleContentView(true);
-
 		try {
 			if (!mgr.isAuthorised(true)) {
 				buttonsView().setVisibility(View.GONE);
