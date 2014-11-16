@@ -25,6 +25,7 @@ import java.util.*;
 
 import android.app.*;
 import android.content.*;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -48,6 +49,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 import org.geometerplus.zlibrary.ui.android.library.*;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
@@ -56,6 +58,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
+import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.tips.TipsManager;
@@ -1176,7 +1179,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private final FBReaderApp.Notifier myNotifier = new FBReaderApp.Notifier() {
 		@Override
-		public void showMissingBookNotification(SyncData.ServerBookInfo info) {
+		public void showMissingBookNotification(final SyncData.ServerBookInfo info) {
+			new Thread() {
+				public void run() {
+					showMissingBookNotificationInternal(info);
+				}
+			}.start();
+		}
+
+		private void showMissingBookNotificationInternal(SyncData.ServerBookInfo info) {
 			final String errorMessage = MissingBookActivity.errorMessage(info.Title);
 
 			final NotificationManager notificationManager =
@@ -1187,6 +1198,19 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				.setContentTitle(info.Title)
 				.setContentText(errorMessage)
 				.setAutoCancel(false);
+
+			if (info.ThumbnailUrl != null) {
+				SQLiteCookieDatabase.init(FBReader.this);
+				final NetworkImage thumbnail = new NetworkImage(info.ThumbnailUrl);
+				thumbnail.synchronize();
+				try {
+					builder.setLargeIcon(
+						BitmapFactory.decodeStream(thumbnail.getRealImage().inputStream())
+					);
+				} catch (Throwable t) {
+					// ignore
+				}
+			}
 
 			Uri uri = null;
 			try {
