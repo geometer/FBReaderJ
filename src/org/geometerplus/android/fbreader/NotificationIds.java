@@ -28,6 +28,6 @@ public abstract class NotificationIds {
 	}
 
 	public static int getDownloadId(String url) {
-		return DOWNLOAD_ID_MIN + url.hashCode() % (DOWNLOAD_ID_MAX - DOWNLOAD_ID_MIN + 1);
+		return DOWNLOAD_ID_MIN + Math.abs(url.hashCode()) % (DOWNLOAD_ID_MAX - DOWNLOAD_ID_MIN + 1);
 	}
 }
