@@ -33,4 +33,13 @@
   <string name="permission_sync_description">A aplicação pode iniciar o processo de sincronização de FBReader</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">página</string>
+  <string name="d_ago">há %dd</string>
+  <string name="buy_book">COMPRAR</string>
+  <string name="download_book">DESCARREGAR</string>
+  <string name="read_book">LER</string>
+  <string name="network_library">Biblioteca de rede</string>
+  <string name="no_dictionaries">Instala pelo menos um dicionário no ABBYY Lingvo</string>
+  <string name="only_english">Lamentamos, definição apenas disponível para palavras em inglês</string>
+  <string name="select_only_one_word">Seleciona apenas uma palavra</string>
+  <string name="bookmark">Marcador</string>
 </resources>

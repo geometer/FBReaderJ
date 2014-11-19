@@ -33,4 +33,13 @@
   <string name="permission_sync_description">แอปพลิเคชันสามารถเริ่มขั้นตอนการซิงโครไนซ์ FBReader ได้</string>
   <string name="permission_sync_label">อินเทอร์เฟซการซิงค์ FBReader</string>
   <string name="page">หน้า</string>
+  <string name="d_ago">%dวันที่ผ่านมา</string>
+  <string name="buy_book">ซื้อ</string>
+  <string name="download_book">ดาวน์โหลด</string>
+  <string name="read_book">อ่าน</string>
+  <string name="network_library">ไลบรารีเครือข่าย</string>
+  <string name="no_dictionaries">โปรดติดตั้งพจนานุกรมอย่างน้อยหนึ่งรายการใน ABBYY Lingvo</string>
+  <string name="only_english">ขออภัย มีคำจำกัดความให้เฉพาะคำภาษาอังกฤษ</string>
+  <string name="select_only_one_word">โปรดเลือกเพียงคำเดียว</string>
+  <string name="bookmark">บุ๊กมาร์ก</string>
 </resources>

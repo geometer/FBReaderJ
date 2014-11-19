@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Aplikacija može pokrenuti postupak sinkronizacije programa FBReader</string>
   <string name="permission_sync_label">Sinkronizacijsko sučelje programa FBReader</string>
   <string name="page">stranica</string>
+  <string name="d_ago">prije %dd</string>
+  <string name="buy_book">KUPI</string>
+  <string name="download_book">PREUZMI</string>
+  <string name="read_book">ČITAJ</string>
+  <string name="network_library">Mrežna knjižnica</string>
+  <string name="no_dictionaries">Instalirajte barem jedan rječnik u ABBYY Lingvo</string>
+  <string name="only_english">Definicije su dostupne samo za engleske riječi</string>
+  <string name="select_only_one_word">Odaberite samo jednu riječ</string>
+  <string name="bookmark">Oznaka</string>
 </resources>

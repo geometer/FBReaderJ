@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Uygulama FBReader eşitleme işlemini başlatabilir</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">sayfa</string>
+  <string name="d_ago">%dgün önce</string>
+  <string name="buy_book">SATIN AL</string>
+  <string name="download_book">İNDİR</string>
+  <string name="read_book">OKU</string>
+  <string name="network_library">Ağ arşivi</string>
+  <string name="no_dictionaries">Lütfen ABBYY Lingvo\'ya en az bir sözlük yükleyin</string>
+  <string name="only_english">Üzgünüz, tanım sadece İngilizce sözcükler için mevcut</string>
+  <string name="select_only_one_word">Lütfen yalnızca bir sözcük seçin</string>
+  <string name="bookmark">Yer İmi</string>
 </resources>

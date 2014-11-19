@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Programmet kan starta FBReader-synkroniseringsprocessen</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">sida</string>
+  <string name="d_ago">%dd sedan</string>
+  <string name="buy_book">KÖP</string>
+  <string name="download_book">LADDA NED</string>
+  <string name="read_book">LÄS</string>
+  <string name="network_library">Nätverksbibliotek</string>
+  <string name="no_dictionaries">Installera minst en ordlista till ABBYY Lingvo</string>
+  <string name="only_english">Definitioner finns endast för engelska ord</string>
+  <string name="select_only_one_word">Välj endast ett ord</string>
+  <string name="bookmark">Bokmärke</string>
 </resources>

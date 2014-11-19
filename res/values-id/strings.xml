@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Aplikasi dapat memulai proses sinkronisasi FBReader</string>
   <string name="permission_sync_label">Antarmuka sinkronisasi FBReader</string>
   <string name="page">halaman</string>
+  <string name="d_ago">%dhari yang lalu</string>
+  <string name="buy_book">BELI</string>
+  <string name="download_book">UNDUH</string>
+  <string name="read_book">BACA</string>
+  <string name="network_library">Pustaka jaringan</string>
+  <string name="no_dictionaries">Instal minimal satu kamus di ABBYY Lingvo</string>
+  <string name="only_english">Maaf, definisi hanya tersedia untuk kata berbahasa Inggris</string>
+  <string name="select_only_one_word">Pilih hanya satu kata</string>
+  <string name="bookmark">Penanda</string>
 </resources>

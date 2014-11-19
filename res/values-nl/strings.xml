@@ -33,4 +33,13 @@
   <string name="permission_sync_description">De toepassing kan het FBReader-synchronisatieproces starten</string>
   <string name="permission_sync_label">FBReader-synchronisatie-interface</string>
   <string name="page">pagina</string>
+  <string name="d_ago">%d d geleden</string>
+  <string name="buy_book">KOPEN</string>
+  <string name="download_book">DOWNLOADEN</string>
+  <string name="read_book">LEZEN</string>
+  <string name="network_library">Netwerkbibliotheek</string>
+  <string name="no_dictionaries">Installeer ten minste één woordenlijst in ABBYY Lingvo</string>
+  <string name="only_english">De definitie is helaas alleen beschikbaar voor Engelse woorden</string>
+  <string name="select_only_one_word">Selecteer slechts één woord</string>
+  <string name="bookmark">Bladwijzer</string>
 </resources>

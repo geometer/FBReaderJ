@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Програма може почати процес синхронізації FBReader</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">сторінка</string>
+  <string name="d_ago">%d дн. тому</string>
+  <string name="buy_book">КУПИТИ</string>
+  <string name="download_book">ЗАВАНТАЖИТИ</string>
+  <string name="read_book">ПРОЧИТАТИ</string>
+  <string name="network_library">Мережева бібліотека</string>
+  <string name="no_dictionaries">Установіть принаймні один словник ABBYY Lingvo</string>
+  <string name="only_english">На жаль, наявні визначення лише для англійських слів</string>
+  <string name="select_only_one_word">Виберіть лише одне слово</string>
+  <string name="bookmark">Закладка</string>
 </resources>

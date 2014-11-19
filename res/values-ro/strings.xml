@@ -33,4 +33,13 @@
   <string name="permission_sync_description">Aplicaţia poate porni procesul de sincronizare FBReader</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">pagina</string>
+  <string name="d_ago">%dz în urmă</string>
+  <string name="buy_book">CUMPĂRAŢI</string>
+  <string name="download_book">DESCĂRCAŢI</string>
+  <string name="read_book">CITIŢI</string>
+  <string name="network_library">Bibliotecă în reţea</string>
+  <string name="no_dictionaries">Instalaţi cel puţin un dicţionar în ABBYY Lingvo</string>
+  <string name="only_english">Din păcate, definiţiile sunt disponibile numai pentru cuvinte în engleză</string>
+  <string name="select_only_one_word">Selectaţi un singur cuvânt</string>
+  <string name="bookmark">Marcaj</string>
 </resources>
