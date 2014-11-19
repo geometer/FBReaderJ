@@ -128,6 +128,10 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     @Override
     public void onBSResume() {
         super.onBSResume();
+	    if (getBSDrawer() == null) {
+		    finish();
+		    return;
+	    }
         registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         setBSContentView(mRootView);
 
@@ -222,7 +226,12 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     }
 
     private Context getBsContext() {
-        return getBSDrawer().getBSContext();
+	    if (getBSDrawer() == null) {
+		    finish();
+		    return this;
+	    } else {
+		    return getBSDrawer().getBSContext();
+	    }
     }
 
     @Override
