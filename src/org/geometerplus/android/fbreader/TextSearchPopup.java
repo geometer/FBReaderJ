@@ -21,7 +21,7 @@ package org.geometerplus.android.fbreader;
 
 import android.widget.RelativeLayout;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;

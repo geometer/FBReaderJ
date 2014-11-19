@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:id="@+id/widget_root"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@android:color/transparent"
+				android:orientation="vertical">
+	<RelativeLayout
+		android:id="@+id/footer"
+		android:layout_alignParentBottom="true"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+	<TextView
+		android:id="@+id/left_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_centerVertical="true"
+		android:drawablePadding="10px"
+		android:drawableLeft="@drawable/widget_clocks_icon"
+		android:text="info"
+		android:textSize="16dp"
+		android:singleLine="true"
+		android:fontFamily="Roboto Yota"
+		android:textColor="#a6a8ab"/>
+	<TextView
+		android:id="@+id/right_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:gravity="right"
+		android:text="info"
+		android:textSize="14dp"
+		android:layout_marginLeft="6.6dp"
+		android:layout_marginBottom="8dp"
+		android:singleLine="true"
+		android:fontFamily="Roboto Yota"
+		android:paddingLeft="14dp"
+		android:paddingRight="13dp"
+		android:paddingTop="5dp"
+		android:paddingBottom="5dp"
+		android:drawablePadding="6dp"
+		android:background="@drawable/widget_footer_button"
+		android:textColor="@android:color/white"/>
+	</RelativeLayout>
+	<FrameLayout
+		android:id="@+id/content"
+		android:layout_above="@id/footer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+	</FrameLayout>
+</RelativeLayout>

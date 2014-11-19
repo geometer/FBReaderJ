@@ -35,7 +35,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import org.geometerplus.android.util.PackageUtil;
 import org.geometerplus.android.util.ViewUtil;

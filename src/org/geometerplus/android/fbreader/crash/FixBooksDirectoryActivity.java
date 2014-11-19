@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.FileChooserUtil;

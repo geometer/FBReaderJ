@@ -12,7 +12,7 @@ import com.yotadevices.yotaphone2.fbreader.OxfordDefinition;
 import com.yotadevices.yotaphone2.fbreader.util.ConnectionManager;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 public class YotaDefinePopup extends YotaTranslatePopup implements OxfordDefinition.DefinitionResult{
 	public final static String ID = "YotaDefinePopup";

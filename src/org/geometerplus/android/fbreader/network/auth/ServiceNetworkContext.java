@@ -35,7 +35,7 @@ import com.google.android.gms.common.Scopes;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 public class ServiceNetworkContext extends AndroidNetworkContext {
 	private final Service myService;

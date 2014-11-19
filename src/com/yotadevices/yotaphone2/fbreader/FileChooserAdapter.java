@@ -17,7 +17,7 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.library.FileTree;
 import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 public class FileChooserAdapter extends TreeAdapter {
     private CoverManager mCoverManager;

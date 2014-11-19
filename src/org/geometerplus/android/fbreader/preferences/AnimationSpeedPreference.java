@@ -30,7 +30,7 @@ import android.widget.SeekBar;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 class AnimationSpeedPreference extends DialogPreference {
 	private final ZLIntegerRangeOption myOption;

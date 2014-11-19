@@ -3,7 +3,7 @@ package com.yotadevices.yotaphone2.fbreader.util;
 import android.content.Context;
 import android.text.format.DateFormat;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

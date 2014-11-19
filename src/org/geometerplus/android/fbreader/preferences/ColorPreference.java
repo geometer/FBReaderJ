@@ -29,7 +29,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 public abstract class ColorPreference extends Preference {

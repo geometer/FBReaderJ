@@ -28,10 +28,19 @@ class ToggleBarsAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		if (BaseActivity.barsAreShown()) {
-			BaseActivity.hideBars();
-		} else {
-			BaseActivity.showBars();
+		if (params != null && params.length == 1 && params[0] instanceof Boolean) {
+			boolean show = (Boolean)params[0];
+			if (show)
+				BaseActivity.showBars();
+			else
+				BaseActivity.hideBars();
+		}
+		else {
+			if (BaseActivity.barsAreShown()) {
+				BaseActivity.hideBars();
+			} else {
+				BaseActivity.showBars();
+			}
 		}
 	}
 }

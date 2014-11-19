@@ -25,7 +25,7 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.book.Book;

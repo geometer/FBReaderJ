@@ -20,7 +20,7 @@ import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import java.util.List;
 

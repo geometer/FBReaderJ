@@ -5,4 +5,5 @@
     <string name="loading_data">Loading data...</string>
     <string name="flip_popup_default_title">Flip your phone</string>
     <string name="flip_popup_default_description">Application is active \nat the front screen</string>
+	<string name="d_ago">%dd ago</string>
 </resources>

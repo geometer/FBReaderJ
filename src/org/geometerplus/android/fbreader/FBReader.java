@@ -60,7 +60,7 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
@@ -125,7 +125,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 	private Intent myCancelIntent = null;
 	private Intent myOpenBookIntent = null;
-
+	private boolean mDontKillYotaService = false;
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
@@ -187,7 +187,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 						if (action != null) {
 							action.run();
 						}
-						hideBars();
+						if (!DeviceType.Instance().isYotaPhone()) {
+							hideBars();
+						}
 					}
 				}, FBReader.this);
 				AndroidFontUtil.clearFontCache();
@@ -496,10 +498,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 				}
 			});
 		} else if (FBReaderIntents.Action.SHARE.equals(intent.getAction())) {
+			mDontKillYotaService = true;
 			final String subject = intent.getStringExtra(android.content.Intent.EXTRA_SUBJECT);
 			final String text = intent.getStringExtra(android.content.Intent.EXTRA_TEXT);
 			shareText(subject, text);
-			setIntent(intent);
 		} else {
 			super.onNewIntent(intent);
 		}
@@ -740,11 +742,20 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 		PopupPanel.restoreVisibilities(myFBReaderApp);
 
-		hideBars();
+		if (DeviceType.Instance().isYotaPhone()) {
+			showBars();
+		}
+		else {
+			hideBars();
+		}
 
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
 		if (DeviceType.Instance().isYotaPhone()) {
-			closeYotaReaderOnBSIfActive();
+			if (!mDontKillYotaService) {
+				closeYotaReaderOnBSIfActive();
+			} else {
+				mDontKillYotaService = false;
+			}
 		}
 	}
 

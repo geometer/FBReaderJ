@@ -57,7 +57,7 @@ public class FrameworkUtils {
     }
 
     public static void performSingleUpdate(Context ctx, Waveform waveform) {
-        executeCommand(ctx, Message.obtain(null, COMMAND_PERFORM_SINGLE_UPDATE, waveform.getInternalValue(), -1));
+        executeCommand(ctx, Message.obtain(null, COMMAND_PERFORM_SINGLE_UPDATE, waveform.ordinal(), -1));
     }
 
 }

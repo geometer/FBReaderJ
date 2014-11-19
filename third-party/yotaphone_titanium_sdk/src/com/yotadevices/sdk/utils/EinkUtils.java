@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.view.View;
+import android.widget.RemoteViews;
 
 /*
  *
@@ -101,6 +102,17 @@ public class EinkUtils {
     public static void setViewDithering(View view, Drawer.Dithering dithering) {
         if (view != null) {
 	        com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewDithering(view, dithering.ordinal());
+        }
+    }
+
+    public static void setRemoteViewsDithering(RemoteViews remoteViews, int viewId, Drawer.Dithering dithering) {
+        if (remoteViews != null) {
+            remoteViews.setInt(viewId, "setEpdViewDithering", dithering.ordinal());
+        }
+    }
+    public static void setRemoteViewsWaveform(RemoteViews remoteViews, int viewId, Drawer.Waveform waveform) {
+        if (remoteViews != null) {
+            remoteViews.setInt(viewId, "setEpdViewWaveFormMode", waveform.ordinal());
         }
     }
 

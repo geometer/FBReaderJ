@@ -15,7 +15,7 @@ import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import java.util.TreeMap;
 

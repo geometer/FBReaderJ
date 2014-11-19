@@ -24,7 +24,7 @@ import android.content.Intent;
 import org.geometerplus.fbreader.book.*;
 
 public abstract class FBReaderIntents {
-	public static final String DEFAULT_PACKAGE = "org.geometerplus.zlibrary.ui.android";
+	public static final String DEFAULT_PACKAGE = "com.yotadevices.yotaphone2.yotareader";
 
 	public interface Action {
 		String API                      = "android.fbreader.action.API";

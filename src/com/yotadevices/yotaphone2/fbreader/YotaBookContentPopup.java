@@ -40,7 +40,7 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import java.util.Collections;
 import java.util.Comparator;

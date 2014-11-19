@@ -11,7 +11,7 @@ import android.widget.TextView;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 
 public class YotaSelectionBSPopup extends YotaSelectionPopup {

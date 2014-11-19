@@ -13,7 +13,7 @@ import com.yotadevices.yotaphone2.fbreader.UIUtils;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View.OnClickListener {
     public final static String ID = "YotaFSSelectionPopup";

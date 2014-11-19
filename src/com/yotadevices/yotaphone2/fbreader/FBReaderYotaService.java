@@ -64,7 +64,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
@@ -166,17 +166,8 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 				        myFBReaderApp.hideActivePopup();
 			        }
 		        }
-		        if (!firstStart()) {
-			        showActionBar();
-			        showStatusBar();
-			        mHandler.postDelayed(new Runnable() {
-				        @Override
-				        public void run() {
-					        hideActionBar();
-					        hideStatusBar();
-				        }
-			        }, 1500);
-		        }
+		        showActionBar();
+		        showStatusBar();
 		        setNotFirstStart();
 	        }
         });

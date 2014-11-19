@@ -68,6 +68,8 @@ public class BSActivity extends Service {
     /** Messenger for communicating with service. */
     Messenger mService = null;
 
+    private boolean isInit;
+
     /**
      * @hide
      */
@@ -75,12 +77,19 @@ public class BSActivity extends Service {
     public final void onCreate() {
         super.onCreate();
         TAG = getClass().getSimpleName();
+        init();
+    }
 
+    void init() {
         mIncomingHandler = new BSAcivityIncomingMessagesHandler(this);
         mMessenger = new Messenger(mIncomingHandler);
 
         mDrawer = new BSDrawer(this);
         mRecord = new BSRecord(getApplicationContext(), TAG);
+    }
+
+    boolean isInit() {
+        return mMessenger != null && mIncomingHandler != null && mDrawer != null;
     }
 
     private void cleanResource() {
@@ -90,6 +99,9 @@ public class BSActivity extends Service {
     }
 
     synchronized void doBindService() {
+        if (!isInit()) {
+            init();
+        }
         if (!mIsBound) {
             Log.d(TAG, "Start Binding.");
             mIsBound = bindService(getFrameworkIntent(), mConnection, Context.BIND_AUTO_CREATE | Context.BIND_WAIVE_PRIORITY);
@@ -182,8 +194,7 @@ public class BSActivity extends Service {
     }
 
     /**
-     * @hide
-     * Method is deprecated. Please to use {@link #onStartCommand}.
+     * @hide Method is deprecated. Please to use {@link #onStartCommand}.
      * 
      * @param intent
      */
@@ -509,6 +520,15 @@ public class BSActivity extends Service {
      */
     public BSDrawer getBSDrawer() {
         return mDrawer;
+    }
+
+    /**
+     * Check the possibility of using the back screen
+     * 
+     * @return true - if the back screen is available, otherwise false
+     */
+    public boolean isBackScreenInit() {
+        return mDrawer != null ? mDrawer.isInit() : false;
     }
 
     public void setInitialWaveform(Drawer.Waveform initialWaveform) {

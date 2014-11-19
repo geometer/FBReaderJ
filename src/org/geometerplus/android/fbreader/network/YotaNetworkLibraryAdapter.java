@@ -18,7 +18,7 @@ import org.geometerplus.android.fbreader.tree.TreeActivity;
 import org.geometerplus.android.util.ViewUtil;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 public class YotaNetworkLibraryAdapter extends NetworkLibraryAdapter {
 	private final static int ROOT_ITEM = 1;

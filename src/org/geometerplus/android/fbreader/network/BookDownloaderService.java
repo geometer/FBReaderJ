@@ -30,12 +30,12 @@ import android.os.*;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;

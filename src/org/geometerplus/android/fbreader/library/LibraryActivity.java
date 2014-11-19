@@ -32,7 +32,7 @@ import android.widget.ListView;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.library.*;

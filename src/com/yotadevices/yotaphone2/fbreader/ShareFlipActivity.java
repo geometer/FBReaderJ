@@ -6,7 +6,7 @@ import com.yotadevices.sdk.FlipBSActivity;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 public class ShareFlipActivity extends FlipBSActivity {
 	public static String subject;

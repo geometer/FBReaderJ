@@ -13,16 +13,28 @@ public class ToggleBarsAction extends FBBSAction {
     }
     @Override
     protected void run(Object... params) {
-        BSReadingStatusBar statusBar = mBSActivity.getStatusBar();
-        BSReadingActionBar actionBar = mBSActivity.geActionBar();
-        boolean showing = statusBar != null && actionBar != null && actionBar.isShowing() && statusBar.isShowing();
-        if (!showing) {
-            mBSActivity.showActionBar();
-            mBSActivity.showStatusBar();
-        }
-        else {
-            mBSActivity.hideActionBar();
-            mBSActivity.hideStatusBar();
-        }
+	    BSReadingStatusBar statusBar = mBSActivity.getStatusBar();
+	    BSReadingActionBar actionBar = mBSActivity.geActionBar();
+	    if (params != null && params.length == 1 && params[0] instanceof Boolean) {
+		    boolean show = (Boolean)params[0];
+		    if (show) {
+			    mBSActivity.showActionBar();
+			    mBSActivity.showStatusBar();
+		    }
+		    else {
+			    mBSActivity.hideActionBar();
+			    mBSActivity.hideStatusBar();
+		    }
+	    }
+	    else {
+		    boolean showing = statusBar != null && actionBar != null && actionBar.isShowing() && statusBar.isShowing();
+		    if (!showing) {
+			    mBSActivity.showActionBar();
+			    mBSActivity.showStatusBar();
+		    } else {
+			    mBSActivity.hideActionBar();
+			    mBSActivity.hideStatusBar();
+		    }
+	    }
     }
 }

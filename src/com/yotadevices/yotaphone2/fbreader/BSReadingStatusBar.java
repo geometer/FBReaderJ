@@ -15,7 +15,7 @@ import com.yotadevices.yotaphone2.fbreader.view.GaugeView;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 public class BSReadingStatusBar {
     private final android.widget.PopupWindow mPopup;

@@ -9,7 +9,7 @@ import com.yotadevices.yotaphone2.fbreader.ShareFlipActivity;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 public class YotaSelectionShareAction extends FBAndroidContextAction {
 	public YotaSelectionShareAction(Context ctx, FBReaderApp fbreader) {

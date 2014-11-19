@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.yotadevices.yotaphone2.fbreader.UIUtils;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 
 public class TOCPopup {
 	private final android.widget.PopupWindow mPopup;

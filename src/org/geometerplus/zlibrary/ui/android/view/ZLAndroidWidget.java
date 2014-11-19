@@ -38,7 +38,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;

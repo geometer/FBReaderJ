@@ -38,7 +38,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.yotadevices.yotaphone2.yotareader.R;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
