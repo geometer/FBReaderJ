@@ -814,7 +814,7 @@
 			<node name="thirdParty" value="Biblioteci terțe părți"/>
 		</node>
 		<node name="eink" value="Ecran tip E-ink">
-			<node name="summary" value="Optiuni specifice ecranelor tip E-ink/>
+			<node name="summary" value="Optiuni specifice ecranelor tip E-ink"/>
 			<node name="enableFastRefresh" value="Mod improspatare rapida">
 				<node name="summaryOn" value="Foloseste modul rapid (dar nu perfect) de improspatare a ecranului"/>
 				<node name="summaryOff" value="Foloseste modul complet (curat dar incet) de improspatare a ecranului"/>
