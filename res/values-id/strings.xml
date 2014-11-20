@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Aplikasi dapat memulai proses sinkronisasi FBReader</string>
   <string name="permission_sync_label">Antarmuka sinkronisasi FBReader</string>
   <string name="page">halaman</string>
-  <string name="d_ago">%dhari yang lalu</string>
+  <string name="d_ago">%dh yang lalu</string>
   <string name="buy_book">BELI</string>
   <string name="download_book">UNDUH</string>
   <string name="read_book">BACA</string>

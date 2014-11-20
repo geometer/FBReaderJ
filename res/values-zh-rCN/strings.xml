@@ -33,7 +33,7 @@
   <string name="permission_sync_description">此应用程序可启动 FBReader 同步过程</string>
   <string name="permission_sync_label">FBReader 同步界面</string>
   <string name="page">页</string>
-  <string name="d_ago">%d 天前</string>
+  <string name="d_ago">%d天前</string>
   <string name="buy_book">购买</string>
   <string name="download_book">下载</string>
   <string name="read_book">阅读</string>

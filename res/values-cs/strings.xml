@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Aplikace může spustit proces synchronizace aplikace FBReader</string>
   <string name="permission_sync_label">Synchronizační rozhraní aplikace FBReader</string>
   <string name="page">strana</string>
-  <string name="d_ago">Před %dd</string>
+  <string name="d_ago">Před %d d</string>
   <string name="buy_book">KOUPIT</string>
   <string name="download_book">STÁHNOUT</string>
   <string name="read_book">ČÍST</string>

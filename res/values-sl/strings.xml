@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Aplikacija lahko zažene postopek sinhronizacije knjižnice FBReader</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">stran</string>
-  <string name="d_ago">%dd nazaj</string>
+  <string name="d_ago">pred %d d</string>
   <string name="buy_book">KUPI</string>
   <string name="download_book">PRENESI</string>
   <string name="read_book">PREBERI</string>

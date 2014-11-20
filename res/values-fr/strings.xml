@@ -25,7 +25,7 @@
   <string name="unknown_error">Une erreur inconnue s\'est produite</string>
   <string name="incorrect_request">Demande incorrecte</string>
   <string name="nothing_to_define">Sélectionnez un mot à traduire</string>
-  <string name="no_connection">Pas de connexion Internet</string>
+  <string name="no_connection">Pas de connexion à Internet</string>
   <string name="permission_library_description">L\'application peut lire et modifier une bibliothèque FBReader</string>
   <string name="permission_library_label">FBReader library interface</string>
   <string name="permission_config_description">L\'application peut lire et modifier les paramètres FBReader</string>
@@ -33,7 +33,7 @@
   <string name="permission_sync_description">L\'application peut démarrer le processus de synchronisation FBReader</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">page</string>
-  <string name="d_ago">%dj auparavant</string>
+  <string name="d_ago">il y a %d j</string>
   <string name="buy_book">ACHETER</string>
   <string name="download_book">TÉLÉCHARGER</string>
   <string name="read_book">LIRE</string>

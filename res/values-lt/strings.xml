@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Programėlė gali pradėti „FBReader“ sinchronizavimo procesą</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">puslapis</string>
-  <string name="d_ago">prieš %ddien.</string>
+  <string name="d_ago">prieš %d d.</string>
   <string name="buy_book">PIRKTI</string>
   <string name="download_book">ATSISIŲSTI</string>
   <string name="read_book">SKAITYTI</string>

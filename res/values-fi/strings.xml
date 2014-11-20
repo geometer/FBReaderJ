@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Sovellus voi käynnistää FBReader-synkronoinnin</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">sivu</string>
-  <string name="d_ago">%dpv sitten</string>
+  <string name="d_ago">%d pv sitten</string>
   <string name="buy_book">OSTA</string>
   <string name="download_book">LATAA</string>
   <string name="read_book">LUE</string>
