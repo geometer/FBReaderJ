@@ -62,7 +62,7 @@ shared_ptr<ZLEncodingConverter> ZLEncodingCollection::converter(const std::strin
 			return (*it)->createConverter(name);
 		}
 	}
-	return 0;
+	return shared_ptr<ZLEncodingConverter>(0);
 }
 
 shared_ptr<ZLEncodingConverter> ZLEncodingCollection::converter(int code) const {
