@@ -22,7 +22,7 @@
 			<node name="invalidURL" value="URL inválido"/>
 			<node name="hostCantBeReached" value="Host %s não pode ser alcançado"/>
 			<node name="connectionRefused" value="A ligação foi recusada por %s"/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Rede não disponível"/>
 		</node>
 	</node>
 	<node name="color">
@@ -53,7 +53,7 @@
 		<node name="hy" value="Arménio"/>
 		<node name="id" value="Indonésio"/>
 		<node name="it" value="Italiano"/>
-		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ja" value="Japonês"/>
 		<node name="ka" value="Georgiano"/>
 		<node name="lt" value="Lituano"/>
 		<node name="nb" value="Norueguês"/>
