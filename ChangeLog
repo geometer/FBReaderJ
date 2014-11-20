@@ -7,6 +7,11 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.2 beta 5 (Nov ??, 2014) =====
+* CBZ plugin compatibility
+* Updated Dutch localisation (by Frank Fesevur)
+* Updated Czech localisation (by Marek Pavelka)
+
 ===== 2.2 beta 4 (Nov 16, 2014) =====
 * Missing book download (from the book network)
 * Material design support in themes
