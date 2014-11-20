@@ -25,7 +25,7 @@
   <string name="unknown_error">Неизвестная ошибка</string>
   <string name="incorrect_request">Неправильный запрос</string>
   <string name="nothing_to_define">Выберите слово, которое следует перевести</string>
-  <string name="no_connection">Нет соединения с Интернетом</string>
+  <string name="no_connection">Нет соединения с интернетом</string>
   <string name="permission_library_description">Приложение может получать данные из библиотеки FBReader и изменять ее</string>
   <string name="permission_library_label">Интерфейс библиотеки FBReader</string>
   <string name="permission_config_description">Приложение может получать данные из настроек FBReader и изменять их</string>
@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Приложение может запускать синхронизацию FBReader</string>
   <string name="permission_sync_label">Интерфейс синхронизации FBReader</string>
   <string name="page">стр.</string>
-  <string name="d_ago">%dd назад</string>
+  <string name="d_ago">%dд назад</string>
   <string name="buy_book">КУПИТЬ</string>
   <string name="download_book">ЗАГРУЗИТЬ</string>
   <string name="read_book">ЧИТАТЬ</string>

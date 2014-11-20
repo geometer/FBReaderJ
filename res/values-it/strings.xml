@@ -25,7 +25,7 @@
   <string name="unknown_error">Errore sconosciuto</string>
   <string name="incorrect_request">Richiesta non valida</string>
   <string name="nothing_to_define">Seleziona parola da tradurre</string>
-  <string name="no_connection">Nessuna connessione Internet</string>
+  <string name="no_connection">No connessione Internet</string>
   <string name="permission_library_description">L\'applicazione può leggere e cambiare la raccolta FBReader</string>
   <string name="permission_library_label">Interfaccia raccolta FBReader</string>
   <string name="permission_config_description">L\'applicazione può leggere e cambiare le impostazioni di FBReader</string>

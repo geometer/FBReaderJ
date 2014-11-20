@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Die Anwendung kann die FBReader-Synchronisierung starten.</string>
   <string name="permission_sync_label">FBReader-Synchronisationsschnittstelle</string>
   <string name="page">Seite</string>
-  <string name="d_ago">%dTage zurück</string>
+  <string name="d_ago">vor %d T.</string>
   <string name="buy_book">KAUFEN</string>
   <string name="download_book">HERUNTERLADEN</string>
   <string name="read_book">LESEN</string>
