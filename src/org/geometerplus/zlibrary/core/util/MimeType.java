@@ -108,8 +108,8 @@ public final class MimeType {
 	// unofficial, used by data.fbreader.org LitRes catalog
 	public static final MimeType APP_LITRES = get("application/litres+xml");
 	//???
-	public static final MimeType APP_CBZ = get("application/application/x-cbz");
-	
+	public static final MimeType APP_CBZ = get("application/x-cbz");
+
 	// MIME types / text
 	// ???
 	public static final MimeType TEXT_XML = get("text/xml");
@@ -167,7 +167,7 @@ public final class MimeType {
 	public static final List<MimeType> TYPES_DJVU
 		 = Arrays.asList(IMAGE_VND_DJVU, IMAGE_XDJVU, APP_DJVU);
 	public static final List<MimeType> TYPES_CBZ
-	 = Arrays.asList(APP_CBZ);
+		 = Arrays.asList(APP_CBZ);
 	public static final List<MimeType> TYPES_DOC
 		 = Arrays.asList(APP_MSWORD, APP_DOC);
 	public static final List<MimeType> TYPES_FB2_ZIP
