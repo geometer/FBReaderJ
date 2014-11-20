@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 28-Aug-2014 -->
+<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 16-Nov-2014 -->
 <resources>
 	<node name="library" value="FBReader bibliotheek">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
@@ -69,7 +69,7 @@
 		<node name="tryAgain" value="Nogmaals proberen"/>
 	</node>
 	<node name="networkLibrary" value="FBReader netwerkbibliotheek">
-		<node name="sync" value="FBReader® boekennetwork">
+		<node name="sync" value="FBReader® boekennetwerk">
 			<node name="summary" value="Mijn persoonlijke catalogus"/>
 		</node>
 		<node name="byAuthor" value="Auteurs">
@@ -97,7 +97,7 @@
 		</node>
 		<node name="openCatalog" value="Open catalogus"/>
 		<node name="networkSearch" value="Zoeken"/>
-		<node name="showResults" value="Toon resulten"/>
+		<node name="showResults" value="Toon resultaten"/>
 		<node name="showBooks" value="Toon boeken"/>
 		<node name="download" value="Download"/>
 		<node name="read" value="Lees lokale kopie"/>
@@ -144,14 +144,14 @@
 			<node name="readDemo" value="Wil je het voorbeeld lezen?"/>
 			<node name="downloadDemo" value="Wil je het voorbeeld downloaden"/>
 			<node name="buy" value="Wil je dit boek kopen? (%s)"/>
-			<node name="openInBrowser" value="Wil je deze catalous openen in de browser?"/>
+			<node name="openInBrowser" value="Wil je deze catalogus openen in de browser?"/>
 		</node>
 		<node name="downloadingCatalogs" value="Catalogus downloaden"/>
 		<!-- used as notification title -->
 		<node name="searchingNetwork" value="Zoeken naar boeken op het netwerk"/>
 		<!-- used as notification title -->
 		<node name="addCatalog">
-			<node name="title" value="Catalog toevoegen"/>
+			<node name="title" value="Catalogus toevoegen"/>
 			<node name="editUrl" value="Geef URL handmatig op"/>
 		</node>
 		<node name="manageCatalogs" value="Catalogussen beheren">
@@ -299,7 +299,7 @@
 		<node name="shareBook" value="Boek delen"/>
 		<node name="search" value="Zoeken"/>
 		<node name="rotate" value="Scherm draaien"/>
-		<node name="screenOrientation" value="Schermorientatie"/>
+		<node name="screenOrientation" value="Schermoriëntatie"/>
 		<node name="screenOrientationSystem" value="Systeem"/>
 		<node name="screenOrientationSensor" value="Afhankelijk van stand apparaat"/>
 		<node name="screenOrientationPortrait" value="Staand"/>
@@ -328,22 +328,22 @@
 			<node name="enable" value="Synchronisatie inschakelen">
 				<node name="summaryOn" value="Synchroniseer mijn bibliotheek met het FBReader boekennetwerk"/>
 				<node name="summaryOnWithAccount" value="Synchroniseer mijn bibliotheek als %s"/>
-				<node name="summaryOff" value="Synchroniseer mijn bibliotheek niet het net FBReader boekennetwerk"/>
+				<node name="summaryOff" value="Synchroniseer mijn bibliotheek niet met het FBReader boekennetwerk"/>
 			</node>
 			<node name="values">
 				<node name="always" value="Altijd"/>
-				<node name="viaWifi" value="Wanner verbonden met Wi-Fi"/>
+				<node name="viaWifi" value="Wanneer verbonden met wifi"/>
 				<node name="never" value="Nooit"/>
 			</node>
 			<node name="uploadAllBooks" value="Verstuur alle boeken naar de server"/>
-			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Download alle boeken van de server"/>
+			<node name="downloadCurrentBook" value="Download huidige boek van de server"/>
 			<node name="positions" value="Synchroniseer leesposities"/>
 			<node name="bookmarks" value="Synchroniseer bladwijzers"/>
-			<node name="metainfo" value="Synchroniseer metainfo (titel, trefwoorden, etc.)"/>
-			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
-				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchroniseer metadata (titel, trefwoorden, etc.)"/>
+			<node name="changeCurrentBook" value="Verander huidige boek">
+				<node name="summaryOn" value="Open hetzelfde boek op alle apparaten"/>
+				<node name="summaryOff" value="Synchroniseer alleen posities, verander niet automatisch van boek"/>
 			</node>
 		</node>
 		<node name="directories" value="Mappen">
@@ -354,7 +354,7 @@
 			<node name="downloadDir" value="Gedownloade boeken zoeken in">
 				<node name="chooserTitle" value="Map met boeken"/>
 			</node>
-			<node name="fontPath" value="Lattertypes zoeken in">
+			<node name="fontPath" value="Lettertypes zoeken in">
 				<node name="chooserTitle" value="Map met lettertypes"/>
 			</node>
 			<node name="tempDir" value="Tijdelijke bestanden opslaan in">
@@ -364,7 +364,7 @@
 		<node name="appearance" value="Weergave">
 			<node name="summary" value="Draaien, statusbalk"/>
 			<node name="language" value="Interfacetaal"/>
-			<node name="screenOrientation" value="Schermorientatie">
+			<node name="screenOrientation" value="Schermoriëntatie">
 				<node name="system" value="Systeem"/>
 				<node name="sensor" value="Afhankelijk van stand apparaat"/>
 				<node name="portrait" value="Staand"/>
@@ -393,7 +393,7 @@
 				<node name="summaryOff" value="Verberg navigatie controls"/>
 			</node>
 			<node name="disableButtonLights" value="Verlichting van hardwareknoppen uitschakelen tijdens lezen">
-				<node name="summaryOn" value="Verlichting perberen uit te schakelen (werkt niet op alle apparaten)"/>
+				<node name="summaryOn" value="Verlichting proberen uit te schakelen (werkt niet op alle apparaten)"/>
 				<node name="summaryOff" value="Probeer niet verlichting uit te schakelen"/>
 			</node>
 			<node name="twoColumnView" value="Twee kolommen">
@@ -541,7 +541,7 @@
 				<node name="Internal Hyperlink" value="Interne hyperlink">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Footnote" value="Voetnote">
+				<node name="Footnote" value="Voetnoot">
 					<node name="summary" value=""/>
 				</node>
 				<node name="Emphasis" value="Benadrukt">
@@ -598,53 +598,53 @@
 			</node>
 		</node>
 		<node name="css" value="CSS">
-			<node name="summary" value="Gebruik/Negeer waarden gedefineerd in CSS"/>
+			<node name="summary" value="Gebruik/Negeer waarden gedefinieerd in CSS"/>
 			<node name="fontFamily" value="Lettertype">
-				<node name="summaryOn" value="Gebruik lettertype gedefineerd in CSS"/>
-				<node name="summaryOff" value="Negeer lettertype gedefineerd in CSS"/>
+				<node name="summaryOn" value="Gebruik lettertype gedefinieerd in CSS"/>
+				<node name="summaryOff" value="Negeer lettertype gedefinieerd in CSS"/>
 			</node>
 			<node name="fontSize" value="Lettergrootte">
-				<node name="summaryOn" value="Gebruik lettergrootte gedefineerd in CSS"/>
-				<node name="summaryOff" value="Negeer lettergroote gedefineerd in CSS"/>
+				<node name="summaryOn" value="Gebruik lettergrootte gedefinieerd in CSS"/>
+				<node name="summaryOff" value="Negeer lettergrootte gedefinieerd in CSS"/>
 			</node>
 			<node name="textAlignment" value="Tekstuitlijning">
-				<node name="summaryOn" value="Gebruik tekstuitlijning gedefineerd in CSS"/>
-				<node name="summaryOff" value="Negeer tekstuitlijning gedefineerd in CSS"/>
+				<node name="summaryOn" value="Gebruik tekstuitlijning gedefinieerd in CSS"/>
+				<node name="summaryOff" value="Negeer tekstuitlijning gedefinieerd in CSS"/>
 			</node>
 			<node name="margins" value="Marges">
-				<node name="summaryOn" value="Gebruik marges gedefineerd in CSS"/>
-				<node name="summaryOff" value="Negeer marges gedefineerd in CSS"/>
+				<node name="summaryOn" value="Gebruik marges gedefinieerd in CSS"/>
+				<node name="summaryOff" value="Negeer marges gedefinieerd in CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="Kleuren">
 			<node name="summary" value="Kleurinstellingen"/>
 			<node name="background" value="Achtergrond">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
-					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+					<node name="solidColor" value="Effen kleur…"/>
+					<node name="predefined" value="Voorgedefinieerde texture…"/>
+					<node name="selectFile" value="Selecteer bestand…"/>
 				</node>
 				<node name="solidColor" value="Effen kleur"/>
 				<node name="leather" value="Leer"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Hout"/>
-				<node name="sand" value="Sand" toBeTranslated="true"/>
-				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+				<node name="sand" value="Zand"/>
+				<node name="hardpaper" value="Hardpapier"/>
 			</node>
-			<node name="fillMode" value="Fill mode" toBeTranslated="true">
-				<node name="tile" value="Tile" toBeTranslated="true"/>
-				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
-				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
-				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
-				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
-				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			<node name="fillMode" value="Opvulmode">
+				<node name="tile" value="Naast elkaar"/>
+				<node name="tileMirror" value="Gespiegeld naast elkaar"/>
+				<node name="fullscreen" value="Volledig scherm"/>
+				<node name="stretch" value="Uitrekken naar volledig scherm"/>
+				<node name="tileVertically" value="Horizontaal uitrekken, verticaal naast elkaar"/>
+				<node name="tileHorizontally" value="Verticaal uitrekken, horizontaal naast elkaar"/>
 			</node>
 			<node name="selectionBackground" value="Selectie achtergrond"/>
 			<node name="selectionForeground" value="Geselecteerde tekst"/>
 			<node name="text" value="Normale tekst"/>
 			<node name="hyperlink" value="Hyperlink tekst"/>
 			<node name="hyperlinkVisited" value="Bezochte hyperlink tekst"/>
-			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingForeground" value="Zoekresultaten"/>
 			<node name="highlightingBackground" value="Achtergrond zoekresultaten"/>
 			<node name="footer" value="Voettekst"/>
 		</node>
@@ -738,7 +738,7 @@
 			<node name="tappingAction" value="Lang aantikken">
 				<node name="doNothing" value="Lang aantikken doet niets"/>
 				<node name="selectSingleWord" value="Lang aantikken selecteert enkel woord"/>
-				<node name="startSelecting" value="Lang aatikken begint selecteermogelijkheid"/>
+				<node name="startSelecting" value="Lang aantikken begint selecteermogelijkheid"/>
 				<node name="openDictionary" value="Lang aantikken selecteert het woord, loslaten opent woordenboek"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigeer over alle woorden">
@@ -767,7 +767,7 @@
 		<node name="cancelMenu" value="Afsluitmenu">
 			<node name="summary" value="Terugknop actie"/>
 			<node name="library" value="Bibliotheek">
-				<node name="summaryOn" value="Toon 'open bibiotheek' item"/>
+				<node name="summaryOn" value="Toon 'open bibliotheek' item"/>
 				<node name="summaryOff" value="Verberg 'open bibliotheek' item"/>
 			</node>
 			<node name="networkLibrary" value="Netwerkbibliotheek">
@@ -810,7 +810,7 @@
 			<node name="email" value="Stuur ons een (Engelstalige) e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
-			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+			<node name="googleplus" value="Word lid van FBReader Google+ community">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
 			<node name="twitter" value="Volg ons op Twitter">
@@ -897,7 +897,7 @@
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik…"/>
 			<node name="updatingAccountInformation" value="Accountinformatie wordt bijgewerkt. Een ogenblik…"/>
 			<node name="initDRMEngine" value="DRM-engine wordt geïnitialiseerd. Een ogenblik…"/>
-			<node name="acquireLicense" value="License ophalen. Een ogenblik…"/>
+			<node name="acquireLicense" value="Licentie ophalen. Een ogenblik…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interne serverfout"/>
@@ -945,7 +945,7 @@
 		</node>
 		<node name="screenHint">
 			<node name="message1" value="FBReader werkt standaard in volledig scherm. Tik op de middelste deel van het scherm om de controls te tonen. Je kunt dit aanpassen in de “Weergave” sectie van de “Instellingen”"/>
-			<node name="message2" value="Prima! Tik nu nogmaalt op het middelste deel van scherm om de controls en deze tip te verbergen. Als je de controls wilt blijven zien tijdens het lezen, selecteer dan “Toon actiebalk” in de “Weergave” sectie van de “Instellingen”."/>
+			<node name="message2" value="Prima! Tik nu nogmaals op het middelste deel van scherm om de controls en deze tip te verbergen. Als je de controls wilt blijven zien tijdens het lezen, selecteer dan “Toon actiebalk” in de “Weergave” sectie van de “Instellingen”."/>
 		</node>
 		<node name="folderList">
 			<node name="addFolder" value="Map toevoegen"/>
@@ -1047,11 +1047,11 @@
 		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Hardop voorlezen"/>
 		</node>
-		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
-			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+		<node name="calibre_server_integration" value="Calibre-connectie">
+			<node name="summary" value="Verbind met Calibre server in het lokale netwerk"/>
 		</node>
 		<node name="local_opds_scanner" value="Lokale OPDS-scanner">
-			<node name="summary" value="Zoek naar boeken in het locale netwerk"/>
+			<node name="summary" value="Zoek naar boeken in het lokale netwerk"/>
 		</node>
 		<node name="bookshelf" value="Boekenplank">
 			<node name="summary" value="Miniatuurweergaven tonen"/>
@@ -1065,8 +1065,8 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Lees boeken in PDF-formaat"/>
 		</node>
-		<node name="djvu" value="DjVu" toBeTranslated="true">
-			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="Lees boeken in DjVu-formaat"/>
 		</node>
 	</node>
 	<node name="drm">

@@ -1023,7 +1023,7 @@
 		<node name="emptyNetworkSearchResults" value="Nebyly nalezeny žádné knihy"/>
 		<node name="videoServiceNotWorking" value="Bohužel, videoslužba není dostupná"/>
 		<node name="videoPlayerNotFound" value="Bohužel, na tomto zařízení není nainstalovaný žádný přehrávač videa"/>
-		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
+		<node name="bookIsMissingTitle" value="Chybějící kniha"/>
 		<node name="bookIsMissing" value="Bohužel, kniha '%s' nebyla v zařízení nalezena"/>
 	</node>
 	<node name="external">
