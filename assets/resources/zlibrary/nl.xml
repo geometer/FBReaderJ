@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch zlibrary resources, by Frank Fesevur 07-Jan-2011, Last update 10-Jan-2014 -->
+<!-- Dutch zlibrary resources, by Frank Fesevur 07-Jan-2011, Last update 16-Nov-2014 -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -23,7 +23,7 @@
 			<node name="invalidURL" value="Ongeldige URL"/>
 			<node name="hostCantBeReached" value="Host %s is onbereikbaar"/>
 			<node name="connectionRefused" value="Verbinding was geweigerd door&#10;%s"/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Netwerk is niet beschikbaar"/>
 		</node>
 	</node>
 	<node name="color">
@@ -54,7 +54,7 @@
 		<node name="hy" value="Armeens"/>
 		<node name="id" value="Indonesisch"/>
 		<node name="it" value="Italiaans"/>
-		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ja" value="Japans"/>
 		<node name="ka" value="Georgisch"/>
 		<node name="lt" value="Litouws"/>
 		<node name="nb" value="Noors"/>
