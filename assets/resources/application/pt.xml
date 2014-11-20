@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Portuguese FBReader resources, translated by Bruno Ramalhete "bram.512@gmail.com" -->
+<!-- Updated by Igor Marques -->
 <resources>
 	<node name="library" value="Biblioteca FBReader">
 		<node name="unknownAuthor" value="Autor desconhecido"/>
@@ -338,14 +339,14 @@
 				<node name="never" value="Nunca"/>
 			</node>
 			<node name="uploadAllBooks" value="Enviar todos os livros para o servidor"/>
-			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Baixar todos os livros do servidor"/>
+			<node name="downloadCurrentBook" value="Baixar livro atual do servidor"/>
 			<node name="positions" value="Sincronizar posições de leitura"/>
 			<node name="bookmarks" value="Sincronizar marcadores"/>
 			<node name="metainfo" value="Sincronizar metainfo (títulos, etiquetas, etc.)"/>
-			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
-				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Alterar livro atual">
+				<node name="summaryOn" value="Abrir o mesmo livro em todos os dispositivos"/>
+				<node name="summaryOff" value="Apenas sincronizar posições, não alterar o livro automaticamente"/>
 			</node>
 		</node>
 		<node name="directories" value="Diretórios">
@@ -622,31 +623,31 @@
 			<node name="summary" value="Configurações de cor"/>
 			<node name="background" value="Fundo">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
-					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+					<node name="solidColor" value="Cor sólida…"/>
+					<node name="predefined" value="Textura pré-definida…"/>
+					<node name="selectFile" value="Selecionar arquivo…"/>
 				</node>
 				<node name="solidColor" value="Cor sólida"/>
 				<node name="leather" value="Couro"/>
 				<node name="sepia" value="Sépia"/>
 				<node name="wood" value="Madeira"/>
-				<node name="sand" value="Sand" toBeTranslated="true"/>
-				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+				<node name="sand" value="Areia"/>
+				<node name="hardpaper" value="Lixa"/>
 			</node>
-			<node name="fillMode" value="Fill mode" toBeTranslated="true">
-				<node name="tile" value="Tile" toBeTranslated="true"/>
-				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
-				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
-				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
-				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
-				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			<node name="fillMode" value="Modo de preenchimento">
+				<node name="tile" value="Repetir"/>
+				<node name="tileMirror" value="Repetir espelhado"/>
+				<node name="fullscreen" value="Tela cheia"/>
+				<node name="stretch" value="Esticar para preencher a tela"/>
+				<node name="tileVertically" value="Esticar horizontalmente, repetir verticalmente"/>
+				<node name="tileHorizontally" value="Esticar verticalmente,  repetir horizontalmente"/>
 			</node>
 			<node name="selectionBackground" value="Seleção de fundo"/>
 			<node name="selectionForeground" value="Texto selecionado"/>
 			<node name="text" value="Texto normal"/>
 			<node name="hyperlink" value="Texto de hiperligação"/>
 			<node name="hyperlinkVisited" value="Texto de hiperligação visitado"/>
-			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingForeground" value="Resultados da busca"/>
 			<node name="highlightingBackground" value="Fundo de resultados de pesquisa"/>
 			<node name="footer" value="Rodapé"/>
 		</node>
@@ -812,7 +813,7 @@
 			<node name="email" value="Envie-nos um e-mail">
 				<node name="url" value="mailto:tech@panaceasupplies.com"/>
 			</node>
-			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+			<node name="googleplus" value="Participe da comunidade FBReader no Google+">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
 			<node name="twitter" value="Siga-nos no Twitter">
@@ -1016,7 +1017,7 @@
 		<node name="emptyNetworkSearchResults" value="Nenhum livro encontrado, desculpe"/>
 		<node name="videoServiceNotWorking" value="Serviço de vídeo não disponível, desculpe"/>
 		<node name="videoPlayerNotFound" value="Não há nenhum leitor de vídeo instalado neste dispositivo, desculpe"/>
-		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
+		<node name="bookIsMissingTitle" value="Livro não encontrado"/>
 		<node name="bookIsMissing" value="O livro '%s' não foi encontrado no dispositivo, desculpe"/>
 	</node>
 	<node name="external" value="Externo">
@@ -1049,8 +1050,8 @@
 		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Ler em voz alta"/>
 		</node>
-		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
-			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+		<node name="calibre_server_integration" value="Conexão com Calibre">
+			<node name="summary" value="Conecte ao servidor Calibre da sua rede local"/>
 		</node>
 		<node name="local_opds_scanner" value="Local OPDS Scanner">
 			<node name="summary" value="Procurar por livros na rede local"/>
@@ -1067,8 +1068,8 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Ler livros no formato PDF"/>
 		</node>
-		<node name="djvu" value="DjVu" toBeTranslated="true">
-			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="Leia livros no formato DjVu"/>
 		</node>
 	</node>
 	<node name="drm">
