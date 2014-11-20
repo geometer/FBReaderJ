@@ -22,7 +22,7 @@
 			<node name="invalidURL" value="URL Invalid"/>
 			<node name="hostCantBeReached" value="Serverul %s&#10; nu poate fi contactat"/>
 			<node name="connectionRefused" value="Conexiunea a fost refuzata de &#10;%s"/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Reteaua nu este disponibila"/>
 		</node>
 	</node>
 	<node name="color">
@@ -53,7 +53,7 @@
 		<node name="hy" value="Armeana"/>
 		<node name="id" value="Indoneziana"/>
 		<node name="it" value="Italiana"/>
-		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ja" value="Japoneza"/>
 		<node name="ka" value="Georgiana"/>
 		<node name="lt" value="Lituaniana"/>
 		<node name="nb" value="Norvegiana"/>

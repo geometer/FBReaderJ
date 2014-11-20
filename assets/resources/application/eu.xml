@@ -850,11 +850,6 @@
 			<node name="refresh" value="Freskatu"/>
 			<node name="authorise" value="Baimendu"/>
 			<node name="resetPosition" value="Berrezarri posizioa"/>
-			<node name="sendReport" value="Send report" toBeTranslated="true"/>
-			<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
-			<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 			<node name="enterPosition" value="Idatzi orri zenbakia"/>
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
