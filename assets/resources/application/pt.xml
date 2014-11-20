@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Portuguese FBReader resources, translated by Bruno Ramalhete "bram.512@gmail.com" -->
+<!-- Updated by Igor Marques -->
 <resources>
 	<node name="library" value="Biblioteca FBReader">
 		<node name="unknownAuthor" value="Autor desconhecido"/>
