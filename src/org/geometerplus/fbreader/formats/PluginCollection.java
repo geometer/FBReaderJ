@@ -61,6 +61,7 @@ public class PluginCollection {
 		if (Build.VERSION.SDK_INT >= 8) {
 			myExternalPlugins.add(new DjVuPlugin());
 			myExternalPlugins.add(new PDFPlugin());
+			myExternalPlugins.add(new CBZPlugin());
 		}
 	}
 
