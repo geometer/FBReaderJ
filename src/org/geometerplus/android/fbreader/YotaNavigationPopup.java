@@ -13,6 +13,8 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
+
+import com.yotadevices.yotaphone2.fbreader.UIUtils;
 import com.yotadevices.yotaphone2.yotareader.R;
 
 public class YotaNavigationPopup extends NavigationPopup {
@@ -66,7 +68,7 @@ public class YotaNavigationPopup extends NavigationPopup {
 		final TextView page = (TextView)layout.findViewById(R.id.page);
 		final TextView pages_left = (TextView)layout.findViewById(R.id.pages_left);
 		final TextView back_to_page = (TextView)layout.findViewById(R.id.back_to_page);
-		back_to_page.setText(myWindow.getActivity().getString(R.string.back_to_page) + " " + mStartPage);
+		//back_to_page.setText(myWindow.getActivity().getString(R.string.back_to_page) + " " + mStartPage);
 		back_to_page.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -108,7 +110,9 @@ public class YotaNavigationPopup extends NavigationPopup {
 					final int pagesNumber = seekBar.getMax() + 1;
 					gotoPage(curpage);
 					page.setText(makeProgressText(curpage, pagesNumber, of));
-					pages_left.setText(pagesNumber - curpage + " " + pages_left_resource);
+					int percents = (int)(((float)curpage / (float)pagesNumber) * 100);
+					String percentsText = percents+"%";
+					pages_left.setText(UIUtils.isArabic() ? UIUtils.convertStringWithNumbersToArabic(percentsText) :percentsText);
 
 					final TOCTree tocElement = myFBReader.getCurrentTOCElement();
 					if (tocElement != null) {
@@ -132,13 +136,15 @@ public class YotaNavigationPopup extends NavigationPopup {
 
 		final ZLTextView textView = myFBReader.getTextView();
 		final ZLTextView.PagePosition pagePosition = textView.pagePosition();
-		back_to_page.setText(myWindow.getActivity().getString(R.string.back_to_page) + " " + mStartPage);
+		//back_to_page.setText(myWindow.getActivity().getString(R.string.back_to_page) + " " + mStartPage);
 
 		if (slider.getMax() != pagePosition.Total - 1 || slider.getProgress() != pagePosition.Current - 1) {
 			slider.setMax(pagePosition.Total - 1);
 			slider.setProgress(pagePosition.Current - 1);
 			page.setText(makeProgressText(pagePosition.Current, pagePosition.Total, myWindow.getActivity().getString(R.string.of)));
-			pagesLeft.setText(pagePosition.Total - pagePosition.Current + " " + myWindow.getActivity().getString(R.string.pages_left));
+			int percents = (int)(((float)pagePosition.Current / (float)pagePosition.Total) * 100);
+			String percentsText = percents+"%";
+			pagesLeft.setText(UIUtils.isArabic() ? UIUtils.convertStringWithNumbersToArabic(percentsText) :percentsText);
 		}
 	}
 
@@ -153,15 +159,13 @@ public class YotaNavigationPopup extends NavigationPopup {
 	protected String makeProgressText(int page, int pagesNumber, String of) {
 		final StringBuilder builder = new StringBuilder();
 		builder.append(page);
-		builder.append(" ");
-		builder.append(of);
-		builder.append(" ");
+		builder.append("/");
 		builder.append(pagesNumber);
 //		final TOCTree tocElement = myFBReader.getCurrentTOCElement();
 //		if (tocElement != null) {
 //			builder.append("  ");
 //			builder.append(tocElement.getText());
 //		}
-		return builder.toString();
+		return UIUtils.isArabic() ? UIUtils.convertStringWithNumbersToArabic(builder.toString()) : builder.toString();
 	}
 }

@@ -23,7 +23,7 @@
         android:textColor="#4e4e4e"
         android:textSize="15dp"
         android:fontFamily="PT Sans Yota"
-        android:text="100 of 100"/>
+        android:text="100/100"/>
     <ImageView
         android:id="@+id/back_to_page_icon"
         android:layout_alignParentLeft="true"
@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/back_to_page"
-
         android:layout_toLeftOf="@+id/page"
         android:layout_toRightOf="@+id/back_to_page_icon"
         android:layout_below="@id/navigation_slider"
@@ -48,7 +47,7 @@
         android:textSize="13dp"
         android:fontFamily="PT Sans Yota Demi"
         android:textStyle="italic"
-        android:text="Back to page 27"
+        android:text="@string/back"
         android:singleLine="true"/>
     <TextView
         android:id="@+id/pages_left"
@@ -66,6 +65,6 @@
         android:textSize="13dp"
         android:fontFamily="PT Sans Yota"
         android:textStyle="italic"
-        android:text="100 pages left"
+        android:text="100%"
         android:singleLine="true"/>
 </RelativeLayout>
