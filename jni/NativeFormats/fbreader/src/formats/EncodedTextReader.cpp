@@ -18,13 +18,10 @@
  */
 
 #include "EncodedTextReader.h"
-#include <android/log.h>
 
 EncodedTextReader::EncodedTextReader(const std::string &encoding) {
 	ZLEncodingCollection &collection = ZLEncodingCollection::Instance();
-	const shared_ptr<ZLEncodingConverter>& ptr = collection.converter(encoding);
-	__android_log_print(ANDROID_LOG_DEBUG, "FBReader", "EncodedTextReader collection 0x%08x, converter 0x%08x", &collection, &ptr);
-	myConverter = ptr;
+	myConverter = collection.converter(encoding);
 	if (myConverter.isNull()) {
 		myConverter = collection.defaultConverter();
 	}
