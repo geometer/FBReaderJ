@@ -42,4 +42,5 @@
   <string name="only_english">عذرًا، التعريف المتاح للكلمات الإنجليزية فقط</string>
   <string name="select_only_one_word">يرجى تحديد كلمة واحدة فقط</string>
   <string name="bookmark">إشارة مرجعية</string>
+  <string name="back">Back</string>
 </resources>

@@ -42,4 +42,5 @@
   <string name="only_english">Sorry, definition available only for English words</string>
   <string name="select_only_one_word">Please select only one word</string>
   <string name="bookmark">Bookmark</string>
+  <string name="back">Back</string>
 </resources>

@@ -42,4 +42,5 @@
   <string name="only_english">Definizione disponibile solo per parole inglesi</string>
   <string name="select_only_one_word">Seleziona solo una parola</string>
   <string name="bookmark">Segnalibro</string>
+  <string name="back">Back</string>
 </resources>

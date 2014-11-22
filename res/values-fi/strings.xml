@@ -42,4 +42,5 @@
   <string name="only_english">Valitettavasti määritelmä on saatavana vain englanninkielisille sanoille</string>
   <string name="select_only_one_word">Valitse vain yksi sana</string>
   <string name="bookmark">Kirjanmerkki</string>
+  <string name="back">Back</string>
 </resources>

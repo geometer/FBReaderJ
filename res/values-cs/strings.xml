@@ -42,4 +42,5 @@
   <string name="only_english">Litujeme, definice je k dispozici pouze pro anglická slova</string>
   <string name="select_only_one_word">Vyberte pouze jedno slovo</string>
   <string name="bookmark">Záložka</string>
+  <string name="back">Back</string>
 </resources>

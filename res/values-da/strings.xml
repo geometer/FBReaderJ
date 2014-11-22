@@ -42,4 +42,5 @@
   <string name="only_english">Der er desværre kun definitioner til engelske ord</string>
   <string name="select_only_one_word">Vælg kun ét ord</string>
   <string name="bookmark">Bogmærke</string>
+  <string name="back">Back</string>
 </resources>

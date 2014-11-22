@@ -42,4 +42,5 @@
   <string name="only_english">De definitie is helaas alleen beschikbaar voor Engelse woorden</string>
   <string name="select_only_one_word">Selecteer slechts één woord</string>
   <string name="bookmark">Bladwijzer</string>
+  <string name="back">Back</string>
 </resources>

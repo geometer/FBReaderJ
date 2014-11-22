@@ -42,4 +42,5 @@
   <string name="only_english">Definition ist leider nur für englische Wörter verfügbar.</string>
   <string name="select_only_one_word">Wählen Sie genau ein Wort aus.</string>
   <string name="bookmark">Lesezeichen</string>
+  <string name="back">Back</string>
 </resources>

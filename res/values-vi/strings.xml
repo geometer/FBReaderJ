@@ -42,4 +42,5 @@
   <string name="only_english">Rất tiếc, định nghĩa chỉ có sẵn cho các từ tiếng Anh</string>
   <string name="select_only_one_word">Vui lòng chọn ít nhất một từ</string>
   <string name="bookmark">Bookmark</string>
+  <string name="back">Back</string>
 </resources>

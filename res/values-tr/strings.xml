@@ -42,4 +42,5 @@
   <string name="only_english">Üzgünüz, tanım sadece İngilizce sözcükler için mevcut</string>
   <string name="select_only_one_word">Lütfen yalnızca bir sözcük seçin</string>
   <string name="bookmark">Yer İmi</string>
+  <string name="back">Back</string>
 </resources>

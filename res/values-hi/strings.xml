@@ -42,4 +42,5 @@
   <string name="only_english">क्षमा करें, केवल अंग्रेज़ी शब्दों की परिभाषा उपलब्ध है</string>
   <string name="select_only_one_word">कृपया कोई एक शब्द चुनें</string>
   <string name="bookmark">बुकमार्क</string>
+  <string name="back">Back</string>
 </resources>

@@ -42,4 +42,5 @@
   <string name="only_english">Atsiprašome, yra tik angliškų žodžių apibrėžimai</string>
   <string name="select_only_one_word">Pasirinkite tik vieną žodį</string>
   <string name="bookmark">Žymelė</string>
+  <string name="back">Back</string>
 </resources>
