@@ -42,4 +42,5 @@
   <string name="only_english">Definicije su dostupne samo za engleske riječi</string>
   <string name="select_only_one_word">Odaberite samo jednu riječ</string>
   <string name="bookmark">Oznaka</string>
+  <string name="back">Back</string>
 </resources>

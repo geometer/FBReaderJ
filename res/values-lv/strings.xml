@@ -42,4 +42,5 @@
   <string name="only_english">Diemžēl definīcijas ir pieejamas tikai angļu valodas vārdiem</string>
   <string name="select_only_one_word">Atlasiet vienu vārdu</string>
   <string name="bookmark">Grāmatzīme</string>
+  <string name="back">Back</string>
 </resources>

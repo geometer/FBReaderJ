@@ -42,4 +42,5 @@
   <string name="only_english">ขออภัย มีคำจำกัดความให้เฉพาะคำภาษาอังกฤษ</string>
   <string name="select_only_one_word">โปรดเลือกเพียงคำเดียว</string>
   <string name="bookmark">บุ๊กมาร์ก</string>
+  <string name="back">Back</string>
 </resources>
