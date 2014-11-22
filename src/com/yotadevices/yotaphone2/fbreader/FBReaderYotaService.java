@@ -407,14 +407,16 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     };
 
     protected void onVolumeButtonsEvent(Constants.VolumeButtonsEvent event) {
-        switch (event) {
-            case VOLUME_MINUS_DOWN:
-                myFBReaderApp.runAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD);
-                break;
-            case VOLUME_PLUS_DOWN:
-                myFBReaderApp.runAction(ActionCode.VOLUME_KEY_SCROLL_BACK);
-                break;
-        }
+	    if (!isBackScreenLocked()) {
+		    switch (event) {
+			    case VOLUME_MINUS_DOWN:
+				    myFBReaderApp.runAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+				    break;
+			    case VOLUME_PLUS_DOWN:
+				    myFBReaderApp.runAction(ActionCode.VOLUME_KEY_SCROLL_BACK);
+				    break;
+		    }
+	    }
     }
 
 	public void updateCoverOnYotaWidget(Book book) {
