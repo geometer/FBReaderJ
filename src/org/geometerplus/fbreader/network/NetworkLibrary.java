@@ -163,11 +163,11 @@ public class NetworkLibrary {
 		}
 
 		final List<INetworkLink> result = new LinkedList<INetworkLink>();
-		INetworkLink syncLink = linksById.get(SyncOptions.DOMAIN);
+		/*INetworkLink syncLink = linksById.get(SyncOptions.DOMAIN);
 		if (syncLink == null) {
 			syncLink = new OPDSSyncNetworkLink();
 		}
-		result.add(syncLink);
+		result.add(syncLink);*/
 		for (String id : activeIds()) {
 			final INetworkLink link = linksById.get(id);
 			if (link != null) {
