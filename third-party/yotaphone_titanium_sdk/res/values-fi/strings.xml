@@ -6,4 +6,5 @@
   <string name="loading_data">Ladataan tietoja...</string>
   <string name="flip_popup_default_title">Käännä puhelimesi</string>
   <string name="flip_popup_default_description">Sovellus on aktiivinen\nvärinäytössä</string>
+  <string name="d_ago">%d pv sitten</string>
 </resources>

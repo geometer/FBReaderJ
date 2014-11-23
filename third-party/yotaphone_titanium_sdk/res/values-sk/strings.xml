@@ -6,4 +6,5 @@
   <string name="loading_data">Načítavanie údajov...</string>
   <string name="flip_popup_default_title">Prevrátiť telefón</string>
   <string name="flip_popup_default_description">Aplikácia je aktívna\nna farebnom displeji</string>
+  <string name="d_ago">Pred %d d.</string>
 </resources>

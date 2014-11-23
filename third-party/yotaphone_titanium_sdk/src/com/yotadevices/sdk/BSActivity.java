@@ -70,6 +70,12 @@ public class BSActivity extends Service {
 
     private boolean isInit;
 
+    final static class InstanceState {
+        public boolean mFromCurtain;
+    }
+
+    private InstanceState mInstance = new InstanceState();
+
     /**
      * @hide
      */
@@ -236,11 +242,13 @@ public class BSActivity extends Service {
         }
     }
 
-    final void performBSCreate() {
+    final void performBSCreate(Bundle instance) {
         if (DEBUG_BS_LIFECIRCLE) {
             Log.v(TAG, "onBSCreate.");
         }
+        parceInstance(instance);
 
+        checkBSActivityRunning();
         mDrawer.showBlankView();// TODO:
         mCalled = false;
         onBSCreate();
@@ -248,6 +256,12 @@ public class BSActivity extends Service {
             throw new SuperNotCalledException("BSActivity " + TAG + " did not call through to super.onBSCreate()");
         }
         sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVE);
+    }
+
+    void parceInstance(Bundle instance) {
+        if (instance != null) {
+            mInstance.mFromCurtain = instance.getBoolean("fromCurtain");
+        }
     }
 
     void performBSActivated(boolean isBsLock) {
@@ -377,6 +391,9 @@ public class BSActivity extends Service {
         sendToFramework(InnerConstants.RequestFramework.HANDLE_ON_KEY_PRESS, bundle);
     }
 
+    void onBSAttach() {
+    }
+
     protected void onPrepareLayoutParams(WindowManager.LayoutParams lp) {
 
     }
@@ -420,10 +437,8 @@ public class BSActivity extends Service {
      */
     protected void onBSResume() {
         checkBSActivityRunning();
-        mDrawer.addBSParentView(mInitialWaveform, mInitialDithering);// show
-        // user UI
-        // on back
-        // screen
+        // show user UI on back screen
+        mDrawer.addBSParentView(mInitialWaveform, mInitialDithering);
         isResumed = true;
         mCalled = true;
     }
@@ -745,6 +760,14 @@ public class BSActivity extends Service {
         return false;
     }
 
+    public boolean fromCoverStarted() {
+        return getInstanceState().mFromCurtain;
+    }
+
+    InstanceState getInstanceState() {
+        return mInstance;
+    }
+
     void performFnishWithRequest(boolean stopped) {
         sendRequest(InnerConstants.RequestFramework.REQUEST_SET_FINISH);
         performFnish(stopped);
@@ -835,6 +858,7 @@ public class BSActivity extends Service {
             if (mService == null) {
                 Log.d(TAG, "Attached.");
                 mService = new Messenger(service);
+                onBSAttach();
                 sendRequest(InnerConstants.RequestFramework.REQUEST_CAN_START);
             }
         }

@@ -6,4 +6,5 @@
   <string name="loading_data">Načítání dat...</string>
   <string name="flip_popup_default_title">Obraťte telefon</string>
   <string name="flip_popup_default_description">Aplikace je aktivní\nna barevném displeji</string>
+  <string name="d_ago">Před %d d</string>
 </resources>

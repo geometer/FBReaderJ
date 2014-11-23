@@ -6,4 +6,5 @@
   <string name="loading_data">Indlæser data...</string>
   <string name="flip_popup_default_title">Vend din telefon</string>
   <string name="flip_popup_default_description">Appen er aktiv\npå farveskærmen</string>
+  <string name="d_ago">%dd. siden</string>
 </resources>

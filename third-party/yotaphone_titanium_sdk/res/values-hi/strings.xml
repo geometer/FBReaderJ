@@ -6,4 +6,5 @@
   <string name="loading_data">डेटा लोड हो रहा है...</string>
   <string name="flip_popup_default_title">अपना फ़ोन फ़्लिप करें</string>
   <string name="flip_popup_default_description">एप्लिकेशन\nरंगीन डिस्प्ले पर सक्रिय है</string>
+  <string name="d_ago">%dदिन पहले</string>
 </resources>

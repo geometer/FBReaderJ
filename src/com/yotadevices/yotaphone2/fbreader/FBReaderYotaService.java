@@ -149,12 +149,12 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 				        public void run() {
 					        myFBReaderApp.initWindow();
 					        initBookView(true);
-					        if (firstStart()) {
+					        /*if (firstStart()) {
 						        showActionBar();
 						        showStatusBar();
 					        } else {
 						        hideStatusBar();
-					        }
+					        }*/
 				        }
 			        }, null);
 			        AndroidFontUtil.clearFontCache();
@@ -170,11 +170,16 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 				        myFBReaderApp.hideActivePopup();
 			        }
 		        }
-		        showActionBar();
-		        showStatusBar();
-		        setNotFirstStart();
 	        }
         });
+	    mHandler.postDelayed(new Runnable() {
+		    @Override
+		    public void run() {
+			    showActionBar();
+			    showStatusBar();
+			    setNotFirstStart();
+		    }
+	    }, 500);
     }
 
     @Override

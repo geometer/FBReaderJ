@@ -181,10 +181,11 @@ public class BSDrawer extends Drawer {
             boolean translucentNavigation = (visibility & SystemBSFlags.SYSTEM_BS_UI_FLAG_TRANSLUCENT_NAVIGATION) != 0;
 
             int y = 0;
-            int height = BS_SCREEN_HEIGHT - y - ((hideNavigation || translucentNavigation) ? 0 : mNavigationBarHeight);
+            // int height = BS_SCREEN_HEIGHT - y - ((hideNavigation ||
+            // translucentNavigation) ? 0 : mNavigationBarHeight);
 
             lp.y = y;
-            lp.height = height;
+            // lp.height = WindowManager.LayoutParams.MATCH_PARENT;// height;
             lp.gravity = Gravity.TOP;
         }
         return lp;
@@ -219,16 +220,18 @@ public class BSDrawer extends Drawer {
                 activity.onPrepareLayoutParams(lp);
                 applySystemIUVisibility(lp, activity.getSytemBSUiVisibility());
             }
+            final Waveform prevWaveform = EinkUtils.getViewWaveform(mParentView);
+            final Dithering prevDithering = EinkUtils.getViewDithering(mParentView);
             EinkUtils.setViewDithering(mParentView, initialDithering);
             EinkUtils.setViewWaveform(mParentView, initialWaveform);
             wm.addView(mParentView, lp);
             mParentView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    EinkUtils.setViewDithering(mParentView, Dithering.DITHER_DEFAULT);
-                    EinkUtils.setViewWaveform(mParentView, Waveform.WAVEFORM_DEFAULT);
+                    EinkUtils.setViewDithering(mParentView, prevDithering);
+                    EinkUtils.setViewWaveform(mParentView, prevWaveform);
                 }
-            }, 500);
+            }, 400);
 
             // When BS layout is added we perform FULL update to remove all
             // ghosting
@@ -338,6 +341,10 @@ public class BSDrawer extends Drawer {
         if (isInit() && isShowBSParentView()) {
             WindowManager wm = getWindowManager();
             LayoutParams lp = getDefaultLayoutParams();
+            BSActivity activity = mActivity.get();
+            if (activity != null) {
+                activity.onPrepareLayoutParams(lp);
+            }
             applySystemIUVisibility(lp, visibility);
 
             wm.updateViewLayout(mParentView, lp);

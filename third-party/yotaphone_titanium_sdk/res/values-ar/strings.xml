@@ -6,4 +6,5 @@
   <string name="loading_data">جارٍ تحميل البيانات...</string>
   <string name="flip_popup_default_title">اقلب الهاتف</string>
   <string name="flip_popup_default_description">التطبيق نشط\nعلى الشاشة الملونة.</string>
+  <string name="d_ago">%dي مضى</string>
 </resources>

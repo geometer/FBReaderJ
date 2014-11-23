@@ -6,4 +6,5 @@
   <string name="loading_data">Chargement des données...</string>
   <string name="flip_popup_default_title">Retournez votre téléphone</string>
   <string name="flip_popup_default_description">L\'application est active\nsur l\'écran couleur</string>
+  <string name="d_ago">il y a %d j</string>
 </resources>

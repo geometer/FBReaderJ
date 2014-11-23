@@ -6,4 +6,5 @@
   <string name="loading_data">Läser in data...</string>
   <string name="flip_popup_default_title">Vänd telefonen</string>
   <string name="flip_popup_default_description">Programmet är aktivt\npå färgskärmen</string>
+  <string name="d_ago">%dd sedan</string>
 </resources>

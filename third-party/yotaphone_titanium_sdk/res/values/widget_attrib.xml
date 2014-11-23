@@ -28,6 +28,8 @@
             <flag name="Education" value="8192" />
             <flag name="Personalisation" value="16384" />
             <flag name="Games" value="32768" />
+            <flag name="Cover" value="131072" />
+            <flag name="Panel" value="262144" />
         </attr>
 
     </declare-styleable>

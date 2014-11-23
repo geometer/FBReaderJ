@@ -6,4 +6,5 @@
   <string name="loading_data">A carregar dados...</string>
   <string name="flip_popup_default_title">Virar o telefone ao contrário</string>
   <string name="flip_popup_default_description">A aplicação está ativa\nno ecrã a cores</string>
+  <string name="d_ago">há %dd</string>
 </resources>

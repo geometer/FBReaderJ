@@ -6,4 +6,5 @@
   <string name="loading_data">Adatok betöltése...</string>
   <string name="flip_popup_default_title">Fordítsa meg a telefont</string>
   <string name="flip_popup_default_description">Az alkalmazás aktív\na színes kijelzőn</string>
+  <string name="d_ago">%d napja</string>
 </resources>

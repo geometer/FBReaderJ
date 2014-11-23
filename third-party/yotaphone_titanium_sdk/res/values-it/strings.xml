@@ -6,4 +6,5 @@
   <string name="loading_data">Caricamento dati...</string>
   <string name="flip_popup_default_title">Capovolgi il telefono</string>
   <string name="flip_popup_default_description">L\'applicazione è attiva\nsul display a colori</string>
+  <string name="d_ago">%dg fa</string>
 </resources>

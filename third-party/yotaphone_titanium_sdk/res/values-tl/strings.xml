@@ -6,4 +6,5 @@
   <string name="loading_data">Nilo-load ang data...</string>
   <string name="flip_popup_default_title">Baligtarin ang iyong telepono</string>
   <string name="flip_popup_default_description">Aktibo ang application\nsa display na palaging naka-on</string>
+  <string name="d_ago">Nakaraang %da</string>
 </resources>

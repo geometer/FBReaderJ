@@ -1,13 +1,15 @@
 package com.yotadevices.sdk;
 
+import com.yotadevices.sdk.Constants.Feature;
+import com.yotadevices.sdk.utils.EinkUtils;
+
 import android.graphics.drawable.Drawable;
+import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.yotadevices.sdk.utils.EinkUtils;
 
 public class NotificationBSActivity extends BSActivity {
     private RelativeLayout mMainLayout;
@@ -15,6 +17,12 @@ public class NotificationBSActivity extends BSActivity {
     private ImageView mOK;
     private ImageView mCancel;
     private ImageView mAction;
+
+    @Override
+    void onBSAttach() {
+        super.onBSAttach();
+        setFeature(Feature.FEATURE_KEEP_ON_SCREEN);
+    }
 
     @Override
     protected void onBSCreate() {
@@ -25,6 +33,14 @@ public class NotificationBSActivity extends BSActivity {
     @Override
     protected void onBSResume() {
         super.onBSResume();
+    }
+
+    public boolean isPrivate() {
+        return getInstanceState().mFromCurtain && !isShowNotificationOnCover();
+    }
+
+    private boolean isShowNotificationOnCover() {
+        return Settings.Global.getInt(getContext().getContentResolver(), "show_notifications_content_on_cover", 0) == 1;
     }
 
     @Override

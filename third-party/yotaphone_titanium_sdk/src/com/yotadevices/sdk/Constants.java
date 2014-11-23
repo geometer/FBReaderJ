@@ -218,9 +218,23 @@ public final class Constants {
 
     public static class Feature {
         public final static int FEATURE_OVERRIDE_BACK_PRESS = 0x00000001;
+        /**
+         * @hide - use only for BSNotificationActivity
+         */
+        public final static int FEATURE_KEEP_ON_SCREEN = 0x00000002;
+
+        /**
+         * @hide - use only for BSNotificationActivity
+         */
+        public final static int FEATURE_AUTO_UNLOCK = 0x00000004;
+    }
+
+    public static final class YotaIntent {
+        public static final int FLAG_BSACTIVITY_NO_HISTORY = 0x00000001;
     }
 
     public static final String YOTAPHONE_EXTRA_BACK = "com.yotadevices.yotaphone.EXTRA_BACK";
+    public static final String YOTAPHONE_EXTRA_FLAGS = "com.yotadevices.yotaphone.EXTRA_FLAGS";
 
     private Constants() {
 

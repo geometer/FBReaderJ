@@ -6,4 +6,5 @@
   <string name="loading_data">Đang tải dữ liệu...</string>
   <string name="flip_popup_default_title">Lật điện thoại</string>
   <string name="flip_popup_default_description">Ứng dụng đang hoạt động\ntrên màn hình màu</string>
+  <string name="d_ago">%dn trước</string>
 </resources>

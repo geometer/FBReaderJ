@@ -6,4 +6,5 @@
   <string name="loading_data">טוען נתונים...</string>
   <string name="flip_popup_default_title">הפוך את הטלפון שלך</string>
   <string name="flip_popup_default_description">האפליקציה פעילה\nבצג הצבעוני</string>
+  <string name="d_ago">לפני %dי\'</string>
 </resources>

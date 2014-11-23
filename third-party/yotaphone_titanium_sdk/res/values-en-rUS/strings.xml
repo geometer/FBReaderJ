@@ -6,4 +6,5 @@
   <string name="loading_data">Loading data...</string>
   <string name="flip_popup_default_title">Flip over your phone</string>
   <string name="flip_popup_default_description">Application is active\non the color display</string>
+  <string name="d_ago">%dd ago</string>
 </resources>

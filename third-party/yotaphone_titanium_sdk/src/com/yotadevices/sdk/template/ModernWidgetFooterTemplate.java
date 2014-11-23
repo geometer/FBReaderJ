@@ -24,13 +24,14 @@ public class ModernWidgetFooterTemplate extends WidgetBuilder {
 	PendingIntent mButtonAction;
 
 	RemoteViews mContentView;
+	long mTime;
 
 	@Override
 	public RemoteViews apply(Context context) {
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.modern_widget_footer_template);
 		remoteViews.removeAllViews(R.id.content);
 		remoteViews.addView(R.id.content, mContentView);
-		String time = getFormattedTimeAgoString(context, System.currentTimeMillis());
+		String time = getFormattedTimeAgoString(context, mTime == 0 ? System.currentTimeMillis() : mTime);
 		if (!mShowTime) {
 			remoteViews.setTextViewCompoundDrawables(R.id.left_text, 0, 0, 0, 0);
 			if (mText != null) {
@@ -56,13 +57,16 @@ public class ModernWidgetFooterTemplate extends WidgetBuilder {
 		else {
 			remoteViews.setViewVisibility(R.id.right_text, View.GONE);
 		}
-		remoteViews.setOnClickPendingIntent(R.id.content, mMaxViewPendingIntent);
-		return remoteViews;
+		return super.apply(context, remoteViews);
 	}
 
 	public ModernWidgetFooterTemplate showTime(boolean value) {
 		mShowTime = value;
 		return this;
+	}
+
+	public void setTime(long time) {
+		mTime = time;
 	}
 
 	public ModernWidgetFooterTemplate setText(String text) {

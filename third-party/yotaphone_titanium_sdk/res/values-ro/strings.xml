@@ -6,4 +6,5 @@
   <string name="loading_data">Datele se încarcă...</string>
   <string name="flip_popup_default_title">Întoarceţi telefonul</string>
   <string name="flip_popup_default_description">Aplicaţia este activă\npe ecranul color</string>
+  <string name="d_ago">%dz în urmă</string>
 </resources>

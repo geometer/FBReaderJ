@@ -69,6 +69,12 @@ public class RotationAlgorithm implements SensorEventListener {
      */
     public static final int OPTION_EXPECT_FIRST_ROTATION_FOR_60SEC = 32;
 
+    /**
+     * OPTION_EXPECT_FIRST_ROTATION_FOR_10MIN = 32: Set this rotation if application needs to wait for 10 minutes for rotation instead of 6.
+     */
+    public static final int OPTION_EXPECT_FIRST_ROTATION_FOR_10MIN = 64;
+
+    private static final int TIME_10MIN = 10* 60 * 1000;
     private static final int TIME_60SEC = 60 * 1000;
     private static final int TIME_6SEC = 6 * 1000;
 
@@ -171,6 +177,7 @@ public class RotationAlgorithm implements SensorEventListener {
     private boolean mDeviceLockSettingIsNone = false;
     private boolean mNoUnlock = false;
     private boolean mExpectFirstRotationFor60Sec = false;
+    private boolean mExpectFirstRotationFor10Min = false;
 
     private SensorManager mSensorManager;
     private KeyguardManager mKeyguardManager;
@@ -225,6 +232,7 @@ public class RotationAlgorithm implements SensorEventListener {
         mPowerOn = isOptionSet(options, OPTION_POWER_ON);
         mNoUnlock = isOptionSet(options, OPTION_NO_UNLOCK);
         mExpectFirstRotationFor60Sec = isOptionSet(options, OPTION_EXPECT_FIRST_ROTATION_FOR_60SEC);
+        mExpectFirstRotationFor10Min = isOptionSet(options, OPTION_EXPECT_FIRST_ROTATION_FOR_10MIN);
 
         turnScreenOffIfRotated();
     }
@@ -381,7 +389,14 @@ public class RotationAlgorithm implements SensorEventListener {
     }
 
     private void handleAction() {
-        if (System.currentTimeMillis() > (p2bClickedTime + (mExpectFirstRotationFor60Sec ? TIME_60SEC : TIME_6SEC))) {
+        int time = TIME_6SEC;
+        if (mExpectFirstRotationFor10Min) {
+            time = TIME_10MIN;
+        } else if(mExpectFirstRotationFor60Sec) {
+            time = TIME_60SEC;
+        }
+
+        if (System.currentTimeMillis() > (p2bClickedTime + time)) {
             mSensorManager.unregisterListener(this);
             if (mListener != null) {
                 mListener.onRotataionCancelled();

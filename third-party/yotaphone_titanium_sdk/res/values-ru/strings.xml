@@ -6,4 +6,5 @@
   <string name="loading_data">Загрузка данных...</string>
   <string name="flip_popup_default_title">Переверните телефон</string>
   <string name="flip_popup_default_description">Приложение активно\nна цветном дисплее</string>
+  <string name="d_ago">%dд назад</string>
 </resources>

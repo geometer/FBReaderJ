@@ -6,4 +6,5 @@
   <string name="loading_data">Φόρτωση δεδομένων...</string>
   <string name="flip_popup_default_title">Γυρίστε το τηλέφωνό σας από την άλλη πλευρά</string>
   <string name="flip_popup_default_description">Η εφαρμογή είναι ενεργή\nστην έγχρωμη οθόνη</string>
+  <string name="d_ago">%dη πριν</string>
 </resources>

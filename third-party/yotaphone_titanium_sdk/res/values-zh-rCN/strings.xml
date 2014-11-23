@@ -6,4 +6,5 @@
   <string name="loading_data">正在加载数据...</string>
   <string name="flip_popup_default_title">翻转手机</string>
   <string name="flip_popup_default_description">应用程序正在彩色显示屏\n上运行</string>
+  <string name="d_ago">%d天前</string>
 </resources>

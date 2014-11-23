@@ -6,4 +6,5 @@
   <string name="loading_data">กำลังโหลดข้อมูล...</string>
   <string name="flip_popup_default_title">โปรดพลิกโทรศัพท์</string>
   <string name="flip_popup_default_description">แอปพลิเคชันจะแสดงผล\nบนหน้าจอสี</string>
+  <string name="d_ago">%d วันที่แล้ว</string>
 </resources>

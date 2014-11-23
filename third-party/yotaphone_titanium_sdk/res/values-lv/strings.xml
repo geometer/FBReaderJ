@@ -6,4 +6,5 @@
   <string name="loading_data">Tiek ielādēti dati...</string>
   <string name="flip_popup_default_title">Apgrieziet tālruni</string>
   <string name="flip_popup_default_description">Lietojumprogramma ir\naktīva krāsu displejā</string>
+  <string name="d_ago">Pirms %d d.</string>
 </resources>

@@ -6,4 +6,5 @@
   <string name="loading_data">Įkeliami duomenys...</string>
   <string name="flip_popup_default_title">Apverskite telefoną</string>
   <string name="flip_popup_default_description">Programėlė aktyvi\nspalvotame ekrane</string>
+  <string name="d_ago">prieš %d d.</string>
 </resources>

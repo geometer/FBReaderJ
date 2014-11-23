@@ -6,4 +6,5 @@
   <string name="loading_data">Memuat data...</string>
   <string name="flip_popup_default_title">Balik posisi ponsel Anda</string>
   <string name="flip_popup_default_description">Aplikasi sedang aktif\ndi layar warna</string>
+  <string name="d_ago">%dh yang lalu</string>
 </resources>

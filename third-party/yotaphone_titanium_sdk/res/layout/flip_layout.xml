@@ -1,43 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="597.33dp"
-    android:background="@drawable/flip_popup_bg" >
+    android:layout_height="match_parent" >
 
-    <ImageView
-        android:id="@+id/flip_popup_image"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="12dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/bs_flip_content_image" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="84.67dp"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/flip_popup_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/flip_popup_image"
-        android:layout_marginTop="10dp"
-        android:fontFamily="Roboto Yota"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="@string/flip_popup_default_title"
-        android:textColor="@android:color/black"
-        android:textSize="33.33dp" />
+        <ImageView
+            android:id="@+id/flip_popup_image"
+            android:layout_width="214.67dp"
+            android:layout_height="214.67dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="false"
+            android:src="@drawable/bs_flip_content_image" />
 
-    <TextView
-        android:id="@+id/flip_popup_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/flip_popup_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="4.33dp"
-        android:fontFamily="Roboto Yota"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="@string/flip_popup_default_description"
-        android:textColor="@android:color/black"
-        android:textSize="20dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/flip_popup_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="Roboto Light Yota"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:maxLines="2"
+                android:text="@string/flip_popup_default_title"
+                android:textColor="@android:color/black"
+                android:textSize="33.33dp" />
+
+            <TextView
+                android:id="@+id/flip_popup_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flip_popup_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4.33dp"
+                android:fontFamily="Roboto Light Yota"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="@string/flip_popup_default_description"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</FrameLayout>

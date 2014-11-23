@@ -6,4 +6,5 @@
   <string name="loading_data">Cargando datos...</string>
   <string name="flip_popup_default_title">Da la vuelta al teléfono</string>
   <string name="flip_popup_default_description">Aplicación activa\nen la pantalla de color</string>
+  <string name="d_ago">hace %dd</string>
 </resources>

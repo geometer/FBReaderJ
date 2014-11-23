@@ -6,4 +6,5 @@
   <string name="loading_data">Učitavanje podataka...</string>
   <string name="flip_popup_default_title">Okrenite telefon</string>
   <string name="flip_popup_default_description">Aplikacija je aktivna\nna zaslonu u boji</string>
+  <string name="d_ago">prije %dd</string>
 </resources>

@@ -6,4 +6,5 @@
   <string name="loading_data">Veri yükleniyor...</string>
   <string name="flip_popup_default_title">Telefonunuzu ters çevirin</string>
   <string name="flip_popup_default_description">Uygulamayı renkli ekranda\netkin</string>
+  <string name="d_ago">%dgün önce</string>
 </resources>

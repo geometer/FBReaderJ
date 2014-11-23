@@ -4,6 +4,7 @@ import com.yotadevices.sdk.Constants.VolumeButtonsEvent;
 import com.yotadevices.sdk.InnerConstants.AnswerFramework;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -65,7 +66,7 @@ class BSAcivityIncomingMessagesHandler extends Handler {
             mBSActivity.get().performKeyPress(msg.arg1);
             break;
         case AnswerFramework.MESSAGE_ACTIVITY_START:
-            mBSActivity.get().performBSCreate();
+            mBSActivity.get().performBSCreate((Bundle) msg.obj);
             break;
         default:
             super.handleMessage(msg);

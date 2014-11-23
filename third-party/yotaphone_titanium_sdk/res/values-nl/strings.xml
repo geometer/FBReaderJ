@@ -6,4 +6,5 @@
   <string name="loading_data">Gegevens laden...</string>
   <string name="flip_popup_default_title">Uw telefoon omdraaien</string>
   <string name="flip_popup_default_description">De toepassing is actief\nop het kleurenscherm</string>
+  <string name="d_ago">%d d geleden</string>
 </resources>
