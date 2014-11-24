@@ -86,21 +86,7 @@ public abstract class BookUtil {
 			return file;
 		}
 
-		file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + "_" + locale.getCountry() + ".fb2"
-		);
-		if (file.exists()) {
-			return file;
-		}
-
-		file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + ".fb2"
-		);
-		if (file.exists()) {
-			return file;
-		}
-
-		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
+		return ZLResourceFile.createResourceFile("data/help/QuickGuide.en.fb2");
 	}
 
 	public static boolean canRemoveBookFile(Book book) {
