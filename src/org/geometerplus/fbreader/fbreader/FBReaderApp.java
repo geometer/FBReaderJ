@@ -161,7 +161,8 @@ public final class FBReaderApp extends ZLApplication {
 		return null;
 	}
 
-	public void openBook(Book book, final Bookmark bookmark, Runnable postAction, Notifier notifier) {
+	public void openBook(Book book, final Bookmark bookmark, final Runnable postAction, Notifier notifier) {
+		Runnable customPostAction = null;
         final Book recentBook = Collection.getRecentBook(0);
 		if (Model != null) {
 			if (book == null || bookmark == null && book.File.equals(Model.Book.File) && Model.Book.equals(recentBook)) {
@@ -177,7 +178,13 @@ public final class FBReaderApp extends ZLApplication {
 			if (book == null || !book.File.exists()) {
 				book = Collection.getBookByFile(BookUtil.getHelpFile());
 				if (DeviceType.Instance().isYotaPhone()) {
-					runAction(ActionCode.SHOW_LIBRARY);
+					customPostAction = new Runnable() {
+						@Override
+						public void run() {
+							postAction.run();
+							runAction(ActionCode.SHOW_LIBRARY);
+						}
+					};
 				}
 			}
 			if (book == null) {
@@ -200,7 +207,7 @@ public final class FBReaderApp extends ZLApplication {
 			public void run() {
 				openBookInternal(bookToOpen, bookmark, false);
 			}
-		}, postAction);
+		}, customPostAction != null ? customPostAction : postAction);
 	}
 
 	public void reloadBook() {
