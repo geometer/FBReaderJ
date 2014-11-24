@@ -99,6 +99,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     @Override
     public void onBSCreate() {
         super.onBSCreate();
+	    setFeature(Constants.Feature.FEATURE_OVERRIDE_BACK_PRESS);
         myFBReaderApp = (FBReaderApp) FBReaderApp.Instance();
         if (myFBReaderApp == null) {
             myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
@@ -200,8 +201,17 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         super.onBSDestroy();
     }
 
+	@Override
+	protected boolean onBackPressed() {
+		if (myFBReaderApp.jumpBack()) {
+			hideActionBar();
+			hideStatusBar();
+			return true;
+		}
+		return false;
+	}
 
-    private void initBookView(final boolean refresh) {
+	private void initBookView(final boolean refresh) {
         Log.d(TAG, "--- init book view:" + refresh);
         if (mWidget != null) {
             mWidget.setBook(myCurrentBook);

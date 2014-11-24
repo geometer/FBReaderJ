@@ -26,6 +26,7 @@ public class YotaNavigationPopup extends NavigationPopup {
 	private int mStartPage;
 
 	private SeekBar mSlider;
+	private boolean mNavigated = false;
 
 	YotaNavigationPopup(FBReaderApp fbReader) {
 		super(fbReader);
@@ -72,12 +73,19 @@ public class YotaNavigationPopup extends NavigationPopup {
 		back_to_page.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (myStartPosition != null) {
-					myFBReader.getTextView().gotoPosition(myStartPosition);
+				if (mNavigated) {
+					mNavigated = false;
+					if (myStartPosition != null) {
+						myFBReader.getTextView().gotoPosition(myStartPosition);
+					}
+					myFBReader.getViewWidget().reset();
+					myFBReader.getViewWidget().repaint();
+					update();
 				}
-				myFBReader.getViewWidget().reset();
-				myFBReader.getViewWidget().repaint();
-				update();
+				else {
+					myFBReader.jumpBack();
+					myFBReader.runAction(ActionCode.TOGGLE_BARS);
+				}
 			}
 		});
 
@@ -97,6 +105,7 @@ public class YotaNavigationPopup extends NavigationPopup {
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar) {
+				mNavigated = true;
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {

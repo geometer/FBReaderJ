@@ -26,10 +26,14 @@ class ExitAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
-		if (Reader.getCurrentView() != Reader.BookTextView) {
-			Reader.showBookTextView();
+		if (!Reader.jumpBack()) {
+			if (Reader.getCurrentView() != Reader.BookTextView) {
+				Reader.showBookTextView();
+			} else {
+				Reader.closeWindow();
+			}
 		} else {
-			Reader.closeWindow();
+			Reader.runAction(ActionCode.TOGGLE_BARS);
 		}
 	}
 }
