@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GifView2">
+        <!-- Used to identify how to draw the cling bg -->
+        <attr name="animationGif" format="reference" />
+    </declare-styleable>
+
+</resources>

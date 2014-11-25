@@ -109,9 +109,10 @@
         <antcall target="copy-to-formal-build"/>
     </target>
 	
-	<target name="formal-build-yota-key" depends="release">
+	<target name="formal-build-yota-key" depends="-get-last-revision-git,-custom-manifest-version,release">
         <antcall target="clean-system-build"/>
         <antcall target="signer_with_yotakey"/>
+        <antcall target="-custom-restore-manifest"/>
         <antcall target="copy-to-formal-build"/>
     </target>
 	

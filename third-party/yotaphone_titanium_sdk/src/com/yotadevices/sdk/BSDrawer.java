@@ -1,12 +1,11 @@
 package com.yotadevices.sdk;
 
-import com.yotadevices.sdk.Constants.SystemBSFlags;
-import com.yotadevices.sdk.utils.EinkUtils;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.display.DisplayManager;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,6 +14,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
+
+import com.yotadevices.sdk.Constants.SystemBSFlags;
+import com.yotadevices.sdk.utils.EinkUtils;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -49,8 +51,6 @@ public class BSDrawer extends Drawer {
     private ViewGroup mParentView;
     private ViewGroup mBlankView;
 
-    private boolean isShowEpdView;
-    private boolean isShowBlankView;
     private LayoutInflater mEpdInflater;
 
     private int mNavigationBarHeight;
@@ -96,7 +96,7 @@ public class BSDrawer extends Drawer {
     private static int getTypeDisplay(Display d) {
         try {
             Method m = android.view.Display.class.getDeclaredMethod("getType");
-            return (Integer) m.invoke(d, new Object[] {});
+            return (Integer) m.invoke(d, new Object[]{});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -124,9 +124,8 @@ public class BSDrawer extends Drawer {
 
     /**
      * Return EPD display context. May be null, when EDP display is not added.
-     * 
-     * @param context
-     *            Main application context
+     *
+     * @param context Main application context
      * @return A Context for the EPD display.
      */
     public static Context createEpdContext(Context context) {
@@ -144,25 +143,23 @@ public class BSDrawer extends Drawer {
 
     /**
      * Check the possibility of using the back screen
-     * 
+     *
      * @return <b>true</b> if EPD display is attached and all methods for EDP
-     *         display are available, otherwise <b>false</b>.
+     * display are available, otherwise <b>false</b>.
      */
     public boolean isInit() {
         return isEpdInit;
     }
 
     public void showBlankView() {
-        if (isInit() && !isShowBSParentView()) {
+        if (isInit() && !isShowBSParentView() && !isShowBlankView()) {
             getWindowManager().addView(mBlankView, getDefaultLayoutParams());
-            isShowBlankView = true;
         }
     }
 
     private void hideBlankView() {
-        if (isInit()) {
+        if (isInit() && isShowBlankView()) {
             getWindowManager().removeView(mBlankView);
-            isShowBlankView = false;
         }
     }
 
@@ -201,21 +198,25 @@ public class BSDrawer extends Drawer {
      * @hide
      */
     private synchronized boolean isShowBSParentView() {
-        return isShowEpdView;
+        return mParentView != null && mParentView.isShown();
+    }
+
+    private synchronized boolean isShowBlankView() {
+        return mBlankView != null && mBlankView.isShown();
     }
 
     /**
-     * @hide only for inner usage
      * @param initialWaveform
      * @param initialDithering
+     * @hide only for inner usage
      */
     @Override
-    public synchronized void addBSParentView(Waveform initialWaveform, Dithering initialDithering) {
+    public synchronized void addBSParentView(final Waveform initialWaveform, final Dithering initialDithering) {
         if (isInit() && !isShowBSParentView()) {
             WindowManager wm = getWindowManager();
             LayoutParams lp = getDefaultLayoutParams();
 
-            BSActivity activity = mActivity.get();
+            final BSActivity activity = mActivity.get();
             if (activity != null) {
                 activity.onPrepareLayoutParams(lp);
                 applySystemIUVisibility(lp, activity.getSytemBSUiVisibility());
@@ -224,25 +225,35 @@ public class BSDrawer extends Drawer {
             final Dithering prevDithering = EinkUtils.getViewDithering(mParentView);
             EinkUtils.setViewDithering(mParentView, initialDithering);
             EinkUtils.setViewWaveform(mParentView, initialWaveform);
-            wm.addView(mParentView, lp);
-            mParentView.postDelayed(new Runnable() {
+
+            mParentView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
                 @Override
-                public void run() {
-                    EinkUtils.setViewDithering(mParentView, prevDithering);
-                    EinkUtils.setViewWaveform(mParentView, prevWaveform);
+                public void onViewAttachedToWindow(View v) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mActivity.get().sendRequest(InnerConstants.RequestFramework.UNFREEZE_EPD);
+                            EinkUtils.setViewDithering(mParentView, prevDithering);
+                            EinkUtils.setViewWaveform(mParentView, prevWaveform);
+                        }
+                    },100);
                 }
-            }, 400);
+
+                @Override
+                public void onViewDetachedFromWindow(View v) {
+
+                }
+            });
+
+            wm.addView(mParentView, lp);
 
             // When BS layout is added we perform FULL update to remove all
             // ghosting
             // from previous BSActivity
             // EinkUtils.performSingleUpdate(mParentView, initialWaveform,
             // initialDithering, 0);
-            isShowEpdView = true;
 
-            if (isShowBlankView) {
-                hideBlankView();
-            }
+            hideBlankView();
         }
     }
 
@@ -254,7 +265,6 @@ public class BSDrawer extends Drawer {
         if (isInit() && isShowBSParentView()) {
             WindowManager wm = (WindowManager) mEpdContext.getSystemService(Context.WINDOW_SERVICE);
             wm.removeView(mParentView);
-            isShowEpdView = false;
         }
     }
 
@@ -264,11 +274,9 @@ public class BSDrawer extends Drawer {
 
     /**
      * Adds a child view with the specified layout parameters.
-     * 
-     * @param child
-     *            the child view to add
-     * @param params
-     *            the layout parameters to set on the child
+     *
+     * @param child  the child view to add
+     * @param params the layout parameters to set on the child
      */
     @Override
     public void addViewToBS(View child, ViewGroup.LayoutParams params) {
@@ -282,9 +290,8 @@ public class BSDrawer extends Drawer {
      * Adds a child view. If no layout parameters are already set on the child,
      * the default parameters for this ViewGroup are set on the child.
      * </p>
-     * 
-     * @param child
-     *            the child view to add
+     *
+     * @param child the child view to add
      */
     public void addViewToBS(View child) {
         if (isInit()) {
@@ -295,9 +302,8 @@ public class BSDrawer extends Drawer {
     /**
      * Look for a child view with the given id. If this view has the given id,
      * return this view.
-     * 
-     * @param id
-     *            The id to search for.
+     *
+     * @param id The id to search for.
      * @return The view that has the given id in the hierarchy or null
      */
     public View findViewById(int id) {
@@ -315,7 +321,7 @@ public class BSDrawer extends Drawer {
     /**
      * Quick access to the {@link LayoutInflater} instance that this Window
      * retrieved from its back screen Context.
-     * 
+     *
      * @return LayoutInflater The LayoutInflater for the back screen.
      */
     @Override
@@ -325,9 +331,8 @@ public class BSDrawer extends Drawer {
 
     /**
      * Removes a view from the back screen.
-     * 
-     * @param view
-     *            the view to remove from back screen
+     *
+     * @param view the view to remove from back screen
      */
     @Override
     public void removeViewFromBS(View view) {

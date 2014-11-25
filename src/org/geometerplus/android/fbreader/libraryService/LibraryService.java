@@ -318,6 +318,10 @@ public class LibraryService extends Service {
 			myCollection.rescan(path);
 		}
 
+		public void rescanDefaultPaths() {
+			myCollection.rescan();
+		}
+
 		public String getHash(String book, boolean force) {
 			return myCollection.getHash(SerializerUtil.deserializeBook(book), force);
 		}

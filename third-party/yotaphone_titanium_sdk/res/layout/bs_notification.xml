@@ -17,7 +17,7 @@
         android:layout_height="62.67dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="15dp"
         android:src="@drawable/bs_ok_button"
         android:layout_marginBottom="86.67dp" />
 

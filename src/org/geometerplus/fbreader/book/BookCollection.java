@@ -19,9 +19,12 @@
 
 package org.geometerplus.fbreader.book;
 
+import android.graphics.Path;
+
 import java.io.File;
 import java.util.*;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -443,6 +446,14 @@ public class BookCollection extends AbstractBookCollection {
 	public void rescan(String path) {
 		synchronized (myFilesToRescan) {
 			myFilesToRescan.add(path);
+			processFilesQueue();
+		}
+	}
+
+	public void rescan() {
+		synchronized (myFilesToRescan) {
+			final List<String> path = Paths.bookPath();
+			myFilesToRescan.addAll(path);
 			processFilesQueue();
 		}
 	}

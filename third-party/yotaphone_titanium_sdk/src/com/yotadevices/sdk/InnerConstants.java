@@ -13,6 +13,7 @@ public final class InnerConstants {
         public static final int REQUEST_SET_ACTIVITY_RESULT = 4;
         public static final int REQUEST_CAN_START = 5;
         public static final int HANDLE_ON_KEY_PRESS = 6;
+        public static final int UNFREEZE_EPD = 7;
     }
 
     public static final class AnswerFramework {

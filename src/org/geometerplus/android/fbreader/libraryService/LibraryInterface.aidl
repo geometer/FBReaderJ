@@ -56,4 +56,5 @@ interface LibraryInterface {
 	void saveHighlightingStyle(in String style);
 
 	void rescan(in String path);
+	void rescanDefaultPaths();
 }

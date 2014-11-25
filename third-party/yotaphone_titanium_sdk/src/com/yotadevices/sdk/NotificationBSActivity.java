@@ -117,4 +117,16 @@ public class NotificationBSActivity extends BSActivity {
     protected void setActionVisibility(int visibility) {
         mAction.setVisibility(visibility);
     }
+
+    public void setOKImageResource(int resId) {
+        mOK.setImageResource(resId);
+    }
+
+    public void setActionImageResource(int resId) {
+        mAction.setImageResource(resId);
+    }
+
+    public void setCancelImageResource(int resId) {
+        mCancel.setImageResource(resId);
+    }
 }

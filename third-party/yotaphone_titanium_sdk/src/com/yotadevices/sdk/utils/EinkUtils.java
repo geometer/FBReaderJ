@@ -112,11 +112,13 @@ public class EinkUtils {
     }
 
     public static void setRemoteViewsDithering(RemoteViews remoteViews, int viewId, Drawer.Dithering dithering) {
+        Log.d("EinkUtils", "setRemoteViewsDithering " +dithering +" "+remoteViews);
         if (remoteViews != null) {
             remoteViews.setInt(viewId, "setEpdViewDithering", dithering.ordinal());
         }
     }
     public static void setRemoteViewsWaveform(RemoteViews remoteViews, int viewId, Drawer.Waveform waveform) {
+        Log.d("EinkUtils", "setRemoteViewsWaveform " +waveform +" "+remoteViews);
         if (remoteViews != null) {
             remoteViews.setInt(viewId, "setEpdViewWaveFormMode", waveform.ordinal());
         }

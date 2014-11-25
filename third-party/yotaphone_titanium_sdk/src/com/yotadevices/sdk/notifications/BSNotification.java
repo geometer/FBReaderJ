@@ -53,7 +53,7 @@ public class BSNotification implements Parcelable {
     public static final int CATEGORY_EMAIL = 3;
     public static final int CATEGORY_OTHER = 4;
 
-    public static final int TRANSIENT_TIME = 1 * 60 * 1000;
+    public static final int TRANSIENT_TIME = 2 * 60 * 1000;
     public static final int TRANSIENT_TIME_NO_LIMIT = -1;
 
     /**
