@@ -85,6 +85,7 @@
             android:textSize="18dp"
             android:gravity="center"
             android:text="@string/define"
+			android:visibility="gone"
             android:textColor="@color/yota_selection_popup_item_text"
             android:background="@drawable/yota_selection_popup_item_background">
         </TextView>
