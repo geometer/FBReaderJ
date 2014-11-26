@@ -24,18 +24,18 @@
         </publish-info>
     </description>
 <body>
-<section>
-<p><strong>FARVESKÆRM</strong></p>
-
-<p>
-					<image xlink:href="#_0.jpg" /></p>
-</section>
 
 <section>
 <p><strong>ALWAYS-ON-SKÆRM</strong></p>
 
 <p>
 					<image xlink:href="#_1.jpg" /></p>
+</section>
+<section>
+<p><strong>FARVESKÆRM</strong></p>
+
+<p>
+                    <image xlink:href="#_0.jpg" /></p>
 </section>
 
 <section>

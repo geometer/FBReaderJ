@@ -25,17 +25,17 @@
     </description>
 <body>
 <section>
-<p><strong>หน้าจอสี</strong></p>
-
-<p>
-					<image xlink:href="#_0.jpg" /></p>
-</section>
-
-<section>
 <p><strong>หน้าจอแบบ ALWAYS-ON</strong></p>
 
 <p>
 					<image xlink:href="#_1.jpg" /></p>
+</section>
+
+<section>
+<p><strong>หน้าจอสี</strong></p>
+
+<p>
+                    <image xlink:href="#_0.jpg" /></p>
 </section>
 
 <section>
