@@ -39,6 +39,8 @@ public class BSReadingActionBar {
 	private YotaBookContentPopup mContentsPopup;
     private final FBReaderApp mReader;
 
+	private View mPopupView;
+
     private TextView mBookAuthor;
     private TextView mBookTitle;
     private final FontSettingsPopup.OnFontChangeListener mFontListener;
@@ -49,26 +51,26 @@ public class BSReadingActionBar {
         mReader = readerApp;
         mFontListener = listener;
         mLayoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = mLayoutInflater.inflate(R.layout.bs_action_bar_reading_mode, null);
-        mFontIcon = (ImageView)layout.findViewById(R.id.font_action);
+        mPopupView = mLayoutInflater.inflate(R.layout.bs_action_bar_reading_mode, null);
+        mFontIcon = (ImageView)mPopupView.findViewById(R.id.font_action);
         mFontIcon.setOnClickListener(fontClickListener);
-        mBookmarkIcon = (ImageView)layout.findViewById(R.id.bookmark_action);
+        mBookmarkIcon = (ImageView)mPopupView.findViewById(R.id.bookmark_action);
         mBookmarkIcon.setOnClickListener(mBookmarkClickListener);
-	    mContentsButton = (ImageView)layout.findViewById(R.id.search_action);
+	    mContentsButton = (ImageView)mPopupView.findViewById(R.id.search_action);
 		mContentsButton.setOnClickListener(mContentsClickListener);
 
-        mBookAuthor = (TextView)layout.findViewById(R.id.book_author);
-        mBookTitle =  (TextView)layout.findViewById(R.id.book_title);
+        mBookAuthor = (TextView)mPopupView.findViewById(R.id.book_author);
+        mBookTitle =  (TextView)mPopupView.findViewById(R.id.book_title);
 
-        mTitle = layout.findViewById(R.id.title);
-        mBackButton = (ImageView)layout.findViewById(R.id.back_action);
+        mTitle = mPopupView.findViewById(R.id.title);
+        mBackButton = (ImageView)mPopupView.findViewById(R.id.back_action);
 
         mTitle.setOnClickListener(mOpenCollection);
         mBackButton.setOnClickListener(mOpenCollection);
 
         mPopup = new PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));
-        mPopup.setContentView(layout);
+        mPopup.setContentView(mPopupView);
         mPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         mPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
     }
@@ -169,7 +171,7 @@ public class BSReadingActionBar {
 		@Override
 		public void onClick(View v) {
 			if (mContentsPopup == null) {
-				mContentsPopup = new YotaBookContentPopup(mReader, mContext, true);
+				mContentsPopup = new YotaBookContentBSPopup(mReader, mContext, true);
 				mContentsPopup.setRootView(mRootView, mContext);
 			}
 			if (mContentsPopup.isShowing()) {

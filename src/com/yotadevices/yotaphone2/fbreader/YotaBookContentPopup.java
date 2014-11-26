@@ -101,7 +101,12 @@ public class YotaBookContentPopup extends ZLApplication.PopupPanel {
 		mPopup = new android.widget.PopupWindow(context);
 		mPopup.setBackgroundDrawable(new ColorDrawable(0));
 		mPopup.setContentView(mPopupView);
-		mPopup.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
+		if (onBackScreen) {
+			mPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+		}
+		else {
+			mPopup.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
+		}
 		mPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
 
 		mPopup.setFocusable(true);
