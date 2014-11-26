@@ -170,7 +170,7 @@ public class BSReadingActionBar {
 		public void onClick(View v) {
 			if (mContentsPopup == null) {
 				mContentsPopup = new YotaBookContentPopup(mReader, mContext, true);
-				mContentsPopup.setRootView(mRootView);
+				mContentsPopup.setRootView(mRootView, mContext);
 			}
 			if (mContentsPopup.isShowing()) {
 				mContentsPopup.hide();

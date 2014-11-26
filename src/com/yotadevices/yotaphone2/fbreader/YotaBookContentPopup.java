@@ -57,7 +57,7 @@ public class YotaBookContentPopup extends ZLApplication.PopupPanel {
 	private final View mPopupView;
 	private ListView mContentsListView;
 	private ListView mBookmarksListView;
-	private final Context mFBReader;
+	private Context mFBReader;
 	private final FBReaderApp mFBReaderApp;
 	private TOCAdapter myAdapter;
 
@@ -411,8 +411,9 @@ public class YotaBookContentPopup extends ZLApplication.PopupPanel {
 		}
 	}
 
-	public void setRootView(View root) {
+	public void setRootView(View root, Context fbreader) {
 		mRootView = root;
+		mFBReader = fbreader;
 	}
 
 }

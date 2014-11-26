@@ -18,7 +18,7 @@ public class ShowYotaBookContentsAction extends FBAndroidAction {
 		Integer viewId = (Integer) params[0];
 		View button = BaseActivity.findViewById(viewId);
 		YotaBookContentPopup contentPopup = (YotaBookContentPopup) Reader.getPopupById(YotaBookContentPopup.ID);
-		contentPopup.setRootView(button);
+		contentPopup.setRootView(button, BaseActivity);
 		Reader.showPopup(YotaBookContentPopup.ID);
 	}
 }
