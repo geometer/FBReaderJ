@@ -364,6 +364,9 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		else {
 			if (myOptionsMenuActions.isEmpty()) {
 				myOptionsMenuActions.add(new RunSearchAction(this, false));
+				myOptionsMenuActions.add(new SignInAction(this));
+				myOptionsMenuActions.add(new SignUpAction(this));
+				myOptionsMenuActions.add(new SignOutAction(this, myNetworkContext));
 			}
 			for (Action a : myOptionsMenuActions) {
 				final MenuItem item = menu.add(0, a.Code, Menu.NONE, "");
