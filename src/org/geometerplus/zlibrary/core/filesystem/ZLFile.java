@@ -225,6 +225,9 @@ public abstract class ZLFile implements InputStreamHolder {
 		if (!(o instanceof ZLFile)) {
 			return false;
 		}
+		if (o instanceof ZLArchiveEntryFile) {
+			return ((ZLArchiveEntryFile)o).equals(this);
+		}
 		return getPath().equals(((ZLFile)o).getPath());
 	}
 

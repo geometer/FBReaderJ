@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.*;
 
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.zlibrary.core.filesystem.ZLArchiveEntryFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -482,6 +483,7 @@ public class BookCollection extends AbstractBookCollection {
 				// rescan files and check book id
 				filesToRemove.remove(file);
 				final Book book = getBookByFile(file);
+
 				if (book != null) {
 					saveBook(book);
 					getHash(book, false);
@@ -490,6 +492,7 @@ public class BookCollection extends AbstractBookCollection {
 
 			for (ZLFile f : filesToRemove) {
 				synchronized (myBooksByFile) {
+					String test = f.getPath();
 					final Book book = myBooksByFile.remove(f);
 					myDuplicateResolver.removeFile(f);
 					if (book != null) {
@@ -556,8 +559,8 @@ public class BookCollection extends AbstractBookCollection {
 		final Map<Long,Book> orphanedBooksByFileId = myDatabase.loadBooks(fileInfos, false);
 		final Set<Book> newBooks = new HashSet<Book>();
 
-		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles(BookDirectories);
-		for (ZLPhysicalFile file : physicalFilesList) {
+		final List<ZLFile> physicalFilesList = collectPhysicalFiles(BookDirectories);
+		for (ZLFile file : physicalFilesList) {
 			if (physicalFiles.contains(file)) {
 				continue;
 			}
@@ -591,17 +594,17 @@ public class BookCollection extends AbstractBookCollection {
 		myDatabase.setExistingFlag(newBooks, true);
 	}
 
-	private List<ZLPhysicalFile> collectPhysicalFiles(List<String> paths) {
-		final Queue<ZLPhysicalFile> fileQueue = new LinkedList<ZLPhysicalFile>();
-		final HashSet<ZLPhysicalFile> dirSet = new HashSet<ZLPhysicalFile>();
-		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
+	private List<ZLFile> collectPhysicalFiles(List<String> paths) {
+		final Queue<ZLFile> fileQueue = new LinkedList<ZLFile>();
+		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
+		final LinkedList<ZLFile> fileList = new LinkedList<ZLFile>();
 
 		for (String p : paths) {
 			fileQueue.offer(new ZLPhysicalFile(new File(p)));
 		}
 
 		while (!fileQueue.isEmpty()) {
-			final ZLPhysicalFile entry = fileQueue.poll();
+			final ZLFile entry = fileQueue.poll();
 			if (!entry.exists()) {
 				continue;
 			}
@@ -611,7 +614,7 @@ public class BookCollection extends AbstractBookCollection {
 				}
 				dirSet.add(entry);
 				for (ZLFile file : entry.children()) {
-					fileQueue.add((ZLPhysicalFile)file);
+					fileQueue.add(file);
 				}
 			} else {
 				entry.setCached(true);

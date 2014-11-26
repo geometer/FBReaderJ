@@ -113,4 +113,24 @@ public abstract class ZLArchiveEntryFile extends ZLFile {
 		}
 		return (ZLPhysicalFile)ancestor;
 	}
+
+	@Override
+	public int hashCode() {
+		return getParent().getPath().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof ZLFile)) {
+			return false;
+		}
+		if (o instanceof ZLArchiveEntryFile) {
+			return getPath().equals(((ZLArchiveEntryFile)o).getPath());
+		}
+		return getParent().getPath().equals(((ZLFile)o).getPath());
+	}
+
 }

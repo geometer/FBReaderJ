@@ -100,7 +100,7 @@ public final class FileInfoSet {
 		});
 	}
 
-	public boolean check(ZLPhysicalFile file, boolean processChildren) {
+	public boolean check(ZLFile file, boolean processChildren) {
 		if (file == null) {
 			return true;
 		}
