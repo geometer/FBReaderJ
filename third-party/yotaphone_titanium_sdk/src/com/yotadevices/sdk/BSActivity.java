@@ -1,5 +1,10 @@
 package com.yotadevices.sdk;
 
+import com.yotadevices.sdk.Constants.SystemBSFlags;
+import com.yotadevices.sdk.Constants.VolumeButtonsEvent;
+import com.yotadevices.sdk.exception.SuperNotCalledException;
+import com.yotadevices.sdk.helper.HelperConstant;
+
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,11 +20,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-
-import com.yotadevices.sdk.Constants.SystemBSFlags;
-import com.yotadevices.sdk.Constants.VolumeButtonsEvent;
-import com.yotadevices.sdk.exception.SuperNotCalledException;
-import com.yotadevices.sdk.helper.HelperConstant;
 
 public class BSActivity extends Service {
 
@@ -385,16 +385,16 @@ public class BSActivity extends Service {
         String key = null;
         boolean value = false;
         switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                key = InnerConstants.EXTRA_OVERRIDE_KEY_BACK;
-                value = onBackPressed();
-                break;
-            case KeyEvent.KEYCODE_HOME:
-                key = InnerConstants.EXTRA_OVERRIDE_KEY_HOME;
-                value = onHomePressed();
-                break;
-            default:
-                break;
+        case KeyEvent.KEYCODE_BACK:
+            key = InnerConstants.EXTRA_OVERRIDE_KEY_BACK;
+            value = onBackPressed();
+            break;
+        case KeyEvent.KEYCODE_HOME:
+            key = InnerConstants.EXTRA_OVERRIDE_KEY_HOME;
+            value = onHomePressed();
+            break;
+        default:
+            break;
         }
 
         Bundle bundle = getDefaultBundle();
@@ -759,10 +759,6 @@ public class BSActivity extends Service {
         return false;
     }
 
-    public boolean fromCoverStarted() {
-        return getInstanceState().mFromCurtain;
-    }
-
     InstanceState getInstanceState() {
         return mInstance;
     }
@@ -806,35 +802,35 @@ public class BSActivity extends Service {
             msg.arg2 = android.os.Process.myUid();
 
             switch (what) {
-                case InnerConstants.RequestFramework.REQUEST_SET_ACTIVE:
-                case InnerConstants.RequestFramework.REQUEST_CAN_START:
-                    msg.replyTo = mMessenger;
-                    bundle.putParcelable(InnerConstants.EXTRA_BS_ACTIVITY_INTENT, getIntent());
-                    break;
-                case InnerConstants.RequestFramework.REQUEST_SET_INTENT:
-                    bundle.putParcelable(InnerConstants.EXTRA_BS_ACTIVITY_INTENT, getIntent());
-                    break;
-                case InnerConstants.RequestFramework.REQUEST_SET_ACTIVITY_RESULT:
-                    int requestCode;
-                    synchronized (this) {
-                        requestCode = mRequestCode;
-                    }
-                    bundle.putInt(InnerConstants.EXTRA_REQUEST_CODE, requestCode);
-                    break;
-                case InnerConstants.RequestFramework.REQUEST_SET_FINISH:
-                    int resultCode;
-                    Intent resultData;
-                    synchronized (this) {
-                        resultCode = mResultCode;
-                        resultData = mResultData;
-                    }
-                    bundle.putInt(InnerConstants.EXTRA_RESULT_CODE, resultCode);
-                    if (resultData != null) {
-                        bundle.putParcelable(InnerConstants.EXTRA_RESULT_DATA, resultData);
-                    }
-                    break;
-                default:
-                    break;
+            case InnerConstants.RequestFramework.REQUEST_SET_ACTIVE:
+            case InnerConstants.RequestFramework.REQUEST_CAN_START:
+                msg.replyTo = mMessenger;
+                bundle.putParcelable(InnerConstants.EXTRA_BS_ACTIVITY_INTENT, getIntent());
+                break;
+            case InnerConstants.RequestFramework.REQUEST_SET_INTENT:
+                bundle.putParcelable(InnerConstants.EXTRA_BS_ACTIVITY_INTENT, getIntent());
+                break;
+            case InnerConstants.RequestFramework.REQUEST_SET_ACTIVITY_RESULT:
+                int requestCode;
+                synchronized (this) {
+                    requestCode = mRequestCode;
+                }
+                bundle.putInt(InnerConstants.EXTRA_REQUEST_CODE, requestCode);
+                break;
+            case InnerConstants.RequestFramework.REQUEST_SET_FINISH:
+                int resultCode;
+                Intent resultData;
+                synchronized (this) {
+                    resultCode = mResultCode;
+                    resultData = mResultData;
+                }
+                bundle.putInt(InnerConstants.EXTRA_RESULT_CODE, resultCode);
+                if (resultData != null) {
+                    bundle.putParcelable(InnerConstants.EXTRA_RESULT_DATA, resultData);
+                }
+                break;
+            default:
+                break;
             }
 
             msg.setData(bundle);

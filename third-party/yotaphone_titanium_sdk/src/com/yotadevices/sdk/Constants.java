@@ -235,6 +235,7 @@ public final class Constants {
 
     public static final String YOTAPHONE_EXTRA_BACK = "com.yotadevices.yotaphone.EXTRA_BACK";
     public static final String YOTAPHONE_EXTRA_FLAGS = "com.yotadevices.yotaphone.EXTRA_FLAGS";
+    public static final String YOTAPHONE_EXTRA_FROM_COVER = "com.yotadevices.yotaphone.EXTRA_FROM_COVER";
 
     private Constants() {
 

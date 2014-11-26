@@ -211,12 +211,12 @@ public class BSDrawer extends Drawer {
      * @hide only for inner usage
      */
     @Override
-    public synchronized void addBSParentView(final Waveform initialWaveform, final Dithering initialDithering) {
+    public synchronized void addBSParentView(Waveform initialWaveform, Dithering initialDithering) {
         if (isInit() && !isShowBSParentView()) {
             WindowManager wm = getWindowManager();
             LayoutParams lp = getDefaultLayoutParams();
 
-            final BSActivity activity = mActivity.get();
+            BSActivity activity = mActivity.get();
             if (activity != null) {
                 activity.onPrepareLayoutParams(lp);
                 applySystemIUVisibility(lp, activity.getSytemBSUiVisibility());
@@ -225,27 +225,14 @@ public class BSDrawer extends Drawer {
             final Dithering prevDithering = EinkUtils.getViewDithering(mParentView);
             EinkUtils.setViewDithering(mParentView, initialDithering);
             EinkUtils.setViewWaveform(mParentView, initialWaveform);
-
-            mParentView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-                @Override
-                public void onViewAttachedToWindow(View v) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mActivity.get().sendRequest(InnerConstants.RequestFramework.UNFREEZE_EPD);
-                            EinkUtils.setViewDithering(mParentView, prevDithering);
-                            EinkUtils.setViewWaveform(mParentView, prevWaveform);
-                        }
-                    },100);
-                }
-
-                @Override
-                public void onViewDetachedFromWindow(View v) {
-
-                }
-            });
-
             wm.addView(mParentView, lp);
+            mParentView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    EinkUtils.setViewDithering(mParentView, prevDithering);
+                    EinkUtils.setViewWaveform(mParentView, prevWaveform);
+                }
+            }, 400);
 
             // When BS layout is added we perform FULL update to remove all
             // ghosting

@@ -87,15 +87,7 @@ public class RotationAlgorithm implements SensorEventListener {
      * @return Instance of RotationAlgorithm
      */
     public static RotationAlgorithm getInstance(Context context) {
-        if (mInstance == null) {
-            mInstance = new RotationAlgorithm(context);
-        } else {
-            mInstance.mStartWithFS = true;
-            mInstance.mPowerOn = false;
-            mInstance.mNoUnlock = false;
-            mInstance.setContext(context);
-        }
-        return mInstance;
+        return new RotationAlgorithm(context);
     }
 
     private class SensorAttributes {
