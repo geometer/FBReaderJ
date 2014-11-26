@@ -51,7 +51,7 @@
 		<node name="fileTreeCard" value="Карта памет">
 			<node name="summary" value="Картата работи"/>
 		</node>
-		<node name="fileTreeLibrary" value="Библиотека FBReader">
+		<node name="fileTreeLibrary" value="Библиотека">
 			<node name="summary" value="Каталог на книгите"/>
 		</node>
 		<node name="localSearch" value="Търсене"/>

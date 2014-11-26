@@ -51,7 +51,7 @@
 			<node name="summary" value="Paměťová karta vložena do zařízení"/>
 		</node>
 		<node name="fileTreeLibrary" value="Knihovna FBReaderu">
-			<node name="summary" value="Adresář s knihami pro FBReader"/>
+			<node name="summary" value="Adresář s knihami"/>
 		</node>
 		<node name="localSearch" value="Místní hledání"/>
 		<node name="rescan" value="Prohledat znovu"/>

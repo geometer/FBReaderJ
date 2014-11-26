@@ -50,7 +50,7 @@
 		<node name="fileTreeCard" value="მეხსიერების ბარათი">
 			<node name="summary" value="მეხსიერების ბარათის დათვალიერება"/>
 		</node>
-		<node name="fileTreeLibrary" value="ბიბლიოთეკა FBReader">
+		<node name="fileTreeLibrary" value="ბიბლიოთეკა YotaReader">
 			<node name="summary" value="წიგნების კატალოგის დათვალიერება"/>
 		</node>
 		<node name="localSearch" value="ძებნა"/>

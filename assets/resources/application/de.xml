@@ -56,8 +56,8 @@
 		<node name="fileTreeCard" value="Speicherkarte">
 			<node name="summary" value="Speicherkarte (bei einigen Geräten der interne Speicher)"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader Bibliothek">
-			<node name="summary" value="FBReader Buchverzeichnis"/>
+		<node name="fileTreeLibrary" value="Bibliothek">
+			<node name="summary" value="Buchverzeichnis"/>
 		</node>
 		<node name="localSearch" value="Lokale Suche"/>
 		<node name="rescan" value="Neu einlesen"/>

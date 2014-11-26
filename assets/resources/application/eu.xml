@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Memoria txartela">
 			<node name="summary" value="Gailuan txertaturiko memoria txartela"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader liburutegia">
-			<node name="summary" value="FBReadereko liburuen direktorioa"/>
+		<node name="fileTreeLibrary" value="Liburutegia">
+			<node name="summary" value="Liburuen direktorioa"/>
 		</node>
 		<node name="localSearch" value="Bilatu"/>
 		<node name="rescan" value="Berreskaneatu"/>

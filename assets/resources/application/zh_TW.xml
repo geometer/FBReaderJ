@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="記憶卡">
 			<node name="summary" value="插入裝置內的記憶卡"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader 書目">
-			<node name="summary" value="FBReader 書藉目錄"/>
+		<node name="fileTreeLibrary" value="YotaReader 書目">
+			<node name="summary" value="YotaReader 書藉目錄"/>
 		</node>
 		<node name="localSearch" value="本地搜尋"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

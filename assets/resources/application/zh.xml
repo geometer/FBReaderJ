@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="SD存储卡">
 			<node name="summary" value="插入设备的存储卡"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader 文件夹">
-			<node name="summary" value="FBReader 存放书刊的文件夹"/>
+		<node name="fileTreeLibrary" value="YotaReader 文件夹">
+			<node name="summary" value="YotaReader 存放书刊的文件夹"/>
 		</node>
 		<node name="localSearch" value="本地搜索"/>
 		<node name="rescan" value="重新扫描"/>

@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Tarxeta de memoria">
 			<node name="summary" value="Tarxeta de memoria inserida no dispositivo"/>
 		</node>
-		<node name="fileTreeLibrary" value="Biblioteca FBReader">
-			<node name="summary" value="Cartafol de libros FBReader"/>
+		<node name="fileTreeLibrary" value="Biblioteca">
+			<node name="summary" value="Cartafol de libros"/>
 		</node>
 		<node name="localSearch" value="Busca local"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

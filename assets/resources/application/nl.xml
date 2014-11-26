@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Geheugenkaart">
 			<node name="summary" value="Geheugenkaart geplaatst in het apparaat"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader bibliotheek">
-			<node name="summary" value="FBReader boekenmap"/>
+		<node name="fileTreeLibrary" value="Bibliotheek">
+			<node name="summary" value="Boekenmap"/>
 		</node>
 		<node name="localSearch" value="Lokaal zoeken"/>
 		<node name="rescan" value="Vernieuwen"/>

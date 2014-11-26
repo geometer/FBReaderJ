@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Thẻ nhớ">
 			<node name="summary" value="Có thể thêm thẻ nhớ vào máy"/>
 		</node>
-		<node name="fileTreeLibrary" value="Thư viện FBReader">
-			<node name="summary" value="Thư mục sách FBReader"/>
+		<node name="fileTreeLibrary" value="Thư viện YotaReader">
+			<node name="summary" value="Thư mục sách YotaReader"/>
 		</node>
 		<node name="localSearch" value="Tìm nội bộ"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

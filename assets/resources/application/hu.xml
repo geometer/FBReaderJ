@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Memóriakártya">
 			<node name="summary" value="Az eszközbe illesztett memóriakártya"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader mappa">
-			<node name="summary" value="Az FBReader e-könyvek mappája"/>
+		<node name="fileTreeLibrary" value="Mappa">
+			<node name="summary" value="E-könyvek mappája"/>
 		</node>
 		<node name="localSearch" value="Helyi keresés"/>
 		<node name="rescan" value="Újraindexel"/>

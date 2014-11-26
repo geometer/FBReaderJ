@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Hafıza kartı">
 			<node name="summary" value="Hafıza kartı takılı"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader Kitaplığı">
-			<node name="summary" value="FBReader kitap dizini"/>
+		<node name="fileTreeLibrary" value="Kitaplığı">
+			<node name="summary" value="kitap dizini"/>
 		</node>
 		<node name="localSearch" value="Ara"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

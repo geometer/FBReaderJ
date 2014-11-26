@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Minnekort">
 			<node name="summary" value="Minnekort i enheten"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader bibliotek">
-			<node name="summary" value="FBReader bokkatalog"/>
+		<node name="fileTreeLibrary" value="Bibliotek">
+			<node name="summary" value="Bokkatalog"/>
 		</node>
 		<node name="localSearch" value="Søk"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

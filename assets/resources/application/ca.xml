@@ -56,8 +56,8 @@
 		<node name="fileTreeCard" value="Tarja de memòria">
 			<node name="summary" value="Tarja de memòria inserida al dispositiu"/>
 		</node>
-		<node name="fileTreeLibrary" value="Biblioteca FBReader">
-			<node name="summary" value="Directori de llibres de FBReader"/>
+		<node name="fileTreeLibrary" value="Biblioteca">
+			<node name="summary" value="Directori de llibres"/>
 		</node>
 		<node name="localSearch" value="Cercar"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

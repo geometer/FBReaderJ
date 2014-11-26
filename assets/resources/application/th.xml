@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="การ์ดหน่วยความจำ">
 			<node name="summary" value="การ์ดหน่วยความจำที่พบในตัวเครื่อง"/>
 		</node>
-		<node name="fileTreeLibrary" value="คลังหนังสือของ FBReader">
-			<node name="summary" value="ไดเรคทอรีหนังสือของ FBReader"/>
+		<node name="fileTreeLibrary" value="คลังหนังสือของ YotaReader">
+			<node name="summary" value="ไดเรคทอรีหนังสือของ YotaReader"/>
 		</node>
 		<node name="localSearch" value="ค้นหา"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

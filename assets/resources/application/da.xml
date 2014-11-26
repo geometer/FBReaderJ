@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Hukommelseskort">
 			<node name="summary" value="Hukommelseskort indsat i enheden"/>
 		</node>
-		<node name="fileTreeLibrary" value="FB-læser bibliotek">
-			<node name="summary" value="FB-Læser bogbibliotek"/>
+		<node name="fileTreeLibrary" value="Bibliotek">
+			<node name="summary" value="Bogbibliotek"/>
 		</node>
 		<node name="localSearch" value="Søg"/>
 		<node name="rescan" value="Scan igen"/>

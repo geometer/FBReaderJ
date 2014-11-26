@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Карта памяці">
 			<node name="summary" value="Файлы на карце памяці, зьнешняй ці ўбудаванай"/>
 		</node>
-		<node name="fileTreeLibrary" value="Бібліятэка FBReader">
-			<node name="summary" value="Тэчка кніг FBReader"/>
+		<node name="fileTreeLibrary" value="Бібліятэка">
+			<node name="summary" value="Тэчка кніг"/>
 		</node>
 		<node name="localSearch" value="Пошук"/>
 		<node name="rescan" value="Пераглядзець"/>

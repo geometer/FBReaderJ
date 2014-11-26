@@ -50,7 +50,7 @@
 		<node name="fileTreeCard" value="Հիշողության քարտ">
 			<node name="summary" value="Ցուցադրել հիշողության քարտը"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader գրադարան">
+		<node name="fileTreeLibrary" value="գրադարան">
 			<node name="summary" value="Ցուցադրել գրացուցակը"/>
 		</node>
 		<node name="localSearch" value="Որոնում"/>

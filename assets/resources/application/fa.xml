@@ -50,7 +50,7 @@
 		<node name="fileTreeCard" value="کارت حافظه">
 			<node name="summary" value="کارت حافظه وارد شد"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader کتابخانه">
+		<node name="fileTreeLibrary" value="کتابخانه">
 			<node name="summary" value="پوشه کتابهای اف بی ریدر"/>
 		</node>
 		<node name="localSearch" value="جستجو"/>

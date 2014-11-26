@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Карта пам'яті">
 			<node name="summary" value="Підключена карта пам'яті"/>
 		</node>
-		<node name="fileTreeLibrary" value="Бібліотека FBReader">
-			<node name="summary" value="Бібліотека книг FBReader"/>
+		<node name="fileTreeLibrary" value="Бібліотека">
+			<node name="summary" value="Бібліотека книг"/>
 		</node>
 		<node name="localSearch" value="Пошук"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

@@ -53,8 +53,8 @@
 		<node name="fileTreeCard" value="Carte mémoire">
 			<node name="summary" value="Carte mémoire insérée dans le périphérique"/>
 		</node>
-		<node name="fileTreeLibrary" value="Bibliothèque FBReader">
-			<node name="summary" value="Répertoire des livres FBReader"/>
+		<node name="fileTreeLibrary" value="Bibliothèque">
+			<node name="summary" value="Répertoire des livres"/>
 		</node>
 		<node name="localSearch" value="Recherche locale"/>
 		<node name="rescan" value="Chercher à nouveau"/>

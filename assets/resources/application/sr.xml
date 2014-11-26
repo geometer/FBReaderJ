@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Меморијска картица">
 			<node name="summary" value="Меморијска картица која је убачена."/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader библиотека">
-			<node name="summary" value="FBReader-ова фасцикла са књигама."/>
+		<node name="fileTreeLibrary" value="библиотека">
+			<node name="summary" value="фасцикла са књигама."/>
 		</node>
 		<node name="localSearch" value="Претражи"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

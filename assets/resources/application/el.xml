@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="Κάρτα μνήμης">
 			<node name="summary" value="Κάρτα μνήμης (εσωτερική μνήμε σε ορισμένες συσκευές)"/>
 		</node>
-		<node name="fileTreeLibrary" value="βιβλιοθήκη FBReader">
-			<node name="summary" value="κατάλογος αρχείων FBReader"/>
+		<node name="fileTreeLibrary" value="βιβλιοθήκη">
+			<node name="summary" value="κατάλογος αρχείων"/>
 		</node>
 		<node name="localSearch" value="τοπική αναζήτηση"/>
 		<node name="rescan" value="Rescan" toBeTranslated="true"/>

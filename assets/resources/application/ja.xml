@@ -50,8 +50,8 @@
 		<node name="fileTreeCard" value="メモリカード">
 			<node name="summary" value="メモリカード上のファイル (内蔵も)"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader ライブラリ">
-			<node name="summary" value="FBReader の指定ディレクトリ"/>
+		<node name="fileTreeLibrary" value="Yota Reader ライブラリ">
+			<node name="summary" value="Yota Reader の指定ディレクトリ"/>
 		</node>
 		<node name="localSearch" value="検索"/>
 		<node name="rescan" value="再調査"/>
