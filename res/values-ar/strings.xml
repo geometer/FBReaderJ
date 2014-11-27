@@ -43,4 +43,6 @@
   <string name="select_only_one_word">يرجى تحديد كلمة واحدة فقط</string>
   <string name="bookmark">إشارة مرجعية</string>
   <string name="back">Back</string>
+  <string name="contents">Contents</string>
+  <string name="bookmarks">Bookmarks</string>
 </resources>

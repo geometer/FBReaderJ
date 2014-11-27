@@ -42,5 +42,7 @@
   <string name="only_english">К сожалению, поиск определения слов доступен только для английского языка</string>
   <string name="select_only_one_word">Выберите только одно слово</string>
   <string name="bookmark">Закладка</string>
-  <string name="back">Back</string>
+  <string name="back">Назад</string>
+  <string name="contents">Содержание</string>
+  <string name="bookmarks">Закладки</string>
 </resources>

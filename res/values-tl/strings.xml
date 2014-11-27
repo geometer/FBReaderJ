@@ -43,4 +43,6 @@
   <string name="select_only_one_word">Mangyaring pumili lamang ng isang salita</string>
   <string name="bookmark">Bookmark</string>
   <string name="back">Back</string>
+  <string name="contents">Contents</string>
+  <string name="bookmarks">Bookmarks</string>
 </resources>

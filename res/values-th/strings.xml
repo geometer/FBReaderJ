@@ -43,4 +43,6 @@
   <string name="select_only_one_word">โปรดเลือกเพียงคำเดียว</string>
   <string name="bookmark">บุ๊กมาร์ก</string>
   <string name="back">Back</string>
+  <string name="contents">Contents</string>
+  <string name="bookmarks">Bookmarks</string>
 </resources>

@@ -43,4 +43,6 @@
   <string name="select_only_one_word">Selecteer slechts één woord</string>
   <string name="bookmark">Bladwijzer</string>
   <string name="back">Back</string>
+  <string name="contents">Contents</string>
+  <string name="bookmarks">Bookmarks</string>
 </resources>

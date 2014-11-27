@@ -43,4 +43,6 @@
   <string name="select_only_one_word">Csak egy szót jelöljön ki</string>
   <string name="bookmark">Könyvjelző</string>
   <string name="back">Back</string>
+  <string name="contents">Contents</string>
+  <string name="bookmarks">Bookmarks</string>
 </resources>

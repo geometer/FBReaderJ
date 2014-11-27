@@ -43,4 +43,6 @@
   <string name="select_only_one_word">Vyberte len jedno slovo</string>
   <string name="bookmark">Záložka</string>
   <string name="back">Back</string>
+  <string name="contents">Contents</string>
+  <string name="bookmarks">Bookmarks</string>
 </resources>

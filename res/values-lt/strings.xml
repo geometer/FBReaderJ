@@ -43,4 +43,6 @@
   <string name="select_only_one_word">Pasirinkite tik vieną žodį</string>
   <string name="bookmark">Žymelė</string>
   <string name="back">Back</string>
+  <string name="contents">Contents</string>
+  <string name="bookmarks">Bookmarks</string>
 </resources>

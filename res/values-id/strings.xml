@@ -43,4 +43,6 @@
   <string name="select_only_one_word">Pilih hanya satu kata</string>
   <string name="bookmark">Penanda</string>
   <string name="back">Back</string>
+  <string name="contents">Contents</string>
+  <string name="bookmarks">Bookmarks</string>
 </resources>

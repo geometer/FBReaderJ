@@ -43,4 +43,6 @@
   <string name="select_only_one_word">Välj endast ett ord</string>
   <string name="bookmark">Bokmärke</string>
   <string name="back">Back</string>
+  <string name="contents">Contents</string>
+  <string name="bookmarks">Bookmarks</string>
 </resources>
