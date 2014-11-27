@@ -132,7 +132,7 @@
 		<git command="rev-list" property="versioning.code" taskname="versioning">
 			<args>
 				<arg value="--count" />
-				<arg value="--all" /
+				<arg value="--all" />
 				<arg value="HEAD" />
 			</args>
 		</git>
