@@ -126,6 +126,13 @@ public class ZLNetworkUtil {
 	}
 
 	public static String getUserAgent() {
-		return "FBReader/" + ZLibrary.Instance().getVersionName() + "(java)";
+		return String.format(
+			"%s/%s (Android %s, %s, %s)",
+			"FBReader",
+			ZLibrary.Instance().getVersionName(),
+			android.os.Build.VERSION.RELEASE,
+			android.os.Build.DEVICE,
+			android.os.Build.MODEL
+		);
 	}
 }
