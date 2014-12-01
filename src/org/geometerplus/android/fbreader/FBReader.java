@@ -279,14 +279,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			//bar.setDisplayUseLogoEnabled(false);
 		}
-		final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
+		final TextView titleView = (TextView)getLayoutInflater().inflate(DeviceUtil.titleViewId(), null);
 		titleView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				myFBReaderApp.runAction(ActionCode.SHOW_BOOK_INFO);
 			}
 		});
 		bar.setCustomView(titleView);
-		bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
+		if (DeviceType.Instance() != DeviceType.LENOVO_TAB) {
+			bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
+		}
 
 		setTitle(myFBReaderApp.getTitle());
 

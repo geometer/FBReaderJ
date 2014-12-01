@@ -56,7 +56,7 @@ public class TOCActivity extends ListActivity {
 				ActionBar.DISPLAY_SHOW_CUSTOM,
 				ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE
 			);
-			final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
+			final TextView titleView = (TextView)getLayoutInflater().inflate(DeviceUtil.titleViewId(), null);
 			titleView.setText(fbreader.getTitle());
 			bar.setCustomView(titleView);
 		}
