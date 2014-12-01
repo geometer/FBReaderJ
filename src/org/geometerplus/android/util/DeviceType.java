@@ -31,7 +31,8 @@ public enum DeviceType {
 	NOOK12,
 	EKEN_M001,
 	PAN_DIGITAL,
-	SAMSUNG_GT_S5830;
+	SAMSUNG_GT_S5830,
+	LENOVO_TAB;
 
 	private static DeviceType ourInstance;
 	public static DeviceType Instance() {
@@ -64,6 +65,10 @@ public enum DeviceType {
 				} else {
 					ourInstance = NOOK;
 				}
+			} else if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT &&
+					   Build.MODEL != null &&
+					   Build.MODEL.toLowerCase().matches("lenovo.*tab.*")) {
+				ourInstance = LENOVO_TAB;
 			} else {
 				ourInstance = GENERIC;
 			}
