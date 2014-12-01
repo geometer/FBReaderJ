@@ -38,7 +38,7 @@
             android:fontFamily="serif"
             android:textStyle="bold"
             android:checked="true"
-            android:text="Contents"/>
+            android:text="@string/contents"/>
         <RadioButton
             android:id="@+id/bookmarks"
             android:layout_width="match_parent"
@@ -54,7 +54,7 @@
             android:fontFamily="serif"
             android:textStyle="bold"
             android:checked="false"
-            android:text="Bookmarks"/>
+            android:text="@string/bookmarks"/>
     </LinearLayout>
 
     <ListView
