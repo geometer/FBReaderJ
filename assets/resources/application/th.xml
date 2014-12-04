@@ -697,6 +697,7 @@
 				<node name="none" value="ไม่มีแอนิเมชั่นในการเลื่อนหน้า"/>
 				<node name="curl" value="Curl animation" toBeTranslated="true"/>
 				<node name="slide" value="เลื่อนหน้าแบบสไลด์"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="เลื่อนหน้าแบบสลับ"/>
 			</node>
 			<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
