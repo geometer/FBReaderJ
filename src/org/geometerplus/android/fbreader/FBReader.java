@@ -282,9 +282,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		});
 		bar.setCustomView(titleView);
-		if (DeviceType.Instance() != DeviceType.LENOVO_TAB) {
-			bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
-		}
 
 		setTitle(myFBReaderApp.getTitle());
 
