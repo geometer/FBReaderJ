@@ -1,6 +1,10 @@
 <resources>
   <style name="FBReader.Activity" parent="android:Theme.DeviceDefault">
+		<item name="android:actionBarStyle">@style/FBReader.ActionBar</item>
 	</style>
   <style name="FBReader.Dialog" parent="android:Theme.DeviceDefault.Dialog">
+	</style>
+	<style name="FBReader.ActionBar" parent="@android:style/Widget.DeviceDefault.ActionBar">
+		<item name="android:background">@color/primary</item>
 	</style>
 </resources>
