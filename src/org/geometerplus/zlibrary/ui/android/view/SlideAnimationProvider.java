@@ -51,8 +51,30 @@ class SlideAnimationProvider extends SimpleAnimationProvider {
 		}
 	}
 
+	private void drawBitmapInternal(Canvas canvas, Bitmap bm, int left, int right, int height, int voffset, Paint paint) {
+		canvas.drawBitmap(
+			bm,
+			new Rect(left, 0, right, height),
+			new Rect(left, voffset, right, voffset + height),
+			paint
+		);
+	}
+
 	@Override
 	protected void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
-		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+		if (myDirection.IsHorizontal) {
+			final int dX = myEndX - myStartX;
+			setDarkFilter(dX, myWidth);
+			final int h = footerBitmap.getHeight();
+			if (dX > 0) {
+				drawBitmapInternal(canvas, footerBitmap, 0, dX, h, voffset, myDarkPaint);
+				drawBitmapInternal(canvas, footerBitmap, dX, myWidth, h, voffset, myPaint);
+			} else {
+				drawBitmapInternal(canvas, footerBitmap, myWidth + dX, myWidth, h, voffset, myDarkPaint);
+				drawBitmapInternal(canvas, footerBitmap, 0, myWidth + dX, h, voffset, myPaint);
+			}
+		} else {
+			canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+		}
 	}
 }
