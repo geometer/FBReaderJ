@@ -23,6 +23,9 @@ import android.graphics.*;
 
 class ShiftAnimationProvider extends SimpleAnimationProvider {
 	private final Paint myPaint = new Paint();
+	{
+		myPaint.setColor(Color.rgb(127, 127, 127));
+	}
 
 	ShiftAnimationProvider(BitmapManager bitmapManager) {
 		super(bitmapManager);
@@ -30,7 +33,6 @@ class ShiftAnimationProvider extends SimpleAnimationProvider {
 
 	@Override
 	protected void drawInternal(Canvas canvas) {
-		myPaint.setColor(Color.rgb(127, 127, 127));
 		if (myDirection.IsHorizontal) {
 			final int dX = myEndX - myStartX;
 			canvas.drawBitmap(getBitmapTo(), dX > 0 ? dX - myWidth : dX + myWidth, 0, myPaint);
@@ -48,6 +50,19 @@ class ShiftAnimationProvider extends SimpleAnimationProvider {
 				canvas.drawLine(0, dY, myWidth + 1, dY, myPaint);
 			} else if (dY < 0 && dY > -myHeight) {
 				canvas.drawLine(0, dY + myHeight, myWidth + 1, dY + myHeight, myPaint);
+			}
+		}
+	}
+
+	@Override
+	protected void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+		if (myDirection.IsHorizontal) {
+			final int dX = myEndX - myStartX;
+			if (dX > 0 && dX < myWidth) {
+				canvas.drawLine(dX, voffset, dX, voffset + footerBitmap.getHeight(), myPaint);
+			} else if (dX < 0 && dX > -myWidth) {
+				canvas.drawLine(dX + myWidth, voffset, dX + myWidth, voffset + footerBitmap.getHeight(), myPaint);
 			}
 		}
 	}
