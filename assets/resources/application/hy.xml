@@ -712,6 +712,7 @@
 				<node name="none" value="Անջատել անիմացիան"/>
 				<node name="curl" value="Եռաչափ անիմացիա"/>
 				<node name="slide" value="Սահեցնելով"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Շարժով"/>
 			</node>
 			<node name="animationSpeed" value="Անիմացիայի արագությունը">

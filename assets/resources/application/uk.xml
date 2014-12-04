@@ -697,6 +697,7 @@
 				<node name="none" value="Перегортати без анімації"/>
 				<node name="curl" value="Кучеряво"/>
 				<node name="slide" value="Слайд"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Зсув"/>
 			</node>
 			<node name="animationSpeed" value="Швидкість анімації">

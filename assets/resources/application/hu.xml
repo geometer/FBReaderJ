@@ -697,6 +697,7 @@
 				<node name="none" value="Görgetés animáció nélkül"/>
 				<node name="curl" value="Hajlítás"/>
 				<node name="slide" value="Csúsztatás"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Eltolás"/>
 			</node>
 			<node name="animationSpeed" value="Animáció sebessége">

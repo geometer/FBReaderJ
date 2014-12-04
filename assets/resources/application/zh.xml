@@ -697,6 +697,7 @@
 				<node name="none" value="无动画效果的滚屏"/>
 				<node name="curl" value="翻卷动画"/>
 				<node name="slide" value="滑动动画"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="移动动画"/>
 			</node>
 			<node name="animationSpeed" value="动画速度">

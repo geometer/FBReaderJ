@@ -699,6 +699,7 @@
 				<node name="none" value="Derulati fara animatie"/>
 				<node name="curl" value="Animatie la rotund"/>
 				<node name="slide" value="Animatie glisare"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Animatie mutare"/>
 			</node>
 			<node name="animationSpeed" value="Viteza de animatie">

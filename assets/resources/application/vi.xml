@@ -697,6 +697,7 @@
 				<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
 				<node name="curl" value="Curl animation" toBeTranslated="true"/>
 				<node name="slide" value="Slide animation" toBeTranslated="true"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Shift animation" toBeTranslated="true"/>
 			</node>
 			<node name="animationSpeed" value="Animation speed" toBeTranslated="true">

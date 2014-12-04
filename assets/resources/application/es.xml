@@ -712,6 +712,7 @@
 				<node name="none" value="Pasar páginas sin animación"/>
 				<node name="curl" value="Animación voltear página"/>
 				<node name="slide" value="Animación deslizar página"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Animación mover página"/>
 			</node>
 			<node name="animationSpeed" value="Velocidad de animación">

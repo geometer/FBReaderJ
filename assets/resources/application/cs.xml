@@ -716,6 +716,7 @@
 				<node name="none" value="Posouvat bez animace"/>
 				<node name="curl" value="Animace otočení"/>
 				<node name="slide" value="Animace vysunutí"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Animace posunutí"/>
 			</node>
 			<node name="animationSpeed" value="Rychlost animace">

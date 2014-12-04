@@ -107,6 +107,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 				case slide:
 					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
 					break;
+				case slideOldStyle:
+					myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
+					break;
 				case shift:
 					myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
 					break;
