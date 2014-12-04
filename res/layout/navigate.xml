@@ -38,6 +38,7 @@
 		/>
 		<Button
 			android:id="@+id/navigation_reset_button"
+			style="?android:attr/buttonBarButtonStyle"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="0.5"
