@@ -1,6 +1,10 @@
 <resources>
   <style name="FBReader.Activity" parent="android:Theme.Holo">
+		<item name="android:actionBarStyle">@style/FBReader.ActionBar</item>
 	</style>
   <style name="FBReader.Dialog" parent="android:Theme.Holo.Dialog">
+	</style>
+	<style name="FBReader.ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+		<item name="android:background">@color/primary</item>
 	</style>
 </resources>

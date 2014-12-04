@@ -25,8 +25,6 @@ import java.util.*;
 
 import android.app.*;
 import android.content.*;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.*;
 import android.view.*;
@@ -69,8 +67,6 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
-	static final int ACTION_BAR_COLOR = Color.DKGRAY;
-
 	public static final int REQUEST_PREFERENCES = 1;
 	public static final int REQUEST_CANCEL_MENU = 2;
 
@@ -279,14 +275,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			bar.setDisplayUseLogoEnabled(false);
 		}
-		final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
+		final TextView titleView = (TextView)getLayoutInflater().inflate(DeviceUtil.titleViewId(), null);
 		titleView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				myFBReaderApp.runAction(ActionCode.SHOW_BOOK_INFO);
 			}
 		});
 		bar.setCustomView(titleView);
-		bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
 
 		setTitle(myFBReaderApp.getTitle());
 
@@ -874,7 +869,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			invalidateOptionsMenu();
 		}
 
-		if (Build.VERSION.SDK_INT >= 19/*Build.VERSION_CODES.KITKAT*/
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
 				&& zlibrary.EnableFullscreenModeOption.getValue()) {
 			myRootView.setSystemUiVisibility(
 				View.SYSTEM_UI_FLAG_LOW_PROFILE |
