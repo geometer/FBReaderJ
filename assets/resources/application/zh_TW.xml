@@ -697,6 +697,7 @@
 				<node name="none" value="無翻頁動畫"/>
 				<node name="curl" value="捲頁效果"/>
 				<node name="slide" value="滑動效果"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="平移效果"/>
 			</node>
 			<node name="animationSpeed" value="Animation speed" toBeTranslated="true">

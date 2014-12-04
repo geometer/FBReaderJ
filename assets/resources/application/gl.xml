@@ -697,6 +697,7 @@
 				<node name="none" value="Desprazamento sen animación"/>
 				<node name="curl" value="Curl animation" toBeTranslated="true"/>
 				<node name="slide" value="Deslizar"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Pasar"/>
 			</node>
 			<node name="animationSpeed" value="Animation speed" toBeTranslated="true">

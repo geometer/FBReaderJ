@@ -700,6 +700,7 @@
 				<node name="none" value="Pas d'animation"/>
 				<node name="curl" value="Effet curl"/>
 				<node name="slide" value="Effet slide"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Effet shift"/>
 			</node>
 			<node name="animationSpeed" value="Vitesse d'animation">

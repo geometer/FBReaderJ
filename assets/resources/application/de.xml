@@ -714,6 +714,7 @@
 				<node name="none" value="Ohne Animation umblättern"/>
 				<node name="curl" value="Blättern"/>
 				<node name="slide" value="Gleiten"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Schieben"/>
 			</node>
 			<node name="animationSpeed" value="Animationsgeschwindigkeit">
