@@ -25,8 +25,6 @@ import java.util.*;
 
 import android.app.*;
 import android.content.*;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.*;
 import android.view.*;
@@ -69,8 +67,6 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
-	static final int ACTION_BAR_COLOR = Color.DKGRAY;
-
 	public static final int REQUEST_PREFERENCES = 1;
 	public static final int REQUEST_CANCEL_MENU = 2;
 
@@ -286,7 +282,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		});
 		bar.setCustomView(titleView);
-		bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
 
 		setTitle(myFBReaderApp.getTitle());
 
