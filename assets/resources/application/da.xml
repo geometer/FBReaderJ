@@ -707,6 +707,7 @@
 				<node name="none" value="Bladre uden animation"/>
 				<node name="curl" value="Bladre-animation"/>
 				<node name="slide" value="Glide-animation"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Skift animation"/>
 			</node>
 			<node name="animationSpeed" value="Animationshastighed">

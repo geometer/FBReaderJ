@@ -707,6 +707,7 @@
 				<node name="none" value="Bla sidene uten animasjon"/>
 				<node name="curl" value="Krølleanimasjon"/>
 				<node name="slide" value="Skyveanimasjon"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Skifteanimasjon"/>
 			</node>
 			<node name="animationSpeed" value="Animasjonshastighet">

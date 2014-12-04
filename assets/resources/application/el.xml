@@ -697,6 +697,7 @@
 				<node name="none" value="Αλλαγή σελίδας χωρίς animation"/>
 				<node name="curl" value="Αλλαγή σελίδας"/>
 				<node name="slide" value="σπρώξτε"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="σύρετε"/>
 			</node>
 			<node name="animationSpeed" value="ταχύτητα Animation">
