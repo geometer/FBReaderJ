@@ -1,6 +1,10 @@
 <resources>
   <style name="FBReader.Activity" parent="android:Theme.Material">
+    <item name="android:colorPrimary">@color/primary</item>
+    <item name="android:colorPrimaryDark">@color/primary_dark</item>
   </style>
   <style name="FBReader.Dialog" parent="android:Theme.Material.Dialog">
+    <item name="android:colorPrimary">@color/primary</item>
+    <item name="android:colorPrimaryDark">@color/primary_dark</item>
   </style>
 </resources>
