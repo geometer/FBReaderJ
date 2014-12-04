@@ -328,4 +328,9 @@ class CurlAnimationProvider extends AnimationProvider {
 			}
 		}
 	}
+
+	@Override
+	protected void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+	}
 }
