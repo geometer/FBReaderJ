@@ -38,15 +38,16 @@ class SlideAnimationProvider extends SimpleAnimationProvider {
 	}
 
 	private void drawShadow(Canvas canvas, int top, int bottom, int dX) {
-		final GradientDrawable gradient = new GradientDrawable();
+		final GradientDrawable.Orientation orientation = dX > 0
+			? GradientDrawable.Orientation.RIGHT_LEFT
+			: GradientDrawable.Orientation.LEFT_RIGHT;
+		final int[] colors = new int[] { 0x46000000, 0x00000000 };
+		final GradientDrawable gradient = new GradientDrawable(orientation, colors);
 		gradient.setGradientType(GradientDrawable.LINEAR_GRADIENT);
-		gradient.setColors(new int[] { 0x46000000, 0x00000000 });
 		gradient.setDither(true);
 		if (dX > 0) {
-			gradient.setOrientation(GradientDrawable.Orientation.RIGHT_LEFT);
 			gradient.setBounds(dX - 16, top, dX, bottom);
 		} else {
-			gradient.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
 			gradient.setBounds(myWidth + dX, top, myWidth + dX + 16, bottom);
 		}
 		gradient.draw(canvas);
