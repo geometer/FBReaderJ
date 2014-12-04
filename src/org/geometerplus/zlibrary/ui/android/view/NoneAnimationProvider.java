@@ -77,4 +77,9 @@ class NoneAnimationProvider extends AnimationProvider {
 		}
 		return ZLView.PageIndex.current;
 	}
+
+	@Override
+	protected void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+	}
 }
