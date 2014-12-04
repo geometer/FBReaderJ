@@ -24,7 +24,7 @@ import android.graphics.*;
 class SlideOldStyleAnimationProvider extends SimpleAnimationProvider {
 	private final Paint myPaint = new Paint();
 
-	SlideAnimationProvider(BitmapManager bitmapManager) {
+	SlideOldStyleAnimationProvider(BitmapManager bitmapManager) {
 		super(bitmapManager);
 	}
 
