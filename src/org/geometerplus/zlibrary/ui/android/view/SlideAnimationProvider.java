@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
+import android.graphics.drawable.GradientDrawable;
 
 class SlideAnimationProvider extends SimpleAnimationProvider {
 	private final Paint myDarkPaint = new Paint();
@@ -36,6 +37,21 @@ class SlideAnimationProvider extends SimpleAnimationProvider {
 		));
 	}
 
+	private void drawShadow(Canvas canvas, int top, int bottom, int dX) {
+		final GradientDrawable gradient = new GradientDrawable();
+		gradient.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+		gradient.setColors(new int[] { 0x46000000, 0x00000000 });
+		gradient.setDither(true);
+		if (dX > 0) {
+			gradient.setOrientation(GradientDrawable.Orientation.RIGHT_LEFT);
+			gradient.setBounds(dX - 16, top, dX, bottom);
+		} else {
+			gradient.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+			gradient.setBounds(myWidth + dX, top, myWidth + dX + 16, bottom);
+		}
+		gradient.draw(canvas);
+	}
+
 	@Override
 	protected void drawInternal(Canvas canvas) {
 		if (myDirection.IsHorizontal) {
@@ -43,6 +59,7 @@ class SlideAnimationProvider extends SimpleAnimationProvider {
 			setDarkFilter(dX, myWidth);
 			canvas.drawBitmap(getBitmapTo(), 0, 0, myDarkPaint);
 			canvas.drawBitmap(getBitmapFrom(), dX, 0, myPaint);
+			drawShadow(canvas, 0, myHeight, dX);
 		} else {
 			final int dY = myEndY - myStartY;
 			setDarkFilter(dY, myHeight);
@@ -73,6 +90,7 @@ class SlideAnimationProvider extends SimpleAnimationProvider {
 				drawBitmapInternal(canvas, footerBitmap, myWidth + dX, myWidth, h, voffset, myDarkPaint);
 				drawBitmapInternal(canvas, footerBitmap, 0, myWidth + dX, h, voffset, myPaint);
 			}
+			drawShadow(canvas, voffset, voffset + h, dX);
 		} else {
 			canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
 		}
