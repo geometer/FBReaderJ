@@ -697,6 +697,7 @@
 				<node name="none" value="Zmiana strony bez animacji"/>
 				<node name="curl" value="Wywijanie strony"/>
 				<node name="slide" value="Przesuwanie strony"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Przekładanie strony"/>
 			</node>
 			<node name="animationSpeed" value="Szybkość animacji">

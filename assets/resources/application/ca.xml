@@ -713,6 +713,7 @@
 				<node name="none" value="Sense animació"/>
 				<node name="curl" value="Donar la volta"/>
 				<node name="slide" value="Lliscar"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Desplaçar"/>
 			</node>
 			<node name="animationSpeed" value="Velocitat d'animació">

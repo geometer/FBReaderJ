@@ -707,6 +707,7 @@
 				<node name="none" value="Нема"/>
 				<node name="curl" value="Савијање"/>
 				<node name="slide" value="Клизање"/>
+				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
 				<node name="shift" value="Померање"/>
 			</node>
 			<node name="animationSpeed" value="Брзина анимације">
