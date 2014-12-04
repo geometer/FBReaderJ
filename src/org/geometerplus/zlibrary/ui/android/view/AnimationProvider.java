@@ -227,4 +227,6 @@ abstract class AnimationProvider {
 	protected Bitmap getBitmapTo() {
 		return myBitmapManager.getBitmap(getPageToScrollTo());
 	}
+
+	protected abstract void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset);
 }
