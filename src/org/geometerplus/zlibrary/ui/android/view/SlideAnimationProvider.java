@@ -22,32 +22,32 @@ package org.geometerplus.zlibrary.ui.android.view;
 import android.graphics.*;
 
 class SlideAnimationProvider extends SimpleAnimationProvider {
+	private final Paint myDarkPaint = new Paint();
 	private final Paint myPaint = new Paint();
 
 	SlideAnimationProvider(BitmapManager bitmapManager) {
 		super(bitmapManager);
 	}
 
+	private void setDarkFilter(int visible, int full) {
+		final int color = 145 + 100 * Math.abs(visible) / full;
+		myDarkPaint.setColorFilter(new PorterDuffColorFilter(
+			Color.rgb(color, color, color), PorterDuff.Mode.MULTIPLY
+		));
+	}
+
 	@Override
 	protected void drawInternal(Canvas canvas) {
-		canvas.drawBitmap(getBitmapTo(), 0, 0, myPaint);
-		myPaint.setColor(Color.rgb(127, 127, 127));
 		if (myDirection.IsHorizontal) {
 			final int dX = myEndX - myStartX;
+			setDarkFilter(dX, myWidth);
+			canvas.drawBitmap(getBitmapTo(), 0, 0, myDarkPaint);
 			canvas.drawBitmap(getBitmapFrom(), dX, 0, myPaint);
-			if (dX > 0 && dX < myWidth) {
-				canvas.drawLine(dX, 0, dX, myHeight + 1, myPaint);
-			} else if (dX < 0 && dX > -myWidth) {
-				canvas.drawLine(dX + myWidth, 0, dX + myWidth, myHeight + 1, myPaint);
-			}
 		} else {
 			final int dY = myEndY - myStartY;
+			setDarkFilter(dY, myHeight);
+			canvas.drawBitmap(getBitmapTo(), 0, 0, myDarkPaint);
 			canvas.drawBitmap(getBitmapFrom(), 0, dY, myPaint);
-			if (dY > 0 && dY < myHeight) {
-				canvas.drawLine(0, dY, myWidth + 1, dY, myPaint);
-			} else if (dY < 0 && dY > -myHeight) {
-				canvas.drawLine(0, dY + myHeight, myWidth + 1, dY + myHeight, myPaint);
-			}
 		}
 	}
 
