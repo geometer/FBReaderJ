@@ -707,6 +707,7 @@
 				<node name="none" value="Turn pages with no animation"/>
 				<node name="curl" value="Curl animation"/>
 				<node name="slide" value="Slide animation"/>
+				<node name="slideOldStyle" value="Slide animation (old style)"/>
 				<node name="shift" value="Shift animation"/>
 			</node>
 			<node name="animationSpeed" value="Animation speed">

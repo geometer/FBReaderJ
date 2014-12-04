@@ -712,6 +712,7 @@
 				<node name="none" value="Выключить анимацию"/>
 				<node name="curl" value="Трехмерная анимация"/>
 				<node name="slide" value="Сдвиг с перекрытием"/>
+				<node name="slideOldStyle" value="Сдвиг с перекрытием (старый стиль)"/>
 				<node name="shift" value="Сдвиг"/>
 			</node>
 			<node name="animationSpeed" value="Скорость анимации">
