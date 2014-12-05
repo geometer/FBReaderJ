@@ -530,7 +530,7 @@ public final class FBView extends ZLTextView {
 			}
 			context.setFont(
 				myFontEntry,
-				height <= boldLimit ? height + 3 : height + 1,
+				height <= boldLimit ? height + 2 : height + 1,
 				height > boldLimit, false, false, false
 			);
 		}
@@ -622,7 +622,6 @@ public final class FBView extends ZLTextView {
 			final int right = context.getWidth() - getRightMargin();
 			final int height = getHeight();
 			final int lineWidth = height <= 12 ? 1 : 2;
-			final int delta = height <= 12 ? 0 : 1;
 			setFont(context, height, 12);
 
 			final PagePosition pagePosition = FBView.this.pagePosition();
@@ -631,7 +630,7 @@ public final class FBView extends ZLTextView {
 			final String infoString = buildInfoString(pagePosition, "  ");
 			final int infoWidth = context.getStringWidth(infoString);
 			context.setTextColor(textColor);
-			context.drawString(right - infoWidth, height - delta, infoString);
+			context.drawString(right - infoWidth, height - 1, infoString);
 
 			// draw gauge
 			final int gaugeRight = right - (infoWidth == 0 ? 0 : infoWidth + 10);
@@ -648,10 +647,10 @@ public final class FBView extends ZLTextView {
 			}
 
 			// draw labels
-			final TreeSet<Integer> labels = new TreeSet<Integer>();
-			labels.add(left);
-			labels.add(gaugeRight);
 			if (myViewOptions.getFooterOptions().ShowTOCMarks.getValue()) {
+				final TreeSet<Integer> labels = new TreeSet<Integer>();
+				labels.add(left);
+				labels.add(gaugeRight);
 				if (myTOCMarks == null) {
 					updateTOCMarks(model);
 				}
@@ -663,10 +662,10 @@ public final class FBView extends ZLTextView {
 						labels.add(left + (int)(1.0 * (gaugeRight - left) * refCoord / fullLength + 0.5));
 					}
 				}
-			}
-			for (int l : labels) {
-				context.setLineColor(l <= gaugeInternalRight ? readColor : unreadColor);
-				context.drawLine(l, v + 3, l, v - lineWidth - 2);
+				for (int l : labels) {
+					context.setLineColor(l <= gaugeInternalRight ? readColor : unreadColor);
+					context.drawLine(l, v + 3, l, v - lineWidth - 2);
+				}
 			}
 		}
 	}
