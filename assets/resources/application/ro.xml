@@ -655,6 +655,7 @@
 				<node name="show" value="Glisorul vertical"/>
 				<node name="showAsProgress" value="Bara verticala de progres"/>
 				<node name="showAsFooter" value="Subsol orizontal"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="înaltime subsol"/>
 			<node name="footerColor" value="Culoarea subsolului"/>

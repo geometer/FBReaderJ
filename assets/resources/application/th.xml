@@ -653,6 +653,7 @@
 				<node name="show" value="สไลเดอร์แนวตั้ง"/>
 				<node name="showAsProgress" value="แถบแนวตั้งแสดงความก้าวหน้าในการอ่าน"/>
 				<node name="showAsFooter" value="แถบแสดงแนวนอนท้ายหน้า"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="ความสูงแถบแสดงท้ายหน้า"/>
 			<node name="footerColor" value="สีแถบแสดงท้ายหน้า"/>
