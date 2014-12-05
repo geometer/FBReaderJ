@@ -663,6 +663,7 @@
 				<node name="show" value="Irristari bertikala"/>
 				<node name="showAsProgress" value="Aurrerapen-barra bertikala"/>
 				<node name="showAsFooter" value="Oin-ohar horizontala"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Oin-oharraren altuera"/>
 			<node name="footerColor" value="Oin-oharraren kolorea"/>
@@ -850,7 +851,6 @@
 			<node name="pay" value="Ordaindu"/>
 			<node name="refresh" value="Freskatu"/>
 			<node name="authorise" value="Baimendu"/>
-			<node name="resetPosition" value="Berrezarri posizioa"/>
 			<node name="enterPosition" value="Idatzi orri zenbakia"/>
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
