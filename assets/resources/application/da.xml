@@ -663,6 +663,7 @@
 				<node name="show" value="Lodret skyder"/>
 				<node name="showAsProgress" value="Lodret fremgangsbjælke"/>
 				<node name="showAsFooter" value="Vandret sidefod"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Sidefodens højde"/>
 			<node name="footerColor" value="Sidefodens farve"/>
