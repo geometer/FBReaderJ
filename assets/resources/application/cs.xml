@@ -672,6 +672,7 @@
 				<node name="show" value="Svislé šoupátko"/>
 				<node name="showAsProgress" value="Svislý indikátor průběhu"/>
 				<node name="showAsFooter" value="Vodorovná patička"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Výška patičky"/>
 			<node name="footerColor" value="Barva patičky"/>

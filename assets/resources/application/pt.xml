@@ -666,6 +666,7 @@
 				<node name="show" value="Slider vertical"/>
 				<node name="showAsProgress" value="Barra de progresso vertical"/>
 				<node name="showAsFooter" value="Rodapé Horizontal"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Altura do rodapé"/>
 			<node name="footerColor" value="Cor do Rodapé"/>

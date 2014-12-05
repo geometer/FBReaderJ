@@ -668,6 +668,7 @@
 				<node name="show" value="ვერტიკალური ცოცია"/>
 				<node name="showAsProgress" value="ვერტიკალური პროგრეს-ბარი"/>
 				<node name="showAsFooter" value="სარდაფი"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="სარდაფის სიმაღლე"/>
 			<node name="footerColor" value="სარდაფის ფერი"/>
