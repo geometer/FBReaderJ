@@ -448,7 +448,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final PreferenceSet footerPreferences = new PreferenceSet.Enabler() {
 			@Override
 			protected Boolean detectState() {
-				return viewOptions.ScrollbarType.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER;
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
+						return true;
+					default:
+						return false;
+				}
 			}
 		};
 
@@ -515,7 +521,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen statusLineScreen = createPreferenceScreen("scrollBar");
 
-		final String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
+		final String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter", "showAsFooterOldStyle"};
 		statusLineScreen.addPreference(new ZLChoicePreference(
 			this, statusLineScreen.Resource.getResource("scrollbarType"),
 			viewOptions.ScrollbarType, scrollBarTypes

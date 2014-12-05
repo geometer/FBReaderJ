@@ -661,6 +661,7 @@
 				<node name="show" value="شريط تمرير عمودي"/>
 				<node name="showAsProgress" value="شريط تقدم عمودي"/>
 				<node name="showAsFooter" value="شريط تقدم أفقي"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="ارتفاع حاشية الصفحة"/>
 			<node name="footerColor" value="لون حاشية الصفحة"/>

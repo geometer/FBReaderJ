@@ -668,6 +668,7 @@
 				<node name="show" value="Ուղղաձիգ սահիչ"/>
 				<node name="showAsProgress" value="Ուղղաձիգ ընթացագոտի"/>
 				<node name="showAsFooter" value="Էջատակ"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Էջատակի բարձրությունը"/>
 			<node name="footerColor" value="Էջատակի գույնը"/>
