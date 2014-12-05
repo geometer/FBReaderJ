@@ -669,6 +669,7 @@
 				<node name="show" value="Вертикален скрол бар"/>
 				<node name="showAsProgress" value="Вертикален прогрес бар"/>
 				<node name="showAsFooter" value="Долен колонтитул"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Височина на долния колонтитул"/>
 			<node name="footerColor" value="Цвят на долния колонтитул"/>

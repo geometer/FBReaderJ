@@ -668,6 +668,7 @@
 				<node name="show" value="Вертикальный ползунок"/>
 				<node name="showAsProgress" value="Вертикальный прогресс-бар"/>
 				<node name="showAsFooter" value="Подвал"/>
+				<node name="showAsFooterOldStyle" value="Подвал (старый стиль)"/>
 			</node>
 			<node name="footerHeight" value="Высота подвала"/>
 			<node name="footerColor" value="Цвет подвала"/>

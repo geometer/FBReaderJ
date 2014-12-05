@@ -663,6 +663,7 @@
 				<node name="show" value="Loddrett glidebryter"/>
 				<node name="showAsProgress" value="Loddrett fremgangsfelt"/>
 				<node name="showAsFooter" value="Vannrett bunntekst"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Bunntekstens høyde"/>
 			<node name="footerColor" value="Bunntekstens farge"/>

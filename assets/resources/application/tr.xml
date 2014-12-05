@@ -663,6 +663,7 @@
 				<node name="show" value="Dikey Çubuk"/>
 				<node name="showAsProgress" value="İlerleme Göstergesi Dikey"/>
 				<node name="showAsFooter" value="Altbilgi"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Altbilgi yüksekliği"/>
 			<node name="footerColor" value="Altbilgi rengi"/>

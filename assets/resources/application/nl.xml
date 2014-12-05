@@ -663,6 +663,7 @@
 				<node name="show" value="Verticale schuifbalk"/>
 				<node name="showAsProgress" value="Verticale voortgangsbalk"/>
 				<node name="showAsFooter" value="Horizontale onderbalk"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Hoogte onderbalk"/>
 			<node name="footerColor" value="Kleur onderbalk"/>

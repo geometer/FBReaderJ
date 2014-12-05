@@ -663,6 +663,7 @@
 				<node name="show" value="Усправни клизач"/>
 				<node name="showAsProgress" value="Усправна трака с напретком"/>
 				<node name="showAsFooter" value="Водоравно подножје"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Висина подножја"/>
 			<node name="footerColor" value="Боја подножја"/>

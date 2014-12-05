@@ -668,6 +668,7 @@
 				<node name="show" value="Deslizador vertical"/>
 				<node name="showAsProgress" value="Barra de progreso vertical"/>
 				<node name="showAsFooter" value="Pie de página horizontal"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Altura del pie de página"/>
 			<node name="footerColor" value="Color del pie de página"/>

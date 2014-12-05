@@ -663,6 +663,7 @@
 				<node name="show" value="Vertical slider"/>
 				<node name="showAsProgress" value="Vertical progress bar"/>
 				<node name="showAsFooter" value="Horizontal footer"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)"/>
 			</node>
 			<node name="footerHeight" value="Footer height"/>
 			<node name="footerColor" value="Footer color"/>

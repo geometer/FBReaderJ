@@ -670,6 +670,7 @@
 				<node name="show" value="Vertikal"/>
 				<node name="showAsProgress" value="Vertikal progressiv"/>
 				<node name="showAsFooter" value="Horizontal"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Höhe der Fußleiste"/>
 			<node name="footerColor" value="Farbe der Fußleiste"/>

@@ -653,6 +653,7 @@
 				<node name="show" value="Κάθετη"/>
 				<node name="showAsProgress" value="Κάθετη σταδιακή"/>
 				<node name="showAsFooter" value="Οριζόντια"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Ύψος υποσέλιδου"/>
 			<node name="footerColor" value="Χρώμα υποσέλιδου"/>

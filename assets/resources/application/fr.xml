@@ -656,6 +656,7 @@
 				<node name="show" value="Curseur vertical"/>
 				<node name="showAsProgress" value="Barre de progression verticale"/>
 				<node name="showAsFooter" value="Pied de page horizontal"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Hauteur du pied de page"/>
 			<node name="footerColor" value="Couleur pied de page"/>

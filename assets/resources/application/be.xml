@@ -663,6 +663,7 @@
 				<node name="show" value="Вэртыкальны лятунок"/>
 				<node name="showAsProgress" value="Вэртыкальная паліца прагрэсу"/>
 				<node name="showAsFooter" value="Гарызантальны прыпятак"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Вышыня прыпятка"/>
 			<node name="footerColor" value="Колер прыпятка"/>

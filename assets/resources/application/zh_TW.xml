@@ -653,6 +653,7 @@
 				<node name="show" value="垂直滾動條"/>
 				<node name="showAsProgress" value="垂直進度條"/>
 				<node name="showAsFooter" value="水平頁尾"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="頁尾高度"/>
 			<node name="footerColor" value="頁尾顏色"/>

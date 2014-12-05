@@ -663,6 +663,7 @@
 				<node name="show" value="لغزنده عمودي"/>
 				<node name="showAsProgress" value="نوار پيشرفت عمودي"/>
 				<node name="showAsFooter" value="زير برگ افقي"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="ارتفاع زيربرگ"/>
 			<node name="footerColor" value="رنگ زيربرگ"/>

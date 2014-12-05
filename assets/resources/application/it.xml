@@ -654,6 +654,7 @@
 				<node name="show" value="Scorrimento verticale"/>
 				<node name="showAsProgress" value="Avanzamento barra verticale"/>
 				<node name="showAsFooter" value="Piè di pagina orizzontale"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Altezza piè di pagina"/>
 			<node name="footerColor" value="Colore piè di pagina"/>
