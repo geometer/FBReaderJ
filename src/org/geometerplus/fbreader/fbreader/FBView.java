@@ -452,14 +452,14 @@ public final class FBView extends ZLTextView {
 		return myViewOptions.getColorProfile().HighlightingForegroundOption.getValue();
 	}
 
-	private class Footer implements FooterArea {
+	private abstract class Footer implements FooterArea {
 		private Runnable UpdateTask = new Runnable() {
 			public void run() {
 				myReader.getViewWidget().repaint();
 			}
 		};
 
-		private ArrayList<TOCTree> myTOCMarks;
+		protected ArrayList<TOCTree> myTOCMarks;
 
 		public int getHeight() {
 			return myViewOptions.FooterHeight.getValue();
@@ -470,7 +470,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		private final int MAX_TOC_MARKS_NUMBER = 100;
-		private synchronized void updateTOCMarks(BookModel model) {
+		protected synchronized void updateTOCMarks(BookModel model) {
 			myTOCMarks = new ArrayList<TOCTree>();
 			TOCTree toc = model.TOCTree;
 			if (toc == null) {
@@ -498,7 +498,45 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
+		protected String buildInfoString(PagePosition pagePosition, String separator) {
+			final StringBuilder info = new StringBuilder();
+			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
+			if (footerOptions.ShowProgress.getValue()) {
+				info.append(pagePosition.Current);
+				info.append("/");
+				info.append(pagePosition.Total);
+			}
+			if (footerOptions.ShowClock.getValue()) {
+				if (info.length() > 0) {
+					info.append(separator);
+				}
+				info.append(ZLibrary.Instance().getCurrentTimeString());
+			}
+			if (footerOptions.ShowBattery.getValue()) {
+				if (info.length() > 0) {
+					info.append(separator);
+				}
+				info.append(myReader.getBatteryLevel());
+				info.append("%");
+			}
+			return info.toString();
+		}
+
 		private List<FontEntry> myFontEntry;
+		protected void setFont(ZLPaintContext context, int height, int boldLimit) {
+			final String family = myViewOptions.getFooterOptions().Font.getValue();
+			if (myFontEntry == null || !family.equals(myFontEntry.get(0).Family)) {
+				myFontEntry = Collections.singletonList(FontEntry.systemEntry(family));
+			}
+			context.setFont(
+				myFontEntry,
+				height <= boldLimit ? height + 3 : height + 1,
+				height > boldLimit, false, false, false
+			);
+		}
+	}
+
+	private class FooterOldStyle extends Footer {
 		public synchronized void paint(ZLPaintContext context) {
 			final ZLFile wallpaper = getWallpaperFile();
 			if (wallpaper != null) {
@@ -512,7 +550,6 @@ public final class FBView extends ZLTextView {
 				return;
 			}
 
-			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
 			//final ZLColor bgColor = getBackgroundColor();
 			// TODO: separate color option for footer color
 			final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
@@ -523,48 +560,19 @@ public final class FBView extends ZLTextView {
 			final int height = getHeight();
 			final int lineWidth = height <= 10 ? 1 : 2;
 			final int delta = height <= 10 ? 0 : 1;
-			final String family = footerOptions.Font.getValue();
-			if (myFontEntry == null || !family.equals(myFontEntry.get(0).Family)) {
-				myFontEntry = Collections.singletonList(FontEntry.systemEntry(family));
-			}
-			context.setFont(
-				myFontEntry,
-				height <= 10 ? height + 3 : height + 1,
-				height > 10, false, false, false
-			);
+			setFont(context, height, 10);
 
 			final PagePosition pagePosition = FBView.this.pagePosition();
 
-			final StringBuilder info = new StringBuilder();
-			if (footerOptions.ShowProgress.getValue()) {
-				info.append(pagePosition.Current);
-				info.append("/");
-				info.append(pagePosition.Total);
-			}
-			if (footerOptions.ShowClock.getValue()) {
-				if (info.length() > 0) {
-					info.append(" ");
-				}
-				info.append(ZLibrary.Instance().getCurrentTimeString());
-			}
-			if (footerOptions.ShowBattery.getValue()) {
-				if (info.length() > 0) {
-					info.append(" ");
-				}
-				info.append(myReader.getBatteryLevel());
-				info.append("%");
-			}
-			final String infoString = info.toString();
-
-			final int infoWidth = context.getStringWidth(infoString);
-
 			// draw info text
+			final String infoString = buildInfoString(pagePosition, " ");
+			final int infoWidth = context.getStringWidth(infoString);
 			context.setTextColor(fgColor);
 			context.drawString(right - infoWidth, height - delta, infoString);
 
 			// draw gauge
 			final int gaugeRight = right - (infoWidth == 0 ? 0 : infoWidth + 10);
-			myGaugeWidth = gaugeRight - left - 2 * lineWidth;
+			final int gaugeWidth = gaugeRight - left - 2 * lineWidth;
 
 			context.setLineColor(fgColor);
 			context.setLineWidth(lineWidth);
@@ -574,12 +582,12 @@ public final class FBView extends ZLTextView {
 			context.drawLine(gaugeRight, lineWidth, left, lineWidth);
 
 			final int gaugeInternalRight =
-				left + lineWidth + (int)(1.0 * myGaugeWidth * pagePosition.Current / pagePosition.Total);
+				left + lineWidth + (int)(1.0 * gaugeWidth * pagePosition.Current / pagePosition.Total);
 
 			context.setFillColor(fillColor);
 			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);
 
-			if (footerOptions.ShowTOCMarks.getValue()) {
+			if (myViewOptions.getFooterOptions().ShowTOCMarks.getValue()) {
 				if (myTOCMarks == null) {
 					updateTOCMarks(model);
 				}
@@ -589,48 +597,109 @@ public final class FBView extends ZLTextView {
 					if (reference != null) {
 						final int refCoord = sizeOfTextBeforeParagraph(reference.ParagraphIndex);
 						final int xCoord =
-							left + 2 * lineWidth + (int)(1.0 * myGaugeWidth * refCoord / fullLength);
+							left + 2 * lineWidth + (int)(1.0 * gaugeWidth * refCoord / fullLength);
 						context.drawLine(xCoord, height - lineWidth, xCoord, lineWidth);
 					}
 				}
 			}
 		}
+	}
 
-		// TODO: remove
-		int myGaugeWidth = 1;
-		/*public int getGaugeWidth() {
-			return myGaugeWidth;
-		}*/
+	private class FooterNewStyle extends Footer {
+		public synchronized void paint(ZLPaintContext context) {
+			context.clear(new ZLColor(0x44, 0x44, 0x44));
 
-		/*public void setProgress(int x) {
-			// set progress according to tap coordinate
-			int gaugeWidth = getGaugeWidth();
-			float progress = 1.0f * Math.min(x, gaugeWidth) / gaugeWidth;
-			int page = (int)(progress * computePageNumber());
-			if (page <= 1) {
-				gotoHome();
-			} else {
-				gotoPage(page);
+			final BookModel model = myReader.Model;
+			if (model == null) {
+				return;
 			}
-			myReader.getViewWidget().reset();
-			myReader.getViewWidget().repaint();
-		}*/
+
+			final ZLColor textColor = new ZLColor(0xBB, 0xBB, 0xBB);
+			final ZLColor readColor = new ZLColor(0xBB, 0xBB, 0xBB);
+			final ZLColor unreadColor = new ZLColor(0x77, 0x77, 0x77);
+
+			final int left = getLeftMargin();
+			final int right = context.getWidth() - getRightMargin();
+			final int height = getHeight();
+			final int lineWidth = height <= 12 ? 1 : 2;
+			final int delta = height <= 12 ? 0 : 1;
+			setFont(context, height, 12);
+
+			final PagePosition pagePosition = FBView.this.pagePosition();
+
+			// draw info text
+			final String infoString = buildInfoString(pagePosition, "  ");
+			final int infoWidth = context.getStringWidth(infoString);
+			context.setTextColor(textColor);
+			context.drawString(right - infoWidth, height - delta, infoString);
+
+			// draw gauge
+			final int gaugeRight = right - (infoWidth == 0 ? 0 : infoWidth + 10);
+			final int gaugeInternalRight =
+				left + (int)(1.0 * (gaugeRight - left) * pagePosition.Current / pagePosition.Total + 0.5);
+			final int v = height / 2;
+
+			context.setLineWidth(lineWidth);
+			context.setLineColor(readColor);
+			context.drawLine(left, v, gaugeInternalRight, v);
+			if (gaugeInternalRight < gaugeRight) {
+				context.setLineColor(unreadColor);
+				context.drawLine(gaugeInternalRight + 1, v, gaugeRight, v);
+			}
+
+			// draw labels
+			final TreeSet<Integer> labels = new TreeSet<Integer>();
+			labels.add(left);
+			labels.add(gaugeRight);
+			if (myViewOptions.getFooterOptions().ShowTOCMarks.getValue()) {
+				if (myTOCMarks == null) {
+					updateTOCMarks(model);
+				}
+				final int fullLength = sizeOfFullText();
+				for (TOCTree tocItem : myTOCMarks) {
+					TOCTree.Reference reference = tocItem.getReference();
+					if (reference != null) {
+						final int refCoord = sizeOfTextBeforeParagraph(reference.ParagraphIndex);
+						labels.add(left + (int)(1.0 * (gaugeRight - left) * refCoord / fullLength + 0.5));
+					}
+				}
+			}
+			for (int l : labels) {
+				context.setLineColor(l <= gaugeInternalRight ? readColor : unreadColor);
+				context.drawLine(l, v + 3, l, v - lineWidth - 2);
+			}
+		}
 	}
 
 	private Footer myFooter;
 
 	@Override
 	public Footer getFooterArea() {
-		if (myViewOptions.ScrollbarType.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
-			if (myFooter == null) {
-				myFooter = new Footer();
-				myReader.addTimerTask(myFooter.UpdateTask, 15000);
-			}
-		} else {
-			if (myFooter != null) {
-				myReader.removeTimerTask(myFooter.UpdateTask);
-				myFooter = null;
-			}
+		switch (myViewOptions.ScrollbarType.getValue()) {
+			case SCROLLBAR_SHOW_AS_FOOTER:
+				if (!(myFooter instanceof FooterNewStyle)) {
+					if (myFooter != null) {
+						myReader.removeTimerTask(myFooter.UpdateTask);
+					}
+					myFooter = new FooterNewStyle();
+					myReader.addTimerTask(myFooter.UpdateTask, 15000);
+				}
+				break;
+			case SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
+				if (!(myFooter instanceof FooterOldStyle)) {
+					if (myFooter != null) {
+						myReader.removeTimerTask(myFooter.UpdateTask);
+					}
+					myFooter = new FooterOldStyle();
+					myReader.addTimerTask(myFooter.UpdateTask, 15000);
+				}
+				break;
+			default:
+				if (myFooter != null) {
+					myReader.removeTimerTask(myFooter.UpdateTask);
+					myFooter = null;
+				}
+				break;
 		}
 		return myFooter;
 	}
@@ -660,6 +729,7 @@ public final class FBView extends ZLTextView {
 	}
 
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
+	public static final int SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE = 4;
 
 	@Override
 	public int scrollbarType() {

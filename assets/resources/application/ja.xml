@@ -663,6 +663,7 @@
 				<node name="show" value="タテ向きのスライダー"/>
 				<node name="showAsProgress" value="タテ向きの進度メータ"/>
 				<node name="showAsFooter" value="ヨコ向きのフッタ"/>
+				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="フッタ幅"/>
 			<node name="footerColor" value="フッタ色"/>

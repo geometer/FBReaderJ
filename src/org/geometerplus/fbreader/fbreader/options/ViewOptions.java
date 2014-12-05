@@ -61,7 +61,7 @@ public class ViewOptions {
 		SpaceBetweenColumns =
 			new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
 		ScrollbarType =
-			new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
+			new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 4, FBView.SCROLLBAR_SHOW_AS_FOOTER);
 		FooterHeight =
 			new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
 		ColorProfileName =
