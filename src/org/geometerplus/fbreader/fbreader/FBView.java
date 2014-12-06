@@ -532,16 +532,34 @@ public final class FBView extends ZLTextView {
 		}
 
 		private List<FontEntry> myFontEntry;
-		protected void setFont(ZLPaintContext context, int height, int boldLimit) {
+		private Map<String,Integer> myHeightMap = new HashMap<String,Integer>();
+		private Map<String,Integer> myCharHeightMap = new HashMap<String,Integer>();
+		protected synchronized int setFont(ZLPaintContext context, int height, boolean bold) {
 			final String family = myViewOptions.getFooterOptions().Font.getValue();
 			if (myFontEntry == null || !family.equals(myFontEntry.get(0).Family)) {
 				myFontEntry = Collections.singletonList(FontEntry.systemEntry(family));
 			}
-			context.setFont(
-				myFontEntry,
-				height <= boldLimit ? height + 2 : height + 1,
-				height > boldLimit, false, false, false
-			);
+			final String key = family + (bold ? "N" : "B") + height;
+			final Integer cached = myHeightMap.get(key);
+			if (cached != null) {
+				context.setFont(myFontEntry, cached, bold, false, false, false);
+				final Integer charHeight = myCharHeightMap.get(key);
+				return charHeight != null ? charHeight : height;
+			} else {
+				int h = height + 2;
+				int charHeight = height;
+				final int max = height < 9 ? height - 1 : height - 2;
+				for (; h > 5; --h) {
+					context.setFont(myFontEntry, h, bold, false, false, false);
+					charHeight = context.getCharHeight('H');
+					if (charHeight <= max) {
+						break;
+					}
+				}
+				myHeightMap.put(key, h);
+				myCharHeightMap.put(key, charHeight);
+				return charHeight;
+			}
 		}
 	}
 
@@ -569,7 +587,7 @@ public final class FBView extends ZLTextView {
 			final int height = getHeight();
 			final int lineWidth = height <= 10 ? 1 : 2;
 			final int delta = height <= 10 ? 0 : 1;
-			setFont(context, height, 10);
+			setFont(context, height, height > 10);
 
 			final PagePosition pagePosition = FBView.this.pagePosition();
 
@@ -631,7 +649,7 @@ public final class FBView extends ZLTextView {
 			final int right = context.getWidth() - getRightMargin();
 			final int height = getHeight();
 			final int lineWidth = height <= 12 ? 1 : 2;
-			setFont(context, height, 12);
+			final int charHeight = setFont(context, height, height > 12);
 
 			final PagePosition pagePosition = FBView.this.pagePosition();
 
@@ -639,7 +657,7 @@ public final class FBView extends ZLTextView {
 			final String infoString = buildInfoString(pagePosition, "  ");
 			final int infoWidth = context.getStringWidth(infoString);
 			context.setTextColor(textColor);
-			context.drawString(right - infoWidth, height - 1, infoString);
+			context.drawString(right - infoWidth, (height + charHeight + 1) / 2, infoString);
 
 			// draw gauge
 			final int gaugeRight = right - (infoWidth == 0 ? 0 : infoWidth + 10);
