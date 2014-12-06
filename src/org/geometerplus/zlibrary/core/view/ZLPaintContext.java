@@ -84,6 +84,7 @@ abstract public class ZLPaintContext {
 			mySpaceWidth = -1;
 			myStringHeight = -1;
 			myDescent = -1;
+			myCharHeights.clear();
 		}
 	}
 
@@ -127,6 +128,18 @@ abstract public class ZLPaintContext {
 		return stringHeight;
 	}
 	abstract protected int getStringHeightInternal();
+
+	private Map<Character,Integer> myCharHeights = new TreeMap<Character,Integer>();
+	public final int getCharHeight(char chr) {
+		final Integer h = myCharHeights.get(chr);
+		if (h != null) {
+			return h;
+		}
+		final int he = getCharHeightInternal(chr);
+		myCharHeights.put(chr, he);
+		return he;
+	}
+	protected abstract int getCharHeightInternal(char chr);
 
 	private int myDescent = -1;
 	public final int getDescent() {
