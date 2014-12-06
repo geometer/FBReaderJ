@@ -353,6 +353,13 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		return (int)(myTextPaint.measureText(" ", 0, 1) + 0.5f);
 	}
 	@Override
+	protected int getCharHeightInternal(char chr) {
+		final Rect r = new Rect();
+		final char[] txt = new char[] { chr };
+		myTextPaint.getTextBounds(txt, 0, 1, r);
+		return r.bottom - r.top;
+	}
+	@Override
 	protected int getStringHeightInternal() {
 		return (int)(myTextPaint.getTextSize() + 0.5f);
 	}
