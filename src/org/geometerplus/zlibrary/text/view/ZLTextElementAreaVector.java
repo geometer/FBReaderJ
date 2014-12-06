@@ -21,6 +21,8 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.view.ZLViewEnums;
+
 final class ZLTextElementAreaVector {
 	private final List<ZLTextElementArea> myAreas =
 		Collections.synchronizedList(new ArrayList<ZLTextElementArea>());
@@ -166,7 +168,7 @@ final class ZLTextElementAreaVector {
 		return bestRegion;
 	}
 
-	protected ZLTextRegion nextRegion(ZLTextRegion currentRegion, ZLTextView.Direction direction, ZLTextRegion.Filter filter) {
+	protected ZLTextRegion nextRegion(ZLTextRegion currentRegion, ZLViewEnums.Direction direction, ZLTextRegion.Filter filter) {
 		synchronized (myElementRegions) {
 			if (myElementRegions.isEmpty()) {
 				return null;

@@ -25,11 +25,10 @@ import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.util.*;
-
+import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
-
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
@@ -113,10 +112,10 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
 		addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
 
-		addAction(ActionCode.MOVE_CURSOR_UP, new MoveCursorAction(this, FBView.Direction.up));
-		addAction(ActionCode.MOVE_CURSOR_DOWN, new MoveCursorAction(this, FBView.Direction.down));
-		addAction(ActionCode.MOVE_CURSOR_LEFT, new MoveCursorAction(this, FBView.Direction.rightToLeft));
-		addAction(ActionCode.MOVE_CURSOR_RIGHT, new MoveCursorAction(this, FBView.Direction.leftToRight));
+		addAction(ActionCode.MOVE_CURSOR_UP, new MoveCursorAction(this, ZLViewEnums.Direction.up));
+		addAction(ActionCode.MOVE_CURSOR_DOWN, new MoveCursorAction(this, ZLViewEnums.Direction.down));
+		addAction(ActionCode.MOVE_CURSOR_LEFT, new MoveCursorAction(this, ZLViewEnums.Direction.rightToLeft));
+		addAction(ActionCode.MOVE_CURSOR_RIGHT, new MoveCursorAction(this, ZLViewEnums.Direction.leftToRight));
 
 		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(this, true));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(this, false));
