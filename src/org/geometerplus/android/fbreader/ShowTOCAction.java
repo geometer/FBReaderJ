@@ -28,8 +28,13 @@ class ShowTOCAction extends FBAndroidAction {
 		super(baseActivity, fbreader);
 	}
 
+	static boolean isTOCAvailable(FBReaderApp reader) {
+		return reader.Model != null && reader.Model.TOCTree.hasChildren();
+	}
+
+	@Override
 	public boolean isVisible() {
-		return Reader.Model != null && Reader.Model.TOCTree.hasChildren();
+		return isTOCAvailable(Reader);
 	}
 
 	@Override
