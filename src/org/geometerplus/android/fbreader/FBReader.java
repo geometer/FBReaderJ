@@ -275,7 +275,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			bar.setDisplayUseLogoEnabled(false);
 		}
-		final TextView titleView = (TextView)getLayoutInflater().inflate(DeviceUtil.titleViewId(), null);
+		final View titleView = getLayoutInflater().inflate(DeviceUtil.titleViewId(), null);
 		titleView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				myFBReaderApp.runAction(ActionCode.SHOW_BOOK_INFO);
