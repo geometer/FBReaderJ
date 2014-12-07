@@ -23,7 +23,7 @@
 	<permission android:name="fbreader.permission.LIBRARY" android:description="@string/permission_library_description" android:label="@string/permission_library_label"/>
 	<permission android:name="fbreader.permission.CONFIG" android:description="@string/permission_config_description" android:label="@string/permission_config_label"/>
 	<permission android:name="fbreader.permission.SYNC" android:description="@string/permission_sync_description" android:label="@string/permission_sync_label"/>
-	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:logo="@drawable/fbreader_bw" android:label="FBReader">
+	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:logo="@drawable/fbreader_logo" android:label="FBReader">
 		<activity android:name="org.geometerplus.android.fbreader.error.BookReadingErrorActivity" android:theme="@style/FBReader.Dialog" android:process=":error" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.ERROR"/>
