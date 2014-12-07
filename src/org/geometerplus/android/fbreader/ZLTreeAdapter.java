@@ -29,16 +29,17 @@ import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.ui.android.R;
 
 abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
+	final ZLTree<?> Root;
 	private final ListView myParent;
-	private ZLTree<?> myTree;
 	private ZLTree<?>[] myItems;
 	private final HashSet<ZLTree<?>> myOpenItems = new HashSet<ZLTree<?>>();
+	protected ZLTree<?> mySelectedTree;
 
-	protected ZLTreeAdapter(ListView parent, ZLTree<?> tree) {
+	protected ZLTreeAdapter(ListView parent, ZLTree<?> root) {
 		myParent = parent;
-		myTree = tree;
-		myItems = new ZLTree[tree.getSize() - 1];
-		myOpenItems.add(tree);
+		Root = root;
+		myItems = new ZLTree[root.getSize() - 1];
+		myOpenItems.add(root);
 
 		parent.setAdapter(this);
 		parent.setOnItemClickListener(this);
@@ -74,6 +75,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	}
 
 	public final void selectItem(ZLTree<?> tree) {
+		mySelectedTree = tree;
 		if (tree == null) {
 			return;
 		}
@@ -96,6 +98,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		if (index > 0) {
 			myParent.setSelection(index - 1);
 		}
+		myParent.invalidateViews();
 	}
 
 	private int getCount(ZLTree<?> tree) {
@@ -109,7 +112,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	}
 
 	public final int getCount() {
-		return getCount(myTree) - 1;
+		return getCount(Root) - 1;
 	}
 
 	private final int indexByPosition(int position, ZLTree<?> tree) {
@@ -131,10 +134,10 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	}
 
 	public final ZLTree<?> getItem(int position) {
-		final int index = indexByPosition(position + 1, myTree) - 1;
+		final int index = indexByPosition(position + 1, Root) - 1;
 		ZLTree<?> item = myItems[index];
 		if (item == null) {
-			item = myTree.getTreeByParagraphNumber(index + 1);
+			item = Root.getTreeByParagraphNumber(index + 1);
 			myItems[index] = item;
 		}
 		return item;
@@ -149,7 +152,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	}
 
 	public final long getItemId(int position) {
-		return indexByPosition(position + 1, myTree);
+		return indexByPosition(position + 1, Root);
 	}
 
 	protected boolean runTreeItem(ZLTree<?> tree) {
@@ -160,18 +163,8 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return true;
 	}
 
-	protected void resetTree(ZLTree<?> tree) {
-		myTree = tree;
-		myItems = new ZLTree[tree.getSize() - 1];
-		myOpenItems.clear();
-		myOpenItems.add(tree);
-		//myParent.invalidateViews();
-		//myParent.requestLayout();
-		notifyDataSetChanged();
-	}
-
 	public void resetTree() {
-		myItems = new ZLTree[myTree.getSize() - 1];
+		myItems = new ZLTree[Root.getSize() - 1];
 		//myParent.invalidateViews();
 		//myParent.requestLayout();
 		notifyDataSetChanged();
