@@ -23,7 +23,7 @@ import android.graphics.*;
 import android.util.FloatMath;
 
 import org.geometerplus.zlibrary.core.view.ZLView;
-
+import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 class CurlAnimationProvider extends AnimationProvider {
@@ -208,22 +208,22 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	ZLView.PageIndex getPageToScrollTo(int x, int y) {
+	ZLViewEnums.PageIndex getPageToScrollTo(int x, int y) {
 		if (myDirection == null) {
-			return ZLView.PageIndex.current;
+			return ZLViewEnums.PageIndex.current;
 		}
 
 		switch (myDirection) {
 			case leftToRight:
-				return myStartX < myWidth / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartX < myWidth / 2 ? ZLViewEnums.PageIndex.next : ZLViewEnums.PageIndex.previous;
 			case rightToLeft:
-				return myStartX < myWidth / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartX < myWidth / 2 ? ZLViewEnums.PageIndex.previous : ZLViewEnums.PageIndex.next;
 			case up:
-				return myStartY < myHeight / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartY < myHeight / 2 ? ZLViewEnums.PageIndex.previous : ZLViewEnums.PageIndex.next;
 			case down:
-				return myStartY < myHeight / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartY < myHeight / 2 ? ZLViewEnums.PageIndex.next : ZLViewEnums.PageIndex.previous;
 		}
-		return ZLView.PageIndex.current;
+		return ZLViewEnums.PageIndex.current;
 	}
 
 	@Override

@@ -19,13 +19,14 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.text.view.ZLTextWordRegionSoul;
 
 class MoveCursorAction extends FBAction {
-	private final FBView.Direction myDirection;
+	private final ZLViewEnums.Direction myDirection;
 
-	MoveCursorAction(FBReaderApp fbreader, FBView.Direction direction) {
+	MoveCursorAction(FBReaderApp fbreader, ZLViewEnums.Direction direction) {
 		super(fbreader);
 		myDirection = direction;
 	}
