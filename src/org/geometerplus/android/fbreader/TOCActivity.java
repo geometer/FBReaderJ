@@ -63,11 +63,6 @@ public class TOCActivity extends ListActivity {
 
 		final TOCTree root = fbreader.Model.TOCTree;
 		myAdapter = new TOCAdapter(root);
-		final ZLTextWordCursor cursor = fbreader.BookTextView.getStartCursor();
-		int index = cursor.getParagraphIndex();
-		if (cursor.isEndOfParagraph()) {
-			++index;
-		}
 		TOCTree treeToSelect = fbreader.getCurrentTOCElement();
 		myAdapter.selectItem(treeToSelect);
 		mySelectedItem = treeToSelect;
