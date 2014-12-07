@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLView;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 
 public class PageTurningOptions {
 	public static enum FingerScrollingType {
@@ -30,8 +29,8 @@ public class PageTurningOptions {
 	public final ZLEnumOption<FingerScrollingType> FingerScrolling =
 		new ZLEnumOption<FingerScrollingType>("Scrolling", "Finger", FingerScrollingType.byTapAndFlick);
 
-	public final ZLEnumOption<ZLViewEnums.Animation> Animation =
-		new ZLEnumOption<ZLViewEnums.Animation>("Scrolling", "Animation", ZLViewEnums.Animation.slide);
+	public final ZLEnumOption<ZLView.Animation> Animation =
+		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", ZLView.Animation.slide);
 	public final ZLIntegerRangeOption AnimationSpeed =
 		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, 7);
 

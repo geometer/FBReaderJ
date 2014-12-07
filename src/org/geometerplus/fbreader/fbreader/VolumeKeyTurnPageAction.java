@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 
 class VolumeKeyTurnPageAction extends FBAction {
 	private final boolean myForward;
@@ -34,9 +33,9 @@ class VolumeKeyTurnPageAction extends FBAction {
 	protected void run(Object ... params) {
 		final PageTurningOptions preferences = Reader.PageTurningOptions;
 		Reader.getViewWidget().startAnimatedScrolling(
-			myForward ? ZLViewEnums.PageIndex.next : ZLViewEnums.PageIndex.previous,
+			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 			preferences.Horizontal.getValue()
-				? ZLViewEnums.Direction.rightToLeft : ZLViewEnums.Direction.up,
+				? FBView.Direction.rightToLeft : FBView.Direction.up,
 			preferences.AnimationSpeed.getValue()
 		);
 	}

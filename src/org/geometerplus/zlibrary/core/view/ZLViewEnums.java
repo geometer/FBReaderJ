@@ -19,10 +19,8 @@
 
 package org.geometerplus.zlibrary.core.view;
 
-
-abstract public class ZLViewEnums {
-
-	public static enum PageIndex {
+public interface ZLViewEnums {
+	public enum PageIndex {
 		previous, current, next;
 
 		public PageIndex getNext() {
@@ -46,8 +44,9 @@ abstract public class ZLViewEnums {
 					return null;
 			}
 		}
-	};
-	public static enum Direction {
+	}
+
+	public enum Direction {
 		leftToRight(true), rightToLeft(true), up(false), down(false);
 
 		public final boolean IsHorizontal;
@@ -55,9 +54,9 @@ abstract public class ZLViewEnums {
 		Direction(boolean isHorizontal) {
 			IsHorizontal = isHorizontal;
 		}
-	};
-	public static enum Animation {
-		none, curl, slide, slideOldStyle, shift
 	}
 
+	public enum Animation {
+		none, curl, slide, slideOldStyle, shift
+	}
 }

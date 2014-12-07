@@ -26,13 +26,12 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLColor;
-import org.geometerplus.zlibrary.core.view.*;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums.Animation;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums.Direction;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums.PageIndex;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
+
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.bookmodel.TOCTree;

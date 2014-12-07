@@ -22,12 +22,11 @@ package org.geometerplus.zlibrary.ui.android.view;
 import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.core.view.ZLView;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 
 class BitmapManager {
 	private final int SIZE = 2;
 	private final Bitmap[] myBitmaps = new Bitmap[SIZE];
-	private final ZLViewEnums.PageIndex[] myIndexes = new ZLViewEnums.PageIndex[SIZE];
+	private final ZLView.PageIndex[] myIndexes = new ZLView.PageIndex[SIZE];
 
 	private int myWidth;
 	private int myHeight;
@@ -52,7 +51,7 @@ class BitmapManager {
 		}
 	}
 
-	Bitmap getBitmap(ZLViewEnums.PageIndex index) {
+	Bitmap getBitmap(ZLView.PageIndex index) {
 		for (int i = 0; i < SIZE; ++i) {
 			if (index == myIndexes[i]) {
 				return myBitmaps[i];
@@ -73,14 +72,14 @@ class BitmapManager {
 		return myBitmaps[iIndex];
 	}
 
-	private int getInternalIndex(ZLViewEnums.PageIndex index) {
+	private int getInternalIndex(ZLView.PageIndex index) {
 		for (int i = 0; i < SIZE; ++i) {
 			if (myIndexes[i] == null) {
 				return i;
 			}
 		}
 		for (int i = 0; i < SIZE; ++i) {
-			if (myIndexes[i] != ZLViewEnums.PageIndex.current) {
+			if (myIndexes[i] != ZLView.PageIndex.current) {
 				return i;
 			}
 		}

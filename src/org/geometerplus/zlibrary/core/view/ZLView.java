@@ -20,10 +20,8 @@
 package org.geometerplus.zlibrary.core.view;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums.Animation;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums.PageIndex;
 
-abstract public class ZLView {
+abstract public class ZLView implements ZLViewEnums {
 	public final ZLApplication Application;
 	private ZLPaintContext myViewContext = new DummyPaintContext();
 

@@ -26,7 +26,9 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
-import org.geometerplus.zlibrary.core.view.*;
+import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.view.ZLViewWidget;
+
 import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
@@ -64,7 +66,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		if (myScreenIsTouched) {
 			final ZLView view = ZLApplication.Instance().getCurrentView();
 			myScreenIsTouched = false;
-			view.onScrollingFinished(ZLViewEnums.PageIndex.current);
+			view.onScrollingFinished(ZLView.PageIndex.current);
 		}
 	}
 
@@ -90,9 +92,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 
 	private AnimationProvider myAnimationProvider;
-	private ZLViewEnums.Animation myAnimationType;
+	private ZLView.Animation myAnimationType;
 	private AnimationProvider getAnimationProvider() {
-		final ZLViewEnums.Animation type = ZLApplication.Instance().getCurrentView().getAnimationType();
+		final ZLView.Animation type = ZLApplication.Instance().getCurrentView().getAnimationType();
 		if (myAnimationProvider == null || myAnimationType != type) {
 			myAnimationType = type;
 			switch (type) {
@@ -135,14 +137,14 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			switch (oldMode) {
 				case AnimatedScrollingForward:
 				{
-					final ZLViewEnums.PageIndex index = animator.getPageToScrollTo();
-					myBitmapManager.shift(index == ZLViewEnums.PageIndex.next);
+					final ZLView.PageIndex index = animator.getPageToScrollTo();
+					myBitmapManager.shift(index == ZLView.PageIndex.next);
 					view.onScrollingFinished(index);
 					ZLApplication.Instance().onRepaintFinished();
 					break;
 				}
 				case AnimatedScrollingBackward:
-					view.onScrollingFinished(ZLViewEnums.PageIndex.current);
+					view.onScrollingFinished(ZLView.PageIndex.current);
 					break;
 			}
 			onDrawStatic(canvas);
@@ -160,7 +162,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 
 	@Override
-	public void startManualScrolling(int x, int y, ZLViewEnums.Direction direction) {
+	public void startManualScrolling(int x, int y, ZLView.Direction direction) {
 		final AnimationProvider animator = getAnimationProvider();
 		animator.setup(direction, getWidth(), getMainAreaHeight());
 		animator.startManualScrolling(x, y);
@@ -177,9 +179,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 
 	@Override
-	public void startAnimatedScrolling(ZLViewEnums.PageIndex pageIndex, int x, int y, ZLViewEnums.Direction direction, int speed) {
+	public void startAnimatedScrolling(ZLView.PageIndex pageIndex, int x, int y, ZLView.Direction direction, int speed) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (pageIndex == ZLViewEnums.PageIndex.current || !view.canScroll(pageIndex)) {
+		if (pageIndex == ZLView.PageIndex.current || !view.canScroll(pageIndex)) {
 			return;
 		}
 		final AnimationProvider animator = getAnimationProvider();
@@ -191,9 +193,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 
 	@Override
-	public void startAnimatedScrolling(ZLViewEnums.PageIndex pageIndex, ZLViewEnums.Direction direction, int speed) {
+	public void startAnimatedScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (pageIndex == ZLViewEnums.PageIndex.current || !view.canScroll(pageIndex)) {
+		if (pageIndex == ZLView.PageIndex.current || !view.canScroll(pageIndex)) {
 			return;
 		}
 		final AnimationProvider animator = getAnimationProvider();
@@ -216,7 +218,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		postInvalidate();
 	}
 
-	void drawOnBitmap(Bitmap bitmap, ZLViewEnums.PageIndex index) {
+	void drawOnBitmap(Bitmap bitmap, ZLView.PageIndex index) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		if (view == null) {
 			return;
@@ -277,7 +279,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	private void onDrawStatic(final Canvas canvas) {
 		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
-		canvas.drawBitmap(myBitmapManager.getBitmap(ZLViewEnums.PageIndex.current), 0, 0, myPaint);
+		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
 		drawFooter(canvas, null);
 		new Thread() {
 			@Override
@@ -295,7 +297,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 					),
 					view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 				);
-				view.preparePage(context, ZLViewEnums.PageIndex.next);
+				view.preparePage(context, ZLView.PageIndex.next);
 			}
 		}.start();
 	}
@@ -488,12 +490,12 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		final AnimationProvider animator = getAnimationProvider();
 		if (animator.inProgress()) {
-			final int from = view.getScrollbarThumbLength(ZLViewEnums.PageIndex.current);
+			final int from = view.getScrollbarThumbLength(ZLView.PageIndex.current);
 			final int to = view.getScrollbarThumbLength(animator.getPageToScrollTo());
 			final int percent = animator.getScrolledPercent();
 			return (from * (100 - percent) + to * percent) / 100;
 		} else {
-			return view.getScrollbarThumbLength(ZLViewEnums.PageIndex.current);
+			return view.getScrollbarThumbLength(ZLView.PageIndex.current);
 		}
 	}
 
@@ -505,12 +507,12 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		final AnimationProvider animator = getAnimationProvider();
 		if (animator.inProgress()) {
-			final int from = view.getScrollbarThumbPosition(ZLViewEnums.PageIndex.current);
+			final int from = view.getScrollbarThumbPosition(ZLView.PageIndex.current);
 			final int to = view.getScrollbarThumbPosition(animator.getPageToScrollTo());
 			final int percent = animator.getScrolledPercent();
 			return (from * (100 - percent) + to * percent) / 100;
 		} else {
-			return view.getScrollbarThumbPosition(ZLViewEnums.PageIndex.current);
+			return view.getScrollbarThumbPosition(ZLView.PageIndex.current);
 		}
 	}
 
