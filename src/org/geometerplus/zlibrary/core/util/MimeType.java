@@ -61,6 +61,7 @@ public final class MimeType {
 	// MIME types / application
 	// ???
 	public static final MimeType APP_ZIP = get("application/zip");
+	public static final MimeType APP_RAR = get("application/x-rar-compressed");
 	// unofficial, http://en.wikipedia.org/wiki/EPUB
 	public static final MimeType APP_EPUB_ZIP = get("application/epub+zip");
 	// unofficial, used by flibusta catalog
@@ -109,6 +110,7 @@ public final class MimeType {
 	public static final MimeType APP_LITRES = get("application/litres+xml");
 	//???
 	public static final MimeType APP_CBZ = get("application/x-cbz");
+	public static final MimeType APP_CBR = get("application/x-cbr");
 
 	// MIME types / text
 	// ???
@@ -166,8 +168,8 @@ public final class MimeType {
 		 = Arrays.asList(APP_PDF);
 	public static final List<MimeType> TYPES_DJVU
 		 = Arrays.asList(IMAGE_VND_DJVU, IMAGE_XDJVU, APP_DJVU);
-	public static final List<MimeType> TYPES_CBZ
-		 = Arrays.asList(APP_CBZ);
+	public static final List<MimeType> TYPES_COMIC_BOOK
+		 = Arrays.asList(APP_CBZ, APP_CBR);
 	public static final List<MimeType> TYPES_DOC
 		 = Arrays.asList(APP_MSWORD, APP_DOC);
 	public static final List<MimeType> TYPES_FB2_ZIP
