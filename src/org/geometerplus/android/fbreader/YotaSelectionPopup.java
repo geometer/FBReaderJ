@@ -53,6 +53,9 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
             view.setTag(codes[i]);
             view.setOnClickListener(this);
         }
+	    if (UIUtils.Region.getRegion() == UIUtils.Region.CHINA) {
+		    root.findViewById(R.id.translate).setVisibility(View.GONE);
+	    }
     }
 
     protected int getLayoutId() {
