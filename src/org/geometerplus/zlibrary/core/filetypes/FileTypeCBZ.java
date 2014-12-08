@@ -32,21 +32,46 @@ class FileTypeCBZ extends FileType {
 	@Override
 	public boolean acceptsFile(ZLFile file) {
 		final String extension = file.getExtension();
-		return "cbz".equalsIgnoreCase(extension);
+		return "cbz".equalsIgnoreCase(extension) || "cbr".equalsIgnoreCase(extension);
 	}
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_CBZ;
+		return MimeType.TYPES_COMIC_BOOK;
 	}
 
 	@Override
 	public MimeType mimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.APP_CBZ : MimeType.NULL;
+		final String lName = file.getShortName().toLowerCase();
+		if (lName.endsWith(".cbz")) {
+			return MimeType.APP_CBZ;
+		} else if (lName.endsWith(".cbr")) {
+			return MimeType.APP_CBR;
+		} else {
+			return MimeType.NULL;
+		}
+	}
+
+	@Override
+	public MimeType rawMimeType(ZLFile file) {
+		final String lName = file.getShortName().toLowerCase();
+		if (lName.endsWith(".cbz")) {
+			return MimeType.APP_ZIP;
+		} else if (lName.endsWith(".cbr")) {
+			return MimeType.APP_RAR;
+		} else {
+			return MimeType.NULL;
+		}
 	}
 
 	@Override
 	public String defaultExtension(MimeType mime) {
+		if (MimeType.APP_CBZ.equals(mime) || MimeType.APP_ZIP.equals(mime)) {
+			return "cbz";
+		}
+		if (MimeType.APP_CBR.equals(mime) || MimeType.APP_RAR.equals(mime)) {
+			return "cbr";
+		}
 		return "cbz";
 	}
 }
