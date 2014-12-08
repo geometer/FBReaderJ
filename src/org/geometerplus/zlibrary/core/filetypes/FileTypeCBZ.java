@@ -37,7 +37,7 @@ class FileTypeCBZ extends FileType {
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_CBZ;
+		return MimeType.TYPES_COMIC_BOOK;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ class FileTypeCBZ extends FileType {
 			return MimeType.NULL;
 		}
 	}
-	
+
 	@Override
 	public MimeType rawMimeType(ZLFile file) {
 		final String lName = file.getShortName().toLowerCase();

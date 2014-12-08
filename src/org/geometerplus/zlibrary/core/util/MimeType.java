@@ -168,7 +168,7 @@ public final class MimeType {
 		 = Arrays.asList(APP_PDF);
 	public static final List<MimeType> TYPES_DJVU
 		 = Arrays.asList(IMAGE_VND_DJVU, IMAGE_XDJVU, APP_DJVU);
-	public static final List<MimeType> TYPES_CBZ
+	public static final List<MimeType> TYPES_COMIC_BOOK
 		 = Arrays.asList(APP_CBZ, APP_CBR);
 	public static final List<MimeType> TYPES_DOC
 		 = Arrays.asList(APP_MSWORD, APP_DOC);
