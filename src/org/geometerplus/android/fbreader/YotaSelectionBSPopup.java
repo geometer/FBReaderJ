@@ -8,9 +8,12 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
+
+import com.yotadevices.yotaphone2.fbreader.UIUtils;
 import com.yotadevices.yotaphone2.yotareader.R;
 
 
@@ -48,6 +51,9 @@ public class YotaSelectionBSPopup extends YotaSelectionPopup {
             view.setOnClickListener(this);
 	        view.getPaint().setAntiAlias(false);
         }
+	    if (UIUtils.Region.getRegion() == UIUtils.Region.CHINA) {
+		    root.findViewById(R.id.translate).setVisibility(View.GONE);
+	    }
     }
 
     @Override
