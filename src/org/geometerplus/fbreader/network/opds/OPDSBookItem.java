@@ -112,6 +112,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			final MimeType mime = MimeType.get(link.getType());
 			final String rel = networkLink.relation(link.getRel(), mime);
 			final UrlInfo.Type referenceType = typeByRelation(rel);
+			System.err.println("href = " + href);
+			System.err.println("rel = " + rel + "; referenceType = " + referenceType);
 			if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
 				urls.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href, mime));
 			} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || REL_COVER.equals(rel)) {
@@ -152,14 +154,14 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	private static UrlInfo.Type typeByRelation(String rel) {
-		if (rel == null || REL_ACQUISITION.equals(rel) || REL_ACQUISITION_OPEN.equals(rel)) {
+		if (rel == null || REL_ACQUISITION_SAMPLE_OR_FULL.equals(rel)) {
+			return UrlInfo.Type.BookFullOrDemo;
+		} else if (REL_ACQUISITION.equals(rel) || REL_ACQUISITION_OPEN.equals(rel)) {
 			return UrlInfo.Type.Book;
 		} else if (REL_ACQUISITION_SAMPLE.equals(rel)) {
 			return UrlInfo.Type.BookDemo;
 		} else if (REL_ACQUISITION_CONDITIONAL.equals(rel)) {
 			return UrlInfo.Type.BookConditional;
-		} else if (REL_ACQUISITION_SAMPLE_OR_FULL.equals(rel)) {
-			return UrlInfo.Type.BookFullOrDemo;
 		} else if (REL_ACQUISITION_BUY.equals(rel)) {
 			return UrlInfo.Type.BookBuy;
 		} else if (REL_RELATED.equals(rel)) {
