@@ -54,6 +54,6 @@ public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPrede
 	}
 
 	public boolean servesHost(String hostname) {
-		return hostname != null && hostname.matches(getShortName());
+		return hostname != null && hostname.indexOf(getShortName()) != -1;
 	}
 }
