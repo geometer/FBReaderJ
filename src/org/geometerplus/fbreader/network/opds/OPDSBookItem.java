@@ -113,13 +113,9 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			final String rel = networkLink.relation(link.getRel(), mime);
 			final UrlInfo.Type referenceType = typeByRelation(rel);
 			if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
-				if (MimeType.IMAGE_PNG.equals(mime) || MimeType.IMAGE_JPEG.equals(mime)) {
-					urls.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href, mime));
-				}
+				urls.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href, mime));
 			} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || REL_COVER.equals(rel)) {
-				if (MimeType.IMAGE_PNG.equals(mime) || MimeType.IMAGE_JPEG.equals(mime)) {
-					urls.addInfo(new UrlInfo(UrlInfo.Type.Image, href, mime));
-				}
+				urls.addInfo(new UrlInfo(UrlInfo.Type.Image, href, mime));
 			} else if (MimeType.APP_ATOM_XML.weakEquals(mime) &&
 						"entry".equals(mime.getParameter("type"))) {
 				urls.addInfo(new UrlInfo(UrlInfo.Type.SingleEntry, href, mime));
