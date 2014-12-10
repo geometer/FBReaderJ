@@ -73,6 +73,7 @@ public:
 	void addImage(const std::string &id, shared_ptr<const ZLImage> image);
 
 	void addVideoEntry(const ZLVideoEntry &entry);
+	void addFBReaderSpecialEntry(const std::string &action, const std::string &data);
 
 	void beginContentsParagraph(int referenceNumber = -1);
 	void endContentsParagraph();
