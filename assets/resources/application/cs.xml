@@ -672,7 +672,7 @@
 				<node name="show" value="Svislé šoupátko"/>
 				<node name="showAsProgress" value="Svislý indikátor průběhu"/>
 				<node name="showAsFooter" value="Vodorovná patička"/>
-				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
+				<node name="showAsFooterOldStyle" value="Vodorovná patička (starý styl)"/>
 			</node>
 			<node name="footerHeight" value="Výška patičky"/>
 			<node name="footerColor" value="Barva patičky"/>
@@ -717,7 +717,7 @@
 				<node name="none" value="Posouvat bez animace"/>
 				<node name="curl" value="Animace otočení"/>
 				<node name="slide" value="Animace vysunutí"/>
-				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
+				<node name="slideOldStyle" value="Animace vysunutí (starý styl)"/>
 				<node name="shift" value="Animace posunutí"/>
 			</node>
 			<node name="animationSpeed" value="Rychlost animace">
