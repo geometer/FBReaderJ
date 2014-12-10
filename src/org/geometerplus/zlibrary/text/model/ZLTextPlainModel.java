@@ -70,6 +70,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		// VideoEntry
 		private ZLVideoEntry myVideoEntry;
 
+		// FBReaderSpecialEntry
+		private FBReaderSpecialEntry myFBReaderSpecialEntry;
+
 		// StyleEntry
 		private ZLTextStyleEntry myStyleEntry;
 
@@ -120,6 +123,10 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 
 		public ZLVideoEntry getVideoEntry() {
 			return myVideoEntry;
+		}
+
+		public FBReaderSpecialEntry getFBReaderSpecialEntry() {
+			return myFBReaderSpecialEntry;
 		}
 
 		public ZLTextStyleEntry getStyleEntry() {
@@ -263,6 +270,17 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 						dataOffset += len;
 						myVideoEntry.addSource(mime, src);
 					}
+					break;
+				}
+				case ZLTextParagraph.Entry.FBREADER_SPECIAL:
+				{
+					final short kindLength = (short)data[dataOffset++];
+					final String kind = new String(data, dataOffset, kindLength);
+					dataOffset += kindLength;
+					final short paramLength = (short)data[dataOffset++];
+					final String param = new String(data, dataOffset, paramLength);
+					dataOffset += paramLength;
+					myFBReaderSpecialEntry = new FBReaderSpecialEntry(kind, param);
 					break;
 				}
 			}

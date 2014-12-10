@@ -69,7 +69,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public synchronized void setModel(ZLTextModel model) {
-		ZLTextParagraphCursorCache.clear();
+		myCursorCache.clear();
 
 		mySelection.clear();
 		myHighlightings.clear();
@@ -81,7 +81,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
 			if (paragraphsNumber > 0) {
-				myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
+				myCurrentPage.moveStartCursor(cursor(0));
 			}
 		}
 		Application.getViewWidget().reset();
@@ -188,7 +188,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myPreviousPage.reset();
 		myNextPage.reset();
 		if (!myCurrentPage.StartCursor.isNull()) {
-			rebuildPaintInfo();
+			rebuildPaintInfo(true);
 			if (count > 0) {
 				ZLTextMark mark = myCurrentPage.StartCursor.getMark();
 				gotoMark(wholeText ?
@@ -228,7 +228,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public void clearFindResults() {
 		if (!findResultsAreEmpty()) {
 			myModel.removeAllMarks();
-			rebuildPaintInfo();
+			rebuildPaintInfo(true);
 			Application.getViewWidget().reset();
 			Application.getViewWidget().repaint();
 		}
@@ -937,6 +937,32 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					final int c = yStart + (yEnd - yStart) / 2;
 					context.setFillColor(new ZLColor(196, 196, 196));
 					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
+				} else if (element instanceof OpdsElement) {
+					// TODO: draw
+					context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
+					context.setFillColor(new ZLColor(127, 127, 127));
+					final int xStart = area.XStart + 10;
+					final int xEnd = area.XEnd - 10;
+					final int yStart = area.YStart + 10;
+					final int yEnd = area.YEnd - 10;
+					context.fillRectangle(xStart, yStart, xEnd, yEnd);
+					context.drawLine(xStart, yStart, xStart, yEnd);
+					context.drawLine(xStart, yEnd, xEnd, yEnd);
+					context.drawLine(xEnd, yEnd, xEnd, yStart);
+					context.drawLine(xEnd, yStart, xStart, yStart);
+				} else if (element instanceof BookElement) {
+					// TODO: draw
+					context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
+					context.setFillColor(new ZLColor(127, 127, 127));
+					final int xStart = area.XStart + 10;
+					final int xEnd = area.XEnd - 10;
+					final int yStart = area.YStart + 10;
+					final int yEnd = area.YEnd - 10;
+					context.fillRectangle(xStart, yStart, xEnd, yEnd);
+					context.drawLine(xStart, yStart, xStart, yEnd);
+					context.drawLine(xStart, yEnd, xEnd, yEnd);
+					context.drawLine(xEnd, yEnd, xEnd, yStart);
+					context.drawLine(xEnd, yStart, xStart, yStart);
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
 					/*
@@ -1134,6 +1160,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				wordOccurred = true;
 				isVisible = true;
 			} else if (element instanceof ZLTextVideoElement) {
+				wordOccurred = true;
+				isVisible = true;
+			} else if (element instanceof OpdsElement) {
+				wordOccurred = true;
+				isVisible = true;
+			} else if (element instanceof BookElement) {
 				wordOccurred = true;
 				isVisible = true;
 			} else if (isStyleChangeElement(element)) {
@@ -1336,7 +1368,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					wordOccurred = false;
 					--spaceCounter;
 				}
-			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement) {
+			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement || element instanceof OpdsElement || element instanceof BookElement) {
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0;
@@ -1551,16 +1583,22 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void clearCaches() {
+		clearCaches(true);
+	}
+
+	void clearCaches(boolean full) {
 		resetMetrics();
-		rebuildPaintInfo();
+		rebuildPaintInfo(full);
 		Application.getViewWidget().reset();
 		myCharWidth = -1;
 	}
 
-	protected synchronized void rebuildPaintInfo() {
+	protected synchronized void rebuildPaintInfo(boolean full) {
 		myPreviousPage.reset();
 		myNextPage.reset();
-		ZLTextParagraphCursorCache.clear();
+		if (full) {
+			myCursorCache.clear();
+		}
 
 		if (myCurrentPage.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
 			myCurrentPage.LineInfos.clear();
@@ -1820,5 +1858,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				return cursor != null && !cursor.isNull() && !cursor.isStartOfText();
 			}
 		}
+	}
+
+	private final ZLTextParagraphCursorCache myCursorCache = new ZLTextParagraphCursorCache();
+	ZLTextParagraphCursor cursor(int index) {
+		ZLTextParagraphCursor result = myCursorCache.get(myModel, index);
+		if (result == null) {
+			result = new ZLTextParagraphCursor(this, myModel, index);
+			myCursorCache.put(myModel, index, result);
+		}
+		return result;
 	}
 }
