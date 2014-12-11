@@ -48,7 +48,7 @@ class SyncNetworkContext extends ServiceNetworkContext {
 	@Override
 	protected void perform(ZLNetworkRequest request, int socketTimeout, int connectionTimeout) throws ZLNetworkException {
 		if (!canPerformRequest()) {
-			throw new SyncronizationDisabledException();
+			throw new SynchronizationDisabledException();
 		}
 		final String accountName = SyncUtil.getAccountName(this);
 		if (!MiscUtil.equals(myAccountName, accountName)) {
