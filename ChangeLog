@@ -8,6 +8,7 @@
 * (planned) CSS selectors priority
 
 ===== 2.2 beta 8 (Dec ??, 2014) =====
+* Fixed crash on old (2.0 and 2.1) devices
 * Fixed opening of huge ePubs (300+ htmls inside)
 * Fixed Smashwords catalog parsing
 
