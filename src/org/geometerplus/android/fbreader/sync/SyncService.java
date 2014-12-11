@@ -48,8 +48,9 @@ public class SyncService extends Service implements IBookCollection.Listener {
 		Uploaded(Book.SYNCHRONISED_LABEL),
 		ToBeDeleted(Book.SYNC_DELETED_LABEL),
 		Failure(Book.SYNC_FAILURE_LABEL),
+		AuthenticationError(null),
 		ServerError(null),
-		SyncronizationDisabled(null),
+		SynchronizationDisabled(null),
 		FailedPreviuousTime(null),
 		HashNotComputed(null);
 
@@ -141,7 +142,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 					alarmManager.setInexactRepeating(
 						AlarmManager.ELAPSED_REALTIME,
 						SystemClock.elapsedRealtime(),
-						AlarmManager.INTERVAL_HALF_HOUR,
+						AlarmManager.INTERVAL_HOUR,
 						syncIntent()
 					);
 					SQLiteCookieDatabase.init(SyncService.this);
@@ -203,7 +204,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 				});
 				log("RECEIVED: " + myHashesFromServer.toString());
 			}
-		} catch (SyncronizationDisabledException e) {
+		} catch (SynchronizationDisabledException e) {
 			myHashesFromServer.clear();
 			throw e;
 		} catch (Exception e) {
@@ -239,10 +240,11 @@ public class SyncService extends Service implements IBookCollection.Listener {
 									addBook(b);
 								}
 							}
-							while (!myQueue.isEmpty()) {
+							Status status = null;
+							while (!myQueue.isEmpty() && status != Status.AuthenticationError) {
 								final Book book = myQueue.remove(0);
 								++count;
-								final Status status = uploadBookToServer(book);
+								status = uploadBookToServer(book);
 								if (status.Label != null) {
 									for (String label : Status.AllLabels) {
 										if (status.Label.equals(label)) {
@@ -361,8 +363,8 @@ public class SyncService extends Service implements IBookCollection.Listener {
 	private Status uploadBookToServer(Book book) {
 		try {
 			return uploadBookToServerInternal(book);
-		} catch (SyncronizationDisabledException e) {
-			return Status.SyncronizationDisabled;
+		} catch (SynchronizationDisabledException e) {
+			return Status.SynchronizationDisabled;
 		}
 	}
 
@@ -395,6 +397,9 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			};
 		try {
 			myBookUploadContext.perform(verificationRequest);
+		} catch (ZLNetworkAuthenticationException e) {
+			e.printStackTrace();
+			return Status.AuthenticationError;
 		} catch (ZLNetworkException e) {
 			e.printStackTrace();
 			return Status.ServerError;
@@ -409,6 +414,9 @@ public class SyncService extends Service implements IBookCollection.Listener {
 					uploadRequest.addHeader("X-CSRFToken", csrfToken);
 					myBookUploadContext.perform(uploadRequest);
 					return uploadRequest.Result;
+				} catch (ZLNetworkAuthenticationException e) {
+					e.printStackTrace();
+					return Status.AuthenticationError;
 				} catch (ZLNetworkException e) {
 					e.printStackTrace();
 					return Status.ServerError;
