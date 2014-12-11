@@ -95,6 +95,10 @@ public final class ZipFile {
 	}
 
 	synchronized MyBufferedInputStream getBaseStream() throws IOException {
+		final MyBufferedInputStream stored = myStoredStreams.poll();
+		if (stored != null) {
+			return stored;
+		}
 		return new MyBufferedInputStream(myStreamHolder);
 	}
 
