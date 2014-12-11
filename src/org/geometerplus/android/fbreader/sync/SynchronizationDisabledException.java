@@ -19,5 +19,5 @@
 
 package org.geometerplus.android.fbreader.sync;
 
-class SyncronizationDisabledException extends RuntimeException {
+class SynchronizationDisabledException extends RuntimeException {
 }
