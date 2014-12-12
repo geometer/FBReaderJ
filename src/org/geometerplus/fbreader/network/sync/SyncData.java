@@ -171,9 +171,6 @@ public class SyncData {
 				currentBookMap.put("timestamp", Long.parseLong(myCurrentBookTimestamp.getValue()));
 			} catch (Exception e) {
 			}
-			if (currentBook.File.getPhysicalFile() == null) {
-				currentBookMap.put("default", 0);
-			}
 			map.put("currentbook", currentBookMap);
 
 			final List<Map<String,Object>> lst = new ArrayList<Map<String,Object>>();
