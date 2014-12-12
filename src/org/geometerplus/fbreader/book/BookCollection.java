@@ -33,6 +33,8 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
 public class BookCollection extends AbstractBookCollection {
+	private static final String ZERO_HASH = String.format("%040d", 0);
+
 	private final BooksDatabase myDatabase;
 	public final List<String> BookDirectories;
 
@@ -172,6 +174,10 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public Book getBookByHash(String hash) {
+		if (ZERO_HASH.equals(hash)) {
+			return getBookByFile(BookUtil.getHelpFile());
+		}
+
 		for (long id : myDatabase.bookIdsByHash(hash)) {
 			final Book book = getBookById(id);
 			if (book != null && book.File.exists()) {
@@ -730,7 +736,7 @@ public class BookCollection extends AbstractBookCollection {
 	public String getHash(Book book, boolean force) {
 		final ZLPhysicalFile file = book.File.getPhysicalFile();
 		if (file == null) {
-			return null;
+			return ZERO_HASH;
 		}
 		String hash = null;
 		try {
