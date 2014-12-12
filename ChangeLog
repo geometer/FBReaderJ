@@ -7,11 +7,12 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.2 beta 8 (Dec ??, 2014) =====
+===== 2.1.11 (Dec 12, 2014) =====
 * Sync optimisation: do not send unnecessary requests
 * Fixed crash on old (2.0 and 2.1) devices
 * Fixed opening of huge ePubs (300+ htmls inside)
 * Fixed Smashwords catalog parsing
+* Changes from 2.2 beta 7
 
 ===== 2.2 beta 7 (Dec 09, 2014) =====
 * Fixed behaviour on feeds with incorrect mimetypes
