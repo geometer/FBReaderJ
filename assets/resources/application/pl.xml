@@ -636,7 +636,10 @@
 			<node name="hyperlinkVisited" value="Odwiedzony odsyłacz"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="Tło wyszukanych elementów"/>
-			<node name="footer" value="Stopka"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Marginesy">
 			<node name="summary" value="Marginesy tektu"/>
@@ -656,7 +659,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Wysokość stopki"/>
-			<node name="footerColor" value="Kolor stopki"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="Pokazywanie znaczników spisu treści">
 				<node name="summaryOn" value="Pokazuj znaczniki w stopce"/>
 				<node name="summaryOff" value="Nie pokazuj znaczników w stopce"/>

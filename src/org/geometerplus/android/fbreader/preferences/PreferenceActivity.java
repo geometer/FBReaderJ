@@ -457,6 +457,28 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			}
 		};
+		final PreferenceSet oldStyleFooterPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
+						return true;
+					default:
+						return false;
+				}
+			}
+		};
+		final PreferenceSet newStyleFooterPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
+						return true;
+					default:
+						return false;
+				}
+			}
+		};
 
 		final Screen cssScreen = createPreferenceScreen("css");
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");
@@ -491,7 +513,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
 		colorsScreen.addOption(profile.VisitedHyperlinkTextOption, "hyperlinkVisited");
-		colorsScreen.addOption(profile.FooterFillOption, "footer");
+		colorsScreen.addOption(profile.FooterFillOption, "footerOldStyle");
+		colorsScreen.addOption(profile.FooterNGBackgroundOption, "footerBackground");
+		colorsScreen.addOption(profile.FooterNGForegroundOption, "footerForeground");
+		colorsScreen.addOption(profile.FooterNGForegroundUnreadOption, "footerForegroundUnread");
 		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
 		colorsScreen.addOption(profile.SelectionForegroundOption, "selectionForeground");
 		colorsScreen.addOption(profile.HighlightingForegroundOption, "highlightingForeground");
@@ -530,6 +555,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			protected void onDialogClosed(boolean result) {
 				super.onDialogClosed(result);
 				footerPreferences.run();
+				oldStyleFooterPreferences.run();
+				newStyleFooterPreferences.run();
 			}
 		});
 
@@ -537,7 +564,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, statusLineScreen.Resource.getResource("footerHeight"),
 			viewOptions.FooterHeight
 		)));
-		footerPreferences.add(statusLineScreen.addOption(profile.FooterFillOption, "footerColor"));
+		oldStyleFooterPreferences.add(statusLineScreen.addOption(profile.FooterFillOption, "footerOldStyleColor"));
+		newStyleFooterPreferences.add(statusLineScreen.addOption(profile.FooterNGBackgroundOption, "footerBackgroundColor"));
+		newStyleFooterPreferences.add(statusLineScreen.addOption(profile.FooterNGForegroundOption, "footerForegroundColor"));
+		newStyleFooterPreferences.add(statusLineScreen.addOption(profile.FooterNGForegroundUnreadOption, "footerForegroundUnreadColor"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowTOCMarks, "tocMarks"));
 
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowProgress, "showProgress"));
@@ -548,6 +578,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			footerOptions.Font, false
 		)));
 		footerPreferences.run();
+		oldStyleFooterPreferences.run();
+		newStyleFooterPreferences.run();
 
 		/*
 		final Screen colorProfileScreen = createPreferenceScreen("colorProfile");
