@@ -644,7 +644,10 @@
 			<node name="hyperlinkVisited" value="الروابط التي تمت زيارتها"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="خلفية نتائج البحث"/>
-			<node name="footer" value="الحاشية"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="الهوامش">
 			<node name="summary" value="هوامش النص"/>
@@ -664,7 +667,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="ارتفاع حاشية الصفحة"/>
-			<node name="footerColor" value="لون حاشية الصفحة"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="إظهار علامات الفهرس">
 				<node name="summaryOn" value="عرض علامات الفهرس على شريط التقدم"/>
 				<node name="summaryOff" value="لا تعرض علامات الفهرس على شريط التقدم"/>

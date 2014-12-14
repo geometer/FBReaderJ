@@ -636,7 +636,10 @@
 			<node name="hyperlinkVisited" value="已按超連結文字"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="搜尋結果背景"/>
-			<node name="footer" value="頁尾"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="邊距">
 			<node name="summary" value="文字邊距"/>
@@ -656,7 +659,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="頁尾高度"/>
-			<node name="footerColor" value="頁尾顏色"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="顯示目錄標示">
 				<node name="summaryOn" value="在頁尾顯示目錄標示"/>
 				<node name="summaryOff" value="不要在頁尾顯示目錄標示"/>
