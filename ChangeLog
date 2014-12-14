@@ -9,6 +9,7 @@
 
 ===== 2.1.12 (Dec 14, 2014) =====
 * Fixed an infinite loop (and OOM) on rendering some formatted ePubs
+* Added color settings for new style footer (separate for day & night profiles)
 
 ===== 2.1.11 (Dec 12, 2014) =====
 * Sync optimisation: do not send unnecessary requests
