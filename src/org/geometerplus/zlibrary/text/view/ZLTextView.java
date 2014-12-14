@@ -985,7 +985,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private void buildInfos(ZLTextPage page, ZLTextWordCursor start, ZLTextWordCursor result) {
-		final long startTime = System.currentTimeMillis();
 		result.setCursor(start);
 		int textAreaHeight = page.getTextHeight();
 		page.LineInfos.clear();
@@ -1061,7 +1060,25 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int endIndex,
 		ZLTextLineInfo previousInfo
 	) {
-		final long startTime = System.currentTimeMillis();
+		final ZLTextLineInfo info = processTextLineInternal(
+			page, paragraphCursor, startIndex, startCharIndex, endIndex, previousInfo
+		);
+		if (info.EndElementIndex == startIndex && info.EndCharIndex == startCharIndex) {
+			info.EndElementIndex = paragraphCursor.getParagraphLength();
+			info.EndCharIndex = 0;
+			// TODO: add error element
+		}
+		return info;
+	}
+
+	private ZLTextLineInfo processTextLineInternal(
+		ZLTextPage page,
+		ZLTextParagraphCursor paragraphCursor,
+		final int startIndex,
+		final int startCharIndex,
+		final int endIndex,
+		ZLTextLineInfo previousInfo
+	) {
 		final ZLPaintContext context = getContext();
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, getTextStyle());
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
@@ -1095,9 +1112,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		ZLTextStyle storedStyle = getTextStyle();
 
+		final int maxWidth = page.getTextWidth() - storedStyle.getRightIndent(metrics());
 		info.LeftIndent = storedStyle.getLeftIndent(metrics());
 		if (isFirstLine) {
 			info.LeftIndent += storedStyle.getFirstLineIndent(metrics());
+		}
+		if (info.LeftIndent > maxWidth - 20) {
+			info.LeftIndent = maxWidth * 3 / 4;
 		}
 
 		ZLTextElement first = getFirst(paragraphCursor, info.StartElementIndex);
@@ -1124,7 +1145,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int newWidth = info.Width;
 		int newHeight = info.Height;
 		int newDescent = info.Descent;
-		int maxWidth = page.getTextWidth() - storedStyle.getRightIndent(metrics());
 		boolean wordOccurred = false;
 		boolean isVisible = false;
 		int lastSpaceWidth = 0;
