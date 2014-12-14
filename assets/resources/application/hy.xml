@@ -651,7 +651,10 @@
 			<node name="hyperlinkVisited" value="Այցելված հղում"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="Որոնման արդյունքների ետնաշերտը"/>
-			<node name="footer" value="Էջատակ"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Լուսանցքներ">
 			<node name="summary" value="Լուսանցքներ գրվածքի շուրջ"/>
@@ -671,7 +674,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Էջատակի բարձրությունը"/>
-			<node name="footerColor" value="Էջատակի գույնը"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="Ցուցադրել ցանկի նիշերը">
 				<node name="summaryOn" value="Ցուցադրել ցանկի նիշերը էջատակում"/>
 				<node name="summaryOff" value="Թաքցնել ցանկի նիշերը"/>

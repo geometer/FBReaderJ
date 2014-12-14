@@ -646,7 +646,10 @@
 			<node name="hyperlinkVisited" value="Visited hyperlink text"/>
 			<node name="highlightingForeground" value="Search results"/>
 			<node name="highlightingBackground" value="Search results background"/>
-			<node name="footer" value="Footer"/>
+			<node name="footerOldStyle" value="Footer (old style)"/>
+			<node name="footerBackground" value="Footer background"/>
+			<node name="footerForeground" value="Footer text"/>
+			<node name="footerForegroundUnread" value="Footer line"/>
 		</node>
 		<node name="margins" value="Margins">
 			<node name="summary" value="Text margins"/>
@@ -666,7 +669,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)"/>
 			</node>
 			<node name="footerHeight" value="Footer height"/>
-			<node name="footerColor" value="Footer color"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color"/>
+			<node name="footerBackgroundColor" value="Footer background color"/>
+			<node name="footerForegroundColor" value="Footer text color"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color"/>
 			<node name="tocMarks" value="Show TOC marks">
 				<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 				<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>

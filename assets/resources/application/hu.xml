@@ -636,7 +636,10 @@
 			<node name="hyperlinkVisited" value="Meglátogatott link"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="Találatok kiemelése"/>
-			<node name="footer" value="Lábléc"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Margók">
 			<node name="summary" value="Szövegmargók"/>
@@ -656,7 +659,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Lábléc magassága"/>
-			<node name="footerColor" value="Lábléc színe"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="Tartalomjegyzék jelzése">
 				<node name="summaryOn" value="Mutassa a tartalomjegyzék elemeit a láblécen"/>
 				<node name="summaryOff" value="Ne mutassa a tartalomjegyzék elemeit a láblécen"/>

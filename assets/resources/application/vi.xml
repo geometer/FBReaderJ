@@ -636,7 +636,10 @@
 			<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="Kết quả Tìm kiếm"/>
-			<node name="footer" value="Footer"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Canh lề">
 			<node name="summary" value="Text margins"/>
@@ -656,7 +659,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Chiều cao của cuối trang"/>
-			<node name="footerColor" value="Màu sắc cuối trang"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="Hiện đánh dấu mục lục">
 				<node name="summaryOn" value="Hiện đánh dấu mục lục ở thanh cuối trang"/>
 				<node name="summaryOff" value="Không Hiện đánh dấu mục lục ở thanh cuối trang"/>

@@ -651,7 +651,10 @@
 			<node name="hyperlinkVisited" value="მონახულებული ლინკი"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="ძიების რეზულტატების ფონი"/>
-			<node name="footer" value="სარდაფი"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="დაშორებები">
 			<node name="summary" value="სივრცე ტექსტის გარშემო"/>
@@ -671,7 +674,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="სარდაფის სიმაღლე"/>
-			<node name="footerColor" value="სარდაფის ფერი"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="ნიშნულების ჩვენება თავების მიხედვით">
 				<node name="summaryOn" value="სარდაფზე ნიშნულის დახატვა თავის დასაწყისში"/>
 				<node name="summaryOff" value="სარდაფი ნიშნულების გარეშე"/>

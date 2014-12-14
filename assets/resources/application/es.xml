@@ -651,7 +651,10 @@
 			<node name="hyperlinkVisited" value="Texto de hipervínculo visitado"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="Fondo de resultados de búsqueda"/>
-			<node name="footer" value="Pie de página"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Márgenes">
 			<node name="summary" value="Márgenes de texto"/>
@@ -671,7 +674,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Altura del pie de página"/>
-			<node name="footerColor" value="Color del pie de página"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="Mostrar marcas de TDC">
 				<node name="summaryOn" value="Mostrar las marcas de TDC en la barra del pie de página"/>
 				<node name="summaryOff" value="No mostrar las marcas de TDC en la barra del pie de página"/>

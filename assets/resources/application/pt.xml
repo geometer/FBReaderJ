@@ -649,7 +649,10 @@
 			<node name="hyperlinkVisited" value="Texto de hiperligação visitado"/>
 			<node name="highlightingForeground" value="Resultados da busca"/>
 			<node name="highlightingBackground" value="Fundo de resultados de pesquisa"/>
-			<node name="footer" value="Rodapé"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Margens">
 			<node name="summary" value="Margens do texto"/>
@@ -669,7 +672,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Altura do rodapé"/>
-			<node name="footerColor" value="Cor do Rodapé"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="Mostrar marcas de TOC">
 				<node name="summaryOn" value="Mostrar marcas de TOC na barra de rodapé"/>
 				<node name="summaryOff" value="Não mostrar marcas de TOC na barra de rodapé"/>

@@ -646,7 +646,10 @@
 			<node name="hyperlinkVisited" value="Ziyaret edilmiş link"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="Arama sonuçları arkaplanı"/>
-			<node name="footer" value="Altbilgi"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Aralıklar">
 			<node name="summary" value="Yazı aralığı"/>
@@ -666,7 +669,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Altbilgi yüksekliği"/>
-			<node name="footerColor" value="Altbilgi rengi"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="İçerik işaretlerini göster">
 				<node name="summaryOn" value="İçerik işaretlerini altbilgi kısmında göster"/>
 				<node name="summaryOff" value="İçerik işaretlerini altbilgi kısmında gösterme"/>
