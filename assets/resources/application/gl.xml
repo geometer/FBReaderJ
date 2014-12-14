@@ -636,7 +636,10 @@
 			<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="Resultado da busca de fondos"/>
-			<node name="footer" value="Rodapé"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Marxes">
 			<node name="summary" value="Marxes do texto"/>
@@ -656,7 +659,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Altura do rodapé"/>
-			<node name="footerColor" value="Cor do rodapé"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="Mostrar as marcas do índice">
 				<node name="summaryOn" value="Mostrar as marcas do índice na barra do rodapé"/>
 				<node name="summaryOff" value="Non mostrar as marcas do índice na barra do rodapé"/>

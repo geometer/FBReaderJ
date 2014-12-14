@@ -634,16 +634,17 @@ public final class FBView extends ZLTextView {
 
 	private class FooterNewStyle extends Footer {
 		public synchronized void paint(ZLPaintContext context) {
-			context.clear(new ZLColor(0x44, 0x44, 0x44));
+			final ColorProfile cProfile = myViewOptions.getColorProfile();
+			context.clear(cProfile.FooterNGBackgroundOption.getValue());
 
 			final BookModel model = myReader.Model;
 			if (model == null) {
 				return;
 			}
 
-			final ZLColor textColor = new ZLColor(0xBB, 0xBB, 0xBB);
-			final ZLColor readColor = new ZLColor(0xBB, 0xBB, 0xBB);
-			final ZLColor unreadColor = new ZLColor(0x77, 0x77, 0x77);
+			final ZLColor textColor = cProfile.FooterNGForegroundOption.getValue();
+			final ZLColor readColor = cProfile.FooterNGForegroundOption.getValue();
+			final ZLColor unreadColor = cProfile.FooterNGForegroundUnreadOption.getValue();
 
 			final int left = getLeftMargin();
 			final int right = context.getWidth() - getRightMargin();
