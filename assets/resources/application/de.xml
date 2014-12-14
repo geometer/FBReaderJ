@@ -653,7 +653,10 @@
 			<node name="hyperlinkVisited" value="Besuchte Hyperlinks"/>
 			<node name="highlightingForeground" value="Suchergebnisse"/>
 			<node name="highlightingBackground" value="Hintergrund der Suchergebnisse"/>
-			<node name="footer" value="Fußzeile"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Ränder">
 			<node name="summary" value="Seitenränder festlegen"/>
@@ -673,7 +676,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Höhe der Fußleiste"/>
-			<node name="footerColor" value="Farbe der Fußleiste"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="Kapitelmarken anzeigen">
 				<node name="summaryOn" value="Kapitelmarken in der Fußzeile anzeigen"/>
 				<node name="summaryOff" value="Keine Kapitelmarken in der Fußzeile anzeigen"/>

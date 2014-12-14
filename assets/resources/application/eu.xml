@@ -646,7 +646,10 @@
 			<node name="hyperlinkVisited" value="Bisitatutako lotura testua"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="Bilaketaren emaitzaren atzeko planoa"/>
-			<node name="footer" value="Oin-oharra"/>
+			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
+			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
+			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
+			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
 		<node name="margins" value="Marjinak">
 			<node name="summary" value="Testuaren marjinak"/>
@@ -666,7 +669,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Oin-oharraren altuera"/>
-			<node name="footerColor" value="Oin-oharraren kolorea"/>
+			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
 			<node name="tocMarks" value="Erakutsi aurkibidearen laster-markak">
 				<node name="summaryOn" value="Erakutsi aurkibidearen laster-markak oin-barran"/>
 				<node name="summaryOff" value="Ez erakutsi aurkibidearen laster-markak oin-barran"/>
@@ -851,12 +857,13 @@
 			<node name="pay" value="Ordaindu"/>
 			<node name="refresh" value="Freskatu"/>
 			<node name="authorise" value="Baimendu"/>
-			<node name="enterPosition" value="Idatzi orri zenbakia"/>
+			<node name="resetPosition" value="Berrezarri posizioa"/>
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
 			<node name="removeFromFavorites" value="Kendu gogokoetatik"/>
 			<node name="markAsRead" value="Markatu irakurria bezala"/>
 			<node name="markAsUnread" value="Markatu ez irakurria bezala"/>
+			<node name="enterPosition" value="Idatzi orri zenbakia"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalatu gehigarria"/>

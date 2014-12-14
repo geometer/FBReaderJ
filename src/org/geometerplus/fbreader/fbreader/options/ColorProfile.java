@@ -67,6 +67,9 @@ public class ColorProfile {
 	public final ZLColorOption HyperlinkTextOption;
 	public final ZLColorOption VisitedHyperlinkTextOption;
 	public final ZLColorOption FooterFillOption;
+	public final ZLColorOption FooterNGBackgroundOption;
+	public final ZLColorOption FooterNGForegroundOption;
+	public final ZLColorOption FooterNGForegroundUnreadOption;
 
 	private ColorProfile(String name, ColorProfile base) {
 		this(name);
@@ -81,6 +84,9 @@ public class ColorProfile {
 		HyperlinkTextOption.setValue(base.HyperlinkTextOption.getValue());
 		VisitedHyperlinkTextOption.setValue(base.VisitedHyperlinkTextOption.getValue());
 		FooterFillOption.setValue(base.FooterFillOption.getValue());
+		FooterNGBackgroundOption.setValue(base.FooterNGBackgroundOption.getValue());
+		FooterNGForegroundOption.setValue(base.FooterNGForegroundOption.getValue());
+		FooterNGForegroundUnreadOption.setValue(base.FooterNGForegroundUnreadOption.getValue());
 	}
 
 	private static ZLColorOption createOption(String profileName, String optionName, int r, int g, int b) {
@@ -116,6 +122,12 @@ public class ColorProfile {
 				createOption(name, "VisitedHyperlink", 200, 139, 255);
 			FooterFillOption =
 				createOption(name, "FooterFillOption", 85, 85, 85);
+			FooterNGBackgroundOption =
+				createOption(name, "FooterNGBackgroundOption", 68, 68, 68);
+			FooterNGForegroundOption =
+				createOption(name, "FooterNGForegroundOption", 187, 187, 187);
+			FooterNGForegroundUnreadOption =
+				createOption(name, "FooterNGForegroundUnreadOption", 119, 119, 119);
 		} else {
 			WallpaperOption =
 				new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/sepia.jpg");
@@ -139,6 +151,12 @@ public class ColorProfile {
 				createOption(name, "VisitedHyperlink", 200, 139, 255);
 			FooterFillOption =
 				createOption(name, "FooterFillOption", 170, 170, 170);
+			FooterNGBackgroundOption =
+				createOption(name, "FooterNGBackgroundOption", 68, 68, 68);
+			FooterNGForegroundOption =
+				createOption(name, "FooterNGForegroundOption", 187, 187, 187);
+			FooterNGForegroundUnreadOption =
+				createOption(name, "FooterNGForegroundUnreadOption", 119, 119, 119);
 		}
 	}
 }
