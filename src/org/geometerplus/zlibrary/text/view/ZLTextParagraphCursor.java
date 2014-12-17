@@ -115,6 +115,7 @@ public final class ZLTextParagraphCursor {
 							elements.add(new BookElement(null, null));
 							elements.add(new BookElement(null, null));
 							elements.add(new BookElement(null, null));
+							elements.add(new BookElement(null, null));
 						}
 						break;
 					}
