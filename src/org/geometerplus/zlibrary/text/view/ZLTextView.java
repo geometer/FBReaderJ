@@ -937,19 +937,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					final int c = yStart + (yEnd - yStart) / 2;
 					context.setFillColor(new ZLColor(196, 196, 196));
 					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
-				} else if (element instanceof OpdsElement) {
-					// TODO: draw
-					context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
-					context.setFillColor(new ZLColor(127, 127, 127));
-					final int xStart = area.XStart + 10;
-					final int xEnd = area.XEnd - 10;
-					final int yStart = area.YStart + 10;
-					final int yEnd = area.YEnd - 10;
-					context.fillRectangle(xStart, yStart, xEnd, yEnd);
-					context.drawLine(xStart, yStart, xStart, yEnd);
-					context.drawLine(xStart, yEnd, xEnd, yEnd);
-					context.drawLine(xEnd, yEnd, xEnd, yStart);
-					context.drawLine(xEnd, yStart, xStart, yStart);
 				} else if (element instanceof BookElement) {
 					// TODO: draw
 					context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
@@ -1182,9 +1169,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			} else if (element instanceof ZLTextVideoElement) {
 				wordOccurred = true;
 				isVisible = true;
-			} else if (element instanceof OpdsElement) {
-				wordOccurred = true;
-				isVisible = true;
 			} else if (element instanceof BookElement) {
 				wordOccurred = true;
 				isVisible = true;
@@ -1388,7 +1372,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					wordOccurred = false;
 					--spaceCounter;
 				}
-			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement || element instanceof OpdsElement || element instanceof BookElement) {
+			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement || element instanceof BookElement) {
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0;
