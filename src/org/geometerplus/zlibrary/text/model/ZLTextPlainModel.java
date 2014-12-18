@@ -277,10 +277,18 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 					final short kindLength = (short)data[dataOffset++];
 					final String kind = new String(data, dataOffset, kindLength);
 					dataOffset += kindLength;
-					final short paramLength = (short)data[dataOffset++];
-					final String param = new String(data, dataOffset, paramLength);
-					dataOffset += paramLength;
-					myFBReaderSpecialEntry = new FBReaderSpecialEntry(kind, param);
+
+					final Map<String,String> map = new HashMap<String,String>();
+					final short dataSize = (short)((first >> 8) & 0xFF);
+					for (short i = 0; i < dataSize; ++i) {
+						final short keyLength = (short)data[dataOffset++];
+						final String key = new String(data, dataOffset, keyLength);
+						dataOffset += keyLength;
+						final short valueLength = (short)data[dataOffset++];
+						map.put(key, new String(data, dataOffset, valueLength));
+						dataOffset += valueLength;
+					}
+					myFBReaderSpecialEntry = new FBReaderSpecialEntry(kind, map);
 					break;
 				}
 			}

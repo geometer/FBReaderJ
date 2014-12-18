@@ -111,6 +111,7 @@ public final class ZLTextParagraphCursor {
 					{
 						final FBReaderSpecialEntry entry = it.getFBReaderSpecialEntry();
 						if ("opds".equals(entry.Type)) {
+							System.err.println("OPDS DATA = " + entry.Data);
 							elements.add(new BookElement(null, null));
 							elements.add(new BookElement(null, null));
 							elements.add(new BookElement(null, null));
