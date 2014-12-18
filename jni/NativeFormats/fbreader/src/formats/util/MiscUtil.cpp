@@ -32,7 +32,10 @@ FBTextKind MiscUtil::referenceType(const std::string &link) {
 		ZLStringUtil::stringStartsWith(lowerCasedLink, "ftp://");
 
 	if (!isFileReference) {
-		return ZLStringUtil::stringStartsWith(lowerCasedLink, "mailto:") ? EXTERNAL_HYPERLINK : INTERNAL_HYPERLINK;
+		return
+			ZLStringUtil::stringStartsWith(lowerCasedLink, "mailto:") ||
+			ZLStringUtil::stringStartsWith(lowerCasedLink, "fbreader-action:")
+				? EXTERNAL_HYPERLINK : INTERNAL_HYPERLINK;
 	}
 	/*static const std::string FeedBooksPrefix0 = "http://feedbooks.com/book/stanza/";
 	static const std::string FeedBooksPrefix1 = "http://www.feedbooks.com/book/stanza/";
