@@ -54,7 +54,7 @@ if __name__ == '__main__':
     html_dir = sys.argv[2]
     output_dir = sys.argv[3]
 
-    os.mkdirs(output_dir)
+    os.makedirs(output_dir)
     for lang in collect_languages(html_dir):
         epub = os.path.join(output_dir, 'intro_' + lang + '.epub')
         if os.path.exists(epub):
