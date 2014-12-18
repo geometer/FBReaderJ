@@ -59,7 +59,7 @@
 		<exec executable="./help/generate.py">
 			<arg value="help/proto"/>
 			<arg value="help/html"/>
-			<arg value="assets/data/help"/>
+			<arg value="assets/data/intro"/>
 		</exec>
 	</target>
 
@@ -77,7 +77,7 @@
 		<delete dir="gen" />
 		<delete dir="bin" />
 		<delete dir="out" />
-		<delete dir="assets/data/help" includes="*.epub" />
+		<delete dir="assets/data/intro" />
 		<echo message="DONE (Deleting temporary files)" />
 	</target>
 
