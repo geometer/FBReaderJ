@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     os.makedirs(output_dir)
     for lang in collect_languages(html_dir):
-        epub = os.path.join(output_dir, 'intro_' + lang + '.epub')
+        epub = os.path.join(output_dir, 'intro-' + lang + '.epub')
         if os.path.exists(epub):
             os.remove(epub)
         print 'Generating intro for language %s...' % lang

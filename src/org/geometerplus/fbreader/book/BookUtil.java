@@ -73,14 +73,14 @@ public abstract class BookUtil {
 		final Locale locale = Locale.getDefault();
 
 		ZLResourceFile file = ZLResourceFile.createResourceFile(
-			"data/intro/intro-" + locale.getLanguage() + ".epub"
+			"data/intro/intro-" + locale.getLanguage() + "_" + locale.getCountry() + ".epub"
 		);
 		if (file.exists()) {
 			return file;
 		}
 
 		file = ZLResourceFile.createResourceFile(
-			"data/intro/intro-ru.epub"
+			"data/intro/intro-" + locale.getLanguage() + ".epub"
 		);
 		if (file.exists()) {
 			return file;
@@ -100,7 +100,7 @@ public abstract class BookUtil {
 			return file;
 		}
 
-		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
+		return ZLResourceFile.createResourceFile("data/intro/intro-en.epub");
 	}
 
 	public static boolean canRemoveBookFile(Book book) {
