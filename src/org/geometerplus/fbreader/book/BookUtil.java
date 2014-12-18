@@ -73,14 +73,14 @@ public abstract class BookUtil {
 		final Locale locale = Locale.getDefault();
 
 		ZLResourceFile file = ZLResourceFile.createResourceFile(
-			"data/help/fb-intro-" + locale.getLanguage() + ".epub"
+			"data/intro/intro-" + locale.getLanguage() + ".epub"
 		);
 		if (file.exists()) {
 			return file;
 		}
 
 		file = ZLResourceFile.createResourceFile(
-			"data/help/fb-intro-ru.epub"
+			"data/intro/intro-ru.epub"
 		);
 		if (file.exists()) {
 			return file;

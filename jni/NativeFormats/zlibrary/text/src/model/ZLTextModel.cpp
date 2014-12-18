@@ -385,22 +385,32 @@ void ZLTextModel::addVideoEntry(const ZLVideoEntry &entry) {
 	++myParagraphLengths.back();
 }
 
-void ZLTextModel::addFBReaderSpecialEntry(const std::string &action, const std::string &data) {
+void ZLTextModel::addFBReaderSpecialEntry(const std::string &action, const std::map<std::string,std::string> &data) {
+	std::size_t fullLength = 2;                                      // entry type + map size
+	fullLength += 2 + ZLUnicodeUtil::utf8Length(action) * 2;         // action name
+	for (std::map<std::string,std::string>::const_iterator it = data.begin(); it != data.end(); ++it) {
+		fullLength += 2 + ZLUnicodeUtil::utf8Length(it->first) * 2;    // data key
+		fullLength += 2 + ZLUnicodeUtil::utf8Length(it->second) * 2;   // data value
+	}
+
+	myLastEntryStart = myAllocator->allocate(fullLength);
+	*myLastEntryStart = ZLTextParagraphEntry::FBREADER_SPECIAL;
+	*(myLastEntryStart + 1) = data.size();
+
+	char *p = myLastEntryStart + 2;
 	ZLUnicodeUtil::Ucs2String ucs2action;
 	ZLUnicodeUtil::utf8ToUcs2(ucs2action, action);
-	ZLUnicodeUtil::Ucs2String ucs2data;
-	ZLUnicodeUtil::utf8ToUcs2(ucs2data, data);
-
-	const std::size_t actionLength = ucs2action.size() * 2;
-	const std::size_t dataLength = ucs2data.size() * 2;
-
-	myLastEntryStart = myAllocator->allocate(6 + actionLength + dataLength);
-	*myLastEntryStart = ZLTextParagraphEntry::FBREADER_SPECIAL;
-	*(myLastEntryStart + 1) = 0;
-	
-	char *p = myLastEntryStart + 2;
 	p = ZLCachedMemoryAllocator::writeString(p, ucs2action);
-	p = ZLCachedMemoryAllocator::writeString(p, ucs2data);
+
+	for (std::map<std::string,std::string>::const_iterator it = data.begin(); it != data.end(); ++it) {
+		ZLUnicodeUtil::Ucs2String key;
+		ZLUnicodeUtil::utf8ToUcs2(key, it->first);
+		p = ZLCachedMemoryAllocator::writeString(p, key);
+		ZLUnicodeUtil::Ucs2String value;
+		ZLUnicodeUtil::utf8ToUcs2(value, it->second);
+		p = ZLCachedMemoryAllocator::writeString(p, value);
+	}
+
 	myParagraphs.back()->addEntry(myLastEntryStart);
 	++myParagraphLengths.back();
 }

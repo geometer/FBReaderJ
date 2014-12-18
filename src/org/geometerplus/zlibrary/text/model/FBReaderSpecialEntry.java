@@ -19,11 +19,13 @@
 
 package org.geometerplus.zlibrary.text.model;
 
+import java.util.Map;
+
 public class FBReaderSpecialEntry {
 	public final String Type;
-	public final String Data;
+	public final Map<String,String> Data;
 
-	FBReaderSpecialEntry(String type, String data) {
+	FBReaderSpecialEntry(String type, Map<String,String> data) {
 		Type = type;
 		Data = data;
 	}
