@@ -12,7 +12,7 @@
   <string name="yota_book_publisher_tille">Utgivare</string>
   <string name="yota_book_seller_tille">Försäljare</string>
   <string name="yota_book_published_tille">Publicerad</string>
-  <string name="highlight">Markera</string>
+  <string name="highlight">Höjdpunkt</string>
   <string name="copy">Kopiera</string>
   <string name="share">Dela</string>
   <string name="define">Förklaring</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Definitioner finns endast för engelska ord</string>
   <string name="select_only_one_word">Välj endast ett ord</string>
   <string name="bookmark">Bokmärke</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Tillbaka</string>
+  <string name="contents">Innehåll</string>
+  <string name="bookmarks">Bokmärken</string>
 </resources>

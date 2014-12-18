@@ -42,7 +42,7 @@
   <string name="only_english">Výklad je k dispozícii len pre anglické slová</string>
   <string name="select_only_one_word">Vyberte len jedno slovo</string>
   <string name="bookmark">Záložka</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Späť</string>
+  <string name="contents">Obsah</string>
+  <string name="bookmarks">Záložky</string>
 </resources>

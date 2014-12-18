@@ -11,7 +11,7 @@
   <string name="yota_book_cat_tille">Categoria</string>
   <string name="yota_book_publisher_tille">Editore</string>
   <string name="yota_book_seller_tille">Venditore</string>
-  <string name="yota_book_published_tille">Pubblicato</string>
+  <string name="yota_book_published_tille">Data di pubblicazione</string>
   <string name="highlight">Evidenzia</string>
   <string name="copy">Copia</string>
   <string name="share">Condividi</string>
@@ -25,7 +25,7 @@
   <string name="unknown_error">Errore sconosciuto</string>
   <string name="incorrect_request">Richiesta non valida</string>
   <string name="nothing_to_define">Seleziona parola da tradurre</string>
-  <string name="no_connection">No connessione Internet</string>
+  <string name="no_connection">Nessuna connessione a Internet</string>
   <string name="permission_library_description">L\'applicazione può leggere e cambiare la raccolta FBReader</string>
   <string name="permission_library_label">Interfaccia raccolta FBReader</string>
   <string name="permission_config_description">L\'applicazione può leggere e cambiare le impostazioni di FBReader</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Definizione disponibile solo per parole inglesi</string>
   <string name="select_only_one_word">Seleziona solo una parola</string>
   <string name="bookmark">Segnalibro</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Indietro</string>
+  <string name="contents">Sommario</string>
+  <string name="bookmarks">Segnalibri</string>
 </resources>

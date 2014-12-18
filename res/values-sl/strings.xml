@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Aplikacija lahko zažene postopek sinhronizacije knjižnice FBReader</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">stran</string>
-  <string name="d_ago">pred %d d</string>
+  <string name="d_ago">pred %dd</string>
   <string name="buy_book">KUPI</string>
   <string name="download_book">PRENESI</string>
   <string name="read_book">PREBERI</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Definicija je žal na voljo samo za angleške besede</string>
   <string name="select_only_one_word">Izberite samo eno besedo</string>
   <string name="bookmark">Zaznamek</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Nazaj</string>
+  <string name="contents">Vsebina</string>
+  <string name="bookmarks">Zaznamki</string>
 </resources>

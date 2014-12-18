@@ -25,7 +25,7 @@
   <string name="unknown_error">Error desconocido</string>
   <string name="incorrect_request">Solicitud incorrecta</string>
   <string name="nothing_to_define">Selecciona la palabra que quieres traducir</string>
-  <string name="no_connection">No hay conexión a Internet</string>
+  <string name="no_connection">Sin conexión a Internet</string>
   <string name="permission_library_description">La aplicación puede consultar y modificar la biblioteca de FBReader</string>
   <string name="permission_library_label">Interfaz de la biblioteca de FBReader</string>
   <string name="permission_config_description">La aplicación puede consultar y modificar la configuración de FBReader</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Lo sentimos, solo hay definiciones disponibles para entradas en inglés</string>
   <string name="select_only_one_word">Selecciona solo una palabra</string>
   <string name="bookmark">Marcador</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Atrás</string>
+  <string name="contents">Contenido</string>
+  <string name="bookmarks">Marcadores</string>
 </resources>

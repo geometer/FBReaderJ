@@ -15,7 +15,7 @@
   <string name="highlight">Zvýraznit</string>
   <string name="copy">Kopírovat</string>
   <string name="share">Sdílet</string>
-  <string name="define">Definovat</string>
+  <string name="define">Definice</string>
   <string name="translate">Přeložit</string>
   <string name="open_in_lingvo">Otevřít článek ve slovníku Lingvo</string>
   <string name="did_you_mean">Měli jste na mysli</string>
@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Aplikace může spustit proces synchronizace aplikace FBReader</string>
   <string name="permission_sync_label">Synchronizační rozhraní aplikace FBReader</string>
   <string name="page">strana</string>
-  <string name="d_ago">Před %d d</string>
+  <string name="d_ago">Před %dd</string>
   <string name="buy_book">KOUPIT</string>
   <string name="download_book">STÁHNOUT</string>
   <string name="read_book">ČÍST</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Litujeme, definice je k dispozici pouze pro anglická slova</string>
   <string name="select_only_one_word">Vyberte pouze jedno slovo</string>
   <string name="bookmark">Záložka</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Zpět</string>
+  <string name="contents">Obsah</string>
+  <string name="bookmarks">Záložky</string>
 </resources>

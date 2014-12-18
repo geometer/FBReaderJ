@@ -11,7 +11,7 @@
   <string name="yota_book_cat_tille">Categorie</string>
   <string name="yota_book_publisher_tille">Editură</string>
   <string name="yota_book_seller_tille">Distribuitor</string>
-  <string name="yota_book_published_tille">Publicat</string>
+  <string name="yota_book_published_tille">Publicat pe</string>
   <string name="highlight">Subliniere</string>
   <string name="copy">Copiere</string>
   <string name="share">Partajare</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Din păcate, definiţiile sunt disponibile numai pentru cuvinte în engleză</string>
   <string name="select_only_one_word">Selectaţi un singur cuvânt</string>
   <string name="bookmark">Marcaj</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Înapoi</string>
+  <string name="contents">Cuprins</string>
+  <string name="bookmarks">Marcaje</string>
 </resources>

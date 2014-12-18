@@ -42,7 +42,7 @@
   <string name="only_english">Съжаляваме, дефинициите са само за думи на английски език</string>
   <string name="select_only_one_word">Изберете само една дума</string>
   <string name="bookmark">Маркер</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Назад</string>
+  <string name="contents">Съдържание</string>
+  <string name="bookmarks">Маркери</string>
 </resources>

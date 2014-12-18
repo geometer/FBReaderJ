@@ -11,7 +11,7 @@
   <string name="yota_book_cat_tille">Kategori</string>
   <string name="yota_book_publisher_tille">Yayıncı</string>
   <string name="yota_book_seller_tille">Satıcı</string>
-  <string name="yota_book_published_tille">Yayınlandı</string>
+  <string name="yota_book_published_tille">Yayın Tarihi</string>
   <string name="highlight">Vurgula</string>
   <string name="copy">Kopyala</string>
   <string name="share">Paylaş</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Üzgünüz, tanım sadece İngilizce sözcükler için mevcut</string>
   <string name="select_only_one_word">Lütfen yalnızca bir sözcük seçin</string>
   <string name="bookmark">Yer İmi</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Geri</string>
+  <string name="contents">İçindekiler</string>
+  <string name="bookmarks">Yer İmleri</string>
 </resources>

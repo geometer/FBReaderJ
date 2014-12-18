@@ -3,7 +3,7 @@
 <resources>
   <string name="of">no</string>
   <string name="pages_left">lappušu atlicis</string>
-  <string name="back_to_page">Atpakaļ uz lappusi</string>
+  <string name="back_to_page">Atpakaļ uz lappusi:</string>
   <string name="yota_book_description">Apraksts</string>
   <string name="yota_add_to_collection">PIEVIENOT</string>
   <string name="yota_book_details">Dati</string>
@@ -40,9 +40,9 @@
   <string name="network_library">Tīkla bibliotēka</string>
   <string name="no_dictionaries">Instalējiet programmai ABBYY Lingvo vismaz vienu vārdnīcu</string>
   <string name="only_english">Diemžēl definīcijas ir pieejamas tikai angļu valodas vārdiem</string>
-  <string name="select_only_one_word">Atlasiet vienu vārdu</string>
+  <string name="select_only_one_word">Atlasiet tikai vienu vārdu</string>
   <string name="bookmark">Grāmatzīme</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Atpakaļ</string>
+  <string name="contents">Saturs</string>
+  <string name="bookmarks">Grāmatzīmes</string>
 </resources>

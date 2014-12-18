@@ -18,8 +18,8 @@
   <string name="define">Määritä</string>
   <string name="translate">Käännä</string>
   <string name="open_in_lingvo">Avaa artikkeli Lingvossa</string>
-  <string name="did_you_mean">Tarkoititko</string>
-  <string name="lingvo_error">Lingvossa ilmeni virhe. Yritä uudelleen.</string>
+  <string name="did_you_mean">Tarkoititko:</string>
+  <string name="lingvo_error">Lingvossa tapahtui virhe. Yritä uudelleen.</string>
   <string name="nothing_to_translate">Valitse käännettävä sana</string>
   <string name="nothing_was_found">Ei löytynyt mitään</string>
   <string name="unknown_error">Ilmeni tuntematon virhe</string>
@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Sovellus voi käynnistää FBReader-synkronoinnin</string>
   <string name="permission_sync_label">FBReader sync interface</string>
   <string name="page">sivu</string>
-  <string name="d_ago">%d pv sitten</string>
+  <string name="d_ago">%dpv sitten</string>
   <string name="buy_book">OSTA</string>
   <string name="download_book">LATAA</string>
   <string name="read_book">LUE</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Valitettavasti määritelmä on saatavana vain englanninkielisille sanoille</string>
   <string name="select_only_one_word">Valitse vain yksi sana</string>
   <string name="bookmark">Kirjanmerkki</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Takaisin</string>
+  <string name="contents">Sisältö</string>
+  <string name="bookmarks">Kirjanmerkit</string>
 </resources>

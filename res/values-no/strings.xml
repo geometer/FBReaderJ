@@ -42,7 +42,7 @@
   <string name="only_english">Beklager, definisjoner er bare tilgjengelige for engelske ord</string>
   <string name="select_only_one_word">Velg bare ett ord</string>
   <string name="bookmark">Bokmerke</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Tilbake</string>
+  <string name="contents">Innhold</string>
+  <string name="bookmarks">Bokmerker</string>
 </resources>

@@ -42,7 +42,7 @@
   <string name="only_english">Der er desværre kun definitioner til engelske ord</string>
   <string name="select_only_one_word">Vælg kun ét ord</string>
   <string name="bookmark">Bogmærke</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Tilbage</string>
+  <string name="contents">Indhold</string>
+  <string name="bookmarks">Bogmærker</string>
 </resources>

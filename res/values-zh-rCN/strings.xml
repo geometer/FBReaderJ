@@ -42,7 +42,7 @@
   <string name="only_english">抱歉，目前仅提供英文单词定义</string>
   <string name="select_only_one_word">请只选择一个单词</string>
   <string name="bookmark">书签</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">返回</string>
+  <string name="contents">目录</string>
+  <string name="bookmarks">书签</string>
 </resources>

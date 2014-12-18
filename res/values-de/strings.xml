@@ -9,12 +9,12 @@
   <string name="yota_book_details">Wählhilfe</string>
   <string name="yota_book_language_tille">Sprache</string>
   <string name="yota_book_cat_tille">Kategorie</string>
-  <string name="yota_book_publisher_tille">Herausgeber</string>
+  <string name="yota_book_publisher_tille">Verlag</string>
   <string name="yota_book_seller_tille">Verkäufer</string>
-  <string name="yota_book_published_tille">Herausgegeben</string>
+  <string name="yota_book_published_tille">Veröffentlicht</string>
   <string name="highlight">Hervorheben</string>
   <string name="copy">Kopieren</string>
-  <string name="share">Weitergeben</string>
+  <string name="share">Teilen</string>
   <string name="define">Definieren</string>
   <string name="translate">Übersetzen</string>
   <string name="open_in_lingvo">Artikel in Lingvo öffnen</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Definition ist leider nur für englische Wörter verfügbar.</string>
   <string name="select_only_one_word">Wählen Sie genau ein Wort aus.</string>
   <string name="bookmark">Lesezeichen</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Zurück</string>
+  <string name="contents">Inhalt</string>
+  <string name="bookmarks">Lesezeichen</string>
 </resources>

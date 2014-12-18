@@ -33,7 +33,7 @@
   <string name="permission_sync_description">Ta aplikacja może uruchamiać proces synchronizacji FBReader</string>
   <string name="permission_sync_label">Interfejs synchronizacji FBReader</string>
   <string name="page">strona</string>
-  <string name="d_ago">%d dn. temu</string>
+  <string name="d_ago">%ddn. temu</string>
   <string name="buy_book">KUP</string>
   <string name="download_book">POBIERZ</string>
   <string name="read_book">PRZECZYTAJ</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Definicja jest dostępna tylko dla słów w języku angielskim</string>
   <string name="select_only_one_word">Wybierz tylko jedno słowo</string>
   <string name="bookmark">Zakładka</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Wróć</string>
+  <string name="contents">Treści</string>
+  <string name="bookmarks">Zakładki</string>
 </resources>

@@ -11,7 +11,7 @@
   <string name="yota_book_cat_tille">श्रेणी</string>
   <string name="yota_book_publisher_tille">प्रकाशक</string>
   <string name="yota_book_seller_tille">विक्रेता</string>
-  <string name="yota_book_published_tille">प्रकाशित</string>
+  <string name="yota_book_published_tille">प्रकाशन तिथि</string>
   <string name="highlight">हाइलाइट</string>
   <string name="copy">कॉपी करें</string>
   <string name="share">शेयर करें</string>
@@ -27,11 +27,11 @@
   <string name="nothing_to_define">अनुवाद करने के लिए एक शब्द चुनें</string>
   <string name="no_connection">इंटरनेट कनेक्शन उपलब्ध नहीं है</string>
   <string name="permission_library_description">यह एप्लिकेशन FBReader लाइब्रेरी पढ़ और बदल सकता है</string>
-  <string name="permission_library_label">FBReader library interface</string>
+  <string name="permission_library_label">FBReader लाइब्रेरी इंटरफ़ेस</string>
   <string name="permission_config_description">यह एप्लिकेशन FBReader सेटिंग पढ़ और बदल सकता है</string>
-  <string name="permission_config_label">FBReader config interface</string>
-  <string name="permission_sync_description">यह एप्लिकेशन FBReader सिंक्रनाइज़ेशन प्रक्रिया शुरू कर सकता है</string>
-  <string name="permission_sync_label">FBReader sync interface</string>
+  <string name="permission_config_label">FBReader कॉन्फ़िगरेशन इंटरफ़ेस</string>
+  <string name="permission_sync_description">यह एप्लिकेशन FBReader की सिंक्रनाइज़ेशन प्रक्रिया शुरू कर सकता है</string>
+  <string name="permission_sync_label">FBReader सिंक इंटरफ़ेस</string>
   <string name="page">पृष्ठ</string>
   <string name="d_ago">%dदिन पहले</string>
   <string name="buy_book">खरीदें</string>
@@ -40,9 +40,9 @@
   <string name="network_library">नेटवर्क लाइब्रेरी</string>
   <string name="no_dictionaries">ABBYY Lingvo में कम-से-कम एक शब्दकोश इंस्टॉल करें</string>
   <string name="only_english">क्षमा करें, केवल अंग्रेज़ी शब्दों की परिभाषा उपलब्ध है</string>
-  <string name="select_only_one_word">कृपया कोई एक शब्द चुनें</string>
+  <string name="select_only_one_word">कृपया केवल एक शब्द चुनें</string>
   <string name="bookmark">बुकमार्क</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">पीछे</string>
+  <string name="contents">सामग्री</string>
+  <string name="bookmarks">बुकमार्क्स</string>
 </resources>

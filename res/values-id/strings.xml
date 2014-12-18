@@ -5,7 +5,7 @@
   <string name="pages_left">halaman tersisa</string>
   <string name="back_to_page">Kembali ke halaman</string>
   <string name="yota_book_description">Deskripsi</string>
-  <string name="yota_add_to_collection">TAMBAHKAN</string>
+  <string name="yota_add_to_collection">TAMBAH</string>
   <string name="yota_book_details">Rincian</string>
   <string name="yota_book_language_tille">Bahasa</string>
   <string name="yota_book_cat_tille">Kategori</string>
@@ -28,9 +28,9 @@
   <string name="no_connection">Tidak ada sambungan Internet</string>
   <string name="permission_library_description">Aplikasi dapat membaca dan mengubah pustaka FBReader</string>
   <string name="permission_library_label">Antarmuka pustaka FBReader</string>
-  <string name="permission_config_description">Aplikasi dapat membaca dan mengubah pengaturan FBReader</string>
+  <string name="permission_config_description">Aplikasi ini dapat membaca dan mengubah pengaturan FBReader</string>
   <string name="permission_config_label">Antarmuka konfigurasi FBReader</string>
-  <string name="permission_sync_description">Aplikasi dapat memulai proses sinkronisasi FBReader</string>
+  <string name="permission_sync_description">Aplikasi ini dapat memulai proses sinkronisasi FBReader</string>
   <string name="permission_sync_label">Antarmuka sinkronisasi FBReader</string>
   <string name="page">halaman</string>
   <string name="d_ago">%dh yang lalu</string>
@@ -39,10 +39,10 @@
   <string name="read_book">BACA</string>
   <string name="network_library">Pustaka jaringan</string>
   <string name="no_dictionaries">Instal minimal satu kamus di ABBYY Lingvo</string>
-  <string name="only_english">Maaf, definisi hanya tersedia untuk kata berbahasa Inggris</string>
+  <string name="only_english">Maaf, definisi hanya tersedia untuk kata bahasa Inggris</string>
   <string name="select_only_one_word">Pilih hanya satu kata</string>
   <string name="bookmark">Penanda</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Kembali</string>
+  <string name="contents">Konten</string>
+  <string name="bookmarks">Penanda</string>
 </resources>

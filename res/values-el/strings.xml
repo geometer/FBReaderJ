@@ -22,7 +22,7 @@
   <string name="lingvo_error">Σημειώθηκε σφάλμα στο Lingvo. Δοκιμάστε ξανά.</string>
   <string name="nothing_to_translate">Επιλέξτε μια λέξη προς μετάφραση</string>
   <string name="nothing_was_found">Δεν βρέθηκε αποτέλεσμα</string>
-  <string name="unknown_error">Σημειώθηκε άγνωστο σφάλμα</string>
+  <string name="unknown_error">Παρουσιάστηκε άγνωστο σφάλμα</string>
   <string name="incorrect_request">Εσφαλμένο αίτημα</string>
   <string name="nothing_to_define">Επιλέξτε μια λέξη προς μετάφραση</string>
   <string name="no_connection">Δεν υπάρχει σύνδεση στο Internet</string>
@@ -42,7 +42,7 @@
   <string name="only_english">Δυστυχώς, ο ορισμός είναι διαθέσιμος μόνο για Αγγλικές λέξεις</string>
   <string name="select_only_one_word">Επιλέξτε μία μόνο λέξη</string>
   <string name="bookmark">Σελιδοδείκτης</string>
-  <string name="back">Back</string>
-  <string name="contents">Contents</string>
-  <string name="bookmarks">Bookmarks</string>
+  <string name="back">Πίσω</string>
+  <string name="contents">Περιεχόμενα</string>
+  <string name="bookmarks">Σελιδοδείκτες</string>
 </resources>
