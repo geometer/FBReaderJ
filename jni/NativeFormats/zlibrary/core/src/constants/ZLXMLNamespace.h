@@ -44,6 +44,7 @@ public:
 	static const std::string XMLEncryption;
 	static const std::string XMLDigitalSignature;
 	static const std::string EpubContainer;
+	static const std::string FBReaderXhtml;
 };
 
 #endif /* __ZLXMLNAMESPACE_H__ */

@@ -22,6 +22,7 @@
 
 #include <vector>
 #include <list>
+#include <map>
 #include <stack>
 #include <string>
 
@@ -73,6 +74,7 @@ public:
 	void addImage(const std::string &id, shared_ptr<const ZLImage> image);
 
 	void addVideoEntry(const ZLVideoEntry &entry);
+	void addFBReaderSpecialEntry(const std::string &action, const std::map<std::string,std::string> &data);
 
 	void beginContentsParagraph(int referenceNumber = -1);
 	void endContentsParagraph();
