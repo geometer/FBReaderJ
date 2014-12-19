@@ -21,8 +21,7 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.io.InputStream;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.*;
 
@@ -31,9 +30,21 @@ import org.geometerplus.fbreader.network.opds.*;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 class BookHolder {
+	private static Map<Map<String,String>,BookHolder> ourCache =
+		new HashMap<Map<String,String>,BookHolder>();
+
+	static BookHolder get(Map<String,String> data) {
+		BookHolder holder = ourCache.get(data);
+		if (holder == null) {
+			holder = new BookHolder(data.get("src"), Integer.valueOf(data.get("size")));
+			ourCache.put(data, holder);
+		}
+		return holder;
+	}
+
 	final List<BookElement> Elements = new LinkedList<BookElement>();
 
-	BookHolder(String url, int count) {
+	private BookHolder(String url, int count) {
 		startLoading(url);
 		for (int i = 0; i < count; ++i) {
 			Elements.add(new BookElement());

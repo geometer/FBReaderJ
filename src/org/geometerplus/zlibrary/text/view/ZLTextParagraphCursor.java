@@ -28,8 +28,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.model.*;
 
 public final class ZLTextParagraphCursor {
-	private static BookHolder HOLDER;
-
 	private static final class Processor {
 		private final ZLTextParagraphCursor myCursor;
 		private final ZLTextParagraph myParagraph;
@@ -115,11 +113,7 @@ public final class ZLTextParagraphCursor {
 						final FBReaderSpecialEntry entry = it.getFBReaderSpecialEntry();
 						if ("opds".equals(entry.Type)) {
 							try {
-								final String src = entry.Data.get("src");
-								final int count = Integer.valueOf(entry.Data.get("size"));
-								final BookHolder holder = HOLDER != null ? HOLDER : new BookHolder(src, count);
-								HOLDER = holder;
-								elements.addAll(holder.Elements);
+								elements.addAll(BookHolder.get(entry.Data).Elements);
 							} catch (Exception e) {
 								// ignore
 							}
