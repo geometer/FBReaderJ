@@ -385,6 +385,36 @@ void ZLTextModel::addVideoEntry(const ZLVideoEntry &entry) {
 	++myParagraphLengths.back();
 }
 
+void ZLTextModel::addFBReaderSpecialEntry(const std::string &action, const std::map<std::string,std::string> &data) {
+	std::size_t fullLength = 2;                                      // entry type + map size
+	fullLength += 2 + ZLUnicodeUtil::utf8Length(action) * 2;         // action name
+	for (std::map<std::string,std::string>::const_iterator it = data.begin(); it != data.end(); ++it) {
+		fullLength += 2 + ZLUnicodeUtil::utf8Length(it->first) * 2;    // data key
+		fullLength += 2 + ZLUnicodeUtil::utf8Length(it->second) * 2;   // data value
+	}
+
+	myLastEntryStart = myAllocator->allocate(fullLength);
+	*myLastEntryStart = ZLTextParagraphEntry::FBREADER_SPECIAL;
+	*(myLastEntryStart + 1) = data.size();
+
+	char *p = myLastEntryStart + 2;
+	ZLUnicodeUtil::Ucs2String ucs2action;
+	ZLUnicodeUtil::utf8ToUcs2(ucs2action, action);
+	p = ZLCachedMemoryAllocator::writeString(p, ucs2action);
+
+	for (std::map<std::string,std::string>::const_iterator it = data.begin(); it != data.end(); ++it) {
+		ZLUnicodeUtil::Ucs2String key;
+		ZLUnicodeUtil::utf8ToUcs2(key, it->first);
+		p = ZLCachedMemoryAllocator::writeString(p, key);
+		ZLUnicodeUtil::Ucs2String value;
+		ZLUnicodeUtil::utf8ToUcs2(value, it->second);
+		p = ZLCachedMemoryAllocator::writeString(p, value);
+	}
+
+	myParagraphs.back()->addEntry(myLastEntryStart);
+	++myParagraphLengths.back();
+}
+
 void ZLTextModel::flush() {
 	myAllocator->flush();
 }
