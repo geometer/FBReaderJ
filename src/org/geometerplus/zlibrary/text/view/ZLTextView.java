@@ -66,6 +66,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private final Set<ZLTextHighlighting> myHighlightings =
 		Collections.synchronizedSet(new TreeSet<ZLTextHighlighting>());
 
+	private final ZLTextParagraphCursorCache myCursorCache = new ZLTextParagraphCursorCache();
+
 	public ZLTextView(ZLApplication application) {
 		super(application);
 	}
@@ -1881,7 +1883,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private final ZLTextParagraphCursorCache myCursorCache = new ZLTextParagraphCursorCache();
 	ZLTextParagraphCursor cursor(int index) {
 		ZLTextParagraphCursor result = myCursorCache.get(myModel, index);
 		if (result == null) {
