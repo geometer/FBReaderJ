@@ -55,7 +55,15 @@
 		<echo message="DONE (Checking if native libraries are up-to-date)"/>
 	</target>
 
-	<target name="-pre-build" depends="init, native">
+	<target name="genhelp">
+		<exec executable="./help/generate.py">
+			<arg value="help/proto"/>
+			<arg value="help/html"/>
+			<arg value="assets/data/intro"/>
+		</exec>
+	</target>
+
+	<target name="-pre-build" depends="init, native, genhelp">
 	</target>
 <!--
 	<target name="-pre-compile">
@@ -69,6 +77,7 @@
 		<delete dir="gen" />
 		<delete dir="bin" />
 		<delete dir="out" />
+		<delete dir="assets/data/intro" />
 		<echo message="DONE (Deleting temporary files)" />
 	</target>
 
