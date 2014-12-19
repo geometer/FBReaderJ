@@ -163,7 +163,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 		if (!isNull() && (paragraphIndex != myParagraphCursor.Index)) {
 			final ZLTextModel model = myParagraphCursor.Model;
 			paragraphIndex = Math.max(0, Math.min(paragraphIndex, model.getParagraphsNumber() - 1));
-			myParagraphCursor = ZLTextParagraphCursor.cursor(model, paragraphIndex);
+			myParagraphCursor = myParagraphCursor.View.cursor(paragraphIndex);
 			moveToParagraphStart();
 		}
 	}
