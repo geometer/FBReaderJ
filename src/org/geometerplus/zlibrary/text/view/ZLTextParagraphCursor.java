@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
+
 import org.vimgadgets.linebreak.LineBreaker;
 
 import org.geometerplus.zlibrary.core.image.*;
@@ -27,6 +28,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.model.*;
 
 public final class ZLTextParagraphCursor {
+	private static BookHolder HOLDER;
+
 	private static final class Processor {
 		private final ZLTextParagraphCursor myCursor;
 		private final ZLTextParagraph myParagraph;
@@ -111,12 +114,15 @@ public final class ZLTextParagraphCursor {
 					{
 						final FBReaderSpecialEntry entry = it.getFBReaderSpecialEntry();
 						if ("opds".equals(entry.Type)) {
-							System.err.println("OPDS DATA = " + entry.Data);
-							elements.add(new BookElement(null, null));
-							elements.add(new BookElement(null, null));
-							elements.add(new BookElement(null, null));
-							elements.add(new BookElement(null, null));
-							elements.add(new BookElement(null, null));
+							try {
+								final String src = entry.Data.get("src");
+								final int count = Integer.valueOf(entry.Data.get("size"));
+								final BookHolder holder = HOLDER != null ? HOLDER : new BookHolder(src, count);
+								HOLDER = holder;
+								elements.addAll(holder.Elements);
+							} catch (Exception e) {
+								// ignore
+							}
 						}
 						break;
 					}

@@ -19,12 +19,25 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-public final class BookElement extends ZLTextElement {
-	public final String BookUrl;
-	public final String CoverUrl;
+import org.geometerplus.zlibrary.core.image.ZLImageData;
+import org.geometerplus.zlibrary.core.image.ZLImageManager;
 
-	BookElement(String bookUrl, String coverUrl) {
-		BookUrl = bookUrl;
-		CoverUrl = coverUrl;
+import org.geometerplus.fbreader.network.NetworkImage;
+
+final class BookElement extends ZLTextElement {
+	private NetworkImage myThumbnail;
+
+	void setData(String bookUrl, NetworkImage thumbnail) {
+		myThumbnail = thumbnail;
+	}
+
+	void setFailed() {
+	}
+
+	ZLImageData getImageData() {
+		if (myThumbnail == null) {
+			return null;
+		}
+		return ZLImageManager.Instance().getImageData(myThumbnail);
 	}
 }
