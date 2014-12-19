@@ -169,7 +169,10 @@ public class BSNotification implements Parcelable {
             }
             contentText = getCharSequence(b, Notification.EXTRA_TEXT);
             if (contentText == null) {
-                contentText = getCharSequence(b, Notification.EXTRA_SUB_TEXT);
+                CharSequence[] extraLines = b.getCharSequenceArray(Notification.EXTRA_TEXT_LINES);
+                if (extraLines != null && extraLines.length > 0) {
+                    contentText = extraLines[0].toString(); // top
+                }
             }
 
             smallIcon = b.getInt(Notification.EXTRA_SMALL_ICON);

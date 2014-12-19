@@ -3,11 +3,14 @@ package com.yotadevices.sdk.utils;
 import com.yotadevices.sdk.Drawer;
 import com.yotadevices.sdk.Drawer.Waveform;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RemoteViews;
 
 /*
@@ -140,23 +143,13 @@ public class EinkUtils {
         performSingleUpdate(view, waveform, Drawer.Dithering.DITHER_DEFAULT);
     }
 
-    public static void performSingleUpdate(final View view, final Drawer.Waveform waveform, final Drawer.Dithering dithering) {
-        performSingleUpdate(view, waveform, dithering, 200);
-    }
-
     // update with delay
     public static void performSingleUpdate(final View view, final Drawer.Waveform waveform, final Drawer.Dithering dithering, final int delay) {
         if (view != null) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    final Drawer.Waveform previousWaveform = getViewWaveform(view);
-                    final Drawer.Dithering previousDithering = getViewDithering(view);
-                    setViewWaveform(view, waveform);
-                    setViewDithering(view, dithering);
-                    view.invalidate();
-                    setViewWaveform(view, previousWaveform);
-                    setViewDithering(view, previousDithering);
+                    performSingleUpdate(view, waveform, dithering);
                 }
             }, delay);
 
@@ -177,4 +170,20 @@ public class EinkUtils {
         FrameworkUtils.performSingleUpdate(context, waveform);
     }
 
+    public static void performSingleUpdate(final View view, final Drawer.Waveform waveform, final Drawer.Dithering dithering) {
+        com.yotadevices.yotaphone2.sdk.EpdUtils.performSingleUpdate(view, waveform.ordinal(), dithering.ordinal());
+    }
+
+    public static void addViewEpd(WindowManager wm, View view, ViewGroup.LayoutParams lp, Drawer.Waveform waveform, Drawer.Dithering dithering) {
+        com.yotadevices.yotaphone2.sdk.EpdUtils.addViewEpd(wm, view, lp, waveform.ordinal(), dithering.ordinal());
+    }
+
+    public static void removeViewEpd(WindowManager wm, View view) {
+        com.yotadevices.yotaphone2.sdk.EpdUtils.removeViewWithoutUpdate(wm, view);
+    }
+
+    public static void setVisibilityWithoutUpdate(View view, int visibility) {
+        com.yotadevices.yotaphone2.sdk.EpdUtils.setVisibilityWithoutUpdate(view, visibility);
+
+    }
 }

@@ -14,7 +14,8 @@ public class YotaUpdateWidgetAction extends FBAndroidContextAction {
 
     @Override
     protected void run(Object... params) {
-        Intent i = new Intent(YOTA_WIDGET_UPDATE_ACTION);
-        mContext.sendBroadcast(i);
+	    //temporary disabled
+        //Intent i = new Intent(YOTA_WIDGET_UPDATE_ACTION);
+        //mContext.sendBroadcast(i);
     }
 }

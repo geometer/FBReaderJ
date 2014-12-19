@@ -17,4 +17,6 @@ interface IFrameworkService {
     boolean isLockScreenDisabled();
     
     void performSingleUpdate(in int waveform);
+
+    ComponentName getTopBSActivity();
 }

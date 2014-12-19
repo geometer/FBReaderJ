@@ -5,6 +5,6 @@
   <string name="application_is_updated_on_bs" comment="Please split the string in more lines if it is longer then 35 symbols">應用程式已在全時開啟\n螢幕上更新</string>
   <string name="loading_data">正在載入資料...</string>
   <string name="flip_popup_default_title">請翻轉手機</string>
-  <string name="flip_popup_default_description">Application is active\non the colour display</string>
+  <string name="flip_popup_default_description">應用程式已轉到\n彩色螢幕上顯示</string>
   <string name="d_ago">%d 天前</string>
 </resources>

@@ -15,7 +15,7 @@ public class YotaUpdateBackScreen extends FBAndroidContextAction {
 
 	@Override
 	protected void run(Object... params) {
-		int countLimit = Reader.ViewOptions.YotaBSColorProfileName.getValue().equals(ColorProfile.YOTA_BS_WHITE) ? 10 : 3;
+		int countLimit = Reader.ViewOptions.YotaBSColorProfileName.getValue().equals(ColorProfile.YOTA_BS_WHITE) ? 5 : 3;
 		if (++mUpdateCount >= countLimit) {
 			mUpdateCount = 0;
 			((FBReaderYotaService)mContext).performSingleFullUpdate();

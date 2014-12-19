@@ -243,7 +243,7 @@ public class RotationAlgorithm implements SensorEventListener {
         mGyroscopeArray = new LinkedList<SensorAttributes>();
         p2bClickedTime = System.currentTimeMillis();
 
-        FrameworkUtils.isLockScreenDisabled(mContext, new IPlatinumCallback() {
+        FrameworkUtils.isLockScreenDisabled(mContext, new ILockCallback() {
 
             @Override
             public void onLockScreenDisabled(boolean isLockScreenDisabled) {

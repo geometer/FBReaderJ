@@ -185,7 +185,7 @@ public class BSActivity extends Service {
      * @hide
      */
     @Override
-    public final void onTaskRemoved(Intent rootIntent) {
+    public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
         performFnishWithRequest(false);
         doUnbindService();
@@ -260,7 +260,7 @@ public class BSActivity extends Service {
         parceInstance(instance);
 
         checkBSActivityRunning();
-        mDrawer.showBlankView();// TODO:
+        //mDrawer.showBlankView();// TODO:
         mCalled = false;
         onBSCreate();
         if (!mCalled) {

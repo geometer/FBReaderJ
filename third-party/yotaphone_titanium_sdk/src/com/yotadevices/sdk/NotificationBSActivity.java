@@ -79,7 +79,6 @@ public class NotificationBSActivity extends BSActivity {
                 finish();
             }
         });
-        EinkUtils.setViewWaveform(mMainLayout, Drawer.Waveform.WAVEFORM_GC_PARTIAL);
     }
 
     protected void setOnOKClickListener(View.OnClickListener l) {
