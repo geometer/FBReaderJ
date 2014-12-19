@@ -29,4 +29,21 @@ public class FBReaderSpecialEntry {
 		Type = type;
 		Data = data;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+		if (!(other instanceof FBReaderSpecialEntry)) {
+			return false;
+		}
+		final FBReaderSpecialEntry entry = (FBReaderSpecialEntry)other;
+		return Type.equals(entry.Type) && Data.equals(entry.Data);
+	}
+
+	@Override
+	public int hashCode() {
+		return Type.hashCode() + 23 * Data.hashCode();
+	}
 }
