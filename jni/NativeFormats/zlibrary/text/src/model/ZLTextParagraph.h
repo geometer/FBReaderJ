@@ -48,6 +48,7 @@ public:
 		RESET_BIDI_ENTRY = 9,
 		AUDIO_ENTRY = 10,
 		VIDEO_ENTRY = 11,
+		FBREADER_SPECIAL = 12,
 	};
 
 protected:
@@ -153,6 +154,18 @@ private:
 	ResetBidiEntry();
 };
 
+class FBReaderSpecialEntry : public ZLTextParagraphEntry {
+
+public:
+	~FBReaderSpecialEntry();
+	const std::string &action() const;
+	const std::string &data() const;
+
+private:
+	std::string myAction;
+	std::string myData;
+};
+
 class ZLTextParagraph {
 
 public:
@@ -255,6 +268,10 @@ inline const std::string &ImageEntry::id() const { return myId; }
 inline short ImageEntry::vOffset() const { return myVOffset; }
 
 inline ResetBidiEntry::ResetBidiEntry() {}
+
+inline FBReaderSpecialEntry::~FBReaderSpecialEntry() {}
+inline const std::string &FBReaderSpecialEntry::action() const { return myAction; }
+inline const std::string &FBReaderSpecialEntry::data() const { return myData; }
 
 inline ZLTextParagraph::ZLTextParagraph() : myEntryNumber(0) {}
 inline ZLTextParagraph::~ZLTextParagraph() {}

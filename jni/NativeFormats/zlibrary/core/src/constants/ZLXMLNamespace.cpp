@@ -35,3 +35,4 @@ const std::string ZLXMLNamespace::MarlinEpub = "http://marlin-drm.com/epub";
 const std::string ZLXMLNamespace::XMLEncryption = "http://www.w3.org/2001/04/xmlenc#";
 const std::string ZLXMLNamespace::XMLDigitalSignature = "http://www.w3.org/2000/09/xmldsig#";
 const std::string ZLXMLNamespace::EpubContainer = "urn:oasis:names:tc:opendocument:xmlns:container";
+const std::string ZLXMLNamespace::FBReaderXhtml = "http://data.fbreader.org/xhtml-extension/";

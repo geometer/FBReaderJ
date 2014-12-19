@@ -247,6 +247,12 @@ void BookReader::addVideoEntry(const ZLVideoEntry &entry) {
 	}
 }
 
+void BookReader::addFBReaderSpecialEntry(const std::string &action, const std::map<std::string,std::string> &data) {
+	if (myCurrentTextModel != 0) {
+		myCurrentTextModel->addFBReaderSpecialEntry(action, data);
+	}
+}
+
 void BookReader::insertEndParagraph(ZLTextParagraph::Kind kind) {
 	if (myCurrentTextModel != 0 && mySectionContainsRegularContents) {
 		std::size_t size = myCurrentTextModel->paragraphsNumber();

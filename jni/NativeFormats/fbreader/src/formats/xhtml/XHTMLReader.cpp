@@ -230,6 +230,13 @@ public:
 	void doAtEnd(XHTMLReader &reader);
 };
 
+class XHTMLTagOpdsAction : public XHTMLTextModeTagAction {
+
+public:
+	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
+	void doAtEnd(XHTMLReader &reader);
+};
+
 void XHTMLTagStyleAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
 	static const std::string TYPE = "text/css";
 
@@ -535,6 +542,13 @@ void XHTMLTagPreAction::doAtEnd(XHTMLReader &reader) {
 	reader.myPreformatted = false;
 }
 
+void XHTMLTagOpdsAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
+	bookReader(reader).addFBReaderSpecialEntry("opds", reader.attributeMap(xmlattributes));
+}
+
+void XHTMLTagOpdsAction::doAtEnd(XHTMLReader &reader) {
+}
+
 XHTMLTagAction *XHTMLReader::addAction(const std::string &tag, XHTMLTagAction *action) {
 	XHTMLTagAction *old = ourTagActions[tag];
 	ourTagActions[tag] = action;
@@ -611,6 +625,8 @@ void XHTMLReader::fillTagTable() {
 		addAction("image", new XHTMLTagImageAction(predicate));
 		addAction(ZLXMLNamespace::Svg, "svg", new XHTMLTagSvgAction(*predicate));
 		addAction(ZLXMLNamespace::Svg, "image", new XHTMLTagImageAction(predicate));
+
+		addAction(ZLXMLNamespace::FBReaderXhtml, "opds", new XHTMLTagOpdsAction());
 
 		//addAction("area", new XHTMLTagAction());
 		//addAction("map", new XHTMLTagAction());
