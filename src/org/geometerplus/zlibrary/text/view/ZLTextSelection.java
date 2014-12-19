@@ -196,8 +196,7 @@ class ZLTextSelection extends ZLTextHighlighting {
 		if (isEmpty()) {
 			return null;
 		}
-		final ZLTextParagraphCursor cursor =
-			ZLTextParagraphCursor.cursor(myView.getModel(), myRightMostRegionSoul.ParagraphIndex);
+		final ZLTextParagraphCursor cursor = myView.cursor(myRightMostRegionSoul.ParagraphIndex);
 		final ZLTextElement element = cursor.getElement(myRightMostRegionSoul.EndElementIndex);
 		return new ZLTextFixedPosition(
 			myRightMostRegionSoul.ParagraphIndex,
