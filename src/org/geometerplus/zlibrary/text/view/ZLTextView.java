@@ -23,6 +23,8 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImageData;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -938,18 +940,33 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					context.setFillColor(new ZLColor(196, 196, 196));
 					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
 				} else if (element instanceof BookElement) {
-					// TODO: draw
-					context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
-					context.setFillColor(new ZLColor(127, 127, 127));
-					final int xStart = area.XStart + 10;
-					final int xEnd = area.XEnd - 10;
-					final int yStart = area.YStart + 10;
-					final int yEnd = area.YEnd - 10;
-					context.fillRectangle(xStart, yStart, xEnd, yEnd);
-					context.drawLine(xStart, yStart, xStart, yEnd);
-					context.drawLine(xStart, yEnd, xEnd, yEnd);
-					context.drawLine(xEnd, yEnd, xEnd, yStart);
-					context.drawLine(xEnd, yStart, xStart, yStart);
+					final int vSpace = ZLibrary.Instance().getDisplayDPI() / 15;
+					final int hSpace = ZLibrary.Instance().getDisplayDPI() / 30;
+					final ZLImageData imageData = ((BookElement)element).getImageData();
+					if (imageData != null) {
+						context.drawImage(
+							area.XStart + hSpace, area.YEnd - vSpace,
+							imageData,
+							new ZLPaintContext.Size(
+								area.XEnd - area.XStart - 2 * hSpace + 1,
+								area.YEnd - area.YStart - 2 * vSpace + 1
+							),
+							ZLPaintContext.ScalingType.FitMaximum,
+							ZLPaintContext.ColorAdjustingMode.NONE
+						);
+					} else {
+						context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
+						context.setFillColor(new ZLColor(127, 127, 127));
+						final int xStart = area.XStart + hSpace;
+						final int xEnd = area.XEnd - hSpace;
+						final int yStart = area.YStart + vSpace;
+						final int yEnd = area.YEnd - vSpace;
+						context.fillRectangle(xStart, yStart, xEnd, yEnd);
+						context.drawLine(xStart, yStart, xStart, yEnd);
+						context.drawLine(xStart, yEnd, xEnd, yEnd);
+						context.drawLine(xEnd, yEnd, xEnd, yStart);
+						context.drawLine(xEnd, yStart, xStart, yStart);
+					}
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
 					/*
