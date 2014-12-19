@@ -200,7 +200,7 @@ abstract class ZLTextViewBase extends ZLView {
 		} else if (element instanceof ZLTextVideoElement) {
 			return Math.min(300, getTextColumnWidth());
 		} else if (element instanceof BookElement) {
-			return Math.min(ZLibrary.Instance().getDisplayDPI() * 3 / 4, getTextColumnWidth());
+			return Math.min(ZLibrary.Instance().getDisplayDPI() * 5 / 7, getTextColumnWidth());
 		} else if (element == ZLTextElement.Indent) {
 			return myTextStyle.getFirstLineIndent(metrics());
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
