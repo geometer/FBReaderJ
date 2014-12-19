@@ -110,10 +110,11 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(baseUrl, link.getHref());
 			final MimeType mime = MimeType.get(link.getType());
-			final String rel = networkLink.relation(link.getRel(), mime);
+			String rel = link.getRel();
+			if (networkLink != null) {
+				rel = networkLink.relation(rel, mime);
+			}
 			final UrlInfo.Type referenceType = typeByRelation(rel);
-			System.err.println("href = " + href);
-			System.err.println("rel = " + rel + "; referenceType = " + referenceType);
 			if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
 				urls.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href, mime));
 			} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || REL_COVER.equals(rel)) {

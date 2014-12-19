@@ -824,19 +824,19 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		myModelReader.addHyperlinkLabel(myReferenceAlias + HASH + id);
 	}
 
-	bool breakBefore = myStyleSheetTable.doBreakBefore(sTag, EMPTY);
+	ZLBoolean3 breakBefore = myStyleSheetTable.doBreakBefore(sTag, EMPTY);
 	tagData.PageBreakAfter = myStyleSheetTable.doBreakAfter(sTag, EMPTY);
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
-		// TODO: use 3-value logic (yes, no, inherit)
-		if (myStyleSheetTable.doBreakBefore(sTag, *it)) {
-			breakBefore = true;
+		const ZLBoolean3 bb = myStyleSheetTable.doBreakBefore(sTag, *it);
+		if (bb != B3_UNDEFINED) {
+			breakBefore = bb;
 		}
-		// TODO: use 3-value logic (yes, no, inherit)
-		if (myStyleSheetTable.doBreakAfter(sTag, *it)) {
-			tagData.PageBreakAfter = true;
+		const ZLBoolean3 ba = myStyleSheetTable.doBreakAfter(sTag, *it);
+		if (ba != B3_UNDEFINED) {
+			tagData.PageBreakAfter = ba;
 		}
 	}
-	if (breakBefore) {
+	if (breakBefore == B3_TRUE) {
 		myModelReader.insertEndOfSectionParagraph();
 	}
 
@@ -890,7 +890,7 @@ void XHTMLReader::endElementHandler(const char *tag) {
 		myModelReader.addStyleCloseEntry();
 	}
 
-	if (tagData.PageBreakAfter) {
+	if (tagData.PageBreakAfter == B3_TRUE) {
 		myModelReader.insertEndOfSectionParagraph();
 	} else if (tagData.DisplayCode == ZLTextStyleEntry::DC_BLOCK) {
 		restartParagraph(false);
@@ -1031,5 +1031,5 @@ const std::string &XHTMLReader::fileAlias(const std::string &fileName) const {
 	return it->second;
 }
 
-XHTMLReader::TagData::TagData() : PageBreakAfter(false), DisplayCode(ZLTextStyleEntry::DC_INLINE) {
+XHTMLReader::TagData::TagData() : PageBreakAfter(B3_UNDEFINED), DisplayCode(ZLTextStyleEntry::DC_INLINE) {
 }
