@@ -213,14 +213,14 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public final int Index;
-	public final ZLTextView View;
+	final ZLTextView View;
 	public final ZLTextModel Model;
 	private final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
 
 	ZLTextParagraphCursor(ZLTextView view, ZLTextModel model, int index) {
 		View = view;
 		Model = model;
-		Index = Math.min(index, Model.getParagraphsNumber() - 1);
+		Index = Math.min(index, model.getParagraphsNumber() - 1);
 		fill();
 	}
 
@@ -256,11 +256,11 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public boolean isLast() {
-		return (Index + 1 >= Model.getParagraphsNumber());
+		return Index + 1 >= Model.getParagraphsNumber();
 	}
 
 	public boolean isEndOfSection() {
-		return (Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
+		return Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH;
 	}
 
 	int getParagraphLength() {
