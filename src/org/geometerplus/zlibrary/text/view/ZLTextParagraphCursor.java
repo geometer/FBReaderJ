@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
+
 import org.vimgadgets.linebreak.LineBreaker;
 
 import org.geometerplus.zlibrary.core.image.*;
@@ -106,7 +107,12 @@ public final class ZLTextParagraphCursor {
 						elements.add(new ZLTextVideoElement(it.getVideoEntry().sources()));
 						break;
 					case ZLTextParagraph.Entry.FBREADER_SPECIAL:
+					{
+						final FBReaderSpecialEntry entry = it.getFBReaderSpecialEntry();
+						if ("opds".equals(entry.Type)) {
+						}
 						break;
+					}
 					case ZLTextParagraph.Entry.STYLE_CSS:
 					case ZLTextParagraph.Entry.STYLE_OTHER:
 						elements.add(new ZLTextStyleElement(it.getStyleEntry()));
