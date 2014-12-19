@@ -168,6 +168,20 @@ const char *ZLXMLReader::attributeValue(const char **xmlattributes, const char *
 	return 0;
 }
 
+std::map<std::string,std::string> ZLXMLReader::attributeMap(const char **xmlattributes) const {
+	std::map<std::string,std::string> map;
+	while (*xmlattributes != 0) {
+		std::string key = *xmlattributes;
+		++xmlattributes;
+		if (*xmlattributes == 0) {
+			break;
+		}
+		map[key] = *xmlattributes;
+		++xmlattributes;
+	}
+	return map;
+}
+
 ZLXMLReader::NamePredicate::~NamePredicate() {
 }
 

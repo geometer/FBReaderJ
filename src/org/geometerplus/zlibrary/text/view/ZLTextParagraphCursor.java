@@ -105,6 +105,8 @@ public final class ZLTextParagraphCursor {
 					case ZLTextParagraph.Entry.VIDEO:
 						elements.add(new ZLTextVideoElement(it.getVideoEntry().sources()));
 						break;
+					case ZLTextParagraph.Entry.FBREADER_SPECIAL:
+						break;
 					case ZLTextParagraph.Entry.STYLE_CSS:
 					case ZLTextParagraph.Entry.STYLE_OTHER:
 						elements.add(new ZLTextStyleElement(it.getStyleEntry()));
