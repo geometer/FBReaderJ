@@ -25,6 +25,7 @@
 #include <vector>
 #include <stack>
 
+#include <ZLBoolean3.h>
 #include <ZLXMLReader.h>
 #include <ZLVideoEntry.h>
 #include <FontMap.h>
@@ -70,7 +71,7 @@ public:
 	struct TagData {
 		std::vector<FBTextKind> TextKinds;
 		std::vector<shared_ptr<ZLTextStyleEntry> > StyleEntries;
-		bool PageBreakAfter;
+		ZLBoolean3 PageBreakAfter;
 		ZLTextStyleEntry::DisplayCode DisplayCode;
 		XHTMLTagInfoList Children;
 

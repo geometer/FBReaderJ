@@ -90,7 +90,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		final NetworkCatalogItem catalogItem = state.Loader.getTree().Item;
 		library.startLoading(catalogItem);
 		url = rewriteUrl(url, false);
-		return new ZLNetworkRequest.Get(url, false) {
+		return new ZLNetworkRequest.Get(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				if (state.Loader.confirmInterruption()) {
