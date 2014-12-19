@@ -206,22 +206,15 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public final int Index;
+	final ZLTextView View;
 	public final ZLTextModel Model;
 	private final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
 
-	private ZLTextParagraphCursor(ZLTextModel model, int index) {
+	ZLTextParagraphCursor(ZLTextView view, ZLTextModel model, int index) {
+		View = view;
 		Model = model;
-		Index = Math.min(index, Model.getParagraphsNumber() - 1);
+		Index = Math.min(index, model.getParagraphsNumber() - 1);
 		fill();
-	}
-
-	static ZLTextParagraphCursor cursor(ZLTextModel model, int index) {
-		ZLTextParagraphCursor result = ZLTextParagraphCursorCache.get(model, index);
-		if (result == null) {
-			result = new ZLTextParagraphCursor(model, index);
-			ZLTextParagraphCursorCache.put(model, index, result);
-		}
-		return result;
 	}
 
 	private static final char[] SPACE_ARRAY = { ' ' };
@@ -256,11 +249,11 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public boolean isLast() {
-		return (Index + 1 >= Model.getParagraphsNumber());
+		return Index + 1 >= Model.getParagraphsNumber();
 	}
 
 	public boolean isEndOfSection() {
-		return (Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
+		return Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH;
 	}
 
 	int getParagraphLength() {
@@ -268,11 +261,11 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public ZLTextParagraphCursor previous() {
-		return isFirst() ? null : cursor(Model, Index - 1);
+		return isFirst() ? null : View.cursor(Index - 1);
 	}
 
 	public ZLTextParagraphCursor next() {
-		return isLast() ? null : cursor(Model, Index + 1);
+		return isLast() ? null : View.cursor(Index + 1);
 	}
 
 	ZLTextElement getElement(int index) {
