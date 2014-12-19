@@ -70,6 +70,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		// VideoEntry
 		private ZLVideoEntry myVideoEntry;
 
+		// FBReaderSpecialEntry
+		private FBReaderSpecialEntry myFBReaderSpecialEntry;
+
 		// StyleEntry
 		private ZLTextStyleEntry myStyleEntry;
 
@@ -120,6 +123,10 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 
 		public ZLVideoEntry getVideoEntry() {
 			return myVideoEntry;
+		}
+
+		public FBReaderSpecialEntry getFBReaderSpecialEntry() {
+			return myFBReaderSpecialEntry;
 		}
 
 		public ZLTextStyleEntry getStyleEntry() {
@@ -263,6 +270,25 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 						dataOffset += len;
 						myVideoEntry.addSource(mime, src);
 					}
+					break;
+				}
+				case ZLTextParagraph.Entry.FBREADER_SPECIAL:
+				{
+					final short kindLength = (short)data[dataOffset++];
+					final String kind = new String(data, dataOffset, kindLength);
+					dataOffset += kindLength;
+
+					final Map<String,String> map = new HashMap<String,String>();
+					final short dataSize = (short)((first >> 8) & 0xFF);
+					for (short i = 0; i < dataSize; ++i) {
+						final short keyLength = (short)data[dataOffset++];
+						final String key = new String(data, dataOffset, keyLength);
+						dataOffset += keyLength;
+						final short valueLength = (short)data[dataOffset++];
+						map.put(key, new String(data, dataOffset, valueLength));
+						dataOffset += valueLength;
+					}
+					myFBReaderSpecialEntry = new FBReaderSpecialEntry(kind, map);
 					break;
 				}
 			}
