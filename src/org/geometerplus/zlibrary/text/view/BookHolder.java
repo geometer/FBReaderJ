@@ -25,9 +25,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.*;
 
-import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.opds.*;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 class BookHolder {
 	private static Map<Map<String,String>,BookHolder> ourCache =
@@ -65,16 +63,7 @@ class BookHolder {
 				if (items.size() > 0) {
 					int index = 0;
 					for (BookElement book : Elements) {
-						final OPDSBookItem i = items.get(index);
-						final String bookUrl = i.getUrl(UrlInfo.Type.Book);
-						final String thumbnailUrl = i.getUrl(UrlInfo.Type.Thumbnail);
-						if (bookUrl == null || thumbnailUrl == null) {
-							book.setFailed();
-						} else {
-							final NetworkImage thumbnail = new NetworkImage(thumbnailUrl);
-							thumbnail.synchronize();
-							book.setData(bookUrl, thumbnail);
-						}
+						book.setData(items.get(index));
 						index = (index + 1) % items.size();
 					}
 				} else {

@@ -23,21 +23,45 @@ import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.image.ZLImageManager;
 
 import org.geometerplus.fbreader.network.NetworkImage;
+import org.geometerplus.fbreader.network.opds.OPDSBookItem;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-final class BookElement extends ZLTextElement {
-	private NetworkImage myThumbnail;
+public final class BookElement extends ZLTextElement {
+	private OPDSBookItem myItem;
+	private NetworkImage myCover;
 
-	void setData(String bookUrl, NetworkImage thumbnail) {
-		myThumbnail = thumbnail;
+	void setData(OPDSBookItem item) {
+		final String bookUrl = item.getUrl(UrlInfo.Type.Book);
+		String coverUrl = item.getUrl(UrlInfo.Type.Image);
+		if (coverUrl == null) {
+			coverUrl = item.getUrl(UrlInfo.Type.Thumbnail);
+		}
+		if (bookUrl == null || coverUrl == null) {
+			setFailed();
+		} else {
+			myItem = item;
+			myCover = new NetworkImage(coverUrl);
+			myCover.synchronize();
+		}
 	}
 
 	void setFailed() {
+		myItem = null;
+		myCover = null;
 	}
 
-	ZLImageData getImageData() {
-		if (myThumbnail == null) {
+	public boolean isInitialized() {
+		return myItem != null && myCover != null;
+	}
+
+	public OPDSBookItem getItem() {
+		return myItem;
+	}
+
+	public ZLImageData getImageData() {
+		if (myCover == null) {
 			return null;
 		}
-		return ZLImageManager.Instance().getImageData(myThumbnail);
+		return ZLImageManager.Instance().getImageData(myCover);
 	}
 }
