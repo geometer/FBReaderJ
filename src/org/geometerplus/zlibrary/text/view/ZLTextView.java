@@ -943,7 +943,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
 				} else if (element instanceof BookElement) {
 					final int vSpace = ZLibrary.Instance().getDisplayDPI() / 15;
-					final int hSpace = ZLibrary.Instance().getDisplayDPI() / 30;
+					final int hSpace = ZLibrary.Instance().getDisplayDPI() / 10;
 					final ZLImageData imageData = ((BookElement)element).getImageData();
 					if (imageData != null) {
 						context.drawImage(

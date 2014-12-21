@@ -67,6 +67,7 @@ public interface ActionCode {
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
 
+	String DISPLAY_BOOK_POPUP = "displayBookPopup";
 	String PROCESS_HYPERLINK = "processHyperlink";
 
 	String SELECTION_SHOW_PANEL = "selectionShowPanel";

@@ -200,7 +200,7 @@ abstract class ZLTextViewBase extends ZLView {
 		} else if (element instanceof ZLTextVideoElement) {
 			return Math.min(300, getTextColumnWidth());
 		} else if (element instanceof BookElement) {
-			return Math.min(ZLibrary.Instance().getDisplayDPI() * 5 / 7, getTextColumnWidth());
+			return Math.min(ZLibrary.Instance().getDisplayDPI() * 818 / 1000, getTextColumnWidth());
 		} else if (element == ZLTextElement.Indent) {
 			return myTextStyle.getFirstLineIndent(metrics());
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
@@ -225,7 +225,7 @@ abstract class ZLTextViewBase extends ZLView {
 		} else if (element instanceof ZLTextVideoElement) {
 			return Math.min(Math.min(200, getTextAreaHeight()), getTextColumnWidth() * 2 / 3);
 		} else if (element instanceof BookElement) {
-			return ZLibrary.Instance().getDisplayDPI();
+			return ZLibrary.Instance().getDisplayDPI() * 17 / 15;
 		}
 		return 0;
 	}
