@@ -5,26 +5,32 @@
 </head>
 <body>
 <h2>FBReader: an introduction</h2>
-<h3 id='first'>Start reading right now</h3>
-<p>Want to start reading immediately? Click a cover below to download and open the book. To return back to this text select &ldquo;Start screen&rdquo; in the menu.</p>
-<p class='opds'><fbreader:opds size='5' src='https://books.fbreader.org/opds/recommended/lang/$LANG$.xml'/></p>
-<h3 id='network'>Where to look for more books?</h3>
-<p>Just go to <a href='fbreader-action:networkLibrary'>&ldquo;Network library&rdquo;</a>. В нескольких каталогах собраны книги на разных языках, некоторые можно полностью скачать бесплатно, в некоторых доступны только первые несколько глав, а продолжение можно купить за деньги. Если вы знаете адреса других каталогов, вы можете добавить их в свой список, и скачивать книги из них прямо в свой FBReader.</p>
-<h3 id='sync'>How do I put books onto the device?</h3>
-<p>У вас есть книги на компьютере, и вы хотите перенести их на это устройство? Или наоборот, книги, которые вы скачали на это устройство, хотите сохранить понадёжнее? Это можно сделать, не соединяя компьютер и телефон (планшет) между собой. В FBReader есть возможность синхронизации. <a href='fbreader-action:preferences#sync'>Включите её</a>, и все ваши книги автоматически попадут в облако (на ваш собственный Google Drive). С компьютера доступ к коллекции книг происходит через сайт <a href='https://books.fbreader.org/'>Книжной сети FBReader</a>.</p>
-<p>Хотите читать одну и ту же книгу днём на телефоне, а вечером на планшете? И не искать место, где остановились? Синхронизация FBReader решит и эту проблему. Включите её на обоих устройствах, и вы никогда не потеряете место, на котором остановились.</p>
-<h3 id='introduction'>Choose book format</h3>
-<p>FBReader is free and ad-free ebook reader. Если у вас есть книги в виде файлов <code>ePub</code>, <code>mobi</code>, <code>fb2</code> или во многих других форматах, вы можете скопировать их на это устройство, открыть в FBReader, и читать прямо здесь. &laquo;Не совсем текстовые&raquo; форматы книг, <code>PDF</code> и <code>DjVu</code>, FBReader тоже понимает. Но чтобы программа не слишком разрасталась, мы вынесли их поддержку в отдельные плагины <a href='https://play.google.com/store/apps/details?id=org.geometerplus.fbreader.plugin.pdf'>для PDF</a> и <a href='https://play.google.com/store/apps/details?id=org.geometerplus.fbreader.plugin.djvu'>для DjVu</a>.</p>
-<h3 id='more'>И это всё?</h3>
-<p>Разумеется, нет. В таком кратком тексте мы не рассказали про возможности настройки FBReader, про интеграцию с программой Calibre, про другие плагины, например, для автоматического чтения вслух. Новые возможности появляются регулярно, ведь обновления FBReader выходят не реже раза в месяц. Если вы хотите узнать больше &ndash; заходите <a href='http://ru.fbreader.org/'>на наш сайт</a>, или <a href='http://ru.fbreader.org/content/about-us#social'>ищите нас в социальных сетях</a>.</p>
+<h3 id='first'>Start reading</h3>
+<p>Want to start reading right now? Click a cover below to download and open the book. To return back to this text select &ldquo;Start screen&rdquo; in the menu.</p>
+<p class='opds last'><fbreader:opds size='5' src='http://data.fbreader.org/recommended/$LANG$/catalog.xml'/></p>
+<h3 id='network'>Looking for more books?</h3>
+<p class='last'>Just go to <a href='fbreader-action:networkLibrary'>&ldquo;Network library&rdquo;</a>. Several catalogs contains a large set of books, for free and for fee. You can add your own OPDS catalogs to the list.</p>
+<h3 id='sync'>Store your ebooks on the cloud</h3>
+<p>Want to copy your ebooks from the desktop to this device? Or may be you want to store your dowloaded books in a safe space? FBReader Book Network is a cloud storage based on the Google Drive™. <a href='fbreader-action:preferences:sync'>Enable syncronisation</a> with the Book Network, and your book collection will be always available from all your computers and mobile devices. The books would be stored on your own space on the Google Drive. You can <a href='https://books.fbreader.org/'>manage your collection</a> from the browser.</p>
+<p class='last'>Do you read the same book on mobile phone and tablet? Seeking for current page every time? Enable FBReader synchronisation on both devices and the program will open the reading position automatically.</p>
+<h3 id='introduction'>Choose ebook format</h3>
+<p>FBReader supports all popular text file formats. However if you have a book in several formats, the best choice is <code>ePub</code>, <code>mobi</code> (a.k.a. <code>azw3</code> of <code>kindle</code>), or <code>fb2</code>. Please keep in the mind that FBReader is a free reader and does not open DRM-protected books. Non-text formats like <code>PDF</code> or <code>DjVu</code> are supported by separate plugins. The list of format plugins:</p>
+<ul class='last'>
+  <li><a href='https://play.google.com/store/apps/details?id=org.geometerplus.fbreader.plugin.pdf'>PDF plugin on the Google Play</a></li> 
+  <li><a href='https://play.google.com/store/apps/details?id=org.geometerplus.fbreader.plugin.djvu'>DjVu plugin on the Google Play</a></li> 
+  <li><a href='https://play.google.com/store/apps/details?id=org.geometerplus.fbreader.plugin.comicbook'>ComicBook (CBZ, CBR) plugin on the Google Play</a></li> 
+  <li><a href='http://fbreader.org/content/plugins'>All the plugins on FBReader official site</a></li>
+</ul>
+<h3 id='more'>More about FBReader</h3>
+<p class='last'>This text is too short to describe all the FBReader features. We did not mention rich set of <a href="fbreader-action:preferences">FBReader Settings</a>, <a href="https://play.google.com/store/apps/details?id=org.geometerplus.fbreader.plugin.local_opds_scanner">Calibre Integration</a>, other plugins like <a href="https://play.google.com/store/apps/details?id=com.hyperionics.fbreader.plugin.tts_plus">Reading Aloud</a> by <a href="http://hyperionics.com">Hyperionics</a>. We are releasing updates every month. For news and more details please visit <a href='http://fbreader.org/'>our sites</a>, or <a href='http://fbreader.org/content/about-us#social'>follow us on social networks</a>.</p>
 <h3 id='help'>I need help</h3>
-<p>Лучший способ &ndash; написать о проблеме в одной из социальных сетей. Ссылки вы найдёте выше, а в сетях много активных пользователей, которые увидят ваш вопрос. Мы тоже читаем сети, и регулярно в них отвечаем. Если вы уверены, что ваш вопрос обязательно задать напрямую разработчикам, <a href="mailto:contact@fbreader.org">напишите нам электронное письмо</a>.</p>
+<p>Ask in a social network. There is a lot of active users who can help. If you prefer to ask us privately please <a href="mailto:contact@fbreader.org">write an email</a>.</p>
 <h3>Table of Content</h3>
 <ul>
-<li><a href='#first'>Start reading right now</a></li>
+<li><a href='#first'>Start reading</a></li>
 <li><a href='#network'>Looking for more books?</a></li>
 <li><a href='#sync'>Store your ebooks on the cloud</a></li>
-<li><a href='#formats'>Choose book format</a></li>
+<li><a href='#formats'>Choose ebook format</a></li>
 <li><a href='#more'>More about FBReader</a></li>
 <li><a href='#help'>I need help</a></li>
 </ul>
