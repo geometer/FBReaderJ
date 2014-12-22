@@ -38,5 +38,8 @@ class DisplayBookPopupAction extends FBAndroidAction {
 			return;
 		}
 		final BookElement element = ((BookRegionSoul)region.getSoul()).Element;
+		if (!element.isInitialized()) {
+			return;
+		}
 	}
 }
