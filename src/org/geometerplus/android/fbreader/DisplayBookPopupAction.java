@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import org.geometerplus.zlibrary.text.view.*;
+
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class DisplayBookPopupAction extends FBAndroidAction {
@@ -28,5 +30,13 @@ class DisplayBookPopupAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
+		if (params.length != 1 || !(params[0] instanceof ZLTextRegion)) {
+			return;
+		}
+		final ZLTextRegion region = (ZLTextRegion)params[0];
+		if (!(region.getSoul() instanceof BookRegionSoul)) {
+			return;
+		}
+		final BookElement element = ((BookRegionSoul)region.getSoul()).Element;
 	}
 }
