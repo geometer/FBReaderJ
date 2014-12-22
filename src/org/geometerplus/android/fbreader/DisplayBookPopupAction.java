@@ -41,8 +41,11 @@ class DisplayBookPopupAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
+		if (params.length != 1 || !(params[0] instanceof ZLTextRegion)) {
+			return;
+		}
 		final ZLTextRegion region = (ZLTextRegion)params[0];
-		if (region == null || !(region.getSoul() instanceof BookRegionSoul)) {
+		if (!(region.getSoul() instanceof BookRegionSoul)) {
 			return;
 		}
 		final BookElement element = ((BookRegionSoul)region.getSoul()).Element;
@@ -113,7 +116,7 @@ class DisplayBookPopupAction extends FBAndroidAction {
 				BaseActivity.hideBars();
 			}
 		});
-		
+
 		System.err.println("Hello, BOOK: " + region.getLeft() + ", " + region.getTop() + ", " + region.getRight() + ", " + region.getBottom());
 	}
 }
