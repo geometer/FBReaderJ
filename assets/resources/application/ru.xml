@@ -281,6 +281,7 @@
 		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="openStartScreen" value="Стартовый экран"/>
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>
 		<node name="library" value="Библиотека"/>
