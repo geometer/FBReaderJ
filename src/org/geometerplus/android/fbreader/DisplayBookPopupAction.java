@@ -62,9 +62,6 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		popup.setOutsideTouchable(true);
 		/*
 		popup.setTouchable(true);*/
-		popup.setElevation(TypedValue.applyDimension(
-			TypedValue.COMPLEX_UNIT_DIP, 14, BaseActivity.getResources().getDisplayMetrics()
-		));
 		popup.setTouchInterceptor(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				popup.dismiss();
@@ -113,7 +110,6 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		});
 		popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			public void onDismiss() {
-				BaseActivity.hideBars();
 			}
 		});
 
