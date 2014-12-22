@@ -276,6 +276,7 @@
 		<node name="sharedFrom" value="&lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; (e)tik partekatua"/>
 	</node>
 	<node name="menu">
+		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="Hobespenak"/>
 		<node name="bookInfo" value="Liburuaren infoa"/>
 		<node name="library" value="Liburutegia"/>
