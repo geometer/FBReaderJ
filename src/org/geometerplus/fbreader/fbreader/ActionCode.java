@@ -67,6 +67,7 @@ public interface ActionCode {
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
 
+	String DISPLAY_BOOK_POPUP = "displayBookPopup";
 	String PROCESS_HYPERLINK = "processHyperlink";
 
 	String SELECTION_SHOW_PANEL = "selectionShowPanel";
@@ -79,6 +80,7 @@ public interface ActionCode {
 
 	String OPEN_VIDEO = "video";
 
+	String OPEN_START_SCREEN = "openStartScreen";
 	String OPEN_WEB_HELP = "help";
 	String INSTALL_PLUGINS = "plugins";
 }

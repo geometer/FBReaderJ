@@ -266,6 +266,7 @@
 		<node name="sharedFrom" value="Παρέχεται από &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="Ρυθμίσεις"/>
 		<node name="bookInfo" value="Πληροφορίες βιβλίου"/>
 		<node name="library" value="Βιβλιοθήκη"/>
