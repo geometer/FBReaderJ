@@ -27,29 +27,25 @@ import org.geometerplus.zlibrary.core.network.*;
 
 import org.geometerplus.fbreader.network.opds.*;
 
-class BookHolder {
-	private static Map<Map<String,String>,BookHolder> ourCache =
-		new HashMap<Map<String,String>,BookHolder>();
+class BookElementsHolder {
+	private static Map<Map<String,String>,List<BookElement>> ourCache =
+		new HashMap<Map<String,String>,List<BookElement>>();
 
-	static BookHolder get(Map<String,String> data) {
-		BookHolder holder = ourCache.get(data);
-		if (holder == null) {
-			holder = new BookHolder(data.get("src"), Integer.valueOf(data.get("size")));
-			ourCache.put(data, holder);
+	static synchronized List<BookElement> getElements(Map<String,String> data) {
+		List<BookElement> elements = ourCache.get(data);
+		if (elements == null) {
+			elements = new LinkedList<BookElement>();
+			final int count = Integer.valueOf(data.get("size"));
+			for (int i = 0; i < count; ++i) {
+				elements.add(new BookElement());
+			}
+			startLoading(data.get("src"), elements);
+			ourCache.put(data, elements);
 		}
-		return holder;
+		return Collections.unmodifiableList(elements);
 	}
 
-	final List<BookElement> Elements = new LinkedList<BookElement>();
-
-	private BookHolder(String url, int count) {
-		startLoading(url);
-		for (int i = 0; i < count; ++i) {
-			Elements.add(new BookElement());
-		}
-	}
-
-	private void startLoading(final String url) {
+	private static void startLoading(final String url, final List<BookElement> elements) {
 		new Thread() {
 			public void run() {
 				final SimpleOPDSFeedHandler handler = new SimpleOPDSFeedHandler(url);
@@ -62,12 +58,12 @@ class BookHolder {
 				final List<OPDSBookItem> items = handler.books();
 				if (items.size() > 0) {
 					int index = 0;
-					for (BookElement book : Elements) {
+					for (BookElement book : elements) {
 						book.setData(items.get(index));
 						index = (index + 1) % items.size();
 					}
 				} else {
-					for (BookElement book : Elements) {
+					for (BookElement book : elements) {
 						book.setFailed();
 					}
 				}

@@ -113,7 +113,7 @@ public final class ZLTextParagraphCursor {
 						final FBReaderSpecialEntry entry = it.getFBReaderSpecialEntry();
 						if ("opds".equals(entry.Type)) {
 							try {
-								elements.addAll(BookHolder.get(entry.Data).Elements);
+								elements.addAll(BookElementsHolder.getElements(entry.Data));
 							} catch (Exception e) {
 								// ignore
 							}
