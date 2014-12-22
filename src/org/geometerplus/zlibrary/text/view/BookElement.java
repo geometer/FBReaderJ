@@ -22,6 +22,10 @@ package org.geometerplus.zlibrary.text.view;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 
 public final class BookElement extends ZLTextElement {
+	public boolean isInitialized() {
+		return false;
+	}
+
 	public ZLImageData getImageData() {
 		return null;
 	}
