@@ -135,6 +135,8 @@ public class AddCustomCatalogActivity extends Activity {
 				final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
 				if (link instanceof ICustomNetworkLink) {
 					myLink = (ICustomNetworkLink)link;
+				} else {
+					openCatalog(uri);
 				}
 			}
 
