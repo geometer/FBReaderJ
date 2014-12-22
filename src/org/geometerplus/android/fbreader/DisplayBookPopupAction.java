@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
@@ -37,6 +39,13 @@ import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 class DisplayBookPopupAction extends FBAndroidAction {
 	DisplayBookPopupAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader);
+	}
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	private void setShadow(PopupWindow popup) {
+		popup.setElevation(TypedValue.applyDimension(
+			TypedValue.COMPLEX_UNIT_DIP, 14, BaseActivity.getResources().getDisplayMetrics()
+		));
 	}
 
 	@Override
@@ -62,9 +71,9 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		popup.setOutsideTouchable(true);
 		/*
 		popup.setTouchable(true);*/
-		popup.setElevation(TypedValue.applyDimension(
-			TypedValue.COMPLEX_UNIT_DIP, 14, BaseActivity.getResources().getDisplayMetrics()
-		));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			setShadow(popup);
+		}
 		popup.setTouchInterceptor(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				popup.dismiss();
