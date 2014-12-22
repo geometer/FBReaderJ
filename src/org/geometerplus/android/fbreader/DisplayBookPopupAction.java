@@ -26,6 +26,7 @@ import android.view.*;
 import android.widget.PopupWindow;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -96,11 +97,12 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		descriptionView.setText(item.getSummary());
 		descriptionView.setMovementMethod(new LinkMovementMethod());
 
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final View buttonsView = bookView.findViewById(R.id.book_popup_buttons);
 		final Button downloadButton = (Button)buttonsView.findViewById(R.id.ok_button);
-		downloadButton.setText("download");
+		downloadButton.setText(buttonResource.getResource("download").getValue());
 		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
-		cancelButton.setText("cancel");
+		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				popup.dismiss();
