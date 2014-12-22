@@ -19,5 +19,5 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-final class BookElement extends ZLTextElement {
+public final class BookElement extends ZLTextElement {
 }
