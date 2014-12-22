@@ -29,11 +29,12 @@ class BookElementsHolder {
 		List<BookElement> elements = ourCache.get(data);
 		if (elements == null) {
 			try {
-				elements = new LinkedList<BookElement>();
-				ourCache.put(data, elements);
+				final int count = 0;
+				elements = new ArrayList<BookElement>(count);
 			} catch (Throwable t) {
 				return Collections.emptyList();
 			}
+			ourCache.put(data, elements);
 		}
 		return Collections.unmodifiableList(elements);
 	}
