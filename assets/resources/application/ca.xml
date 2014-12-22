@@ -282,6 +282,7 @@
 		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="Preferències"/>
 		<node name="bookInfo" value="Informació del llibre"/>
 		<node name="library" value="Biblioteca"/>
