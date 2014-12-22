@@ -266,6 +266,7 @@
 		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
+		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="Cài đặt"/>
 		<node name="bookInfo" value="Thông tin sách"/>
 		<node name="library" value="Thư viện"/>

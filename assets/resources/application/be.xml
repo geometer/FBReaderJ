@@ -276,6 +276,7 @@
 		<node name="sharedFrom" value="Абагулена праз &lt;a href=&quot;http://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="Налады"/>
 		<node name="bookInfo" value="Інфармацыя кнігі"/>
 		<node name="library" value="Бібліятэка"/>
