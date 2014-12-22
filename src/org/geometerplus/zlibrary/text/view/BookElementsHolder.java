@@ -28,18 +28,22 @@ import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.fbreader.network.opds.*;
 
 class BookElementsHolder {
-	private static Map<Map<String,String>,List<BookElement>> ourCache =
+	private static final Map<Map<String,String>,List<BookElement>> ourCache =
 		new HashMap<Map<String,String>,List<BookElement>>();
 
 	static synchronized List<BookElement> getElements(Map<String,String> data) {
 		List<BookElement> elements = ourCache.get(data);
 		if (elements == null) {
-			elements = new LinkedList<BookElement>();
-			final int count = Integer.valueOf(data.get("size"));
-			for (int i = 0; i < count; ++i) {
-				elements.add(new BookElement());
+			try {
+				final int count = Integer.valueOf(data.get("size"));
+				elements = new ArrayList<BookElement>(count);
+				for (int i = 0; i < count; ++i) {
+					elements.add(new BookElement());
+				}
+				startLoading(data.get("src"), elements);
+			} catch (Throwable t) {
+				return Collections.emptyList();
 			}
-			startLoading(data.get("src"), elements);
 			ourCache.put(data, elements);
 		}
 		return Collections.unmodifiableList(elements);
