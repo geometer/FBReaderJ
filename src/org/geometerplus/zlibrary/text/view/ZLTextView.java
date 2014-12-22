@@ -23,6 +23,8 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImageData;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -939,6 +941,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					final int c = yStart + (yEnd - yStart) / 2;
 					context.setFillColor(new ZLColor(196, 196, 196));
 					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
+				} else if (element instanceof BookElement) {
+					final int vMargin = ZLibrary.Instance().getDisplayDPI() / 15;
+					final int hMargin = ZLibrary.Instance().getDisplayDPI() / 10;
+					final ZLImageData imageData = ((BookElement)element).getImageData();
+					if (imageData != null) {
+					} else {
+					}
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
 					/*
