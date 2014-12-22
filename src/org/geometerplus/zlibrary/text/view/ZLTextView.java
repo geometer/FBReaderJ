@@ -1183,6 +1183,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			} else if (element instanceof ZLTextVideoElement) {
 				wordOccurred = true;
 				isVisible = true;
+			} else if (element instanceof BookElement) {
+				wordOccurred = true;
+				isVisible = true;
 			} else if (isStyleChangeElement(element)) {
 				applyStyleChangeElement(element);
 			}
@@ -1480,7 +1483,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					wordOccurred = false;
 					--spaceCounter;
 				}
-			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement) {
+			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement || element instanceof BookElement) {
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0;
