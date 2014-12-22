@@ -86,7 +86,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion bookRegion = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.BookFilter);
+		final ZLTextRegion bookRegion = findRegion(x, y, 0, ZLTextRegion.BookFilter);
 		if (bookRegion != null) {
 			myReader.runAction(ActionCode.DISPLAY_BOOK_POPUP, bookRegion);
 			return true;
