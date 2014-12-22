@@ -118,6 +118,12 @@ public final class ZLTextRegion {
 		}
 	};
 
+	public static Filter BookFilter = new Filter() {
+		public boolean accepts(ZLTextRegion region) {
+			return region.getSoul() instanceof BookRegionSoul;
+		}
+	};
+
 	public static Filter ImageOrHyperlinkFilter = new Filter() {
 		public boolean accepts(ZLTextRegion region) {
 			final Soul soul = region.getSoul();
@@ -176,6 +182,22 @@ public final class ZLTextRegion {
 	ZLTextElementArea getLastArea() {
 		final ZLTextElementArea[] areas = textAreas();
 		return areas[areas.length - 1];
+	}
+
+	public int getLeft() {
+		int left = Integer.MAX_VALUE;
+		for (ZLTextElementArea area : textAreas()) {
+			left = Math.min(area.XStart, left);
+		}
+		return left;
+	}
+
+	public int getRight() {
+		int right = Integer.MIN_VALUE;
+		for (ZLTextElementArea area : textAreas()) {
+			right = Math.max(area.XEnd, right);
+		}
+		return right;
 	}
 
 	public int getTop() {
