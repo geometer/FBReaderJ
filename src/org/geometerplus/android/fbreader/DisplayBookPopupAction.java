@@ -53,11 +53,16 @@ class DisplayBookPopupAction extends FBAndroidAction {
 			return;
 		}
 
+		final View mainView = (View)BaseActivity.getViewWidget();
 		final View bookView = BaseActivity.getLayoutInflater().inflate(R.layout.book_popup, null);
 		final int inch = (int)TypedValue.applyDimension(
 			TypedValue.COMPLEX_UNIT_IN, 1, BaseActivity.getResources().getDisplayMetrics()
 		);
-		final PopupWindow popup = new PopupWindow(bookView, 4 * inch, 3 * inch);
+		final PopupWindow popup = new PopupWindow(
+			bookView,
+			Math.min(4 * inch, mainView.getWidth() * 9 / 10),
+			Math.min(3 * inch, mainView.getHeight() * 9 / 10)
+		);
 		popup.setFocusable(true);
 		popup.setOutsideTouchable(true);
 		/*
@@ -78,9 +83,11 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		popup.showAtLocation(BaseActivity.getCurrentFocus(), Gravity.CENTER, 0, 0);
 
 		final ImageView coverView = (ImageView)bookView.findViewById(R.id.book_popup_cover);
-		final ZLAndroidImageData imageData = (ZLAndroidImageData)element.getImageData();
-		if (imageData != null) {
-			coverView.setImageBitmap(imageData.getFullSizeBitmap());
+		if (coverView != null) {
+			final ZLAndroidImageData imageData = (ZLAndroidImageData)element.getImageData();
+			if (imageData != null) {
+				coverView.setImageBitmap(imageData.getFullSizeBitmap());
+			}
 		}
 
 		final OPDSBookItem item = element.getItem();
