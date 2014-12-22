@@ -276,6 +276,7 @@
 		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
+		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="Ayarlar"/>
 		<node name="bookInfo" value="Kitabın künyesi"/>
 		<node name="library" value="Kitaplık"/>

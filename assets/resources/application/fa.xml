@@ -276,6 +276,7 @@
 		<node name="sharedFrom" value="به اشتراک گذتری شده توسط &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="تنظیمات"/>
 		<node name="bookInfo" value="اطلاعات کتاب"/>
 		<node name="library" value="کتابخانه"/>

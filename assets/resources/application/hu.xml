@@ -266,6 +266,7 @@
 		<node name="sharedFrom" value="Megosztva az &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;ből"/>
 	</node>
 	<node name="menu">
+		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="Beállítások"/>
 		<node name="bookInfo" value="Könyv adatai"/>
 		<node name="library" value="Könyvtár"/>
