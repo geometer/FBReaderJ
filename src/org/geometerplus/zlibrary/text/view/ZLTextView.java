@@ -942,16 +942,16 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					context.setFillColor(new ZLColor(196, 196, 196));
 					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
 				} else if (element instanceof BookElement) {
-					final int vSpace = ZLibrary.Instance().getDisplayDPI() / 15;
-					final int hSpace = ZLibrary.Instance().getDisplayDPI() / 10;
+					final int vMargin = ZLibrary.Instance().getDisplayDPI() / 15;
+					final int hMargin = ZLibrary.Instance().getDisplayDPI() / 10;
 					final ZLImageData imageData = ((BookElement)element).getImageData();
 					if (imageData != null) {
 						context.drawImage(
-							area.XStart + hSpace, area.YEnd - vSpace,
+							area.XStart + hMargin, area.YEnd - vMargin,
 							imageData,
 							new ZLPaintContext.Size(
-								area.XEnd - area.XStart - 2 * hSpace + 1,
-								area.YEnd - area.YStart - 2 * vSpace + 1
+								area.XEnd - area.XStart - 2 * hMargin + 1,
+								area.YEnd - area.YStart - 2 * vMargin + 1
 							),
 							ZLPaintContext.ScalingType.FitMaximum,
 							ZLPaintContext.ColorAdjustingMode.NONE
@@ -959,10 +959,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					} else {
 						context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
 						context.setFillColor(new ZLColor(127, 127, 127));
-						final int xStart = area.XStart + hSpace;
-						final int xEnd = area.XEnd - hSpace;
-						final int yStart = area.YStart + vSpace;
-						final int yEnd = area.YEnd - vSpace;
+						final int xStart = area.XStart + hMargin;
+						final int xEnd = area.XEnd - hMargin;
+						final int yStart = area.YStart + vMargin;
+						final int yEnd = area.YEnd - vMargin;
 						context.fillRectangle(xStart, yStart, xEnd, yEnd);
 						context.drawLine(xStart, yStart, xStart, yEnd);
 						context.drawLine(xStart, yEnd, xEnd, yEnd);
