@@ -65,6 +65,8 @@ public abstract class UIUtil {
 							ourMonitor.notify();
 						}
 					} catch (Exception e) {
+						e.printStackTrace();
+						ourProgress = null;
 					}
 				}
 			};
@@ -94,7 +96,7 @@ public abstract class UIUtil {
 		final ProgressDialog currentProgress = ourProgress;
 		new Thread(new Runnable() {
 			public void run() {
-				while ((ourProgress == currentProgress) && !ourTaskQueue.isEmpty()) {
+				while (ourProgress == currentProgress && !ourTaskQueue.isEmpty()) {
 					Pair p = ourTaskQueue.poll();
 					p.Action.run();
 					synchronized (ourMonitor) {
