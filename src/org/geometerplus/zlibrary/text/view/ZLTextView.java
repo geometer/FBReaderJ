@@ -192,7 +192,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myPreviousPage.reset();
 		myNextPage.reset();
 		if (!myCurrentPage.StartCursor.isNull()) {
-			rebuildPaintInfo(true);
+			rebuildPaintInfo();
 			if (count > 0) {
 				ZLTextMark mark = myCurrentPage.StartCursor.getMark();
 				gotoMark(wholeText ?
@@ -232,7 +232,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public void clearFindResults() {
 		if (!findResultsAreEmpty()) {
 			myModel.removeAllMarks();
-			rebuildPaintInfo(true);
+			rebuildPaintInfo();
 			Application.getViewWidget().reset();
 			Application.getViewWidget().repaint();
 		}
@@ -1606,22 +1606,16 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void clearCaches() {
-		clearCaches(true);
-	}
-
-	void clearCaches(boolean full) {
 		resetMetrics();
-		rebuildPaintInfo(full);
+		rebuildPaintInfo();
 		Application.getViewWidget().reset();
 		myCharWidth = -1;
 	}
 
-	protected synchronized void rebuildPaintInfo(boolean full) {
+	protected synchronized void rebuildPaintInfo() {
 		myPreviousPage.reset();
 		myNextPage.reset();
-		if (full) {
-			myCursorCache.clear();
-		}
+		myCursorCache.clear();
 
 		if (myCurrentPage.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
 			myCurrentPage.LineInfos.clear();
