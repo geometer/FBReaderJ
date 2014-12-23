@@ -24,7 +24,8 @@ import android.os.Build;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
-import android.view.*;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.*;
 
@@ -79,12 +80,12 @@ class DisplayBookPopupAction extends FBAndroidAction {
 			setShadow(popup);
 		}
 
-		popup.setTouchInterceptor(new View.OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				popup.dismiss();
-				return true;
-			}
-		});
+//		popup.setTouchInterceptor(new View.OnTouchListener() {
+//			public boolean onTouch(View v, MotionEvent event) {
+//				popup.dismiss();
+//				return true;
+//			}
+//		});
 
 		final ImageView coverView = (ImageView)bookView.findViewById(R.id.book_popup_cover);
 		if (coverView != null) {
