@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#222222"
+	android:orientation="vertical"
+>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="80"
+		android:padding="15dp"
+		android:orientation="horizontal"
+	>
+		<ImageView
+			android:id="@+id/book_popup_cover"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:scaleType="fitStart"
+			android:adjustViewBounds="true"
+		/>
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:paddingLeft="25dp"
+			android:paddingRight="25dp"
+		>
+			<TextView
+				android:id="@+id/book_popup_header_text"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="#AAAAAA"
+			/>
+			<ScrollView
+				android:scrollbars="vertical"
+				android:fadeScrollbars="true"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+			>
+				<TextView
+					android:id="@+id/book_popup_description_text"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:textColor="#AAAAAA"
+				/>
+			</ScrollView>
+		</LinearLayout>
+	</LinearLayout>
+	<include
+		layout="@layout/ok_cancel_buttons"
+		android:id="@+id/book_popup_buttons"
+		android:layout_weight="20"
+	/>
+</LinearLayout>
