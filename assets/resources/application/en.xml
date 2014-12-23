@@ -262,7 +262,7 @@
 			<node name="summaryOn" value="Do not highlight bookmarks"/>
 			<node name="summaryOff" value="Highlight bookmarks"/>
 		</node>
-		<node name="bgColor" value="Background color"/>
+		<node name="bgColor" value="Background colour"/>
 	</node>
 	<node name="selection" value="Selection">
 		<node name="copyToClipboard" value="Copy to clipboard"/>
@@ -429,8 +429,8 @@
 					<node name="summaryOff" value="Device kerning is disabled"/>
 				</node>
 				<node name="dithering" value="Dithering">
-					<node name="summaryOn" value="Color dithering is enabled"/>
-					<node name="summaryOff" value="Color dithering is disabled"/>
+					<node name="summaryOn" value="Colour dithering is enabled"/>
+					<node name="summaryOff" value="Colour dithering is disabled"/>
 				</node>
 				<node name="hinting" value="Hinting">
 					<node name="summaryOn" value="Font hinting is enabled"/>
@@ -617,15 +617,15 @@
 				<node name="summaryOff" value="Ignore margins defined in CSS"/>
 			</node>
 		</node>
-		<node name="colors" value="Colors &amp; wallpapers">
-			<node name="summary" value="Color settings"/>
+		<node name="colors" value="Colours &amp; wallpapers">
+			<node name="summary" value="Colour settings"/>
 			<node name="background" value="Background">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…"/>
+					<node name="solidColor" value="Solid colour…"/>
 					<node name="predefined" value="Predefined texture…"/>
 					<node name="selectFile" value="Select file…"/>
 				</node>
-				<node name="solidColor" value="Solid color"/>
+				<node name="solidColor" value="Solid colour"/>
 				<node name="leather" value="Leather"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Wood"/>
@@ -670,10 +670,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)"/>
 			</node>
 			<node name="footerHeight" value="Footer height"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color"/>
-			<node name="footerBackgroundColor" value="Footer background color"/>
-			<node name="footerForegroundColor" value="Footer text color"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color"/>
+			<node name="footerOldStyleColor" value="Footer (old style) colour"/>
+			<node name="footerBackgroundColor" value="Footer background colour"/>
+			<node name="footerForegroundColor" value="Footer text colour"/>
+			<node name="footerForegroundUnreadColor" value="Footer line colour"/>
 			<node name="tocMarks" value="Show TOC marks">
 				<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 				<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>
@@ -757,7 +757,7 @@
 		</node>
 		<node name="images" value="Images">
 			<node name="summary" value="Image displaying options"/>
-			<node name="backgroundColor" value="Background color for image view"/>
+			<node name="backgroundColor" value="Background colour for image view"/>
 			<node name="tappingAction" value="Long tapping action">
 				<node name="doNothing" value="Long tapping does nothing"/>
 				<node name="selectImage" value="Long tapping selects the image"/>
@@ -769,8 +769,8 @@
 				<node name="all" value="All"/>
 			</node>
 			<node name="matchBackground" value="Match background intensity">
-				<node name="summaryOn" value="Adjust image color according background"/>
-				<node name="summaryOff" value="Do not adjust image color"/>
+				<node name="summaryOn" value="Adjust image colour according background"/>
+				<node name="summaryOff" value="Do not adjust image colour"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Cancel menu">
