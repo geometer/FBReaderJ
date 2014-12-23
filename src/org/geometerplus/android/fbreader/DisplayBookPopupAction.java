@@ -105,10 +105,8 @@ class DisplayBookPopupAction extends FBAndroidAction {
 			}
 		});
 
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-			downloadButton.setTextColor(0xFF777777);
-			cancelButton.setTextColor(0xFF777777);
-		}
+		downloadButton.setTextColor(0xFF777777);
+		cancelButton.setTextColor(0xFF777777);
 
 		popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			public void onDismiss() {
