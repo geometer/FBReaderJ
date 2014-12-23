@@ -31,15 +31,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-<<<<<<< Updated upstream
-=======
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
-import org.geometerplus.fbreader.network.opds.OPDSBookItem;
-import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-
-import org.geometerplus.android.util.UIUtil;
->>>>>>> Stashed changes
 
 class DisplayBookPopupAction extends FBAndroidAction {
 	DisplayBookPopupAction(FBReader baseActivity, FBReaderApp fbreader) {
