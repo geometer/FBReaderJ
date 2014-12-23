@@ -17,13 +17,13 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-import org.geometerplus.fbreader.book.BookUtil;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-public class StartScreenAction extends FBAction {
-	StartScreenAction(FBReaderApp fbreader) {
-		super(fbreader);
+class StartScreenAction extends FBAndroidAction {
+	StartScreenAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader);
 	}
 
 	@Override
