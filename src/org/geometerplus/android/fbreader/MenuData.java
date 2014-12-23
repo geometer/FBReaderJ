@@ -63,6 +63,7 @@ public abstract class MenuData {
 			ourNodes.add(new MenuNode.Item(ActionCode.DECREASE_FONT));
 			ourNodes.add(new MenuNode.Item(ActionCode.INSTALL_PLUGINS));
 			ourNodes.add(new MenuNode.Item(ActionCode.OPEN_WEB_HELP));
+			ourNodes.add(new MenuNode.Item(ActionCode.OPEN_START_SCREEN));
 			ourNodes = Collections.unmodifiableList(ourNodes);
 		}
 		return ourNodes;
