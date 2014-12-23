@@ -946,6 +946,16 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					final int hMargin = ZLibrary.Instance().getDisplayDPI() / 10;
 					final ZLImageData imageData = ((BookElement)element).getImageData();
 					if (imageData != null) {
+						context.drawImage(
+							area.XStart + hMargin, area.YEnd - vMargin,
+							imageData,
+							new ZLPaintContext.Size(
+								area.XEnd - area.XStart - 2 * hMargin + 1,
+								area.YEnd - area.YStart - 2 * vMargin + 1
+							),
+							ZLPaintContext.ScalingType.FitMaximum,
+							ZLPaintContext.ColorAdjustingMode.NONE
+						);
 					} else {
 					}
 				} else if (element == ZLTextElement.HSpace) {
