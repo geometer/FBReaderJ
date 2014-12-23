@@ -881,7 +881,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Incercare de conectare. Va rugam asteptati…"/>
-			<node name="downloadingFile" value="Descarcare carte %s"/>
+			<node name="downloadingBook" value="Descarcare carte %s"/>
 			<node name="search" value="Cautarea a inceput. Va rugam asteptati…"/>
 			<node name="loadInfo" value="Se incarca informatiile necesare. Va rugam asteptati…"/>
 			<node name="loadingBook" value="Se deschide cartea. Va rugam asteptati…"/>

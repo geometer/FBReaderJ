@@ -77,15 +77,25 @@ public abstract class UIUtil {
 		}
 	}
 
+	public static void wait(String key, String param, Runnable action, Context context) {
+		waitInternal(getWaitMessage(key).replace("%s", param), action, context);
+	}
+
 	public static void wait(String key, Runnable action, Context context) {
+		waitInternal(getWaitMessage(key), action, context);
+	}
+
+	private static String getWaitMessage(String key) {
+		return ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
+	}
+
+	private static void waitInternal(String message, Runnable action, Context context) {
 		if (!init()) {
 			action.run();
 			return;
 		}
 
 		synchronized (ourMonitor) {
-			final String message =
-				ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
 			ourTaskQueue.offer(new Pair(action, message));
 			if (ourProgress == null) {
 				ourProgress = ProgressDialog.show(context, null, message, true, false);
