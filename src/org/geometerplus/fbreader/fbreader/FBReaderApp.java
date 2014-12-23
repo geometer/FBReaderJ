@@ -109,6 +109,7 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 
 		addAction(ActionCode.SELECTION_CLEAR, new SelectionClearAction(this));
+		addAction(ActionCode.OPEN_START_SCREEN, new StartScreenAction(this));
 
 		addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
 		addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
