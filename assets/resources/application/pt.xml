@@ -893,7 +893,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="A tentar ligar, por favor, espere…"/>
-			<node name="downloadingFile" value="Descarregar livro %s"/>
+			<node name="downloadingBook" value="Descarregar livro %s"/>
 			<node name="search" value="Pesquisando. Por favor, aguarde…"/>
 			<node name="loadInfo" value="Carregando informações. Por favor, aguarde…"/>
 			<node name="loadingBook" value="Abrindo livro. Por favor, aguarde…"/>

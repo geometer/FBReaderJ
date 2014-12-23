@@ -899,7 +899,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Устанавливается соединение. Подождите, пожалуйста…"/>
-			<node name="downloadingFile" value="Загужается книга %s"/>
+			<node name="downloadingBook" value="Загужается книга %s"/>
 			<node name="search" value="Идет поиск. Подождите, пожалуйста…"/>
 			<node name="loadInfo" value="Загружается информация. Подождите, пожалуйста…"/>
 			<node name="loadingBook" value="Открывается книга. Подождите, пожалуйста…"/>

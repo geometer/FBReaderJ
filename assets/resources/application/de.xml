@@ -897,7 +897,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Verbindungsversuch. Bitte warten…"/>
-			<node name="downloadingFile" value="Buch wird geladen %s"/>
+			<node name="downloadingBook" value="Buch wird geladen %s"/>
 			<node name="search" value="Suche läuft. Bitte warten…"/>
 			<node name="loadInfo" value="Information wird geladen. Bitte warten…"/>
 			<node name="loadingBook" value="Buch wird geladen. Bitte warten…"/>

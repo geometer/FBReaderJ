@@ -880,7 +880,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
-			<node name="downloadingFile" value="กำลังดาวน์โหลดหนังสือ %s"/>
+			<node name="downloadingBook" value="กำลังดาวน์โหลดหนังสือ %s"/>
 			<node name="search" value="กำลังค้นหา, กรุณารอสักครู่…"/>
 			<node name="loadInfo" value="Loading information. Please, wait…" toBeTranslated="true"/>
 			<node name="loadingBook" value="กำลังเปิดหนังสือ, กรุณารอสักครู่…"/>

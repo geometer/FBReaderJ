@@ -890,7 +890,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Bezig met verbinden. Een ogenblik…"/>
-			<node name="downloadingFile" value="Boek %s wordt gedownload"/>
+			<node name="downloadingBook" value="Boek %s wordt gedownload"/>
 			<node name="search" value="Bezig met zoeken. Een ogenblik…"/>
 			<node name="loadInfo" value="Informatie wordt geladen. Een ogenblik…"/>
 			<node name="loadingBook" value="Boek wordt geopend. Een ogenblik…"/>

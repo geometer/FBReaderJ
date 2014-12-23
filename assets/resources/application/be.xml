@@ -890,7 +890,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Спроба злучэньня. Калі ласка, пачакайце…"/>
-			<node name="downloadingFile" value="Зладаваньне кнігі %s"/>
+			<node name="downloadingBook" value="Зладаваньне кнігі %s"/>
 			<node name="search" value="Пошук. Калі ласка, пачакайце…"/>
 			<node name="loadInfo" value="Ладаваньне інфармацыі. Калі ласка, пачакайце…"/>
 			<node name="loadingBook" value="Адчыненьне кнігі. Калі ласка, пачакайце…"/>

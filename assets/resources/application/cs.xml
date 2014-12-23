@@ -899,7 +899,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
-			<node name="downloadingFile" value="Stahování knihy %s"/>
+			<node name="downloadingBook" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte…"/>
 			<node name="loadInfo" value="Načítání informací. Čekejte…"/>
 			<node name="loadingBook" value="Otevírání knihy. Čekejte…"/>

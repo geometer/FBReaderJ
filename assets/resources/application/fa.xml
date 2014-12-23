@@ -890,7 +890,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
-			<node name="downloadingFile" value="دانلود كتاب %s"/>
+			<node name="downloadingBook" value="دانلود كتاب %s"/>
 			<node name="search" value="در حال جستجو. لطفاً صبر كنيد..."/>
 			<node name="loadInfo" value="درحال بارگذاري اطلاعات. لطفاً صبر كنيد..."/>
 			<node name="loadingBook" value="در حال بازكردن كتاب. لطفاً صبر كنيد..."/>

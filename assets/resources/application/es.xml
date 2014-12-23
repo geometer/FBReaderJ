@@ -895,7 +895,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
-			<node name="downloadingFile" value="Descargando libro %s"/>
+			<node name="downloadingBook" value="Descargando libro %s"/>
 			<node name="search" value="Buscando. Por favor, espere…"/>
 			<node name="loadInfo" value="Cargando información. Por favor, espere…"/>
 			<node name="loadingBook" value="Abriendo libro. Por favor, espere…"/>
