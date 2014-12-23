@@ -889,7 +889,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="接続しようとしています。しばらくお待ちください…"/>
-			<node name="downloadingFile" value="ダウンロード中です (%s)"/>
+			<node name="downloadingBook" value="ダウンロード中です (%s)"/>
 			<node name="search" value="検索中です。しばらくお待ちください…"/>
 			<node name="loadInfo" value="情報を読み込んでいます。しばらくお待ちください…"/>
 			<node name="loadingBook" value="本を開いています。しばらくお待ちください…"/>
