@@ -19,11 +19,16 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.*;
+import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
@@ -59,7 +64,15 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		popup.setFocusable(true);
 		popup.setOutsideTouchable(true);
 
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button")
+		final ImageView coverView = (ImageView)bookView.findViewById(R.id.book_popup_cover);
+		if (coverView != null) {
+			final ZLAndroidImageData imageData = (ZLAndroidImageData)element.getImageData();
+			if (imageData != null) {
+				coverView.setImageBitmap(imageData.getFullSizeBitmap());
+			}
+		}
+
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final View buttonsView = bookView.findViewById(R.id.book_popup_buttons);
 
 		final Button downloadButton = (Button)buttonsView.findViewById(R.id.ok_button);
