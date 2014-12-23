@@ -33,6 +33,15 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+<<<<<<< Updated upstream
+=======
+import org.geometerplus.fbreader.fbreader.options.ColorProfile;
+import org.geometerplus.fbreader.network.opds.OPDSBookItem;
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+
+import org.geometerplus.android.util.UIUtil;
+>>>>>>> Stashed changes
 
 class DisplayBookPopupAction extends FBAndroidAction {
 	DisplayBookPopupAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -61,7 +70,11 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		}
 
 		final View mainView = (View)BaseActivity.getViewWidget();
-		final View bookView = BaseActivity.getLayoutInflater().inflate(R.layout.book_popup, null);
+		final View bookView = BaseActivity.getLayoutInflater().inflate(
+			ColorProfile.NIGHT.equals(Reader.ViewOptions.ColorProfileName.getValue())
+				? R.layout.book_popup_night : R.layout.book_popup,
+			null
+		);
 		final int inch = (int)TypedValue.applyDimension(
 			TypedValue.COMPLEX_UNIT_IN, 1, BaseActivity.getResources().getDisplayMetrics()
 		);
@@ -104,6 +117,11 @@ class DisplayBookPopupAction extends FBAndroidAction {
 				popup.dismiss();
 			}
 		});
+
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+			downloadButton.setTextColor(0xFF777777);
+			cancelButton.setTextColor(0xFF777777);
+		}
 
 		popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			public void onDismiss() {
