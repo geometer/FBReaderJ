@@ -65,22 +65,13 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		);
 		popup.setFocusable(true);
 		popup.setOutsideTouchable(true);
-		/*
-		popup.setTouchable(true);*/
+
 		popup.setTouchInterceptor(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				popup.dismiss();
 				return true;
 			}
 		});
-//		bookView.setSystemUiVisibility(
-//			View.SYSTEM_UI_FLAG_LOW_PROFILE |
-//			2048 /*View.SYSTEM_UI_FLAG_IMMERSIVE*/ |
-//			4096 /*View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY*/ |
-//			4 /*View.SYSTEM_UI_FLAG_FULLSCREEN*/ |
-//			View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//		);
-		popup.showAtLocation(BaseActivity.getCurrentFocus(), Gravity.CENTER, 0, 0);
 
 		final ImageView coverView = (ImageView)bookView.findViewById(R.id.book_popup_cover);
 		if (coverView != null) {
@@ -106,8 +97,16 @@ class DisplayBookPopupAction extends FBAndroidAction {
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final View buttonsView = bookView.findViewById(R.id.book_popup_buttons);
+
 		final Button downloadButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		downloadButton.setText(buttonResource.getResource("download").getValue());
+		downloadButton.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				// TODO: implement
+				popup.dismiss();
+			}
+		});
+
 		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
@@ -115,11 +114,12 @@ class DisplayBookPopupAction extends FBAndroidAction {
 				popup.dismiss();
 			}
 		});
+
 		popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			public void onDismiss() {
 			}
 		});
 
-		System.err.println("Hello, BOOK: " + region.getLeft() + ", " + region.getTop() + ", " + region.getRight() + ", " + region.getBottom());
+		popup.showAtLocation(BaseActivity.getCurrentFocus(), Gravity.CENTER, 0, 0);
 	}
 }
