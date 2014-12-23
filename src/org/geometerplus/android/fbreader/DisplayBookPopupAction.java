@@ -143,7 +143,7 @@ class DisplayBookPopupAction extends FBAndroidAction {
 				downloadButton.setOnClickListener(new Button.OnClickListener() {
 					public void onClick(View v) {
 						UIUtil.wait(
-							"downloadingBook", item.Title,
+							"downloadingBook", item.Title.toString(),
 							new Runnable() {
 								public void run() {
 									try {
