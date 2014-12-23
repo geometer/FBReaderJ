@@ -70,7 +70,7 @@
 	</node>
 	<node name="networkLibrary" value="FBReader network library">
 		<node name="sync" value="FBReader® book network">
-			<node name="summary" value="My personal catalog"/>
+			<node name="summary" value="My personal catalogue"/>
 		</node>
 		<node name="byAuthor" value="By author">
 			<node name="summary" value="Books sorted by author"/>
@@ -86,16 +86,16 @@
 		</node>
 		<node name="search" value="Search">
 			<node name="summary" value="Search books on %s"/>
-			<node name="summaryAllCatalogs" value="Search books in all catalogs"/>
+			<node name="summaryAllCatalogs" value="Search books in all catalogues"/>
 			<node name="summaryInProgress" value="Search in progress"/>
 		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
-		<node name="recent" value="Recent catalogs">
-			<node name="summary" value="Catalogs you visited recently"/>
+		<node name="recent" value="Recent catalogues">
+			<node name="summary" value="Catalogues you visited recently"/>
 		</node>
-		<node name="openCatalog" value="Open catalog"/>
+		<node name="openCatalog" value="Open catalogue"/>
 		<node name="networkSearch" value="Search"/>
 		<node name="showResults" value="Show results"/>
 		<node name="showBooks" value="Show books"/>
@@ -133,43 +133,43 @@
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded"/>
 		<node name="stoppingCatalogLoading" value="Stopping loading"/>
 		<node name="stoppingNetworkSearch" value="Stopping search"/>
-		<node name="editCustomCatalog" value="Edit catalog"/>
-		<node name="removeCustomCatalog" value="Remove catalog"/>
-		<node name="addCustomCatalog" value="Add catalog"/>
-		<node name="addCustomCatalogSummary" value="Add custom OPDS catalog manually"/>
-		<node name="disableCatalog" value="Disable catalog"/>
+		<node name="editCustomCatalog" value="Edit catalogue"/>
+		<node name="removeCustomCatalog" value="Remove catalogue"/>
+		<node name="addCustomCatalog" value="Add catalogue"/>
+		<node name="addCustomCatalogSummary" value="Add custom OPDS catalogue manually"/>
+		<node name="disableCatalog" value="Disable catalogue"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>
 			<node name="readDemo" value="Do you want to read sample?"/>
 			<node name="downloadDemo" value="Do you want to download sample?"/>
 			<node name="buy" value="Do you want to buy this book? (%s)"/>
-			<node name="openInBrowser" value="Do you want to open this catalog in browser?"/>
+			<node name="openInBrowser" value="Do you want to open this catalogue in browser?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Downloading catalogs"/>
+		<node name="downloadingCatalogs" value="Downloading catalogues"/>
 		<!-- used as notification title -->
 		<node name="searchingNetwork" value="Searching for books in network"/>
 		<!-- used as notification title -->
 		<node name="addCatalog">
-			<node name="title" value="Add catalog"/>
+			<node name="title" value="Add catalogue"/>
 			<node name="editUrl" value="Enter URL manually"/>
 		</node>
-		<node name="manageCatalogs" value="Manage catalogs">
-			<node name="summary" value="Configure your catalogs list"/>
+		<node name="manageCatalogs" value="Manage catalogues">
+			<node name="summary" value="Configure your catalogues list"/>
 			<node name="enabled" value="Enabled"/>
 			<node name="disabled" value="Disabled"/>
 		</node>
 		<node name="menu">
-			<node name="openRoot" value="Root catalog"/>
+			<node name="openRoot" value="Root catalogue"/>
 			<node name="networkSearch" value="Search"/>
 			<node name="reload" value="Reload"/>
 			<node name="signIn" value="Sign in"/>
 			<node name="signUp" value="Sign up"/>
 			<node name="signOut" value="Sign out (%s)"/>
 			<node name="topup" value="Top up account"/>
-			<node name="addCustomCatalog" value="Add catalog"/>
-			<node name="refreshCatalogsList" value="Refresh catalogs"/>
-			<node name="manageCatalogs" value="Manage catalogs"/>
+			<node name="addCustomCatalog" value="Add catalogue"/>
+			<node name="refreshCatalogsList" value="Refresh catalogues"/>
+			<node name="manageCatalogs" value="Manage catalogues"/>
 			<node name="clearBasket" value="Clear basket"/>
 			<node name="buyAllBooks" value="Buy all books"/>
 		</node>
@@ -209,7 +209,7 @@
 			<node condition="value 1" value="%s byte"/>
 		</node>
 		<node name="sizeInKiloBytes" value="%s kB"/>
-		<node name="catalog" value="Catalog:"/>
+		<node name="catalog" value="Catalogue:"/>
 		<node name="extraLinks" value="Related links"/>
 		<node name="menu">
 			<node name="edit" value="Edit"/>
@@ -900,9 +900,9 @@
 			<node name="authentication" value="Authentication. Please, wait…"/>
 			<node name="signOut" value="Signing out. Please, wait…"/>
 			<node name="purchaseBook" value="Purchase book. Please, wait…"/>
-			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait…"/>
+			<node name="loadingCatalogInfo" value="Loading catalogue information. Please, wait…"/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…"/>
-			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
+			<node name="updatingCatalogsList" value="Updating catalogues list. Please, wait…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…"/>
@@ -916,8 +916,8 @@
 			<node name="downloadLimitExceeded" value="Download limit exceeded"/>
 			<node name="noUserEmail" value="No user was registered&#10;with specified e-mail address"/>
 			<node name="unsupportedOperation" value="Unsupported operation"/>
-			<node name="notAnOPDS" value="This is not an OPDS catalog"/>
-			<node name="noRequiredInformation" value="Required information is not specified in the catalog"/>
+			<node name="notAnOPDS" value="This is not an OPDS catalogue"/>
+			<node name="noRequiredInformation" value="Required information is not specified in the catalogue"/>
 			<node name="cacheDirectoryError" value="Unable to create cache directory"/>
 		</node>
 		<node name="AuthenticationDialog">
@@ -929,11 +929,11 @@
 			<node name="register" value="Sign up"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: add custom catalog"/>
+			<node name="title" value="FBReader: add custom catalogue"/>
 			<node name="catalogTitle" value="Title"/>
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Summary"/>
-			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog"/>
+			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalogue"/>
 			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="E.g.: Public domain books"/>
 			<node name="titleIsEmpty" value="Title should be non-empty"/>
@@ -1017,7 +1017,7 @@
 		<node name="permissionDenied" value="Permission denied, sorry"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
 		<node name="noSeries" value="There are no books in series, sorry"/>
-		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
+		<node name="emptyCatalog" value="Catalogue is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry"/>
