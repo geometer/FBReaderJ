@@ -80,13 +80,6 @@ class DisplayBookPopupAction extends FBAndroidAction {
 			setShadow(popup);
 		}
 
-//		popup.setTouchInterceptor(new View.OnTouchListener() {
-//			public boolean onTouch(View v, MotionEvent event) {
-//				popup.dismiss();
-//				return true;
-//			}
-//		});
-
 		final ImageView coverView = (ImageView)bookView.findViewById(R.id.book_popup_cover);
 		if (coverView != null) {
 			final ZLAndroidImageData imageData = (ZLAndroidImageData)element.getImageData();
