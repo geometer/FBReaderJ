@@ -29,13 +29,24 @@ class BookElementsHolder {
 		List<BookElement> elements = ourCache.get(data);
 		if (elements == null) {
 			try {
-				final int count = 0;
+				final int count = Integer.valueOf(data.get("size"));
 				elements = new ArrayList<BookElement>(count);
+				for (int i = 0; i < count; ++i) {
+					elements.add(new BookElement());
+				}
+				startLoading(data.get("src"), elements);
 			} catch (Throwable t) {
 				return Collections.emptyList();
 			}
 			ourCache.put(data, elements);
 		}
 		return Collections.unmodifiableList(elements);
+	}
+
+	private static void startLoading(final String url, final List<BookElement> elements) {
+		new Thread() {
+			public void run() {
+			}
+		}.start();
 	}
 }
