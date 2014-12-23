@@ -19,6 +19,10 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.view.View;
+import android.widget.PopupWindow;
+import android.widget.*;
+
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -41,5 +45,45 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		if (!element.isInitialized()) {
 			return;
 		}
+
+		final View mainView = (View)BaseActivity.getViewWidget();
+		final View bookView = BaseActivity.getLayoutInflater().inflate(R.layout.book_popup, null);
+		final int inch = (int)TypedValue.applyDimension(
+			TypedValue.COMPLEX_UNIT_IN, 1, BaseActivity.getResources().getDisplayMetrics()
+		);
+		final PopupWindow popup = new PopupWindow(
+			bookView,
+			Math.min(4 * inch, mainView.getWidth() * 9 / 10),
+			Math.min(3 * inch, mainView.getHeight() * 9 / 10)
+		);
+		popup.setFocusable(true);
+		popup.setOutsideTouchable(true);
+
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button")
+		final View buttonsView = bookView.findViewById(R.id.book_popup_buttons);
+
+		final Button downloadButton = (Button)buttonsView.findViewById(R.id.ok_button);
+		downloadButton.setText(buttonResource.getResource("download").getValue());
+		downloadButton.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				// TODO: implement
+				popup.dismiss();
+			}
+		});
+
+		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
+		cancelButton.setText(buttonResource.getResource("cancel").getValue());
+		cancelButton.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				popup.dismiss();
+			}
+		});
+
+		popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+			public void onDismiss() {
+			}
+		});
+
+		popup.showAtLocation(BaseActivity.getCurrentFocus(), Gravity.CENTER, 0, 0);
 	}
 }
