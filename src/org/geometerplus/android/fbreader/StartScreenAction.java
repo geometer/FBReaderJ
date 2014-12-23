@@ -28,6 +28,7 @@ class StartScreenAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
+		BaseActivity.hideBars();
 		Reader.openHelpBook();
 	}
 }
