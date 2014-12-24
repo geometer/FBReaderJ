@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
 public abstract class AbstractBookCollection implements IBookCollection {
 	private final List<Listener> myListeners = Collections.synchronizedList(new LinkedList<Listener>());
 
@@ -52,5 +54,9 @@ public abstract class AbstractBookCollection implements IBookCollection {
 				l.onBuildEvent(status);
 			}
 		}
+	}
+
+	public final Book getBookByFile(String path) {
+		return getBookByFile(ZLFile.createFileByPath(path));
 	}
 }

@@ -1016,6 +1016,7 @@
 		<node name="videoPlayerNotFound" value="Nu exista nici un player video instalat pe acest aparat, ne pare rau"/>
 		<node name="bookIsMissingTitle" value="Carte lipsa"/>
 		<node name="bookIsMissing" value="Cartea '%s' nu a fost gasita pe dispozitiv"/>
+		<node name="downloadFailed" value="Descarcare esuata"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
