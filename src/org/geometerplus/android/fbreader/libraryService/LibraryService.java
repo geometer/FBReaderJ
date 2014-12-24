@@ -27,7 +27,6 @@ import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.FileObserver;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
@@ -185,8 +184,8 @@ public class LibraryService extends Service {
 			return SerializerUtil.serialize(myCollection.getRecentBook(index));
 		}
 
-		public String getBookByFile(String file) {
-			return SerializerUtil.serialize(myCollection.getBookByFile(ZLFile.createFileByPath(file)));
+		public String getBookByFile(String path) {
+			return SerializerUtil.serialize(myCollection.getBookByFile(path));
 		}
 
 		public String getBookById(long id) {

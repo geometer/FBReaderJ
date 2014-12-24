@@ -1024,6 +1024,7 @@
 		<node name="videoPlayerNotFound" value="このデバイスにはビデオプレイヤがインストールされていないようです"/>
 		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
 		<node name="bookIsMissing" value="申し訳ありませんが、本体内に '%s' という本が見当たりません"/>
+		<node name="downloadFailed" value="ダウンロード失敗"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="ブラウザ"/>
