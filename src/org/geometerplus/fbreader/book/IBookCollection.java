@@ -60,6 +60,7 @@ public interface IBookCollection {
 	Book getRecentBook(int index);
 	void addBookToRecentList(Book book);
 
+	Book getBookByFile(String path);
 	Book getBookByFile(ZLFile file);
 	Book getBookById(long id);
 	Book getBookByUid(UID uid);
