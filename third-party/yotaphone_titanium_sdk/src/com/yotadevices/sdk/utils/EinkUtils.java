@@ -3,7 +3,6 @@ package com.yotadevices.sdk.utils;
 import com.yotadevices.sdk.Drawer;
 import com.yotadevices.sdk.Drawer.Waveform;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -23,10 +22,6 @@ import android.widget.RemoteViews;
  * @hide Utils for the back screen
  */
 public class EinkUtils {
-
-    /*
-     * static { System.loadLibrary("yotadevices_platinum_jni"); // TODO: }
-     */
 
     public static final int NO_DITHERING = 0;
     public static final int ATKINSON_DITHERING = 1;
@@ -81,47 +76,48 @@ public class EinkUtils {
     }
 
     public static void setViewWaveform(View view, Drawer.Waveform waveform) {
-        //if (view != null) {
-        //    view.setEpdViewWaveFormMode(waveform.ordinal());
-        //}
-        Log.d("EinkUtils", "setViewWaveform " +waveform +" "+view);
-	    com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewWaveFormMode(view, waveform.ordinal());
+        if (view == null) {
+            throw new IllegalArgumentException("view can't be null");
+        }
+        if (waveform == null) {
+            waveform = Drawer.Waveform.WAVEFORM_DEFAULT;
+        }
+        com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewWaveFormMode(view, waveform.ordinal());
     }
 
     public static Drawer.Waveform getViewWaveform(View view) {
         Drawer.Waveform waveform;
         if (view != null) {
-            //return Drawer.Waveform.values()[view.getEpdViewWaveformMode()];
-            waveform =  Drawer.Waveform.values()[com.yotadevices.yotaphone2.sdk.EpdUtils.getEpdViewWaveformMode(view)];
+            waveform = Drawer.Waveform.values()[com.yotadevices.yotaphone2.sdk.EpdUtils.getEpdViewWaveformMode(view)];
         } else {
             waveform = Drawer.Waveform.WAVEFORM_DEFAULT;
         }
-        Log.d("EinkUtils", "getViewWaveform " +waveform +" "+view);
         return waveform;
     }
 
     public static void disableViewDithering(View view) {
-        if (view != null) {
-            //view.setEpdViewDithering(Drawer.Dithering.DITHER_NONE.ordinal());
-	        com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewDithering(view, Drawer.Dithering.DITHER_NONE.ordinal());
+        if (view == null) {
+            throw new IllegalArgumentException("view can't be null");
         }
+        com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewDithering(view, Drawer.Dithering.DITHER_NONE.ordinal());
     }
 
     public static void setViewDithering(View view, Drawer.Dithering dithering) {
-        Log.d("EinkUtils", "setViewDithering " +dithering +" "+view);
+        Log.d("EinkUtils", "setViewDithering " + dithering + " " + view);
         if (view != null) {
-	        com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewDithering(view, dithering.ordinal());
+            com.yotadevices.yotaphone2.sdk.EpdUtils.setEpdViewDithering(view, dithering.ordinal());
         }
     }
 
     public static void setRemoteViewsDithering(RemoteViews remoteViews, int viewId, Drawer.Dithering dithering) {
-        Log.d("EinkUtils", "setRemoteViewsDithering " +dithering +" "+remoteViews);
+        Log.d("EinkUtils", "setRemoteViewsDithering " + dithering + " " + remoteViews);
         if (remoteViews != null) {
             remoteViews.setInt(viewId, "setEpdViewDithering", dithering.ordinal());
         }
     }
+
     public static void setRemoteViewsWaveform(RemoteViews remoteViews, int viewId, Drawer.Waveform waveform) {
-        Log.d("EinkUtils", "setRemoteViewsWaveform " +waveform +" "+remoteViews);
+        Log.d("EinkUtils", "setRemoteViewsWaveform " + waveform + " " + remoteViews);
         if (remoteViews != null) {
             remoteViews.setInt(viewId, "setEpdViewWaveFormMode", waveform.ordinal());
         }
@@ -130,12 +126,12 @@ public class EinkUtils {
     public static Drawer.Dithering getViewDithering(View view) {
         Drawer.Dithering dithering;
         if (view != null) {
-            //return Drawer.Dithering.values()[view.getEpdViewDithering()];
+            // return Drawer.Dithering.values()[view.getEpdViewDithering()];
             dithering = Drawer.Dithering.values()[com.yotadevices.yotaphone2.sdk.EpdUtils.getEpdViewDithering(view)];
         } else {
             dithering = Drawer.Dithering.DITHER_DEFAULT;
         }
-        Log.d("EinkUtils", "getViewDithering " +dithering +" "+view);
+        Log.d("EinkUtils", "getViewDithering " + dithering + " " + view);
         return dithering;
     }
 

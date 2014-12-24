@@ -220,9 +220,16 @@ public class BSActivity extends Service {
         Log.d(TAG, "onHandleIntent");
     }
 
-    private void checkBSActivityRunning() {
-        if (mDrawer == null) {
-            throw new IllegalStateException("Is your BSActivity running?");
+    private boolean isBSActivityRunning() {
+        if (isFinishing || mDrawer == null) {
+            try {
+                throw new IllegalStateException("Is your BSActivity running?");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -257,16 +264,15 @@ public class BSActivity extends Service {
         if (DEBUG_BS_LIFECIRCLE) {
             Log.v(TAG, "onBSCreate.");
         }
-        parceInstance(instance);
-
-        checkBSActivityRunning();
-        //mDrawer.showBlankView();// TODO:
-        mCalled = false;
-        onBSCreate();
-        if (!mCalled) {
-            throw new SuperNotCalledException("BSActivity " + TAG + " did not call through to super.onBSCreate()");
+        if (isBSActivityRunning()) {
+            parceInstance(instance);
+            mCalled = false;
+            onBSCreate();
+            if (!mCalled) {
+                throw new SuperNotCalledException("BSActivity " + TAG + " did not call through to super.onBSCreate()");
+            }
+            sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVE);
         }
-        sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVE);
     }
 
     void parceInstance(Bundle instance) {
@@ -377,8 +383,9 @@ public class BSActivity extends Service {
     }
 
     final void performSystemUIChange() {
-        checkBSActivityRunning();
-        mDrawer.updateViewLayout(mSystemUiVisibility);
+        if (isBSActivityRunning()) {
+            mDrawer.updateViewLayout(mSystemUiVisibility);
+        }
     }
 
     final void performKeyPress(int keyCode) {
@@ -413,8 +420,9 @@ public class BSActivity extends Service {
 
     /**
      * onBSSaveInstanceState - Save state before the instance is killed
-     *
-     * @param outState instance state.
+     * 
+     * @param outState
+     *            instance state.
      */
     protected void onBSSaveInstanceState(Bundle outState) {
 
@@ -422,8 +430,9 @@ public class BSActivity extends Service {
 
     /**
      * onBSRestoreInstanceState - Restores the state
-     *
-     * @param savedInstanceState saved instance state.
+     * 
+     * @param savedInstanceState
+     *            saved instance state.
      */
     protected void onBSRestoreInstanceState(Bundle savedInstanceState) {
 
@@ -447,10 +456,11 @@ public class BSActivity extends Service {
      * onBSResume - Called when BsDrawer is ready to draw on BS.
      */
     protected void onBSResume() {
-        checkBSActivityRunning();
-        // show user UI on back screen
-        mDrawer.addBSParentView(mInitialWaveform, mInitialDithering);
-        isResumed = true;
+        if (isBSActivityRunning()) {
+            // show user UI on back screen
+            mDrawer.addBSParentView(mInitialWaveform, mInitialDithering);
+            isResumed = true;
+        }
         mCalled = true;
     }
 
@@ -488,9 +498,10 @@ public class BSActivity extends Service {
      * removed a task that comes from the service's application. If you have set
      * ServiceInfo.FLAG_STOP_WITH_TASK then you will not receive this callback;
      * instead, the service will simply be stopped.
-     *
-     * @param rootIntent The original root Intent that was used to launch the task that
-     *                   is being removed.
+     * 
+     * @param rootIntent
+     *            The original root Intent that was used to launch the task that
+     *            is being removed.
      */
     protected void onBSTaskRemoved(Intent rootIntent) {
 
@@ -514,8 +525,9 @@ public class BSActivity extends Service {
 
     /**
      * onVolumeButtonsEvent - Called when Volume button event occurs.
-     *
-     * @param event Volume button event.
+     * 
+     * @param event
+     *            Volume button event.
      */
     protected void onVolumeButtonsEvent(VolumeButtonsEvent event) {
 
@@ -531,7 +543,7 @@ public class BSActivity extends Service {
 
     /**
      * getIntent - Return the intent that started this BSActivity.
-     *
+     * 
      * @return Intent
      */
     public Intent getIntent() {
@@ -548,7 +560,7 @@ public class BSActivity extends Service {
 
     /**
      * Check the possibility of using the back screen
-     *
+     * 
      * @return true - if the back screen is available, otherwise false
      */
     public boolean isBackScreenInit() {
@@ -568,9 +580,10 @@ public class BSActivity extends Service {
      * .
      */
     public void setBSContentView(View view) {
-        checkBSActivityRunning();
-        mDrawer.getParentView().removeAllViews();
-        mDrawer.addViewToBS(view);
+        if (isBSActivityRunning()) {
+            mDrawer.getParentView().removeAllViews();
+            mDrawer.addViewToBS(view);
+        }
     }
 
     /**
@@ -578,25 +591,28 @@ public class BSActivity extends Service {
      * .
      */
     public void setBSContentView(View view, LayoutParams params) {
-        checkBSActivityRunning();
-        mDrawer.getParentView().removeAllViews();
-        mDrawer.addViewToBS(view, params);
+        if (isBSActivityRunning()) {
+            mDrawer.getParentView().removeAllViews();
+            mDrawer.addViewToBS(view, params);
+        }
     }
 
     /**
      * Set the back screen activity content from a layout resource. The resource
      * will be inflated, adding all top-level views to the back screen activity.
-     *
-     * @param layoutResID Resource ID to be inflated.
+     * 
+     * @param layoutResID
+     *            Resource ID to be inflated.
      * @see #setBSContentView(android.view.View)
      * @see #setBSContentView(android.view.View,
-     * android.view.ViewGroup.LayoutParams)
+     *      android.view.ViewGroup.LayoutParams)
      */
     public void setBSContentView(int layoutResID) {
-        checkBSActivityRunning();
-        mDrawer.getParentView().removeAllViews();
-        if (mDrawer.getBSLayoutInflater() != null) {
-            mDrawer.addViewToBS(getBSDrawer().getBSLayoutInflater().inflate(layoutResID, null));
+        if (isBSActivityRunning()) {
+            mDrawer.getParentView().removeAllViews();
+            if (mDrawer.getBSLayoutInflater() != null) {
+                mDrawer.addViewToBS(getBSDrawer().getBSLayoutInflater().inflate(layoutResID, null));
+            }
         }
     }
 
@@ -605,13 +621,12 @@ public class BSActivity extends Service {
      * .
      */
     public View findViewById(int id) {
-        checkBSActivityRunning();
-        return mDrawer.findViewById(id);
+        return isBSActivityRunning() ? mDrawer.findViewById(id) : null;
     }
 
     /**
      * Return application context
-     *
+     * 
      * @return getApplicationContext()
      */
     public Context getContext() {
@@ -642,7 +657,7 @@ public class BSActivity extends Service {
      * UI thread, then the action is executed immediately. If the current thread
      * is not the UI thread, the action is posted to the event queue of the UI
      * thread. Parameters: action the action to run on the UI thread
-     *
+     * 
      * @param action
      */
     public void runOnUiThread(Runnable action) {
@@ -654,7 +669,7 @@ public class BSActivity extends Service {
      * either because you called finish() on it or someone else has requested
      * that it finished. This is often used in onBSPause() to determine whether
      * the BSActivity is simply pausing or completely finishing.
-     *
+     * 
      * @return If the BSActivity is finishing, returns true; else returns false.
      */
     public boolean isFinishing() {
@@ -677,9 +692,10 @@ public class BSActivity extends Service {
     /**
      * Call this to set the result that your bsactivity will return to its
      * caller.
-     *
-     * @param resultCode The result code to propagate back to the originating activity,
-     *                   often RESULT_CANCELED or RESULT_OK
+     * 
+     * @param resultCode
+     *            The result code to propagate back to the originating activity,
+     *            often RESULT_CANCELED or RESULT_OK
      */
     public void setResult(int resultCode) {
         synchronized (this) {
@@ -698,8 +714,9 @@ public class BSActivity extends Service {
     /**
      * Same as {@link #startBSActivityForResult(Intent, int)} with no options
      * specified.
-     *
-     * @param intent The intent to start.
+     * 
+     * @param intent
+     *            The intent to start.
      */
 
     public void startBSActivity(Intent intent) {
@@ -712,18 +729,21 @@ public class BSActivity extends Service {
      * with the given requestCode. Using a negative requestCode is the same as
      * calling {@link #startBSActivity} (the activity is not launched as a
      * sub-activity).
-     *
-     * @param intent      The intent to start.
-     * @param requestCode If >= 0, this code will be returned in onBSActivityResult()
-     *                    when the activity exits.
+     * 
+     * @param intent
+     *            The intent to start.
+     * @param requestCode
+     *            If >= 0, this code will be returned in onBSActivityResult()
+     *            when the activity exits.
      */
     public void startBSActivityForResult(Intent intent, int requestCode) {
-        checkBSActivityRunning();
-        synchronized (this) {
-            mRequestCode = requestCode;
+        if (isBSActivityRunning()) {
+            synchronized (this) {
+                mRequestCode = requestCode;
+            }
+            sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVITY_RESULT);
+            startService(intent);
         }
-        sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVITY_RESULT);
-        startService(intent);
     }
 
     /**
@@ -736,14 +756,17 @@ public class BSActivity extends Service {
      * <p/>
      * You will receive this call immediately before onResume() when your
      * bs-activity is re-starting.
-     *
-     * @param requestCode The integer request code originally supplied to
-     *                    startBSActivityForResult(), allowing you to identify who this
-     *                    result came from.
-     * @param resultCode  The integer result code returned by the child activity through
-     *                    its setResult().
-     * @param data        An Intent, which can return result data to the caller (various
-     *                    data can be attached to Intent "extras").
+     * 
+     * @param requestCode
+     *            The integer request code originally supplied to
+     *            startBSActivityForResult(), allowing you to identify who this
+     *            result came from.
+     * @param resultCode
+     *            The integer result code returned by the child activity through
+     *            its setResult().
+     * @param data
+     *            An Intent, which can return result data to the caller (various
+     *            data can be attached to Intent "extras").
      * @see #startBSActivityForResult
      * @see #setResult(int)
      */

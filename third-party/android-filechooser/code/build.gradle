@@ -44,4 +44,10 @@ android {
     }
     buildTypes {
     }
+  android {
+      lintOptions {
+          abortOnError false
+      }
+  }
+
 }
