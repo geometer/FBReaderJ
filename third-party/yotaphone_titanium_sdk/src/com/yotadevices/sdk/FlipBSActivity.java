@@ -22,7 +22,7 @@ public class FlipBSActivity extends NotificationBSActivity {
 		gifView.setStopOnDuration(stopDuration);
 
 		EinkUtils.setViewWaveform(gifView, Drawer.Waveform.WAVEFORM_A2);
-		EinkUtils.setViewDithering(gifView, Drawer.Dithering.DITHER_ATKINSON_BINARY);
+		EinkUtils.setViewDithering(gifView, Drawer.Dithering.DITHER_NONE);
 	}
 
 	protected void setDescription(final String description) {

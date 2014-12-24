@@ -101,14 +101,12 @@ public class GifView2 extends View {
 
 			// Log.d("gifMovie", "-- " + (mCurrentRelTime + relTime));
 
-			if ((mNumPlays == -1 || mNumPlayed < mNumPlays)
-					&& (mStopDuration == -1 || (mCurrentRelTime + relTime) < mStopDuration)) {
+			if ((mNumPlays == -1 || mNumPlayed < mNumPlays) && (mStopDuration == -1 || (mCurrentRelTime + relTime) < mStopDuration)) {
 				gifMovie.setTime(relTime);
 			}
 
 			gifMovie.draw(canvas, 0, 0);
-			if ((mNumPlays == -1 || mNumPlayed < mNumPlays)
-					&& (mStopDuration == -1 || (mCurrentRelTime + relTime) < mStopDuration)) {
+			if ((mNumPlays == -1 || mNumPlayed < mNumPlays) && (mStopDuration == -1 || (mCurrentRelTime + relTime) < mStopDuration)) {
 				invalidate();
 			}
 
