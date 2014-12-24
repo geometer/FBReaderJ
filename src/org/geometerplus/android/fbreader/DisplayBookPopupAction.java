@@ -180,11 +180,11 @@ class DisplayBookPopupAction extends FBAndroidAction {
 
 		popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			public void onDismiss() {
-				BaseActivity.runOnUiThread(new Runnable(
+				BaseActivity.runOnUiThread(new Runnable() {
 					public void run() {
 						BaseActivity.hideBars();
 					}
-				));
+				});
 			}
 		});
 
