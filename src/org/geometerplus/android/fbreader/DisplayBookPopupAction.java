@@ -22,6 +22,8 @@ package org.geometerplus.android.fbreader;
 import java.io.File;
 import java.util.List;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -47,6 +49,13 @@ import org.geometerplus.android.util.UIUtil;
 class DisplayBookPopupAction extends FBAndroidAction {
 	DisplayBookPopupAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader);
+	}
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	private void setShadow(PopupWindow popup) {
+		popup.setElevation(TypedValue.applyDimension(
+			TypedValue.COMPLEX_UNIT_DIP, 14, BaseActivity.getResources().getDisplayMetrics()
+		));
 	}
 
 	private void openBook(final PopupWindow popup, final Book book) {
@@ -92,6 +101,10 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		);
 		popup.setFocusable(true);
 		popup.setOutsideTouchable(true);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			setShadow(popup);
+		}
 
 		final ImageView coverView = (ImageView)bookView.findViewById(R.id.book_popup_cover);
 		if (coverView != null) {
@@ -167,6 +180,11 @@ class DisplayBookPopupAction extends FBAndroidAction {
 
 		popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			public void onDismiss() {
+				BaseActivity.runOnUiThread(new Runnable(
+					public void run() {
+						BaseActivity.hideBars();
+					}
+				));
 			}
 		});
 
