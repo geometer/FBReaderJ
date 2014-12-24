@@ -1031,6 +1031,7 @@
 		<node name="videoPlayerNotFound" value="На това устройство няма инсталиран видео плейър"/>
 		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
 		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
+		<node name="downloadFailed" value="Грешка при свалянето"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Браузер"/>

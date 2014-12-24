@@ -1025,6 +1025,7 @@
 		<node name="videoPlayerNotFound" value="Er is geen videospeler gevonden op dit apparaat, sorry"/>
 		<node name="bookIsMissingTitle" value="Ontbrekend boek"/>
 		<node name="bookIsMissing" value="Boek '%s' is niet gevonden op dit apparaat, sorry"/>
+		<node name="downloadFailed" value="Download mislukt"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

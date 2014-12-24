@@ -1023,6 +1023,7 @@
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
 		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
+		<node name="downloadFailed" value="Η λήψη απέτυχε."/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

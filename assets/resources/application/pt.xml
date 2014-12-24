@@ -218,7 +218,7 @@
 			<node name="edit" value="Editar"/>
 		</node>
 	</node>
-	<node name="bookDownloader" value="Descarregar livro">
+	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Livro foi descarregado"/>
 		<node name="tickerError" value="Erro ao descarregar o livro"/>
 		<node name="contentSuccess" value="Download completo"/>
@@ -1028,6 +1028,7 @@
 		<node name="videoPlayerNotFound" value="Não há nenhum leitor de vídeo instalado neste dispositivo, desculpe"/>
 		<node name="bookIsMissingTitle" value="Livro não encontrado"/>
 		<node name="bookIsMissing" value="O livro '%s' não foi encontrado no dispositivo, desculpe"/>
+		<node name="downloadFailed" value="Falha no download"/>
 	</node>
 	<node name="external" value="Externo">
 		<node name="browser" value="Navegador"/>

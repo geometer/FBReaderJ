@@ -1032,6 +1032,7 @@
 		<node name="videoPlayerNotFound" value="Kein installierter Videoplayer gefunden."/>
 		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
 		<node name="bookIsMissing" value="Buch '%s' konnte nicht auf dem Gerät gefunden werden."/>
+		<node name="downloadFailed" value="Download fehlgeschlagen"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

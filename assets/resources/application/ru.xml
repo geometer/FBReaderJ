@@ -1034,6 +1034,7 @@
 		<node name="videoPlayerNotFound" value="Не удалось отыскать видеопроигрыватель"/>
 		<node name="bookIsMissingTitle" value="Отсутствует книга"/>
 		<node name="bookIsMissing" value="Не удалось найти на этом устройстве книгу «%s»"/>
+		<node name="downloadFailed" value="Не удалось скачать книгу"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>

@@ -1034,6 +1034,7 @@
 		<node name="videoPlayerNotFound" value="Bohužel, na tomto zařízení není nainstalovaný žádný přehrávač videa"/>
 		<node name="bookIsMissingTitle" value="Chybějící kniha"/>
 		<node name="bookIsMissing" value="Bohužel, kniha '%s' nebyla v zařízení nalezena"/>
+		<node name="downloadFailed" value="Stahování selhalo"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>

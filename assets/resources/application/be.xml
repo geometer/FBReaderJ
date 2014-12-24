@@ -1025,6 +1025,7 @@
 		<node name="videoPlayerNotFound" value="На прыладзе не ўсталяваны прайгравальнік, прабачце"/>
 		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
 		<node name="bookIsMissing" value="Кніга «%s» ня знойдзена на прыладзе, прабачце"/>
+		<node name="downloadFailed" value="Зладаваньне няўдалае"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Аглядальнік"/>
