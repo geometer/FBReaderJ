@@ -37,17 +37,13 @@ public final class BookElement extends ZLTextElement {
 			coverUrl = item.getUrl(UrlInfo.Type.Thumbnail);
 		}
 		if (bookUrl == null || coverUrl == null) {
-			setFailed();
+			myItem = null;
+			myCover = null;
 		} else {
 			myItem = item;
 			myCover = new NetworkImage(coverUrl);
 			myCover.synchronize();
 		}
-	}
-
-	void setFailed() {
-		myItem = null;
-		myCover = null;
 	}
 
 	public boolean isInitialized() {

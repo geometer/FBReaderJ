@@ -68,6 +68,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private final ZLTextParagraphCursorCache myCursorCache = new ZLTextParagraphCursorCache();
 
+	final BookElementsHolder Holder = new BookElementsHolder(this);
+
 	public ZLTextView(ZLApplication application) {
 		super(application);
 	}
@@ -958,10 +960,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 						);
 					} else {
 						context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
+						context.setFillColor(getTextColor(ZLTextHyperlink.NO_LINK), 0x33);
 						final int xStart = area.XStart + hMargin;
 						final int xEnd = area.XEnd - hMargin;
 						final int yStart = area.YStart + vMargin;
 						final int yEnd = area.YEnd - vMargin;
+						context.fillRectangle(xStart, yStart, xEnd, yEnd);
 						context.drawLine(xStart, yStart, xStart, yEnd);
 						context.drawLine(xStart, yEnd, xEnd, yEnd);
 						context.drawLine(xEnd, yEnd, xEnd, yStart);
