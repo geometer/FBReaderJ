@@ -7,6 +7,8 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.1.13 (Dec 24, 2014) =====
+
 ===== 2.1.12 (Dec 14, 2014) =====
 * Fixed an infinite loop (and OOM) on rendering some formatted ePubs
 * Added color settings for new style footer (separate for day & night profiles)
