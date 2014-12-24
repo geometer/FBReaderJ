@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader;
 
 import java.io.File;
-
 import java.util.List;
 
 import android.text.Html;
@@ -155,7 +154,7 @@ class DisplayBookPopupAction extends FBAndroidAction {
 										new QuietNetworkContext().downloadToFile(bookInfo.Url, file);
 										openBook(popup, Reader.Collection.getBookByFile(fileName));
 									} catch (ZLNetworkException e) {
-										// TODO: show error message?
+										UIUtil.showErrorMessage(BaseActivity, "downloadFailed");
 										e.printStackTrace();
 									}
 								}
