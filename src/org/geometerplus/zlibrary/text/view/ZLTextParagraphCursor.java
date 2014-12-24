@@ -53,7 +53,7 @@ public final class ZLTextParagraphCursor {
 			}
 			myFirstMark = i;
 			myLastMark = myFirstMark;
-			for (; (myLastMark != myMarks.size()) && (((ZLTextMark)myMarks.get(myLastMark)).ParagraphIndex == paragraphIndex); myLastMark++);
+			for (; myLastMark != myMarks.size() && ((ZLTextMark)myMarks.get(myLastMark)).ParagraphIndex == paragraphIndex; myLastMark++);
 			myOffset = 0;
 		}
 
