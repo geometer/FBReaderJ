@@ -117,18 +117,6 @@ class DisplayBookPopupAction extends FBAndroidAction {
 		descriptionView.setText(item.getSummary());
 		descriptionView.setMovementMethod(new LinkMovementMethod());
 
-		final TextView headerView = (TextView)bookView.findViewById(R.id.book_popup_header_text);
-		final StringBuilder text = new StringBuilder();
-		for (OPDSBookItem.AuthorData author : item.Authors) {
-			text.append("<p><i>").append(author.DisplayName).append("</i></p>");
-		}
-		text.append("<h3>").append(item.Title).append("</h3>");
-		headerView.setText(Html.fromHtml(text.toString()));
-
-		final TextView descriptionView = (TextView)bookView.findViewById(R.id.book_popup_description_text);
-		descriptionView.setText(item.getSummary());
-		descriptionView.setMovementMethod(new LinkMovementMethod());
-
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final View buttonsView = bookView.findViewById(R.id.book_popup_buttons);
 
