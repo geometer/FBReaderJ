@@ -93,6 +93,7 @@ class DisplayBookPopupAction extends FBAndroidAction {
 				? R.layout.book_popup_night : R.layout.book_popup,
 			null
 		);
+		FBReader.ensureFullscreen(bookView);
 		final int inch = (int)TypedValue.applyDimension(
 			TypedValue.COMPLEX_UNIT_IN, 1, BaseActivity.getResources().getDisplayMetrics()
 		);
