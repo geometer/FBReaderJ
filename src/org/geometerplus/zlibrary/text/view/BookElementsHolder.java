@@ -22,11 +22,22 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.*;
 
 class BookElementsHolder {
-	private static final Map<Map<String,String>,List<BookElement>> ourCache =
+	private final Runnable myScreenRefresher;
+	private final Map<Map<String,String>,List<BookElement>> myCache =
 		new HashMap<Map<String,String>,List<BookElement>>();
+	private Timer myTimer;
 
-	static synchronized List<BookElement> getElements(Map<String,String> data) {
-		List<BookElement> elements = ourCache.get(data);
+	BookElementsHolder(final ZLTextView view) {
+		myScreenRefresher = new Runnable() {
+			public void run() {
+				view.Application.getViewWidget().reset();
+				view.Application.getViewWidget().repaint();
+			}
+		};
+	}
+
+	synchronized List<BookElement> getElements(Map<String,String> data) {
+		List<BookElement> elements = myCache.get(data);
 		if (elements == null) {
 			try {
 				final int count = Integer.valueOf(data.get("size"));
@@ -38,12 +49,12 @@ class BookElementsHolder {
 			} catch (Throwable t) {
 				return Collections.emptyList();
 			}
-			ourCache.put(data, elements);
+			myCache.put(data, elements);
 		}
 		return Collections.unmodifiableList(elements);
 	}
 
-	private static void startLoading(final String url, final List<BookElement> elements) {
+	private void startLoading(final String url, final List<BookElement> elements) {
 		new Thread() {
 			public void run() {
 			}

@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.text.model.*;
 
 public final class ZLTextParagraphCursor {
 	private static final class Processor {
+		private final ZLTextView myView;
 		private final ZLTextParagraph myParagraph;
 		private final LineBreaker myLineBreaker;
 		private final ArrayList<ZLTextElement> myElements;
@@ -37,7 +38,8 @@ public final class ZLTextParagraphCursor {
 		private int myLastMark;
 		private final List<ZLTextMark> myMarks;
 
-		private Processor(ZLTextParagraph paragraph, LineBreaker lineBreaker, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
+		private Processor(ZLTextView view, ZLTextParagraph paragraph, LineBreaker lineBreaker, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
+			myView = view;
 			myParagraph = paragraph;
 			myLineBreaker = lineBreaker;
 			myElements = elements;
@@ -51,7 +53,7 @@ public final class ZLTextParagraphCursor {
 			}
 			myFirstMark = i;
 			myLastMark = myFirstMark;
-			for (; (myLastMark != myMarks.size()) && (((ZLTextMark)myMarks.get(myLastMark)).ParagraphIndex == paragraphIndex); myLastMark++);
+			for (; myLastMark != myMarks.size() && ((ZLTextMark)myMarks.get(myLastMark)).ParagraphIndex == paragraphIndex; myLastMark++);
 			myOffset = 0;
 		}
 
@@ -110,7 +112,7 @@ public final class ZLTextParagraphCursor {
 					{
 						final FBReaderSpecialEntry entry = it.getFBReaderSpecialEntry();
 						if ("opds".equals(entry.Type)) {
-							elements.addAll(BookElementsHolder.getElements(entry.Data));
+							elements.addAll(myView.Holder.getElements(entry.Data));
 						}
 						break;
 					}
@@ -223,7 +225,7 @@ public final class ZLTextParagraphCursor {
 		ZLTextParagraph	paragraph = Model.getParagraph(Index);
 		switch (paragraph.getKind()) {
 			case ZLTextParagraph.Kind.TEXT_PARAGRAPH:
-				new Processor(paragraph, new LineBreaker(Model.getLanguage()), Model.getMarks(), Index, myElements).fill();
+				new Processor(View, paragraph, new LineBreaker(Model.getLanguage()), Model.getMarks(), Index, myElements).fill();
 				break;
 			case ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH:
 				myElements.add(new ZLTextWord(SPACE_ARRAY, 0, 1, 0));
