@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkException;
 
-class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
+public class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
 	private static final String TAG_PASSWORD_RECOVERY_OK = "catalit-pass-recover-ok";
 	private static final String TAG_PASSWORD_RECOVERY_FAILED = "catalit-pass-recover-failed";
 
@@ -34,16 +34,21 @@ class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
 		if (TAG_PASSWORD_RECOVERY_FAILED == tag) {
 			final String error = attributes.getValue("error");
 			if ("1".equals(error)) {
-				setException(ZLNetworkException.forCode(NetworkException.ERROR_NO_USER_EMAIL));
+				setException(ZLNetworkException.forCode(NetworkException.ERROR_NO_USER_FOR_EMAIL));
 			} else if ("2".equals(error)) {
-				setException(ZLNetworkException.forCode(NetworkException.ERROR_EMAIL_WAS_NOT_SPECIFIED));
+				setException(ZLNetworkException.forCode(NetworkException.ERROR_EMAIL_NOT_SPECIFIED));
 			} else {
-				setException(ZLNetworkException.forCode(NetworkException.ERROR_INTERNAL));
+				final String comment = attributes.getValue("coment");
+				if (comment != null) {
+					setException(new ZLNetworkException(comment));
+				} else {
+					setException(ZLNetworkException.forCode(NetworkException.ERROR_INTERNAL, error));
+				}
 			}
 		} else if (TAG_PASSWORD_RECOVERY_OK == tag) {
 			// NOP
 		} else {
-			setException(ZLNetworkException.forCode(NetworkException.ERROR_SOMETHING_WRONG, LitResUtil.HOST_NAME));
+			setException(ZLNetworkException.forCode(ZLNetworkException.ERROR_SOMETHING_WRONG, LitResUtil.HOST_NAME));
 		}
 		return true;
 	}
