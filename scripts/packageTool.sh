@@ -18,7 +18,7 @@ updateVersion() {
 		android-1.5)
 			variant=0
 			;;
-		ice-cream-sandwich|yota|yota2|kindle|betayota|yotabeta|*-ics)
+		ice-cream-sandwich|yota|yota2|lr-kindle|kindle|betayota|yotabeta|*-ics)
 			variant=2
 			;;
 		*)
@@ -32,9 +32,9 @@ updateVersion() {
 	minor=`echo $fixed | cut -d . -f 2`
 	micro=`echo $fixed | cut -d . -f 3`
 	local=`echo $fixed | cut -d . -f 4`
-	if [ "$branch" == "nook" ]; then
+	if [ "$branch" == "nook" -o "$branch" == "lr-nook" ]; then
 		version=$version-nst
-	elif [ "$branch" == "kindle" ]; then
+	elif [ "$branch" == "kindle" -o "$branch" == "lr-kindle" ]; then
 		version=$version-kindlehd
 	fi
 	
