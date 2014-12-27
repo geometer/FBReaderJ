@@ -23,12 +23,12 @@ import android.app.Activity;
 import android.content.*;
 import android.net.Uri;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-
-import org.geometerplus.android.util.PackageUtil;
 
 import org.geometerplus.android.fbreader.api.PluginApi;
 
@@ -49,15 +49,27 @@ public class AuthorisationMenuActivity extends MenuActivity {
 
 	@Override
 	protected void init() {
-		setTitle(NetworkLibrary.resource().getResource("authorisationMenuTitle").getValue());
-		final String url = getIntent().getData().toString();
-		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
+		final String baseUrl = getIntent().getData().toString();
+		final ZLResource resource = NetworkLibrary.resource();
+
+		setTitle(resource.getResource("authorisationMenuTitle").getValue());
+		myLink = NetworkLibrary.Instance().getLinkByUrl(baseUrl);
 
 		if (myLink.getUrlInfo(UrlInfo.Type.SignIn) != null) {
 			myInfos.add(new PluginApi.MenuActionInfo(
-				Uri.parse(url + "/signIn"),
-				NetworkLibrary.resource().getResource("signIn").getValue(),
+				Uri.parse(baseUrl + "/signIn"),
+				resource.getResource("signIn").getValue(),
 				0
+			));
+			myInfos.add(new PluginApi.MenuActionInfo(
+				Uri.parse(baseUrl + "/signUp"),
+				resource.getResource("signUp").getValue(),
+				1
+			));
+			myInfos.add(new PluginApi.MenuActionInfo(
+				Uri.parse(baseUrl + "/quickBuy"),
+				resource.getResource("quickBuy").getValue(),
+				2
 			));
 		}
 	}
@@ -73,11 +85,6 @@ public class AuthorisationMenuActivity extends MenuActivity {
 			final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 			if (info.getId().toString().endsWith("/signIn")) {
 				Util.runAuthenticationDialog(AuthorisationMenuActivity.this, myLink, null);
-			} else {
-				final Intent intent = Util.authorisationIntent(myLink, info.getId());
-				if (PackageUtil.canBeStarted(AuthorisationMenuActivity.this, intent, true)) {
-					startActivity(intent);
-				}
 			}
 		} catch (Exception e) {
 			// do nothing
