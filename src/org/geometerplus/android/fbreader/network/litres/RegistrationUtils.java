@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ public class RegistrationUtils {
 	private void collectEMails() {
 		if (myEMails != null) {
 			return;
-		} 
+		}
 		try {
 			final Class<?> cls$AccountManager = Class.forName("android.accounts.AccountManager");
 			final Class<?> cls$Account = Class.forName("android.accounts.Account");
@@ -78,7 +78,7 @@ public class RegistrationUtils {
 					&& meth$AccountManager$getAccountsByType.getReturnType().getComponentType() == cls$Account
 					&& fld$Account$name.getType() == String.class) {
 				final Object mgr = meth$AccountManager$get.invoke(null, myContext);
-				final Object[] accountsByType = (Object[]) meth$AccountManager$getAccountsByType.invoke(mgr, "com.google"); 
+				final Object[] accountsByType = (Object[]) meth$AccountManager$getAccountsByType.invoke(mgr, "com.google");
 				myEMails = new ArrayList<String>(accountsByType.length);
 				for (Object a: accountsByType) {
 					final String value = (String) fld$Account$name.get(a);
