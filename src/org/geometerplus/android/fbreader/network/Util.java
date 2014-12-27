@@ -79,8 +79,8 @@ public abstract class Util implements UserRegistrationConstants {
 		});
 	}
 
-	public static Intent authorisationIntent(INetworkLink link, Uri id) {
-		final Intent intent = new Intent(AUTHORISATION_ACTION, id);
+	public static Intent authorisationIntent(INetworkLink link, Activity activity, Class<? extends Activity> cls) {
+		final Intent intent = new Intent(activity, cls);
 		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
 		intent.putExtra(SIGNIN_URL, link.getUrl(UrlInfo.Type.SignIn));
 		intent.putExtra(SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));
