@@ -14,13 +14,13 @@
 	>
 		<TextView
 			xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/lr_auto_registration_text"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:layout_alignParentTop="true"
-      android:paddingLeft="10dip"
-      android:paddingRight="10dip"
-      android:paddingBottom="14dip"
+			android:id="@+id/lr_auto_registration_text"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_alignParentTop="true"
+			android:paddingLeft="10dip"
+			android:paddingRight="10dip"
+			android:paddingBottom="14dip"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 		/>
 		<include layout="@layout/lr_action_item" android:id="@+id/lr_auto_registration_action_signin" />
