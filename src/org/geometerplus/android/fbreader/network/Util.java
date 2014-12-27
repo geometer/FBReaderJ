@@ -39,7 +39,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
-	static final String AUTHORIZATION_ACTION = "android.fbreader.action.network.AUTHORIZATION";
+	static final String AUTHORISATION_ACTION = "android.fbreader.action.network.AUTHORISATION";
 	static final String SIGNIN_ACTION = "android.fbreader.action.network.SIGNIN";
 	static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
 	static final String EXTRA_CATALOG_ACTION = "android.fbreader.action.network.EXTRA_CATALOG";
@@ -81,7 +81,7 @@ public abstract class Util implements UserRegistrationConstants {
 	}
 
 	static Intent authorisationIntent(INetworkLink link, Uri id) {
-		final Intent intent = new Intent(AUTHORIZATION_ACTION, id);
+		final Intent intent = new Intent(AUTHORISATION_ACTION, id);
 		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
 		intent.putExtra(SIGNIN_URL, link.getUrl(UrlInfo.Type.SignIn));
 		intent.putExtra(SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));
