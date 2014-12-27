@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/lr_user_registration_dialog"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingTop="15dp"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:orientation="vertical"
+	>
+		<TextView
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/lr_auto_registration_text"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_alignParentTop="true"
+			android:paddingLeft="10dip"
+			android:paddingRight="10dip"
+			android:paddingBottom="14dip"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+		/>
+		<include layout="@layout/lr_action_item" android:id="@+id/lr_auto_registration_action_signin" />
+		<include layout="@layout/lr_action_item" android:id="@+id/lr_auto_registration_action_recover" />
+		<include layout="@layout/lr_action_item" android:id="@+id/lr_auto_registration_action_change_email" />
+		<include layout="@layout/lr_email_control" android:id="@+id/lr_auto_registration_email_control" />
+		<include layout="@layout/ok_cancel_buttons" android:id="@+id/lr_auto_registration_buttons" />
+	</LinearLayout>
+</ScrollView>

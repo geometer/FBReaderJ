@@ -19,7 +19,13 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import java.io.InputStream;
+import java.io.IOException;
 import java.util.*;
+
+import org.geometerplus.zlibrary.core.network.*;
+
+import org.geometerplus.fbreader.network.opds.*;
 
 class BookElementsHolder {
 	private final Runnable myScreenRefresher;
@@ -57,6 +63,38 @@ class BookElementsHolder {
 	private void startLoading(final String url, final List<BookElement> elements) {
 		new Thread() {
 			public void run() {
+				final SimpleOPDSFeedHandler handler = new SimpleOPDSFeedHandler(url);
+				try {
+					new QuietNetworkContext().perform(new ZLNetworkRequest.Get(url, true) {
+						@Override
+						public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
+							new OPDSXMLReader(handler, false).read(inputStream);
+						}
+					});
+					if (handler.books().isEmpty()) {
+						throw new RuntimeException();
+					}
+					myTimer = null;
+				} catch (Exception e) {
+					if (myTimer == null) {
+						myTimer = new Timer();
+					}
+					myTimer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							startLoading(url, elements);
+						}
+					}, 10000);
+					e.printStackTrace();
+					return;
+				}
+				final List<OPDSBookItem> items = handler.books();
+				int index = 0;
+				for (BookElement book : elements) {
+					book.setData(items.get(index));
+					index = (index + 1) % items.size();
+					myScreenRefresher.run();
+				}
 			}
 		}.start();
 	}

@@ -31,6 +31,8 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.fbreader.api.PluginApi;
+import org.geometerplus.android.fbreader.network.litres.AutoRegistrationActivity;
+import org.geometerplus.android.fbreader.network.litres.UserRegistrationActivity;
 
 public class AuthorisationMenuActivity extends MenuActivity {
 	public static void runMenu(Context context, INetworkLink link) {
@@ -61,16 +63,18 @@ public class AuthorisationMenuActivity extends MenuActivity {
 				resource.getResource("signIn").getValue(),
 				0
 			));
-			myInfos.add(new PluginApi.MenuActionInfo(
-				Uri.parse(baseUrl + "/signUp"),
-				resource.getResource("signUp").getValue(),
-				1
-			));
-			myInfos.add(new PluginApi.MenuActionInfo(
-				Uri.parse(baseUrl + "/quickBuy"),
-				resource.getResource("quickBuy").getValue(),
-				2
-			));
+			if (myLink.authenticationManager() != null) {
+				myInfos.add(new PluginApi.MenuActionInfo(
+					Uri.parse(baseUrl + "/signUp"),
+					resource.getResource("signUp").getValue(),
+					1
+				));
+				myInfos.add(new PluginApi.MenuActionInfo(
+					Uri.parse(baseUrl + "/quickBuy"),
+					resource.getResource("quickBuy").getValue(),
+					2
+				));
+			}
 		}
 	}
 
@@ -85,6 +89,10 @@ public class AuthorisationMenuActivity extends MenuActivity {
 			final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 			if (info.getId().toString().endsWith("/signIn")) {
 				Util.runAuthenticationDialog(AuthorisationMenuActivity.this, myLink, null);
+			} else if (info.getId().toString().endsWith("/signUp")) {
+				startActivity(Util.authorisationIntent(myLink, this, UserRegistrationActivity.class));
+			} else if (info.getId().toString().endsWith("/quickBuy")) {
+				startActivity(Util.authorisationIntent(myLink, this, AutoRegistrationActivity.class));
 			}
 		} catch (Exception e) {
 			// do nothing
