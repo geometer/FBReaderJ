@@ -42,8 +42,7 @@ public class SignUpAction extends Action {
 			return false;
 		}
 
-		final INetworkLink link = tree.getLink();
-		final NetworkAuthenticationManager mgr = link.authenticationManager();
+		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		return mgr != null && !mgr.mayBeAuthorised(false);
 	}
 
