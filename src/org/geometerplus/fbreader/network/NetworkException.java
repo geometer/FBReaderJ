@@ -30,9 +30,9 @@ public abstract class NetworkException extends ZLNetworkException {
 	public static final String ERROR_BOOK_NOT_PURCHASED = "bookNotPurchased";
 	public static final String ERROR_DOWNLOAD_LIMIT_EXCEEDED = "downloadLimitExceeded";
 
-	public static final String ERROR_EMAIL_WAS_NOT_SPECIFIED = "emailNotSpecified";
+	public static final String ERROR_EMAIL_NOT_SPECIFIED = "emailNotSpecified";
 
-	public static final String ERROR_NO_USER_EMAIL = "noUserEmail";
+	public static final String ERROR_NO_USER_FOR_EMAIL = "noUserForEmail";
 
 	public static final String ERROR_UNSUPPORTED_OPERATION = "unsupportedOperation";
 

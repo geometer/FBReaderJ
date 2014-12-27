@@ -23,7 +23,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.network.ZLNetworkAuthenticationException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
+public class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 	private static final String TAG_AUTHORIZATION_OK = "catalit-authorization-ok";
 	private static final String TAG_AUTHORIZATION_FAILED = "catalit-authorization-failed";
 
