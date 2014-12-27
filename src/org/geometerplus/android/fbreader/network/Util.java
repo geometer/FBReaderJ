@@ -38,8 +38,10 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
+import org.geometerplus.android.fbreader.network.litres.UserRegistrationActivity;
+
 public abstract class Util implements UserRegistrationConstants {
-	static final String AUTHORIZATION_ACTION = "android.fbreader.action.network.AUTHORIZATION";
+	static final String AUTHORISATION_ACTION = "android.fbreader.action.network.AUTHORISATION";
 	static final String SIGNIN_ACTION = "android.fbreader.action.network.SIGNIN";
 	static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
 	static final String EXTRA_CATALOG_ACTION = "android.fbreader.action.network.EXTRA_CATALOG";
@@ -80,8 +82,8 @@ public abstract class Util implements UserRegistrationConstants {
 		});
 	}
 
-	static Intent authorisationIntent(INetworkLink link, Uri id) {
-		final Intent intent = new Intent(AUTHORIZATION_ACTION, id);
+	static Intent authorisationIntent(INetworkLink link, Activity activity, Class<? extends Activity> cls) {
+		final Intent intent = new Intent(activity, cls);
 		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
 		intent.putExtra(SIGNIN_URL, link.getUrl(UrlInfo.Type.SignIn));
 		intent.putExtra(SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));
@@ -89,21 +91,17 @@ public abstract class Util implements UserRegistrationConstants {
 		return intent;
 	}
 
-	private static Intent registrationIntent(INetworkLink link) {
-		return authorisationIntent(link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register"));
-	}
-
-	public static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
-		return PackageUtil.canBeStarted(activity, registrationIntent(link), true);
+	public static boolean isRegistrationSupported(INetworkLink link) {
+		return "litres.ru".equals(link.getHostName());
 	}
 
 	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
-		try {
-			final Intent intent = registrationIntent(link);
-			if (PackageUtil.canBeStarted(activity, intent, true)) {
+		if (isRegistrationSupported(link)) {
+			try {
+				final Intent intent = authorisationIntent(link, activity, UserRegistrationActivity.class);
 				activity.startActivity(intent);
+			} catch (ActivityNotFoundException e) {
 			}
-		} catch (ActivityNotFoundException e) {
 		}
 	}
 

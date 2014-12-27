@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,31 +24,47 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkException;
 
-public class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
-	private static final String TAG_PASSWORD_RECOVERY_OK = "catalit-pass-recover-ok";
-	private static final String TAG_PASSWORD_RECOVERY_FAILED = "catalit-pass-recover-failed";
+public class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
+	private static final String TAG_AUTHORIZATION_OK = "catalit-authorization-ok";
+	private static final String TAG_REGISTRATION_FAILED = "catalit-registration-failed";
+
+	public String Sid;
+
+	public static final class AlreadyInUseException extends ZLNetworkException {
+		public AlreadyInUseException(String code) {
+			super(errorMessage(code));
+		}
+	}
 
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
-		if (TAG_PASSWORD_RECOVERY_FAILED == tag) {
+		if (TAG_REGISTRATION_FAILED == tag) {
 			final String error = attributes.getValue("error");
 			if ("1".equals(error)) {
-				setException(ZLNetworkException.forCode(NetworkException.ERROR_NO_USER_FOR_EMAIL));
+				setException(new AlreadyInUseException("usernameAlreadyInUse"));
 			} else if ("2".equals(error)) {
-				setException(ZLNetworkException.forCode(NetworkException.ERROR_EMAIL_NOT_SPECIFIED));
+				setException(ZLNetworkException.forCode("usernameNotSpecified"));
+			} else if ("3".equals(error)) {
+				setException(ZLNetworkException.forCode("passwordNotSpecified"));
+			} else if ("4".equals(error)) {
+				setException(ZLNetworkException.forCode("invalidEMail"));
+			} else if ("5".equals(error)) {
+				setException(ZLNetworkException.forCode("tooManyRegistrations"));
+			} else if ("6".equals(error)) {
+				setException(new AlreadyInUseException("emailAlreadyInUse"));
 			} else {
 				final String comment = attributes.getValue("coment");
 				if (comment != null) {
 					setException(new ZLNetworkException(comment));
 				} else {
-					setException(ZLNetworkException.forCode(NetworkException.ERROR_INTERNAL, error));
+					setException(ZLNetworkException.forCode(NetworkException.ERROR_INTERNAL));
 				}
 			}
-		} else if (TAG_PASSWORD_RECOVERY_OK == tag) {
-			// NOP
+		} else if (TAG_AUTHORIZATION_OK == tag) {
+			Sid = attributes.getValue("sid");
 		} else {
-			setException(ZLNetworkException.forCode(ZLNetworkException.ERROR_SOMETHING_WRONG, LitResUtil.HOST_NAME));
+			setException(ZLNetworkException.forCode("somethingWrongMessage", LitResUtil.HOST_NAME));
 		}
 		return true;
 	}

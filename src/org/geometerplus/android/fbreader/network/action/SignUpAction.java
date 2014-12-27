@@ -44,7 +44,7 @@ public class SignUpAction extends Action {
 		return
 			mgr != null &&
 			!mgr.mayBeAuthorised(false) &&
-			Util.isRegistrationSupported(myActivity, link);
+			Util.isRegistrationSupported(link);
 	}
 
 	@Override
