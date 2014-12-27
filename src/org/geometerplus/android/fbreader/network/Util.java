@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -37,8 +36,6 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
-
-import org.geometerplus.android.fbreader.network.litres.UserRegistrationActivity;
 
 public abstract class Util implements UserRegistrationConstants {
 	static final String AUTHORISATION_ACTION = "android.fbreader.action.network.AUTHORISATION";
@@ -89,20 +86,6 @@ public abstract class Util implements UserRegistrationConstants {
 		intent.putExtra(SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));
 		intent.putExtra(RECOVER_PASSWORD_URL, link.getUrl(UrlInfo.Type.RecoverPassword));
 		return intent;
-	}
-
-	public static boolean isRegistrationSupported(INetworkLink link) {
-		return "litres.ru".equals(link.getHostName());
-	}
-
-	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
-		if (isRegistrationSupported(link)) {
-			try {
-				final Intent intent = authorisationIntent(link, activity, UserRegistrationActivity.class);
-				activity.startActivity(intent);
-			} catch (ActivityNotFoundException e) {
-			}
-		}
 	}
 
 	public static void runAuthenticationDialog(Activity activity, INetworkLink link, Runnable onSuccess) {
