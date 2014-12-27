@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="Припинити пошук"/>
 		<node name="signIn" value="Увійти"/>
 		<node name="signOut" value="Вийти (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="Поповнити рахунок (поточний рахунок: %s)"/>
 		<node name="topupTitle" value="Поповнити рахунок"/>
 		<node name="topupViaBrowser" value="Відкрити сторінку веб-переглядачем"/>
@@ -878,6 +880,26 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="Файл вже є на пристрої. Завантажити заново?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Реєстрація нового користувача"/>
+			<node name="login" value="Ім’я користувача"/>
+			<node name="password" value="Пароль"/>
+			<node name="confirmPassword" value="Ще раз пароль"/>
+			<node name="email" value="E-mail"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="Завантажується книга «%s»"/>
@@ -897,6 +919,9 @@
 			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка……"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="registerUser" value="Реєструємо користувача. Зачекайте, будь ласка…"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутрішня помилка сервера"/>
@@ -905,11 +930,19 @@
 			<node name="purchaseAlreadyPurchased" value="Книга вже була придбана"/>
 			<node name="bookNotPurchased" value="Книгу не було придбано"/>
 			<node name="downloadLimitExceeded" value="Вичерпано ліміт завантажень"/>
-			<node name="noUserEmail" value="Нема користувача з такою адресою"/>
+			<node name="noUserForEmail" value="Нема користувача з такою адресою"/>
 			<node name="unsupportedOperation" value="Непідтримувана операція"/>
 			<node name="notAnOPDS" value="Це не OPDS каталог"/>
 			<node name="noRequiredInformation" value="Необхідна інформація не знайдена в каталозі"/>
 			<node name="cacheDirectoryError" value="Не вдається створити каталог для кеша"/>
+			<node name="usernameAlreadyInUse" value="Це ім’я користувача зайняте"/>
+			<node name="usernameNotSpecified" value="Введіть ім’я користувача"/>
+			<node name="passwordNotSpecified" value="Введіть пароль"/>
+			<node name="passwordsDoNotMatch" value="Ви ввели 2 різних паролі"/>
+			<node name="emailNotSpecified" value="Введіть поштову адресу"/>
+			<node name="emailAlreadyInUse" value="Email address already in use" toBeTranslated="true"/>
+			<node name="invalidEMail" value="Некоректна поштова адреса"/>
+			<node name="tooManyRegistrations" value="Занадто багато реєстрацій з вашого IP;&#10;спробуйте ще раз через декілька хвилин"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Авторизація"/>

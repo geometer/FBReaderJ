@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="Keresés leállítása"/>
 		<node name="signIn" value="Bejelentkezés"/>
 		<node name="signOut" value="Kijelentkezés (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="Számla feltöltése (Jelenleg: %s)"/>
 		<node name="topupTitle" value="Számla feltöltése"/>
 		<node name="topupViaBrowser" value="Oldal megnyitása böngészőben"/>
@@ -878,6 +880,26 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="A fájl már létezik. Újra letölti?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Felhasználó létrehozása"/>
+			<node name="login" value="Felhasználónév"/>
+			<node name="password" value="Jelszó"/>
+			<node name="confirmPassword" value="Jelszó&#10;megerősítése"/>
+			<node name="email" value="E-mail"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="Könyv letöltése %s"/>
@@ -897,6 +919,9 @@
 			<node name="updatingAccountInformation" value="Fiókadatok frissítése. Egy kis türelmet…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="registerUser" value="Fiók létrehozása. Egy kis türelmet…"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Belső szerverhiba"/>
@@ -905,11 +930,19 @@
 			<node name="purchaseAlreadyPurchased" value="Már megvásárolta a könyvet"/>
 			<node name="bookNotPurchased" value="A könyv nincs megvásárolva"/>
 			<node name="downloadLimitExceeded" value="Túllépte a letöltési korlátot"/>
-			<node name="noUserEmail" value="Nincs regisztrált felhasználónk&#10;ezzel az e-mail címmel"/>
+			<node name="noUserForEmail" value="Nincs regisztrált felhasználónk&#10;ezzel az e-mail címmel"/>
 			<node name="unsupportedOperation" value="Nem támogatott művelet"/>
 			<node name="notAnOPDS" value="Ez nem OPSD formátumú katalógus"/>
 			<node name="noRequiredInformation" value="Szükséges információ nincs megadva a katalógusban"/>
 			<node name="cacheDirectoryError" value="Gyorsítótár létrehozása sikertelen"/>
+			<node name="usernameAlreadyInUse" value="Ez a felhasználónév már foglalt"/>
+			<node name="usernameNotSpecified" value="Adjon meg felhasználónevet"/>
+			<node name="passwordNotSpecified" value="Adjon meg jelszót"/>
+			<node name="passwordsDoNotMatch" value="A két jelszónak meg kell egyeznie."/>
+			<node name="emailNotSpecified" value="Adjon meg egy érvényes e-mail címet"/>
+			<node name="emailAlreadyInUse" value="A megadott e-mail cím már regisztrálva van"/>
+			<node name="invalidEMail" value="Érvénytelen e-mail cím"/>
+			<node name="tooManyRegistrations" value="Túl sok regisztrációs kérés erről az IP-címről;&#10;próbálja meg pár perc múlva ismét!"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Bejelentkezés"/>

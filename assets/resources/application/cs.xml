@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="Zastavit vyhledávání"/>
 		<node name="signIn" value="Přihlásit"/>
 		<node name="signOut" value="Odhlásit (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="topupTitle" value="Doplnit účet"/>
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
@@ -897,6 +899,26 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="Soubor již existuje. Stáhnout ho znovu?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Registrace uživatele"/>
+			<node name="login" value="Uživatelské jméno"/>
+			<node name="password" value="Heslo"/>
+			<node name="confirmPassword" value="Potvrzení&#10;hesla"/>
+			<node name="email" value="E-mail"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
 			<node name="downloadingBook" value="Stahování knihy %s"/>
@@ -916,6 +938,9 @@
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte…"/>
 			<node name="initDRMEngine" value="Inicializace modulu DRM. Čekejte…"/>
 			<node name="acquireLicense" value="Načítání licence. Čekejte…"/>
+			<node name="registerUser" value="Registrace nového účtu. Čekejte..."/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
@@ -924,11 +949,19 @@
 			<node name="purchaseAlreadyPurchased" value="Již zakoupena"/>
 			<node name="bookNotPurchased" value="Kniha nebyla zakoupena"/>
 			<node name="downloadLimitExceeded" value="Překročen limit stahování"/>
-			<node name="noUserEmail" value="Žádný uživatel nebyl zaregistrován&#10;se zadanou e-mailovou adresou"/>
+			<node name="noUserForEmail" value="Žádný uživatel nebyl zaregistrován&#10;se zadanou e-mailovou adresou"/>
 			<node name="unsupportedOperation" value="Nepodporovaná operace"/>
 			<node name="notAnOPDS" value="Toto není OPDS katalog"/>
 			<node name="noRequiredInformation" value="Požadovaná informace není uvedena v katalogu"/>
 			<node name="cacheDirectoryError" value="Nelze vytvořit adresář mezipaměti"/>
+			<node name="usernameAlreadyInUse" value="Uživatelské jméno se již používá"/>
+			<node name="usernameNotSpecified" value="Zadejte uživatelské jméno"/>
+			<node name="passwordNotSpecified" value="Zadejte neprázdné heslo"/>
+			<node name="passwordsDoNotMatch" value="Heslo a potvrzení hesla se musí shodovat."/>
+			<node name="emailNotSpecified" value="Zadejte e-mailovou adresu"/>
+			<node name="emailAlreadyInUse" value="E-mailová adresa se již používá"/>
+			<node name="invalidEMail" value="Neplatná e-mailová adresa"/>
+			<node name="tooManyRegistrations" value="Příliš mnoho registrací z vaší IP;&#10;zkuste to znovu za pár minut"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Ověřování"/>

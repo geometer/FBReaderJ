@@ -117,6 +117,8 @@
 		<node name="stopSearching" value="Parar a pesquisa"/>
 		<node name="signIn" value="Entrar"/>
 		<node name="signOut" value="Sair (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="Depositar na conta (atualmente: %s)"/>
 		<node name="topupTitle" value="Depositar na conta"/>
 		<node name="topupViaBrowser" value="Abrir página no navegador"/>
@@ -891,6 +893,26 @@
 		<node name="redownloadFileBox" value="Redescarregar arquivo">
 			<node name="message" value="O arquivo já existe. Você quer descarregá-lo novamente?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Register User" toBeTranslated="true"/>
+			<node name="login" value="Username" toBeTranslated="true"/>
+			<node name="password" value="Password" toBeTranslated="true"/>
+			<node name="confirmPassword" value="Password&#10;confirmation" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="A tentar ligar, por favor, espere…"/>
 			<node name="downloadingBook" value="Descarregar livro %s"/>
@@ -910,6 +932,9 @@
 			<node name="updatingAccountInformation" value="Atualizando as informações da conta. Por favor, aguarde…"/>
 			<node name="initDRMEngine" value="Inicializando motor DRM. Por favor, aguarde…"/>
 			<node name="acquireLicense" value="Adquirindo licensa. Por favor, aguarde…"/>
+			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError" value="Erro de ligação">
 			<node name="internalError" value="Erro interno do servidor"/>
@@ -918,11 +943,19 @@
 			<node name="purchaseAlreadyPurchased" value="Já comprado"/>
 			<node name="bookNotPurchased" value="Livro não foi comprado"/>
 			<node name="downloadLimitExceeded" value="Limite excedido de download"/>
-			<node name="noUserEmail" value="Nenhum utilizador foi registrado&#10; com o email especificado"/>
+			<node name="noUserForEmail" value="Nenhum utilizador foi registrado&#10; com o email especificado"/>
 			<node name="unsupportedOperation" value="Operação não suportada"/>
 			<node name="notAnOPDS" value="Este não é um catálogo OPDS"/>
 			<node name="noRequiredInformation" value="Informação necessária não está especificada no catálogo"/>
 			<node name="cacheDirectoryError" value="Não foi possível criar diretório de cache"/>
+			<node name="usernameAlreadyInUse" value="Username already in use" toBeTranslated="true"/>
+			<node name="usernameNotSpecified" value="Username should be non-empty" toBeTranslated="true"/>
+			<node name="passwordNotSpecified" value="Password should be non-empty" toBeTranslated="true"/>
+			<node name="passwordsDoNotMatch" value="The entered passwords do not match" toBeTranslated="true"/>
+			<node name="emailNotSpecified" value="Email address is empty" toBeTranslated="true"/>
+			<node name="emailAlreadyInUse" value="Email address already in use" toBeTranslated="true"/>
+			<node name="invalidEMail" value="Invalid email address" toBeTranslated="true"/>
+			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" toBeTranslated="true"/>
 		</node>
 		<node name="AuthenticationDialog" value="Autenticação">
 			<node name="title" value="Autenticação"/>

@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="Dừng tìm kiếm"/>
 		<node name="signIn" value="Đăng nhập"/>
 		<node name="signOut" value="Đăng xuất (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="Làm đầy lại tài khoản (hiện tại: %s)"/>
 		<node name="topupTitle" value="Làm đầy lại tài khoản"/>
 		<node name="topupViaBrowser" value="Mở trang trong trình duyệt"/>
@@ -878,6 +880,26 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="Tập tin đã tồn tại. Tải lại?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Đăng ký"/>
+			<node name="login" value="Người dùng"/>
+			<node name="password" value="Mật khẩu"/>
+			<node name="confirmPassword" value="Mật khẩu&#10;xác nhận"/>
+			<node name="email" value="E-mail"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="Đang tải sách về %s"/>
@@ -897,6 +919,9 @@
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="registerUser" value="Đang đăng ký tài khoản. Xin chờ…"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Lỗi mạng nội bộ "/>
@@ -905,11 +930,19 @@
 			<node name="purchaseAlreadyPurchased" value="Đã mua"/>
 			<node name="bookNotPurchased" value="Sách chưa được mua"/>
 			<node name="downloadLimitExceeded" value="Quá giói hạn tải về"/>
-			<node name="noUserEmail" value="Không người nào đang ký&#10;với địa chỉ email xác định"/>
+			<node name="noUserForEmail" value="Không người nào đang ký&#10;với địa chỉ email xác định"/>
 			<node name="unsupportedOperation" value="Thao tác không được hỗ trợ"/>
 			<node name="notAnOPDS" value="Đây không phải là một catalo OPDS"/>
 			<node name="noRequiredInformation" value="Thông tin yêu cầu không định vị được trong catalo"/>
 			<node name="cacheDirectoryError" value="Không thể tạo thư mục đệm"/>
+			<node name="usernameAlreadyInUse" value="Tài khoản đã có thể dùng"/>
+			<node name="usernameNotSpecified" value="Xin nhập tên người dùng"/>
+			<node name="passwordNotSpecified" value="Xin nhập mật khẩu"/>
+			<node name="passwordsDoNotMatch" value="Mật khẩu và mật khẩu xác nhận phải giống nhau."/>
+			<node name="emailNotSpecified" value="Xin nhập 1 địa chỉ email"/>
+			<node name="emailAlreadyInUse" value="Địa chỉ email đã được sử dụng"/>
+			<node name="invalidEMail" value="Địa chỉ email sai"/>
+			<node name="tooManyRegistrations" value="Có quá nhiều đăng ký từ IP của bạn;&#10;thử lại sau vài phút"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Xác thực"/>

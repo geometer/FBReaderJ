@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="中止搜尋"/>
 		<node name="signIn" value="登入"/>
 		<node name="signOut" value="登出 (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="升級賬戶 (現為: %s)"/>
 		<node name="topupTitle" value="升級賬戶"/>
 		<node name="topupViaBrowser" value="以瀏覽器開啟本頁"/>
@@ -878,6 +880,26 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="檔案已存在，確認重新下載?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="註冊"/>
+			<node name="login" value="用戶名稱"/>
+			<node name="password" value="密碼"/>
+			<node name="confirmPassword" value="確認密碼"/>
+			<node name="email" value="電郵地址"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="正下載 %s"/>
@@ -897,6 +919,9 @@
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="registerUser" value="註冊中，請稍候…"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="伺服器出錯"/>
@@ -905,11 +930,19 @@
 			<node name="purchaseAlreadyPurchased" value="已購買的書藉"/>
 			<node name="bookNotPurchased" value="未購買的書藉"/>
 			<node name="downloadLimitExceeded" value="已超過下載總額"/>
-			<node name="noUserEmail" value="電郵地址未有註冊"/>
+			<node name="noUserForEmail" value="電郵地址未有註冊"/>
 			<node name="unsupportedOperation" value="非法操作"/>
 			<node name="notAnOPDS" value="此非OPDS目錄"/>
 			<node name="noRequiredInformation" value="目錄沒有提供必需的資料"/>
 			<node name="cacheDirectoryError" value="未能創建暫存檔案目錄"/>
+			<node name="usernameAlreadyInUse" value="用戶名稱已被使用"/>
+			<node name="usernameNotSpecified" value="請填上用戶名稱"/>
+			<node name="passwordNotSpecified" value="請填上密碼"/>
+			<node name="passwordsDoNotMatch" value="密碼和確認密碼不一致"/>
+			<node name="emailNotSpecified" value="請填上電郵地址"/>
+			<node name="emailAlreadyInUse" value="電郵地址已被使用"/>
+			<node name="invalidEMail" value="無效的電郵地址"/>
+			<node name="tooManyRegistrations" value="來自你IP的註冊數量太多&#10;請稍後再試"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="驗證"/>

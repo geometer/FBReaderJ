@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="停止搜索"/>
 		<node name="signIn" value="登录"/>
 		<node name="signOut" value="退出 (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="重新输入账号(目前: %s)"/>
 		<node name="topupTitle" value="重新输入账号"/>
 		<node name="topupViaBrowser" value="在浏览器中打开页面"/>
@@ -878,6 +880,26 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="该文件已存在，确认重新下载?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="注册用户"/>
+			<node name="login" value="用户名"/>
+			<node name="password" value="密码"/>
+			<node name="confirmPassword" value="密码确认"/>
+			<node name="email" value="E-mail"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="已下载 %s"/>
@@ -897,6 +919,9 @@
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="registerUser" value="正在注册新账号，请稍等…"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错"/>
@@ -905,11 +930,19 @@
 			<node name="purchaseAlreadyPurchased" value="已购买书籍"/>
 			<node name="bookNotPurchased" value="未购买书籍"/>
 			<node name="downloadLimitExceeded" value="超过下载限制"/>
-			<node name="noUserEmail" value="你的电子邮箱可以注册&#10;"/>
+			<node name="noUserForEmail" value="你的电子邮箱可以注册&#10;"/>
 			<node name="unsupportedOperation" value="非法操作"/>
 			<node name="notAnOPDS" value="没有OPDS书库"/>
 			<node name="noRequiredInformation" value="书库目录中必须的信息没有定义"/>
 			<node name="cacheDirectoryError" value="无法创建缓存目录"/>
+			<node name="usernameAlreadyInUse" value="用户名已经存在"/>
+			<node name="usernameNotSpecified" value="请输入用户名"/>
+			<node name="passwordNotSpecified" value="请输入密码"/>
+			<node name="passwordsDoNotMatch" value="密码和密码确认必须一致."/>
+			<node name="emailNotSpecified" value="请输入你的电子邮箱"/>
+			<node name="emailAlreadyInUse" value="该email已经注册过"/>
+			<node name="invalidEMail" value="无效的电子邮箱"/>
+			<node name="tooManyRegistrations" value="来自你的IP的注册数过多，&#10;请稍候再尝试注册"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="鉴定"/>

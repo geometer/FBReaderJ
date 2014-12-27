@@ -119,6 +119,8 @@
 		<node name="stopSearching" value="Arrêt de la recherche"/>
 		<node name="signIn" value="Connexion"/>
 		<node name="signOut" value="Déconnexion (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="topupTitle" value="Recréditer le compte"/>
 		<node name="topupViaBrowser" value="Ouvrir la page dans le navigateur"/>
@@ -881,6 +883,26 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="Le fichier existe déjà. Le re-télécharger ?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Inscription"/>
+			<node name="login" value="Identifiant"/>
+			<node name="password" value="Mot de passe"/>
+			<node name="confirmPassword" value="Confirmer&#10;le mot de passe"/>
+			<node name="email" value="Email"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Connexion en cours, veuillez patienter…"/>
 			<node name="downloadingBook" value="Téléchargement de %s"/>
@@ -900,6 +922,9 @@
 			<node name="updatingAccountInformation" value="Mise à jour des informations du compte, veuillez patienter…"/>
 			<node name="initDRMEngine" value="Initialisation du moteur DRM, veuillez patienter…"/>
 			<node name="acquireLicense" value="Récupération de la licence, veuillez patienter…"/>
+			<node name="registerUser" value="Inscription en cours. Veuillez patienter…"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>
@@ -908,11 +933,19 @@
 			<node name="purchaseAlreadyPurchased" value="Déjà acheté"/>
 			<node name="bookNotPurchased" value="Le livre n'a pas été acheté"/>
 			<node name="downloadLimitExceeded" value="Limite de téléchargement atteinte"/>
-			<node name="noUserEmail" value="Aucun utilisateur n'est inscrit&#10;avec l'adresse email indiquée"/>
+			<node name="noUserForEmail" value="Aucun utilisateur n'est inscrit&#10;avec l'adresse email indiquée"/>
 			<node name="unsupportedOperation" value="Opération non supportée"/>
 			<node name="notAnOPDS" value="Il ne s'agit pas d'un catalogue OPDS"/>
 			<node name="noRequiredInformation" value="Certaines informations requises sont absentes du catalogue"/>
 			<node name="cacheDirectoryError" value="Impossible de créer le répertoire contenant le cache"/>
+			<node name="usernameAlreadyInUse" value="Identifiant déjà utilisé"/>
+			<node name="usernameNotSpecified" value="Veuillez entrer un identifiant"/>
+			<node name="passwordNotSpecified" value="Veuillez entrer un mot de passe non vide"/>
+			<node name="passwordsDoNotMatch" value="Les deux mots de passe indiqués doivent être les mêmes."/>
+			<node name="emailNotSpecified" value="Veuillez entrer une adresse email"/>
+			<node name="emailAlreadyInUse" value="Email address already in use" toBeTranslated="true"/>
+			<node name="invalidEMail" value="Adresse email invalide"/>
+			<node name="tooManyRegistrations" value="Trop d'inscriptions depuis votre IP ;&#10;essayer à nouvea dans quelques minutes"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentification"/>

@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="ძებნის შეჩერება"/>
 		<node name="signIn" value="შესვლა"/>
 		<node name="signOut" value="გამოსვლა (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="ანგარიშის შევსება (ბალანსი: %s)"/>
 		<node name="topupTitle" value="გადახდა"/>
 		<node name="topupViaBrowser" value="ბრაუზერის ფანჯარაში"/>
@@ -893,6 +895,26 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="ფაილი უკვე არის მოწყობილობაში. ახლიდან გადმოიწეროს?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Register User" toBeTranslated="true"/>
+			<node name="login" value="Username" toBeTranslated="true"/>
+			<node name="password" value="Password" toBeTranslated="true"/>
+			<node name="confirmPassword" value="Password&#10;confirmation" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="იტვირთება წიგნი %s"/>
@@ -912,6 +934,9 @@
 			<node name="updatingAccountInformation" value="იტვირთება ინფორმაცია ანგარიშის შესახებ. გთხოვთ, დაიცადოთ…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="სერვერსშიდა შეცდომა"/>
@@ -920,11 +945,19 @@
 			<node name="purchaseAlreadyPurchased" value="წიგნი უკვე ნაყიდია"/>
 			<node name="bookNotPurchased" value="წიგნი არ არის ნაყიდი"/>
 			<node name="downloadLimitExceeded" value="გადმოწერების ლიმიტი ამოწურულია"/>
-			<node name="noUserEmail" value="ამ ელექტრონული მისამართით არ არის დარეგისტრირებული მომხმარებელი"/>
+			<node name="noUserForEmail" value="ამ ელექტრონული მისამართით არ არის დარეგისტრირებული მომხმარებელი"/>
 			<node name="unsupportedOperation" value="არ არის ოპერაციული მხარდაჭერა"/>
 			<node name="notAnOPDS" value="ეს არ არის OPDS კატალოგი"/>
 			<node name="noRequiredInformation" value="ინფორმაცია არ არის კატალოგში"/>
 			<node name="cacheDirectoryError" value="არ ხერხდება ქეშისთვის კატალოგის შექმნა"/>
+			<node name="usernameAlreadyInUse" value="Username already in use" toBeTranslated="true"/>
+			<node name="usernameNotSpecified" value="Username should be non-empty" toBeTranslated="true"/>
+			<node name="passwordNotSpecified" value="Password should be non-empty" toBeTranslated="true"/>
+			<node name="passwordsDoNotMatch" value="The entered passwords do not match" toBeTranslated="true"/>
+			<node name="emailNotSpecified" value="Email address is empty" toBeTranslated="true"/>
+			<node name="emailAlreadyInUse" value="Email address already in use" toBeTranslated="true"/>
+			<node name="invalidEMail" value="Invalid email address" toBeTranslated="true"/>
+			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" toBeTranslated="true"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="ავტორიზაცია"/>
