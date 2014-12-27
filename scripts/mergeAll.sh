@@ -40,4 +40,19 @@ git checkout intro-ics
 git merge yota2
 git merge intro
 
+git checkout lr
+git merge master
+
+git checkout lr-ics
+git merge lr
+git merge yota2
+
+git checkout lr-kindle
+git merge lr
+git merge kindle
+
+git checkout lr-nook
+git merge lr
+git merge nook
+
 git checkout master
