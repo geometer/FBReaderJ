@@ -64,7 +64,7 @@ public class AuthorisationMenuActivity extends MenuActivity {
 
 	@Override
 	protected String getAction() {
-		return Util.AUTHORIZATION_ACTION;
+		return Util.AUTHORISATION_ACTION;
 	}
 
 	@Override
