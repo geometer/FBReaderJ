@@ -1,5 +1,4 @@
-===== 2.2 (Nov ??, 2014) =====
-* (planned) Bookshelf library view (plugin)
+===== 2.2.1 (Jan ??, 2015) =====
 * (planned) Tablet-oriented preferences dialog
 * (planned) Material Design support
 * (planned) Sync: single book upload
@@ -7,7 +6,12 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.2 (Dec 31, 2014) =====
+* Progress indicator in local/network library for Lollipop+
+* (planned) Bookshelf library view (plugin)
+
 ===== 2.1.13 (Dec 24, 2014) =====
+* New start screen fro newbies
 
 ===== 2.1.12 (Dec 14, 2014) =====
 * Fixed an infinite loop (and OOM) on rendering some formatted ePubs
