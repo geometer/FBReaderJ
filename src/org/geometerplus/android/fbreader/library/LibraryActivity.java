@@ -66,7 +66,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				setProgressBarIndeterminateVisibility(!myCollection.status().IsCompleted);
+				showProgress(!myCollection.status().IsCompleted);
 				myRootTree = new RootTree(myCollection);
 				myCollection.addListener(LibraryActivity.this);
 				init(getIntent());
@@ -470,6 +470,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	public void onBuildEvent(IBookCollection.Status status) {
-		setProgressBarIndeterminateVisibility(!status.IsCompleted);
+		showProgress(!status.IsCompleted);
 	}
 }
