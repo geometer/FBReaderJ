@@ -395,7 +395,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		final NetworkTree tree = getCurrentTree();
 		final NetworkTree lTree = getLoadableNetworkTree(tree);
 		final NetworkTree sTree = RunSearchAction.getSearchTree(tree);
-		setProgressBarIndeterminateVisibility(
+		showProgress(
 			library.isUpdateInProgress() ||
 			library.isLoadingInProgress(lTree) ||
 			library.isLoadingInProgress(sTree)
