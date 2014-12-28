@@ -23,8 +23,12 @@ import java.util.*;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.*;
+
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -49,12 +53,19 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	private final List<FBTree.Key> myHistory =
 		Collections.synchronizedList(new ArrayList<FBTree.Key>());
 
+	private ContentLoadingProgressBar myProgressBar;
+
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		} else {
+			setContentView(R.layout.tree_activity);
+			myProgressBar = (ContentLoadingProgressBar)findViewById(R.id.tree_activity_progress);
+		}
 	}
 
 	@Override
@@ -217,6 +228,19 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 			case CANNOT_OPEN:
 				UIUtil.showErrorMessage(TreeActivity.this, tree.getOpeningStatusMessage());
 				break;
+		}
+	}
+
+	protected final void showProgress(boolean show) {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+			setProgressBarIndeterminateVisibility(show);
+		} else if (myProgressBar != null) {
+			if (show) {
+				myProgressBar.setVisibility(View.VISIBLE);
+				myProgressBar.show();
+			} else {
+				myProgressBar.hide();
+			}
 		}
 	}
 }
