@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="empty_string"></string>
-	<string name="permission_library_description">The appication can read and change FBReader library</string>
+	<string name="permission_library_description">The application can read and change FBReader library</string>
 	<string name="permission_library_label">FBReader library interface</string>
-	<string name="permission_config_description">The appication can read and change FBReader settings</string>
+	<string name="permission_config_description">The application can read and change FBReader settings</string>
 	<string name="permission_config_label">FBReader config interface</string>
-	<string name="permission_sync_description">The appication can start FBReader synchronisation process</string>
+	<string name="permission_sync_description">The application can start FBReader synchronisation process</string>
 	<string name="permission_sync_label">FBReader sync interface</string>
 </resources>
