@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="permission_library_description">L\'application peut lire et modifier la bibliothèque de FBReader</string>
+	<string name="permission_library_label">Interface de la bibliothèque FBReader</string>
+	<string name="permission_config_description">L\'application peut lire et modifier les paramètres de FBReader</string>
+	<string name="permission_config_label">Interface de configuration FBReader</string>
+	<string name="permission_sync_description">L\'application peut démarrer le processus de synchronisation de FBReader</string>
+	<string name="permission_sync_label">Interface de synchronisation FBReader</string>
+</resources>
