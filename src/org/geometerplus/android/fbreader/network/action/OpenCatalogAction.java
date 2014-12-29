@@ -105,11 +105,12 @@ public class OpenCatalogAction extends Action {
 		}
 
 		tree.startItemsLoader(myNetworkContext, true, resumeNotLoad);
-		processExtraData(tree.Item.extraData(), new Runnable() {
-			public void run() {
-				doOpenTree(tree);
-			}
-		});
+		doOpenTree(tree);
+//		processExtraData(tree.Item.extraData(), new Runnable() {
+//			public void run() {
+//				doOpenTree(tree);
+//			}
+//		});
 	}
 
 	private void processExtraData(Map<String,String> extraData, final Runnable postRunnable) {
