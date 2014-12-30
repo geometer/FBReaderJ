@@ -29,16 +29,18 @@ import org.geometerplus.zlibrary.text.view.ExtensionElementManager;
 import org.geometerplus.fbreader.network.opds.*;
 
 class BookElementManager extends ExtensionElementManager {
+	private final FBView myView;
 	private final Runnable myScreenRefresher;
 	private final Map<Map<String,String>,List<BookElement>> myCache =
 		new HashMap<Map<String,String>,List<BookElement>>();
 	private Timer myTimer;
 
-	BookElementManager(final FBReaderApp reader) {
+	BookElementManager(final FBView view) {
+		myView = view;
 		myScreenRefresher = new Runnable() {
 			public void run() {
-				reader.getViewWidget().reset();
-				reader.getViewWidget().repaint();
+				view.Application.getViewWidget().reset();
+				view.Application.getViewWidget().repaint();
 			}
 		};
 	}
@@ -55,7 +57,7 @@ class BookElementManager extends ExtensionElementManager {
 				final int count = Integer.valueOf(data.get("size"));
 				elements = new ArrayList<BookElement>(count);
 				for (int i = 0; i < count; ++i) {
-					elements.add(new BookElement());
+					elements.add(new BookElement(myView));
 				}
 				startLoading(data.get("src"), elements);
 			} catch (Throwable t) {
