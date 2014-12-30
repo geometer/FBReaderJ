@@ -103,7 +103,7 @@ class DisplayBookPopupAction extends FBAndroidAction {
 			}
 		}
 
-		final OPDSBookItem item = null;
+		final OPDSBookItem item = element.getItem();
 
 		final TextView headerView = (TextView)bookView.findViewById(R.id.book_popup_header_text);
 		final StringBuilder text = new StringBuilder();

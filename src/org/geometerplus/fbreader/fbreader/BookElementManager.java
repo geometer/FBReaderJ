@@ -85,7 +85,7 @@ class BookElementManager extends ExtensionElementManager {
 					final List<OPDSBookItem> items = handler.books();
 					int index = 0;
 					for (BookElement book : elements) {
-						//book.setData(items.get(index));
+						book.setData(items.get(index));
 						index = (index + 1) % items.size();
 						myScreenRefresher.run();
 					}
