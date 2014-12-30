@@ -70,10 +70,14 @@ class DisplayBookPopupAction extends FBAndroidAction {
 			return;
 		}
 		final ZLTextRegion region = (ZLTextRegion)params[0];
-		if (!(region.getSoul() instanceof BookRegionSoul)) {
+		if (!(region.getSoul() instanceof ExtensionRegionSoul)) {
 			return;
 		}
-		final BookElement element = ((BookRegionSoul)region.getSoul()).Element;
+		final ExtensionElement e = ((ExtensionRegionSoul)region.getSoul()).Element;
+		if (!(e instanceof BookElement)) {
+			return;
+		}
+		final BookElement element = (BookElement)e;
 		if (!element.isInitialized()) {
 			return;
 		}

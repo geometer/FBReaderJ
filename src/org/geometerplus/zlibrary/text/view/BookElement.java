@@ -21,12 +21,14 @@ package org.geometerplus.zlibrary.text.view;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.image.ZLImageManager;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-public final class BookElement extends ZLTextElement {
+public final class BookElement extends ExtensionElement {
 	private OPDSBookItem myItem;
 	private NetworkImage myCover;
 
@@ -59,5 +61,48 @@ public final class BookElement extends ZLTextElement {
 			return null;
 		}
 		return ZLImageManager.Instance().getImageData(myCover);
+	}
+
+	@Override
+	protected int getWidth(ZLTextViewBase view) {
+		// 1/\phi (= 0.618) inch width + 1/10 inch left & right margin
+		return Math.min(ZLibrary.Instance().getDisplayDPI() * 818 / 1000, view.getTextColumnWidth());
+	}
+
+	@Override
+	protected int getHeight(ZLTextViewBase view) {
+		// 1 inch height + 1/15 inch top & bottom margin
+		return ZLibrary.Instance().getDisplayDPI() * 17 / 15;
+	}
+
+	@Override
+	protected void draw(ZLPaintContext context, ZLTextView view, ZLTextElementArea area) {
+		final int vMargin = ZLibrary.Instance().getDisplayDPI() / 15;
+		final int hMargin = ZLibrary.Instance().getDisplayDPI() / 10;
+		final ZLImageData imageData = getImageData();
+		if (imageData != null) {
+			context.drawImage(
+				area.XStart + hMargin, area.YEnd - vMargin,
+				imageData,
+				new ZLPaintContext.Size(
+					area.XEnd - area.XStart - 2 * hMargin + 1,
+					area.YEnd - area.YStart - 2 * vMargin + 1
+				),
+				ZLPaintContext.ScalingType.FitMaximum,
+				ZLPaintContext.ColorAdjustingMode.NONE
+			);
+		} else {
+			context.setLineColor(view.getTextColor(ZLTextHyperlink.NO_LINK));
+			context.setFillColor(view.getTextColor(ZLTextHyperlink.NO_LINK), 0x33);
+			final int xStart = area.XStart + hMargin;
+			final int xEnd = area.XEnd - hMargin;
+			final int yStart = area.YStart + vMargin;
+			final int yEnd = area.YEnd - vMargin;
+			context.fillRectangle(xStart, yStart, xEnd, yEnd);
+			context.drawLine(xStart, yStart, xStart, yEnd);
+			context.drawLine(xStart, yEnd, xEnd, yEnd);
+			context.drawLine(xEnd, yEnd, xEnd, yStart);
+			context.drawLine(xEnd, yStart, xStart, yStart);
+		}
 	}
 }
