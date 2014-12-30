@@ -385,7 +385,7 @@ void ZLTextModel::addVideoEntry(const ZLVideoEntry &entry) {
 	++myParagraphLengths.back();
 }
 
-void ZLTextModel::addFBReaderSpecialEntry(const std::string &action, const std::map<std::string,std::string> &data) {
+void ZLTextModel::addExtensionEntry(const std::string &action, const std::map<std::string,std::string> &data) {
 	std::size_t fullLength = 2;                                      // entry type + map size
 	fullLength += 2 + ZLUnicodeUtil::utf8Length(action) * 2;         // action name
 	for (std::map<std::string,std::string>::const_iterator it = data.begin(); it != data.end(); ++it) {
@@ -394,7 +394,7 @@ void ZLTextModel::addFBReaderSpecialEntry(const std::string &action, const std::
 	}
 
 	myLastEntryStart = myAllocator->allocate(fullLength);
-	*myLastEntryStart = ZLTextParagraphEntry::FBREADER_SPECIAL;
+	*myLastEntryStart = ZLTextParagraphEntry::EXTENSION_ENTRY;
 	*(myLastEntryStart + 1) = data.size();
 
 	char *p = myLastEntryStart + 2;

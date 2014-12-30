@@ -21,11 +21,11 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.util.Map;
 
-public class FBReaderSpecialEntry {
+public class ExtensionEntry {
 	public final String Type;
 	public final Map<String,String> Data;
 
-	FBReaderSpecialEntry(String type, Map<String,String> data) {
+	ExtensionEntry(String type, Map<String,String> data) {
 		Type = type;
 		Data = data;
 	}
@@ -35,10 +35,10 @@ public class FBReaderSpecialEntry {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof FBReaderSpecialEntry)) {
+		if (!(other instanceof ExtensionEntry)) {
 			return false;
 		}
-		final FBReaderSpecialEntry entry = (FBReaderSpecialEntry)other;
+		final ExtensionEntry entry = (ExtensionEntry)other;
 		return Type.equals(entry.Type) && Data.equals(entry.Data);
 	}
 

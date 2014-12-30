@@ -247,9 +247,9 @@ void BookReader::addVideoEntry(const ZLVideoEntry &entry) {
 	}
 }
 
-void BookReader::addFBReaderSpecialEntry(const std::string &action, const std::map<std::string,std::string> &data) {
+void BookReader::addExtensionEntry(const std::string &action, const std::map<std::string,std::string> &data) {
 	if (myCurrentTextModel != 0) {
-		myCurrentTextModel->addFBReaderSpecialEntry(action, data);
+		myCurrentTextModel->addExtensionEntry(action, data);
 	}
 }
 
