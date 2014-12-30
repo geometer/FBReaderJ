@@ -17,23 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.fbreader.fbreader;
 
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.network.opds.*;
 
-class BookElementsHolder {
+class BookElementManager extends ExtensionElementManager {
 	private final Runnable myScreenRefresher;
 	private final Map<Map<String,String>,List<BookElement>> myCache =
 		new HashMap<Map<String,String>,List<BookElement>>();
 	private Timer myTimer;
 
-	BookElementsHolder(final ZLTextView view) {
+	BookElementManager(final ZLTextView view) {
 		myScreenRefresher = new Runnable() {
 			public void run() {
 				view.Application.getViewWidget().reset();
@@ -42,7 +43,12 @@ class BookElementsHolder {
 		};
 	}
 
-	synchronized List<BookElement> getElements(Map<String,String> data) {
+	@Override
+	protected synchronized List<BookElement> getElements(String type, Map<String,String> data) {
+		if (!"opds".equals(type)) {
+			return Collections.emptyList();
+		}
+
 		List<BookElement> elements = myCache.get(data);
 		if (elements == null) {
 			try {

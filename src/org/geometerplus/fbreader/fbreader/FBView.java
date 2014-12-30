@@ -40,6 +40,7 @@ import org.geometerplus.fbreader.fbreader.options.*;
 public final class FBView extends ZLTextView {
 	private final FBReaderApp myReader;
 	private final ViewOptions myViewOptions;
+	private final BookElementManager myBookElementManager = new BookElementManager(this);
 
 	FBView(FBReaderApp reader) {
 		super(reader);
@@ -782,5 +783,10 @@ public final class FBView extends ZLTextView {
 	public synchronized void onScrollingFinished(PageIndex pageIndex) {
 		super.onScrollingFinished(pageIndex);
 		myReader.storePosition();
+	}
+
+	@Override
+	protected ExtensionElementManager getExtensionManager() {
+		return myBookElementManager;
 	}
 }
