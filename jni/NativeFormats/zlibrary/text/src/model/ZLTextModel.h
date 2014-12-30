@@ -78,7 +78,7 @@ public:
 	void addFixedHSpace(unsigned char length);
 	void addBidiReset();
 	void addVideoEntry(const ZLVideoEntry &entry);
-	void addFBReaderSpecialEntry(const std::string &action, const std::map<std::string,std::string> &data);
+	void addExtensionEntry(const std::string &action, const std::map<std::string,std::string> &data);
 
 	void flush();
 
