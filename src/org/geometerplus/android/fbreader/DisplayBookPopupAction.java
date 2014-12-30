@@ -38,6 +38,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.fbreader.BookElement;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
@@ -70,10 +71,14 @@ class DisplayBookPopupAction extends FBAndroidAction {
 			return;
 		}
 		final ZLTextRegion region = (ZLTextRegion)params[0];
-		if (!(region.getSoul() instanceof BookRegionSoul)) {
+		if (!(region.getSoul() instanceof ExtensionRegionSoul)) {
 			return;
 		}
-		final BookElement element = ((BookRegionSoul)region.getSoul()).Element;
+		final ExtensionElement e = ((ExtensionRegionSoul)region.getSoul()).Element;
+		if (!(e instanceof BookElement)) {
+			return;
+		}
+		final BookElement element = (BookElement)e;
 		if (!element.isInitialized()) {
 			return;
 		}
@@ -103,7 +108,7 @@ class DisplayBookPopupAction extends FBAndroidAction {
 			}
 		}
 
-		final OPDSBookItem item = null;
+		final OPDSBookItem item = element.getItem();
 
 		final TextView headerView = (TextView)bookView.findViewById(R.id.book_popup_header_text);
 		final StringBuilder text = new StringBuilder();
