@@ -40,12 +40,13 @@ import org.geometerplus.fbreader.fbreader.options.*;
 public final class FBView extends ZLTextView {
 	private final FBReaderApp myReader;
 	private final ViewOptions myViewOptions;
-	private final BookElementManager myBookElementManager = new BookElementManager(this);
+	private final BookElementManager myBookElementManager;
 
 	FBView(FBReaderApp reader) {
 		super(reader);
 		myReader = reader;
 		myViewOptions = reader.ViewOptions;
+		myBookElementManager = new BookElementManager(reader);
 	}
 
 	public void setModel(ZLTextModel model) {

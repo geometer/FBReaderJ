@@ -24,7 +24,8 @@ import java.io.IOException;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.*;
-import org.geometerplus.zlibrary.text.view.*;
+import org.geometerplus.zlibrary.text.view.BookElement;
+import org.geometerplus.zlibrary.text.view.ExtensionElementManager;
 
 import org.geometerplus.fbreader.network.opds.*;
 
@@ -34,11 +35,11 @@ class BookElementManager extends ExtensionElementManager {
 		new HashMap<Map<String,String>,List<BookElement>>();
 	private Timer myTimer;
 
-	BookElementManager(final ZLTextView view) {
+	BookElementManager(final FBReaderApp reader) {
 		myScreenRefresher = new Runnable() {
 			public void run() {
-				view.Application.getViewWidget().reset();
-				view.Application.getViewWidget().repaint();
+				reader.getViewWidget().reset();
+				reader.getViewWidget().repaint();
 			}
 		};
 	}
@@ -81,6 +82,13 @@ class BookElementManager extends ExtensionElementManager {
 						throw new RuntimeException();
 					}
 					myTimer = null;
+					final List<OPDSBookItem> items = handler.books();
+					int index = 0;
+					for (BookElement book : elements) {
+						book.setData(items.get(index));
+						index = (index + 1) % items.size();
+						myScreenRefresher.run();
+					}
 				} catch (Exception e) {
 					if (myTimer == null) {
 						myTimer = new Timer();
@@ -92,14 +100,6 @@ class BookElementManager extends ExtensionElementManager {
 						}
 					}, 10000);
 					e.printStackTrace();
-					return;
-				}
-				final List<OPDSBookItem> items = handler.books();
-				int index = 0;
-				for (BookElement book : elements) {
-					book.setData(items.get(index));
-					index = (index + 1) % items.size();
-					myScreenRefresher.run();
 				}
 			}
 		}.start();
