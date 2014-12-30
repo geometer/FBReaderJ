@@ -543,7 +543,7 @@ void XHTMLTagPreAction::doAtEnd(XHTMLReader &reader) {
 }
 
 void XHTMLTagOpdsAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
-	bookReader(reader).addFBReaderSpecialEntry("opds", reader.attributeMap(xmlattributes));
+	bookReader(reader).addExtensionEntry("opds", reader.attributeMap(xmlattributes));
 }
 
 void XHTMLTagOpdsAction::doAtEnd(XHTMLReader &reader) {

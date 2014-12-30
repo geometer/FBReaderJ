@@ -30,7 +30,7 @@ public final class BookElement extends ZLTextElement {
 	private OPDSBookItem myItem;
 	private NetworkImage myCover;
 
-	void setData(OPDSBookItem item) {
+	public void setData(OPDSBookItem item) {
 		final String bookUrl = item.getUrl(UrlInfo.Type.Book);
 		String coverUrl = item.getUrl(UrlInfo.Type.Image);
 		if (coverUrl == null) {

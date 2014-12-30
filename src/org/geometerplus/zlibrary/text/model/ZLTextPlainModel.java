@@ -70,8 +70,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		// VideoEntry
 		private ZLVideoEntry myVideoEntry;
 
-		// FBReaderSpecialEntry
-		private FBReaderSpecialEntry myFBReaderSpecialEntry;
+		// ExtensionEntry
+		private ExtensionEntry myExtensionEntry;
 
 		// StyleEntry
 		private ZLTextStyleEntry myStyleEntry;
@@ -125,8 +125,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 			return myVideoEntry;
 		}
 
-		public FBReaderSpecialEntry getFBReaderSpecialEntry() {
-			return myFBReaderSpecialEntry;
+		public ExtensionEntry getExtensionEntry() {
+			return myExtensionEntry;
 		}
 
 		public ZLTextStyleEntry getStyleEntry() {
@@ -272,7 +272,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 					}
 					break;
 				}
-				case ZLTextParagraph.Entry.FBREADER_SPECIAL:
+				case ZLTextParagraph.Entry.EXTENSION:
 				{
 					final short kindLength = (short)data[dataOffset++];
 					final String kind = new String(data, dataOffset, kindLength);
@@ -288,7 +288,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 						map.put(key, new String(data, dataOffset, valueLength));
 						dataOffset += valueLength;
 					}
-					myFBReaderSpecialEntry = new FBReaderSpecialEntry(kind, map);
+					myExtensionEntry = new ExtensionEntry(kind, map);
 					break;
 				}
 			}
