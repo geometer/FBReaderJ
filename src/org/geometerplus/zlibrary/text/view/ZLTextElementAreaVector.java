@@ -71,8 +71,8 @@ final class ZLTextElementAreaVector {
 					soul = new ZLTextVideoRegionSoul(area, (ZLTextVideoElement)area.Element);
 				} else if (area.Element instanceof ZLTextWord && !((ZLTextWord)area.Element).isASpace()) {
 					soul = new ZLTextWordRegionSoul(area, (ZLTextWord)area.Element);
-				} else if (area.Element instanceof BookElement) {
-					soul = new BookRegionSoul(area, (BookElement)area.Element);
+				} else if (area.Element instanceof ExtensionElement) {
+					soul = new ExtensionRegionSoul(area, (ExtensionElement)area.Element);
 				}
 				if (soul != null) {
 					myCurrentElementRegion = new ZLTextRegion(soul, myAreas, myAreas.size());
