@@ -17,32 +17,39 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.fbreader.fbreader;
 
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.text.view.BookElement;
+import org.geometerplus.zlibrary.text.view.ExtensionElementManager;
 
 import org.geometerplus.fbreader.network.opds.*;
 
-class BookElementsHolder {
+class BookElementManager extends ExtensionElementManager {
 	private final Runnable myScreenRefresher;
 	private final Map<Map<String,String>,List<BookElement>> myCache =
 		new HashMap<Map<String,String>,List<BookElement>>();
 	private Timer myTimer;
 
-	BookElementsHolder(final ZLTextView view) {
+	BookElementManager(final FBReaderApp reader) {
 		myScreenRefresher = new Runnable() {
 			public void run() {
-				view.Application.getViewWidget().reset();
-				view.Application.getViewWidget().repaint();
+				reader.getViewWidget().reset();
+				reader.getViewWidget().repaint();
 			}
 		};
 	}
 
-	synchronized List<BookElement> getElements(Map<String,String> data) {
+	@Override
+	protected synchronized List<BookElement> getElements(String type, Map<String,String> data) {
+		if (!"opds".equals(type)) {
+			return Collections.emptyList();
+		}
+
 		List<BookElement> elements = myCache.get(data);
 		if (elements == null) {
 			try {
@@ -75,6 +82,13 @@ class BookElementsHolder {
 						throw new RuntimeException();
 					}
 					myTimer = null;
+					final List<OPDSBookItem> items = handler.books();
+					int index = 0;
+					for (BookElement book : elements) {
+						book.setData(items.get(index));
+						index = (index + 1) % items.size();
+						myScreenRefresher.run();
+					}
 				} catch (Exception e) {
 					if (myTimer == null) {
 						myTimer = new Timer();
@@ -86,14 +100,6 @@ class BookElementsHolder {
 						}
 					}, 10000);
 					e.printStackTrace();
-					return;
-				}
-				final List<OPDSBookItem> items = handler.books();
-				int index = 0;
-				for (BookElement book : elements) {
-					book.setData(items.get(index));
-					index = (index + 1) % items.size();
-					myScreenRefresher.run();
 				}
 			}
 		}.start();

@@ -108,14 +108,9 @@ public final class ZLTextParagraphCursor {
 					case ZLTextParagraph.Entry.VIDEO:
 						elements.add(new ZLTextVideoElement(it.getVideoEntry().sources()));
 						break;
-					case ZLTextParagraph.Entry.FBREADER_SPECIAL:
-					{
-						final FBReaderSpecialEntry entry = it.getFBReaderSpecialEntry();
-						if ("opds".equals(entry.Type)) {
-							elements.addAll(myView.Holder.getElements(entry.Data));
-						}
+					case ZLTextParagraph.Entry.EXTENSION:
+						elements.addAll(myView.getExtensionManager().getElements(it.getExtensionEntry()));
 						break;
-					}
 					case ZLTextParagraph.Entry.STYLE_CSS:
 					case ZLTextParagraph.Entry.STYLE_OTHER:
 						elements.add(new ZLTextStyleElement(it.getStyleEntry()));
