@@ -102,7 +102,7 @@ abstract class ZLTextViewBase extends ZLView {
 		return getContextHeight() - getTopMargin() - getBottomMargin();
 	}
 
-	int getTextColumnWidth() {
+	public int getTextColumnWidth() {
 		return twoColumnView()
 			? (getContextWidth() - getLeftMargin() - getSpaceBetweenColumns() - getRightMargin()) / 2
 			: getContextWidth() - getLeftMargin() - getRightMargin();
@@ -200,7 +200,7 @@ abstract class ZLTextViewBase extends ZLView {
 		} else if (element instanceof ZLTextVideoElement) {
 			return Math.min(300, getTextColumnWidth());
 		} else if (element instanceof ExtensionElement) {
-			return ((ExtensionElement)element).getWidth(this);
+			return ((ExtensionElement)element).getWidth();
 		} else if (element == ZLTextElement.Indent) {
 			return myTextStyle.getFirstLineIndent(metrics());
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
@@ -225,7 +225,7 @@ abstract class ZLTextViewBase extends ZLView {
 		} else if (element instanceof ZLTextVideoElement) {
 			return Math.min(Math.min(200, getTextAreaHeight()), getTextColumnWidth() * 2 / 3);
 		} else if (element instanceof ExtensionElement) {
-			return ((ExtensionElement)element).getHeight(this);
+			return ((ExtensionElement)element).getHeight();
 		}
 		return 0;
 	}

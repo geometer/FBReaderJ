@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.image.ZLImageManager;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.view.*;
@@ -31,8 +32,14 @@ import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public final class BookElement extends ExtensionElement {
+	private final FBView myView;
+
 	private OPDSBookItem myItem;
 	private NetworkImage myCover;
+
+	BookElement(FBView view) {
+		myView = view;
+	}
 
 	public void setData(OPDSBookItem item) {
 		final String bookUrl = item.getUrl(UrlInfo.Type.Book);
@@ -66,19 +73,19 @@ public final class BookElement extends ExtensionElement {
 	}
 
 	@Override
-	protected int getWidth(ZLTextViewBase view) {
+	protected int getWidth() {
 		// 1/\phi (= 0.618) inch width + 1/10 inch left & right margin
-		return Math.min(ZLibrary.Instance().getDisplayDPI() * 818 / 1000, view.getTextColumnWidth());
+		return Math.min(ZLibrary.Instance().getDisplayDPI() * 818 / 1000, myView.getTextColumnWidth());
 	}
 
 	@Override
-	protected int getHeight(ZLTextViewBase view) {
+	protected int getHeight() {
 		// 1 inch height + 1/15 inch top & bottom margin
 		return ZLibrary.Instance().getDisplayDPI() * 17 / 15;
 	}
 
 	@Override
-	protected void draw(ZLPaintContext context, ZLTextView view, ZLTextElementArea area) {
+	protected void draw(ZLPaintContext context, ZLTextElementArea area) {
 		final int vMargin = ZLibrary.Instance().getDisplayDPI() / 15;
 		final int hMargin = ZLibrary.Instance().getDisplayDPI() / 10;
 		final ZLImageData imageData = getImageData();
@@ -94,8 +101,9 @@ public final class BookElement extends ExtensionElement {
 				ZLPaintContext.ColorAdjustingMode.NONE
 			);
 		} else {
-			context.setLineColor(view.getTextColor(ZLTextHyperlink.NO_LINK));
-			context.setFillColor(view.getTextColor(ZLTextHyperlink.NO_LINK), 0x33);
+			final ZLColor color = myView.getTextColor(ZLTextHyperlink.NO_LINK);
+			context.setLineColor(color);
+			context.setFillColor(color, 0x33);
 			final int xStart = area.XStart + hMargin;
 			final int xEnd = area.XEnd - hMargin;
 			final int yStart = area.YStart + vMargin;

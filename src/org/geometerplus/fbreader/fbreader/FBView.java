@@ -46,7 +46,7 @@ public final class FBView extends ZLTextView {
 		super(reader);
 		myReader = reader;
 		myViewOptions = reader.ViewOptions;
-		myBookElementManager = new BookElementManager(reader);
+		myBookElementManager = new BookElementManager(this);
 	}
 
 	public void setModel(ZLTextModel model) {

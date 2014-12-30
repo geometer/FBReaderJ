@@ -942,7 +942,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					context.setFillColor(new ZLColor(196, 196, 196));
 					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
 				} else if (element instanceof ExtensionElement) {
-					((ExtensionElement)element).draw(context, this, area);
+					((ExtensionElement)element).draw(context, area);
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
 					/*
