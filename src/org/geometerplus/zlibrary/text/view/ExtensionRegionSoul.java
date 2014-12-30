@@ -19,10 +19,10 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-public class BookRegionSoul extends ZLTextRegion.Soul {
-	public final BookElement Element;
+public class ExtensionRegionSoul extends ZLTextRegion.Soul {
+	public final ExtensionElement Element;
 
-	BookRegionSoul(ZLTextPosition position, BookElement element) {
+	ExtensionRegionSoul(ZLTextPosition position, ExtensionElement element) {
 		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
 		Element = element;
 	}
