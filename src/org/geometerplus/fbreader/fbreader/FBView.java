@@ -46,7 +46,7 @@ public final class FBView extends ZLTextView {
 		super(reader);
 		myReader = reader;
 		myViewOptions = reader.ViewOptions;
-		myBookElementManager = new BookElementManager(reader);
+		myBookElementManager = new BookElementManager(this);
 	}
 
 	public void setModel(ZLTextModel model) {
@@ -88,7 +88,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion bookRegion = findRegion(x, y, 0, ZLTextRegion.BookFilter);
+		final ZLTextRegion bookRegion = findRegion(x, y, 0, ZLTextRegion.ExtensionFilter);
 		if (bookRegion != null) {
 			myReader.runAction(ActionCode.DISPLAY_BOOK_POPUP, bookRegion);
 			return true;
