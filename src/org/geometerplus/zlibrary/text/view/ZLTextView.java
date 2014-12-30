@@ -68,8 +68,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private final ZLTextParagraphCursorCache myCursorCache = new ZLTextParagraphCursorCache();
 
-	final BookElementsHolder Holder = new BookElementsHolder(this);
-
 	public ZLTextView(ZLApplication application) {
 		super(application);
 	}
@@ -1887,4 +1885,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		return result;
 	}
+
+	protected abstract ExtensionElementManager getExtensionManager();
 }
