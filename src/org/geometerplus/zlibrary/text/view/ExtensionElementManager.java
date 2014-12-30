@@ -25,9 +25,9 @@ import java.util.Map;
 import org.geometerplus.zlibrary.text.model.ExtensionEntry;
 
 public abstract class ExtensionElementManager {
-	final List<BookElement> getElements(ExtensionEntry entry) {
+	final List<? extends ExtensionElement> getElements(ExtensionEntry entry) {
 		return getElements(entry.Type, entry.Data);
 	}
 
-	protected abstract List<BookElement> getElements(String type, Map<String,String> data);
+	protected abstract List<? extends ExtensionElement> getElements(String type, Map<String,String> data);
 }

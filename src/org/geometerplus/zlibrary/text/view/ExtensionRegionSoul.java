@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +19,11 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import org.geometerplus.zlibrary.core.image.ZLImageData;
+public class ExtensionRegionSoul extends ZLTextRegion.Soul {
+	public final ExtensionElement Element;
 
-public final class BookElement extends ZLTextElement {
-	public boolean isInitialized() {
-		return false;
-	}
-
-	public ZLImageData getImageData() {
-		return null;
+	ExtensionRegionSoul(ZLTextPosition position, ExtensionElement element) {
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
+		Element = element;
 	}
 }
