@@ -10,9 +10,10 @@
 * Progress indicator in local/network library for Lollipop+
 * Misc LitRes optimisations
 * (planned) Bookshelf library view (plugin)
+* 'Default book' changed to the new style help for all languages
 
 ===== 2.1.13 (Dec 24, 2014) =====
-* New start screen fro newbies
+* New start screen for newbies
 
 ===== 2.1.12 (Dec 14, 2014) =====
 * Fixed an infinite loop (and OOM) on rendering some formatted ePubs
