@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.*;
-import org.geometerplus.zlibrary.text.view.BookElement;
 import org.geometerplus.zlibrary.text.view.ExtensionElementManager;
 
 import org.geometerplus.fbreader.network.opds.*;

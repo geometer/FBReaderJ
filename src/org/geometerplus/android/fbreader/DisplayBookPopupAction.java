@@ -38,6 +38,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.fbreader.BookElement;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;

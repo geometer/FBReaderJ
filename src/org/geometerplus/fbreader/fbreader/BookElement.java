@@ -17,12 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.image.ZLImageManager;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+
+import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
