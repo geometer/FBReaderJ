@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-public class BookRegionSoul extends ZLTextRegion.Soul {
-	public final BookElement Element;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-	BookRegionSoul(ZLTextPosition position, BookElement element) {
-		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
-		Element = element;
-	}
+public abstract class ExtensionElement extends ZLTextElement {
+	protected abstract int getWidth();
+	protected abstract int getHeight();
+
+	protected abstract void draw(ZLPaintContext context, ZLTextElementArea area);
 }

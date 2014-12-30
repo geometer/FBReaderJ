@@ -118,9 +118,9 @@ public final class ZLTextRegion {
 		}
 	};
 
-	public static Filter BookFilter = new Filter() {
+	public static Filter ExtensionFilter = new Filter() {
 		public boolean accepts(ZLTextRegion region) {
-			return region.getSoul() instanceof BookRegionSoul;
+			return region.getSoul() instanceof ExtensionRegionSoul;
 		}
 	};
 
