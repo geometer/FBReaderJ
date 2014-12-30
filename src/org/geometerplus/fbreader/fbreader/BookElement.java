@@ -17,11 +17,13 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+
+import org.geometerplus.zlibrary.text.view.*;
 
 public final class BookElement extends ExtensionElement {
 	public boolean isInitialized() {
