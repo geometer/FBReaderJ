@@ -61,16 +61,18 @@ public class AuthorisationMenuActivity extends MenuActivity {
 				resource.getResource("signIn").getValue(),
 				0
 			));
-			myInfos.add(new PluginApi.MenuActionInfo(
-				Uri.parse(baseUrl + "/signUp"),
-				resource.getResource("signUp").getValue(),
-				1
-			));
-			myInfos.add(new PluginApi.MenuActionInfo(
-				Uri.parse(baseUrl + "/quickBuy"),
-				resource.getResource("quickBuy").getValue(),
-				2
-			));
+			if (myLink.authenticationManager() != null) {
+				myInfos.add(new PluginApi.MenuActionInfo(
+					Uri.parse(baseUrl + "/signUp"),
+					resource.getResource("signUp").getValue(),
+					1
+				));
+				myInfos.add(new PluginApi.MenuActionInfo(
+					Uri.parse(baseUrl + "/quickBuy"),
+					resource.getResource("quickBuy").getValue(),
+					2
+				));
+			}
 		}
 	}
 
