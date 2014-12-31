@@ -53,8 +53,13 @@ public class DataServer extends NanoHTTPD {
 		try {
 			final ZLImage image = BookUtil.getCover(DataUtil.fileFromEncodedPath(uri.substring(7)));
 			if (image instanceof ZLFileImageProxy) {
-				final InputStream stream = ((ZLFileImageProxy)image).getRealImage().inputStream();
-				return new Response(Response.Status.OK, MimeType.IMAGE_AUTO.toString(), stream);
+				final ZLFileImageProxy proxy = (ZLFileImageProxy)image;
+				proxy.synchronize();
+				final InputStream stream = proxy.getRealImage().inputStream();
+				if (stream == null) {
+					return notFound(uri);
+				}
+				return new Response(Response.Status.OK, MimeType.IMAGE_PNG.toString(), stream);
 			} else /* TODO: process PluginImage & null */ {
 				return notFound(uri);
 			}
