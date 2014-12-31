@@ -26,8 +26,11 @@ import java.util.Map;
 import fi.iki.elonen.NanoHTTPD;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
+
+import org.geometerplus.fbreader.book.BookUtil;
 
 public class DataServer extends NanoHTTPD {
 	DataServer(int port) {
@@ -45,15 +48,12 @@ public class DataServer extends NanoHTTPD {
 		}
 	}
 
-	private Response notFound(String uri) {
-		return new Response(
-			Response.Status.NOT_FOUND,
-			MimeType.TEXT_HTML.toString(),
-			"<html><body><h1>Not found: " + uri + "</h1></body></html>"
-		);
-	}
-
 	private Response serveCover(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
+		try {
+			final ZLImage image = BookUtil.getCover(fileFromEncodedPath(uri.substring(7)));
+		} catch (Exception e) {
+			return forbidden(uri, e);
+		}
 		return notFound(uri);
 	}
 
@@ -69,22 +69,10 @@ public class DataServer extends NanoHTTPD {
 		if (mime == null) {
 			return notFound(uri);
 		}
-		final String encodedPath = uri.substring(mime.length() + 2);
 		try {
-			final StringBuilder path = new StringBuilder();
-			for (String item : encodedPath.split("X")) {
-				if (item.length() == 0) {
-					continue;
-				}
-				path.append((char)Short.parseShort(item, 16));
-			}
-			return serveFile(ZLFile.createFileByPath(path.toString()), mime, headers);
+			return serveFile(fileFromEncodedPath(uri.substring(mime.length() + 2)), mime, headers);
 		} catch (Exception e) {
-			return new Response(
-				Response.Status.FORBIDDEN,
-				MimeType.TEXT_HTML.toString(),
-				"<html><body><h1>" + e.getMessage() + "</h1>\n(" + uri + ")\n(" + encodedPath + ")</body></html>"
-			);
+			return forbidden(uri, e);
 		}
 	}
 
@@ -143,5 +131,33 @@ public class DataServer extends NanoHTTPD {
 
 		res.addHeader("Accept-Ranges", "bytes");
 		return res;
+	}
+
+	private Response notFound(String uri) {
+		return new Response(
+			Response.Status.NOT_FOUND,
+			MimeType.TEXT_HTML.toString(),
+			"<html><body><h1>Not found: " + uri + "</h1></body></html>"
+		);
+	}
+
+	private Response forbidden(String uri, Throwable t) {
+		t.printStackTrace();
+		return new Response(
+			Response.Status.FORBIDDEN,
+			MimeType.TEXT_HTML.toString(),
+			"<html><body><h1>" + t.getMessage() + "</h1>\n(" + uri + ")</body></html>"
+		);
+	}
+
+	private ZLFile fileFromEncodedPath(String encodedPath) {
+		final StringBuilder path = new StringBuilder();
+		for (String item : encodedPath.split("X")) {
+			if (item.length() == 0) {
+				continue;
+			}
+			path.append((char)Short.parseShort(item, 16));
+		}
+		return ZLFile.createFileByPath(path.toString());
 	}
 }
