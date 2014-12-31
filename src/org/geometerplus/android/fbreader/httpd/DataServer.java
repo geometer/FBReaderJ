@@ -36,6 +36,28 @@ public class DataServer extends NanoHTTPD {
 
 	@Override
 	public Response serve(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
+		if (uri.startsWith("/cover/")) {
+			return serveCover(uri, method, headers, params, files);
+		} else if (uri.startsWith("/video")) {
+			return serveVideo(uri, method, headers, params, files);
+		} else {
+			return notFound(uri);
+		}
+	}
+
+	private Response notFound(String uri) {
+		return new Response(
+			Response.Status.NOT_FOUND,
+			MimeType.TEXT_HTML.toString(),
+			"<html><body><h1>Not found: " + uri + "</h1></body></html>"
+		);
+	}
+
+	private Response serveCover(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
+		return notFound(uri);
+	}
+
+	private Response serveVideo(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
 		String mime = null;
 		for (MimeType mimeType : MimeType.TYPES_VIDEO) {
 			final String m = mimeType.toString();
@@ -45,11 +67,7 @@ public class DataServer extends NanoHTTPD {
 			}
 		}
 		if (mime == null) {
-			return new Response(
-				Response.Status.NOT_FOUND,
-				MimeType.TEXT_HTML.toString(),
-				"<html><body><h1>Not found: " + uri + "</h1></body></html>"
-			);
+			return notFound(uri);
 		}
 		final String encodedPath = uri.substring(mime.length() + 2);
 		try {
