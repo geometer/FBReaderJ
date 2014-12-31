@@ -33,7 +33,11 @@ public abstract class DataUtil {
 		return ZLFile.createFileByPath(path.toString());
 	}
 
-	public static String buildUrl(int port, String prefix, String path) {
+	public static String buildUrl(DataService.Connection connection, String prefix, String path) {
+		final int port = connection.getPort();
+		if (port == -1) {
+			return null;
+		}
 		final StringBuilder url = new StringBuilder("http://127.0.0.1:").append(port)
 			.append("/").append(prefix).append("/");
 		for (int i = 0; i < path.length(); ++i) {
