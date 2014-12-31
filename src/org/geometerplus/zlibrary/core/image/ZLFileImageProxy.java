@@ -31,7 +31,7 @@ public abstract class ZLFileImageProxy extends ZLImageSelfSynchronizableProxy {
 	}
 
 	@Override
-	public final ZLImage getRealImage() {
+	public final ZLFileImage getRealImage() {
 		return myImage;
 	}
 
