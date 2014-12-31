@@ -40,12 +40,16 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
+import org.geometerplus.android.fbreader.httpd.DataService;
+import org.geometerplus.android.fbreader.httpd.DataUtil;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 import org.geometerplus.android.util.BitmapCache;
 
 public class LibraryService extends Service {
 	private static SQLiteBooksDatabase ourDatabase;
 	private static final Object ourDatabaseLock = new Object();
+
+	final DataService.Connection DataConnection = new DataService.Connection();
 
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
@@ -329,6 +333,10 @@ public class LibraryService extends Service {
 			return null;
 		}
 
+		public String getCoverUrl(String path) {
+			return DataUtil.buildUrl(DataConnection, "cover", path);
+		}
+
 		private Bitmap getResizedBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
 			if (maxWidth <= 0 || maxHeight <= 0) {
 				return null;
@@ -421,10 +429,18 @@ public class LibraryService extends Service {
 			}
 		}
 		myLibrary = new LibraryImplementation(ourDatabase);
+
+		bindService(
+			new Intent(this, DataService.class),
+			DataConnection,
+			DataService.BIND_AUTO_CREATE
+		);
 	}
 
 	@Override
 	public void onDestroy() {
+		unbindService(DataConnection);
+
 		if (myLibrary != null) {
 			final LibraryImplementation l = myLibrary;
 			myLibrary = null;
