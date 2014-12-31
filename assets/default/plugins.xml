@@ -3,5 +3,6 @@
 	<plugin id="tts_plus" package="com.hyperionics.fbreader.plugin.tts_plus"/>
 	<plugin id="pdf" package="org.geometerplus.fbreader.plugin.pdf" min-api="8"/>
 	<plugin id="djvu" package="org.geometerplus.fbreader.plugin.djvu" min-api="8"/>
+	<!--plugin id="cbr" package="org.geometerplus.fbreader.plugin.cbz" min-api="8"/-->
 	<plugin id="calibre_server_integration" package="org.geometerplus.fbreader.plugin.local_opds_scanner" min-api="9"/>
 </fbreader-plugins>
