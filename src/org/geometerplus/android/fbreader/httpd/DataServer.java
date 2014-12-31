@@ -26,6 +26,7 @@ import java.util.Map;
 import fi.iki.elonen.NanoHTTPD;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLFileImageProxy;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
@@ -50,11 +51,16 @@ public class DataServer extends NanoHTTPD {
 
 	private Response serveCover(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
 		try {
-			final ZLImage image = BookUtil.getCover(fileFromEncodedPath(uri.substring(7)));
+			final ZLImage image = BookUtil.getCover(DataUtil.fileFromEncodedPath(uri.substring(7)));
+			if (image instanceof ZLFileImageProxy) {
+				final InputStream stream = ((ZLFileImageProxy)image).getRealImage().inputStream();
+				return new Response(Response.Status.OK, MimeType.IMAGE_AUTO.toString(), stream);
+			} else /* TODO: process PluginImage & null */ {
+				return notFound(uri);
+			}
 		} catch (Exception e) {
 			return forbidden(uri, e);
 		}
-		return notFound(uri);
 	}
 
 	private Response serveVideo(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
@@ -70,7 +76,7 @@ public class DataServer extends NanoHTTPD {
 			return notFound(uri);
 		}
 		try {
-			return serveFile(fileFromEncodedPath(uri.substring(mime.length() + 2)), mime, headers);
+			return serveFile(DataUtil.fileFromEncodedPath(uri.substring(mime.length() + 2)), mime, headers);
 		} catch (Exception e) {
 			return forbidden(uri, e);
 		}
@@ -148,16 +154,5 @@ public class DataServer extends NanoHTTPD {
 			MimeType.TEXT_HTML.toString(),
 			"<html><body><h1>" + t.getMessage() + "</h1>\n(" + uri + ")</body></html>"
 		);
-	}
-
-	private ZLFile fileFromEncodedPath(String encodedPath) {
-		final StringBuilder path = new StringBuilder();
-		for (String item : encodedPath.split("X")) {
-			if (item.length() == 0) {
-				continue;
-			}
-			path.append((char)Short.parseShort(item, 16));
-		}
-		return ZLFile.createFileByPath(path.toString());
 	}
 }
