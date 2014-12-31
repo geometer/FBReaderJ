@@ -1102,6 +1102,9 @@
 		<node name="djvu" value="DjVu" toBeTranslated="true">
 			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
+		<node name="cbr" value="Comic Books" toBeTranslated="true">
+			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="drm">
 		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>

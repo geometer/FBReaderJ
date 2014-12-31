@@ -907,8 +907,8 @@
 			<node name="email" value="E-mail"/>
 		</node>
 		<node name="litresAutoSignIn">
-			<node name="title" value="Автоматический вход" />
-			<node name="email" value="E-mail" />
+			<node name="title" value="Автоматический вход"/>
+			<node name="email" value="E-mail"/>
 			<node name="actions">
 				<node name="title" value="Не удаётся войти с адресом&#10;%s"/>
 				<node name="recover" value="Выслать информацию для входа"/>
@@ -1119,6 +1119,9 @@
 		</node>
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="Чтение файлов DjVu"/>
+		</node>
+		<node name="cbr" value="Comic Books">
+			<node name="summary" value="Чтение файлов CBR, CBZ"/>
 		</node>
 	</node>
 	<node name="drm">
