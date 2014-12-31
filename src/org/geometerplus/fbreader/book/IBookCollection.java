@@ -86,6 +86,7 @@ public interface IBookCollection {
 	void markHyperlinkAsVisited(Book book, String linkId);
 
 	ZLImage getCover(Book book, int maxWidth, int maxHeight);
+	String getCoverUrl(Book book);
 
 	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);

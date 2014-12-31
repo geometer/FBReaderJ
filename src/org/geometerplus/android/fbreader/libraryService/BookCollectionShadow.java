@@ -417,6 +417,19 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
+	public String getCoverUrl(Book book) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return myInterface.getCoverUrl(book.File.getPath());
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
+	@Override
 	public synchronized List<Bookmark> bookmarks(BookmarkQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
