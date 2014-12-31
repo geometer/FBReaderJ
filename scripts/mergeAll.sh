@@ -33,13 +33,6 @@ git checkout betayota
 git merge beta-ics
 git merge yota2
 
-git checkout intro
-git merge master
-
-git checkout intro-ics
-git merge yota2
-git merge intro
-
 git checkout lr
 git merge master
 
