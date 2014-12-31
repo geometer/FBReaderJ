@@ -661,6 +661,12 @@ public class BookCollection extends AbstractBookCollection {
 		return BookUtil.getCover(book);
 	}
 
+	@Override
+	public String getCoverUrl(Book book) {
+		// not implemented in non-shadow collection
+		return null;
+	}
+
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
 		return myDatabase.loadBookmarks(query);
 	}
