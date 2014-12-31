@@ -45,12 +45,6 @@ class OpenVideoAction extends FBAndroidAction {
 			return;
 		}
 
-		final int port = BaseActivity.DataConnection.getPort();
-		if (port == -1) {
-			UIUtil.showErrorMessage(BaseActivity, "videoServiceNotWorking");
-			return;
-		}
-
 		final ZLTextVideoElement element = ((ZLTextVideoRegionSoul)params[0]).VideoElement;
 		boolean playerNotFound = false;
 		for (MimeType mimeType : MimeType.TYPES_VIDEO) {
@@ -60,7 +54,12 @@ class OpenVideoAction extends FBAndroidAction {
 				continue;
 			}
 			final Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.parse(DataUtil.buildUrl(port, mime, path)), mime);
+			final String url = DataUtil.buildUrl(BaseActivity.DataConnection, mime, path);
+			if (url == null) {
+				UIUtil.showErrorMessage(BaseActivity, "videoServiceNotWorking");
+				return;
+			}
+			intent.setDataAndType(Uri.parse(url), mime);
 			try {
 				BaseActivity.startActivity(intent);
 				return;
