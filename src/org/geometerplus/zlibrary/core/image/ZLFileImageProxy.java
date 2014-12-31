@@ -22,11 +22,11 @@ package org.geometerplus.zlibrary.core.image;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-public abstract class ZLImageFileProxy extends ZLImageSelfSynchronizableProxy {
+public abstract class ZLFileImageProxy extends ZLImageSelfSynchronizableProxy {
 	protected final ZLFile File;
-	private volatile ZLImage myImage;
+	private volatile ZLFileImage myImage;
 
-	protected ZLImageFileProxy(ZLFile file) {
+	protected ZLFileImageProxy(ZLFile file) {
 		File = file;
 	}
 
@@ -58,5 +58,5 @@ public abstract class ZLImageFileProxy extends ZLImageSelfSynchronizableProxy {
 		return File.getPath();
 	}
 
-	protected abstract ZLImage retrieveRealImage();
+	protected abstract ZLFileImage retrieveRealImage();
 }
