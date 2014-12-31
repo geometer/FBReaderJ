@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextVideoRegionSoul;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
+import org.geometerplus.android.fbreader.httpd.DataUtil;
 import org.geometerplus.android.util.UIUtil;
 
 class OpenVideoAction extends FBAndroidAction {
@@ -58,14 +59,8 @@ class OpenVideoAction extends FBAndroidAction {
 			if (path == null) {
 				continue;
 			}
-			final StringBuilder url =
-				new StringBuilder("http://127.0.0.1:").append(port)
-				.append("/").append(mime).append("/");
-			for (int i = 0; i < path.length(); ++i) {
-				url.append(String.format("X%X", (short)path.charAt(i)));
-			}
 			final Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.parse(url.toString()), mime);
+			intent.setDataAndType(Uri.parse(DataUtil.buildUrl(port, mime, path)), mime);
 			try {
 				BaseActivity.startActivity(intent);
 				return;
