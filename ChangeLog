@@ -8,9 +8,9 @@
 
 ===== 2.2 (Dec 31, 2014) =====
 * Progress indicator in local/network library for Lollipop+
-* Misc LitRes optimisations
-* (planned) Bookshelf library view (plugin)
+* Bookshelf library view plugin compatibility
 * 'Default book' changed to the new style help for all languages
+* Misc LitRes optimisations
 
 ===== 2.1.13 (Dec 24, 2014) =====
 * New start screen for newbies
