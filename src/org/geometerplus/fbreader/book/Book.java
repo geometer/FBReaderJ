@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.sort.TitledEntity;
 
 public class Book extends TitledEntity {
@@ -73,7 +73,7 @@ public class Book extends TitledEntity {
 			throw new IllegalArgumentException("Creating book with no file");
 		}
 		myId = -1;
-		final FormatPlugin plugin = getPlugin(file);
+		final FormatPlugin plugin = BookUtil.getPlugin(file);
 		File = plugin.realBookFile(file);
 		readMetainfo(plugin);
 		myIsSaved = false;
@@ -162,20 +162,12 @@ public class Book extends TitledEntity {
 		}
 	}
 
-	private static FormatPlugin getPlugin(ZLFile file) throws BookReadingException {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
-		if (plugin == null) {
-			throw new BookReadingException("pluginNotFound", file);
-		}
-		return plugin;
-	}
-
 	public FormatPlugin getPlugin() throws BookReadingException {
-		return getPlugin(File);
+		return BookUtil.getPlugin(File);
 	}
 
 	public FormatPlugin getPluginOrNull() {
-		return PluginCollection.Instance().getPlugin(File);
+		return BookUtil.getPluginOrNull(File);
 	}
 
 	void readMetainfo() throws BookReadingException {
