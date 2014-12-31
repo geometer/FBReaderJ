@@ -654,10 +654,10 @@
 			<node name="hyperlinkVisited" value="Посещенная ссылка"/>
 			<node name="highlightingForeground" value="Результаты поиска"/>
 			<node name="highlightingBackground" value="Фон результатов поиска"/>
-			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
-			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
-			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
-			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
+			<node name="footerOldStyle" value="Подвал (старый стиль)"/>
+			<node name="footerBackground" value="Фон подвала"/>
+			<node name="footerForeground" value="Текст в подвале"/>
+			<node name="footerForegroundUnread" value="Индикатор в подвале"/>
 		</node>
 		<node name="margins" value="Отступы">
 			<node name="summary" value="Поля вокруг текста"/>
@@ -677,10 +677,10 @@
 				<node name="showAsFooterOldStyle" value="Подвал (старый стиль)"/>
 			</node>
 			<node name="footerHeight" value="Высота подвала"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="Цвет подвала (старый стиль)"/>
+			<node name="footerBackgroundColor" value="Цвет фона подвала"/>
+			<node name="footerForegroundColot" value="Цвет текста в подвале"/>
+			<node name="footerForegroundUnreadColor" value="Цвет индикатора в подвале"/>
 			<node name="tocMarks" value="Показывать метки по главам">
 				<node name="summaryOn" value="Рисовать пометку на подвале в начале главы"/>
 				<node name="summaryOff" value="Подвал без пометок"/>
