@@ -1,10 +1,13 @@
-===== 2.2.1 (Jan ??, 2015) =====
+===== 2.2.2 (Jan ??, 2015) =====
 * (planned) Tablet-oriented preferences dialog
 * (planned) Material Design support
 * (planned) Sync: single book upload
 * (planned) Editable notes (by Tamotsu Takahashi)
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
+
+===== 2.2.1 (Jan ??, 2015) =====
+* Fixed English mistakes (thanks to Sahak Petrosyan)
 
 ===== 2.2 (Dec 31, 2014) =====
 * Progress indicator in local/network library for Lollipop+
