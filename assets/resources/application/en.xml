@@ -1110,6 +1110,9 @@
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="Read books in DjVu format"/>
 		</node>
+		<node name="cbr" value="Comic Books">
+			<node name="summary" value="Read Comic Books (CBR, CBZ)"/>
+		</node>
 	</node>
 	<node name="drm">
 		<node name="encryptedSection" value="Encrypted section"/>
