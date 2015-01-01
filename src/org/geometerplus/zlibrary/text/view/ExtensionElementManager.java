@@ -19,23 +19,15 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-class BookElementsHolder {
-	private static final Map<Map<String,String>,List<BookElement>> ourCache =
-		new HashMap<Map<String,String>,List<BookElement>>();
+import org.geometerplus.zlibrary.text.model.ExtensionEntry;
 
-	static synchronized List<BookElement> getElements(Map<String,String> data) {
-		List<BookElement> elements = ourCache.get(data);
-		if (elements == null) {
-			try {
-				final int count = 0;
-				elements = new ArrayList<BookElement>(count);
-			} catch (Throwable t) {
-				return Collections.emptyList();
-			}
-			ourCache.put(data, elements);
-		}
-		return Collections.unmodifiableList(elements);
+public abstract class ExtensionElementManager {
+	final List<? extends ExtensionElement> getElements(ExtensionEntry entry) {
+		return getElements(entry.Type, entry.Data);
 	}
+
+	protected abstract List<? extends ExtensionElement> getElements(String type, Map<String,String> data);
 }

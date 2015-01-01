@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="Zastavit vyhledávání"/>
 		<node name="signIn" value="Přihlásit"/>
 		<node name="signOut" value="Odhlásit (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="topupTitle" value="Doplnit účet"/>
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
@@ -285,7 +287,7 @@
 		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
-		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
+		<node name="openStartScreen" value="Úvodní obrazovka"/>
 		<node name="preferences" value="Nastavení"/>
 		<node name="bookInfo" value="Informace o knize"/>
 		<node name="library" value="Knihovna"/>
@@ -656,10 +658,10 @@
 			<node name="hyperlinkVisited" value="Navštívený hypertextový odkaz"/>
 			<node name="highlightingForeground" value="Výsledky hledání"/>
 			<node name="highlightingBackground" value="Pozadí výsledků vyhledávání"/>
-			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
-			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
-			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
-			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
+			<node name="footerOldStyle" value="Patička (starý styl)"/>
+			<node name="footerBackground" value="Pozadí patičky"/>
+			<node name="footerForeground" value="Text patičky"/>
+			<node name="footerForegroundUnread" value="Řádek patičky"/>
 		</node>
 		<node name="margins" value="Okraje">
 			<node name="summary" value="Okraje textu"/>
@@ -679,10 +681,10 @@
 				<node name="showAsFooterOldStyle" value="Vodorovná patička (starý styl)"/>
 			</node>
 			<node name="footerHeight" value="Výška patičky"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="Barva patičky (starý styl)"/>
+			<node name="footerBackgroundColor" value="Barva pozadí patičky"/>
+			<node name="footerForegroundColor" value="Barva textu patičky"/>
+			<node name="footerForegroundUnreadColor" value="Barva řádku patičky"/>
 			<node name="tocMarks" value="Zobrazit značky obsahu">
 				<node name="summaryOn" value="Zobrazit značky obsahu v patičce"/>
 				<node name="summaryOff" value="Nezobrazovat značky obsahu v patičce"/>
@@ -896,9 +898,29 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="Soubor již existuje. Stáhnout ho znovu?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Registrace uživatele"/>
+			<node name="login" value="Uživatelské jméno"/>
+			<node name="password" value="Heslo"/>
+			<node name="confirmPassword" value="Potvrzení&#10;hesla"/>
+			<node name="email" value="E-mail"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
-			<node name="downloadingFile" value="Stahování knihy %s"/>
+			<node name="downloadingBook" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte…"/>
 			<node name="loadInfo" value="Načítání informací. Čekejte…"/>
 			<node name="loadingBook" value="Otevírání knihy. Čekejte…"/>
@@ -915,6 +937,9 @@
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte…"/>
 			<node name="initDRMEngine" value="Inicializace modulu DRM. Čekejte…"/>
 			<node name="acquireLicense" value="Načítání licence. Čekejte…"/>
+			<node name="registerUser" value="Registrace nového účtu. Čekejte..."/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
@@ -923,11 +948,19 @@
 			<node name="purchaseAlreadyPurchased" value="Již zakoupena"/>
 			<node name="bookNotPurchased" value="Kniha nebyla zakoupena"/>
 			<node name="downloadLimitExceeded" value="Překročen limit stahování"/>
-			<node name="noUserEmail" value="Žádný uživatel nebyl zaregistrován&#10;se zadanou e-mailovou adresou"/>
+			<node name="noUserForEmail" value="Žádný uživatel nebyl zaregistrován&#10;se zadanou e-mailovou adresou"/>
 			<node name="unsupportedOperation" value="Nepodporovaná operace"/>
 			<node name="notAnOPDS" value="Toto není OPDS katalog"/>
 			<node name="noRequiredInformation" value="Požadovaná informace není uvedena v katalogu"/>
 			<node name="cacheDirectoryError" value="Nelze vytvořit adresář mezipaměti"/>
+			<node name="usernameAlreadyInUse" value="Uživatelské jméno se již používá"/>
+			<node name="usernameNotSpecified" value="Zadejte uživatelské jméno"/>
+			<node name="passwordNotSpecified" value="Zadejte neprázdné heslo"/>
+			<node name="passwordsDoNotMatch" value="Heslo a potvrzení hesla se musí shodovat."/>
+			<node name="emailNotSpecified" value="Zadejte e-mailovou adresu"/>
+			<node name="emailAlreadyInUse" value="E-mailová adresa se již používá"/>
+			<node name="invalidEMail" value="Neplatná e-mailová adresa"/>
+			<node name="tooManyRegistrations" value="Příliš mnoho registrací z vaší IP;&#10;zkuste to znovu za pár minut"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Ověřování"/>
@@ -1033,6 +1066,7 @@
 		<node name="videoPlayerNotFound" value="Bohužel, na tomto zařízení není nainstalovaný žádný přehrávač videa"/>
 		<node name="bookIsMissingTitle" value="Chybějící kniha"/>
 		<node name="bookIsMissing" value="Bohužel, kniha '%s' nebyla v zařízení nalezena"/>
+		<node name="downloadFailed" value="Stahování selhalo"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>
@@ -1084,6 +1118,9 @@
 		</node>
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="Čte knihy ve formátu DjVu"/>
+		</node>
+		<node name="cbr" value="Comic Books" toBeTranslated="true">
+			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

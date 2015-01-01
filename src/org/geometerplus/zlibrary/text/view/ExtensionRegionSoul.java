@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,33 +17,13 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+package org.geometerplus.zlibrary.text.view;
 
-import java.util.Map;
+public class ExtensionRegionSoul extends ZLTextRegion.Soul {
+	public final ExtensionElement Element;
 
-public class FBReaderSpecialEntry {
-	public final String Type;
-	public final Map<String,String> Data;
-
-	FBReaderSpecialEntry(String type, Map<String,String> data) {
-		Type = type;
-		Data = data;
-	}
-
-	@Override
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof FBReaderSpecialEntry)) {
-			return false;
-		}
-		final FBReaderSpecialEntry entry = (FBReaderSpecialEntry)other;
-		return Type.equals(entry.Type) && Data.equals(entry.Data);
-	}
-
-	@Override
-	public int hashCode() {
-		return Type.hashCode() + 23 * Data.hashCode();
+	ExtensionRegionSoul(ZLTextPosition position, ExtensionElement element) {
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
+		Element = element;
 	}
 }

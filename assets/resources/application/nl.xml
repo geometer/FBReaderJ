@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="Stop met zoeken"/>
 		<node name="signIn" value="Aanmelden"/>
 		<node name="signOut" value="Afmelden (%s)"/>
+		<node name="signUp" value="Sign up" toBeTranslated="true"/>
+		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		<node name="topup" value="Account opwaarderen (momenteel: %s)"/>
 		<node name="topupTitle" value="Account opwaarderen"/>
 		<node name="topupViaBrowser" value="Open pagina in de browser"/>
@@ -276,7 +278,7 @@
 		<node name="sharedFrom" value="Gedeeld van &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
-		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
+		<node name="openStartScreen" value="Startscherm"/>
 		<node name="preferences" value="Instellingen"/>
 		<node name="bookInfo" value="Boekinformatie"/>
 		<node name="library" value="Bibliotheek"/>
@@ -647,10 +649,10 @@
 			<node name="hyperlinkVisited" value="Bezochte hyperlink tekst"/>
 			<node name="highlightingForeground" value="Zoekresultaten"/>
 			<node name="highlightingBackground" value="Achtergrond zoekresultaten"/>
-			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
-			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
-			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
-			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
+			<node name="footerOldStyle" value="Onderbalk (oude manier)"/>
+			<node name="footerBackground" value="Onderbalk achtergrond"/>
+			<node name="footerForeground" value="Onderbalk tekst"/>
+			<node name="footerForegroundUnread" value="Onderbalk lijn"/>
 		</node>
 		<node name="margins" value="Marges">
 			<node name="summary" value="Tekst marges"/>
@@ -667,13 +669,13 @@
 				<node name="show" value="Verticale schuifbalk"/>
 				<node name="showAsProgress" value="Verticale voortgangsbalk"/>
 				<node name="showAsFooter" value="Horizontale onderbalk"/>
-				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
+				<node name="showAsFooterOldStyle" value="Horizontale onderbalk (oude manier)"/>
 			</node>
 			<node name="footerHeight" value="Hoogte onderbalk"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="Kleur onderbalk (oude manier)"/>
+			<node name="footerBackgroundColor" value="Onderbalk achtergrondkleur"/>
+			<node name="footerForegroundColor" value="Onderbalk tekstkleur"/>
+			<node name="footerForegroundUnreadColor" value="Onderbalk lijnkleur"/>
 			<node name="tocMarks" value="Toon inhoudsmarkeringen">
 				<node name="summaryOn" value="Toon inhoudsmarkeringen in onderbalk"/>
 				<node name="summaryOff" value="Verberg inhoudsmarkeringen in onderbalk"/>
@@ -811,7 +813,7 @@
 			</node>
 		</node>
 		<node name="about" value="Over FBReader">
-			<node name="summary" value="Versieinformation, contact"/>
+			<node name="summary" value="Versieinformatie, contact"/>
 			<node name="version" value="Versie"/>
 			<node name="site" value="Bezoek onze website">
 				<node name="url" value="http://fbreader.org/"/>
@@ -887,9 +889,29 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="Bestand bestaat al. Opnieuw downloaden?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Register User" toBeTranslated="true"/>
+			<node name="login" value="Username" toBeTranslated="true"/>
+			<node name="password" value="Password" toBeTranslated="true"/>
+			<node name="confirmPassword" value="Password&#10;confirmation" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in" toBeTranslated="true"/>
+			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
+				<node name="recover" value="Recover account information" toBeTranslated="true"/>
+				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
+				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Bezig met verbinden. Een ogenblik…"/>
-			<node name="downloadingFile" value="Boek %s wordt gedownload"/>
+			<node name="downloadingBook" value="Boek %s wordt gedownload"/>
 			<node name="search" value="Bezig met zoeken. Een ogenblik…"/>
 			<node name="loadInfo" value="Informatie wordt geladen. Een ogenblik…"/>
 			<node name="loadingBook" value="Boek wordt geopend. Een ogenblik…"/>
@@ -906,6 +928,9 @@
 			<node name="updatingAccountInformation" value="Accountinformatie wordt bijgewerkt. Een ogenblik…"/>
 			<node name="initDRMEngine" value="DRM-engine wordt geïnitialiseerd. Een ogenblik…"/>
 			<node name="acquireLicense" value="Licentie ophalen. Een ogenblik…"/>
+			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interne serverfout"/>
@@ -914,11 +939,19 @@
 			<node name="purchaseAlreadyPurchased" value="Reeds aangeschaft"/>
 			<node name="bookNotPurchased" value="Boek was niet aangeschaft"/>
 			<node name="downloadLimitExceeded" value="Downloadlimiet bereikt"/>
-			<node name="noUserEmail" value="Er is geen gebruik bekend met het opgegeven e-mailadres"/>
+			<node name="noUserForEmail" value="Er is geen gebruik bekend met het opgegeven e-mailadres"/>
 			<node name="unsupportedOperation" value="Bewerking wordt niet ondersteund"/>
 			<node name="notAnOPDS" value="Dit is geen OPDS-catalogus"/>
 			<node name="noRequiredInformation" value="Aangevraagde informatie is niet beschikbaar in de catalogus"/>
 			<node name="cacheDirectoryError" value="Maken van de cache-map is mislukt"/>
+			<node name="usernameAlreadyInUse" value="Username already in use" toBeTranslated="true"/>
+			<node name="usernameNotSpecified" value="Username should be non-empty" toBeTranslated="true"/>
+			<node name="passwordNotSpecified" value="Password should be non-empty" toBeTranslated="true"/>
+			<node name="passwordsDoNotMatch" value="The entered passwords do not match" toBeTranslated="true"/>
+			<node name="emailNotSpecified" value="Email address is empty" toBeTranslated="true"/>
+			<node name="emailAlreadyInUse" value="Email address already in use" toBeTranslated="true"/>
+			<node name="invalidEMail" value="Invalid email address" toBeTranslated="true"/>
+			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" toBeTranslated="true"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authenticatie"/>
@@ -1024,6 +1057,7 @@
 		<node name="videoPlayerNotFound" value="Er is geen videospeler gevonden op dit apparaat, sorry"/>
 		<node name="bookIsMissingTitle" value="Ontbrekend boek"/>
 		<node name="bookIsMissing" value="Boek '%s' is niet gevonden op dit apparaat, sorry"/>
+		<node name="downloadFailed" value="Download mislukt"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -1075,6 +1109,9 @@
 		</node>
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="Lees boeken in DjVu-formaat"/>
+		</node>
+		<node name="cbr" value="Comic Books" toBeTranslated="true">
+			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

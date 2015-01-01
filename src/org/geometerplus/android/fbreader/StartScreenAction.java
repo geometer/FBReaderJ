@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.android.fbreader;
 
-public class BookRegionSoul extends ZLTextRegion.Soul {
-	public final BookElement Element;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-	BookRegionSoul(ZLTextPosition position, BookElement element) {
-		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
-		Element = element;
+class StartScreenAction extends FBAndroidAction {
+	StartScreenAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader);
+	}
+
+	@Override
+	protected void run(Object ... params) {
+		Reader.openHelpBook();
 	}
 }

@@ -26,8 +26,12 @@ import java.util.Map;
 import fi.iki.elonen.NanoHTTPD;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLFileImageProxy;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
+
+import org.geometerplus.fbreader.book.BookUtil;
 
 public class DataServer extends NanoHTTPD {
 	DataServer(int port) {
@@ -36,6 +40,35 @@ public class DataServer extends NanoHTTPD {
 
 	@Override
 	public Response serve(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
+		if (uri.startsWith("/cover/")) {
+			return serveCover(uri, method, headers, params, files);
+		} else if (uri.startsWith("/video")) {
+			return serveVideo(uri, method, headers, params, files);
+		} else {
+			return notFound(uri);
+		}
+	}
+
+	private Response serveCover(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
+		try {
+			final ZLImage image = BookUtil.getCover(DataUtil.fileFromEncodedPath(uri.substring(7)));
+			if (image instanceof ZLFileImageProxy) {
+				final ZLFileImageProxy proxy = (ZLFileImageProxy)image;
+				proxy.synchronize();
+				final InputStream stream = proxy.getRealImage().inputStream();
+				if (stream == null) {
+					return notFound(uri);
+				}
+				return new Response(Response.Status.OK, MimeType.IMAGE_PNG.toString(), stream);
+			} else /* TODO: process PluginImage & null */ {
+				return notFound(uri);
+			}
+		} catch (Exception e) {
+			return forbidden(uri, e);
+		}
+	}
+
+	private Response serveVideo(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
 		String mime = null;
 		for (MimeType mimeType : MimeType.TYPES_VIDEO) {
 			final String m = mimeType.toString();
@@ -45,28 +78,12 @@ public class DataServer extends NanoHTTPD {
 			}
 		}
 		if (mime == null) {
-			return new Response(
-				Response.Status.NOT_FOUND,
-				MimeType.TEXT_HTML.toString(),
-				"<html><body><h1>Not found: " + uri + "</h1></body></html>"
-			);
+			return notFound(uri);
 		}
-		final String encodedPath = uri.substring(mime.length() + 2);
 		try {
-			final StringBuilder path = new StringBuilder();
-			for (String item : encodedPath.split("X")) {
-				if (item.length() == 0) {
-					continue;
-				}
-				path.append((char)Short.parseShort(item, 16));
-			}
-			return serveFile(ZLFile.createFileByPath(path.toString()), mime, headers);
+			return serveFile(DataUtil.fileFromEncodedPath(uri.substring(mime.length() + 2)), mime, headers);
 		} catch (Exception e) {
-			return new Response(
-				Response.Status.FORBIDDEN,
-				MimeType.TEXT_HTML.toString(),
-				"<html><body><h1>" + e.getMessage() + "</h1>\n(" + uri + ")\n(" + encodedPath + ")</body></html>"
-			);
+			return forbidden(uri, e);
 		}
 	}
 
@@ -125,5 +142,22 @@ public class DataServer extends NanoHTTPD {
 
 		res.addHeader("Accept-Ranges", "bytes");
 		return res;
+	}
+
+	private Response notFound(String uri) {
+		return new Response(
+			Response.Status.NOT_FOUND,
+			MimeType.TEXT_HTML.toString(),
+			"<html><body><h1>Not found: " + uri + "</h1></body></html>"
+		);
+	}
+
+	private Response forbidden(String uri, Throwable t) {
+		t.printStackTrace();
+		return new Response(
+			Response.Status.FORBIDDEN,
+			MimeType.TEXT_HTML.toString(),
+			"<html><body><h1>" + t.getMessage() + "</h1>\n(" + uri + ")</body></html>"
+		);
 	}
 }

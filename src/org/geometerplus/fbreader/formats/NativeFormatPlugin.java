@@ -113,18 +113,18 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	private native int readModelNative(BookModel model);
 
 	@Override
-	public ZLImage readCover(ZLFile file) {
-		return new ZLImageFileProxy(file) {
+	public ZLFileImageProxy readCover(ZLFile file) {
+		return new ZLFileImageProxy(file) {
 			@Override
-			protected ZLImage retrieveRealImage() {
-				final ZLImage[] box = new ZLImage[1];
+			protected ZLFileImage retrieveRealImage() {
+				final ZLFileImage[] box = new ZLFileImage[1];
 				readCoverInternal(File, box);
 				return box[0];
 			}
 		};
 	}
 
-	protected native void readCoverInternal(ZLFile file, ZLImage[] box);
+	protected native void readCoverInternal(ZLFile file, ZLFileImage[] box);
 
 	@Override
 	public String readAnnotation(ZLFile file) {

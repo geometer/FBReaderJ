@@ -60,6 +60,7 @@ public interface IBookCollection {
 	Book getRecentBook(int index);
 	void addBookToRecentList(Book book);
 
+	Book getBookByFile(String path);
 	Book getBookByFile(ZLFile file);
 	Book getBookById(long id);
 	Book getBookByUid(UID uid);
@@ -85,6 +86,7 @@ public interface IBookCollection {
 	void markHyperlinkAsVisited(Book book, String linkId);
 
 	ZLImage getCover(Book book, int maxWidth, int maxHeight);
+	String getCoverUrl(Book book);
 
 	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);

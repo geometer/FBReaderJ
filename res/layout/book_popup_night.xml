@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#222222"
+	android:orientation="vertical"
+>
+	<ScrollView
+		android:scrollbars="vertical"
+		android:fadeScrollbars="true"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="80"
+	>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:paddingTop="25dp"
+			android:paddingLeft="25dp"
+			android:paddingRight="25dp"
+		>
+			<TextView
+				android:id="@+id/book_popup_header_text"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="#AAAAAA"
+			/>
+			<TextView
+				android:id="@+id/book_popup_description_text"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="#AAAAAA"
+			/>
+		</LinearLayout>
+	</ScrollView>
+	<include
+		layout="@layout/ok_cancel_buttons"
+		android:id="@+id/book_popup_buttons"
+		android:layout_weight="20"
+	/>
+</LinearLayout>

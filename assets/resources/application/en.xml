@@ -70,7 +70,7 @@
 	</node>
 	<node name="networkLibrary" value="FBReader network library">
 		<node name="sync" value="FBReader® book network">
-			<node name="summary" value="My personal catalog"/>
+			<node name="summary" value="My personal catalogue"/>
 		</node>
 		<node name="byAuthor" value="By author">
 			<node name="summary" value="Books sorted by author"/>
@@ -86,16 +86,16 @@
 		</node>
 		<node name="search" value="Search">
 			<node name="summary" value="Search books on %s"/>
-			<node name="summaryAllCatalogs" value="Search books in all catalogs"/>
+			<node name="summaryAllCatalogs" value="Search books in all catalogues"/>
 			<node name="summaryInProgress" value="Search in progress"/>
 		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
-		<node name="recent" value="Recent catalogs">
-			<node name="summary" value="Catalogs you visited recently"/>
+		<node name="recent" value="Recent catalogues">
+			<node name="summary" value="Catalogues you visited recently"/>
 		</node>
-		<node name="openCatalog" value="Open catalog"/>
+		<node name="openCatalog" value="Open catalogue"/>
 		<node name="networkSearch" value="Search"/>
 		<node name="showResults" value="Show results"/>
 		<node name="showBooks" value="Show books"/>
@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="Stop searching"/>
 		<node name="signIn" value="Sign in"/>
 		<node name="signOut" value="Sign out (%s)"/>
+		<node name="signUp" value="Sign up"/>
+		<node name="quickBuy" value="Quick buy"/>
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
@@ -133,43 +135,43 @@
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded"/>
 		<node name="stoppingCatalogLoading" value="Stopping loading"/>
 		<node name="stoppingNetworkSearch" value="Stopping search"/>
-		<node name="editCustomCatalog" value="Edit catalog"/>
-		<node name="removeCustomCatalog" value="Remove catalog"/>
-		<node name="addCustomCatalog" value="Add catalog"/>
-		<node name="addCustomCatalogSummary" value="Add custom OPDS catalog manually"/>
-		<node name="disableCatalog" value="Disable catalog"/>
+		<node name="editCustomCatalog" value="Edit catalogue"/>
+		<node name="removeCustomCatalog" value="Remove catalogue"/>
+		<node name="addCustomCatalog" value="Add catalogue"/>
+		<node name="addCustomCatalogSummary" value="Add custom OPDS catalogue manually"/>
+		<node name="disableCatalog" value="Disable catalogue"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>
 			<node name="readDemo" value="Do you want to read sample?"/>
 			<node name="downloadDemo" value="Do you want to download sample?"/>
 			<node name="buy" value="Do you want to buy this book? (%s)"/>
-			<node name="openInBrowser" value="Do you want to open this catalog in browser?"/>
+			<node name="openInBrowser" value="Do you want to open this catalogue in browser?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Downloading catalogs"/>
+		<node name="downloadingCatalogs" value="Downloading catalogues"/>
 		<!-- used as notification title -->
 		<node name="searchingNetwork" value="Searching for books in network"/>
 		<!-- used as notification title -->
 		<node name="addCatalog">
-			<node name="title" value="Add catalog"/>
+			<node name="title" value="Add catalogue"/>
 			<node name="editUrl" value="Enter URL manually"/>
 		</node>
-		<node name="manageCatalogs" value="Manage catalogs">
-			<node name="summary" value="Configure your catalogs list"/>
+		<node name="manageCatalogs" value="Manage catalogues">
+			<node name="summary" value="Configure your catalogues list"/>
 			<node name="enabled" value="Enabled"/>
 			<node name="disabled" value="Disabled"/>
 		</node>
 		<node name="menu">
-			<node name="openRoot" value="Root catalog"/>
+			<node name="openRoot" value="Root catalogue"/>
 			<node name="networkSearch" value="Search"/>
 			<node name="reload" value="Reload"/>
 			<node name="signIn" value="Sign in"/>
 			<node name="signUp" value="Sign up"/>
 			<node name="signOut" value="Sign out (%s)"/>
 			<node name="topup" value="Top up account"/>
-			<node name="addCustomCatalog" value="Add catalog"/>
-			<node name="refreshCatalogsList" value="Refresh catalogs"/>
-			<node name="manageCatalogs" value="Manage catalogs"/>
+			<node name="addCustomCatalog" value="Add catalogue"/>
+			<node name="refreshCatalogsList" value="Refresh catalogues"/>
+			<node name="manageCatalogs" value="Manage catalogues"/>
 			<node name="clearBasket" value="Clear basket"/>
 			<node name="buyAllBooks" value="Buy all books"/>
 		</node>
@@ -209,7 +211,7 @@
 			<node condition="value 1" value="%s byte"/>
 		</node>
 		<node name="sizeInKiloBytes" value="%s kB"/>
-		<node name="catalog" value="Catalog:"/>
+		<node name="catalog" value="Catalogue:"/>
 		<node name="extraLinks" value="Related links"/>
 		<node name="menu">
 			<node name="edit" value="Edit"/>
@@ -262,7 +264,7 @@
 			<node name="summaryOn" value="Do not highlight bookmarks"/>
 			<node name="summaryOff" value="Highlight bookmarks"/>
 		</node>
-		<node name="bgColor" value="Background color"/>
+		<node name="bgColor" value="Background colour"/>
 	</node>
 	<node name="selection" value="Selection">
 		<node name="copyToClipboard" value="Copy to clipboard"/>
@@ -429,8 +431,8 @@
 					<node name="summaryOff" value="Device kerning is disabled"/>
 				</node>
 				<node name="dithering" value="Dithering">
-					<node name="summaryOn" value="Color dithering is enabled"/>
-					<node name="summaryOff" value="Color dithering is disabled"/>
+					<node name="summaryOn" value="Colour dithering is enabled"/>
+					<node name="summaryOff" value="Colour dithering is disabled"/>
 				</node>
 				<node name="hinting" value="Hinting">
 					<node name="summaryOn" value="Font hinting is enabled"/>
@@ -617,15 +619,15 @@
 				<node name="summaryOff" value="Ignore margins defined in CSS"/>
 			</node>
 		</node>
-		<node name="colors" value="Colors &amp; wallpapers">
-			<node name="summary" value="Color settings"/>
+		<node name="colors" value="Colours &amp; wallpapers">
+			<node name="summary" value="Colour settings"/>
 			<node name="background" value="Background">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…"/>
+					<node name="solidColor" value="Solid colour…"/>
 					<node name="predefined" value="Predefined texture…"/>
 					<node name="selectFile" value="Select file…"/>
 				</node>
-				<node name="solidColor" value="Solid color"/>
+				<node name="solidColor" value="Solid colour"/>
 				<node name="leather" value="Leather"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Wood"/>
@@ -670,10 +672,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)"/>
 			</node>
 			<node name="footerHeight" value="Footer height"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color"/>
-			<node name="footerBackgroundColor" value="Footer background color"/>
-			<node name="footerForegroundColor" value="Footer text color"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color"/>
+			<node name="footerOldStyleColor" value="Footer (old style) colour"/>
+			<node name="footerBackgroundColor" value="Footer background colour"/>
+			<node name="footerForegroundColor" value="Footer text colour"/>
+			<node name="footerForegroundUnreadColor" value="Footer line colour"/>
 			<node name="tocMarks" value="Show TOC marks">
 				<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 				<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>
@@ -757,7 +759,7 @@
 		</node>
 		<node name="images" value="Images">
 			<node name="summary" value="Image displaying options"/>
-			<node name="backgroundColor" value="Background color for image view"/>
+			<node name="backgroundColor" value="Background colour for image view"/>
 			<node name="tappingAction" value="Long tapping action">
 				<node name="doNothing" value="Long tapping does nothing"/>
 				<node name="selectImage" value="Long tapping selects the image"/>
@@ -769,8 +771,8 @@
 				<node name="all" value="All"/>
 			</node>
 			<node name="matchBackground" value="Match background intensity">
-				<node name="summaryOn" value="Adjust image color according background"/>
-				<node name="summaryOff" value="Do not adjust image color"/>
+				<node name="summaryOn" value="Adjust image colour according background"/>
+				<node name="summaryOff" value="Do not adjust image colour"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Cancel menu">
@@ -816,7 +818,7 @@
 			<node name="site" value="Visit our website">
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
-			<node name="email" value="Send us an e-mail">
+			<node name="email" value="Send us an email">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="googleplus" value="Join FBReader Google+ community">
@@ -887,9 +889,29 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="File already exists. Redownload?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Register User"/>
+			<node name="login" value="Username"/>
+			<node name="password" value="Password"/>
+			<node name="confirmPassword" value="Password&#10;confirmation"/>
+			<node name="email" value="Email"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Signing in"/>
+			<node name="email" value="Email"/>
+			<node name="actions">
+				<node name="title" value="Unable to sign in with email&#10;%s"/>
+				<node name="recover" value="Recover account information"/>
+				<node name="signIn" value="Sign in manually"/>
+				<node name="anotherEmail" value="Select another email"/>
+			</node>
+			<node name="signedIn" value="You are signed in with email address %s."/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s."/>
+			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox."/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Trying to connect. Please, wait…"/>
-			<node name="downloadingFile" value="Downloading book %s"/>
+			<node name="downloadingBook" value="Downloading book “%s”"/>
 			<node name="search" value="Searching. Please, wait…"/>
 			<node name="loadInfo" value="Loading information. Please, wait…"/>
 			<node name="loadingBook" value="Opening book. Please, wait…"/>
@@ -900,12 +922,15 @@
 			<node name="authentication" value="Authentication. Please, wait…"/>
 			<node name="signOut" value="Signing out. Please, wait…"/>
 			<node name="purchaseBook" value="Purchase book. Please, wait…"/>
-			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait…"/>
+			<node name="loadingCatalogInfo" value="Loading catalogue information. Please, wait…"/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…"/>
-			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
+			<node name="updatingCatalogsList" value="Updating catalogues list. Please, wait…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…"/>
+			<node name="registerUser" value="Registering new account. Please, wait…"/>
+			<node name="autoSignIn" value="Signing in. Please, wait…"/>
+			<node name="recoverPassword" value="Recovering password. Please, wait…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>
@@ -914,11 +939,19 @@
 			<node name="purchaseAlreadyPurchased" value="Already purchased"/>
 			<node name="bookNotPurchased" value="Book was not purchased"/>
 			<node name="downloadLimitExceeded" value="Download limit exceeded"/>
-			<node name="noUserEmail" value="No user was registered&#10;with specified e-mail address"/>
+			<node name="noUserForEmail" value="No user was registered&#10;with specified email address"/>
 			<node name="unsupportedOperation" value="Unsupported operation"/>
-			<node name="notAnOPDS" value="This is not an OPDS catalog"/>
-			<node name="noRequiredInformation" value="Required information is not specified in the catalog"/>
+			<node name="notAnOPDS" value="This is not an OPDS catalogue"/>
+			<node name="noRequiredInformation" value="Required information is not specified in the catalogue"/>
 			<node name="cacheDirectoryError" value="Unable to create cache directory"/>
+			<node name="usernameAlreadyInUse" value="Username already in use"/>
+			<node name="usernameNotSpecified" value="Username should be non-empty"/>
+			<node name="passwordNotSpecified" value="Password should be non-empty"/>
+			<node name="passwordsDoNotMatch" value="The entered passwords do not match"/>
+			<node name="emailNotSpecified" value="Email address is empty"/>
+			<node name="emailAlreadyInUse" value="Email address already in use"/>
+			<node name="invalidEMail" value="Invalid email address"/>
+			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentication"/>
@@ -929,11 +962,11 @@
 			<node name="register" value="Sign up"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: add custom catalog"/>
+			<node name="title" value="FBReader: add custom catalogue"/>
 			<node name="catalogTitle" value="Title"/>
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Summary"/>
-			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog"/>
+			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalogue"/>
 			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="E.g.: Public domain books"/>
 			<node name="titleIsEmpty" value="Title should be non-empty"/>
@@ -1017,13 +1050,14 @@
 		<node name="permissionDenied" value="Permission denied, sorry"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
 		<node name="noSeries" value="There are no books in series, sorry"/>
-		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
+		<node name="emptyCatalog" value="Catalogue is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry"/>
 		<node name="bookIsMissingTitle" value="Missing book"/>
 		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry"/>
+		<node name="downloadFailed" value="Download failed"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -1075,6 +1109,9 @@
 		</node>
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="Read books in DjVu format"/>
+		</node>
+		<node name="cbr" value="Comic Books">
+			<node name="summary" value="Read Comic Books (CBR, CBZ)"/>
 		</node>
 	</node>
 	<node name="drm">

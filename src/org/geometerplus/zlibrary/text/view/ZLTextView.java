@@ -23,6 +23,8 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImageData;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -939,6 +941,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					final int c = yStart + (yEnd - yStart) / 2;
 					context.setFillColor(new ZLColor(196, 196, 196));
 					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
+				} else if (element instanceof ExtensionElement) {
+					((ExtensionElement)element).draw(context, area);
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
 					/*
@@ -1158,6 +1162,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			} else if (element instanceof ZLTextVideoElement) {
 				wordOccurred = true;
 				isVisible = true;
+			} else if (element instanceof ExtensionElement) {
+				wordOccurred = true;
+				isVisible = true;
 			} else if (isStyleChangeElement(element)) {
 				applyStyleChangeElement(element);
 			}
@@ -1358,7 +1365,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					wordOccurred = false;
 					--spaceCounter;
 				}
-			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement) {
+			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement || element instanceof ExtensionElement) {
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0;
@@ -1852,4 +1859,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		return result;
 	}
+
+	protected abstract ExtensionElementManager getExtensionManager();
 }

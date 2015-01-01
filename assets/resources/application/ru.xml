@@ -116,6 +116,8 @@
 		<node name="stopSearching" value="Остановить поиск"/>
 		<node name="signIn" value="Вход"/>
 		<node name="signOut" value="Выход (%s)"/>
+		<node name="signUp" value="Регистрация"/>
+		<node name="quickBuy" value="Быстрая покупка"/>
 		<node name="topup" value="Пополнение счёта (баланс: %s)"/>
 		<node name="topupTitle" value="Оплата"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
@@ -652,10 +654,10 @@
 			<node name="hyperlinkVisited" value="Посещенная ссылка"/>
 			<node name="highlightingForeground" value="Результаты поиска"/>
 			<node name="highlightingBackground" value="Фон результатов поиска"/>
-			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
-			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
-			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
-			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
+			<node name="footerOldStyle" value="Подвал (старый стиль)"/>
+			<node name="footerBackground" value="Фон подвала"/>
+			<node name="footerForeground" value="Текст в подвале"/>
+			<node name="footerForegroundUnread" value="Индикатор в подвале"/>
 		</node>
 		<node name="margins" value="Отступы">
 			<node name="summary" value="Поля вокруг текста"/>
@@ -675,10 +677,10 @@
 				<node name="showAsFooterOldStyle" value="Подвал (старый стиль)"/>
 			</node>
 			<node name="footerHeight" value="Высота подвала"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="Цвет подвала (старый стиль)"/>
+			<node name="footerBackgroundColor" value="Цвет фона подвала"/>
+			<node name="footerForegroundColot" value="Цвет текста в подвале"/>
+			<node name="footerForegroundUnreadColor" value="Цвет индикатора в подвале"/>
 			<node name="tocMarks" value="Показывать метки по главам">
 				<node name="summaryOn" value="Рисовать пометку на подвале в начале главы"/>
 				<node name="summaryOff" value="Подвал без пометок"/>
@@ -896,9 +898,29 @@
 		<node name="redownloadFileBox">
 			<node name="message" value="Файл уже есть на устройстве. Загрузить заново?"/>
 		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="Новый пользователь"/>
+			<node name="login" value="Имя пользователя"/>
+			<node name="password" value="Пароль"/>
+			<node name="confirmPassword" value="Еще раз пароль"/>
+			<node name="email" value="E-mail"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="Автоматический вход"/>
+			<node name="email" value="E-mail"/>
+			<node name="actions">
+				<node name="title" value="Не удаётся войти с адресом&#10;%s"/>
+				<node name="recover" value="Выслать информацию для входа"/>
+				<node name="signIn" value="Вход вручную"/>
+				<node name="anotherEmail" value="Выбрать другой адрес"/>
+			</node>
+			<node name="signedIn" value="Вы вошли в систему с почтовым адресом %s."/>
+			<node name="registrationSuccessful" value="Мы создали для вас счет ЛитРес. Подробная информация отправлена на %s."/>
+			<node name="passwordSent" value="Информация о вашем счете ЛитРес выслана на %s."/>
+		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Устанавливается соединение. Подождите, пожалуйста…"/>
-			<node name="downloadingFile" value="Загужается книга %s"/>
+			<node name="downloadingBook" value="Загужается книга «%s»"/>
 			<node name="search" value="Идет поиск. Подождите, пожалуйста…"/>
 			<node name="loadInfo" value="Загружается информация. Подождите, пожалуйста…"/>
 			<node name="loadingBook" value="Открывается книга. Подождите, пожалуйста…"/>
@@ -915,6 +937,9 @@
 			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста…"/>
 			<node name="initDRMEngine" value="Инициализация DRM. Подождите, пожалуйста…"/>
 			<node name="acquireLicense" value="Получение лицензии. Подождите, пожалуйста…"/>
+			<node name="registerUser" value="Регистрируем пользователя. Подождите, пожалуйста…"/>
+			<node name="autoSignIn" value="Входим в систему. Подождите, пожалуйста…"/>
+			<node name="recoverPassword" value="Восстанавливаем пароль. Подождите, пожалуйста…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера"/>
@@ -923,11 +948,19 @@
 			<node name="purchaseAlreadyPurchased" value="Книга уже была куплена"/>
 			<node name="bookNotPurchased" value="Книга не была куплена"/>
 			<node name="downloadLimitExceeded" value="Исчерпан лимит загрузок"/>
-			<node name="noUserEmail" value="Нет пользователя с таким адресом"/>
+			<node name="noUserForEmail" value="Нет пользователя с таким адресом"/>
 			<node name="unsupportedOperation" value="Неподдерживаемая операция"/>
 			<node name="notAnOPDS" value="Это не OPDS каталог"/>
 			<node name="noRequiredInformation" value="Информация нет в каталоге"/>
 			<node name="cacheDirectoryError" value="Не удается создать каталог для кэша"/>
+			<node name="usernameAlreadyInUse" value="Это имя пользователя занято"/>
+			<node name="usernameNotSpecified" value="Введите имя пользователя"/>
+			<node name="passwordNotSpecified" value="Введите пароль"/>
+			<node name="passwordsDoNotMatch" value="Вы ввели 2 разных пароля"/>
+			<node name="emailNotSpecified" value="Введите e-mail"/>
+			<node name="emailAlreadyInUse" value="Пользователь с таким e-mail уже зарегистрирован"/>
+			<node name="invalidEMail" value="Некорректный e-mail"/>
+			<node name="tooManyRegistrations" value="Слишком много регистраций с вашего IP;&#10;попробуйте ещё раз через пару минут"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Авторизация"/>
@@ -1033,6 +1066,7 @@
 		<node name="videoPlayerNotFound" value="Не удалось отыскать видеопроигрыватель"/>
 		<node name="bookIsMissingTitle" value="Отсутствует книга"/>
 		<node name="bookIsMissing" value="Не удалось найти на этом устройстве книгу «%s»"/>
+		<node name="downloadFailed" value="Не удалось скачать книгу"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>
@@ -1084,6 +1118,9 @@
 		</node>
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="Чтение файлов DjVu"/>
+		</node>
+		<node name="cbr" value="Comic Books">
+			<node name="summary" value="Чтение файлов CBR, CBZ"/>
 		</node>
 	</node>
 	<node name="drm">

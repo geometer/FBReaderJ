@@ -30,35 +30,53 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 public abstract class BookUtil {
 	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
-	private static final WeakHashMap<Book,WeakReference<ZLImage>> ourCovers =
-		new WeakHashMap<Book,WeakReference<ZLImage>>();
+	private static final WeakHashMap<ZLFile,WeakReference<ZLImage>> ourCovers =
+		new WeakHashMap<ZLFile,WeakReference<ZLImage>>();
+
+	static FormatPlugin getPluginOrNull(ZLFile file) {
+		return PluginCollection.Instance().getPlugin(file);
+	}
+
+	static FormatPlugin getPlugin(ZLFile file) throws BookReadingException {
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
+		if (plugin == null) {
+			throw new BookReadingException("pluginNotFound", file);
+		}
+		return plugin;
+	}
 
 	public static ZLImage getCover(Book book) {
 		if (book == null) {
 			return null;
 		}
 		synchronized (book) {
-			WeakReference<ZLImage> cover = ourCovers.get(book);
-			if (cover == NULL_IMAGE) {
-				return null;
-			} else if (cover != null) {
-				final ZLImage image = cover.get();
-				if (image != null) {
-					return image;
-				}
-			}
-			ZLImage image = null;
-			try {
-				image = book.getPlugin().readCover(book.File);
-			} catch (BookReadingException e) {
-				// ignore
-			}
-			ourCovers.put(book, image != null ? new WeakReference<ZLImage>(image) : NULL_IMAGE);
-			return image;
+			return getCover(book.File);
 		}
+	}
+
+	public static ZLImage getCover(ZLFile file) {
+		WeakReference<ZLImage> cover = ourCovers.get(file);
+		if (cover == NULL_IMAGE) {
+			return null;
+		} else if (cover != null) {
+			final ZLImage image = cover.get();
+			if (image != null) {
+				return image;
+			}
+		}
+		ZLImage image = null;
+		try {
+			image = getPlugin(file).readCover(file);
+		} catch (BookReadingException e) {
+			// ignore
+		}
+		ourCovers.put(file, image != null ? new WeakReference<ZLImage>(image) : NULL_IMAGE);
+		return image;
 	}
 
 	public static String getAnnotation(Book book) {
@@ -73,20 +91,20 @@ public abstract class BookUtil {
 		final Locale locale = Locale.getDefault();
 
 		ZLResourceFile file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + "_" + locale.getCountry() + ".fb2"
+			"data/intro/intro-" + locale.getLanguage() + "_" + locale.getCountry() + ".epub"
 		);
 		if (file.exists()) {
 			return file;
 		}
 
 		file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + ".fb2"
+			"data/intro/intro-" + locale.getLanguage() + ".epub"
 		);
 		if (file.exists()) {
 			return file;
 		}
 
-		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
+		return ZLResourceFile.createResourceFile("data/intro/intro-en.epub");
 	}
 
 	public static boolean canRemoveBookFile(Book book) {

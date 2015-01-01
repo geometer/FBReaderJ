@@ -40,11 +40,13 @@ import org.geometerplus.fbreader.fbreader.options.*;
 public final class FBView extends ZLTextView {
 	private final FBReaderApp myReader;
 	private final ViewOptions myViewOptions;
+	private final BookElementManager myBookElementManager;
 
 	FBView(FBReaderApp reader) {
 		super(reader);
 		myReader = reader;
 		myViewOptions = reader.ViewOptions;
+		myBookElementManager = new BookElementManager(this);
 	}
 
 	public void setModel(ZLTextModel model) {
@@ -86,7 +88,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion bookRegion = findRegion(x, y, 0, ZLTextRegion.BookFilter);
+		final ZLTextRegion bookRegion = findRegion(x, y, 0, ZLTextRegion.ExtensionFilter);
 		if (bookRegion != null) {
 			myReader.runAction(ActionCode.DISPLAY_BOOK_POPUP, bookRegion);
 			return true;
@@ -782,5 +784,10 @@ public final class FBView extends ZLTextView {
 	public synchronized void onScrollingFinished(PageIndex pageIndex) {
 		super.onScrollingFinished(pageIndex);
 		myReader.storePosition();
+	}
+
+	@Override
+	protected ExtensionElementManager getExtensionManager() {
+		return myBookElementManager;
 	}
 }

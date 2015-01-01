@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -39,7 +38,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
-	static final String AUTHORIZATION_ACTION = "android.fbreader.action.network.AUTHORIZATION";
+	static final String AUTHORISATION_ACTION = "android.fbreader.action.network.AUTHORISATION";
 	static final String SIGNIN_ACTION = "android.fbreader.action.network.SIGNIN";
 	static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
 	static final String EXTRA_CATALOG_ACTION = "android.fbreader.action.network.EXTRA_CATALOG";
@@ -80,31 +79,13 @@ public abstract class Util implements UserRegistrationConstants {
 		});
 	}
 
-	static Intent authorisationIntent(INetworkLink link, Uri id) {
-		final Intent intent = new Intent(AUTHORIZATION_ACTION, id);
+	public static Intent authorisationIntent(INetworkLink link, Uri id) {
+		final Intent intent = new Intent(AUTHORISATION_ACTION, id);
 		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
 		intent.putExtra(SIGNIN_URL, link.getUrl(UrlInfo.Type.SignIn));
 		intent.putExtra(SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));
 		intent.putExtra(RECOVER_PASSWORD_URL, link.getUrl(UrlInfo.Type.RecoverPassword));
 		return intent;
-	}
-
-	private static Intent registrationIntent(INetworkLink link) {
-		return authorisationIntent(link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register"));
-	}
-
-	public static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
-		return PackageUtil.canBeStarted(activity, registrationIntent(link), true);
-	}
-
-	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
-		try {
-			final Intent intent = registrationIntent(link);
-			if (PackageUtil.canBeStarted(activity, intent, true)) {
-				activity.startActivity(intent);
-			}
-		} catch (ActivityNotFoundException e) {
-		}
 	}
 
 	public static void runAuthenticationDialog(Activity activity, INetworkLink link, Runnable onSuccess) {
