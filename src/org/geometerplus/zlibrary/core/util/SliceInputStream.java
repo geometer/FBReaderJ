@@ -25,29 +25,36 @@ import java.io.InputStream;
 public class SliceInputStream extends InputStreamWithOffset {
 	private final int myStart;
 	private final int myLength;
+	private boolean myCreated = false;
 
 	public SliceInputStream(InputStream base, int start, int length) throws IOException {
 		super(base);
 		super.skip(start);
 		myStart = start;
 		myLength = length;
+		myCreated = true;
 	}
 
 	@Override
 	public int read() throws IOException {
-		if (offset() >= myLength) {
-			return -1;
+		if (myCreated) {
+			if (offset() >= myLength) {
+				return -1;
+			}
 		}
 		return super.read();
 	}
 
 	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
-		final int maxbytes = myLength - offset();
-		if (maxbytes <= 0) {
-			return -1;
+		if (myCreated) {
+			int maxbytes = myLength - offset();
+			if (maxbytes <= 0) {
+				return -1;
+			}
+			len = Math.min(len, maxbytes);
 		}
-		return super.read(b, off, Math.min(len, maxbytes));
+		return super.read(b, off, len);
 	}
 
 	@Override
