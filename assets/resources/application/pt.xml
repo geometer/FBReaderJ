@@ -281,7 +281,7 @@
 		<node name="sharedFrom" value="Partilhado de &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu" value="Menu">
-		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
+		<node name="openStartScreen" value="Tela inicial"/>
 		<node name="preferences" value="Configurações"/>
 		<node name="bookInfo" value="Informações do livro"/>
 		<node name="library" value="Biblioteca"/>
