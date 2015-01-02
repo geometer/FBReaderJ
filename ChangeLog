@@ -7,9 +7,9 @@
 * (planned) CSS selectors priority
 
 ===== 2.2.1 (Jan 02, 2015) =====
-* Fixed video streaming
 * Fixed English mistakes (thanks to Sahak Petrosyan)
 * Added Spanish & Portuguese introduction translations
+* Possible fix of exception in 'addInvisibleBookmark()' call
 
 ===== 2.2 (Dec 31, 2014) =====
 * Progress indicator in local/network library for Lollipop+
