@@ -598,15 +598,26 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void addInvisibleBookmark(ZLTextWordCursor cursor) {
-		if (cursor != null && Model != null && Model.Book != null && getTextView() == BookTextView) {
+		if (cursor == null) {
+			return;
+		}
+
+		final ZLTextView textView = getTextView();
+		// textView.model will not be changed inside synchronised block
+		synchronized (textView) {
+			final BookModel model = Model;
+			final Book book = model != null ? model.Book : null;
+			if (book == null || textView != BookTextView || textView.getModel() == null) {
+				return;
+			}
 			cursor = new ZLTextWordCursor(cursor);
 			if (cursor.isNull()) {
 				return;
 			}
 
 			updateInvisibleBookmarksList(Bookmark.createBookmark(
-				Model.Book,
-				getTextView().getModel().getId(),
+				book,
+				textView.getModel().getId(),
 				cursor,
 				6,
 				false
