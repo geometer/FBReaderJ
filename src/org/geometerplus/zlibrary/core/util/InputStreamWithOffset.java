@@ -41,9 +41,19 @@ public class InputStreamWithOffset extends InputStream {
 		if (shift > 0) {
 			myOffset += (int)shift;
 		}
-		while ((shift < n) && (read() != -1)) {
+		while (shift < n && read() != -1) {
 			++shift;
 		}
+		return shift;
+	}
+
+	// does not call virtual methods
+	protected final long baseSkip(long n) throws IOException {
+		long shift = myDecoratedStream.skip(n);
+		while (shift < n && myDecoratedStream.read() != -1) {
+			++shift;
+		}
+		myOffset += shift;
 		return shift;
 	}
 
