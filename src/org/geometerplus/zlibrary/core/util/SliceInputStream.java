@@ -28,7 +28,7 @@ public class SliceInputStream extends InputStreamWithOffset {
 
 	public SliceInputStream(InputStream base, int start, int length) throws IOException {
 		super(base);
-		super.skip(start);
+		baseSkip(start);
 		myStart = start;
 		myLength = length;
 	}
