@@ -5,8 +5,6 @@ mkdir -p READY
 
 git checkout master
 ./scripts/packageTool.sh --updateVersion
-./scripts/packageTool.sh --buildSourceArchive
-mv FBReader*sources*.zip READY
 ant distclean
 fbuild
 mv bin/FBReaderJ.apk READY
