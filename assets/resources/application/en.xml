@@ -20,7 +20,7 @@
 		<node name="recent" value="Recent">
 			<node name="summary" value="Recently opened books"/>
 		</node>
-		<node name="favorites" value="Favorites">
+		<node name="favorites" value="Favourites">
 			<node name="summary" value="My selected books"/>
 		</node>
 		<node name="found" value="Found">
@@ -59,8 +59,8 @@
 		<node name="showBookInfo" value="Book info"/>
 		<node name="shareBook" value="Share book"/>
 		<node name="deleteBook" value="Delete book"/>
-		<node name="addToFavorites" value="Add to favorites"/>
-		<node name="removeFromFavorites" value="Remove from favorites"/>
+		<node name="addToFavorites" value="Add to favourites"/>
+		<node name="removeFromFavorites" value="Remove from favourites"/>
 		<node name="removeFromRecents" value="Remove from recent list"/>
 		<node name="markAsRead" value="Mark as read"/>
 		<node name="markAsUnread" value="Mark as unread"/>
@@ -862,8 +862,8 @@
 			<node name="authorise" value="Authorise"/>
 			<node name="resetPosition" value="Reset position"/>
 			<node name="sendReport" value="Send report"/>
-			<node name="addToFavorites" value="Add to favorites"/>
-			<node name="removeFromFavorites" value="Remove from favorites"/>
+			<node name="addToFavorites" value="Add to favourites"/>
+			<node name="removeFromFavorites" value="Remove from favourites"/>
 			<node name="markAsRead" value="Mark as read"/>
 			<node name="markAsUnread" value="Mark as unread"/>
 		</node>
@@ -1048,7 +1048,7 @@
 		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry"/>
 		<node name="permissionDenied" value="Permission denied, sorry"/>
-		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
+		<node name="noFavorites" value="Your favourites list is empty, sorry"/>
 		<node name="noSeries" value="There are no books in series, sorry"/>
 		<node name="emptyCatalog" value="Catalogue is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
