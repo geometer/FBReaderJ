@@ -6,7 +6,7 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.2.1 (Jan 02, 2015) =====
+===== 2.2.1 (Jan 03, 2015) =====
 * Fixed English mistakes (thanks to Sahak Petrosyan)
 * Added Spanish & Portuguese introduction translations
 * Possible fix of exception in 'addInvisibleBookmark()' call
