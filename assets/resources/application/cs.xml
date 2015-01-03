@@ -114,10 +114,10 @@
 		<node name="openInBrowser" value="Otevřít v prohlížeči"/>
 		<node name="stopLoading" value="Zastavit načítání"/>
 		<node name="stopSearching" value="Zastavit vyhledávání"/>
-		<node name="signIn" value="Přihlásit"/>
-		<node name="signOut" value="Odhlásit (%s)"/>
-		<node name="signUp" value="Sign up" toBeTranslated="true"/>
-		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		<node name="signIn" value="Přihlásit se"/>
+		<node name="signOut" value="Odhlásit se (%s)"/>
+		<node name="signUp" value="Zaregistrovat se"/>
+		<node name="quickBuy" value="Rychlý nákup"/>
 		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="topupTitle" value="Doplnit účet"/>
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
@@ -907,17 +907,17 @@
 			<node name="email" value="E-mail"/>
 		</node>
 		<node name="litresAutoSignIn">
-			<node name="title" value="Signing in" toBeTranslated="true"/>
-			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="title" value="Přihlašování"/>
+			<node name="email" value="E-mail"/>
 			<node name="actions">
-				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
-				<node name="recover" value="Recover account information" toBeTranslated="true"/>
-				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
-				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+				<node name="title" value="Nelze se přihlásit pomocí e-mailu&#10;%s"/>
+				<node name="recover" value="Obnovit informace o účtu"/>
+				<node name="signIn" value="Přihlásit se ručně"/>
+				<node name="anotherEmail" value="Vybrat jiný e-mail"/>
 			</node>
-			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
-			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
-			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+			<node name="signedIn" value="Jste přihlášeni pomocí e-mailové adresy %s."/>
+			<node name="registrationSuccessful" value="Vytvořili jsme pro vás účet LitRes. Podrobné informace odeslány na %s."/>
+			<node name="passwordSent" value="Informace o vašem účtu byly odeslány na %s. Zkontrolujte svou poštovní schránku."/>
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
@@ -939,8 +939,8 @@
 			<node name="initDRMEngine" value="Inicializace modulu DRM. Čekejte…"/>
 			<node name="acquireLicense" value="Načítání licence. Čekejte…"/>
 			<node name="registerUser" value="Registrace nového účtu. Čekejte..."/>
-			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
-			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
+			<node name="autoSignIn" value="Přihlašování. Čekejte…"/>
+			<node name="recoverPassword" value="Obnovování hesla. Čekejte…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
@@ -1120,8 +1120,8 @@
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="Čte knihy ve formátu DjVu"/>
 		</node>
-		<node name="cbr" value="Comic Books" toBeTranslated="true">
-			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
+		<node name="cbr" value="Komiksy">
+			<node name="summary" value="Čte knihy komiksů (CBR, CBZ)"/>
 		</node>
 	</node>
 	<node name="drm">
