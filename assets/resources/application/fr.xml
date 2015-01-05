@@ -71,7 +71,7 @@
 		<node name="uploadAgain" value="Upload again"/>
 		<node name="tryAgain" value="Try again"/>
 	</node>
-	<node name="networkLibrary" value="Librairie réseau">
+	<node name="networkLibrary" value="Bibliothèque réseau">
 		<node name="sync" value="Réseau de livres de FBReader®">
 			<node name="summary" value="Mon catalogue personnel"/>
 		</node>
@@ -271,7 +271,7 @@
 		<node name="sharedFrom" value="Partagé depuis l'application &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; pour Android"/>
 	</node>
 	<node name="menu">
-		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
+		<node name="openStartScreen" value="Écran de départ"/>
 		<node name="preferences" value="Paramètres"/>
 		<node name="bookInfo" value="Information sur le livre"/>
 		<node name="library" value="Bibliothèque"/>
@@ -774,7 +774,7 @@
 				<node name="summaryOn" value="Afficher l'option 'Ouvrir bibliothèque'"/>
 				<node name="summaryOff" value="Ne pas afficher l'option 'Ouvrir bibliothèque'"/>
 			</node>
-			<node name="networkLibrary" value="Librairie réseau">
+			<node name="networkLibrary" value="Bibliothèque réseau">
 				<node name="summaryOn" value="Afficher l'option 'Ouvrir bibliothèque réseau'"/>
 				<node name="summaryOff" value="Ne pas afficher l'option 'Ouvrir bibliothèque réseau'"/>
 			</node>
