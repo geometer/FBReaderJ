@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Belarusian zlibrary resources by Usievaład Čorny -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Добра"/>
+			<node name="cancel" value="Скасаваць"/>
+			<node name="yes" value="Так"/>
+			<node name="no" value="Не"/>
+			<node name="apply" value="Ужыць"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Памылка сеткі"/>
+			<node name="unknownErrorMessage" value="Невядомая памылка"/>
+			<node name="operationTimedOutMessage" value="Апэрацыя пратэрмінаваная"/>
+			<node name="somethingWrongMessage" value="Нешта ня так з «%s»"/>
+			<node name="couldntCreateDirectoryMessage" value="Немагчыма стварыць тэчку «%s»"/>
+			<node name="couldntCreateFileMessage" value="Немагчыма стварыць файл «%s»"/>
+			<node name="couldntConnectMessage" value="Немагчыма злучыцца з вузлом «%s»"/>
+			<node name="couldntResolveHostMessage" value="Немагчыма знайсьці вузел «%s»"/>
+			<node name="authenticationFailed" value="Спраўджаньне няўдалае"/>
+			<node name="unsupportedProtocol" value="Непадтрыманы пратакол"/>
+			<node name="invalidURL" value="Хібны адрас"/>
+			<node name="hostCantBeReached" value="Вузел %s недаступны"/>
+			<node name="connectionRefused" value="Злучэньне скінутае %s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Чырвоны"/>
+		<node name="green" value="Зялёны"/>
+		<node name="blue" value="Сіні"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Арабская мова"/>
+		<node name="be" value="Беларуская мова"/>
+		<node name="bg" value="Баўгарская мова"/>
+		<node name="ca" value="Каталянская мова"/>
+		<node name="cs" value="Чэская мова"/>
+		<node name="da" value="Дацкая мова"/>
+		<node name="de" value="Нямецкая мова"/>
+		<node name="de-traditional" value="Нямецкая мова (традыцыйная артаграфія)"/>
+		<node name="el" value="Грэцкая мова"/>
+		<node name="en" value="Ангельская мова"/>
+		<node name="eo" value="Эспэранта"/>
+		<node name="es" value="Гішпанская мова"/>
+		<node name="eu" value="Басконская мова"/>
+		<node name="fa" value="Пэрсыдзкая мова"/>
+		<node name="fi" value="Фінская мова"/>
+		<node name="fr" value="Француская мова"/>
+		<node name="gl" value="Галісійская мова"/>
+		<node name="he" value="Іўрыт мова"/>
+		<node name="hu" value="Вугорская мова"/>
+		<node name="hy" value="Армянская мова"/>
+		<node name="id" value="Інданэзійская мова"/>
+		<node name="it" value="Італійская мова"/>
+		<node name="ja" value="Японская мова"/>
+		<node name="ka" value="Грузінская мова"/>
+		<node name="lt" value="Літоўская мова"/>
+		<node name="nb" value="Нарвэская мова"/>
+		<node name="nl" value="Галяндзкая мова"/>
+		<node name="pl" value="Польская мова"/>
+		<node name="pt" value="Партугальская мова"/>
+		<node name="ro" value="Румынская мова"/>
+		<node name="ru" value="Расейская мова"/>
+		<node name="sr" value="Сэрбская мова"/>
+		<node name="sv" value="Швэдзкая мова"/>
+		<node name="ta" value="Тамільская мова"/>
+		<node name="th" value="Тайская мова"/>
+		<node name="tr" value="Турэцкая мова"/>
+		<node name="uk" value="Украінская мова"/>
+		<node name="vi" value="Віетнамская мова"/>
+		<node name="zh" value="Кітайская мова"/>
+		<node name="zh_TW" value="Кітайская традыцыйная мова"/>
+		<node name="any" value="Любая мова"/>
+		<node name="other" value="Іншая мова"/>
+		<node name="multi" value="Некалькі моваў"/>
+		<node name="system" value="Сыстэмная"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="уключана"/>
+		<node name="off" value="выключана"/>
+		<node name="unchanged" value="ня зьменена"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Дзеяньне клявішы"/>
+	</node>
+</resources>

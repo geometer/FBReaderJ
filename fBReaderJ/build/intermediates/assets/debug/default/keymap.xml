@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keymap>
+	<binding key="4" action="cancelMenu"/>
+	<binding key="19" action="moveCursorUp"/>
+	<binding key="20" action="moveCursorDown"/>
+	<binding key="21" action="moveCursorLeft"/>
+	<binding key="22" action="moveCursorRight"/>
+	<binding key="23" action="processHyperlink"/>
+	<binding key="24" action="volumeKeyScrollBackward"/>
+	<binding key="25" action="volumeKeyScrollForward"/>
+	<binding key="66" action="processHyperlink"/>
+</keymap>

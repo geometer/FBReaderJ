@@ -1,0 +1,4144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Polish hyphenations description for FBReader
+
+ Based on hyphenation file extracted from hyph-utf8 package.
+
+From the hyph-pl.tex file:
+% This file is part of hyph-utf8 package and resulted from
+% semi-manual conversions of hyphenation patterns into UTF-8 in June 2008.
+%
+% Source: plhyph.tex (1995-06-26)
+% Author: Hanna Kołodziejska, Bogusław Jackowski, Marek Ryćko
+%
+% The above mentioned file should become obsolete,
+% and the author of the original file should preferaby modify this file instead.
+%
+% Modificatios were needed in order to support native UTF-8 engines,
+% but functionality (hopefully) didn't change in any way, at least not intentionally.
+% This file is no longer stand-alone; at least for 8-bit engines
+% you probably want to use loadhyph-foo.tex (which will load this file) instead.
+%
+% Modifications were done by Jonathan Kew, Mojca Miklavec & Arthur Reutenauer
+% with help & support from:
+% - Karl Berry, who gave us free hands and all resources
+% - Taco Hoekwater, with useful macros
+% - Hans Hagen, who did the unicodifisation of patterns already long before
+%               and helped with testing, suggestions and bug reports
+% - Norbert Preining, who tested & integrated patterns into TeX Live
+%
+% However, the "copyright/copyleft" owner of patterns remains the original author.
+%
+% The copyright statement of this file is thus:
+%
+%    Do with this file whatever needs to be done in future for the sake of
+%    "a better world" as long as you respect the copyright of original file.
+%    If you're the original author of patterns or taking over a new revolution,
+%    plese remove all of the TUG comments & credits that we added here -
+%    you are the Queen / the King, we are only the servants.
+
+(...)
+
+%
+% This is PLHYPH.TeX - the Polish hyphenation patterns
+%          version 3.0a, Wednesday, May 17th, 1995
+% to be used for the inclusion of Polish hyphenation patterns in any format,
+% not necessarily in the MeX or LaMeX ones. The patterns are exactly
+% the same as in the version 3.0 being the part of the MeX package,
+% only the surrounding of the \pattern command is changed. The authors
+% claim the upward compatibility, i.e., the version 3.0a can also be used
+% with the MeX or LaMeX formats.
+
+% The history of development of the Polish hyphenation patterns:
+%
+% The first version of the patterns was developed
+% by Hanna Kołodziejska (1987).
+%
+% The adaptation to the LeX format (see below) and extensive modification
+% were done by Bogusław Jackowski & Marek Ryćko (1987-1989).
+%
+% The hyphenation rules were further improved and adapted to the
+% TeX 3.x requirements by Hanna Kołodziejska (1991).
+%
+% Lone-standing version (3.0a) of patterns was prepared (under pressure
+% from LaTeX users) by Bogusław Jackowski and Marek Ryćko, following
+% Mariusz Olko's suggestions, 1995.
+
+% The LeX format mentioned above was the first version of the adaptation
+% of TeX to the Polish language. The next version is called MeX.
+-->
+<HyphenationDescription>
+  <pattern> ćć8</pattern>
+  <pattern> ćł8</pattern>
+  <pattern> ćń8</pattern>
+  <pattern> ćś8</pattern>
+  <pattern> ćź8</pattern>
+  <pattern> ćż8</pattern>
+  <pattern> ć8</pattern>
+  <pattern> ćb8</pattern>
+  <pattern> ćc8</pattern>
+  <pattern> ćd8</pattern>
+  <pattern> ćf8</pattern>
+  <pattern> ćg8</pattern>
+  <pattern> ćh8</pattern>
+  <pattern> ćj8</pattern>
+  <pattern> ćk8</pattern>
+  <pattern> ćl8</pattern>
+  <pattern> ćm8</pattern>
+  <pattern> ćn8</pattern>
+  <pattern> ćp8</pattern>
+  <pattern> ćr8</pattern>
+  <pattern> ćs8</pattern>
+  <pattern> ćt8</pattern>
+  <pattern> ćv8</pattern>
+  <pattern> ćw8</pattern>
+  <pattern> ćwier2ć3</pattern>
+  <pattern> ćx8</pattern>
+  <pattern> ćz8</pattern>
+  <pattern> łć8</pattern>
+  <pattern> łł8</pattern>
+  <pattern> łń8</pattern>
+  <pattern> łś8</pattern>
+  <pattern> łź8</pattern>
+  <pattern> łż8</pattern>
+  <pattern> ł8</pattern>
+  <pattern> łb8</pattern>
+  <pattern> łc8</pattern>
+  <pattern> łd8</pattern>
+  <pattern> łf8</pattern>
+  <pattern> łg8</pattern>
+  <pattern> łh8</pattern>
+  <pattern> łj8</pattern>
+  <pattern> łk8</pattern>
+  <pattern> łl8</pattern>
+  <pattern> łm8</pattern>
+  <pattern> łn8</pattern>
+  <pattern> łp8</pattern>
+  <pattern> łr8</pattern>
+  <pattern> łs8</pattern>
+  <pattern> łt8</pattern>
+  <pattern> łv8</pattern>
+  <pattern> łw8</pattern>
+  <pattern> łx8</pattern>
+  <pattern> łz8</pattern>
+  <pattern> ńć8</pattern>
+  <pattern> ńł8</pattern>
+  <pattern> ńń8</pattern>
+  <pattern> ńś8</pattern>
+  <pattern> ńź8</pattern>
+  <pattern> ńż8</pattern>
+  <pattern> ń8</pattern>
+  <pattern> ńb8</pattern>
+  <pattern> ńc8</pattern>
+  <pattern> ńd8</pattern>
+  <pattern> ńf8</pattern>
+  <pattern> ńg8</pattern>
+  <pattern> ńh8</pattern>
+  <pattern> ńj8</pattern>
+  <pattern> ńk8</pattern>
+  <pattern> ńl8</pattern>
+  <pattern> ńm8</pattern>
+  <pattern> ńn8</pattern>
+  <pattern> ńp8</pattern>
+  <pattern> ńr8</pattern>
+  <pattern> ńs8</pattern>
+  <pattern> ńt8</pattern>
+  <pattern> ńv8</pattern>
+  <pattern> ńw8</pattern>
+  <pattern> ńx8</pattern>
+  <pattern> ńz8</pattern>
+  <pattern> ść8</pattern>
+  <pattern> śł8</pattern>
+  <pattern> śń8</pattern>
+  <pattern> śś8</pattern>
+  <pattern> śź8</pattern>
+  <pattern> śż8</pattern>
+  <pattern> ś8</pattern>
+  <pattern> śb8</pattern>
+  <pattern> śc8</pattern>
+  <pattern> śd8</pattern>
+  <pattern> śf8</pattern>
+  <pattern> śg8</pattern>
+  <pattern> śh8</pattern>
+  <pattern> śj8</pattern>
+  <pattern> śk8</pattern>
+  <pattern> śl8</pattern>
+  <pattern> śm8</pattern>
+  <pattern> śn8</pattern>
+  <pattern> śp8</pattern>
+  <pattern> śró2d5</pattern>
+  <pattern> śródr2</pattern>
+  <pattern> śr8</pattern>
+  <pattern> śs8</pattern>
+  <pattern> śt8</pattern>
+  <pattern> śv8</pattern>
+  <pattern> św8</pattern>
+  <pattern> światło3w2</pattern>
+  <pattern> śx8</pattern>
+  <pattern> śz8</pattern>
+  <pattern> źć8</pattern>
+  <pattern> źł8</pattern>
+  <pattern> źń8</pattern>
+  <pattern> źś8</pattern>
+  <pattern> źź8</pattern>
+  <pattern> źż8</pattern>
+  <pattern> ź8</pattern>
+  <pattern> źb8</pattern>
+  <pattern> źc8</pattern>
+  <pattern> źdź8</pattern>
+  <pattern> źd8</pattern>
+  <pattern> źf8</pattern>
+  <pattern> źg8</pattern>
+  <pattern> źh8</pattern>
+  <pattern> źj8</pattern>
+  <pattern> źk8</pattern>
+  <pattern> źl8</pattern>
+  <pattern> źm8</pattern>
+  <pattern> źn8</pattern>
+  <pattern> źp8</pattern>
+  <pattern> źr8</pattern>
+  <pattern> źs8</pattern>
+  <pattern> źt8</pattern>
+  <pattern> źv8</pattern>
+  <pattern> źw8</pattern>
+  <pattern> źx8</pattern>
+  <pattern> źz8</pattern>
+  <pattern> żć8</pattern>
+  <pattern> żł8</pattern>
+  <pattern> żń8</pattern>
+  <pattern> żś8</pattern>
+  <pattern> żź8</pattern>
+  <pattern> żż8</pattern>
+  <pattern> ż8</pattern>
+  <pattern> żb8</pattern>
+  <pattern> żc8</pattern>
+  <pattern> żd8</pattern>
+  <pattern> żf8</pattern>
+  <pattern> żg8</pattern>
+  <pattern> żh8</pattern>
+  <pattern> żj8</pattern>
+  <pattern> żk8</pattern>
+  <pattern> żl8</pattern>
+  <pattern> żm8</pattern>
+  <pattern> żn8</pattern>
+  <pattern> żp8</pattern>
+  <pattern> żr8</pattern>
+  <pattern> żs8</pattern>
+  <pattern> żt8</pattern>
+  <pattern> żv8</pattern>
+  <pattern> żw8</pattern>
+  <pattern> żx8</pattern>
+  <pattern> żz8</pattern>
+  <pattern> a2b2s3t</pattern>
+  <pattern> a2d3</pattern>
+  <pattern> ad4a</pattern>
+  <pattern> ad4e</pattern>
+  <pattern> ad4i</pattern>
+  <pattern> ad4o</pattern>
+  <pattern> ad4u</pattern>
+  <pattern> ad4y</pattern>
+  <pattern> ad5apt</pattern>
+  <pattern> ad5iu</pattern>
+  <pattern> ad5op</pattern>
+  <pattern> ad5or</pattern>
+  <pattern> ae3ro</pattern>
+  <pattern> aeroa2</pattern>
+  <pattern> aeroe2</pattern>
+  <pattern> aeroi2</pattern>
+  <pattern> aeroo2</pattern>
+  <pattern> aerou2</pattern>
+  <pattern> antya2</pattern>
+  <pattern> antye2</pattern>
+  <pattern> antyi2</pattern>
+  <pattern> antyo2</pattern>
+  <pattern> antyu2</pattern>
+  <pattern> arcy3ł2</pattern>
+  <pattern> arcy3b2</pattern>
+  <pattern> arcy3bz2</pattern>
+  <pattern> arcy3k2</pattern>
+  <pattern> arcy3m2</pattern>
+  <pattern> arcya2</pattern>
+  <pattern> arcye2</pattern>
+  <pattern> arcyi2</pattern>
+  <pattern> arcyo2</pattern>
+  <pattern> arcyu2</pattern>
+  <pattern> au3g2</pattern>
+  <pattern> au3k2</pattern>
+  <pattern> au3t2</pattern>
+  <pattern> auto3ch2</pattern>
+  <pattern> autoa2</pattern>
+  <pattern> autoe2</pattern>
+  <pattern> autoi2</pattern>
+  <pattern> autoo2</pattern>
+  <pattern> autotran2s3</pattern>
+  <pattern> autou2</pattern>
+  <pattern> bć8</pattern>
+  <pattern> bł8</pattern>
+  <pattern> bń8</pattern>
+  <pattern> bś8</pattern>
+  <pattern> bź8</pattern>
+  <pattern> bż8</pattern>
+  <pattern> b8</pattern>
+  <pattern> bb8</pattern>
+  <pattern> bc8</pattern>
+  <pattern> bd8</pattern>
+  <pattern> be2z3</pattern>
+  <pattern> be3z4an</pattern>
+  <pattern> be3z4ec</pattern>
+  <pattern> be3z4ik</pattern>
+  <pattern> bezch2</pattern>
+  <pattern> bezm2</pattern>
+  <pattern> bezo2</pattern>
+  <pattern> bezo2b1j</pattern>
+  <pattern> bezw2</pattern>
+  <pattern> bezzw2</pattern>
+  <pattern> bf8</pattern>
+  <pattern> bg8</pattern>
+  <pattern> bh8</pattern>
+  <pattern> bj8</pattern>
+  <pattern> bk8</pattern>
+  <pattern> bl8</pattern>
+  <pattern> bm8</pattern>
+  <pattern> bn8</pattern>
+  <pattern> bp8</pattern>
+  <pattern> br8</pattern>
+  <pattern> brz8</pattern>
+  <pattern> bs8</pattern>
+  <pattern> bt8</pattern>
+  <pattern> bv8</pattern>
+  <pattern> bw8</pattern>
+  <pattern> bx8</pattern>
+  <pattern> bz8</pattern>
+  <pattern> cć8</pattern>
+  <pattern> cł8</pattern>
+  <pattern> cń8</pattern>
+  <pattern> cś8</pattern>
+  <pattern> cź8</pattern>
+  <pattern> cż8</pattern>
+  <pattern> c8</pattern>
+  <pattern> cało3ś2</pattern>
+  <pattern> cało3k2</pattern>
+  <pattern> cb8</pattern>
+  <pattern> cc8</pattern>
+  <pattern> cd8</pattern>
+  <pattern> cf8</pattern>
+  <pattern> cg8</pattern>
+  <pattern> ch8</pattern>
+  <pattern> chrz8</pattern>
+  <pattern> cienko3w2</pattern>
+  <pattern> ciepło3kr2</pattern>
+  <pattern> cj8</pattern>
+  <pattern> ck8</pattern>
+  <pattern> cl8</pattern>
+  <pattern> cm8</pattern>
+  <pattern> cn8</pattern>
+  <pattern> cp8</pattern>
+  <pattern> cr8</pattern>
+  <pattern> cs8</pattern>
+  <pattern> ct8</pattern>
+  <pattern> cv8</pattern>
+  <pattern> cw8</pattern>
+  <pattern> cx8</pattern>
+  <pattern> cz8</pattern>
+  <pattern> czarno3k2</pattern>
+  <pattern> czk8</pattern>
+  <pattern> cztere2ch3</pattern>
+  <pattern> czterechse2t3</pattern>
+  <pattern> cztero3ś2</pattern>
+  <pattern> czwó2r3</pattern>
+  <pattern> czwó3r4ą</pattern>
+  <pattern> czwó3r4ę</pattern>
+  <pattern> czwó3r4a</pattern>
+  <pattern> czwó3r4e</pattern>
+  <pattern> czwó3r4o</pattern>
+  <pattern> dć8</pattern>
+  <pattern> dł8</pattern>
+  <pattern> długo3tr2</pattern>
+  <pattern> długo3w2</pattern>
+  <pattern> dń8</pattern>
+  <pattern> dś8</pattern>
+  <pattern> dź8</pattern>
+  <pattern> dż8</pattern>
+  <pattern> d8</pattern>
+  <pattern> daleko3w2</pattern>
+  <pattern> db8</pattern>
+  <pattern> dc8</pattern>
+  <pattern> dd8</pattern>
+  <pattern> de2z3</pattern>
+  <pattern> de3z4a3bil</pattern>
+  <pattern> de3z4a3wu</pattern>
+  <pattern> de3z4el</pattern>
+  <pattern> de3z4er</pattern>
+  <pattern> de3z4y</pattern>
+  <pattern> deza2</pattern>
+  <pattern> dezo2</pattern>
+  <pattern> df8</pattern>
+  <pattern> dg8</pattern>
+  <pattern> dh8</pattern>
+  <pattern> dj8</pattern>
+  <pattern> dk8</pattern>
+  <pattern> dl8</pattern>
+  <pattern> dm8</pattern>
+  <pattern> dn8</pattern>
+  <pattern> do3ć2</pattern>
+  <pattern> do3ł2</pattern>
+  <pattern> do3ś2</pattern>
+  <pattern> do3ź2</pattern>
+  <pattern> do3ż2</pattern>
+  <pattern> do3b2</pattern>
+  <pattern> do3c2</pattern>
+  <pattern> do3d2</pattern>
+  <pattern> do3f2</pattern>
+  <pattern> do3g2</pattern>
+  <pattern> do3h2</pattern>
+  <pattern> do3k2</pattern>
+  <pattern> do3l2</pattern>
+  <pattern> do3m2</pattern>
+  <pattern> do3p2</pattern>
+  <pattern> do3r2</pattern>
+  <pattern> do3s2</pattern>
+  <pattern> do3t2</pattern>
+  <pattern> do3w2</pattern>
+  <pattern> do3z2</pattern>
+  <pattern> do4ł3k</pattern>
+  <pattern> do4k3t</pattern>
+  <pattern> do4l3n</pattern>
+  <pattern> do4m3k</pattern>
+  <pattern> do4r3s</pattern>
+  <pattern> do4w3c</pattern>
+  <pattern> do5m4k2n</pattern>
+  <pattern> dobr2</pattern>
+  <pattern> dobrz2</pattern>
+  <pattern> doch2</pattern>
+  <pattern> docz2</pattern>
+  <pattern> dodź2</pattern>
+  <pattern> dodż2</pattern>
+  <pattern> dodz2</pattern>
+  <pattern> dogrz2</pattern>
+  <pattern> dopch2</pattern>
+  <pattern> doprz2</pattern>
+  <pattern> dorż2</pattern>
+  <pattern> dorz2</pattern>
+  <pattern> dosch2</pattern>
+  <pattern> dosm2</pattern>
+  <pattern> dosz2</pattern>
+  <pattern> dotk2</pattern>
+  <pattern> dotr2</pattern>
+  <pattern> dp8</pattern>
+  <pattern> dr8</pattern>
+  <pattern> drogo3w2</pattern>
+  <pattern> drz8</pattern>
+  <pattern> ds8</pattern>
+  <pattern> dt8</pattern>
+  <pattern> dv8</pattern>
+  <pattern> dwó2j3</pattern>
+  <pattern> dwó3j4ą</pattern>
+  <pattern> dwó3j4ę</pattern>
+  <pattern> dwó3j4a</pattern>
+  <pattern> dwó3j4e</pattern>
+  <pattern> dwó3j4o</pattern>
+  <pattern> dw8</pattern>
+  <pattern> dx8</pattern>
+  <pattern> dy2s3</pattern>
+  <pattern> dy2z3</pattern>
+  <pattern> dy3s4e</pattern>
+  <pattern> dy3s4o</pattern>
+  <pattern> dy3s4ta</pattern>
+  <pattern> dy3s4y</pattern>
+  <pattern> dy3sz</pattern>
+  <pattern> dy3z4e</pattern>
+  <pattern> dyzu2</pattern>
+  <pattern> dz8</pattern>
+  <pattern> dziesięcio3ś2</pattern>
+  <pattern> dziewięćse2t3</pattern>
+  <pattern> dziewię2ć3</pattern>
+  <pattern> dziewięcio3ś2</pattern>
+  <pattern> e2k2s3</pattern>
+  <pattern> e2m3e2s5ze2t</pattern>
+  <pattern> e2s1e2s1ma</pattern>
+  <pattern> e2s1ha</pattern>
+  <pattern> e2s1t</pattern>
+  <pattern> egoa2</pattern>
+  <pattern> egoe2</pattern>
+  <pattern> egoi2</pattern>
+  <pattern> egoo2</pattern>
+  <pattern> egou2</pattern>
+  <pattern> eks4y</pattern>
+  <pattern> elektroa2</pattern>
+  <pattern> elektroe2</pattern>
+  <pattern> elektroi2</pattern>
+  <pattern> elektroo2</pattern>
+  <pattern> elektrou2</pattern>
+  <pattern> fć8</pattern>
+  <pattern> fł8</pattern>
+  <pattern> fń8</pattern>
+  <pattern> fś8</pattern>
+  <pattern> fź8</pattern>
+  <pattern> fż8</pattern>
+  <pattern> f8</pattern>
+  <pattern> fb8</pattern>
+  <pattern> fc8</pattern>
+  <pattern> fd8</pattern>
+  <pattern> ff8</pattern>
+  <pattern> fg8</pattern>
+  <pattern> fh8</pattern>
+  <pattern> fj8</pattern>
+  <pattern> fk8</pattern>
+  <pattern> fl8</pattern>
+  <pattern> fm8</pattern>
+  <pattern> fn8</pattern>
+  <pattern> fp8</pattern>
+  <pattern> fr8</pattern>
+  <pattern> fs8</pattern>
+  <pattern> ft8</pattern>
+  <pattern> fv8</pattern>
+  <pattern> fw8</pattern>
+  <pattern> fx8</pattern>
+  <pattern> fz8</pattern>
+  <pattern> gć8</pattern>
+  <pattern> gł8</pattern>
+  <pattern> gń8</pattern>
+  <pattern> gś8</pattern>
+  <pattern> gź8</pattern>
+  <pattern> gż8</pattern>
+  <pattern> g8</pattern>
+  <pattern> gb8</pattern>
+  <pattern> gc8</pattern>
+  <pattern> gd8</pattern>
+  <pattern> ge2o3</pattern>
+  <pattern> gf8</pattern>
+  <pattern> gg8</pattern>
+  <pattern> gh8</pattern>
+  <pattern> gj8</pattern>
+  <pattern> gk8</pattern>
+  <pattern> gl8</pattern>
+  <pattern> gm8</pattern>
+  <pattern> gn8</pattern>
+  <pattern> go2u3</pattern>
+  <pattern> gp8</pattern>
+  <pattern> gr8</pattern>
+  <pattern> grubo3w2</pattern>
+  <pattern> grz8</pattern>
+  <pattern> gs8</pattern>
+  <pattern> gt8</pattern>
+  <pattern> gv8</pattern>
+  <pattern> gw8</pattern>
+  <pattern> gx8</pattern>
+  <pattern> gz8</pattern>
+  <pattern> hć8</pattern>
+  <pattern> hł8</pattern>
+  <pattern> hń8</pattern>
+  <pattern> hś8</pattern>
+  <pattern> hź8</pattern>
+  <pattern> hż8</pattern>
+  <pattern> h8</pattern>
+  <pattern> hb8</pattern>
+  <pattern> hc8</pattern>
+  <pattern> hd8</pattern>
+  <pattern> hf8</pattern>
+  <pattern> hg8</pattern>
+  <pattern> hh8</pattern>
+  <pattern> hipe2r3</pattern>
+  <pattern> hipe3r4o</pattern>
+  <pattern> hipera2</pattern>
+  <pattern> hipere2</pattern>
+  <pattern> hj8</pattern>
+  <pattern> hk8</pattern>
+  <pattern> hl8</pattern>
+  <pattern> hm8</pattern>
+  <pattern> hn8</pattern>
+  <pattern> hp8</pattern>
+  <pattern> hr8</pattern>
+  <pattern> hs8</pattern>
+  <pattern> ht8</pattern>
+  <pattern> hv8</pattern>
+  <pattern> hw8</pattern>
+  <pattern> hx8</pattern>
+  <pattern> hz8</pattern>
+  <pattern> i2n3</pattern>
+  <pattern> i2s3l</pattern>
+  <pattern> i3n4ic</pattern>
+  <pattern> i3n4o</pattern>
+  <pattern> i3n4u</pattern>
+  <pattern> i4n5o2k</pattern>
+  <pattern> in4f3lan</pattern>
+  <pattern> ino3w2</pattern>
+  <pattern> izoa2</pattern>
+  <pattern> izoe2</pattern>
+  <pattern> izoi2</pattern>
+  <pattern> izoo2</pattern>
+  <pattern> izou2</pattern>
+  <pattern> jć8</pattern>
+  <pattern> jł8</pattern>
+  <pattern> jń8</pattern>
+  <pattern> jś8</pattern>
+  <pattern> jź8</pattern>
+  <pattern> jż8</pattern>
+  <pattern> j8</pattern>
+  <pattern> jadło3w2</pattern>
+  <pattern> jb8</pattern>
+  <pattern> jc8</pattern>
+  <pattern> jd8</pattern>
+  <pattern> jf8</pattern>
+  <pattern> jg8</pattern>
+  <pattern> jh8</pattern>
+  <pattern> jj8</pattern>
+  <pattern> jk8</pattern>
+  <pattern> jl8</pattern>
+  <pattern> jm8</pattern>
+  <pattern> jn8</pattern>
+  <pattern> jp8</pattern>
+  <pattern> jr8</pattern>
+  <pattern> js8</pattern>
+  <pattern> jt8</pattern>
+  <pattern> jv8</pattern>
+  <pattern> jw8</pattern>
+  <pattern> jx8</pattern>
+  <pattern> jz8</pattern>
+  <pattern> kć8</pattern>
+  <pattern> kł8</pattern>
+  <pattern> kń8</pattern>
+  <pattern> kś8</pattern>
+  <pattern> kź8</pattern>
+  <pattern> kż8</pattern>
+  <pattern> k8</pattern>
+  <pattern> kb8</pattern>
+  <pattern> kc8</pattern>
+  <pattern> kd8</pattern>
+  <pattern> kf8</pattern>
+  <pattern> kg8</pattern>
+  <pattern> kh8</pattern>
+  <pattern> kilkuse2t3</pattern>
+  <pattern> kilkuseto2</pattern>
+  <pattern> kj8</pattern>
+  <pattern> kk8</pattern>
+  <pattern> kl8</pattern>
+  <pattern> km8</pattern>
+  <pattern> kn8</pattern>
+  <pattern> koło3w2</pattern>
+  <pattern> kon2t2r3</pattern>
+  <pattern> kon3tr4a</pattern>
+  <pattern> kon3tr4e</pattern>
+  <pattern> kon3tr4o3l</pattern>
+  <pattern> kon3tr4o3w</pattern>
+  <pattern> kon3tr4y</pattern>
+  <pattern> kon4tr5a2gi</pattern>
+  <pattern> kon4tr5a2se</pattern>
+  <pattern> kon4tr5a2sy</pattern>
+  <pattern> kon4tr5a2ta</pattern>
+  <pattern> kon4tr5adm</pattern>
+  <pattern> kon4tr5akc</pattern>
+  <pattern> kon4tr5alt</pattern>
+  <pattern> kon4tr5arg</pattern>
+  <pattern> kontro2</pattern>
+  <pattern> kontru2</pattern>
+  <pattern> kp8</pattern>
+  <pattern> krótko3tr2</pattern>
+  <pattern> krótko3w2</pattern>
+  <pattern> kr8</pattern>
+  <pattern> kro2ć3</pattern>
+  <pattern> krz8</pattern>
+  <pattern> ks8</pattern>
+  <pattern> kt8</pattern>
+  <pattern> kv8</pattern>
+  <pattern> kw8</pattern>
+  <pattern> kx8</pattern>
+  <pattern> kz8</pattern>
+  <pattern> lć8</pattern>
+  <pattern> lł8</pattern>
+  <pattern> lń8</pattern>
+  <pattern> lś8</pattern>
+  <pattern> lź8</pattern>
+  <pattern> lż8</pattern>
+  <pattern> l8</pattern>
+  <pattern> lb8</pattern>
+  <pattern> lc8</pattern>
+  <pattern> ld8</pattern>
+  <pattern> lf8</pattern>
+  <pattern> lg8</pattern>
+  <pattern> lh8</pattern>
+  <pattern> lj8</pattern>
+  <pattern> lk8</pattern>
+  <pattern> ll8</pattern>
+  <pattern> lm8</pattern>
+  <pattern> ln8</pattern>
+  <pattern> lp8</pattern>
+  <pattern> lr8</pattern>
+  <pattern> ls8</pattern>
+  <pattern> lt8</pattern>
+  <pattern> ludo3w2</pattern>
+  <pattern> lv8</pattern>
+  <pattern> lw8</pattern>
+  <pattern> lx8</pattern>
+  <pattern> lz8</pattern>
+  <pattern> mć8</pattern>
+  <pattern> mł8</pattern>
+  <pattern> mń8</pattern>
+  <pattern> mś8</pattern>
+  <pattern> mź8</pattern>
+  <pattern> mż8</pattern>
+  <pattern> m8</pattern>
+  <pattern> mb8</pattern>
+  <pattern> mc8</pattern>
+  <pattern> md8</pattern>
+  <pattern> mf8</pattern>
+  <pattern> mg8</pattern>
+  <pattern> mh8</pattern>
+  <pattern> mili3amp</pattern>
+  <pattern> mj8</pattern>
+  <pattern> mk8</pattern>
+  <pattern> ml8</pattern>
+  <pattern> mm8</pattern>
+  <pattern> mn8</pattern>
+  <pattern> możno3w2</pattern>
+  <pattern> mp8</pattern>
+  <pattern> mr8</pattern>
+  <pattern> ms8</pattern>
+  <pattern> mt8</pattern>
+  <pattern> mv8</pattern>
+  <pattern> mw8</pattern>
+  <pattern> mx8</pattern>
+  <pattern> mz8</pattern>
+  <pattern> nć8</pattern>
+  <pattern> nł8</pattern>
+  <pattern> nń8</pattern>
+  <pattern> nś8</pattern>
+  <pattern> nź8</pattern>
+  <pattern> nż8</pattern>
+  <pattern> n8</pattern>
+  <pattern> na2d2</pattern>
+  <pattern> na2j</pattern>
+  <pattern> na3ć2</pattern>
+  <pattern> na3ł2</pattern>
+  <pattern> na3ś2</pattern>
+  <pattern> na3ź2</pattern>
+  <pattern> na3ż2</pattern>
+  <pattern> na3b2</pattern>
+  <pattern> na3c2</pattern>
+  <pattern> na3dą</pattern>
+  <pattern> na3dę</pattern>
+  <pattern> na3dź2</pattern>
+  <pattern> na3d4łub</pattern>
+  <pattern> na3d4ir</pattern>
+  <pattern> na3d4much</pattern>
+  <pattern> na3d4ręcz</pattern>
+  <pattern> na3d4r2w</pattern>
+  <pattern> na3d4repcz</pattern>
+  <pattern> na3d4rept</pattern>
+  <pattern> na3d4ruk</pattern>
+  <pattern> na3d4rz</pattern>
+  <pattern> na3d4worn</pattern>
+  <pattern> na3daj</pattern>
+  <pattern> na3de</pattern>
+  <pattern> na3do</pattern>
+  <pattern> na3dy</pattern>
+  <pattern> na3dzi</pattern>
+  <pattern> na3f2</pattern>
+  <pattern> na3g2</pattern>
+  <pattern> na3h2</pattern>
+  <pattern> na3ją</pattern>
+  <pattern> na3ję</pattern>
+  <pattern> na3jazd</pattern>
+  <pattern> na3je</pattern>
+  <pattern> na3k2</pattern>
+  <pattern> na3l2</pattern>
+  <pattern> na3m2</pattern>
+  <pattern> na3p2</pattern>
+  <pattern> na3r2</pattern>
+  <pattern> na3s2</pattern>
+  <pattern> na3t2</pattern>
+  <pattern> na3u2</pattern>
+  <pattern> na3w2</pattern>
+  <pattern> na3z2</pattern>
+  <pattern> na4d3o2b2ł</pattern>
+  <pattern> na4d3o2bojcz</pattern>
+  <pattern> na4d3o2bowi</pattern>
+  <pattern> na4d3o2brot</pattern>
+  <pattern> na4d3o2drz</pattern>
+  <pattern> na4d3o2kien</pattern>
+  <pattern> na4d3olbrz</pattern>
+  <pattern> na4d5rzą</pattern>
+  <pattern> na4d5rzę</pattern>
+  <pattern> na4d5rzecz</pattern>
+  <pattern> na4d5rzy</pattern>
+  <pattern> na4d5ziem</pattern>
+  <pattern> na4f3c</pattern>
+  <pattern> na4f3t</pattern>
+  <pattern> na4j3e2f</pattern>
+  <pattern> na4j3e2g</pattern>
+  <pattern> na4j3e2k2s</pattern>
+  <pattern> na4j3e2ko</pattern>
+  <pattern> na4j3e2n</pattern>
+  <pattern> na4j3e2r</pattern>
+  <pattern> na4j3e2s</pattern>
+  <pattern> na4j3e2w</pattern>
+  <pattern> na4j3emf</pattern>
+  <pattern> na4j3eu</pattern>
+  <pattern> na4r3c</pattern>
+  <pattern> na4r3d</pattern>
+  <pattern> na4r3k</pattern>
+  <pattern> na4r3r</pattern>
+  <pattern> na4r3t</pattern>
+  <pattern> nabrz2</pattern>
+  <pattern> nach2</pattern>
+  <pattern> nacz2</pattern>
+  <pattern> nadśrod5ziem</pattern>
+  <pattern> nad3ć2</pattern>
+  <pattern> nad3ł2</pattern>
+  <pattern> nad3ś2</pattern>
+  <pattern> nad3b2</pattern>
+  <pattern> nad3c2</pattern>
+  <pattern> nad3d2</pattern>
+  <pattern> nad3e2tat</pattern>
+  <pattern> nad3f2</pattern>
+  <pattern> nad3g2</pattern>
+  <pattern> nad3h2</pattern>
+  <pattern> nad3i2</pattern>
+  <pattern> nad3j2</pattern>
+  <pattern> nad3k2</pattern>
+  <pattern> nad3l2</pattern>
+  <pattern> nad3m2</pattern>
+  <pattern> nad3n2</pattern>
+  <pattern> nad3p2</pattern>
+  <pattern> nad3r2</pattern>
+  <pattern> nad3s2</pattern>
+  <pattern> nad3t2</pattern>
+  <pattern> nad3u2</pattern>
+  <pattern> nad3w2</pattern>
+  <pattern> nad5ż2</pattern>
+  <pattern> nad5zó</pattern>
+  <pattern> nad5z2mys</pattern>
+  <pattern> nad5zo</pattern>
+  <pattern> nad5zwycz</pattern>
+  <pattern> nadch2</pattern>
+  <pattern> nadcz2</pattern>
+  <pattern> naddź2</pattern>
+  <pattern> nade3ć2</pattern>
+  <pattern> nade3ł2</pattern>
+  <pattern> nade3ś2</pattern>
+  <pattern> nade3ź2</pattern>
+  <pattern> nade3ż2</pattern>
+  <pattern> nade3b2</pattern>
+  <pattern> nade3c2</pattern>
+  <pattern> nade3d2</pattern>
+  <pattern> nade3f2</pattern>
+  <pattern> nade3g2</pattern>
+  <pattern> nade3h2</pattern>
+  <pattern> nade3k2</pattern>
+  <pattern> nade3l2</pattern>
+  <pattern> nade3m2</pattern>
+  <pattern> nade3p2</pattern>
+  <pattern> nade3r2</pattern>
+  <pattern> nade3s2</pattern>
+  <pattern> nade3t2</pattern>
+  <pattern> nade3w2</pattern>
+  <pattern> nade3z2</pattern>
+  <pattern> nade4p3c</pattern>
+  <pattern> nade4p3n</pattern>
+  <pattern> nade4p3t</pattern>
+  <pattern> nadech2</pattern>
+  <pattern> nadecz2</pattern>
+  <pattern> nadedź2</pattern>
+  <pattern> nadedż2</pattern>
+  <pattern> nadedz2</pattern>
+  <pattern> naderż2</pattern>
+  <pattern> naderz2</pattern>
+  <pattern> nadesz2</pattern>
+  <pattern> nadsz2</pattern>
+  <pattern> nadtr2</pattern>
+  <pattern> nadz2</pattern>
+  <pattern> nagrz2</pattern>
+  <pattern> naj3ć2</pattern>
+  <pattern> naj3ł2</pattern>
+  <pattern> naj3ś2</pattern>
+  <pattern> naj3ź2</pattern>
+  <pattern> naj3ż2</pattern>
+  <pattern> naj3akt</pattern>
+  <pattern> naj3au</pattern>
+  <pattern> naj3b2</pattern>
+  <pattern> naj3c2</pattern>
+  <pattern> naj3d2</pattern>
+  <pattern> naj3f2</pattern>
+  <pattern> naj3g2</pattern>
+  <pattern> naj3h2</pattern>
+  <pattern> naj3i2</pattern>
+  <pattern> naj3k2</pattern>
+  <pattern> naj3l2</pattern>
+  <pattern> naj3m2</pattern>
+  <pattern> naj3o2</pattern>
+  <pattern> naj3o2ć2</pattern>
+  <pattern> naj3o2ł2</pattern>
+  <pattern> naj3o2ś2</pattern>
+  <pattern> naj3o2ź2</pattern>
+  <pattern> naj3o2ż2</pattern>
+  <pattern> naj3o2b2</pattern>
+  <pattern> naj3o2c2</pattern>
+  <pattern> naj3o2d2</pattern>
+  <pattern> naj3o2f2</pattern>
+  <pattern> naj3o2g2</pattern>
+  <pattern> naj3o2h2</pattern>
+  <pattern> naj3o2k2</pattern>
+  <pattern> naj3o2l2</pattern>
+  <pattern> naj3o2m2</pattern>
+  <pattern> naj3o2p2</pattern>
+  <pattern> naj3o2r2</pattern>
+  <pattern> naj3o2s2</pattern>
+  <pattern> naj3o2t2</pattern>
+  <pattern> naj3o2w2</pattern>
+  <pattern> naj3o2z2</pattern>
+  <pattern> naj3p2</pattern>
+  <pattern> naj3r2</pattern>
+  <pattern> naj3ro2z3</pattern>
+  <pattern> naj3s2</pattern>
+  <pattern> naj3t2</pattern>
+  <pattern> naj3u2</pattern>
+  <pattern> naj3w2</pattern>
+  <pattern> naj3z2</pattern>
+  <pattern> najbe2z3</pattern>
+  <pattern> najbezw2</pattern>
+  <pattern> najch2</pattern>
+  <pattern> najcz2</pattern>
+  <pattern> najdź2</pattern>
+  <pattern> najdż2</pattern>
+  <pattern> najdo3ć2</pattern>
+  <pattern> najdo3ł2</pattern>
+  <pattern> najdo3ś2</pattern>
+  <pattern> najdo3ź2</pattern>
+  <pattern> najdo3ż2</pattern>
+  <pattern> najdo3b2</pattern>
+  <pattern> najdo3c2</pattern>
+  <pattern> najdo3d2</pattern>
+  <pattern> najdo3f2</pattern>
+  <pattern> najdo3g2</pattern>
+  <pattern> najdo3h2</pattern>
+  <pattern> najdo3k2</pattern>
+  <pattern> najdo3l2</pattern>
+  <pattern> najdo3m2</pattern>
+  <pattern> najdo3p2</pattern>
+  <pattern> najdo3r2</pattern>
+  <pattern> najdo3s2</pattern>
+  <pattern> najdo3t2</pattern>
+  <pattern> najdo3w2</pattern>
+  <pattern> najdo3z2</pattern>
+  <pattern> najdoch2</pattern>
+  <pattern> najdocz2</pattern>
+  <pattern> najdodź2</pattern>
+  <pattern> najdodż2</pattern>
+  <pattern> najdodz2</pattern>
+  <pattern> najdorz2</pattern>
+  <pattern> najdosz2</pattern>
+  <pattern> najdotk2</pattern>
+  <pattern> najdz2</pattern>
+  <pattern> najkr2</pattern>
+  <pattern> najob3ć2</pattern>
+  <pattern> najob3ł2</pattern>
+  <pattern> najob3ś2</pattern>
+  <pattern> najob3ź2</pattern>
+  <pattern> najob3ż2</pattern>
+  <pattern> najob3c2</pattern>
+  <pattern> najob3d2</pattern>
+  <pattern> najob3f2</pattern>
+  <pattern> najob3g2</pattern>
+  <pattern> najob3h2</pattern>
+  <pattern> najob3j2</pattern>
+  <pattern> najob3k2</pattern>
+  <pattern> najob3l2</pattern>
+  <pattern> najob3m2</pattern>
+  <pattern> najob3n2</pattern>
+  <pattern> najob3p2</pattern>
+  <pattern> najob3s2</pattern>
+  <pattern> najob3t2</pattern>
+  <pattern> najob3w2</pattern>
+  <pattern> najobch2</pattern>
+  <pattern> najobcz2</pattern>
+  <pattern> najobdź2</pattern>
+  <pattern> najobdż2</pattern>
+  <pattern> najobdz2</pattern>
+  <pattern> najobrz2</pattern>
+  <pattern> najobsz2</pattern>
+  <pattern> najoch2</pattern>
+  <pattern> najocz2</pattern>
+  <pattern> najodź2</pattern>
+  <pattern> najod3ć2</pattern>
+  <pattern> najod3ś2</pattern>
+  <pattern> najod3c2</pattern>
+  <pattern> najod3d2</pattern>
+  <pattern> najod3f2</pattern>
+  <pattern> najod3g2</pattern>
+  <pattern> najod3h2</pattern>
+  <pattern> najod3j2</pattern>
+  <pattern> najod3k2</pattern>
+  <pattern> najod3l2</pattern>
+  <pattern> najod3m2</pattern>
+  <pattern> najod3n2</pattern>
+  <pattern> najod3p2</pattern>
+  <pattern> najod3s2</pattern>
+  <pattern> najod3t2</pattern>
+  <pattern> najod3w2</pattern>
+  <pattern> najod5ż2</pattern>
+  <pattern> najodch2</pattern>
+  <pattern> najodcz2</pattern>
+  <pattern> najoddź2</pattern>
+  <pattern> najoddż2</pattern>
+  <pattern> najoddz2</pattern>
+  <pattern> najodsz2</pattern>
+  <pattern> najodz2</pattern>
+  <pattern> najorz2</pattern>
+  <pattern> najosz2</pattern>
+  <pattern> najro3z4u</pattern>
+  <pattern> najrz2</pattern>
+  <pattern> najsm2</pattern>
+  <pattern> najsz2</pattern>
+  <pattern> najtk2</pattern>
+  <pattern> najtr2</pattern>
+  <pattern> najucz2</pattern>
+  <pattern> najzw2</pattern>
+  <pattern> nakr2</pattern>
+  <pattern> napo2d2</pattern>
+  <pattern> napo3ć2</pattern>
+  <pattern> napo3ł2</pattern>
+  <pattern> napo3ś2</pattern>
+  <pattern> napo3ź2</pattern>
+  <pattern> napo3ż2</pattern>
+  <pattern> napo3b2</pattern>
+  <pattern> napo3c2</pattern>
+  <pattern> napo3f2</pattern>
+  <pattern> napo3g2</pattern>
+  <pattern> napo3h2</pattern>
+  <pattern> napo3k2</pattern>
+  <pattern> napo3l2</pattern>
+  <pattern> napo3m2</pattern>
+  <pattern> napo3p2</pattern>
+  <pattern> napo3r2</pattern>
+  <pattern> napo3s2</pattern>
+  <pattern> napo3t2</pattern>
+  <pattern> napo3w2</pattern>
+  <pattern> napo3z2</pattern>
+  <pattern> napo4m3p</pattern>
+  <pattern> napoch2</pattern>
+  <pattern> napocz2</pattern>
+  <pattern> napodź2</pattern>
+  <pattern> napodż2</pattern>
+  <pattern> napod3d</pattern>
+  <pattern> napomk2</pattern>
+  <pattern> naporz2</pattern>
+  <pattern> naposz2</pattern>
+  <pattern> naprz2</pattern>
+  <pattern> narż2</pattern>
+  <pattern> naro2z3</pattern>
+  <pattern> narz2</pattern>
+  <pattern> nasm2</pattern>
+  <pattern> nasz2</pattern>
+  <pattern> natch2</pattern>
+  <pattern> natk2</pattern>
+  <pattern> naz3m2</pattern>
+  <pattern> nazw2</pattern>
+  <pattern> nb8</pattern>
+  <pattern> nc8</pattern>
+  <pattern> nd8</pattern>
+  <pattern> ne2o3</pattern>
+  <pattern> nf8</pattern>
+  <pattern> ng8</pattern>
+  <pattern> nh8</pattern>
+  <pattern> nie3ć2</pattern>
+  <pattern> nie3ł2</pattern>
+  <pattern> nie3ś2</pattern>
+  <pattern> nie3ź2</pattern>
+  <pattern> nie3ż2</pattern>
+  <pattern> nie3b2</pattern>
+  <pattern> nie3c2</pattern>
+  <pattern> nie3d2</pattern>
+  <pattern> nie3f2</pattern>
+  <pattern> nie3g2</pattern>
+  <pattern> nie3h2</pattern>
+  <pattern> nie3k2</pattern>
+  <pattern> nie3l2</pattern>
+  <pattern> nie3m2</pattern>
+  <pattern> nie3p2</pattern>
+  <pattern> nie3r2</pattern>
+  <pattern> nie3s2</pattern>
+  <pattern> nie3t2</pattern>
+  <pattern> nie3u2</pattern>
+  <pattern> nie3w2</pattern>
+  <pattern> nie3z2</pattern>
+  <pattern> nie4c3c</pattern>
+  <pattern> nie4c3k</pattern>
+  <pattern> nie4dź3</pattern>
+  <pattern> nie4m3c</pattern>
+  <pattern> nie4m3k</pattern>
+  <pattern> niech2</pattern>
+  <pattern> niecz2</pattern>
+  <pattern> niedż2</pattern>
+  <pattern> niedo3ć2</pattern>
+  <pattern> niedo3ł2</pattern>
+  <pattern> niedo3ś2</pattern>
+  <pattern> niedo3ź2</pattern>
+  <pattern> niedo3ż2</pattern>
+  <pattern> niedo3b2</pattern>
+  <pattern> niedo3c2</pattern>
+  <pattern> niedo3d2</pattern>
+  <pattern> niedo3f2</pattern>
+  <pattern> niedo3g2</pattern>
+  <pattern> niedo3h2</pattern>
+  <pattern> niedo3k2</pattern>
+  <pattern> niedo3l2</pattern>
+  <pattern> niedo3m2</pattern>
+  <pattern> niedo3p2</pattern>
+  <pattern> niedo3r2</pattern>
+  <pattern> niedo3s2</pattern>
+  <pattern> niedo3t2</pattern>
+  <pattern> niedo3w2</pattern>
+  <pattern> niedo3z2</pattern>
+  <pattern> niedobrz2</pattern>
+  <pattern> niedoch2</pattern>
+  <pattern> niedocz2</pattern>
+  <pattern> niedodź2</pattern>
+  <pattern> niedodż2</pattern>
+  <pattern> niedodz2</pattern>
+  <pattern> niedokr2</pattern>
+  <pattern> niedomk2</pattern>
+  <pattern> niedopch2</pattern>
+  <pattern> niedorz2</pattern>
+  <pattern> niedosz2</pattern>
+  <pattern> niedotk2</pattern>
+  <pattern> niedz2</pattern>
+  <pattern> nieoć2</pattern>
+  <pattern> nieoł2</pattern>
+  <pattern> nieoś2</pattern>
+  <pattern> nieoź2</pattern>
+  <pattern> nieoż2</pattern>
+  <pattern> nieo2</pattern>
+  <pattern> nieob2</pattern>
+  <pattern> nieob3ć2</pattern>
+  <pattern> nieob3ś2</pattern>
+  <pattern> nieob3ź2</pattern>
+  <pattern> nieob3ż2</pattern>
+  <pattern> nieob3c2</pattern>
+  <pattern> nieob3d2</pattern>
+  <pattern> nieob3f2</pattern>
+  <pattern> nieob3g2</pattern>
+  <pattern> nieob3h2</pattern>
+  <pattern> nieob3j2</pattern>
+  <pattern> nieob3k2</pattern>
+  <pattern> nieob3m2</pattern>
+  <pattern> nieob3p2</pattern>
+  <pattern> nieob3s2</pattern>
+  <pattern> nieob3w2</pattern>
+  <pattern> nieobch2</pattern>
+  <pattern> nieobcz2</pattern>
+  <pattern> nieobdź2</pattern>
+  <pattern> nieobdż2</pattern>
+  <pattern> nieobdz2</pattern>
+  <pattern> nieobsz2</pattern>
+  <pattern> nieoc2</pattern>
+  <pattern> nieoch2</pattern>
+  <pattern> nieocz2</pattern>
+  <pattern> nieodź2</pattern>
+  <pattern> nieod2</pattern>
+  <pattern> nieod3ć2</pattern>
+  <pattern> nieod3ł2</pattern>
+  <pattern> nieod3ś2</pattern>
+  <pattern> nieod3c2</pattern>
+  <pattern> nieod3d2</pattern>
+  <pattern> nieod3f2</pattern>
+  <pattern> nieod3g2</pattern>
+  <pattern> nieod3h2</pattern>
+  <pattern> nieod3j2</pattern>
+  <pattern> nieod3k2</pattern>
+  <pattern> nieod3l2</pattern>
+  <pattern> nieod3n2</pattern>
+  <pattern> nieod3p2</pattern>
+  <pattern> nieod3s2</pattern>
+  <pattern> nieod3t2</pattern>
+  <pattern> nieod3wr</pattern>
+  <pattern> nieod5ż2</pattern>
+  <pattern> nieodch2</pattern>
+  <pattern> nieodcz2</pattern>
+  <pattern> nieoddź2</pattern>
+  <pattern> nieoddż2</pattern>
+  <pattern> nieoddz2</pattern>
+  <pattern> nieodsz2</pattern>
+  <pattern> nieodw2</pattern>
+  <pattern> nieodz2</pattern>
+  <pattern> nieof2</pattern>
+  <pattern> nieog2</pattern>
+  <pattern> nieoh2</pattern>
+  <pattern> nieok2</pattern>
+  <pattern> nieol2</pattern>
+  <pattern> nieom2</pattern>
+  <pattern> nieop2</pattern>
+  <pattern> nieor2</pattern>
+  <pattern> nieorz2</pattern>
+  <pattern> nieos2</pattern>
+  <pattern> nieosz2</pattern>
+  <pattern> nieot2</pattern>
+  <pattern> nieow2</pattern>
+  <pattern> nieoz2</pattern>
+  <pattern> niepo2d2</pattern>
+  <pattern> niepo3ć2</pattern>
+  <pattern> niepo3ł2</pattern>
+  <pattern> niepo3ś2</pattern>
+  <pattern> niepo3ź2</pattern>
+  <pattern> niepo3ż2</pattern>
+  <pattern> niepo3b2</pattern>
+  <pattern> niepo3c2</pattern>
+  <pattern> niepo3dź2</pattern>
+  <pattern> niepo3d4łu</pattern>
+  <pattern> niepo3d4much</pattern>
+  <pattern> niepo3d4ręcz</pattern>
+  <pattern> niepo3d4raż</pattern>
+  <pattern> niepo3d4rap</pattern>
+  <pattern> niepo3d4repcz</pattern>
+  <pattern> niepo3d4rept</pattern>
+  <pattern> niepo3d4waj</pattern>
+  <pattern> niepo3d4woj</pattern>
+  <pattern> niepo3do</pattern>
+  <pattern> niepo3du</pattern>
+  <pattern> niepo3dz2</pattern>
+  <pattern> niepo3f2</pattern>
+  <pattern> niepo3g2</pattern>
+  <pattern> niepo3h2</pattern>
+  <pattern> niepo3k2</pattern>
+  <pattern> niepo3l2</pattern>
+  <pattern> niepo3m2</pattern>
+  <pattern> niepo3p2</pattern>
+  <pattern> niepo3r2</pattern>
+  <pattern> niepo3s2</pattern>
+  <pattern> niepo3t2</pattern>
+  <pattern> niepo3w2</pattern>
+  <pattern> niepo3z2</pattern>
+  <pattern> niepo4d3o2choc</pattern>
+  <pattern> niepo4d3o2strz</pattern>
+  <pattern> niepoch2</pattern>
+  <pattern> niepocz2</pattern>
+  <pattern> niepod3ć2</pattern>
+  <pattern> niepod3ł2</pattern>
+  <pattern> niepod3ś2</pattern>
+  <pattern> niepod3b2</pattern>
+  <pattern> niepod3c2</pattern>
+  <pattern> niepod3d2</pattern>
+  <pattern> niepod3f2</pattern>
+  <pattern> niepod3g2</pattern>
+  <pattern> niepod3h2</pattern>
+  <pattern> niepod3j2</pattern>
+  <pattern> niepod3k2</pattern>
+  <pattern> niepod3l2</pattern>
+  <pattern> niepod3m2</pattern>
+  <pattern> niepod3n2</pattern>
+  <pattern> niepod3p2</pattern>
+  <pattern> niepod3r2</pattern>
+  <pattern> niepod3s2</pattern>
+  <pattern> niepod3t2</pattern>
+  <pattern> niepod3w2</pattern>
+  <pattern> niepod5ż</pattern>
+  <pattern> niepodch2</pattern>
+  <pattern> niepodcz2</pattern>
+  <pattern> niepoddź2</pattern>
+  <pattern> niepoddż2</pattern>
+  <pattern> niepodsm2</pattern>
+  <pattern> niepodsz2</pattern>
+  <pattern> nieporz2</pattern>
+  <pattern> nieposm2</pattern>
+  <pattern> nieposz2</pattern>
+  <pattern> nieprzełk2</pattern>
+  <pattern> nieprze2d2</pattern>
+  <pattern> nieprze3ć2</pattern>
+  <pattern> nieprze3ł2</pattern>
+  <pattern> nieprze3ś2</pattern>
+  <pattern> nieprze3ź2</pattern>
+  <pattern> nieprze3ż2</pattern>
+  <pattern> nieprze3b2</pattern>
+  <pattern> nieprze3brz2</pattern>
+  <pattern> nieprze3c2</pattern>
+  <pattern> nieprze3dź2</pattern>
+  <pattern> nieprze3d4łuż</pattern>
+  <pattern> nieprze3d4much</pattern>
+  <pattern> nieprze3d4ramat</pattern>
+  <pattern> nieprze3d4ruk</pattern>
+  <pattern> nieprze3d4ryl</pattern>
+  <pattern> nieprze3d4rz2</pattern>
+  <pattern> nieprze3d4um</pattern>
+  <pattern> nieprze3dy</pattern>
+  <pattern> nieprze3dz2</pattern>
+  <pattern> nieprze3e2k2s3</pattern>
+  <pattern> nieprze3f2</pattern>
+  <pattern> nieprze3g2</pattern>
+  <pattern> nieprze3h2</pattern>
+  <pattern> nieprze3k2</pattern>
+  <pattern> nieprze3l2</pattern>
+  <pattern> nieprze3m2</pattern>
+  <pattern> nieprze3n2</pattern>
+  <pattern> nieprze3p2</pattern>
+  <pattern> nieprze3r2</pattern>
+  <pattern> nieprze3s2</pattern>
+  <pattern> nieprze3t2</pattern>
+  <pattern> nieprze3w2</pattern>
+  <pattern> nieprze3z2</pattern>
+  <pattern> nieprze4d5łużyc</pattern>
+  <pattern> nieprze4d5ż2</pattern>
+  <pattern> nieprze4d5z2a</pattern>
+  <pattern> nieprze4d5zg2</pattern>
+  <pattern> nieprze4d5zim</pattern>
+  <pattern> nieprze4d5zj</pattern>
+  <pattern> nieprze4d5zl</pattern>
+  <pattern> nieprze4d5zw2r</pattern>
+  <pattern> nieprze4d5zwoj</pattern>
+  <pattern> nieprzech2</pattern>
+  <pattern> nieprzecz2</pattern>
+  <pattern> nieprzed3ć2</pattern>
+  <pattern> nieprzed3ł2</pattern>
+  <pattern> nieprzed3ś2</pattern>
+  <pattern> nieprzed3c2</pattern>
+  <pattern> nieprzed3d2</pattern>
+  <pattern> nieprzed3f2</pattern>
+  <pattern> nieprzed3g2</pattern>
+  <pattern> nieprzed3h2</pattern>
+  <pattern> nieprzed3i2</pattern>
+  <pattern> nieprzed3j2</pattern>
+  <pattern> nieprzed3k2</pattern>
+  <pattern> nieprzed3l2</pattern>
+  <pattern> nieprzed3m2</pattern>
+  <pattern> nieprzed3n2</pattern>
+  <pattern> nieprzed3p2</pattern>
+  <pattern> nieprzed3r2</pattern>
+  <pattern> nieprzed3s2</pattern>
+  <pattern> nieprzed3sz2</pattern>
+  <pattern> nieprzed3t2</pattern>
+  <pattern> nieprzed3u2</pattern>
+  <pattern> nieprzed3w2</pattern>
+  <pattern> nieprzedch2</pattern>
+  <pattern> nieprzedcz2</pattern>
+  <pattern> nieprzeddź2</pattern>
+  <pattern> nieprzeddż2</pattern>
+  <pattern> nieprzeddz2</pattern>
+  <pattern> nieprzegrz2</pattern>
+  <pattern> nieprzekl2</pattern>
+  <pattern> nieprzekr2</pattern>
+  <pattern> nieprzepch2</pattern>
+  <pattern> nieprzerż2</pattern>
+  <pattern> nieprzerz2</pattern>
+  <pattern> nieprzesch2</pattern>
+  <pattern> nieprzesm2</pattern>
+  <pattern> nieprzesz2</pattern>
+  <pattern> nieprzetk2</pattern>
+  <pattern> nieprzetr2</pattern>
+  <pattern> niero2z3</pattern>
+  <pattern> niero3z4e</pattern>
+  <pattern> niero3z4u</pattern>
+  <pattern> nierozś2</pattern>
+  <pattern> nierozbrz2</pattern>
+  <pattern> nieroze3r2</pattern>
+  <pattern> nierozm2</pattern>
+  <pattern> nieroztr2</pattern>
+  <pattern> nierz2</pattern>
+  <pattern> niesu2b3</pattern>
+  <pattern> niesu3b4ie</pattern>
+  <pattern> niesz2</pattern>
+  <pattern> nietk2</pattern>
+  <pattern> nietr2</pattern>
+  <pattern> nieucz2</pattern>
+  <pattern> nieuw2</pattern>
+  <pattern> niewy3ć2</pattern>
+  <pattern> niewy3ł2</pattern>
+  <pattern> niewy3ś2</pattern>
+  <pattern> niewy3ź2</pattern>
+  <pattern> niewy3ż2</pattern>
+  <pattern> niewy3b2</pattern>
+  <pattern> niewy3c2</pattern>
+  <pattern> niewy3d2</pattern>
+  <pattern> niewy3f2</pattern>
+  <pattern> niewy3g2</pattern>
+  <pattern> niewy3h2</pattern>
+  <pattern> niewy3k2</pattern>
+  <pattern> niewy3l2</pattern>
+  <pattern> niewy3m2</pattern>
+  <pattern> niewy3p2</pattern>
+  <pattern> niewy3r2</pattern>
+  <pattern> niewy3s2</pattern>
+  <pattern> niewy3t2</pattern>
+  <pattern> niewy3w2</pattern>
+  <pattern> niewy3z2</pattern>
+  <pattern> niewybrz2</pattern>
+  <pattern> niewych2</pattern>
+  <pattern> niewycz2</pattern>
+  <pattern> niewydź2</pattern>
+  <pattern> niewydż2</pattern>
+  <pattern> niewydz2</pattern>
+  <pattern> niewyrz2</pattern>
+  <pattern> niewysz2</pattern>
+  <pattern> niewytk2</pattern>
+  <pattern> niewytr2</pattern>
+  <pattern> niezw2</pattern>
+  <pattern> nj8</pattern>
+  <pattern> nk8</pattern>
+  <pattern> nl8</pattern>
+  <pattern> nm8</pattern>
+  <pattern> nn8</pattern>
+  <pattern> np8</pattern>
+  <pattern> nr8</pattern>
+  <pattern> ns8</pattern>
+  <pattern> nt8</pattern>
+  <pattern> nv8</pattern>
+  <pattern> nw8</pattern>
+  <pattern> nx8</pattern>
+  <pattern> nz8</pattern>
+  <pattern> oć2</pattern>
+  <pattern> oś2</pattern>
+  <pattern> ośmio3ś2</pattern>
+  <pattern> oź2</pattern>
+  <pattern> oż2</pattern>
+  <pattern> o2b2</pattern>
+  <pattern> o2d2</pattern>
+  <pattern> o2t3chł</pattern>
+  <pattern> o3b4łą</pattern>
+  <pattern> o3b4łę</pattern>
+  <pattern> o3b4łoc</pattern>
+  <pattern> o3b4luzg</pattern>
+  <pattern> o3b4rać</pattern>
+  <pattern> o3b4raso</pattern>
+  <pattern> o3b4roń</pattern>
+  <pattern> o3b4ron</pattern>
+  <pattern> o3b4ryź</pattern>
+  <pattern> o3b4ryz</pattern>
+  <pattern> o3b4rz2</pattern>
+  <pattern> o3be</pattern>
+  <pattern> o3bi</pattern>
+  <pattern> o3d4iu</pattern>
+  <pattern> o3d4ręt</pattern>
+  <pattern> o3d4rap</pattern>
+  <pattern> o3d4robin</pattern>
+  <pattern> o3d4rut</pattern>
+  <pattern> o3d4rwi</pattern>
+  <pattern> o3d4rzeć</pattern>
+  <pattern> o3d4rzw</pattern>
+  <pattern> o3d6zia</pattern>
+  <pattern> o3d6zie</pattern>
+  <pattern> o3de</pattern>
+  <pattern> o3l2śn</pattern>
+  <pattern> o4b5łocz</pattern>
+  <pattern> o4b5rzą</pattern>
+  <pattern> o4b5rzęd</pattern>
+  <pattern> o4b5rzez</pattern>
+  <pattern> o4b5rzuc</pattern>
+  <pattern> o4b5rzut</pattern>
+  <pattern> o4b5rzyn</pattern>
+  <pattern> o4d7ziar</pattern>
+  <pattern> o4d7ziem</pattern>
+  <pattern> oa3z</pattern>
+  <pattern> ob3ć2</pattern>
+  <pattern> ob3ł2</pattern>
+  <pattern> ob3ś2</pattern>
+  <pattern> ob3ź2</pattern>
+  <pattern> ob3ż2</pattern>
+  <pattern> ob3c2</pattern>
+  <pattern> ob3d2</pattern>
+  <pattern> ob3f2</pattern>
+  <pattern> ob3g2</pattern>
+  <pattern> ob3h2</pattern>
+  <pattern> ob3j2</pattern>
+  <pattern> ob3k2</pattern>
+  <pattern> ob3l2</pattern>
+  <pattern> ob3m2</pattern>
+  <pattern> ob3n2</pattern>
+  <pattern> ob3o2strz</pattern>
+  <pattern> ob3p2</pattern>
+  <pattern> ob3r</pattern>
+  <pattern> ob3s2</pattern>
+  <pattern> ob3t2</pattern>
+  <pattern> ob3u2m2</pattern>
+  <pattern> ob3w2</pattern>
+  <pattern> obch2</pattern>
+  <pattern> obcz2</pattern>
+  <pattern> obdź2</pattern>
+  <pattern> obdż2</pattern>
+  <pattern> obdz2</pattern>
+  <pattern> obe3ć2</pattern>
+  <pattern> obe3ł2</pattern>
+  <pattern> obe3ś2</pattern>
+  <pattern> obe3ź2</pattern>
+  <pattern> obe3ż2</pattern>
+  <pattern> obe3b2</pattern>
+  <pattern> obe3c2</pattern>
+  <pattern> obe3d2</pattern>
+  <pattern> obe3f2</pattern>
+  <pattern> obe3g2</pattern>
+  <pattern> obe3h2</pattern>
+  <pattern> obe3k2</pattern>
+  <pattern> obe3l2</pattern>
+  <pattern> obe3m2</pattern>
+  <pattern> obe3p2</pattern>
+  <pattern> obe3r2</pattern>
+  <pattern> obe3r3t</pattern>
+  <pattern> obe3s2</pattern>
+  <pattern> obe3t2</pattern>
+  <pattern> obe3w2</pattern>
+  <pattern> obe3z2</pattern>
+  <pattern> obe4c3n</pattern>
+  <pattern> obe4z3w</pattern>
+  <pattern> obech2</pattern>
+  <pattern> obecz2</pattern>
+  <pattern> obedź2</pattern>
+  <pattern> obedż2</pattern>
+  <pattern> obedz2</pattern>
+  <pattern> oberż2</pattern>
+  <pattern> ober3m</pattern>
+  <pattern> oberz2</pattern>
+  <pattern> obesch2</pattern>
+  <pattern> obesz2</pattern>
+  <pattern> obetk2</pattern>
+  <pattern> obi3b2</pattern>
+  <pattern> obsz2</pattern>
+  <pattern> oc2</pattern>
+  <pattern> och2</pattern>
+  <pattern> ochrz2</pattern>
+  <pattern> ocz2</pattern>
+  <pattern> odź2</pattern>
+  <pattern> od3ć2</pattern>
+  <pattern> od3ś2</pattern>
+  <pattern> od3au</pattern>
+  <pattern> od3b2</pattern>
+  <pattern> od3c2</pattern>
+  <pattern> od3d2</pattern>
+  <pattern> od3f2</pattern>
+  <pattern> od3g2</pattern>
+  <pattern> od3h2</pattern>
+  <pattern> od3i2</pattern>
+  <pattern> od3i2zo</pattern>
+  <pattern> od3j2</pattern>
+  <pattern> od3k2</pattern>
+  <pattern> od3l2</pattern>
+  <pattern> od3m2</pattern>
+  <pattern> od3n2</pattern>
+  <pattern> od3o2s</pattern>
+  <pattern> od3p2</pattern>
+  <pattern> od3r2</pattern>
+  <pattern> od3s2</pattern>
+  <pattern> od3t2</pattern>
+  <pattern> od3u2cz</pattern>
+  <pattern> od3u2m2</pattern>
+  <pattern> od3w2</pattern>
+  <pattern> od5ż2</pattern>
+  <pattern> od5z2</pattern>
+  <pattern> odbe2z3</pattern>
+  <pattern> odch2</pattern>
+  <pattern> odcz2</pattern>
+  <pattern> oddź2</pattern>
+  <pattern> oddż2</pattern>
+  <pattern> oddz2</pattern>
+  <pattern> ode3ć2</pattern>
+  <pattern> ode3ł2</pattern>
+  <pattern> ode3ś2</pattern>
+  <pattern> ode3ź2</pattern>
+  <pattern> ode3ż2</pattern>
+  <pattern> ode3b2</pattern>
+  <pattern> ode3c2</pattern>
+  <pattern> ode3d2</pattern>
+  <pattern> ode3f2</pattern>
+  <pattern> ode3g2</pattern>
+  <pattern> ode3h2</pattern>
+  <pattern> ode3k2</pattern>
+  <pattern> ode3l2</pattern>
+  <pattern> ode3m2</pattern>
+  <pattern> ode3mk2</pattern>
+  <pattern> ode3p2</pattern>
+  <pattern> ode3r2</pattern>
+  <pattern> ode3s2</pattern>
+  <pattern> ode3t2</pattern>
+  <pattern> ode3w2</pattern>
+  <pattern> ode3z2</pattern>
+  <pattern> odech2</pattern>
+  <pattern> odecz2</pattern>
+  <pattern> odedź2</pattern>
+  <pattern> odedż2</pattern>
+  <pattern> odedz2</pattern>
+  <pattern> odepch2</pattern>
+  <pattern> oderż2</pattern>
+  <pattern> oderz2</pattern>
+  <pattern> odesz2</pattern>
+  <pattern> odetch2</pattern>
+  <pattern> odetk2</pattern>
+  <pattern> odkrz2</pattern>
+  <pattern> odrz2</pattern>
+  <pattern> odsz2</pattern>
+  <pattern> of2</pattern>
+  <pattern> ogólno3k2</pattern>
+  <pattern> og2</pattern>
+  <pattern> ognio3tr2</pattern>
+  <pattern> oh2</pattern>
+  <pattern> ok2</pattern>
+  <pattern> oka3m2</pattern>
+  <pattern> okr2</pattern>
+  <pattern> ole2o3</pattern>
+  <pattern> om2</pattern>
+  <pattern> op2</pattern>
+  <pattern> opch2</pattern>
+  <pattern> or2ż2</pattern>
+  <pattern> or2tę</pattern>
+  <pattern> or2z2</pattern>
+  <pattern> os2</pattern>
+  <pattern> osie2m3</pattern>
+  <pattern> osiemse2t3</pattern>
+  <pattern> osz2</pattern>
+  <pattern> ot2</pattern>
+  <pattern> ow2</pattern>
+  <pattern> oz2</pattern>
+  <pattern> pć8</pattern>
+  <pattern> pł8</pattern>
+  <pattern> płasko3w2</pattern>
+  <pattern> pń8</pattern>
+  <pattern> półk2</pattern>
+  <pattern> półkr2</pattern>
+  <pattern> półm2</pattern>
+  <pattern> póło2</pattern>
+  <pattern> półob3r</pattern>
+  <pattern> półom2d</pattern>
+  <pattern> półprzy3m2k</pattern>
+  <pattern> pó2ł3</pattern>
+  <pattern> pó3ł4ą</pattern>
+  <pattern> pó3ł4ę</pattern>
+  <pattern> pó3ł4ecz</pattern>
+  <pattern> pó3ł4y</pattern>
+  <pattern> pś8</pattern>
+  <pattern> pź8</pattern>
+  <pattern> pż8</pattern>
+  <pattern> p8</pattern>
+  <pattern> pb8</pattern>
+  <pattern> pc8</pattern>
+  <pattern> pch8</pattern>
+  <pattern> pd8</pattern>
+  <pattern> pełno3kr2</pattern>
+  <pattern> pe2r3</pattern>
+  <pattern> pe3c2k</pattern>
+  <pattern> pe3r4e</pattern>
+  <pattern> pe3r4i</pattern>
+  <pattern> pe3r4o</pattern>
+  <pattern> pe3r4u</pattern>
+  <pattern> pe3r4y</pattern>
+  <pattern> pe4r5i2n</pattern>
+  <pattern> pee2se2l</pattern>
+  <pattern> pepee2r</pattern>
+  <pattern> pepee2s</pattern>
+  <pattern> peze2t1pee2r</pattern>
+  <pattern> pf8</pattern>
+  <pattern> pg8</pattern>
+  <pattern> ph8</pattern>
+  <pattern> pięćse2t3</pattern>
+  <pattern> pię2ć3</pattern>
+  <pattern> pięcio3ś2</pattern>
+  <pattern> pierwo3w2</pattern>
+  <pattern> piono3w2</pattern>
+  <pattern> pj8</pattern>
+  <pattern> pk8</pattern>
+  <pattern> pl8</pattern>
+  <pattern> pm8</pattern>
+  <pattern> pn8</pattern>
+  <pattern> połk2</pattern>
+  <pattern> po2d2</pattern>
+  <pattern> po3ć2</pattern>
+  <pattern> po3ł2</pattern>
+  <pattern> po3ś2</pattern>
+  <pattern> po3ź2</pattern>
+  <pattern> po3ż2</pattern>
+  <pattern> po3b2</pattern>
+  <pattern> po3c2</pattern>
+  <pattern> po3dą</pattern>
+  <pattern> po3dę</pattern>
+  <pattern> po3dź2</pattern>
+  <pattern> po3d4łu</pattern>
+  <pattern> po3d4much</pattern>
+  <pattern> po3d4naw</pattern>
+  <pattern> po3d4ręcz</pattern>
+  <pattern> po3d4rętw</pattern>
+  <pattern> po3d4róż</pattern>
+  <pattern> po3d4r2wi</pattern>
+  <pattern> po3d4raż</pattern>
+  <pattern> po3d4rap</pattern>
+  <pattern> po3d4repcz</pattern>
+  <pattern> po3d4rept</pattern>
+  <pattern> po3d4roż</pattern>
+  <pattern> po3d4robó</pattern>
+  <pattern> po3d4roba</pattern>
+  <pattern> po3d4robo</pattern>
+  <pattern> po3d4roby</pattern>
+  <pattern> po3d4rocz</pattern>
+  <pattern> po3d4ruzg</pattern>
+  <pattern> po3d4ryg</pattern>
+  <pattern> po3d4rze</pattern>
+  <pattern> po3d4wójn</pattern>
+  <pattern> po3d4wór</pattern>
+  <pattern> po3d4waj</pattern>
+  <pattern> po3d4woi</pattern>
+  <pattern> po3d4woj</pattern>
+  <pattern> po3d4worz</pattern>
+  <pattern> po3da</pattern>
+  <pattern> po3de</pattern>
+  <pattern> po3dej</pattern>
+  <pattern> po3diu</pattern>
+  <pattern> po3do</pattern>
+  <pattern> po3du</pattern>
+  <pattern> po3dy</pattern>
+  <pattern> po3dz2</pattern>
+  <pattern> po3e2k2s3</pattern>
+  <pattern> po3f2</pattern>
+  <pattern> po3g2</pattern>
+  <pattern> po3h2</pattern>
+  <pattern> po3k2</pattern>
+  <pattern> po3l2</pattern>
+  <pattern> po3m2</pattern>
+  <pattern> po3p2</pattern>
+  <pattern> po3rż</pattern>
+  <pattern> po3r2</pattern>
+  <pattern> po3s2</pattern>
+  <pattern> po3t2</pattern>
+  <pattern> po3w2</pattern>
+  <pattern> po3z2</pattern>
+  <pattern> po4ń3c</pattern>
+  <pattern> po4cz3d</pattern>
+  <pattern> po4cz3t</pattern>
+  <pattern> po4d3ów</pattern>
+  <pattern> po4d3e4k2s3</pattern>
+  <pattern> po4d3o2bóz</pattern>
+  <pattern> po4d3o2biad</pattern>
+  <pattern> po4d3o2bojcz</pattern>
+  <pattern> po4d3o2braz</pattern>
+  <pattern> po4d3o2choc</pattern>
+  <pattern> po4d3o2dm</pattern>
+  <pattern> po4d3o2f</pattern>
+  <pattern> po4d3o2g</pattern>
+  <pattern> po4d3o2kien</pattern>
+  <pattern> po4d3o2kn</pattern>
+  <pattern> po4d3o2kręg</pattern>
+  <pattern> po4d3o2kres</pattern>
+  <pattern> po4d3o2piecz</pattern>
+  <pattern> po4d3o2ryw</pattern>
+  <pattern> po4d3o2siniak</pattern>
+  <pattern> po4d3o2strz</pattern>
+  <pattern> po4d3obsz</pattern>
+  <pattern> po4d3odd</pattern>
+  <pattern> po4d3olbrz</pattern>
+  <pattern> po4d3u2cz</pattern>
+  <pattern> po4d3u2dz</pattern>
+  <pattern> po4d3u2pa</pattern>
+  <pattern> po4d3u2ral</pattern>
+  <pattern> po4d3u2sta</pattern>
+  <pattern> po4d3u2szcz</pattern>
+  <pattern> po4d5ręczn</pattern>
+  <pattern> po4d5zakr</pattern>
+  <pattern> po4d5zam</pattern>
+  <pattern> po4d5zast</pattern>
+  <pattern> po4d5zbi</pattern>
+  <pattern> po4d5ze</pattern>
+  <pattern> po4d5zielenią</pattern>
+  <pattern> po4d5zielenić</pattern>
+  <pattern> po4d5zielenię</pattern>
+  <pattern> po4d5zielenił</pattern>
+  <pattern> po4d5zielenic</pattern>
+  <pattern> po4d5zielenien</pattern>
+  <pattern> po4d5zielenil</pattern>
+  <pattern> po4d5zielenim</pattern>
+  <pattern> po4d5zielenio</pattern>
+  <pattern> po4d5zielenis</pattern>
+  <pattern> po4d5ziem</pattern>
+  <pattern> po4d5ziom</pattern>
+  <pattern> po4d5zw2r</pattern>
+  <pattern> po4l3s</pattern>
+  <pattern> po4m3p</pattern>
+  <pattern> po4r3c</pattern>
+  <pattern> po4r3f</pattern>
+  <pattern> po4r3n</pattern>
+  <pattern> po4r3t</pattern>
+  <pattern> po4st3d</pattern>
+  <pattern> po4st3f</pattern>
+  <pattern> po4st3g</pattern>
+  <pattern> po4st3h</pattern>
+  <pattern> po4st3i2</pattern>
+  <pattern> po4st3k</pattern>
+  <pattern> po4st3l</pattern>
+  <pattern> po4st3m</pattern>
+  <pattern> po4st3p</pattern>
+  <pattern> po4st3rom</pattern>
+  <pattern> po4st3s</pattern>
+  <pattern> po5d4uszczyn</pattern>
+  <pattern> po5r4tę</pattern>
+  <pattern> pobr2</pattern>
+  <pattern> pobrz2</pattern>
+  <pattern> poch2</pattern>
+  <pattern> pochrz2</pattern>
+  <pattern> pocz2</pattern>
+  <pattern> pod3ć2</pattern>
+  <pattern> pod3ł2</pattern>
+  <pattern> pod3ś2</pattern>
+  <pattern> pod3śró2d5</pattern>
+  <pattern> pod3alp</pattern>
+  <pattern> pod3b2</pattern>
+  <pattern> pod3c2</pattern>
+  <pattern> pod3d2</pattern>
+  <pattern> pod3f2</pattern>
+  <pattern> pod3g2</pattern>
+  <pattern> pod3h2</pattern>
+  <pattern> pod3i2n</pattern>
+  <pattern> pod3j2</pattern>
+  <pattern> pod3k2</pattern>
+  <pattern> pod3l2</pattern>
+  <pattern> pod3m2</pattern>
+  <pattern> pod3n2</pattern>
+  <pattern> pod3p2</pattern>
+  <pattern> pod3r2</pattern>
+  <pattern> pod3s2</pattern>
+  <pattern> pod3t2</pattern>
+  <pattern> pod3w2</pattern>
+  <pattern> pod5ż2</pattern>
+  <pattern> podch2</pattern>
+  <pattern> podcz2</pattern>
+  <pattern> poddź2</pattern>
+  <pattern> poddż2</pattern>
+  <pattern> pode3ć2</pattern>
+  <pattern> pode3ł2</pattern>
+  <pattern> pode3ś2</pattern>
+  <pattern> pode3ź2</pattern>
+  <pattern> pode3ż2</pattern>
+  <pattern> pode3b2</pattern>
+  <pattern> pode3c2</pattern>
+  <pattern> pode3d2</pattern>
+  <pattern> pode3f2</pattern>
+  <pattern> pode3g2</pattern>
+  <pattern> pode3h2</pattern>
+  <pattern> pode3k2</pattern>
+  <pattern> pode3l2</pattern>
+  <pattern> pode3m2</pattern>
+  <pattern> pode3p2</pattern>
+  <pattern> pode3r2</pattern>
+  <pattern> pode3s2</pattern>
+  <pattern> pode3t2</pattern>
+  <pattern> pode3tk2</pattern>
+  <pattern> pode3w2</pattern>
+  <pattern> pode3z2</pattern>
+  <pattern> podech2</pattern>
+  <pattern> podecz2</pattern>
+  <pattern> podedź2</pattern>
+  <pattern> podedż2</pattern>
+  <pattern> podedz2</pattern>
+  <pattern> podepch2</pattern>
+  <pattern> poderż2</pattern>
+  <pattern> poderz2</pattern>
+  <pattern> podesch2</pattern>
+  <pattern> podesz2</pattern>
+  <pattern> podro2z3</pattern>
+  <pattern> podsm2</pattern>
+  <pattern> podsz2</pattern>
+  <pattern> pogrz2</pattern>
+  <pattern> pokl2</pattern>
+  <pattern> pokr2</pattern>
+  <pattern> pom4pk</pattern>
+  <pattern> pomk2</pattern>
+  <pattern> pona2d2</pattern>
+  <pattern> pona3ć2</pattern>
+  <pattern> pona3ł2</pattern>
+  <pattern> pona3ś2</pattern>
+  <pattern> pona3ź2</pattern>
+  <pattern> pona3ż2</pattern>
+  <pattern> pona3b2</pattern>
+  <pattern> pona3c2</pattern>
+  <pattern> pona3cz2</pattern>
+  <pattern> pona3dź2</pattern>
+  <pattern> pona3do</pattern>
+  <pattern> pona3f2</pattern>
+  <pattern> pona3g2</pattern>
+  <pattern> pona3h2</pattern>
+  <pattern> pona3k2</pattern>
+  <pattern> pona3l2</pattern>
+  <pattern> pona3m2</pattern>
+  <pattern> pona3p2</pattern>
+  <pattern> pona3r2</pattern>
+  <pattern> pona3s2</pattern>
+  <pattern> pona3t2</pattern>
+  <pattern> pona3w2</pattern>
+  <pattern> pona3z2</pattern>
+  <pattern> pona4f3t</pattern>
+  <pattern> ponabrz2</pattern>
+  <pattern> ponach2</pattern>
+  <pattern> ponad3ć2</pattern>
+  <pattern> ponad3ś2</pattern>
+  <pattern> ponad3c2</pattern>
+  <pattern> ponad3ch2</pattern>
+  <pattern> ponad3cz2</pattern>
+  <pattern> ponad3dź2</pattern>
+  <pattern> ponad3f2</pattern>
+  <pattern> ponad3g2</pattern>
+  <pattern> ponad3h2</pattern>
+  <pattern> ponad3j2</pattern>
+  <pattern> ponad3k2</pattern>
+  <pattern> ponad3l2</pattern>
+  <pattern> ponad3p2</pattern>
+  <pattern> ponad3s2</pattern>
+  <pattern> ponad3t2</pattern>
+  <pattern> ponadz2</pattern>
+  <pattern> ponarz2</pattern>
+  <pattern> ponasm2</pattern>
+  <pattern> ponasz2</pattern>
+  <pattern> ponaz3m2</pattern>
+  <pattern> ponazw2</pattern>
+  <pattern> ponie3k2</pattern>
+  <pattern> ponie3w2</pattern>
+  <pattern> popch2</pattern>
+  <pattern> popo3w2</pattern>
+  <pattern> poprz2</pattern>
+  <pattern> por4t1w</pattern>
+  <pattern> por4tf</pattern>
+  <pattern> por4tm</pattern>
+  <pattern> poro2z3</pattern>
+  <pattern> poro3z4u</pattern>
+  <pattern> porz2</pattern>
+  <pattern> posch2</pattern>
+  <pattern> posm2</pattern>
+  <pattern> posz2</pattern>
+  <pattern> potk2</pattern>
+  <pattern> potr2</pattern>
+  <pattern> poz4m2</pattern>
+  <pattern> poza3u2</pattern>
+  <pattern> pozw2</pattern>
+  <pattern> pp8</pattern>
+  <pattern> pr8</pattern>
+  <pattern> pra3s2</pattern>
+  <pattern> pra3w2nu</pattern>
+  <pattern> pra3w2z</pattern>
+  <pattern> prapra3w2nu</pattern>
+  <pattern> predy2s3po</pattern>
+  <pattern> prz8</pattern>
+  <pattern> przełk2</pattern>
+  <pattern> prze2d2</pattern>
+  <pattern> prze3ć2</pattern>
+  <pattern> prze3ł2</pattern>
+  <pattern> prze3ś2</pattern>
+  <pattern> prze3ź2</pattern>
+  <pattern> prze3ż2</pattern>
+  <pattern> prze3b2</pattern>
+  <pattern> prze3c2</pattern>
+  <pattern> prze3dą</pattern>
+  <pattern> prze3dę</pattern>
+  <pattern> prze3dź2</pattern>
+  <pattern> prze3d4łuż</pattern>
+  <pattern> prze3d4much</pattern>
+  <pattern> prze3d4o3br</pattern>
+  <pattern> prze3d4o3st</pattern>
+  <pattern> prze3d4o3zo</pattern>
+  <pattern> prze3d4ramat</pattern>
+  <pattern> prze3d4ruk</pattern>
+  <pattern> prze3d4ryl</pattern>
+  <pattern> prze3d4rz2</pattern>
+  <pattern> prze3d4um</pattern>
+  <pattern> prze3dy</pattern>
+  <pattern> prze3dz2</pattern>
+  <pattern> prze3e2k2s3</pattern>
+  <pattern> prze3f2</pattern>
+  <pattern> prze3g2</pattern>
+  <pattern> prze3h2</pattern>
+  <pattern> prze3k2</pattern>
+  <pattern> prze3l2</pattern>
+  <pattern> prze3m2</pattern>
+  <pattern> prze3n2</pattern>
+  <pattern> prze3p2</pattern>
+  <pattern> prze3r2</pattern>
+  <pattern> prze3s2</pattern>
+  <pattern> prze3t2</pattern>
+  <pattern> prze3u2</pattern>
+  <pattern> prze3w2</pattern>
+  <pattern> prze3z2</pattern>
+  <pattern> prze4d5łużyc</pattern>
+  <pattern> prze4d5ż2</pattern>
+  <pattern> prze4d5o4stat</pattern>
+  <pattern> prze4d5za</pattern>
+  <pattern> prze4d5zg2</pattern>
+  <pattern> prze4d5zim</pattern>
+  <pattern> prze4d5zj</pattern>
+  <pattern> prze4d5zl</pattern>
+  <pattern> prze4d5zw2r</pattern>
+  <pattern> prze4d5zwoj</pattern>
+  <pattern> przebr2</pattern>
+  <pattern> przebrz2</pattern>
+  <pattern> przech2</pattern>
+  <pattern> przechrz2</pattern>
+  <pattern> przeci2w3</pattern>
+  <pattern> przeci3w4ie</pattern>
+  <pattern> przeciwa2</pattern>
+  <pattern> przeciww2</pattern>
+  <pattern> przecz2</pattern>
+  <pattern> przed3ć2</pattern>
+  <pattern> przed3ł2</pattern>
+  <pattern> przed3ś2</pattern>
+  <pattern> przed3a2gon</pattern>
+  <pattern> przed3a2kc</pattern>
+  <pattern> przed3alp</pattern>
+  <pattern> przed3b2</pattern>
+  <pattern> przed3c2</pattern>
+  <pattern> przed3d2</pattern>
+  <pattern> przed3e2gz</pattern>
+  <pattern> przed3e2mer</pattern>
+  <pattern> przed3f2</pattern>
+  <pattern> przed3g2</pattern>
+  <pattern> przed3h2</pattern>
+  <pattern> przed3i2</pattern>
+  <pattern> przed3j2</pattern>
+  <pattern> przed3k2</pattern>
+  <pattern> przed3l2</pattern>
+  <pattern> przed3m2</pattern>
+  <pattern> przed3n2</pattern>
+  <pattern> przed3o2</pattern>
+  <pattern> przed3p2</pattern>
+  <pattern> przed3r2</pattern>
+  <pattern> przed3s2</pattern>
+  <pattern> przed3się3w2</pattern>
+  <pattern> przed3sz2</pattern>
+  <pattern> przed3t2</pattern>
+  <pattern> przed3u2</pattern>
+  <pattern> przed3w2</pattern>
+  <pattern> przedch2</pattern>
+  <pattern> przedcz2</pattern>
+  <pattern> przeddź2</pattern>
+  <pattern> przeddż2</pattern>
+  <pattern> przeddz2</pattern>
+  <pattern> przedgrz2</pattern>
+  <pattern> przedy2s3ku</pattern>
+  <pattern> przegrz2</pattern>
+  <pattern> przekl2</pattern>
+  <pattern> przekr2</pattern>
+  <pattern> przemk2</pattern>
+  <pattern> przepch2</pattern>
+  <pattern> przerż2</pattern>
+  <pattern> przerz2</pattern>
+  <pattern> przesch2</pattern>
+  <pattern> przesm2</pattern>
+  <pattern> przesz2</pattern>
+  <pattern> przetk2</pattern>
+  <pattern> przetr2</pattern>
+  <pattern> przetran2s3</pattern>
+  <pattern> przy3ć2</pattern>
+  <pattern> przy3ł2</pattern>
+  <pattern> przy3ś2</pattern>
+  <pattern> przy3ź2</pattern>
+  <pattern> przy3ż2</pattern>
+  <pattern> przy3b2</pattern>
+  <pattern> przy3c2</pattern>
+  <pattern> przy3d2</pattern>
+  <pattern> przy3f2</pattern>
+  <pattern> przy3g2</pattern>
+  <pattern> przy3h2</pattern>
+  <pattern> przy3k2</pattern>
+  <pattern> przy3l2</pattern>
+  <pattern> przy3m2</pattern>
+  <pattern> przy3p2</pattern>
+  <pattern> przy3r2</pattern>
+  <pattern> przy3s2</pattern>
+  <pattern> przy3t2</pattern>
+  <pattern> przy3w2</pattern>
+  <pattern> przy3z2</pattern>
+  <pattern> przybr2</pattern>
+  <pattern> przych2</pattern>
+  <pattern> przycz2</pattern>
+  <pattern> przydź2</pattern>
+  <pattern> przydż2</pattern>
+  <pattern> przydz2</pattern>
+  <pattern> przygrz2</pattern>
+  <pattern> przymk2</pattern>
+  <pattern> przyoz2</pattern>
+  <pattern> przypch2</pattern>
+  <pattern> przyrż2</pattern>
+  <pattern> przyrz2</pattern>
+  <pattern> przysch2</pattern>
+  <pattern> przysz2</pattern>
+  <pattern> przytk2</pattern>
+  <pattern> ps8</pattern>
+  <pattern> pt8</pattern>
+  <pattern> pv8</pattern>
+  <pattern> pw8</pattern>
+  <pattern> px8</pattern>
+  <pattern> pz8</pattern>
+  <pattern> rć8</pattern>
+  <pattern> rł8</pattern>
+  <pattern> rń8</pattern>
+  <pattern> rś8</pattern>
+  <pattern> rź8</pattern>
+  <pattern> rż8</pattern>
+  <pattern> r8</pattern>
+  <pattern> rb8</pattern>
+  <pattern> rc8</pattern>
+  <pattern> rd8</pattern>
+  <pattern> retran2s3</pattern>
+  <pattern> rf8</pattern>
+  <pattern> rg8</pattern>
+  <pattern> rh8</pattern>
+  <pattern> rj8</pattern>
+  <pattern> rk8</pattern>
+  <pattern> rl8</pattern>
+  <pattern> rm8</pattern>
+  <pattern> rn8</pattern>
+  <pattern> ro2z3</pattern>
+  <pattern> ro3z4a</pattern>
+  <pattern> ro3z4e</pattern>
+  <pattern> ro3z4e3ć2</pattern>
+  <pattern> ro3z4e3ł2</pattern>
+  <pattern> ro3z4e3ś2</pattern>
+  <pattern> ro3z4e3ź2</pattern>
+  <pattern> ro3z4e3ż2</pattern>
+  <pattern> ro3z4e3b2</pattern>
+  <pattern> ro3z4e3c2</pattern>
+  <pattern> ro3z4e3d2</pattern>
+  <pattern> ro3z4e3f2</pattern>
+  <pattern> ro3z4e3g2</pattern>
+  <pattern> ro3z4e3h2</pattern>
+  <pattern> ro3z4e3k2</pattern>
+  <pattern> ro3z4e3l2</pattern>
+  <pattern> ro3z4e3m2</pattern>
+  <pattern> ro3z4e3p2</pattern>
+  <pattern> ro3z4e3r2</pattern>
+  <pattern> ro3z4e3s2</pattern>
+  <pattern> ro3z4e3t2</pattern>
+  <pattern> ro3z4e3w2</pattern>
+  <pattern> ro3z4e3z2</pattern>
+  <pattern> ro3z4ej</pattern>
+  <pattern> ro3z4u</pattern>
+  <pattern> ro4z5a2gi</pattern>
+  <pattern> ro4z5a2nie</pattern>
+  <pattern> ro4z5e2mo</pattern>
+  <pattern> ro4z5e4g3z</pattern>
+  <pattern> ro4z5e4n3t</pattern>
+  <pattern> rozś2</pattern>
+  <pattern> rozbrz2</pattern>
+  <pattern> rozd2</pattern>
+  <pattern> rozech2</pattern>
+  <pattern> rozecz2</pattern>
+  <pattern> rozedź2</pattern>
+  <pattern> rozedż2</pattern>
+  <pattern> rozedz2</pattern>
+  <pattern> rozepch2</pattern>
+  <pattern> rozerż2</pattern>
+  <pattern> rozerz2</pattern>
+  <pattern> rozesch2</pattern>
+  <pattern> rozesz2</pattern>
+  <pattern> rozi2</pattern>
+  <pattern> rozm2</pattern>
+  <pattern> rozo2</pattern>
+  <pattern> rozpo3w2</pattern>
+  <pattern> rozt2</pattern>
+  <pattern> roztr2</pattern>
+  <pattern> rozw2</pattern>
+  <pattern> rp8</pattern>
+  <pattern> rr8</pattern>
+  <pattern> rs8</pattern>
+  <pattern> rt8</pattern>
+  <pattern> rv8</pattern>
+  <pattern> rw8</pattern>
+  <pattern> rx8</pattern>
+  <pattern> rz8</pattern>
+  <pattern> sć8</pattern>
+  <pattern> sł8</pattern>
+  <pattern> sń8</pattern>
+  <pattern> sś8</pattern>
+  <pattern> sź8</pattern>
+  <pattern> sż8</pattern>
+  <pattern> s8</pattern>
+  <pattern> samo3ch2</pattern>
+  <pattern> samo3k2</pattern>
+  <pattern> samo3p2</pattern>
+  <pattern> samo3w2</pattern>
+  <pattern> samoro2z3</pattern>
+  <pattern> sb8</pattern>
+  <pattern> sc8</pattern>
+  <pattern> sch8</pattern>
+  <pattern> sd8</pattern>
+  <pattern> sf8</pattern>
+  <pattern> sg8</pattern>
+  <pattern> sh8</pattern>
+  <pattern> siede2m3</pattern>
+  <pattern> siedemse2t3</pattern>
+  <pattern> siedmio3ś2</pattern>
+  <pattern> sj8</pattern>
+  <pattern> ską2d5że</pattern>
+  <pattern> sk8</pattern>
+  <pattern> skl8</pattern>
+  <pattern> skr8</pattern>
+  <pattern> sl8</pattern>
+  <pattern> sm8</pattern>
+  <pattern> sn8</pattern>
+  <pattern> sobo3w2</pattern>
+  <pattern> spó2ł3</pattern>
+  <pattern> sp8</pattern>
+  <pattern> spo2d2</pattern>
+  <pattern> spo3ć2</pattern>
+  <pattern> spo3ł2</pattern>
+  <pattern> spo3ś2</pattern>
+  <pattern> spo3ź2</pattern>
+  <pattern> spo3ż2</pattern>
+  <pattern> spo3b2</pattern>
+  <pattern> spo3c2</pattern>
+  <pattern> spo3dz2</pattern>
+  <pattern> spo3f2</pattern>
+  <pattern> spo3g2</pattern>
+  <pattern> spo3h2</pattern>
+  <pattern> spo3k2</pattern>
+  <pattern> spo3l2</pattern>
+  <pattern> spo3m2</pattern>
+  <pattern> spo3p2</pattern>
+  <pattern> spo3r2</pattern>
+  <pattern> spo3s2</pattern>
+  <pattern> spo3t2</pattern>
+  <pattern> spo3w2</pattern>
+  <pattern> spo3z2</pattern>
+  <pattern> spo4r3n</pattern>
+  <pattern> spo4r3t</pattern>
+  <pattern> spoch2</pattern>
+  <pattern> spocz2</pattern>
+  <pattern> spodź2</pattern>
+  <pattern> spodż2</pattern>
+  <pattern> spod3d</pattern>
+  <pattern> sporz2</pattern>
+  <pattern> sposz2</pattern>
+  <pattern> sr8</pattern>
+  <pattern> ss8</pattern>
+  <pattern> st8</pattern>
+  <pattern> stere2o3</pattern>
+  <pattern> stereoa2</pattern>
+  <pattern> stereoe2</pattern>
+  <pattern> stereoi2</pattern>
+  <pattern> stereoo2</pattern>
+  <pattern> stereou2</pattern>
+  <pattern> su2b3</pattern>
+  <pattern> su3b4ie</pattern>
+  <pattern> su3b4otn</pattern>
+  <pattern> supe2r3</pattern>
+  <pattern> supe3r4at</pattern>
+  <pattern> supe3r4io</pattern>
+  <pattern> supe4r5a2tr</pattern>
+  <pattern> super5z2b</pattern>
+  <pattern> supere2</pattern>
+  <pattern> supero2d1rzut</pattern>
+  <pattern> sv8</pattern>
+  <pattern> sw8</pattern>
+  <pattern> sx8</pattern>
+  <pattern> sz8</pattern>
+  <pattern> sześćse2t3</pattern>
+  <pattern> sześcio3ś2</pattern>
+  <pattern> sze2ś2ć3</pattern>
+  <pattern> sze2s3</pattern>
+  <pattern> tć8</pattern>
+  <pattern> tł8</pattern>
+  <pattern> tń8</pattern>
+  <pattern> tś8</pattern>
+  <pattern> tź8</pattern>
+  <pattern> tż8</pattern>
+  <pattern> t8</pattern>
+  <pattern> ta2o3</pattern>
+  <pattern> ta2r7zan</pattern>
+  <pattern> tb8</pattern>
+  <pattern> tc8</pattern>
+  <pattern> tch8</pattern>
+  <pattern> td8</pattern>
+  <pattern> te2o3</pattern>
+  <pattern> tf8</pattern>
+  <pattern> tg8</pattern>
+  <pattern> th8</pattern>
+  <pattern> tj8</pattern>
+  <pattern> tk8</pattern>
+  <pattern> tl8</pattern>
+  <pattern> tm8</pattern>
+  <pattern> tn8</pattern>
+  <pattern> toa3</pattern>
+  <pattern> tp8</pattern>
+  <pattern> tró2j3</pattern>
+  <pattern> tró3j4ą</pattern>
+  <pattern> tró3j4ę</pattern>
+  <pattern> tró3j4ecz</pattern>
+  <pattern> tr8</pattern>
+  <pattern> tran2s3</pattern>
+  <pattern> tran3s4e</pattern>
+  <pattern> tran3s4ie</pattern>
+  <pattern> tran3s4y</pattern>
+  <pattern> tran3sz</pattern>
+  <pattern> tran4s5eu</pattern>
+  <pattern> transa2</pattern>
+  <pattern> transo2</pattern>
+  <pattern> trz8</pattern>
+  <pattern> trze2ch3</pattern>
+  <pattern> trzechse2t3</pattern>
+  <pattern> ts8</pattern>
+  <pattern> tt8</pattern>
+  <pattern> tv8</pattern>
+  <pattern> tw8</pattern>
+  <pattern> tx8</pattern>
+  <pattern> tysią2c3</pattern>
+  <pattern> tysią3c4a</pattern>
+  <pattern> tysią3c4e</pattern>
+  <pattern> tysią3cz</pattern>
+  <pattern> tysią4c5zł</pattern>
+  <pattern> tz8</pattern>
+  <pattern> uć2</pattern>
+  <pattern> uś2</pattern>
+  <pattern> u3ł2</pattern>
+  <pattern> u3ź2</pattern>
+  <pattern> u3ż2</pattern>
+  <pattern> u3b2</pattern>
+  <pattern> u3c2</pattern>
+  <pattern> u3d2</pattern>
+  <pattern> u3f2</pattern>
+  <pattern> u3g2</pattern>
+  <pattern> u3h2</pattern>
+  <pattern> u3k2</pattern>
+  <pattern> u3l2</pattern>
+  <pattern> u3m2</pattern>
+  <pattern> u3n2</pattern>
+  <pattern> u3p2</pattern>
+  <pattern> u3r2</pattern>
+  <pattern> u3s2</pattern>
+  <pattern> u3t2</pattern>
+  <pattern> u3w2</pattern>
+  <pattern> u3z2</pattern>
+  <pattern> u4d3k</pattern>
+  <pattern> u4f3n</pattern>
+  <pattern> u4k3lej</pattern>
+  <pattern> u4l3s</pattern>
+  <pattern> u4l3t</pattern>
+  <pattern> u4m3br</pattern>
+  <pattern> u4n3c</pattern>
+  <pattern> u4n3d</pattern>
+  <pattern> u4p3p2s</pattern>
+  <pattern> u4r3s</pattern>
+  <pattern> u4st3n</pattern>
+  <pattern> u4stc</pattern>
+  <pattern> u4stk</pattern>
+  <pattern> u4z3be</pattern>
+  <pattern> ube2z3</pattern>
+  <pattern> ubezw2</pattern>
+  <pattern> ubr2</pattern>
+  <pattern> uch2</pattern>
+  <pattern> ucz2</pattern>
+  <pattern> udź2</pattern>
+  <pattern> udż2</pattern>
+  <pattern> udz2</pattern>
+  <pattern> ukr2</pattern>
+  <pattern> umk2</pattern>
+  <pattern> upch2</pattern>
+  <pattern> upo2d2</pattern>
+  <pattern> upo3ć2</pattern>
+  <pattern> upo3ł2</pattern>
+  <pattern> upo3ś2</pattern>
+  <pattern> upo3ź2</pattern>
+  <pattern> upo3ż2</pattern>
+  <pattern> upo3b2</pattern>
+  <pattern> upo3c2</pattern>
+  <pattern> upo3da</pattern>
+  <pattern> upo3f2</pattern>
+  <pattern> upo3g2</pattern>
+  <pattern> upo3h2</pattern>
+  <pattern> upo3k2</pattern>
+  <pattern> upo3l2</pattern>
+  <pattern> upo3m2</pattern>
+  <pattern> upo3p2</pattern>
+  <pattern> upo3r2</pattern>
+  <pattern> upo3s2</pattern>
+  <pattern> upo3t2</pattern>
+  <pattern> upo3w2</pattern>
+  <pattern> upo3z2</pattern>
+  <pattern> upoch2</pattern>
+  <pattern> upocz2</pattern>
+  <pattern> upodź2</pattern>
+  <pattern> upodż2</pattern>
+  <pattern> upod3d</pattern>
+  <pattern> uporz2</pattern>
+  <pattern> uposz2</pattern>
+  <pattern> urż2</pattern>
+  <pattern> uro2z3</pattern>
+  <pattern> urz2</pattern>
+  <pattern> usch2</pattern>
+  <pattern> usz2</pattern>
+  <pattern> utk2</pattern>
+  <pattern> utr2</pattern>
+  <pattern> uze3w2</pattern>
+  <pattern> vć8</pattern>
+  <pattern> vł8</pattern>
+  <pattern> vń8</pattern>
+  <pattern> vś8</pattern>
+  <pattern> vź8</pattern>
+  <pattern> vż8</pattern>
+  <pattern> v8</pattern>
+  <pattern> vb8</pattern>
+  <pattern> vc8</pattern>
+  <pattern> vd8</pattern>
+  <pattern> vf8</pattern>
+  <pattern> vg8</pattern>
+  <pattern> vh8</pattern>
+  <pattern> vj8</pattern>
+  <pattern> vk8</pattern>
+  <pattern> vl8</pattern>
+  <pattern> vm8</pattern>
+  <pattern> vn8</pattern>
+  <pattern> vp8</pattern>
+  <pattern> vr8</pattern>
+  <pattern> vs8</pattern>
+  <pattern> vt8</pattern>
+  <pattern> vv8</pattern>
+  <pattern> vw8</pattern>
+  <pattern> vx8</pattern>
+  <pattern> vz8</pattern>
+  <pattern> wć8</pattern>
+  <pattern> wł8</pattern>
+  <pattern> wń8</pattern>
+  <pattern> wś8</pattern>
+  <pattern> wź8</pattern>
+  <pattern> wż8</pattern>
+  <pattern> w8</pattern>
+  <pattern> wb8</pattern>
+  <pattern> wc8</pattern>
+  <pattern> wd8</pattern>
+  <pattern> we3ć2</pattern>
+  <pattern> we3ł2</pattern>
+  <pattern> we3ś2</pattern>
+  <pattern> we3ż2</pattern>
+  <pattern> we3b2</pattern>
+  <pattern> we3c2</pattern>
+  <pattern> we3d2</pattern>
+  <pattern> we3f2</pattern>
+  <pattern> we3g2</pattern>
+  <pattern> we3h2</pattern>
+  <pattern> we3k2</pattern>
+  <pattern> we3l2</pattern>
+  <pattern> we3m2</pattern>
+  <pattern> we3n2</pattern>
+  <pattern> we3p2</pattern>
+  <pattern> we3r2</pattern>
+  <pattern> we3s2</pattern>
+  <pattern> we3t2</pattern>
+  <pattern> we3w2</pattern>
+  <pattern> we3z2</pattern>
+  <pattern> we4ł3n</pattern>
+  <pattern> we4k3t</pattern>
+  <pattern> we4l3w</pattern>
+  <pattern> we4n3d</pattern>
+  <pattern> we4n3t</pattern>
+  <pattern> we4r3b</pattern>
+  <pattern> we4r3d</pattern>
+  <pattern> we4r3n</pattern>
+  <pattern> we4r3s</pattern>
+  <pattern> we4r3t</pattern>
+  <pattern> we4s3prz</pattern>
+  <pattern> we4s3tch2</pattern>
+  <pattern> we4z3br</pattern>
+  <pattern> we4z3gł</pattern>
+  <pattern> wech2</pattern>
+  <pattern> wecz2</pattern>
+  <pattern> wedź2</pattern>
+  <pattern> wedż2</pattern>
+  <pattern> wedz2</pattern>
+  <pattern> wemk2</pattern>
+  <pattern> wepch2</pattern>
+  <pattern> werz2</pattern>
+  <pattern> wesz2</pattern>
+  <pattern> wetk2</pattern>
+  <pattern> wewną2trz3</pattern>
+  <pattern> wf8</pattern>
+  <pattern> wg8</pattern>
+  <pattern> wh8</pattern>
+  <pattern> wielo3ś2</pattern>
+  <pattern> wielo3d2</pattern>
+  <pattern> wielo3k2</pattern>
+  <pattern> wieluse2t3</pattern>
+  <pattern> wilczo3m2</pattern>
+  <pattern> wj8</pattern>
+  <pattern> wk8</pattern>
+  <pattern> wl8</pattern>
+  <pattern> wm8</pattern>
+  <pattern> wn8</pattern>
+  <pattern> wniebo3w2</pattern>
+  <pattern> wodo3w2</pattern>
+  <pattern> wp8</pattern>
+  <pattern> wr8</pattern>
+  <pattern> ws8</pattern>
+  <pattern> współi2</pattern>
+  <pattern> współo2b3w</pattern>
+  <pattern> współu2</pattern>
+  <pattern> współw2</pattern>
+  <pattern> wspó2ł3</pattern>
+  <pattern> wsze2ch3</pattern>
+  <pattern> wszecho2</pattern>
+  <pattern> wszechw2</pattern>
+  <pattern> wt8</pattern>
+  <pattern> wv8</pattern>
+  <pattern> ww8</pattern>
+  <pattern> wx8</pattern>
+  <pattern> wy3ć2</pattern>
+  <pattern> wy3ł2</pattern>
+  <pattern> wy3ś2</pattern>
+  <pattern> wy3ź2</pattern>
+  <pattern> wy3ż2</pattern>
+  <pattern> wy3b2</pattern>
+  <pattern> wy3c2</pattern>
+  <pattern> wy3d2</pattern>
+  <pattern> wy3f2</pattern>
+  <pattern> wy3g2</pattern>
+  <pattern> wy3h2</pattern>
+  <pattern> wy3k2</pattern>
+  <pattern> wy3l2</pattern>
+  <pattern> wy3m2</pattern>
+  <pattern> wy3o2d3r</pattern>
+  <pattern> wy3p2</pattern>
+  <pattern> wy3r2</pattern>
+  <pattern> wy3s2</pattern>
+  <pattern> wy3t2</pattern>
+  <pattern> wy3w2</pattern>
+  <pattern> wy3z2</pattern>
+  <pattern> wy4ż3sz</pattern>
+  <pattern> wy4cz3ha</pattern>
+  <pattern> wybr2</pattern>
+  <pattern> wybrz2</pattern>
+  <pattern> wych2</pattern>
+  <pattern> wycz2</pattern>
+  <pattern> wydź2</pattern>
+  <pattern> wydż2</pattern>
+  <pattern> wydr2</pattern>
+  <pattern> wydz2</pattern>
+  <pattern> wye2k2s3</pattern>
+  <pattern> wygrz2</pattern>
+  <pattern> wyi2zo</pattern>
+  <pattern> wykl2</pattern>
+  <pattern> wykr2</pattern>
+  <pattern> wykrz2</pattern>
+  <pattern> wymk2</pattern>
+  <pattern> wypch2</pattern>
+  <pattern> wyprz2</pattern>
+  <pattern> wyrż2</pattern>
+  <pattern> wyrz2</pattern>
+  <pattern> wysch2</pattern>
+  <pattern> wysm2</pattern>
+  <pattern> wysz2</pattern>
+  <pattern> wytch2</pattern>
+  <pattern> wytk2</pattern>
+  <pattern> wytr2</pattern>
+  <pattern> wz8</pattern>
+  <pattern> xć8</pattern>
+  <pattern> xł8</pattern>
+  <pattern> xń8</pattern>
+  <pattern> xś8</pattern>
+  <pattern> xź8</pattern>
+  <pattern> xż8</pattern>
+  <pattern> x8</pattern>
+  <pattern> xb8</pattern>
+  <pattern> xc8</pattern>
+  <pattern> xd8</pattern>
+  <pattern> xf8</pattern>
+  <pattern> xg8</pattern>
+  <pattern> xh8</pattern>
+  <pattern> xj8</pattern>
+  <pattern> xk8</pattern>
+  <pattern> xl8</pattern>
+  <pattern> xm8</pattern>
+  <pattern> xn8</pattern>
+  <pattern> xp8</pattern>
+  <pattern> xr8</pattern>
+  <pattern> xs8</pattern>
+  <pattern> xt8</pattern>
+  <pattern> xv8</pattern>
+  <pattern> xw8</pattern>
+  <pattern> xx8</pattern>
+  <pattern> xz8</pattern>
+  <pattern> zć8</pattern>
+  <pattern> zł8</pattern>
+  <pattern> zło3w2</pattern>
+  <pattern> zń8</pattern>
+  <pattern> zś8</pattern>
+  <pattern> zź8</pattern>
+  <pattern> zż8</pattern>
+  <pattern> z8</pattern>
+  <pattern> za3ć2</pattern>
+  <pattern> za3ł2</pattern>
+  <pattern> za3ś2</pattern>
+  <pattern> za3ź2</pattern>
+  <pattern> za3ż2</pattern>
+  <pattern> za3b2</pattern>
+  <pattern> za3c2</pattern>
+  <pattern> za3d2</pattern>
+  <pattern> za3f2</pattern>
+  <pattern> za3g2</pattern>
+  <pattern> za3h2</pattern>
+  <pattern> za3k2</pattern>
+  <pattern> za3l2</pattern>
+  <pattern> za3m2</pattern>
+  <pattern> za3o2b3r</pattern>
+  <pattern> za3o2b3s</pattern>
+  <pattern> za3p2</pattern>
+  <pattern> za3r2</pattern>
+  <pattern> za3s2</pattern>
+  <pattern> za3t2</pattern>
+  <pattern> za3u2</pattern>
+  <pattern> za3w2</pattern>
+  <pattern> za3z2</pattern>
+  <pattern> za4k3t</pattern>
+  <pattern> za4l3g</pattern>
+  <pattern> za4l3k</pattern>
+  <pattern> za4l3t</pattern>
+  <pattern> za4m3k</pattern>
+  <pattern> za4r3ch</pattern>
+  <pattern> za4uto</pattern>
+  <pattern> za5m4k2n</pattern>
+  <pattern> zabr2</pattern>
+  <pattern> zabrz2</pattern>
+  <pattern> zach2</pattern>
+  <pattern> zacz2</pattern>
+  <pattern> zadź2</pattern>
+  <pattern> zadż2</pattern>
+  <pattern> zadośću4</pattern>
+  <pattern> zado2ść3</pattern>
+  <pattern> zadr2</pattern>
+  <pattern> zady2s3po</pattern>
+  <pattern> zadz2</pattern>
+  <pattern> zagrz2</pattern>
+  <pattern> zai2n3</pattern>
+  <pattern> zai2zo</pattern>
+  <pattern> zain4ic</pattern>
+  <pattern> zakl2</pattern>
+  <pattern> zakr2</pattern>
+  <pattern> zakrz2</pattern>
+  <pattern> zanie3d2</pattern>
+  <pattern> zarż2</pattern>
+  <pattern> zarz2</pattern>
+  <pattern> zasch2</pattern>
+  <pattern> zasm2</pattern>
+  <pattern> zasz2</pattern>
+  <pattern> zatk2</pattern>
+  <pattern> zatr2</pattern>
+  <pattern> zb8</pattern>
+  <pattern> zc8</pattern>
+  <pattern> zd8</pattern>
+  <pattern> zde2z3</pattern>
+  <pattern> zde3z4awu</pattern>
+  <pattern> zde3z4el</pattern>
+  <pattern> zde3z4er</pattern>
+  <pattern> zde3z4y</pattern>
+  <pattern> zdy2s3kont</pattern>
+  <pattern> zdy2s3kred</pattern>
+  <pattern> zdy2s3kwal</pattern>
+  <pattern> ze3ć2</pattern>
+  <pattern> ze3ł2</pattern>
+  <pattern> ze3ś2</pattern>
+  <pattern> ze3ź2</pattern>
+  <pattern> ze3ż2</pattern>
+  <pattern> ze3b2</pattern>
+  <pattern> ze3c2</pattern>
+  <pattern> ze3d2</pattern>
+  <pattern> ze3f2</pattern>
+  <pattern> ze3g2</pattern>
+  <pattern> ze3h2</pattern>
+  <pattern> ze3k2</pattern>
+  <pattern> ze3l2</pattern>
+  <pattern> ze3m2</pattern>
+  <pattern> ze3p2</pattern>
+  <pattern> ze3r2</pattern>
+  <pattern> ze3s2</pattern>
+  <pattern> ze3t2</pattern>
+  <pattern> ze3tk2</pattern>
+  <pattern> ze3w2</pattern>
+  <pattern> ze3z2</pattern>
+  <pattern> ze4r3k</pattern>
+  <pattern> ze4t3e2m1e2s</pattern>
+  <pattern> ze4t3e2s1e2l</pattern>
+  <pattern> ze4t3emp</pattern>
+  <pattern> ze4t3hap</pattern>
+  <pattern> zech2</pattern>
+  <pattern> zecz2</pattern>
+  <pattern> zedź2</pattern>
+  <pattern> zedż2</pattern>
+  <pattern> zedz2</pattern>
+  <pattern> zekl2</pattern>
+  <pattern> zepch2</pattern>
+  <pattern> zerż2</pattern>
+  <pattern> zerz2</pattern>
+  <pattern> zesch2</pattern>
+  <pattern> zesm4</pattern>
+  <pattern> zesz2</pattern>
+  <pattern> zf8</pattern>
+  <pattern> zg8</pattern>
+  <pattern> zh8</pattern>
+  <pattern> zimno3kr2</pattern>
+  <pattern> zj8</pattern>
+  <pattern> zk8</pattern>
+  <pattern> zl8</pattern>
+  <pattern> zm8</pattern>
+  <pattern> zmartwy2ch3</pattern>
+  <pattern> zmartwychw2</pattern>
+  <pattern> zn8</pattern>
+  <pattern> znie3ć2</pattern>
+  <pattern> znie3ł2</pattern>
+  <pattern> znie3ń2</pattern>
+  <pattern> znie3ś2</pattern>
+  <pattern> znie3ź2</pattern>
+  <pattern> znie3ż2</pattern>
+  <pattern> znie3b2</pattern>
+  <pattern> znie3c2</pattern>
+  <pattern> znie3d2</pattern>
+  <pattern> znie3f2</pattern>
+  <pattern> znie3g2</pattern>
+  <pattern> znie3h2</pattern>
+  <pattern> znie3k2</pattern>
+  <pattern> znie3l2</pattern>
+  <pattern> znie3m2</pattern>
+  <pattern> znie3n2</pattern>
+  <pattern> znie3p2</pattern>
+  <pattern> znie3r2</pattern>
+  <pattern> znie3s2</pattern>
+  <pattern> znie3t2</pattern>
+  <pattern> znie3w2</pattern>
+  <pattern> znie3z2</pattern>
+  <pattern> znie4dź3</pattern>
+  <pattern> znie4m3c</pattern>
+  <pattern> zniech2</pattern>
+  <pattern> zniecz2</pattern>
+  <pattern> zniedż2</pattern>
+  <pattern> zniedz2</pattern>
+  <pattern> znierz2</pattern>
+  <pattern> zniesz2</pattern>
+  <pattern> zo2o3</pattern>
+  <pattern> zp8</pattern>
+  <pattern> zr8</pattern>
+  <pattern> zro2z3</pattern>
+  <pattern> zro3z4u</pattern>
+  <pattern> zs8</pattern>
+  <pattern> zt8</pattern>
+  <pattern> zv8</pattern>
+  <pattern> zw8</pattern>
+  <pattern> zx8</pattern>
+  <pattern> zz8</pattern>
+  <pattern>ą1</pattern>
+  <pattern>ę1</pattern>
+  <pattern>ó1</pattern>
+  <pattern>ó4w3cz</pattern>
+  <pattern>ś1c</pattern>
+  <pattern>ź2dź</pattern>
+  <pattern>1ś2ci</pattern>
+  <pattern>2ć1ń</pattern>
+  <pattern>2ć1ś</pattern>
+  <pattern>2ć1ź</pattern>
+  <pattern>2ć1ż</pattern>
+  <pattern>2ć1b</pattern>
+  <pattern>2ć1c</pattern>
+  <pattern>2ć1d</pattern>
+  <pattern>2ć1f</pattern>
+  <pattern>2ć1g</pattern>
+  <pattern>2ć1k</pattern>
+  <pattern>2ć1m</pattern>
+  <pattern>2ć1n</pattern>
+  <pattern>2ć1p</pattern>
+  <pattern>2ć1s</pattern>
+  <pattern>2ć1t</pattern>
+  <pattern>2ć1z</pattern>
+  <pattern>2ł1ć</pattern>
+  <pattern>2ł1ń</pattern>
+  <pattern>2ł1ś</pattern>
+  <pattern>2ł1ź</pattern>
+  <pattern>2ł1ż</pattern>
+  <pattern>2ł1b</pattern>
+  <pattern>2ł1c</pattern>
+  <pattern>2ł1d</pattern>
+  <pattern>2ł1f</pattern>
+  <pattern>2ł1g</pattern>
+  <pattern>2ł1h</pattern>
+  <pattern>2ł1j</pattern>
+  <pattern>2ł1k</pattern>
+  <pattern>2ł1l</pattern>
+  <pattern>2ł1m</pattern>
+  <pattern>2ł1n</pattern>
+  <pattern>2ł1p</pattern>
+  <pattern>2ł1r</pattern>
+  <pattern>2ł1s</pattern>
+  <pattern>2ł1t</pattern>
+  <pattern>2ł1w</pattern>
+  <pattern>2ł1z</pattern>
+  <pattern>2ń1ć</pattern>
+  <pattern>2ń1ł</pattern>
+  <pattern>2ń1ń</pattern>
+  <pattern>2ń1ś</pattern>
+  <pattern>2ń1ź</pattern>
+  <pattern>2ń1ż</pattern>
+  <pattern>2ń1b</pattern>
+  <pattern>2ń1c</pattern>
+  <pattern>2ń1d</pattern>
+  <pattern>2ń1f</pattern>
+  <pattern>2ń1g</pattern>
+  <pattern>2ń1h</pattern>
+  <pattern>2ń1j</pattern>
+  <pattern>2ń1k</pattern>
+  <pattern>2ń1l</pattern>
+  <pattern>2ń1m</pattern>
+  <pattern>2ń1n</pattern>
+  <pattern>2ń1p</pattern>
+  <pattern>2ń1r</pattern>
+  <pattern>2ń1s</pattern>
+  <pattern>2ń1t</pattern>
+  <pattern>2ń1w</pattern>
+  <pattern>2ń1z</pattern>
+  <pattern>2śćc</pattern>
+  <pattern>2ś1ś</pattern>
+  <pattern>2ś1ź</pattern>
+  <pattern>2ś1ż</pattern>
+  <pattern>2ś1b</pattern>
+  <pattern>2ś1d</pattern>
+  <pattern>2ś1f</pattern>
+  <pattern>2ś1g</pattern>
+  <pattern>2ś1k</pattern>
+  <pattern>2ś1p</pattern>
+  <pattern>2ś1s</pattern>
+  <pattern>2ś1t</pattern>
+  <pattern>2ś1z</pattern>
+  <pattern>2ślm</pattern>
+  <pattern>2śln</pattern>
+  <pattern>2ź1ć</pattern>
+  <pattern>2ź1ś</pattern>
+  <pattern>2ź1ż</pattern>
+  <pattern>2ź1b</pattern>
+  <pattern>2ź1c</pattern>
+  <pattern>2ź1d</pattern>
+  <pattern>2ź1f</pattern>
+  <pattern>2ź1g</pattern>
+  <pattern>2ź1k</pattern>
+  <pattern>2ź1l</pattern>
+  <pattern>2ź1m</pattern>
+  <pattern>2ź1n</pattern>
+  <pattern>2ź1p</pattern>
+  <pattern>2ź1s</pattern>
+  <pattern>2ź1t</pattern>
+  <pattern>2ź1w</pattern>
+  <pattern>2ź1z</pattern>
+  <pattern>2ż1ć</pattern>
+  <pattern>2ż1ł</pattern>
+  <pattern>2ż1ń</pattern>
+  <pattern>2ż1ś</pattern>
+  <pattern>2ż1ź</pattern>
+  <pattern>2ż1b</pattern>
+  <pattern>2ż1c</pattern>
+  <pattern>2ż1d</pattern>
+  <pattern>2ż1f</pattern>
+  <pattern>2ż1g</pattern>
+  <pattern>2ż1j</pattern>
+  <pattern>2ż1k</pattern>
+  <pattern>2ż1l</pattern>
+  <pattern>2ż1m</pattern>
+  <pattern>2ż1n</pattern>
+  <pattern>2ż1p</pattern>
+  <pattern>2ż1r</pattern>
+  <pattern>2ż1s</pattern>
+  <pattern>2ż1t</pattern>
+  <pattern>2ż1w</pattern>
+  <pattern>2ż1z</pattern>
+  <pattern>2błk</pattern>
+  <pattern>2b1ć</pattern>
+  <pattern>2b1ń</pattern>
+  <pattern>2b1ś</pattern>
+  <pattern>2b1ź</pattern>
+  <pattern>2b1ż</pattern>
+  <pattern>2b1c</pattern>
+  <pattern>2b1d</pattern>
+  <pattern>2b1f</pattern>
+  <pattern>2b1g</pattern>
+  <pattern>2b1k</pattern>
+  <pattern>2b1m</pattern>
+  <pattern>2b1n</pattern>
+  <pattern>2b1p</pattern>
+  <pattern>2b1s</pattern>
+  <pattern>2b1t</pattern>
+  <pattern>2b1z</pattern>
+  <pattern>2brn</pattern>
+  <pattern>2c1ć</pattern>
+  <pattern>2c1ń</pattern>
+  <pattern>2c1ś</pattern>
+  <pattern>2c1ź</pattern>
+  <pattern>2c1ż</pattern>
+  <pattern>2c1b</pattern>
+  <pattern>2c1d</pattern>
+  <pattern>2c1f</pattern>
+  <pattern>2c1g</pattern>
+  <pattern>2c1k</pattern>
+  <pattern>2c1l</pattern>
+  <pattern>2c1m</pattern>
+  <pattern>2c1n</pattern>
+  <pattern>2c1p</pattern>
+  <pattern>2c1s</pattern>
+  <pattern>2c1t</pattern>
+  <pattern>2ch1ć</pattern>
+  <pattern>2ch1ń</pattern>
+  <pattern>2ch1ś</pattern>
+  <pattern>2ch1ź</pattern>
+  <pattern>2ch1ż</pattern>
+  <pattern>2ch1b</pattern>
+  <pattern>2ch1c</pattern>
+  <pattern>2ch1d</pattern>
+  <pattern>2ch1f</pattern>
+  <pattern>2ch1g</pattern>
+  <pattern>2ch1k</pattern>
+  <pattern>2ch1m</pattern>
+  <pattern>2ch1n</pattern>
+  <pattern>2ch1p</pattern>
+  <pattern>2ch1s</pattern>
+  <pattern>2ch1t</pattern>
+  <pattern>2ch1z</pattern>
+  <pattern>2cz1ć</pattern>
+  <pattern>2cz1ń</pattern>
+  <pattern>2cz1ś</pattern>
+  <pattern>2cz1ź</pattern>
+  <pattern>2cz1ż</pattern>
+  <pattern>2cz1b</pattern>
+  <pattern>2cz1c</pattern>
+  <pattern>2cz1d</pattern>
+  <pattern>2cz1f</pattern>
+  <pattern>2cz1g</pattern>
+  <pattern>2cz1k</pattern>
+  <pattern>2cz1l</pattern>
+  <pattern>2cz1m</pattern>
+  <pattern>2cz1n</pattern>
+  <pattern>2cz1p</pattern>
+  <pattern>2cz1s</pattern>
+  <pattern>2cz1t</pattern>
+  <pattern>2cz1z</pattern>
+  <pattern>2dłb</pattern>
+  <pattern>2dłsz</pattern>
+  <pattern>2dź1ć</pattern>
+  <pattern>2dź1ń</pattern>
+  <pattern>2dź1ś</pattern>
+  <pattern>2dź1ź</pattern>
+  <pattern>2dź1ż</pattern>
+  <pattern>2dź1b</pattern>
+  <pattern>2dź1c</pattern>
+  <pattern>2dź1d</pattern>
+  <pattern>2dź1f</pattern>
+  <pattern>2dź1g</pattern>
+  <pattern>2dź1k</pattern>
+  <pattern>2dź1m</pattern>
+  <pattern>2dź1n</pattern>
+  <pattern>2dź1p</pattern>
+  <pattern>2dź1s</pattern>
+  <pattern>2dź1t</pattern>
+  <pattern>2dź1z</pattern>
+  <pattern>2dż1ć</pattern>
+  <pattern>2dż1ń</pattern>
+  <pattern>2dż1ś</pattern>
+  <pattern>2dż1ź</pattern>
+  <pattern>2dż1ż</pattern>
+  <pattern>2dż1b</pattern>
+  <pattern>2dż1c</pattern>
+  <pattern>2dż1d</pattern>
+  <pattern>2dż1f</pattern>
+  <pattern>2dż1g</pattern>
+  <pattern>2dż1k</pattern>
+  <pattern>2dż1m</pattern>
+  <pattern>2dż1n</pattern>
+  <pattern>2dż1p</pattern>
+  <pattern>2dż1s</pattern>
+  <pattern>2dż1t</pattern>
+  <pattern>2dż1z</pattern>
+  <pattern>2d1ć</pattern>
+  <pattern>2d1ń</pattern>
+  <pattern>2d1ś</pattern>
+  <pattern>2d1b</pattern>
+  <pattern>2d1c</pattern>
+  <pattern>2d1f</pattern>
+  <pattern>2d1g</pattern>
+  <pattern>2d1k</pattern>
+  <pattern>2d1m</pattern>
+  <pattern>2d1n</pattern>
+  <pattern>2d1p</pattern>
+  <pattern>2d1s</pattern>
+  <pattern>2d1t</pattern>
+  <pattern>2drn</pattern>
+  <pattern>2dz1ć</pattern>
+  <pattern>2dz1ń</pattern>
+  <pattern>2dz1ś</pattern>
+  <pattern>2dz1ź</pattern>
+  <pattern>2dz1ż</pattern>
+  <pattern>2dz1b</pattern>
+  <pattern>2dz1c</pattern>
+  <pattern>2dz1d</pattern>
+  <pattern>2dz1f</pattern>
+  <pattern>2dz1g</pattern>
+  <pattern>2dz1k</pattern>
+  <pattern>2dz1l</pattern>
+  <pattern>2dz1m</pattern>
+  <pattern>2dz1n</pattern>
+  <pattern>2dz1p</pattern>
+  <pattern>2dz1s</pattern>
+  <pattern>2dz1t</pattern>
+  <pattern>2dz1z</pattern>
+  <pattern>2f1c</pattern>
+  <pattern>2f1k</pattern>
+  <pattern>2f1m</pattern>
+  <pattern>2f1n</pattern>
+  <pattern>2głb</pattern>
+  <pattern>2g1ć</pattern>
+  <pattern>2g1ń</pattern>
+  <pattern>2g1ś</pattern>
+  <pattern>2g1ź</pattern>
+  <pattern>2g1ż</pattern>
+  <pattern>2g1b</pattern>
+  <pattern>2g1c</pattern>
+  <pattern>2g1d</pattern>
+  <pattern>2g1f</pattern>
+  <pattern>2g1k</pattern>
+  <pattern>2g1m</pattern>
+  <pattern>2g1p</pattern>
+  <pattern>2g1s</pattern>
+  <pattern>2g1t</pattern>
+  <pattern>2g1z</pattern>
+  <pattern>2h1ć</pattern>
+  <pattern>2h1ł</pattern>
+  <pattern>2h1ń</pattern>
+  <pattern>2h1ś</pattern>
+  <pattern>2h1ź</pattern>
+  <pattern>2h1ż</pattern>
+  <pattern>2h1b</pattern>
+  <pattern>2h1c</pattern>
+  <pattern>2h1d</pattern>
+  <pattern>2h1f</pattern>
+  <pattern>2h1g</pattern>
+  <pattern>2h1j</pattern>
+  <pattern>2h1k</pattern>
+  <pattern>2h1l</pattern>
+  <pattern>2h1m</pattern>
+  <pattern>2h1n</pattern>
+  <pattern>2h1p</pattern>
+  <pattern>2h1r</pattern>
+  <pattern>2h1s</pattern>
+  <pattern>2h1t</pattern>
+  <pattern>2h1w</pattern>
+  <pattern>2h1z</pattern>
+  <pattern>2j1ć</pattern>
+  <pattern>2j1ł</pattern>
+  <pattern>2j1ń</pattern>
+  <pattern>2j1ś</pattern>
+  <pattern>2j1ź</pattern>
+  <pattern>2j1ż</pattern>
+  <pattern>2j1b</pattern>
+  <pattern>2j1c</pattern>
+  <pattern>2j1d</pattern>
+  <pattern>2j1f</pattern>
+  <pattern>2j1g</pattern>
+  <pattern>2j1h</pattern>
+  <pattern>2j1k</pattern>
+  <pattern>2j1l</pattern>
+  <pattern>2j1m</pattern>
+  <pattern>2j1n</pattern>
+  <pattern>2j1p</pattern>
+  <pattern>2j1r</pattern>
+  <pattern>2j1s</pattern>
+  <pattern>2j1t</pattern>
+  <pattern>2j1w</pattern>
+  <pattern>2j1z</pattern>
+  <pattern>2kłb</pattern>
+  <pattern>2k1ć</pattern>
+  <pattern>2k1ń</pattern>
+  <pattern>2k1ś</pattern>
+  <pattern>2k1ź</pattern>
+  <pattern>2k1ż</pattern>
+  <pattern>2k1b</pattern>
+  <pattern>2k1c</pattern>
+  <pattern>2k1d</pattern>
+  <pattern>2k1f</pattern>
+  <pattern>2k1g</pattern>
+  <pattern>2k1m</pattern>
+  <pattern>2k1n</pattern>
+  <pattern>2k1p</pattern>
+  <pattern>2k1s</pattern>
+  <pattern>2k1sz</pattern>
+  <pattern>2k1t</pattern>
+  <pattern>2k1z</pattern>
+  <pattern>2l1ć</pattern>
+  <pattern>2l1ł</pattern>
+  <pattern>2l1ń</pattern>
+  <pattern>2l1ś</pattern>
+  <pattern>2l1ź</pattern>
+  <pattern>2l1ż</pattern>
+  <pattern>2l1b</pattern>
+  <pattern>2l1c</pattern>
+  <pattern>2l1d</pattern>
+  <pattern>2l1f</pattern>
+  <pattern>2l1g</pattern>
+  <pattern>2l1h</pattern>
+  <pattern>2l1j</pattern>
+  <pattern>2l1k</pattern>
+  <pattern>2l1m</pattern>
+  <pattern>2l1n</pattern>
+  <pattern>2l1p</pattern>
+  <pattern>2l1r</pattern>
+  <pattern>2l1s</pattern>
+  <pattern>2l1t</pattern>
+  <pattern>2l1w</pattern>
+  <pattern>2l1z</pattern>
+  <pattern>2m1ć</pattern>
+  <pattern>2m1ł</pattern>
+  <pattern>2m1ń</pattern>
+  <pattern>2m1ś</pattern>
+  <pattern>2m1ź</pattern>
+  <pattern>2m1ż</pattern>
+  <pattern>2m1b</pattern>
+  <pattern>2m1c</pattern>
+  <pattern>2m1d</pattern>
+  <pattern>2m1f</pattern>
+  <pattern>2m1g</pattern>
+  <pattern>2m1h</pattern>
+  <pattern>2m1j</pattern>
+  <pattern>2m1k</pattern>
+  <pattern>2m1l</pattern>
+  <pattern>2m1n</pattern>
+  <pattern>2m1p</pattern>
+  <pattern>2m1r</pattern>
+  <pattern>2m1s</pattern>
+  <pattern>2m1t</pattern>
+  <pattern>2m1w</pattern>
+  <pattern>2m1z</pattern>
+  <pattern>2n1ć</pattern>
+  <pattern>2n1ł</pattern>
+  <pattern>2n1ń</pattern>
+  <pattern>2n1ś</pattern>
+  <pattern>2n1ź</pattern>
+  <pattern>2n1ż</pattern>
+  <pattern>2n1b</pattern>
+  <pattern>2n1c</pattern>
+  <pattern>2n1d</pattern>
+  <pattern>2n1f</pattern>
+  <pattern>2n1g</pattern>
+  <pattern>2n1h</pattern>
+  <pattern>2n1j</pattern>
+  <pattern>2n1k</pattern>
+  <pattern>2n1l</pattern>
+  <pattern>2n1m</pattern>
+  <pattern>2n1p</pattern>
+  <pattern>2n1r</pattern>
+  <pattern>2n1s</pattern>
+  <pattern>2n1t</pattern>
+  <pattern>2n1w</pattern>
+  <pattern>2n1z</pattern>
+  <pattern>2ntn</pattern>
+  <pattern>2p1ć</pattern>
+  <pattern>2p1ń</pattern>
+  <pattern>2p1ś</pattern>
+  <pattern>2p1ź</pattern>
+  <pattern>2p1ż</pattern>
+  <pattern>2p1b</pattern>
+  <pattern>2p1c</pattern>
+  <pattern>2p1d</pattern>
+  <pattern>2p1f</pattern>
+  <pattern>2p1g</pattern>
+  <pattern>2p1k</pattern>
+  <pattern>2p1m</pattern>
+  <pattern>2p1n</pattern>
+  <pattern>2p1s</pattern>
+  <pattern>2p1sz</pattern>
+  <pattern>2p1t</pattern>
+  <pattern>2p1z</pattern>
+  <pattern>2pln</pattern>
+  <pattern>2r1ć</pattern>
+  <pattern>2r1ł</pattern>
+  <pattern>2r1ń</pattern>
+  <pattern>2r1ś</pattern>
+  <pattern>2r1ź</pattern>
+  <pattern>2r1ż</pattern>
+  <pattern>2r1b</pattern>
+  <pattern>2r1c</pattern>
+  <pattern>2r1d</pattern>
+  <pattern>2r1f</pattern>
+  <pattern>2r1g</pattern>
+  <pattern>2r1h</pattern>
+  <pattern>2r1j</pattern>
+  <pattern>2r1k</pattern>
+  <pattern>2r1l</pattern>
+  <pattern>2r1m</pattern>
+  <pattern>2r1n</pattern>
+  <pattern>2r1p</pattern>
+  <pattern>2r1s</pattern>
+  <pattern>2r1t</pattern>
+  <pattern>2r1w</pattern>
+  <pattern>2rz1ć</pattern>
+  <pattern>2rz1ł</pattern>
+  <pattern>2rz1ń</pattern>
+  <pattern>2rz1ś</pattern>
+  <pattern>2rz1ź</pattern>
+  <pattern>2rz1ż</pattern>
+  <pattern>2rz1b</pattern>
+  <pattern>2rz1c</pattern>
+  <pattern>2rz1d</pattern>
+  <pattern>2rz1f</pattern>
+  <pattern>2rz1g</pattern>
+  <pattern>2rz1h</pattern>
+  <pattern>2rz1j</pattern>
+  <pattern>2rz1k</pattern>
+  <pattern>2rz1l</pattern>
+  <pattern>2rz1m</pattern>
+  <pattern>2rz1n</pattern>
+  <pattern>2rz1p</pattern>
+  <pattern>2rz1r</pattern>
+  <pattern>2rz1s</pattern>
+  <pattern>2rz1t</pattern>
+  <pattern>2rz1w</pattern>
+  <pattern>2słb</pattern>
+  <pattern>2s1ź</pattern>
+  <pattern>2s1ż</pattern>
+  <pattern>2s1b</pattern>
+  <pattern>2s1d</pattern>
+  <pattern>2s1f</pattern>
+  <pattern>2s1g</pattern>
+  <pattern>2s1s</pattern>
+  <pattern>2snk</pattern>
+  <pattern>2stk</pattern>
+  <pattern>2stn</pattern>
+  <pattern>2stsz</pattern>
+  <pattern>2sz1ć</pattern>
+  <pattern>2sz1ś</pattern>
+  <pattern>2sz1c</pattern>
+  <pattern>2sz1f</pattern>
+  <pattern>2sz1k</pattern>
+  <pattern>2sz1l</pattern>
+  <pattern>2sz1m</pattern>
+  <pattern>2sz1n</pattern>
+  <pattern>2sz1p</pattern>
+  <pattern>2sz1s</pattern>
+  <pattern>2sz1t</pattern>
+  <pattern>2sz1w</pattern>
+  <pattern>2sz1z</pattern>
+  <pattern>2szln</pattern>
+  <pattern>2t1ć</pattern>
+  <pattern>2t1ń</pattern>
+  <pattern>2t1ś</pattern>
+  <pattern>2t1ź</pattern>
+  <pattern>2t1ż</pattern>
+  <pattern>2t1b</pattern>
+  <pattern>2t1c</pattern>
+  <pattern>2t1d</pattern>
+  <pattern>2t1f</pattern>
+  <pattern>2t1g</pattern>
+  <pattern>2t1k</pattern>
+  <pattern>2t1m</pattern>
+  <pattern>2t1n</pattern>
+  <pattern>2t1p</pattern>
+  <pattern>2t1s</pattern>
+  <pattern>2t1z</pattern>
+  <pattern>2tln</pattern>
+  <pattern>2trk</pattern>
+  <pattern>2trzn</pattern>
+  <pattern>2w1ć</pattern>
+  <pattern>2w1ł</pattern>
+  <pattern>2w1ń</pattern>
+  <pattern>2w1ś</pattern>
+  <pattern>2w1ź</pattern>
+  <pattern>2w1ż</pattern>
+  <pattern>2w1b</pattern>
+  <pattern>2w1c</pattern>
+  <pattern>2w1d</pattern>
+  <pattern>2w1f</pattern>
+  <pattern>2w1g</pattern>
+  <pattern>2w1j</pattern>
+  <pattern>2w1k</pattern>
+  <pattern>2w1l</pattern>
+  <pattern>2w1m</pattern>
+  <pattern>2w1n</pattern>
+  <pattern>2w1p</pattern>
+  <pattern>2w1r</pattern>
+  <pattern>2w1s</pattern>
+  <pattern>2w1t</pattern>
+  <pattern>2w1z</pattern>
+  <pattern>2z1ć</pattern>
+  <pattern>2z1ś</pattern>
+  <pattern>2z1c</pattern>
+  <pattern>2z1d</pattern>
+  <pattern>2z1f</pattern>
+  <pattern>2z1k</pattern>
+  <pattern>2z1p</pattern>
+  <pattern>2z1s</pattern>
+  <pattern>2z1t</pattern>
+  <pattern>2zdk</pattern>
+  <pattern>2zdn</pattern>
+  <pattern>3d2niow</pattern>
+  <pattern>3k2sz2t</pattern>
+  <pattern>3m2k2n</pattern>
+  <pattern>3m2nest</pattern>
+  <pattern>3m2nezj</pattern>
+  <pattern>3m2sk2n</pattern>
+  <pattern>3p2neu</pattern>
+  <pattern>3w2ład</pattern>
+  <pattern>3w2łos</pattern>
+  <pattern>3w2czas</pattern>
+  <pattern>4ć3ć</pattern>
+  <pattern>4ł3ł</pattern>
+  <pattern>4ź3ź</pattern>
+  <pattern>4ż3ż</pattern>
+  <pattern>4b3b</pattern>
+  <pattern>4c3c</pattern>
+  <pattern>4d3d</pattern>
+  <pattern>4f3f</pattern>
+  <pattern>4g3g</pattern>
+  <pattern>4h3h</pattern>
+  <pattern>4j3j</pattern>
+  <pattern>4k3k</pattern>
+  <pattern>4l3l</pattern>
+  <pattern>4m3m</pattern>
+  <pattern>4n3n</pattern>
+  <pattern>4p3p</pattern>
+  <pattern>4r3r</pattern>
+  <pattern>4t3t</pattern>
+  <pattern>4w3w</pattern>
+  <pattern>4z3z</pattern>
+  <pattern>8ć </pattern>
+  <pattern>8ćć </pattern>
+  <pattern>8ćł </pattern>
+  <pattern>8ćń </pattern>
+  <pattern>8ćś </pattern>
+  <pattern>8ćź </pattern>
+  <pattern>8ćż </pattern>
+  <pattern>8ćb </pattern>
+  <pattern>8ćc </pattern>
+  <pattern>8ćd </pattern>
+  <pattern>8ćf </pattern>
+  <pattern>8ćg </pattern>
+  <pattern>8ćh </pattern>
+  <pattern>8ćj </pattern>
+  <pattern>8ćk </pattern>
+  <pattern>8ćl </pattern>
+  <pattern>8ćm </pattern>
+  <pattern>8ćn </pattern>
+  <pattern>8ćp </pattern>
+  <pattern>8ćr </pattern>
+  <pattern>8ćs </pattern>
+  <pattern>8ćt </pattern>
+  <pattern>8ćv </pattern>
+  <pattern>8ćw </pattern>
+  <pattern>8ćx </pattern>
+  <pattern>8ćz </pattern>
+  <pattern>8ł </pattern>
+  <pattern>8łć </pattern>
+  <pattern>8łł </pattern>
+  <pattern>8łń </pattern>
+  <pattern>8łś </pattern>
+  <pattern>8łź </pattern>
+  <pattern>8łż </pattern>
+  <pattern>8łb </pattern>
+  <pattern>8łc </pattern>
+  <pattern>8łd </pattern>
+  <pattern>8łf </pattern>
+  <pattern>8łg </pattern>
+  <pattern>8łh </pattern>
+  <pattern>8łj </pattern>
+  <pattern>8łk </pattern>
+  <pattern>8łl </pattern>
+  <pattern>8łm </pattern>
+  <pattern>8łn </pattern>
+  <pattern>8łp </pattern>
+  <pattern>8łr </pattern>
+  <pattern>8łs </pattern>
+  <pattern>8łt </pattern>
+  <pattern>8łv </pattern>
+  <pattern>8łw </pattern>
+  <pattern>8łx </pattern>
+  <pattern>8łz </pattern>
+  <pattern>8ń </pattern>
+  <pattern>8ńć </pattern>
+  <pattern>8ńł </pattern>
+  <pattern>8ńń </pattern>
+  <pattern>8ńś </pattern>
+  <pattern>8ńź </pattern>
+  <pattern>8ńż </pattern>
+  <pattern>8ńb </pattern>
+  <pattern>8ńc </pattern>
+  <pattern>8ńd </pattern>
+  <pattern>8ńf </pattern>
+  <pattern>8ńg </pattern>
+  <pattern>8ńh </pattern>
+  <pattern>8ńj </pattern>
+  <pattern>8ńk </pattern>
+  <pattern>8ńl </pattern>
+  <pattern>8ńm </pattern>
+  <pattern>8ńn </pattern>
+  <pattern>8ńp </pattern>
+  <pattern>8ńr </pattern>
+  <pattern>8ńs </pattern>
+  <pattern>8ńt </pattern>
+  <pattern>8ńv </pattern>
+  <pattern>8ńw </pattern>
+  <pattern>8ńx </pattern>
+  <pattern>8ńz </pattern>
+  <pattern>8ś </pattern>
+  <pattern>8ść </pattern>
+  <pattern>8śł </pattern>
+  <pattern>8śń </pattern>
+  <pattern>8śś </pattern>
+  <pattern>8śź </pattern>
+  <pattern>8śż </pattern>
+  <pattern>8śb </pattern>
+  <pattern>8śc </pattern>
+  <pattern>8śd </pattern>
+  <pattern>8śf </pattern>
+  <pattern>8śg </pattern>
+  <pattern>8śh </pattern>
+  <pattern>8śj </pattern>
+  <pattern>8śk </pattern>
+  <pattern>8śl </pattern>
+  <pattern>8śm </pattern>
+  <pattern>8śn </pattern>
+  <pattern>8śp </pattern>
+  <pattern>8śr </pattern>
+  <pattern>8śs </pattern>
+  <pattern>8śt </pattern>
+  <pattern>8śv </pattern>
+  <pattern>8św </pattern>
+  <pattern>8śx </pattern>
+  <pattern>8śz </pattern>
+  <pattern>8ź </pattern>
+  <pattern>8źć </pattern>
+  <pattern>8źł </pattern>
+  <pattern>8źń </pattern>
+  <pattern>8źś </pattern>
+  <pattern>8źź </pattern>
+  <pattern>8źż </pattern>
+  <pattern>8źb </pattern>
+  <pattern>8źc </pattern>
+  <pattern>8źd </pattern>
+  <pattern>8źf </pattern>
+  <pattern>8źg </pattern>
+  <pattern>8źh </pattern>
+  <pattern>8źj </pattern>
+  <pattern>8źk </pattern>
+  <pattern>8źl </pattern>
+  <pattern>8źm </pattern>
+  <pattern>8źn </pattern>
+  <pattern>8źp </pattern>
+  <pattern>8źr </pattern>
+  <pattern>8źs </pattern>
+  <pattern>8źt </pattern>
+  <pattern>8źv </pattern>
+  <pattern>8źw </pattern>
+  <pattern>8źx </pattern>
+  <pattern>8źz </pattern>
+  <pattern>8ż </pattern>
+  <pattern>8żć </pattern>
+  <pattern>8żł </pattern>
+  <pattern>8żń </pattern>
+  <pattern>8żś </pattern>
+  <pattern>8żź </pattern>
+  <pattern>8żż </pattern>
+  <pattern>8żb </pattern>
+  <pattern>8żc </pattern>
+  <pattern>8żd </pattern>
+  <pattern>8żf </pattern>
+  <pattern>8żg </pattern>
+  <pattern>8żh </pattern>
+  <pattern>8żj </pattern>
+  <pattern>8żk </pattern>
+  <pattern>8żl </pattern>
+  <pattern>8żm </pattern>
+  <pattern>8żn </pattern>
+  <pattern>8żp </pattern>
+  <pattern>8żr </pattern>
+  <pattern>8żs </pattern>
+  <pattern>8żt </pattern>
+  <pattern>8żv </pattern>
+  <pattern>8żw </pattern>
+  <pattern>8żx </pattern>
+  <pattern>8żz </pattern>
+  <pattern>8b </pattern>
+  <pattern>8bć </pattern>
+  <pattern>8bł </pattern>
+  <pattern>8bń </pattern>
+  <pattern>8bś </pattern>
+  <pattern>8bź </pattern>
+  <pattern>8bż </pattern>
+  <pattern>8bb </pattern>
+  <pattern>8bc </pattern>
+  <pattern>8bd </pattern>
+  <pattern>8bf </pattern>
+  <pattern>8bg </pattern>
+  <pattern>8bh </pattern>
+  <pattern>8bj </pattern>
+  <pattern>8bk </pattern>
+  <pattern>8bl </pattern>
+  <pattern>8bm </pattern>
+  <pattern>8bn </pattern>
+  <pattern>8bp </pattern>
+  <pattern>8br </pattern>
+  <pattern>8brz </pattern>
+  <pattern>8bs </pattern>
+  <pattern>8bt </pattern>
+  <pattern>8bv </pattern>
+  <pattern>8bw </pattern>
+  <pattern>8bx </pattern>
+  <pattern>8bz </pattern>
+  <pattern>8c </pattern>
+  <pattern>8cć </pattern>
+  <pattern>8cł </pattern>
+  <pattern>8cń </pattern>
+  <pattern>8cś </pattern>
+  <pattern>8cź </pattern>
+  <pattern>8cż </pattern>
+  <pattern>8cb </pattern>
+  <pattern>8cc </pattern>
+  <pattern>8cd </pattern>
+  <pattern>8cf </pattern>
+  <pattern>8cg </pattern>
+  <pattern>8ch </pattern>
+  <pattern>8chł </pattern>
+  <pattern>8chrz </pattern>
+  <pattern>8chw </pattern>
+  <pattern>8cj </pattern>
+  <pattern>8ck </pattern>
+  <pattern>8cl </pattern>
+  <pattern>8cm </pattern>
+  <pattern>8cn </pattern>
+  <pattern>8cp </pattern>
+  <pattern>8cr </pattern>
+  <pattern>8cs </pattern>
+  <pattern>8ct </pattern>
+  <pattern>8cv </pattern>
+  <pattern>8cw </pattern>
+  <pattern>8cx </pattern>
+  <pattern>8cz </pattern>
+  <pattern>8czt </pattern>
+  <pattern>8d </pattern>
+  <pattern>8dć </pattern>
+  <pattern>8dł </pattern>
+  <pattern>8dń </pattern>
+  <pattern>8dś </pattern>
+  <pattern>8dź </pattern>
+  <pattern>8dż </pattern>
+  <pattern>8db </pattern>
+  <pattern>8dc </pattern>
+  <pattern>8dd </pattern>
+  <pattern>8df </pattern>
+  <pattern>8dg </pattern>
+  <pattern>8dh </pattern>
+  <pattern>8dj </pattern>
+  <pattern>8dk </pattern>
+  <pattern>8dl </pattern>
+  <pattern>8dm </pattern>
+  <pattern>8dn </pattern>
+  <pattern>8dp </pattern>
+  <pattern>8dr </pattern>
+  <pattern>8drz </pattern>
+  <pattern>8ds </pattern>
+  <pattern>8dt </pattern>
+  <pattern>8dv </pattern>
+  <pattern>8dw </pattern>
+  <pattern>8dx </pattern>
+  <pattern>8dz </pattern>
+  <pattern>8f </pattern>
+  <pattern>8fć </pattern>
+  <pattern>8fł </pattern>
+  <pattern>8fń </pattern>
+  <pattern>8fś </pattern>
+  <pattern>8fź </pattern>
+  <pattern>8fż </pattern>
+  <pattern>8fb </pattern>
+  <pattern>8fc </pattern>
+  <pattern>8fd </pattern>
+  <pattern>8ff </pattern>
+  <pattern>8fg </pattern>
+  <pattern>8fh </pattern>
+  <pattern>8fj </pattern>
+  <pattern>8fk </pattern>
+  <pattern>8fl </pattern>
+  <pattern>8fm </pattern>
+  <pattern>8fn </pattern>
+  <pattern>8fp </pattern>
+  <pattern>8fr </pattern>
+  <pattern>8fs </pattern>
+  <pattern>8ft </pattern>
+  <pattern>8fv </pattern>
+  <pattern>8fw </pattern>
+  <pattern>8fx </pattern>
+  <pattern>8fz </pattern>
+  <pattern>8g </pattern>
+  <pattern>8gć </pattern>
+  <pattern>8gł </pattern>
+  <pattern>8gń </pattern>
+  <pattern>8gś </pattern>
+  <pattern>8gź </pattern>
+  <pattern>8gż </pattern>
+  <pattern>8gb </pattern>
+  <pattern>8gc </pattern>
+  <pattern>8gd </pattern>
+  <pattern>8gf </pattern>
+  <pattern>8gg </pattern>
+  <pattern>8gh </pattern>
+  <pattern>8gj </pattern>
+  <pattern>8gk </pattern>
+  <pattern>8gl </pattern>
+  <pattern>8gm </pattern>
+  <pattern>8gn </pattern>
+  <pattern>8gp </pattern>
+  <pattern>8gr </pattern>
+  <pattern>8gs </pattern>
+  <pattern>8gt </pattern>
+  <pattern>8gv </pattern>
+  <pattern>8gw </pattern>
+  <pattern>8gx </pattern>
+  <pattern>8gz </pattern>
+  <pattern>8h </pattern>
+  <pattern>8hć </pattern>
+  <pattern>8hł </pattern>
+  <pattern>8hń </pattern>
+  <pattern>8hś </pattern>
+  <pattern>8hź </pattern>
+  <pattern>8hż </pattern>
+  <pattern>8hb </pattern>
+  <pattern>8hc </pattern>
+  <pattern>8hd </pattern>
+  <pattern>8hf </pattern>
+  <pattern>8hg </pattern>
+  <pattern>8hh </pattern>
+  <pattern>8hj </pattern>
+  <pattern>8hk </pattern>
+  <pattern>8hl </pattern>
+  <pattern>8hm </pattern>
+  <pattern>8hn </pattern>
+  <pattern>8hp </pattern>
+  <pattern>8hr </pattern>
+  <pattern>8hs </pattern>
+  <pattern>8ht </pattern>
+  <pattern>8hv </pattern>
+  <pattern>8hw </pattern>
+  <pattern>8hx </pattern>
+  <pattern>8hz </pattern>
+  <pattern>8j </pattern>
+  <pattern>8jć </pattern>
+  <pattern>8jł </pattern>
+  <pattern>8jń </pattern>
+  <pattern>8jś </pattern>
+  <pattern>8jź </pattern>
+  <pattern>8jż </pattern>
+  <pattern>8jb </pattern>
+  <pattern>8jc </pattern>
+  <pattern>8jd </pattern>
+  <pattern>8jf </pattern>
+  <pattern>8jg </pattern>
+  <pattern>8jh </pattern>
+  <pattern>8jj </pattern>
+  <pattern>8jk </pattern>
+  <pattern>8jl </pattern>
+  <pattern>8jm </pattern>
+  <pattern>8jn </pattern>
+  <pattern>8jp </pattern>
+  <pattern>8jr </pattern>
+  <pattern>8js </pattern>
+  <pattern>8jt </pattern>
+  <pattern>8jv </pattern>
+  <pattern>8jw </pattern>
+  <pattern>8jx </pattern>
+  <pattern>8jz </pattern>
+  <pattern>8k </pattern>
+  <pattern>8kć </pattern>
+  <pattern>8kł </pattern>
+  <pattern>8kń </pattern>
+  <pattern>8kś </pattern>
+  <pattern>8kź </pattern>
+  <pattern>8kż </pattern>
+  <pattern>8kb </pattern>
+  <pattern>8kc </pattern>
+  <pattern>8kd </pattern>
+  <pattern>8kf </pattern>
+  <pattern>8kg </pattern>
+  <pattern>8kh </pattern>
+  <pattern>8kj </pattern>
+  <pattern>8kk </pattern>
+  <pattern>8kl </pattern>
+  <pattern>8km </pattern>
+  <pattern>8kn </pattern>
+  <pattern>8kp </pattern>
+  <pattern>8kr </pattern>
+  <pattern>8ks </pattern>
+  <pattern>8kst </pattern>
+  <pattern>8kt </pattern>
+  <pattern>8kv </pattern>
+  <pattern>8kw </pattern>
+  <pattern>8kx </pattern>
+  <pattern>8kz </pattern>
+  <pattern>8l </pattern>
+  <pattern>8lć </pattern>
+  <pattern>8lł </pattern>
+  <pattern>8lń </pattern>
+  <pattern>8lś </pattern>
+  <pattern>8lź </pattern>
+  <pattern>8lż </pattern>
+  <pattern>8lb </pattern>
+  <pattern>8lc </pattern>
+  <pattern>8ld </pattern>
+  <pattern>8lf </pattern>
+  <pattern>8lg </pattern>
+  <pattern>8lh </pattern>
+  <pattern>8lj </pattern>
+  <pattern>8lk </pattern>
+  <pattern>8ll </pattern>
+  <pattern>8lm </pattern>
+  <pattern>8ln </pattern>
+  <pattern>8lp </pattern>
+  <pattern>8lr </pattern>
+  <pattern>8ls </pattern>
+  <pattern>8lt </pattern>
+  <pattern>8lv </pattern>
+  <pattern>8lw </pattern>
+  <pattern>8lx </pattern>
+  <pattern>8lz </pattern>
+  <pattern>8m </pattern>
+  <pattern>8mć </pattern>
+  <pattern>8mł </pattern>
+  <pattern>8mń </pattern>
+  <pattern>8mś </pattern>
+  <pattern>8mź </pattern>
+  <pattern>8mż </pattern>
+  <pattern>8mb </pattern>
+  <pattern>8mc </pattern>
+  <pattern>8md </pattern>
+  <pattern>8mf </pattern>
+  <pattern>8mg </pattern>
+  <pattern>8mh </pattern>
+  <pattern>8mj </pattern>
+  <pattern>8mk </pattern>
+  <pattern>8ml </pattern>
+  <pattern>8mm </pattern>
+  <pattern>8mn </pattern>
+  <pattern>8mp </pattern>
+  <pattern>8mr </pattern>
+  <pattern>8ms </pattern>
+  <pattern>8mst </pattern>
+  <pattern>8mt </pattern>
+  <pattern>8mv </pattern>
+  <pattern>8mw </pattern>
+  <pattern>8mx </pattern>
+  <pattern>8mz </pattern>
+  <pattern>8n </pattern>
+  <pattern>8nć </pattern>
+  <pattern>8nł </pattern>
+  <pattern>8nń </pattern>
+  <pattern>8nś </pattern>
+  <pattern>8nź </pattern>
+  <pattern>8nż </pattern>
+  <pattern>8nb </pattern>
+  <pattern>8nc </pattern>
+  <pattern>8nd </pattern>
+  <pattern>8nf </pattern>
+  <pattern>8ng </pattern>
+  <pattern>8nh </pattern>
+  <pattern>8nj </pattern>
+  <pattern>8nk </pattern>
+  <pattern>8nl </pattern>
+  <pattern>8nm </pattern>
+  <pattern>8nn </pattern>
+  <pattern>8np </pattern>
+  <pattern>8nr </pattern>
+  <pattern>8ns </pattern>
+  <pattern>8nt </pattern>
+  <pattern>8nv </pattern>
+  <pattern>8nw </pattern>
+  <pattern>8nx </pattern>
+  <pattern>8nz </pattern>
+  <pattern>8p </pattern>
+  <pattern>8pć </pattern>
+  <pattern>8pł </pattern>
+  <pattern>8pń </pattern>
+  <pattern>8pś </pattern>
+  <pattern>8pź </pattern>
+  <pattern>8pż </pattern>
+  <pattern>8pb </pattern>
+  <pattern>8pc </pattern>
+  <pattern>8pd </pattern>
+  <pattern>8pf </pattern>
+  <pattern>8pg </pattern>
+  <pattern>8ph </pattern>
+  <pattern>8pj </pattern>
+  <pattern>8pk </pattern>
+  <pattern>8pl </pattern>
+  <pattern>8pm </pattern>
+  <pattern>8pn </pattern>
+  <pattern>8pp </pattern>
+  <pattern>8pr </pattern>
+  <pattern>8prz </pattern>
+  <pattern>8ps </pattern>
+  <pattern>8pt </pattern>
+  <pattern>8pv </pattern>
+  <pattern>8pw </pattern>
+  <pattern>8px </pattern>
+  <pattern>8pz </pattern>
+  <pattern>8r </pattern>
+  <pattern>8rć </pattern>
+  <pattern>8rł </pattern>
+  <pattern>8rń </pattern>
+  <pattern>8rś </pattern>
+  <pattern>8rź </pattern>
+  <pattern>8rż </pattern>
+  <pattern>8rb </pattern>
+  <pattern>8rc </pattern>
+  <pattern>8rd </pattern>
+  <pattern>8rf </pattern>
+  <pattern>8rg </pattern>
+  <pattern>8rh </pattern>
+  <pattern>8rj </pattern>
+  <pattern>8rk </pattern>
+  <pattern>8rl </pattern>
+  <pattern>8rm </pattern>
+  <pattern>8rn </pattern>
+  <pattern>8rp </pattern>
+  <pattern>8rr </pattern>
+  <pattern>8rs </pattern>
+  <pattern>8rsz </pattern>
+  <pattern>8rt </pattern>
+  <pattern>8rv </pattern>
+  <pattern>8rw </pattern>
+  <pattern>8rx </pattern>
+  <pattern>8rz </pattern>
+  <pattern>8rzł </pattern>
+  <pattern>8s </pattern>
+  <pattern>8sć </pattern>
+  <pattern>8sł </pattern>
+  <pattern>8sń </pattern>
+  <pattern>8sś </pattern>
+  <pattern>8sź </pattern>
+  <pattern>8sż </pattern>
+  <pattern>8sb </pattern>
+  <pattern>8sc </pattern>
+  <pattern>8sch </pattern>
+  <pattern>8sd </pattern>
+  <pattern>8sf </pattern>
+  <pattern>8sg </pattern>
+  <pattern>8sh </pattern>
+  <pattern>8sj </pattern>
+  <pattern>8sk </pattern>
+  <pattern>8skrz </pattern>
+  <pattern>8sl </pattern>
+  <pattern>8sm </pattern>
+  <pattern>8sn </pattern>
+  <pattern>8sp </pattern>
+  <pattern>8sr </pattern>
+  <pattern>8ss </pattern>
+  <pattern>8st </pattern>
+  <pattern>8str </pattern>
+  <pattern>8strz </pattern>
+  <pattern>8stw </pattern>
+  <pattern>8sv </pattern>
+  <pattern>8sw </pattern>
+  <pattern>8sx </pattern>
+  <pattern>8sz </pattern>
+  <pattern>8szcz </pattern>
+  <pattern>8szczb </pattern>
+  <pattern>8szk </pattern>
+  <pattern>8szn </pattern>
+  <pattern>8szt </pattern>
+  <pattern>8sztr </pattern>
+  <pattern>8t </pattern>
+  <pattern>8tć </pattern>
+  <pattern>8tł </pattern>
+  <pattern>8tń </pattern>
+  <pattern>8tś </pattern>
+  <pattern>8tź </pattern>
+  <pattern>8tż </pattern>
+  <pattern>8tb </pattern>
+  <pattern>8tc </pattern>
+  <pattern>8td </pattern>
+  <pattern>8tf </pattern>
+  <pattern>8tg </pattern>
+  <pattern>8th </pattern>
+  <pattern>8tj </pattern>
+  <pattern>8tk </pattern>
+  <pattern>8tl </pattern>
+  <pattern>8tm </pattern>
+  <pattern>8tn </pattern>
+  <pattern>8tp </pattern>
+  <pattern>8tr </pattern>
+  <pattern>8trz </pattern>
+  <pattern>8ts </pattern>
+  <pattern>8tt </pattern>
+  <pattern>8tv </pattern>
+  <pattern>8tw </pattern>
+  <pattern>8tx </pattern>
+  <pattern>8tz </pattern>
+  <pattern>8v </pattern>
+  <pattern>8vć </pattern>
+  <pattern>8vł </pattern>
+  <pattern>8vń </pattern>
+  <pattern>8vś </pattern>
+  <pattern>8vź </pattern>
+  <pattern>8vż </pattern>
+  <pattern>8vb </pattern>
+  <pattern>8vc </pattern>
+  <pattern>8vd </pattern>
+  <pattern>8vf </pattern>
+  <pattern>8vg </pattern>
+  <pattern>8vh </pattern>
+  <pattern>8vj </pattern>
+  <pattern>8vk </pattern>
+  <pattern>8vl </pattern>
+  <pattern>8vm </pattern>
+  <pattern>8vn </pattern>
+  <pattern>8vp </pattern>
+  <pattern>8vr </pattern>
+  <pattern>8vs </pattern>
+  <pattern>8vt </pattern>
+  <pattern>8vv </pattern>
+  <pattern>8vw </pattern>
+  <pattern>8vx </pattern>
+  <pattern>8vz </pattern>
+  <pattern>8w </pattern>
+  <pattern>8wć </pattern>
+  <pattern>8wł </pattern>
+  <pattern>8wń </pattern>
+  <pattern>8wś </pattern>
+  <pattern>8wź </pattern>
+  <pattern>8wż </pattern>
+  <pattern>8wb </pattern>
+  <pattern>8wc </pattern>
+  <pattern>8wd </pattern>
+  <pattern>8wf </pattern>
+  <pattern>8wg </pattern>
+  <pattern>8wh </pattern>
+  <pattern>8wj </pattern>
+  <pattern>8wk </pattern>
+  <pattern>8wl </pattern>
+  <pattern>8wm </pattern>
+  <pattern>8wn </pattern>
+  <pattern>8wp </pattern>
+  <pattern>8wr </pattern>
+  <pattern>8ws </pattern>
+  <pattern>8wt </pattern>
+  <pattern>8wv </pattern>
+  <pattern>8ww </pattern>
+  <pattern>8wx </pattern>
+  <pattern>8wz </pattern>
+  <pattern>8x </pattern>
+  <pattern>8xć </pattern>
+  <pattern>8xł </pattern>
+  <pattern>8xń </pattern>
+  <pattern>8xś </pattern>
+  <pattern>8xź </pattern>
+  <pattern>8xż </pattern>
+  <pattern>8xb </pattern>
+  <pattern>8xc </pattern>
+  <pattern>8xd </pattern>
+  <pattern>8xf </pattern>
+  <pattern>8xg </pattern>
+  <pattern>8xh </pattern>
+  <pattern>8xj </pattern>
+  <pattern>8xk </pattern>
+  <pattern>8xl </pattern>
+  <pattern>8xm </pattern>
+  <pattern>8xn </pattern>
+  <pattern>8xp </pattern>
+  <pattern>8xr </pattern>
+  <pattern>8xs </pattern>
+  <pattern>8xt </pattern>
+  <pattern>8xv </pattern>
+  <pattern>8xw </pattern>
+  <pattern>8xx </pattern>
+  <pattern>8xz </pattern>
+  <pattern>8z </pattern>
+  <pattern>8zć </pattern>
+  <pattern>8zł </pattern>
+  <pattern>8zń </pattern>
+  <pattern>8zś </pattern>
+  <pattern>8zź </pattern>
+  <pattern>8zż </pattern>
+  <pattern>8zb </pattern>
+  <pattern>8zc </pattern>
+  <pattern>8zd </pattern>
+  <pattern>8zdr </pattern>
+  <pattern>8zdrz </pattern>
+  <pattern>8zf </pattern>
+  <pattern>8zg </pattern>
+  <pattern>8zh </pattern>
+  <pattern>8zj </pattern>
+  <pattern>8zk </pattern>
+  <pattern>8zl </pattern>
+  <pattern>8zm </pattern>
+  <pattern>8zn </pattern>
+  <pattern>8zp </pattern>
+  <pattern>8zr </pattern>
+  <pattern>8zs </pattern>
+  <pattern>8zt </pattern>
+  <pattern>8zv </pattern>
+  <pattern>8zw </pattern>
+  <pattern>8zx </pattern>
+  <pattern>8zz </pattern>
+  <pattern>a1</pattern>
+  <pattern>a2u</pattern>
+  <pattern>a2y</pattern>
+  <pattern>aa2</pattern>
+  <pattern>ae2</pattern>
+  <pattern>ai2</pattern>
+  <pattern>ao2</pattern>
+  <pattern>be2eth</pattern>
+  <pattern>be2f3sz2</pattern>
+  <pattern>be2k1hend</pattern>
+  <pattern>bi2n3o2ku</pattern>
+  <pattern>bi2sz3kop</pattern>
+  <pattern>bi2z3ne2s3m</pattern>
+  <pattern>bi2z3nes</pattern>
+  <pattern>birmin2g1ham</pattern>
+  <pattern>blo2k1hauz</pattern>
+  <pattern>bo2s3ma</pattern>
+  <pattern>br2d</pattern>
+  <pattern>bro2a2d3way</pattern>
+  <pattern>bu2sz3me</pattern>
+  <pattern>buk2sz3pan</pattern>
+  <pattern>busine2ss3m</pattern>
+  <pattern>busines2s</pattern>
+  <pattern>c4h</pattern>
+  <pattern>c4z</pattern>
+  <pattern>cal2d1well</pattern>
+  <pattern>ch2ł</pattern>
+  <pattern>ch2j</pattern>
+  <pattern>ch2l</pattern>
+  <pattern>ch2r</pattern>
+  <pattern>ch2w</pattern>
+  <pattern>chus1t</pattern>
+  <pattern>cu2r7zon</pattern>
+  <pattern>dż2ł</pattern>
+  <pattern>dż2j</pattern>
+  <pattern>dż2l</pattern>
+  <pattern>dż2r</pattern>
+  <pattern>dż2w</pattern>
+  <pattern>dże4z3b</pattern>
+  <pattern>dże4z3m</pattern>
+  <pattern>d4ź</pattern>
+  <pattern>d4ż</pattern>
+  <pattern>d4z</pattern>
+  <pattern>deut4sch3land</pattern>
+  <pattern>drz2w</pattern>
+  <pattern>du2sz3past</pattern>
+  <pattern>e1</pattern>
+  <pattern>e2r5zac</pattern>
+  <pattern>e2u</pattern>
+  <pattern>e2y</pattern>
+  <pattern>e3u2sz</pattern>
+  <pattern>ea2</pattern>
+  <pattern>ee2</pattern>
+  <pattern>ei2</pattern>
+  <pattern>eo2</pattern>
+  <pattern>fi2s3harm</pattern>
+  <pattern>fi2sz3bin</pattern>
+  <pattern>fo2k2s3t</pattern>
+  <pattern>fo2r5zac</pattern>
+  <pattern>fol2k1lor</pattern>
+  <pattern>fos2f1a2zot</pattern>
+  <pattern>ga3d2get</pattern>
+  <pattern>gado3p2ta</pattern>
+  <pattern>gol2f3s</pattern>
+  <pattern>golfsz2</pattern>
+  <pattern>gran2d1ilo</pattern>
+  <pattern>gro4t3r</pattern>
+  <pattern>hi2sz3p</pattern>
+  <pattern>hu2cz1w</pattern>
+  <pattern>hu2x3ley</pattern>
+  <pattern>i1</pattern>
+  <pattern>i2ą</pattern>
+  <pattern>i2ę</pattern>
+  <pattern>i2ó</pattern>
+  <pattern>i2a</pattern>
+  <pattern>i2e</pattern>
+  <pattern>i2i</pattern>
+  <pattern>i2o</pattern>
+  <pattern>i2u</pattern>
+  <pattern>i2y</pattern>
+  <pattern>in4nsbruck</pattern>
+  <pattern>in4sbruc</pattern>
+  <pattern>j2t1ł</pattern>
+  <pattern>j2t1r</pattern>
+  <pattern>ja4z4z3b</pattern>
+  <pattern>ja4z4z3m</pattern>
+  <pattern>karl2s1kron</pattern>
+  <pattern>karl2s1ruhe</pattern>
+  <pattern>kir2chhoff</pattern>
+  <pattern>kongre2s3m</pattern>
+  <pattern>led1w</pattern>
+  <pattern>lu2ft3waffe</pattern>
+  <pattern>lu2ks1fer</pattern>
+  <pattern>ly2o</pattern>
+  <pattern>ma2r5zł</pattern>
+  <pattern>ma2r5zl</pattern>
+  <pattern>ma2r5zn</pattern>
+  <pattern>mi2sz1masz</pattern>
+  <pattern>mie2r5zł</pattern>
+  <pattern>mie2r5zi</pattern>
+  <pattern>mon2t3real</pattern>
+  <pattern>moza2i3k</pattern>
+  <pattern>mu2r7zasich3l</pattern>
+  <pattern>na4ł3kows</pattern>
+  <pattern>na4r3v</pattern>
+  <pattern>o1</pattern>
+  <pattern>o2y</pattern>
+  <pattern>oa2</pattern>
+  <pattern>och3mistrz</pattern>
+  <pattern>oe2</pattern>
+  <pattern>of2f3set</pattern>
+  <pattern>oi2</pattern>
+  <pattern>oo2</pattern>
+  <pattern>ou2</pattern>
+  <pattern>pa2n3a2mer</pattern>
+  <pattern>pa2s3cal</pattern>
+  <pattern>pa2s3ch</pattern>
+  <pattern>połu3d2ni</pattern>
+  <pattern>po3d4nieprz</pattern>
+  <pattern>po3m2ną</pattern>
+  <pattern>po3m2nę</pattern>
+  <pattern>po3m2ni</pattern>
+  <pattern>po4rt2s3mo2uth</pattern>
+  <pattern>po4rt3land</pattern>
+  <pattern>poli3e2t</pattern>
+  <pattern>poli3u2re</pattern>
+  <pattern>powsze3d2ni</pattern>
+  <pattern>pr2chal</pattern>
+  <pattern>pre2sz3pa</pattern>
+  <pattern>r4z</pattern>
+  <pattern>ro2e3nt2gen</pattern>
+  <pattern>ro2k3rocz</pattern>
+  <pattern>ro2s3to3c2k</pattern>
+  <pattern>s4z</pattern>
+  <pattern>se2t3le</pattern>
+  <pattern>sko2r5zoner</pattern>
+  <pattern>sm2r</pattern>
+  <pattern>sowi3z2</pattern>
+  <pattern>sy2n3opt</pattern>
+  <pattern>sy2s1tem</pattern>
+  <pattern>sza2sz1ły</pattern>
+  <pattern>sze2z1long</pattern>
+  <pattern>sze4ść</pattern>
+  <pattern>szto2k1holm</pattern>
+  <pattern>szyn2k1was</pattern>
+  <pattern>to3y2o3t</pattern>
+  <pattern>turboo2d3rzut</pattern>
+  <pattern>tygo3d2ni</pattern>
+  <pattern>u1</pattern>
+  <pattern>u2y</pattern>
+  <pattern>ua2</pattern>
+  <pattern>ue2</pattern>
+  <pattern>ui2</pattern>
+  <pattern>uo2</pattern>
+  <pattern>uu2</pattern>
+  <pattern>vo2lk2s3</pattern>
+  <pattern>we2e2k1end</pattern>
+  <pattern>we4st3f</pattern>
+  <pattern>we4st3m</pattern>
+  <pattern>y1</pattern>
+  <pattern>ya2</pattern>
+  <pattern>ye2</pattern>
+  <pattern>yi2</pattern>
+  <pattern>yo2</pattern>
+  <pattern>yu2</pattern>
+  <pattern>ze4p3p</pattern>
+  <pattern>be8zach</pattern>
+  <pattern>be8zami</pattern>
+  <pattern>by8naj8mniej</pattern>
+  <pattern>gdzie8nie8gdzie</pattern>
+  <pattern>ina8czej</pattern>
+  <pattern>na8dal</pattern>
+  <pattern>ni8gdy</pattern>
+  <pattern>ni8gdzie</pattern>
+  <pattern>niech8że</pattern>
+  <pattern>niech8by</pattern>
+  <pattern>ow8szem</pattern>
+  <pattern>pó8łach</pattern>
+  <pattern>pó8łami</pattern>
+  <pattern>pó8łek</pattern>
+  <pattern>pod8ów8czas</pattern>
+  <pattern>przy8naj7mniej</pattern>
+  <pattern>skąd8inąd</pattern>
+  <pattern>tró8jach</pattern>
+  <pattern>tró8jami</pattern>
+  <pattern>tró8jek</pattern>
+</HyphenationDescription>

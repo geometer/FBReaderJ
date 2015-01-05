@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="ОК"/>
+			<node name="cancel" value="Отменить"/>
+			<node name="yes" value="Да"/>
+			<node name="no" value="Нет"/>
+			<node name="apply" value="Применить"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Ошибка при работе с сетью"/>
+			<node name="unknownErrorMessage" value="Неизвестная ошибка"/>
+			<node name="operationTimedOutMessage" value="Отведённое время истекло"/>
+			<node name="somethingWrongMessage" value="Ошибка при работе с %s"/>
+			<node name="couldntCreateDirectoryMessage" value="Не удалось создать каталог %s"/>
+			<node name="couldntCreateFileMessage" value="Не удалось создать файл %s"/>
+			<node name="couldntConnectMessage" value="Не удалось соединиться с сайтом %s"/>
+			<node name="couldntResolveHostMessage" value="Не удаётся найти сайт %s"/>
+			<node name="authenticationFailed" value="Ошибка авторизации"/>
+			<node name="unsupportedProtocol" value="Неизвестный протокол"/>
+			<node name="invalidURL" value="Неправильный URL"/>
+			<node name="hostCantBeReached" value="Сайт %s недоступен"/>
+			<node name="connectionRefused" value="Соединение закрыто сайтом %s"/>
+			<node name="networkNotAvailable" value="Нет соединения с сетью"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Красный"/>
+		<node name="green" value="Зелёный"/>
+		<node name="blue" value="Синий"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="арабский"/>
+		<node name="be" value="беларусский"/>
+		<node name="bg" value="болгарский"/>
+		<node name="ca" value="каталанский"/>
+		<node name="cs" value="чешский"/>
+		<node name="da" value="датский"/>
+		<node name="de" value="немецкий"/>
+		<node name="de-traditional" value="немецкий (старая орфография)"/>
+		<node name="el" value="греческий"/>
+		<node name="en" value="английский"/>
+		<node name="eo" value="эсперанто"/>
+		<node name="es" value="испанский"/>
+		<node name="eu" value="баскский"/>
+		<node name="fa" value="персидский"/>
+		<node name="fi" value="финский"/>
+		<node name="fr" value="французский"/>
+		<node name="gl" value="галицийский"/>
+		<node name="he" value="иврит"/>
+		<node name="hu" value="венгерский"/>
+		<node name="hy" value="армянский"/>
+		<node name="id" value="индонезийский"/>
+		<node name="it" value="итальянский"/>
+		<node name="ja" value="японский"/>
+		<node name="ka" value="грузинский"/>
+		<node name="lt" value="литовский"/>
+		<node name="nb" value="норвежский"/>
+		<node name="nl" value="голландский"/>
+		<node name="pl" value="польский"/>
+		<node name="pt" value="португальский"/>
+		<node name="ro" value="румынский"/>
+		<node name="ru" value="русский"/>
+		<node name="sr" value="сербский"/>
+		<node name="sv" value="шведский"/>
+		<node name="ta" value="тамильский"/>
+		<node name="th" value="тайский"/>
+		<node name="tr" value="турецкий"/>
+		<node name="uk" value="украинский"/>
+		<node name="vi" value="вьетнамский"/>
+		<node name="zh" value="китайский"/>
+		<node name="zh_TW" value="китайский (традиционный)"/>
+		<node name="any" value="любой"/>
+		<node name="other" value="другой"/>
+		<node name="multi" value="многоязычный"/>
+		<node name="system" value="системный"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="включить"/>
+		<node name="off" value="выключить"/>
+		<node name="unchanged" value="не менять"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Действие для"/>
+	</node>
+</resources>

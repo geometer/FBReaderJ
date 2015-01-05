@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="موافق"/>
+			<node name="cancel" value="إلغاء"/>
+			<node name="yes" value="نعم"/>
+			<node name="no" value="لا"/>
+			<node name="apply" value="تطبيق"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="خطأ في الشبكة"/>
+			<node name="unknownErrorMessage" value="خطأ غير معروف"/>
+			<node name="operationTimedOutMessage" value="Operation is timed out" toBeTranslated="true"/>
+			<node name="somethingWrongMessage" value="Something goes wrong for %s" toBeTranslated="true"/>
+			<node name="couldntCreateDirectoryMessage" value="لا يمكن إنشاء المجلد %s"/>
+			<node name="couldntCreateFileMessage" value="لا يمكن إنشاء الملف %s"/>
+			<node name="couldntConnectMessage" value="لايمكن الإتصال بالمضيف %s"/>
+			<node name="couldntResolveHostMessage" value="Couldn't resolve host %s" toBeTranslated="true"/>
+			<node name="authenticationFailed" value="Authentication failed" toBeTranslated="true"/>
+			<node name="unsupportedProtocol" value="Unsupported protocol" toBeTranslated="true"/>
+			<node name="invalidURL" value="Invalid URL" toBeTranslated="true"/>
+			<node name="hostCantBeReached" value="Host %s cannot be reached" toBeTranslated="true"/>
+			<node name="connectionRefused" value="Connection was refused by %s" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="أحمر"/>
+		<node name="green" value="أخضر"/>
+		<node name="blue" value="أزرق"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="العربية"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="bg" value="البلغارية"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="التشيكية"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="de" value="الألماني"/>
+		<node name="de-traditional" value="الألماني (كتابة تقليدية)"/>
+		<node name="el" value="اليونانية"/>
+		<node name="en" value="الإنجليزية"/>
+		<node name="eo" value="الإسبرانتو"/>
+		<node name="es" value="الإسبانية"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fi" value="الفنلندية"/>
+		<node name="fr" value="الفرنسية"/>
+		<node name="gl" value="الجاليكية"/>
+		<node name="he" value="العبرية"/>
+		<node name="hu" value="المجرية"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="id" value="الأندونيسية"/>
+		<node name="it" value="الإيطالية"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Georgian"/>
+		<node name="lt" value="اللتوانية"/>
+		<node name="nb" value="النرويجية"/>
+		<node name="nl" value="الهولندية"/>
+		<node name="pl" value="البولندية"/>
+		<node name="pt" value="البرتغالية"/>
+		<node name="ro" value="الرومانية"/>
+		<node name="ru" value=" الروسية"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sv" value="السويدية"/>
+		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="th" value="التايلاندية"/>
+		<node name="tr" value="التركية"/>
+		<node name="uk" value="الأوكرانية"/>
+		<node name="vi" value="الفيتنامية"/>
+		<node name="zh" value="الصينية"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="other" value="أخرى"/>
+		<node name="multi" value="متعدد اللغات"/>
+		<node name="system" value="النظام"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="تشغيل"/>
+		<node name="off" value="إيقاف"/>
+		<node name="unchanged" value="بدون تغيير"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="عمل للمفتاح"/>
+	</node>
+</resources>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Onartu"/>
+			<node name="cancel" value="Utzi"/>
+			<node name="yes" value="Bai"/>
+			<node name="no" value="Ez"/>
+			<node name="apply" value="Aplikatu"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Sareko errorea"/>
+			<node name="unknownErrorMessage" value="Errore ezezaguna"/>
+			<node name="operationTimedOutMessage" value="Eragiketak denbora gainditu du"/>
+			<node name="somethingWrongMessage" value="Zeozer txarto doa honekin %s"/>
+			<node name="couldntCreateDirectoryMessage" value="Ezin izan da sortu %s direktorioa"/>
+			<node name="couldntCreateFileMessage" value="Ezin izan da sortu %s fitxategia"/>
+			<node name="couldntConnectMessage" value="Ezin izan da konektatu %s zerbitzarira"/>
+			<node name="couldntResolveHostMessage" value="Ezin izan da %s zerbitzarira ebatzi"/>
+			<node name="authenticationFailed" value="Huts egin du egiaztatzeak"/>
+			<node name="unsupportedProtocol" value="Onartugabeko protokoloa"/>
+			<node name="invalidURL" value="Baliogabeko URL-a"/>
+			<node name="hostCantBeReached" value="Ezin izan da konektatu %s zerbitzarira"/>
+			<node name="connectionRefused" value="%s (e)k konexioa ukatu du"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Gorria"/>
+		<node name="green" value="Berdea"/>
+		<node name="blue" value="Urdina"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabiera"/>
+		<node name="be" value="Bieloerrusiera"/>
+		<node name="bg" value="Bulgariera"/>
+		<node name="ca" value="Katalan"/>
+		<node name="cs" value="Txekiera"/>
+		<node name="da" value="Daniera"/>
+		<node name="de" value="Aleman"/>
+		<node name="de-traditional" value="Aleman (ortografia tradizionala)"/>
+		<node name="el" value="Greziera"/>
+		<node name="en" value="Ingeles"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Espainiera"/>
+		<node name="eu" value="Euskara"/>
+		<node name="fa" value="Persiera"/>
+		<node name="fi" value="Finlandiera"/>
+		<node name="fr" value="Frantses"/>
+		<node name="gl" value="Galiziera"/>
+		<node name="he" value="Hebreera"/>
+		<node name="hu" value="Hungariera"/>
+		<node name="hy" value="Armeniera"/>
+		<node name="id" value="Indonesiera"/>
+		<node name="it" value="Italiera"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Georgiera"/>
+		<node name="lt" value="Lituaniera"/>
+		<node name="nb" value="Norvegiera"/>
+		<node name="nl" value="Nederlandera"/>
+		<node name="pl" value="Poloniera"/>
+		<node name="pt" value="Portuges"/>
+		<node name="ro" value="Errumaniera"/>
+		<node name="ru" value="Errusiera"/>
+		<node name="sr" value="Serbiarra"/>
+		<node name="sv" value="Suediera"/>
+		<node name="ta" value="Tamilera"/>
+		<node name="th" value="Thaiera"/>
+		<node name="tr" value="Turkiera"/>
+		<node name="uk" value="Ukrainera"/>
+		<node name="vi" value="Vietnamera"/>
+		<node name="zh" value="Txinera"/>
+		<node name="zh_TW" value="Chinese (tradizionala)"/>
+		<node name="any" value="Edozein"/>
+		<node name="other" value="Besteren bat"/>
+		<node name="multi" value="Eleaniztuna"/>
+		<node name="system" value="Sistema"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="piztuta"/>
+		<node name="off" value="itzalita"/>
+		<node name="unchanged" value="aldaketarik gabe"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Ekintza teklarentzako"/>
+	</node>
+</resources>

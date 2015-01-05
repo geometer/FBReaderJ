@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Thai zlibrary resources, by Samphan Pojanasophanakul -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="ตกลง"/>
+			<node name="cancel" value="ยกเลิก"/>
+			<node name="yes" value="ใช่"/>
+			<node name="no" value="ไม่"/>
+			<node name="apply" value="นำไปใช้"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="ข้อผิดพลาดเกี่ยวกับเครือข่าย"/>
+			<node name="unknownErrorMessage" value="ข้อผิดพลาดที่ไม่สามารถระบุได้"/>
+			<node name="operationTimedOutMessage" value="หมดเวลาการดำเนินการ"/>
+			<node name="somethingWrongMessage" value="พบข้อผิดพลาดเกี่ยวกับ&#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value=" ไม่สามารถสร้างไดเรคทอรี&#10;%s"/>
+			<node name="couldntCreateFileMessage" value="ไม่สามารถสร้างไฟล์&#10;%s"/>
+			<node name="couldntConnectMessage" value="ไม่สามารถเชื่อมต่อไปยังโฮสต์&#10;%s"/>
+			<node name="couldntResolveHostMessage" value="ไม่สามารถตรวจเจอโฮสต์&#10;%s"/>
+			<node name="authenticationFailed" value="ไม่ผ่านการตรวจสอบสิทธิ์"/>
+			<node name="unsupportedProtocol" value="ไม่สนับสนุนโปรโตคอลนี้"/>
+			<node name="invalidURL" value="URL ไมถูกต้องุ"/>
+			<node name="hostCantBeReached" value="โฮสต์ %s&#10;ไม่สามารถเข้าถึงได้"/>
+			<node name="connectionRefused" value="การเชื่อมต่อถูกปฏิเสธโดย&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="แดง"/>
+		<node name="green" value="เขียว"/>
+		<node name="blue" value="น้ำเงิน"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="อารบิค"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="เชค"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="de" value="เยอรมัน"/>
+		<node name="de-traditional" value="เยอรมัน (เทรดิชัน ออโทกราฟี)"/>
+		<node name="el" value="กรีก"/>
+		<node name="en" value="อังกฤษ"/>
+		<node name="eo" value="เอสเพอรานโท"/>
+		<node name="es" value="เสปน"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fi" value="ฟินแลนด์"/>
+		<node name="fr" value="ฝรั่งเศส"/>
+		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="he" value="ฮีบรู"/>
+		<node name="hu" value="ฮังการี"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="id" value="อินโดนีเซีย"/>
+		<node name="it" value="อิตาลี"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="lt" value="ลิทัวเนีย"/>
+		<node name="nb" value="นอร์เวย์"/>
+		<node name="nl" value="ดัตช์"/>
+		<node name="pl" value="โปแลนด์"/>
+		<node name="pt" value="โปรตุเกส"/>
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ru" value="รัสเซีย"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sv" value="สวีเดน"/>
+		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="th" value="ไทย"/>
+		<node name="tr" value="ตุรกี"/>
+		<node name="uk" value="ยูเครน"/>
+		<node name="vi" value="เวียดนาม"/>
+		<node name="zh" value="จีน"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="other" value="อื่นๆ"/>
+		<node name="multi" value="หลายภาษา"/>
+		<node name="system" value="System" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="เปิด"/>
+		<node name="off" value="ปิด"/>
+		<node name="unchanged" value="ไม่เปลี่บน"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="การกระทำสำหรับปุ่ม"/>
+	</node>
+</resources>

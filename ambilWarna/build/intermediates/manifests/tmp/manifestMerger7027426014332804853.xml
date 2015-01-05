@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="yuku.ambilwarna.test">
+
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="3" />
+
+    <application>
+        <uses-library android:name="android.test.runner" />
+    </application>
+
+    <instrumentation android:name="android.test.InstrumentationTestRunner"
+                     android:targetPackage="yuku.ambilwarna.test"
+                     android:handleProfiling="false"
+                     android:functionalTest="false"
+                     android:label="Tests for yuku.ambilwarna.test"/>
+</manifest>

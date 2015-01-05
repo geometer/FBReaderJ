@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok"/>
+			<node name="cancel" value="Cancel"/>
+			<node name="yes" value="Yes"/>
+			<node name="no" value="No"/>
+			<node name="apply" value="Apply"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Network error"/>
+			<node name="unknownErrorMessage" value="Unknown error"/>
+			<node name="operationTimedOutMessage" value="Operation is timed out"/>
+			<node name="somethingWrongMessage" value="Something goes wrong for %s"/>
+			<node name="couldntCreateDirectoryMessage" value="Couldn't create a directory %s"/>
+			<node name="couldntCreateFileMessage" value="Couldn't create a file %s"/>
+			<node name="couldntConnectMessage" value="Couldn't connect to host %s"/>
+			<node name="couldntResolveHostMessage" value="Couldn't resolve host %s"/>
+			<node name="authenticationFailed" value="Authentication failed"/>
+			<node name="unsupportedProtocol" value="Unsupported protocol"/>
+			<node name="invalidURL" value="Invalid URL"/>
+			<node name="hostCantBeReached" value="Host %s cannot be reached"/>
+			<node name="connectionRefused" value="Connection was refused by %s"/>
+			<node name="networkNotAvailable" value="Network is not available"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Red"/>
+		<node name="green" value="Green"/>
+		<node name="blue" value="Blue"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabic"/>
+		<node name="be" value="Belarusian"/>
+		<node name="bg" value="Bulgarian"/>
+		<node name="ca" value="Catalan"/>
+		<node name="cs" value="Czech"/>
+		<node name="da" value="Danish"/>
+		<node name="de" value="German"/>
+		<node name="de-traditional" value="German (traditional orthography)"/>
+		<node name="el" value="Greek"/>
+		<node name="en" value="English"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Spanish"/>
+		<node name="eu" value="Basque"/>
+		<node name="fa" value="Persian"/>
+		<node name="fi" value="Finnish"/>
+		<node name="fr" value="French"/>
+		<node name="gl" value="Galician"/>
+		<node name="he" value="Hebrew"/>
+		<node name="hu" value="Hungarian"/>
+		<node name="hy" value="Armenian"/>
+		<node name="id" value="Indonesian"/>
+		<node name="it" value="Italian"/>
+		<node name="ja" value="Japanese"/>
+		<node name="ka" value="Georgian"/>
+		<node name="lt" value="Lithuanian"/>
+		<node name="nb" value="Norwegian"/>
+		<node name="nl" value="Dutch"/>
+		<node name="pl" value="Polish"/>
+		<node name="pt" value="Portuguese"/>
+		<node name="ro" value="Romanian"/>
+		<node name="ru" value="Russian"/>
+		<node name="sr" value="Serbian"/>
+		<node name="sv" value="Swedish"/>
+		<node name="ta" value="Tamil"/>
+		<node name="th" value="Thai"/>
+		<node name="tr" value="Turkish"/>
+		<node name="uk" value="Ukrainian"/>
+		<node name="vi" value="Vietnamese"/>
+		<node name="zh" value="Chinese"/>
+		<node name="zh_TW" value="Chinese (traditional)"/>
+		<node name="any" value="Any"/>
+		<node name="other" value="Other"/>
+		<node name="multi" value="Multilanguage"/>
+		<node name="system" value="System"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="on"/>
+		<node name="off" value="off"/>
+		<node name="unchanged" value="unchanged"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Action for Key"/>
+	</node>
+</resources>

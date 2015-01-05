@@ -1,0 +1,13 @@
+All the files *.pattern were produced from the original TeX files. All changes
+are the notation changes:
+	* we use XML notation (file format is obvious form any sample)
+	* '.' in patterns is replaced by ' '
+	* all accented characters were written as &xxx; entities, instead of TeX
+notation
+  * all exceptions (\hyphenation{xxx-xx-xx} in TeX notation) were replaced
+with the patterns with weights 7 and 8
+
+Czech hyphenation pattern is excluded for the closed-source version of FBReader,
+because the original TeX file is licensed under the GNU GPL.
+
+-- Nikolay Pultsin (geometer@fbreader.org)

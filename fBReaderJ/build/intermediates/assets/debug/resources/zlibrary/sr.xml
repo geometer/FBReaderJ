@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Serbian zlibrary resources, by Rancher -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="У реду"/>
+			<node name="cancel" value="Откажи"/>
+			<node name="yes" value="Да"/>
+			<node name="no" value="Не"/>
+			<node name="apply" value="Примени"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Мрежна грешка"/>
+			<node name="unknownErrorMessage" value="Непозната грешка."/>
+			<node name="operationTimedOutMessage" value="Радња је истекла."/>
+			<node name="somethingWrongMessage" value="Нешто је кренуло по злу за „%s“."/>
+			<node name="couldntCreateDirectoryMessage" value="Не могу да направим фасциклу „%s“."/>
+			<node name="couldntCreateFileMessage" value="Не могу да направим датотеку „%s“."/>
+			<node name="couldntConnectMessage" value="Не могу да се повежем са домаћином „%s“."/>
+			<node name="couldntResolveHostMessage" value="Не могу да препознам домаћина „%s“."/>
+			<node name="authenticationFailed" value="Не могу да проверим идентитет."/>
+			<node name="unsupportedProtocol" value="Неподржан протокол."/>
+			<node name="invalidURL" value="Неисправна адреса."/>
+			<node name="hostCantBeReached" value="Не могу да достигнем домаћина „%s“."/>
+			<node name="connectionRefused" value="Везу је одбио „%s“."/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="црвена"/>
+		<node name="green" value="зелена"/>
+		<node name="blue" value="плава"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="арапски"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="чешки"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="de" value="немачки"/>
+		<node name="de-traditional" value="немачки (традиционални правопис)"/>
+		<node name="el" value="грчки"/>
+		<node name="en" value="енглески"/>
+		<node name="eo" value="есперанто"/>
+		<node name="es" value="шпански"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fi" value="фински"/>
+		<node name="fr" value="француски"/>
+		<node name="gl" value="галицијски"/>
+		<node name="he" value="хебрејски"/>
+		<node name="hu" value="мађарски"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="id" value="индонезијски"/>
+		<node name="it" value="италијански"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="lt" value="литвански"/>
+		<node name="nb" value="норвешки"/>
+		<node name="nl" value="холандски"/>
+		<node name="pl" value="пољски"/>
+		<node name="pt" value="португалски"/>
+		<node name="ro" value="румунски"/>
+		<node name="ru" value="руски"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sv" value="шведски"/>
+		<node name="ta" value="тамилски"/>
+		<node name="th" value="тајландски"/>
+		<node name="tr" value="турски"/>
+		<node name="uk" value="украјински"/>
+		<node name="vi" value="вијетнамски"/>
+		<node name="zh" value="кинески"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="other" value="други"/>
+		<node name="multi" value="вишејезични"/>
+		<node name="system" value="System" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="укључено"/>
+		<node name="off" value="искључено"/>
+		<node name="unchanged" value="непромењено"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Радња за тастер"/>
+	</node>
+</resources>

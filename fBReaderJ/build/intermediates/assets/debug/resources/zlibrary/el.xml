@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Greek zlibrary resources, by Alex Doulamis-->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK"/>
+			<node name="cancel" value="Ακύρωση"/>
+			<node name="yes" value="Ναι"/>
+			<node name="no" value="Όχι"/>
+			<node name="apply" value="Εφαρμογή"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="σφάλμα δικτύου"/>
+			<node name="unknownErrorMessage" value="Άγνωστο σφάλμα."/>
+			<node name="operationTimedOutMessage" value="Υπέρβαση χρονικού ορίου."/>
+			<node name="somethingWrongMessage" value="Σφάλμα διακομιστή στο &#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value="Ο φάκελος&#10;%s δεν μπόρεσε να δημιουργηθεί."/>
+			<node name="couldntCreateFileMessage" value="Το αρχείο&#10;%s δεν μπόρεσε να δημιουργηθεί."/>
+			<node name="couldntConnectMessage" value="Δεν υπάρχει σύνδεση στον διακομιστή&#10;%s"/>
+			<node name="couldntResolveHostMessage" value="Το όνομα του διακομιστή&#10;%s δεν μπόρεσε να αφαιρεθεί."/>
+			<node name="authenticationFailed" value="Η πιστοποίηση απέτυχε."/>
+			<node name="unsupportedProtocol" value="Το πρότοκολλο δεν υποστιρίζεται."/>
+			<node name="invalidURL" value="Μή έγκυρο URL."/>
+			<node name="hostCantBeReached" value="η σύνδεση με τον διακομιστή %s&#10; δεν είναι δυνατή."/>
+			<node name="connectionRefused" value="Η σύνδεση στο&#10;%s&#10;απορήφθηκε."/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Κόκκινο"/>
+		<node name="green" value="Πράσινο"/>
+		<node name="blue" value="Γαλάζιο"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Αραβικά"/>
+		<node name="be" value="Λευκορωσικά" toBeTranslated="true"/>
+		<node name="bg" value="Βυλγάρικα" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="Τσέχικα"/>
+		<node name="da" value="Δανέζικα" toBeTranslated="true"/>
+		<node name="de" value="Γερμανικά"/>
+		<node name="de-traditional" value="Γερμανικά (παλαιά γραφή)"/>
+		<node name="el" value="Ελληνικά"/>
+		<node name="en" value="Αγγλικά"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Ισπανικά"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Πέρσικα" toBeTranslated="true"/>
+		<node name="fi" value="Φινλανδικά"/>
+		<node name="fr" value="Γαλλικά"/>
+		<node name="gl" value="Γαλλατικά"/>
+		<node name="he" value="Εβραίικα"/>
+		<node name="hu" value="Ουγγρικά"/>
+		<node name="hy" value="Αρμενικά" toBeTranslated="true"/>
+		<node name="id" value="Ινδονέζικα"/>
+		<node name="it" value="Ιταλικά"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Γεωργικά" toBeTranslated="true"/>
+		<node name="lt" value="Λιθουανικά"/>
+		<node name="nb" value="Νορβηγικά"/>
+		<node name="nl" value="Ολλανδικά"/>
+		<node name="pl" value="Πολωνέζικα"/>
+		<node name="pt" value="Πορτογαλικά"/>
+		<node name="ro" value="Ρουμανικά"/>
+		<node name="ru" value="Ρώσσικα"/>
+		<node name="sr" value="Σερβικά" toBeTranslated="true"/>
+		<node name="sv" value="Σουηδικά"/>
+		<node name="ta" value="Ταμιλικά"/>
+		<node name="th" value="Ταιλανδέζικα"/>
+		<node name="tr" value="Τούρκικα"/>
+		<node name="uk" value="Ουκρανέζικα"/>
+		<node name="vi" value="Βιετναμέζικα"/>
+		<node name="zh" value="Κινέζικα"/>
+		<node name="zh_TW" value="Κινέζικα (παραδοσικά)" toBeTranslated="true"/>
+		<node name="any" value="Κάθε" toBeTranslated="true"/>
+		<node name="other" value="άλλη"/>
+		<node name="multi" value="πολλαπλές γλώσσες"/>
+		<node name="system" value="σύστημα" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="ενεργοποιημένο"/>
+		<node name="off" value="απενεργοποιημένο"/>
+		<node name="unchanged" value="αμετάβλητο"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Ενέργεια για πλήκτρο"/>
+	</node>
+</resources>

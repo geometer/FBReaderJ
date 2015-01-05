@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Czech zlibrary resources, by Marek Pavelka -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK"/>
+			<node name="cancel" value="Zrušit"/>
+			<node name="yes" value="Ano"/>
+			<node name="no" value="Ne"/>
+			<node name="apply" value="Použít"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Chyba sítě"/>
+			<node name="unknownErrorMessage" value="Neznámá chyba"/>
+			<node name="operationTimedOutMessage" value="Vypršel časový limit operace"/>
+			<node name="somethingWrongMessage" value="Něco není v pořádku s&#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value="Nelze vytvořit adresář&#10;%s"/>
+			<node name="couldntCreateFileMessage" value="Nelze vytvořit soubor&#10;%s"/>
+			<node name="couldntConnectMessage" value="Nelze se připojit k hostiteli&#10;%s"/>
+			<node name="couldntResolveHostMessage" value="Nelze rozlišit hostitele&#10;%s"/>
+			<node name="authenticationFailed" value="Selhalo ověření"/>
+			<node name="unsupportedProtocol" value="Nepodporovaný protokol"/>
+			<node name="invalidURL" value="Neplatná adresa"/>
+			<node name="hostCantBeReached" value="Hostitel %s&#10;nemůže být dosažen"/>
+			<node name="connectionRefused" value="Spojení bylo odmítnuto:&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Červená"/>
+		<node name="green" value="Zelená"/>
+		<node name="blue" value="Morá"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabsky"/>
+		<node name="be" value="Bělorusky"/>
+		<node name="bg" value="Bulharsky"/>
+		<node name="ca" value="Katalánsky"/>
+		<node name="cs" value="Česky"/>
+		<node name="da" value="Dánsky"/>
+		<node name="de" value="Německy"/>
+		<node name="de-traditional" value="Německy (tradiční pravopis)"/>
+		<node name="el" value="Řecky"/>
+		<node name="en" value="Anglicky"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Španělsky"/>
+		<node name="eu" value="Baskicky"/>
+		<node name="fa" value="Persky"/>
+		<node name="fi" value="Finsky"/>
+		<node name="fr" value="Francouzsky"/>
+		<node name="gl" value="Haličsky"/>
+		<node name="he" value="Hebrejsky"/>
+		<node name="hu" value="Maďarsky"/>
+		<node name="hy" value="Arménsky"/>
+		<node name="id" value="Indonésky"/>
+		<node name="it" value="Italsky"/>
+		<node name="ja" value="Japonsky"/>
+		<node name="ka" value="Gruzínsky"/>
+		<node name="lt" value="Litevsky"/>
+		<node name="nb" value="Norsky"/>
+		<node name="nl" value="Dánsky"/>
+		<node name="pl" value="Polsky"/>
+		<node name="pt" value="Portugalsky"/>
+		<node name="ro" value="Rumunsky"/>
+		<node name="ru" value="Rusky"/>
+		<node name="sr" value="Srbsky"/>
+		<node name="sv" value="Švédsky"/>
+		<node name="ta" value="Tamilsky"/>
+		<node name="th" value="Thajsky"/>
+		<node name="tr" value="Turecky"/>
+		<node name="uk" value="Ukrajinsky"/>
+		<node name="vi" value="Vietnamsky"/>
+		<node name="zh" value="Čínsky"/>
+		<node name="zh_TW" value="Čínsky (tradiční)"/>
+		<node name="any" value="Jakýkoliv"/>
+		<node name="other" value="Jiný"/>
+		<node name="multi" value="Vícejazyčná"/>
+		<node name="system" value="Systémový"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="zap"/>
+		<node name="off" value="vyp"/>
+		<node name="unchanged" value="nezměněno"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Akce pro klávesu"/>
+	</node>
+</resources>

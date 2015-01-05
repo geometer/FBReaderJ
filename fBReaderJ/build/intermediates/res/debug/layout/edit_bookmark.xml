@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+>
+	<EditText
+		android:id="@+id/bookmark_text_editor"
+		android:layout_width="200dip"
+		android:layout_height="100dip"
+		android:layout_marginLeft="5dip"
+		android:layout_marginRight="5dip"
+		android:layout_marginTop="5dip"
+		android:layout_marginBottom="5dip"
+		android:singleLine="false"
+		android:gravity="left|top"
+	/>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+	>
+		<Button
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:text="ok"
+		/>
+		<Button
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:text="cancel"
+		/>
+	</LinearLayout>
+</LinearLayout>
+<!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/src/main/res/layout/edit_bookmark.xml -->

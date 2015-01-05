@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/build/intermediates/exploded-aar/FBReaderJ1/code/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <bool name="afc_pkey_display_remember_last_location_def">true</bool>
+    <bool name="afc_pkey_display_show_time_for_old_days_def">false</bool>
+    <bool name="afc_pkey_display_show_time_for_old_days_this_year_def">false</bool>
+    <bool name="afc_pkey_display_sort_ascending_def">true</bool>
+    <color name="afc_border_line_dark">#33B5E5</color>
+    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <color name="transparent">#00000000</color>
+    <declare-styleable name="DragSortListView"><attr format="dimension" name="collapsed_height"/><attr format="float" name="drag_scroll_start"/><attr format="float" name="max_drag_scroll_speed"/><attr format="color" name="float_background_color"/><attr name="remove_mode"><enum name="clickRemove" value="0"/><enum name="flingRemove" value="1"/></attr><attr format="boolean" name="track_drag_sort"/><attr format="float" name="float_alpha"/><attr format="float" name="slide_shuffle_speed"/><attr format="integer" name="remove_animation_duration"/><attr format="integer" name="drop_animation_duration"/><attr format="boolean" name="drag_enabled"/><attr format="boolean" name="sort_enabled"/><attr format="boolean" name="remove_enabled"/><attr name="drag_start_mode"><enum name="onDown" value="0"/><enum name="onMove" value="1"/><enum name="onLongPress" value="2"/></attr><attr format="integer" name="drag_handle_id"/><attr format="integer" name="fling_handle_id"/><attr format="integer" name="click_remove_id"/><attr format="boolean" name="use_default_controller"/></declare-styleable>
+    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/build/intermediates/exploded-aar/FBReaderJ1/code/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="afc_10dp">10dp</dimen>
+    <dimen name="afc_15dp">15dp</dimen>
+    <dimen name="afc_30dp">30dp</dimen>
+    <dimen name="afc_5dp">5dp</dimen>
+    <dimen name="afc_button_location_max_width">256sp</dimen>
+    <dimen name="afc_button_location_min_width">15sp</dimen>
+    <dimen name="afc_context_menu_item_padding_left">18sp</dimen>
+    <dimen name="afc_single_button_min_width">192sp</dimen>
+    <dimen name="afc_viewgroup_button_locations_bottom_divider_height">1dp</dimen>
+    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/build/intermediates/exploded-aar/FBReaderJ1/ambilWarna/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="ambilwarna_hsvHeight">240dp</dimen>
+    <dimen name="ambilwarna_hsvWidth">240dp</dimen>
+    <dimen name="ambilwarna_hueWidth">30dp</dimen>
+    <dimen name="ambilwarna_spacer">8dp</dimen>
+    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/build/intermediates/exploded-aar/FBReaderJ1/code/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <integer name="afc_pkey_display_sort_type_def">0</integer>
+    <integer name="afc_pkey_display_view_type_def">0</integer>
+    <string name="afc_cmd_advanced_selection_all">All</string>
+    <string name="afc_cmd_advanced_selection_invert">Invert selection</string>
+    <string name="afc_cmd_advanced_selection_none">None</string>
+    <string name="afc_cmd_clear">Clear</string>
+    <string name="afc_cmd_grid_view">Grid view</string>
+    <string name="afc_cmd_home">Home</string>
+    <string name="afc_cmd_list_view">List view</string>
+    <string name="afc_cmd_new_folder">New folder…</string>
+    <string name="afc_cmd_reload">Reload</string>
+    <string name="afc_cmd_remove_from_list">Remove from list</string>
+    <string name="afc_cmd_select_all_files">Select all files</string>
+    <string name="afc_cmd_select_all_folders">Select all folders</string>
+    <string name="afc_cmd_sort">Sort…</string>
+    <string name="afc_ellipsize">…</string>
+    <string name="afc_file">file</string>
+    <string name="afc_folder">folder</string>
+    <string name="afc_hint_double_tap_to_select_file">Double tap to select file/ folder</string>
+    <string name="afc_hint_folder_name">folder name</string>
+    <string name="afc_hint_save_as_filename">filename</string>
+    <string name="afc_lib_name">android-filechooser</string>
+    <string name="afc_msg_app_cant_choose_folder">Can\'t choose this folder</string>
+    <string name="afc_msg_app_cant_create_folder">Can\'t create folder in this directory</string>
+    <string name="afc_msg_app_doesnot_have_permission_to_create_files">This application does not have permission to create files/ folders</string>
+    <string name="afc_msg_app_doesnot_have_permission_to_delete_files">This application does not have permission to delete files/ folders</string>
+    <string name="afc_msg_cancelled">Cancelled</string>
+    <string name="afc_msg_cannot_connect_to_file_provider_service">Can not connect to file provider service</string>
+    <string name="afc_msg_done">Done</string>
+    <string name="afc_msg_empty">…empty</string>
+    <string name="afc_msg_filename_is_empty">Filename is empty</string>
+    <string name="afc_msg_loading">Loading…</string>
+    <string name="afc_pkey_display_last_location">afc.display.last_location</string>
+    <string name="afc_pkey_display_remember_last_location">afc.display.remember_last_location</string>
+    <string name="afc_pkey_display_show_time_for_old_days">afc.display.show_time_for_old_days</string>
+    <string name="afc_pkey_display_show_time_for_old_days_this_year">afc.display.show_time_for_old_days_this_year</string>
+    <string name="afc_pkey_display_sort_ascending">afc.display.sort_ascending</string>
+    <string name="afc_pkey_display_sort_type">afc.display.sort_type</string>
+    <string name="afc_pkey_display_view_type">afc.display.view_type</string>
+    <string name="afc_pmsg_cannot_access_dir">Can not access \"%1$s\"</string>
+    <string name="afc_pmsg_cannot_create_folder">Can not create folder \"%1$s\"</string>
+    <string name="afc_pmsg_cannot_delete_file">Can not delete %1$s \"%2$s\"</string>
+    <string name="afc_pmsg_confirm_delete_file">Are you sure you want to delete this %1$s \"%2$s\"?</string>
+    <string name="afc_pmsg_confirm_replace_file">This file \"%1$s\" already exists.\n\nDo you want to replace it?</string>
+    <string name="afc_pmsg_deleting_file">Deleting %1$s \"%2$s\"…</string>
+    <string name="afc_pmsg_file_has_been_deleted">…%1$s \"%2$s\" has been deleted</string>
+    <string name="afc_pmsg_filename_is_directory">\"%1$s\" is a folder</string>
+    <string name="afc_pmsg_filename_is_invalid">File name \"%1$s\" is invalid</string>
+    <string name="afc_pmsg_max_file_count_allowed">…has more files, max allowed: %1$,d</string>
+    <string name="afc_pmsg_unknown_error">Unknown error: %1$s</string>
+    <string name="afc_pmsg_xxx_items">%1$,d items</string>
+    <string name="afc_root">Root</string>
+    <string name="afc_title_advanced_selection">Select…</string>
+    <string name="afc_title_alert">Alert</string>
+    <string name="afc_title_choose_directories">Choose folders…</string>
+    <string name="afc_title_choose_files">Choose files…</string>
+    <string name="afc_title_choose_files_and_directories">Choose files/ folders…</string>
+    <string name="afc_title_confirmation">Confirmation</string>
+    <string name="afc_title_date">Date</string>
+    <string name="afc_title_error">Error</string>
+    <string name="afc_title_history">History</string>
+    <string name="afc_title_info">Info</string>
+    <string name="afc_title_name">Name</string>
+    <string name="afc_title_save_as">Save as…</string>
+    <string name="afc_title_size">Size</string>
+    <string name="afc_title_sort_by">Sort by…</string>
+    <string name="afc_yesterday">Yesterday</string>
+    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="empty_string"/>
+    <string name="permission_config_description">The application can read and change FBReader settings</string>
+    <string name="permission_config_label">FBReader config interface</string>
+    <string name="permission_library_description">The application can read and change FBReader library</string>
+    <string name="permission_library_label">FBReader library interface</string>
+    <string name="permission_sync_description">The application can start FBReader synchronisation process</string>
+    <string name="permission_sync_label">FBReader sync interface</string>
+    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="FBReader.Activity" parent="android:Theme">
+	</style>
+    <style name="FBReader.Dialog" parent="android:Theme.Dialog">
+	</style>
+    <style name="FBReader.Transparent" parent="android:Theme.Translucent.NoTitleBar">
+    <item name="android:windowBackground">@color/transparent</item>
+  </style>
+    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/build/intermediates/exploded-aar/FBReaderJ1/code/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <style name="afc_button_create_folder" parent="afc_button_navi_left">
+        <item name="android:src">@drawable/afc_selector_button_create_folder</item>
+        <item name="android:layout_marginRight">@dimen/afc_5dp</item>
+        <item name="android:layout_marginLeft">@dimen/afc_5dp</item>
+    </style>
+    <style name="afc_button_folders_view" parent="afc_button_create_folder">
+        <item name="android:src">@drawable/afc_selector_button_folders_view_list</item>
+    </style>
+    <style name="afc_button_location" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@drawable/afc_selector_button_location_dark</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxWidth">@dimen/afc_button_location_max_width</item>
+        <item name="android:minWidth">@dimen/afc_button_location_min_width</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+    <style name="afc_button_navi_left">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:src">@drawable/afc_selector_button_navi_left</item>
+        <item name="android:layout_marginTop">@dimen/afc_5dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:minHeight">@dimen/afc_button_navigators_min_height</item>
+    </style>
+    <style name="afc_button_navi_right" parent="afc_button_navi_left">
+        <item name="android:src">@drawable/afc_selector_button_navi_right</item>
+    </style>
+    <style name="afc_button_sort" parent="afc_button_create_folder">
+        <item name="android:src">@drawable/afc_selector_button_sort_as</item>
+    </style>
+</resources>

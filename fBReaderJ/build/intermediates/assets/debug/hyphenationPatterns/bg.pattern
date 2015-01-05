@@ -1,0 +1,5987 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Bulgarian hyphenations description for FBReader (original was taken from the OOo distribution)
+  
+  Converted to FBReader format by Kaloyan Raev <kaloyan@raev.name>
+
+	From the original http://sourceforge.net/projects/bgoffice/files/OpenOffice.org%20Hyphenation%20BG/4.3/OOo-hyph-bg-4.3.zip package:
+
+% =========
+% COPYRIGHT
+% =========
+%
+%   OOo-hyph-bg part of bgOffice
+%   Copyright (C) 2001 Anton Zinoviev <anton@lml.bas.bg>
+%   Converted to OOo format by Borislav Mitev <morbid_viper@mail.bg>
+%   Maintained by Radostin Radnev <radnev@gmail.com>
+%
+%   This program comes with ABSOLUTELY NO WARRANTY. This is free
+% software, and you are welcome to redistribute it under certain
+% conditions. This package is distributed under the terms of either
+% GNU General Public License Version 2 or later,
+% or GNU Lesser General Public License Version 2.1 or later,
+% or the Mozilla Public License Version 1.1.
+% For details read file GPL-2.0.txt, LGPL-2.1.txt and MPL-1.1.txt.
+-->
+<HyphenationDescription>
+  <pattern> б8</pattern>
+  <pattern> бб8</pattern>
+  <pattern> бв8</pattern>
+  <pattern> бг8</pattern>
+  <pattern> бд8</pattern>
+  <pattern> бж8</pattern>
+  <pattern> бз8</pattern>
+  <pattern> бй8</pattern>
+  <pattern> бк8</pattern>
+  <pattern> бл8</pattern>
+  <pattern> бм8</pattern>
+  <pattern> бн8</pattern>
+  <pattern> бп8</pattern>
+  <pattern> бр8</pattern>
+  <pattern> бс8</pattern>
+  <pattern> бт8</pattern>
+  <pattern> бф8</pattern>
+  <pattern> бх8</pattern>
+  <pattern> бц8</pattern>
+  <pattern> бч8</pattern>
+  <pattern> бш8</pattern>
+  <pattern> бщ8</pattern>
+  <pattern> в8</pattern>
+  <pattern> вб8</pattern>
+  <pattern> вбб8</pattern>
+  <pattern> вбв8</pattern>
+  <pattern> вбг8</pattern>
+  <pattern> вбд8</pattern>
+  <pattern> вбж8</pattern>
+  <pattern> вбз8</pattern>
+  <pattern> вбй8</pattern>
+  <pattern> вбк8</pattern>
+  <pattern> вбл8</pattern>
+  <pattern> вбм8</pattern>
+  <pattern> вбн8</pattern>
+  <pattern> вбп8</pattern>
+  <pattern> вбр8</pattern>
+  <pattern> вбс8</pattern>
+  <pattern> вбт8</pattern>
+  <pattern> вбф8</pattern>
+  <pattern> вбх8</pattern>
+  <pattern> вбц8</pattern>
+  <pattern> вбч8</pattern>
+  <pattern> вбш8</pattern>
+  <pattern> вбщ8</pattern>
+  <pattern> вв8</pattern>
+  <pattern> ввб8</pattern>
+  <pattern> ввв8</pattern>
+  <pattern> ввг8</pattern>
+  <pattern> ввд8</pattern>
+  <pattern> ввж8</pattern>
+  <pattern> ввз8</pattern>
+  <pattern> ввй8</pattern>
+  <pattern> ввк8</pattern>
+  <pattern> ввл8</pattern>
+  <pattern> ввм8</pattern>
+  <pattern> ввн8</pattern>
+  <pattern> ввп8</pattern>
+  <pattern> ввр8</pattern>
+  <pattern> ввс8</pattern>
+  <pattern> ввт8</pattern>
+  <pattern> ввф8</pattern>
+  <pattern> ввх8</pattern>
+  <pattern> ввц8</pattern>
+  <pattern> ввч8</pattern>
+  <pattern> ввш8</pattern>
+  <pattern> ввщ8</pattern>
+  <pattern> вг8</pattern>
+  <pattern> вгб8</pattern>
+  <pattern> вгв8</pattern>
+  <pattern> вгг8</pattern>
+  <pattern> вгд8</pattern>
+  <pattern> вгж8</pattern>
+  <pattern> вгз8</pattern>
+  <pattern> вгй8</pattern>
+  <pattern> вгк8</pattern>
+  <pattern> вгл8</pattern>
+  <pattern> вгм8</pattern>
+  <pattern> вгн8</pattern>
+  <pattern> вгп8</pattern>
+  <pattern> вгр8</pattern>
+  <pattern> вгс8</pattern>
+  <pattern> вгт8</pattern>
+  <pattern> вгф8</pattern>
+  <pattern> вгх8</pattern>
+  <pattern> вгц8</pattern>
+  <pattern> вгч8</pattern>
+  <pattern> вгш8</pattern>
+  <pattern> вгщ8</pattern>
+  <pattern> вд8</pattern>
+  <pattern> вдб8</pattern>
+  <pattern> вдв8</pattern>
+  <pattern> вдг8</pattern>
+  <pattern> вдд8</pattern>
+  <pattern> вдж8</pattern>
+  <pattern> вдз8</pattern>
+  <pattern> вдй8</pattern>
+  <pattern> вдк8</pattern>
+  <pattern> вдл8</pattern>
+  <pattern> вдм8</pattern>
+  <pattern> вдн8</pattern>
+  <pattern> вдп8</pattern>
+  <pattern> вдр8</pattern>
+  <pattern> вдс8</pattern>
+  <pattern> вдт8</pattern>
+  <pattern> вдф8</pattern>
+  <pattern> вдх8</pattern>
+  <pattern> вдц8</pattern>
+  <pattern> вдч8</pattern>
+  <pattern> вдш8</pattern>
+  <pattern> вдщ8</pattern>
+  <pattern> вж8</pattern>
+  <pattern> вжб8</pattern>
+  <pattern> вжв8</pattern>
+  <pattern> вжг8</pattern>
+  <pattern> вжд8</pattern>
+  <pattern> вжж8</pattern>
+  <pattern> вжз8</pattern>
+  <pattern> вжй8</pattern>
+  <pattern> вжк8</pattern>
+  <pattern> вжл8</pattern>
+  <pattern> вжм8</pattern>
+  <pattern> вжн8</pattern>
+  <pattern> вжп8</pattern>
+  <pattern> вжр8</pattern>
+  <pattern> вжс8</pattern>
+  <pattern> вжт8</pattern>
+  <pattern> вжф8</pattern>
+  <pattern> вжх8</pattern>
+  <pattern> вжц8</pattern>
+  <pattern> вжч8</pattern>
+  <pattern> вжш8</pattern>
+  <pattern> вжщ8</pattern>
+  <pattern> вз8</pattern>
+  <pattern> взб8</pattern>
+  <pattern> взв8</pattern>
+  <pattern> взг8</pattern>
+  <pattern> взд8</pattern>
+  <pattern> взж8</pattern>
+  <pattern> взз8</pattern>
+  <pattern> взй8</pattern>
+  <pattern> взк8</pattern>
+  <pattern> взл8</pattern>
+  <pattern> взм8</pattern>
+  <pattern> взн8</pattern>
+  <pattern> взп8</pattern>
+  <pattern> взр8</pattern>
+  <pattern> взс8</pattern>
+  <pattern> взт8</pattern>
+  <pattern> взф8</pattern>
+  <pattern> взх8</pattern>
+  <pattern> взц8</pattern>
+  <pattern> взч8</pattern>
+  <pattern> взш8</pattern>
+  <pattern> взщ8</pattern>
+  <pattern> вй8</pattern>
+  <pattern> вйб8</pattern>
+  <pattern> вйв8</pattern>
+  <pattern> вйг8</pattern>
+  <pattern> вйд8</pattern>
+  <pattern> вйж8</pattern>
+  <pattern> вйз8</pattern>
+  <pattern> вйй8</pattern>
+  <pattern> вйк8</pattern>
+  <pattern> вйл8</pattern>
+  <pattern> вйм8</pattern>
+  <pattern> вйн8</pattern>
+  <pattern> вйп8</pattern>
+  <pattern> вйр8</pattern>
+  <pattern> вйс8</pattern>
+  <pattern> вйт8</pattern>
+  <pattern> вйф8</pattern>
+  <pattern> вйх8</pattern>
+  <pattern> вйц8</pattern>
+  <pattern> вйч8</pattern>
+  <pattern> вйш8</pattern>
+  <pattern> вйщ8</pattern>
+  <pattern> вк8</pattern>
+  <pattern> вкб8</pattern>
+  <pattern> вкв8</pattern>
+  <pattern> вкг8</pattern>
+  <pattern> вкд8</pattern>
+  <pattern> вкж8</pattern>
+  <pattern> вкз8</pattern>
+  <pattern> вкй8</pattern>
+  <pattern> вкк8</pattern>
+  <pattern> вкл8</pattern>
+  <pattern> вкм8</pattern>
+  <pattern> вкн8</pattern>
+  <pattern> вкп8</pattern>
+  <pattern> вкр8</pattern>
+  <pattern> вкс8</pattern>
+  <pattern> вкт8</pattern>
+  <pattern> вкф8</pattern>
+  <pattern> вкх8</pattern>
+  <pattern> вкц8</pattern>
+  <pattern> вкч8</pattern>
+  <pattern> вкш8</pattern>
+  <pattern> вкщ8</pattern>
+  <pattern> вл8</pattern>
+  <pattern> влб8</pattern>
+  <pattern> влв8</pattern>
+  <pattern> влг8</pattern>
+  <pattern> влд8</pattern>
+  <pattern> влж8</pattern>
+  <pattern> влз8</pattern>
+  <pattern> влй8</pattern>
+  <pattern> влк8</pattern>
+  <pattern> влл8</pattern>
+  <pattern> влм8</pattern>
+  <pattern> влн8</pattern>
+  <pattern> влп8</pattern>
+  <pattern> влр8</pattern>
+  <pattern> влс8</pattern>
+  <pattern> влт8</pattern>
+  <pattern> влф8</pattern>
+  <pattern> влх8</pattern>
+  <pattern> влц8</pattern>
+  <pattern> влч8</pattern>
+  <pattern> влш8</pattern>
+  <pattern> влщ8</pattern>
+  <pattern> вм8</pattern>
+  <pattern> вмб8</pattern>
+  <pattern> вмв8</pattern>
+  <pattern> вмг8</pattern>
+  <pattern> вмд8</pattern>
+  <pattern> вмж8</pattern>
+  <pattern> вмз8</pattern>
+  <pattern> вмй8</pattern>
+  <pattern> вмк8</pattern>
+  <pattern> вмл8</pattern>
+  <pattern> вмм8</pattern>
+  <pattern> вмн8</pattern>
+  <pattern> вмп8</pattern>
+  <pattern> вмр8</pattern>
+  <pattern> вмс8</pattern>
+  <pattern> вмт8</pattern>
+  <pattern> вмф8</pattern>
+  <pattern> вмх8</pattern>
+  <pattern> вмц8</pattern>
+  <pattern> вмч8</pattern>
+  <pattern> вмш8</pattern>
+  <pattern> вмщ8</pattern>
+  <pattern> вн8</pattern>
+  <pattern> внб8</pattern>
+  <pattern> внв8</pattern>
+  <pattern> внг8</pattern>
+  <pattern> внд8</pattern>
+  <pattern> внж8</pattern>
+  <pattern> внз8</pattern>
+  <pattern> внй8</pattern>
+  <pattern> внк8</pattern>
+  <pattern> внл8</pattern>
+  <pattern> внм8</pattern>
+  <pattern> внн8</pattern>
+  <pattern> внп8</pattern>
+  <pattern> внр8</pattern>
+  <pattern> внс8</pattern>
+  <pattern> внт8</pattern>
+  <pattern> внф8</pattern>
+  <pattern> внх8</pattern>
+  <pattern> внц8</pattern>
+  <pattern> внч8</pattern>
+  <pattern> внш8</pattern>
+  <pattern> внщ8</pattern>
+  <pattern> вп8</pattern>
+  <pattern> впб8</pattern>
+  <pattern> впв8</pattern>
+  <pattern> впг8</pattern>
+  <pattern> впд8</pattern>
+  <pattern> впж8</pattern>
+  <pattern> впз8</pattern>
+  <pattern> впй8</pattern>
+  <pattern> впк8</pattern>
+  <pattern> впл8</pattern>
+  <pattern> впм8</pattern>
+  <pattern> впн8</pattern>
+  <pattern> впп8</pattern>
+  <pattern> впр8</pattern>
+  <pattern> впс8</pattern>
+  <pattern> впт8</pattern>
+  <pattern> впф8</pattern>
+  <pattern> впх8</pattern>
+  <pattern> впц8</pattern>
+  <pattern> впч8</pattern>
+  <pattern> впш8</pattern>
+  <pattern> впщ8</pattern>
+  <pattern> вр8</pattern>
+  <pattern> врб8</pattern>
+  <pattern> врв8</pattern>
+  <pattern> врг8</pattern>
+  <pattern> врд8</pattern>
+  <pattern> врж8</pattern>
+  <pattern> врз8</pattern>
+  <pattern> врй8</pattern>
+  <pattern> врк8</pattern>
+  <pattern> врл8</pattern>
+  <pattern> врм8</pattern>
+  <pattern> врн8</pattern>
+  <pattern> врп8</pattern>
+  <pattern> врр8</pattern>
+  <pattern> врс8</pattern>
+  <pattern> врт8</pattern>
+  <pattern> врф8</pattern>
+  <pattern> врх8</pattern>
+  <pattern> врц8</pattern>
+  <pattern> врч8</pattern>
+  <pattern> врш8</pattern>
+  <pattern> врщ8</pattern>
+  <pattern> вс8</pattern>
+  <pattern> всб8</pattern>
+  <pattern> всв8</pattern>
+  <pattern> всг8</pattern>
+  <pattern> всд8</pattern>
+  <pattern> всж8</pattern>
+  <pattern> всз8</pattern>
+  <pattern> всй8</pattern>
+  <pattern> вск8</pattern>
+  <pattern> всл8</pattern>
+  <pattern> всм8</pattern>
+  <pattern> всн8</pattern>
+  <pattern> всп8</pattern>
+  <pattern> вср8</pattern>
+  <pattern> всс8</pattern>
+  <pattern> вст8</pattern>
+  <pattern> всф8</pattern>
+  <pattern> всх8</pattern>
+  <pattern> всц8</pattern>
+  <pattern> всч8</pattern>
+  <pattern> всш8</pattern>
+  <pattern> всщ8</pattern>
+  <pattern> вт8</pattern>
+  <pattern> втб8</pattern>
+  <pattern> втв8</pattern>
+  <pattern> втг8</pattern>
+  <pattern> втд8</pattern>
+  <pattern> втж8</pattern>
+  <pattern> втз8</pattern>
+  <pattern> втй8</pattern>
+  <pattern> втк8</pattern>
+  <pattern> втл8</pattern>
+  <pattern> втм8</pattern>
+  <pattern> втн8</pattern>
+  <pattern> втп8</pattern>
+  <pattern> втр8</pattern>
+  <pattern> втс8</pattern>
+  <pattern> втт8</pattern>
+  <pattern> втф8</pattern>
+  <pattern> втх8</pattern>
+  <pattern> втц8</pattern>
+  <pattern> втч8</pattern>
+  <pattern> втш8</pattern>
+  <pattern> втщ8</pattern>
+  <pattern> вф8</pattern>
+  <pattern> вфб8</pattern>
+  <pattern> вфв8</pattern>
+  <pattern> вфг8</pattern>
+  <pattern> вфд8</pattern>
+  <pattern> вфж8</pattern>
+  <pattern> вфз8</pattern>
+  <pattern> вфй8</pattern>
+  <pattern> вфк8</pattern>
+  <pattern> вфл8</pattern>
+  <pattern> вфм8</pattern>
+  <pattern> вфн8</pattern>
+  <pattern> вфп8</pattern>
+  <pattern> вфр8</pattern>
+  <pattern> вфс8</pattern>
+  <pattern> вфт8</pattern>
+  <pattern> вфф8</pattern>
+  <pattern> вфх8</pattern>
+  <pattern> вфц8</pattern>
+  <pattern> вфч8</pattern>
+  <pattern> вфш8</pattern>
+  <pattern> вфщ8</pattern>
+  <pattern> вх8</pattern>
+  <pattern> вхб8</pattern>
+  <pattern> вхв8</pattern>
+  <pattern> вхг8</pattern>
+  <pattern> вхд8</pattern>
+  <pattern> вхж8</pattern>
+  <pattern> вхз8</pattern>
+  <pattern> вхй8</pattern>
+  <pattern> вхк8</pattern>
+  <pattern> вхл8</pattern>
+  <pattern> вхм8</pattern>
+  <pattern> вхн8</pattern>
+  <pattern> вхп8</pattern>
+  <pattern> вхр8</pattern>
+  <pattern> вхс8</pattern>
+  <pattern> вхт8</pattern>
+  <pattern> вхф8</pattern>
+  <pattern> вхх8</pattern>
+  <pattern> вхц8</pattern>
+  <pattern> вхч8</pattern>
+  <pattern> вхш8</pattern>
+  <pattern> вхщ8</pattern>
+  <pattern> вц8</pattern>
+  <pattern> вцб8</pattern>
+  <pattern> вцв8</pattern>
+  <pattern> вцг8</pattern>
+  <pattern> вцд8</pattern>
+  <pattern> вцж8</pattern>
+  <pattern> вцз8</pattern>
+  <pattern> вцй8</pattern>
+  <pattern> вцк8</pattern>
+  <pattern> вцл8</pattern>
+  <pattern> вцм8</pattern>
+  <pattern> вцн8</pattern>
+  <pattern> вцп8</pattern>
+  <pattern> вцр8</pattern>
+  <pattern> вцс8</pattern>
+  <pattern> вцт8</pattern>
+  <pattern> вцф8</pattern>
+  <pattern> вцх8</pattern>
+  <pattern> вцц8</pattern>
+  <pattern> вцч8</pattern>
+  <pattern> вцш8</pattern>
+  <pattern> вцщ8</pattern>
+  <pattern> вч8</pattern>
+  <pattern> вчб8</pattern>
+  <pattern> вчв8</pattern>
+  <pattern> вчг8</pattern>
+  <pattern> вчд8</pattern>
+  <pattern> вчж8</pattern>
+  <pattern> вчз8</pattern>
+  <pattern> вчй8</pattern>
+  <pattern> вчк8</pattern>
+  <pattern> вчл8</pattern>
+  <pattern> вчм8</pattern>
+  <pattern> вчн8</pattern>
+  <pattern> вчп8</pattern>
+  <pattern> вчр8</pattern>
+  <pattern> вчс8</pattern>
+  <pattern> вчт8</pattern>
+  <pattern> вчф8</pattern>
+  <pattern> вчх8</pattern>
+  <pattern> вчц8</pattern>
+  <pattern> вчч8</pattern>
+  <pattern> вчш8</pattern>
+  <pattern> вчщ8</pattern>
+  <pattern> вш8</pattern>
+  <pattern> вшб8</pattern>
+  <pattern> вшв8</pattern>
+  <pattern> вшг8</pattern>
+  <pattern> вшд8</pattern>
+  <pattern> вшж8</pattern>
+  <pattern> вшз8</pattern>
+  <pattern> вшй8</pattern>
+  <pattern> вшк8</pattern>
+  <pattern> вшл8</pattern>
+  <pattern> вшм8</pattern>
+  <pattern> вшн8</pattern>
+  <pattern> вшп8</pattern>
+  <pattern> вшр8</pattern>
+  <pattern> вшс8</pattern>
+  <pattern> вшт8</pattern>
+  <pattern> вшф8</pattern>
+  <pattern> вшх8</pattern>
+  <pattern> вшц8</pattern>
+  <pattern> вшч8</pattern>
+  <pattern> вшш8</pattern>
+  <pattern> вшщ8</pattern>
+  <pattern> вщ8</pattern>
+  <pattern> вщб8</pattern>
+  <pattern> вщв8</pattern>
+  <pattern> вщг8</pattern>
+  <pattern> вщд8</pattern>
+  <pattern> вщж8</pattern>
+  <pattern> вщз8</pattern>
+  <pattern> вщй8</pattern>
+  <pattern> вщк8</pattern>
+  <pattern> вщл8</pattern>
+  <pattern> вщм8</pattern>
+  <pattern> вщн8</pattern>
+  <pattern> вщп8</pattern>
+  <pattern> вщр8</pattern>
+  <pattern> вщс8</pattern>
+  <pattern> вщт8</pattern>
+  <pattern> вщф8</pattern>
+  <pattern> вщх8</pattern>
+  <pattern> вщц8</pattern>
+  <pattern> вщч8</pattern>
+  <pattern> вщш8</pattern>
+  <pattern> вщщ8</pattern>
+  <pattern> г8</pattern>
+  <pattern> гб8</pattern>
+  <pattern> гв8</pattern>
+  <pattern> гг8</pattern>
+  <pattern> гд8</pattern>
+  <pattern> гж8</pattern>
+  <pattern> гз8</pattern>
+  <pattern> гй8</pattern>
+  <pattern> гк8</pattern>
+  <pattern> гл8</pattern>
+  <pattern> гм8</pattern>
+  <pattern> гн8</pattern>
+  <pattern> гп8</pattern>
+  <pattern> гр8</pattern>
+  <pattern> гс8</pattern>
+  <pattern> гт8</pattern>
+  <pattern> гф8</pattern>
+  <pattern> гх8</pattern>
+  <pattern> гц8</pattern>
+  <pattern> гч8</pattern>
+  <pattern> гш8</pattern>
+  <pattern> гщ8</pattern>
+  <pattern> д8</pattern>
+  <pattern> дб8</pattern>
+  <pattern> дв8</pattern>
+  <pattern> дг8</pattern>
+  <pattern> дд8</pattern>
+  <pattern> дж8</pattern>
+  <pattern> дз8</pattern>
+  <pattern> дй8</pattern>
+  <pattern> дк8</pattern>
+  <pattern> дл8</pattern>
+  <pattern> дм8</pattern>
+  <pattern> дн8</pattern>
+  <pattern> дп8</pattern>
+  <pattern> др8</pattern>
+  <pattern> дс8</pattern>
+  <pattern> дт8</pattern>
+  <pattern> дф8</pattern>
+  <pattern> дх8</pattern>
+  <pattern> дц8</pattern>
+  <pattern> дч8</pattern>
+  <pattern> дш8</pattern>
+  <pattern> дщ8</pattern>
+  <pattern> ж8</pattern>
+  <pattern> жб8</pattern>
+  <pattern> жв8</pattern>
+  <pattern> жг8</pattern>
+  <pattern> жд8</pattern>
+  <pattern> жж8</pattern>
+  <pattern> жз8</pattern>
+  <pattern> жй8</pattern>
+  <pattern> жк8</pattern>
+  <pattern> жл8</pattern>
+  <pattern> жм8</pattern>
+  <pattern> жн8</pattern>
+  <pattern> жп8</pattern>
+  <pattern> жр8</pattern>
+  <pattern> жс8</pattern>
+  <pattern> жт8</pattern>
+  <pattern> жф8</pattern>
+  <pattern> жх8</pattern>
+  <pattern> жц8</pattern>
+  <pattern> жч8</pattern>
+  <pattern> жш8</pattern>
+  <pattern> жщ8</pattern>
+  <pattern> з8</pattern>
+  <pattern> зб8</pattern>
+  <pattern> зв8</pattern>
+  <pattern> зг8</pattern>
+  <pattern> зд8</pattern>
+  <pattern> зж8</pattern>
+  <pattern> зз8</pattern>
+  <pattern> зй8</pattern>
+  <pattern> зк8</pattern>
+  <pattern> зл8</pattern>
+  <pattern> зм8</pattern>
+  <pattern> зн8</pattern>
+  <pattern> зп8</pattern>
+  <pattern> зр8</pattern>
+  <pattern> зс8</pattern>
+  <pattern> зт8</pattern>
+  <pattern> зф8</pattern>
+  <pattern> зх8</pattern>
+  <pattern> зц8</pattern>
+  <pattern> зч8</pattern>
+  <pattern> зш8</pattern>
+  <pattern> зщ8</pattern>
+  <pattern> й8</pattern>
+  <pattern> йб8</pattern>
+  <pattern> йв8</pattern>
+  <pattern> йг8</pattern>
+  <pattern> йд8</pattern>
+  <pattern> йж8</pattern>
+  <pattern> йз8</pattern>
+  <pattern> йй8</pattern>
+  <pattern> йк8</pattern>
+  <pattern> йл8</pattern>
+  <pattern> йм8</pattern>
+  <pattern> йн8</pattern>
+  <pattern> йп8</pattern>
+  <pattern> йр8</pattern>
+  <pattern> йс8</pattern>
+  <pattern> йт8</pattern>
+  <pattern> йф8</pattern>
+  <pattern> йх8</pattern>
+  <pattern> йц8</pattern>
+  <pattern> йч8</pattern>
+  <pattern> йш8</pattern>
+  <pattern> йщ8</pattern>
+  <pattern> к8</pattern>
+  <pattern> кб8</pattern>
+  <pattern> кв8</pattern>
+  <pattern> кг8</pattern>
+  <pattern> кд8</pattern>
+  <pattern> кж8</pattern>
+  <pattern> кз8</pattern>
+  <pattern> кй8</pattern>
+  <pattern> кк8</pattern>
+  <pattern> кл8</pattern>
+  <pattern> км8</pattern>
+  <pattern> кн8</pattern>
+  <pattern> кп8</pattern>
+  <pattern> кр8</pattern>
+  <pattern> кс8</pattern>
+  <pattern> кт8</pattern>
+  <pattern> кф8</pattern>
+  <pattern> кх8</pattern>
+  <pattern> кц8</pattern>
+  <pattern> кч8</pattern>
+  <pattern> кш8</pattern>
+  <pattern> кщ8</pattern>
+  <pattern> л8</pattern>
+  <pattern> лб8</pattern>
+  <pattern> лв8</pattern>
+  <pattern> лг8</pattern>
+  <pattern> лд8</pattern>
+  <pattern> лж8</pattern>
+  <pattern> лз8</pattern>
+  <pattern> лй8</pattern>
+  <pattern> лк8</pattern>
+  <pattern> лл8</pattern>
+  <pattern> лм8</pattern>
+  <pattern> лн8</pattern>
+  <pattern> лп8</pattern>
+  <pattern> лр8</pattern>
+  <pattern> лс8</pattern>
+  <pattern> лт8</pattern>
+  <pattern> лф8</pattern>
+  <pattern> лх8</pattern>
+  <pattern> лц8</pattern>
+  <pattern> лч8</pattern>
+  <pattern> лш8</pattern>
+  <pattern> лщ8</pattern>
+  <pattern> м8</pattern>
+  <pattern> мб8</pattern>
+  <pattern> мв8</pattern>
+  <pattern> мг8</pattern>
+  <pattern> мд8</pattern>
+  <pattern> мж8</pattern>
+  <pattern> мз8</pattern>
+  <pattern> мй8</pattern>
+  <pattern> мк8</pattern>
+  <pattern> мл8</pattern>
+  <pattern> мм8</pattern>
+  <pattern> мн8</pattern>
+  <pattern> мп8</pattern>
+  <pattern> мр8</pattern>
+  <pattern> мс8</pattern>
+  <pattern> мт8</pattern>
+  <pattern> мф8</pattern>
+  <pattern> мх8</pattern>
+  <pattern> мц8</pattern>
+  <pattern> мч8</pattern>
+  <pattern> мш8</pattern>
+  <pattern> мщ8</pattern>
+  <pattern> н8</pattern>
+  <pattern> на4д5ж</pattern>
+  <pattern> на4д5з</pattern>
+  <pattern> на5д6жав</pattern>
+  <pattern> на5д6жас</pattern>
+  <pattern> нб8</pattern>
+  <pattern> нв8</pattern>
+  <pattern> нг8</pattern>
+  <pattern> нд8</pattern>
+  <pattern> нж8</pattern>
+  <pattern> нз8</pattern>
+  <pattern> нй8</pattern>
+  <pattern> нк8</pattern>
+  <pattern> нл8</pattern>
+  <pattern> нм8</pattern>
+  <pattern> нн8</pattern>
+  <pattern> нп8</pattern>
+  <pattern> нр8</pattern>
+  <pattern> нс8</pattern>
+  <pattern> нт8</pattern>
+  <pattern> нф8</pattern>
+  <pattern> нх8</pattern>
+  <pattern> нц8</pattern>
+  <pattern> нч8</pattern>
+  <pattern> нш8</pattern>
+  <pattern> нщ8</pattern>
+  <pattern> п8</pattern>
+  <pattern> пб8</pattern>
+  <pattern> пв8</pattern>
+  <pattern> пг8</pattern>
+  <pattern> пд8</pattern>
+  <pattern> пж8</pattern>
+  <pattern> пз8</pattern>
+  <pattern> пй8</pattern>
+  <pattern> пк8</pattern>
+  <pattern> пл8</pattern>
+  <pattern> пм8</pattern>
+  <pattern> пн8</pattern>
+  <pattern> по4д5ж</pattern>
+  <pattern> по4д5з</pattern>
+  <pattern> по5д6жав</pattern>
+  <pattern> по5д6жур</pattern>
+  <pattern> пп8</pattern>
+  <pattern> пр8</pattern>
+  <pattern> пре4д5ж</pattern>
+  <pattern> пре4д5з</pattern>
+  <pattern> пс8</pattern>
+  <pattern> пт8</pattern>
+  <pattern> пф8</pattern>
+  <pattern> пх8</pattern>
+  <pattern> пц8</pattern>
+  <pattern> пч8</pattern>
+  <pattern> пш8</pattern>
+  <pattern> пщ8</pattern>
+  <pattern> р8</pattern>
+  <pattern> рб8</pattern>
+  <pattern> рв8</pattern>
+  <pattern> рг8</pattern>
+  <pattern> рд8</pattern>
+  <pattern> рж8</pattern>
+  <pattern> рз8</pattern>
+  <pattern> рй8</pattern>
+  <pattern> рк8</pattern>
+  <pattern> рл8</pattern>
+  <pattern> рм8</pattern>
+  <pattern> рн8</pattern>
+  <pattern> рп8</pattern>
+  <pattern> рр8</pattern>
+  <pattern> рс8</pattern>
+  <pattern> рт8</pattern>
+  <pattern> рф8</pattern>
+  <pattern> рх8</pattern>
+  <pattern> рц8</pattern>
+  <pattern> рч8</pattern>
+  <pattern> рш8</pattern>
+  <pattern> рщ8</pattern>
+  <pattern> с8</pattern>
+  <pattern> сб8</pattern>
+  <pattern> сбб8</pattern>
+  <pattern> сбв8</pattern>
+  <pattern> сбг8</pattern>
+  <pattern> сбд8</pattern>
+  <pattern> сбж8</pattern>
+  <pattern> сбз8</pattern>
+  <pattern> сбй8</pattern>
+  <pattern> сбк8</pattern>
+  <pattern> сбл8</pattern>
+  <pattern> сбм8</pattern>
+  <pattern> сбн8</pattern>
+  <pattern> сбп8</pattern>
+  <pattern> сбр8</pattern>
+  <pattern> сбс8</pattern>
+  <pattern> сбт8</pattern>
+  <pattern> сбф8</pattern>
+  <pattern> сбх8</pattern>
+  <pattern> сбц8</pattern>
+  <pattern> сбч8</pattern>
+  <pattern> сбш8</pattern>
+  <pattern> сбщ8</pattern>
+  <pattern> св8</pattern>
+  <pattern> свб8</pattern>
+  <pattern> свв8</pattern>
+  <pattern> свг8</pattern>
+  <pattern> свд8</pattern>
+  <pattern> свж8</pattern>
+  <pattern> свз8</pattern>
+  <pattern> свй8</pattern>
+  <pattern> свк8</pattern>
+  <pattern> свл8</pattern>
+  <pattern> свм8</pattern>
+  <pattern> свн8</pattern>
+  <pattern> свп8</pattern>
+  <pattern> свр8</pattern>
+  <pattern> свс8</pattern>
+  <pattern> свт8</pattern>
+  <pattern> свф8</pattern>
+  <pattern> свх8</pattern>
+  <pattern> свц8</pattern>
+  <pattern> свч8</pattern>
+  <pattern> свш8</pattern>
+  <pattern> свщ8</pattern>
+  <pattern> сг8</pattern>
+  <pattern> сгб8</pattern>
+  <pattern> сгв8</pattern>
+  <pattern> сгг8</pattern>
+  <pattern> сгд8</pattern>
+  <pattern> сгж8</pattern>
+  <pattern> сгз8</pattern>
+  <pattern> сгй8</pattern>
+  <pattern> сгк8</pattern>
+  <pattern> сгл8</pattern>
+  <pattern> сгм8</pattern>
+  <pattern> сгн8</pattern>
+  <pattern> сгп8</pattern>
+  <pattern> сгр8</pattern>
+  <pattern> сгс8</pattern>
+  <pattern> сгт8</pattern>
+  <pattern> сгф8</pattern>
+  <pattern> сгх8</pattern>
+  <pattern> сгц8</pattern>
+  <pattern> сгч8</pattern>
+  <pattern> сгш8</pattern>
+  <pattern> сгщ8</pattern>
+  <pattern> сд8</pattern>
+  <pattern> сдб8</pattern>
+  <pattern> сдв8</pattern>
+  <pattern> сдг8</pattern>
+  <pattern> сдд8</pattern>
+  <pattern> сдж8</pattern>
+  <pattern> сдз8</pattern>
+  <pattern> сдй8</pattern>
+  <pattern> сдк8</pattern>
+  <pattern> сдл8</pattern>
+  <pattern> сдм8</pattern>
+  <pattern> сдн8</pattern>
+  <pattern> сдп8</pattern>
+  <pattern> сдр8</pattern>
+  <pattern> сдс8</pattern>
+  <pattern> сдт8</pattern>
+  <pattern> сдф8</pattern>
+  <pattern> сдх8</pattern>
+  <pattern> сдц8</pattern>
+  <pattern> сдч8</pattern>
+  <pattern> сдш8</pattern>
+  <pattern> сдщ8</pattern>
+  <pattern> сж8</pattern>
+  <pattern> сжб8</pattern>
+  <pattern> сжв8</pattern>
+  <pattern> сжг8</pattern>
+  <pattern> сжд8</pattern>
+  <pattern> сжж8</pattern>
+  <pattern> сжз8</pattern>
+  <pattern> сжй8</pattern>
+  <pattern> сжк8</pattern>
+  <pattern> сжл8</pattern>
+  <pattern> сжм8</pattern>
+  <pattern> сжн8</pattern>
+  <pattern> сжп8</pattern>
+  <pattern> сжр8</pattern>
+  <pattern> сжс8</pattern>
+  <pattern> сжт8</pattern>
+  <pattern> сжф8</pattern>
+  <pattern> сжх8</pattern>
+  <pattern> сжц8</pattern>
+  <pattern> сжч8</pattern>
+  <pattern> сжш8</pattern>
+  <pattern> сжщ8</pattern>
+  <pattern> сз8</pattern>
+  <pattern> сзб8</pattern>
+  <pattern> сзв8</pattern>
+  <pattern> сзг8</pattern>
+  <pattern> сзд8</pattern>
+  <pattern> сзж8</pattern>
+  <pattern> сзз8</pattern>
+  <pattern> сзй8</pattern>
+  <pattern> сзк8</pattern>
+  <pattern> сзл8</pattern>
+  <pattern> сзм8</pattern>
+  <pattern> сзн8</pattern>
+  <pattern> сзп8</pattern>
+  <pattern> сзр8</pattern>
+  <pattern> сзс8</pattern>
+  <pattern> сзт8</pattern>
+  <pattern> сзф8</pattern>
+  <pattern> сзх8</pattern>
+  <pattern> сзц8</pattern>
+  <pattern> сзч8</pattern>
+  <pattern> сзш8</pattern>
+  <pattern> сзщ8</pattern>
+  <pattern> сй8</pattern>
+  <pattern> сйб8</pattern>
+  <pattern> сйв8</pattern>
+  <pattern> сйг8</pattern>
+  <pattern> сйд8</pattern>
+  <pattern> сйж8</pattern>
+  <pattern> сйз8</pattern>
+  <pattern> сйй8</pattern>
+  <pattern> сйк8</pattern>
+  <pattern> сйл8</pattern>
+  <pattern> сйм8</pattern>
+  <pattern> сйн8</pattern>
+  <pattern> сйп8</pattern>
+  <pattern> сйр8</pattern>
+  <pattern> сйс8</pattern>
+  <pattern> сйт8</pattern>
+  <pattern> сйф8</pattern>
+  <pattern> сйх8</pattern>
+  <pattern> сйц8</pattern>
+  <pattern> сйч8</pattern>
+  <pattern> сйш8</pattern>
+  <pattern> сйщ8</pattern>
+  <pattern> ск8</pattern>
+  <pattern> скб8</pattern>
+  <pattern> скв8</pattern>
+  <pattern> скг8</pattern>
+  <pattern> скд8</pattern>
+  <pattern> скж8</pattern>
+  <pattern> скз8</pattern>
+  <pattern> скй8</pattern>
+  <pattern> скк8</pattern>
+  <pattern> скл8</pattern>
+  <pattern> скм8</pattern>
+  <pattern> скн8</pattern>
+  <pattern> скп8</pattern>
+  <pattern> скр8</pattern>
+  <pattern> скс8</pattern>
+  <pattern> скт8</pattern>
+  <pattern> скф8</pattern>
+  <pattern> скх8</pattern>
+  <pattern> скц8</pattern>
+  <pattern> скч8</pattern>
+  <pattern> скш8</pattern>
+  <pattern> скщ8</pattern>
+  <pattern> сл8</pattern>
+  <pattern> слб8</pattern>
+  <pattern> слв8</pattern>
+  <pattern> слг8</pattern>
+  <pattern> слд8</pattern>
+  <pattern> слж8</pattern>
+  <pattern> слз8</pattern>
+  <pattern> слй8</pattern>
+  <pattern> слк8</pattern>
+  <pattern> слл8</pattern>
+  <pattern> слм8</pattern>
+  <pattern> слн8</pattern>
+  <pattern> слп8</pattern>
+  <pattern> слр8</pattern>
+  <pattern> слс8</pattern>
+  <pattern> слт8</pattern>
+  <pattern> слф8</pattern>
+  <pattern> слх8</pattern>
+  <pattern> слц8</pattern>
+  <pattern> слч8</pattern>
+  <pattern> слш8</pattern>
+  <pattern> слщ8</pattern>
+  <pattern> см8</pattern>
+  <pattern> смб8</pattern>
+  <pattern> смв8</pattern>
+  <pattern> смг8</pattern>
+  <pattern> смд8</pattern>
+  <pattern> смж8</pattern>
+  <pattern> смз8</pattern>
+  <pattern> смй8</pattern>
+  <pattern> смк8</pattern>
+  <pattern> смл8</pattern>
+  <pattern> смм8</pattern>
+  <pattern> смн8</pattern>
+  <pattern> смп8</pattern>
+  <pattern> смр8</pattern>
+  <pattern> смс8</pattern>
+  <pattern> смт8</pattern>
+  <pattern> смф8</pattern>
+  <pattern> смх8</pattern>
+  <pattern> смц8</pattern>
+  <pattern> смч8</pattern>
+  <pattern> смш8</pattern>
+  <pattern> смщ8</pattern>
+  <pattern> сн8</pattern>
+  <pattern> снб8</pattern>
+  <pattern> снв8</pattern>
+  <pattern> снг8</pattern>
+  <pattern> снд8</pattern>
+  <pattern> снж8</pattern>
+  <pattern> снз8</pattern>
+  <pattern> снй8</pattern>
+  <pattern> снк8</pattern>
+  <pattern> снл8</pattern>
+  <pattern> снм8</pattern>
+  <pattern> снн8</pattern>
+  <pattern> снп8</pattern>
+  <pattern> снр8</pattern>
+  <pattern> снс8</pattern>
+  <pattern> снт8</pattern>
+  <pattern> снф8</pattern>
+  <pattern> снх8</pattern>
+  <pattern> снц8</pattern>
+  <pattern> снч8</pattern>
+  <pattern> снш8</pattern>
+  <pattern> снщ8</pattern>
+  <pattern> сп8</pattern>
+  <pattern> спб8</pattern>
+  <pattern> спв8</pattern>
+  <pattern> спг8</pattern>
+  <pattern> спд8</pattern>
+  <pattern> спж8</pattern>
+  <pattern> спз8</pattern>
+  <pattern> спй8</pattern>
+  <pattern> спк8</pattern>
+  <pattern> спл8</pattern>
+  <pattern> спм8</pattern>
+  <pattern> спн8</pattern>
+  <pattern> спп8</pattern>
+  <pattern> спр8</pattern>
+  <pattern> спс8</pattern>
+  <pattern> спт8</pattern>
+  <pattern> спф8</pattern>
+  <pattern> спх8</pattern>
+  <pattern> спц8</pattern>
+  <pattern> спч8</pattern>
+  <pattern> спш8</pattern>
+  <pattern> спщ8</pattern>
+  <pattern> ср8</pattern>
+  <pattern> срб8</pattern>
+  <pattern> срв8</pattern>
+  <pattern> срг8</pattern>
+  <pattern> срд8</pattern>
+  <pattern> срж8</pattern>
+  <pattern> срз8</pattern>
+  <pattern> срй8</pattern>
+  <pattern> срк8</pattern>
+  <pattern> срл8</pattern>
+  <pattern> срм8</pattern>
+  <pattern> срн8</pattern>
+  <pattern> срп8</pattern>
+  <pattern> срр8</pattern>
+  <pattern> срс8</pattern>
+  <pattern> срт8</pattern>
+  <pattern> срф8</pattern>
+  <pattern> срх8</pattern>
+  <pattern> срц8</pattern>
+  <pattern> срч8</pattern>
+  <pattern> срш8</pattern>
+  <pattern> срщ8</pattern>
+  <pattern> сс8</pattern>
+  <pattern> ссб8</pattern>
+  <pattern> ссв8</pattern>
+  <pattern> ссг8</pattern>
+  <pattern> ссд8</pattern>
+  <pattern> ссж8</pattern>
+  <pattern> ссз8</pattern>
+  <pattern> ссй8</pattern>
+  <pattern> сск8</pattern>
+  <pattern> ссл8</pattern>
+  <pattern> ссм8</pattern>
+  <pattern> ссн8</pattern>
+  <pattern> ссп8</pattern>
+  <pattern> сср8</pattern>
+  <pattern> ссс8</pattern>
+  <pattern> сст8</pattern>
+  <pattern> ссф8</pattern>
+  <pattern> ссх8</pattern>
+  <pattern> ссц8</pattern>
+  <pattern> ссч8</pattern>
+  <pattern> ссш8</pattern>
+  <pattern> ссщ8</pattern>
+  <pattern> ст8</pattern>
+  <pattern> стб8</pattern>
+  <pattern> ств8</pattern>
+  <pattern> стг8</pattern>
+  <pattern> стд8</pattern>
+  <pattern> стж8</pattern>
+  <pattern> стз8</pattern>
+  <pattern> стй8</pattern>
+  <pattern> стк8</pattern>
+  <pattern> стл8</pattern>
+  <pattern> стм8</pattern>
+  <pattern> стн8</pattern>
+  <pattern> стп8</pattern>
+  <pattern> стр8</pattern>
+  <pattern> стс8</pattern>
+  <pattern> стт8</pattern>
+  <pattern> стф8</pattern>
+  <pattern> стх8</pattern>
+  <pattern> стц8</pattern>
+  <pattern> стч8</pattern>
+  <pattern> стш8</pattern>
+  <pattern> стщ8</pattern>
+  <pattern> сф8</pattern>
+  <pattern> сфб8</pattern>
+  <pattern> сфв8</pattern>
+  <pattern> сфг8</pattern>
+  <pattern> сфд8</pattern>
+  <pattern> сфж8</pattern>
+  <pattern> сфз8</pattern>
+  <pattern> сфй8</pattern>
+  <pattern> сфк8</pattern>
+  <pattern> сфл8</pattern>
+  <pattern> сфм8</pattern>
+  <pattern> сфн8</pattern>
+  <pattern> сфп8</pattern>
+  <pattern> сфр8</pattern>
+  <pattern> сфс8</pattern>
+  <pattern> сфт8</pattern>
+  <pattern> сфф8</pattern>
+  <pattern> сфх8</pattern>
+  <pattern> сфц8</pattern>
+  <pattern> сфч8</pattern>
+  <pattern> сфш8</pattern>
+  <pattern> сфщ8</pattern>
+  <pattern> сх8</pattern>
+  <pattern> схб8</pattern>
+  <pattern> схв8</pattern>
+  <pattern> схг8</pattern>
+  <pattern> схд8</pattern>
+  <pattern> схж8</pattern>
+  <pattern> схз8</pattern>
+  <pattern> схй8</pattern>
+  <pattern> схк8</pattern>
+  <pattern> схл8</pattern>
+  <pattern> схм8</pattern>
+  <pattern> схн8</pattern>
+  <pattern> схп8</pattern>
+  <pattern> схр8</pattern>
+  <pattern> схс8</pattern>
+  <pattern> схт8</pattern>
+  <pattern> схф8</pattern>
+  <pattern> схх8</pattern>
+  <pattern> схц8</pattern>
+  <pattern> схч8</pattern>
+  <pattern> схш8</pattern>
+  <pattern> схщ8</pattern>
+  <pattern> сц8</pattern>
+  <pattern> сцб8</pattern>
+  <pattern> сцв8</pattern>
+  <pattern> сцг8</pattern>
+  <pattern> сцд8</pattern>
+  <pattern> сцж8</pattern>
+  <pattern> сцз8</pattern>
+  <pattern> сцй8</pattern>
+  <pattern> сцк8</pattern>
+  <pattern> сцл8</pattern>
+  <pattern> сцм8</pattern>
+  <pattern> сцн8</pattern>
+  <pattern> сцп8</pattern>
+  <pattern> сцр8</pattern>
+  <pattern> сцс8</pattern>
+  <pattern> сцт8</pattern>
+  <pattern> сцф8</pattern>
+  <pattern> сцх8</pattern>
+  <pattern> сцц8</pattern>
+  <pattern> сцч8</pattern>
+  <pattern> сцш8</pattern>
+  <pattern> сцщ8</pattern>
+  <pattern> сч8</pattern>
+  <pattern> счб8</pattern>
+  <pattern> счв8</pattern>
+  <pattern> счг8</pattern>
+  <pattern> счд8</pattern>
+  <pattern> счж8</pattern>
+  <pattern> счз8</pattern>
+  <pattern> счй8</pattern>
+  <pattern> счк8</pattern>
+  <pattern> счл8</pattern>
+  <pattern> счм8</pattern>
+  <pattern> счн8</pattern>
+  <pattern> счп8</pattern>
+  <pattern> счр8</pattern>
+  <pattern> счс8</pattern>
+  <pattern> счт8</pattern>
+  <pattern> счф8</pattern>
+  <pattern> счх8</pattern>
+  <pattern> счц8</pattern>
+  <pattern> счч8</pattern>
+  <pattern> счш8</pattern>
+  <pattern> счщ8</pattern>
+  <pattern> сш8</pattern>
+  <pattern> сшб8</pattern>
+  <pattern> сшв8</pattern>
+  <pattern> сшг8</pattern>
+  <pattern> сшд8</pattern>
+  <pattern> сшж8</pattern>
+  <pattern> сшз8</pattern>
+  <pattern> сшй8</pattern>
+  <pattern> сшк8</pattern>
+  <pattern> сшл8</pattern>
+  <pattern> сшм8</pattern>
+  <pattern> сшн8</pattern>
+  <pattern> сшп8</pattern>
+  <pattern> сшр8</pattern>
+  <pattern> сшс8</pattern>
+  <pattern> сшт8</pattern>
+  <pattern> сшф8</pattern>
+  <pattern> сшх8</pattern>
+  <pattern> сшц8</pattern>
+  <pattern> сшч8</pattern>
+  <pattern> сшш8</pattern>
+  <pattern> сшщ8</pattern>
+  <pattern> сщ8</pattern>
+  <pattern> сщб8</pattern>
+  <pattern> сщв8</pattern>
+  <pattern> сщг8</pattern>
+  <pattern> сщд8</pattern>
+  <pattern> сщж8</pattern>
+  <pattern> сщз8</pattern>
+  <pattern> сщй8</pattern>
+  <pattern> сщк8</pattern>
+  <pattern> сщл8</pattern>
+  <pattern> сщм8</pattern>
+  <pattern> сщн8</pattern>
+  <pattern> сщп8</pattern>
+  <pattern> сщр8</pattern>
+  <pattern> сщс8</pattern>
+  <pattern> сщт8</pattern>
+  <pattern> сщф8</pattern>
+  <pattern> сщх8</pattern>
+  <pattern> сщц8</pattern>
+  <pattern> сщч8</pattern>
+  <pattern> сщш8</pattern>
+  <pattern> сщщ8</pattern>
+  <pattern> т8</pattern>
+  <pattern> тб8</pattern>
+  <pattern> тв8</pattern>
+  <pattern> тг8</pattern>
+  <pattern> тд8</pattern>
+  <pattern> тж8</pattern>
+  <pattern> тз8</pattern>
+  <pattern> тй8</pattern>
+  <pattern> тк8</pattern>
+  <pattern> тл8</pattern>
+  <pattern> тм8</pattern>
+  <pattern> тн8</pattern>
+  <pattern> тп8</pattern>
+  <pattern> тр8</pattern>
+  <pattern> тс8</pattern>
+  <pattern> тт8</pattern>
+  <pattern> тф8</pattern>
+  <pattern> тх8</pattern>
+  <pattern> тц8</pattern>
+  <pattern> тч8</pattern>
+  <pattern> тш8</pattern>
+  <pattern> тщ8</pattern>
+  <pattern> ф8</pattern>
+  <pattern> фб8</pattern>
+  <pattern> фв8</pattern>
+  <pattern> фг8</pattern>
+  <pattern> фд8</pattern>
+  <pattern> фж8</pattern>
+  <pattern> фз8</pattern>
+  <pattern> фй8</pattern>
+  <pattern> фк8</pattern>
+  <pattern> фл8</pattern>
+  <pattern> фм8</pattern>
+  <pattern> фн8</pattern>
+  <pattern> фп8</pattern>
+  <pattern> фр8</pattern>
+  <pattern> фс8</pattern>
+  <pattern> фт8</pattern>
+  <pattern> фф8</pattern>
+  <pattern> фх8</pattern>
+  <pattern> фц8</pattern>
+  <pattern> фч8</pattern>
+  <pattern> фш8</pattern>
+  <pattern> фщ8</pattern>
+  <pattern> х8</pattern>
+  <pattern> хб8</pattern>
+  <pattern> хв8</pattern>
+  <pattern> хг8</pattern>
+  <pattern> хд8</pattern>
+  <pattern> хж8</pattern>
+  <pattern> хз8</pattern>
+  <pattern> хй8</pattern>
+  <pattern> хк8</pattern>
+  <pattern> хл8</pattern>
+  <pattern> хм8</pattern>
+  <pattern> хн8</pattern>
+  <pattern> хп8</pattern>
+  <pattern> хр8</pattern>
+  <pattern> хс8</pattern>
+  <pattern> хт8</pattern>
+  <pattern> хф8</pattern>
+  <pattern> хх8</pattern>
+  <pattern> хц8</pattern>
+  <pattern> хч8</pattern>
+  <pattern> хш8</pattern>
+  <pattern> хщ8</pattern>
+  <pattern> ц8</pattern>
+  <pattern> цб8</pattern>
+  <pattern> цв8</pattern>
+  <pattern> цг8</pattern>
+  <pattern> цд8</pattern>
+  <pattern> цж8</pattern>
+  <pattern> цз8</pattern>
+  <pattern> цй8</pattern>
+  <pattern> цк8</pattern>
+  <pattern> цл8</pattern>
+  <pattern> цм8</pattern>
+  <pattern> цн8</pattern>
+  <pattern> цп8</pattern>
+  <pattern> цр8</pattern>
+  <pattern> цс8</pattern>
+  <pattern> цт8</pattern>
+  <pattern> цф8</pattern>
+  <pattern> цх8</pattern>
+  <pattern> цц8</pattern>
+  <pattern> цч8</pattern>
+  <pattern> цш8</pattern>
+  <pattern> цщ8</pattern>
+  <pattern> ч8</pattern>
+  <pattern> чб8</pattern>
+  <pattern> чв8</pattern>
+  <pattern> чг8</pattern>
+  <pattern> чд8</pattern>
+  <pattern> чж8</pattern>
+  <pattern> чз8</pattern>
+  <pattern> чй8</pattern>
+  <pattern> чк8</pattern>
+  <pattern> чл8</pattern>
+  <pattern> чм8</pattern>
+  <pattern> чн8</pattern>
+  <pattern> чп8</pattern>
+  <pattern> чр8</pattern>
+  <pattern> чс8</pattern>
+  <pattern> чт8</pattern>
+  <pattern> чф8</pattern>
+  <pattern> чх8</pattern>
+  <pattern> чц8</pattern>
+  <pattern> чч8</pattern>
+  <pattern> чш8</pattern>
+  <pattern> чщ8</pattern>
+  <pattern> ш8</pattern>
+  <pattern> шб8</pattern>
+  <pattern> шв8</pattern>
+  <pattern> шг8</pattern>
+  <pattern> шд8</pattern>
+  <pattern> шж8</pattern>
+  <pattern> шз8</pattern>
+  <pattern> шй8</pattern>
+  <pattern> шк8</pattern>
+  <pattern> шл8</pattern>
+  <pattern> шм8</pattern>
+  <pattern> шн8</pattern>
+  <pattern> шп8</pattern>
+  <pattern> шр8</pattern>
+  <pattern> шс8</pattern>
+  <pattern> шт8</pattern>
+  <pattern> шф8</pattern>
+  <pattern> шх8</pattern>
+  <pattern> шц8</pattern>
+  <pattern> шч8</pattern>
+  <pattern> шш8</pattern>
+  <pattern> шщ8</pattern>
+  <pattern> щ8</pattern>
+  <pattern> щб8</pattern>
+  <pattern> щв8</pattern>
+  <pattern> щг8</pattern>
+  <pattern> щд8</pattern>
+  <pattern> щж8</pattern>
+  <pattern> щз8</pattern>
+  <pattern> щй8</pattern>
+  <pattern> щк8</pattern>
+  <pattern> щл8</pattern>
+  <pattern> щм8</pattern>
+  <pattern> щн8</pattern>
+  <pattern> щп8</pattern>
+  <pattern> щр8</pattern>
+  <pattern> щс8</pattern>
+  <pattern> щт8</pattern>
+  <pattern> щф8</pattern>
+  <pattern> щх8</pattern>
+  <pattern> щц8</pattern>
+  <pattern> щч8</pattern>
+  <pattern> щш8</pattern>
+  <pattern> щщ8</pattern>
+  <pattern>4бб4</pattern>
+  <pattern>4бп4</pattern>
+  <pattern>4вв4</pattern>
+  <pattern>4вф4</pattern>
+  <pattern>4гг4</pattern>
+  <pattern>4гк4</pattern>
+  <pattern>4дд4</pattern>
+  <pattern>4дт4</pattern>
+  <pattern>4жж4</pattern>
+  <pattern>4жш4</pattern>
+  <pattern>4зз4</pattern>
+  <pattern>4зс4</pattern>
+  <pattern>4йй4</pattern>
+  <pattern>4кг4</pattern>
+  <pattern>4кк4</pattern>
+  <pattern>4лл4</pattern>
+  <pattern>4мм4</pattern>
+  <pattern>4нн4</pattern>
+  <pattern>4пб4</pattern>
+  <pattern>4пп4</pattern>
+  <pattern>4рр4</pattern>
+  <pattern>4сз4</pattern>
+  <pattern>4сс4</pattern>
+  <pattern>4тд4</pattern>
+  <pattern>4тт4</pattern>
+  <pattern>4фв4</pattern>
+  <pattern>4фф4</pattern>
+  <pattern>4хх4</pattern>
+  <pattern>4цц4</pattern>
+  <pattern>4цч4</pattern>
+  <pattern>4чц4</pattern>
+  <pattern>4чч4</pattern>
+  <pattern>4шж4</pattern>
+  <pattern>4шш4</pattern>
+  <pattern>4щщ4</pattern>
+  <pattern>8б </pattern>
+  <pattern>8в </pattern>
+  <pattern>8г </pattern>
+  <pattern>8д </pattern>
+  <pattern>8ж </pattern>
+  <pattern>8з </pattern>
+  <pattern>8й </pattern>
+  <pattern>8к </pattern>
+  <pattern>8кс </pattern>
+  <pattern>8кт </pattern>
+  <pattern>8л </pattern>
+  <pattern>8м </pattern>
+  <pattern>8н </pattern>
+  <pattern>8п </pattern>
+  <pattern>8р </pattern>
+  <pattern>8с </pattern>
+  <pattern>8ст </pattern>
+  <pattern>8т </pattern>
+  <pattern>8ф </pattern>
+  <pattern>8х </pattern>
+  <pattern>8ц </pattern>
+  <pattern>8ч </pattern>
+  <pattern>8ш </pattern>
+  <pattern>8щ </pattern>
+  <pattern>8ь8</pattern>
+  <pattern>а1</pattern>
+  <pattern>а2б</pattern>
+  <pattern>а2в</pattern>
+  <pattern>а2г</pattern>
+  <pattern>а2д</pattern>
+  <pattern>а2ж</pattern>
+  <pattern>а2з</pattern>
+  <pattern>а2й</pattern>
+  <pattern>а2к</pattern>
+  <pattern>а2л</pattern>
+  <pattern>а2м</pattern>
+  <pattern>а2н</pattern>
+  <pattern>а2п</pattern>
+  <pattern>а2р</pattern>
+  <pattern>а2с</pattern>
+  <pattern>а2т</pattern>
+  <pattern>а2ф</pattern>
+  <pattern>а2х</pattern>
+  <pattern>а2ц</pattern>
+  <pattern>а2ч</pattern>
+  <pattern>а2ш</pattern>
+  <pattern>а2щ</pattern>
+  <pattern>а3ба</pattern>
+  <pattern>а3бе</pattern>
+  <pattern>а3би</pattern>
+  <pattern>а3бо</pattern>
+  <pattern>а3бу</pattern>
+  <pattern>а3бъ</pattern>
+  <pattern>а3бь</pattern>
+  <pattern>а3бю</pattern>
+  <pattern>а3бя</pattern>
+  <pattern>а3ва</pattern>
+  <pattern>а3ве</pattern>
+  <pattern>а3ви</pattern>
+  <pattern>а3во</pattern>
+  <pattern>а3ву</pattern>
+  <pattern>а3въ</pattern>
+  <pattern>а3вь</pattern>
+  <pattern>а3вю</pattern>
+  <pattern>а3вя</pattern>
+  <pattern>а3га</pattern>
+  <pattern>а3ге</pattern>
+  <pattern>а3ги</pattern>
+  <pattern>а3го</pattern>
+  <pattern>а3гу</pattern>
+  <pattern>а3гъ</pattern>
+  <pattern>а3гь</pattern>
+  <pattern>а3гю</pattern>
+  <pattern>а3гя</pattern>
+  <pattern>а3да</pattern>
+  <pattern>а3де</pattern>
+  <pattern>а3джа</pattern>
+  <pattern>а3дже</pattern>
+  <pattern>а3джи</pattern>
+  <pattern>а3джо</pattern>
+  <pattern>а3джу</pattern>
+  <pattern>а3джъ</pattern>
+  <pattern>а3джь</pattern>
+  <pattern>а3джю</pattern>
+  <pattern>а3джя</pattern>
+  <pattern>а3дза</pattern>
+  <pattern>а3дзе</pattern>
+  <pattern>а3дзи</pattern>
+  <pattern>а3дзо</pattern>
+  <pattern>а3дзу</pattern>
+  <pattern>а3дзъ</pattern>
+  <pattern>а3дзь</pattern>
+  <pattern>а3дзю</pattern>
+  <pattern>а3дзя</pattern>
+  <pattern>а3ди</pattern>
+  <pattern>а3до</pattern>
+  <pattern>а3ду</pattern>
+  <pattern>а3дъ</pattern>
+  <pattern>а3дь</pattern>
+  <pattern>а3дю</pattern>
+  <pattern>а3дя</pattern>
+  <pattern>а3жа</pattern>
+  <pattern>а3же</pattern>
+  <pattern>а3жи</pattern>
+  <pattern>а3жо</pattern>
+  <pattern>а3жу</pattern>
+  <pattern>а3жъ</pattern>
+  <pattern>а3жь</pattern>
+  <pattern>а3жю</pattern>
+  <pattern>а3жя</pattern>
+  <pattern>а3за</pattern>
+  <pattern>а3зе</pattern>
+  <pattern>а3зи</pattern>
+  <pattern>а3зо</pattern>
+  <pattern>а3зу</pattern>
+  <pattern>а3зъ</pattern>
+  <pattern>а3зь</pattern>
+  <pattern>а3зю</pattern>
+  <pattern>а3зя</pattern>
+  <pattern>а3йа</pattern>
+  <pattern>а3йе</pattern>
+  <pattern>а3йи</pattern>
+  <pattern>а3йо</pattern>
+  <pattern>а3йу</pattern>
+  <pattern>а3йъ</pattern>
+  <pattern>а3йь</pattern>
+  <pattern>а3йю</pattern>
+  <pattern>а3йя</pattern>
+  <pattern>а3ка</pattern>
+  <pattern>а3ке</pattern>
+  <pattern>а3ки</pattern>
+  <pattern>а3ко</pattern>
+  <pattern>а3ку</pattern>
+  <pattern>а3къ</pattern>
+  <pattern>а3кь</pattern>
+  <pattern>а3кю</pattern>
+  <pattern>а3кя</pattern>
+  <pattern>а3ла</pattern>
+  <pattern>а3ле</pattern>
+  <pattern>а3ли</pattern>
+  <pattern>а3ло</pattern>
+  <pattern>а3лу</pattern>
+  <pattern>а3лъ</pattern>
+  <pattern>а3ль</pattern>
+  <pattern>а3лю</pattern>
+  <pattern>а3ля</pattern>
+  <pattern>а3ма</pattern>
+  <pattern>а3ме</pattern>
+  <pattern>а3ми</pattern>
+  <pattern>а3мо</pattern>
+  <pattern>а3му</pattern>
+  <pattern>а3мъ</pattern>
+  <pattern>а3мь</pattern>
+  <pattern>а3мю</pattern>
+  <pattern>а3мя</pattern>
+  <pattern>а3на</pattern>
+  <pattern>а3не</pattern>
+  <pattern>а3ни</pattern>
+  <pattern>а3но</pattern>
+  <pattern>а3ну</pattern>
+  <pattern>а3нъ</pattern>
+  <pattern>а3нь</pattern>
+  <pattern>а3ню</pattern>
+  <pattern>а3ня</pattern>
+  <pattern>а3па</pattern>
+  <pattern>а3пе</pattern>
+  <pattern>а3пи</pattern>
+  <pattern>а3по</pattern>
+  <pattern>а3пу</pattern>
+  <pattern>а3пъ</pattern>
+  <pattern>а3пь</pattern>
+  <pattern>а3пю</pattern>
+  <pattern>а3пя</pattern>
+  <pattern>а3ра</pattern>
+  <pattern>а3ре</pattern>
+  <pattern>а3ри</pattern>
+  <pattern>а3ро</pattern>
+  <pattern>а3ру</pattern>
+  <pattern>а3ръ</pattern>
+  <pattern>а3рь</pattern>
+  <pattern>а3рю</pattern>
+  <pattern>а3ря</pattern>
+  <pattern>а3са</pattern>
+  <pattern>а3се</pattern>
+  <pattern>а3си</pattern>
+  <pattern>а3со</pattern>
+  <pattern>а3су</pattern>
+  <pattern>а3съ</pattern>
+  <pattern>а3сь</pattern>
+  <pattern>а3сю</pattern>
+  <pattern>а3ся</pattern>
+  <pattern>а3та</pattern>
+  <pattern>а3те</pattern>
+  <pattern>а3ти</pattern>
+  <pattern>а3то</pattern>
+  <pattern>а3ту</pattern>
+  <pattern>а3тъ</pattern>
+  <pattern>а3ть</pattern>
+  <pattern>а3тю</pattern>
+  <pattern>а3тя</pattern>
+  <pattern>а3фа</pattern>
+  <pattern>а3фе</pattern>
+  <pattern>а3фи</pattern>
+  <pattern>а3фо</pattern>
+  <pattern>а3фу</pattern>
+  <pattern>а3фъ</pattern>
+  <pattern>а3фь</pattern>
+  <pattern>а3фю</pattern>
+  <pattern>а3фя</pattern>
+  <pattern>а3ха</pattern>
+  <pattern>а3хе</pattern>
+  <pattern>а3хи</pattern>
+  <pattern>а3хо</pattern>
+  <pattern>а3ху</pattern>
+  <pattern>а3хъ</pattern>
+  <pattern>а3хь</pattern>
+  <pattern>а3хю</pattern>
+  <pattern>а3хя</pattern>
+  <pattern>а3ца</pattern>
+  <pattern>а3це</pattern>
+  <pattern>а3ци</pattern>
+  <pattern>а3цо</pattern>
+  <pattern>а3цу</pattern>
+  <pattern>а3цъ</pattern>
+  <pattern>а3ць</pattern>
+  <pattern>а3цю</pattern>
+  <pattern>а3ця</pattern>
+  <pattern>а3ча</pattern>
+  <pattern>а3че</pattern>
+  <pattern>а3чи</pattern>
+  <pattern>а3чо</pattern>
+  <pattern>а3чу</pattern>
+  <pattern>а3чъ</pattern>
+  <pattern>а3чь</pattern>
+  <pattern>а3чю</pattern>
+  <pattern>а3чя</pattern>
+  <pattern>а3ша</pattern>
+  <pattern>а3ше</pattern>
+  <pattern>а3ши</pattern>
+  <pattern>а3шо</pattern>
+  <pattern>а3шу</pattern>
+  <pattern>а3шъ</pattern>
+  <pattern>а3шь</pattern>
+  <pattern>а3шю</pattern>
+  <pattern>а3шя</pattern>
+  <pattern>а3ща</pattern>
+  <pattern>а3ще</pattern>
+  <pattern>а3щи</pattern>
+  <pattern>а3що</pattern>
+  <pattern>а3щу</pattern>
+  <pattern>а3щъ</pattern>
+  <pattern>а3щь</pattern>
+  <pattern>а3щю</pattern>
+  <pattern>а3щя</pattern>
+  <pattern>ааа4</pattern>
+  <pattern>аае4</pattern>
+  <pattern>ааи4</pattern>
+  <pattern>аао4</pattern>
+  <pattern>аау4</pattern>
+  <pattern>ааъ4</pattern>
+  <pattern>ааю4</pattern>
+  <pattern>аая4</pattern>
+  <pattern>аеа4</pattern>
+  <pattern>аее4</pattern>
+  <pattern>аеи4</pattern>
+  <pattern>аео4</pattern>
+  <pattern>аеу4</pattern>
+  <pattern>аеъ4</pattern>
+  <pattern>аею4</pattern>
+  <pattern>аея4</pattern>
+  <pattern>аиа4</pattern>
+  <pattern>аие4</pattern>
+  <pattern>аии4</pattern>
+  <pattern>аио4</pattern>
+  <pattern>аиу4</pattern>
+  <pattern>аиъ4</pattern>
+  <pattern>аию4</pattern>
+  <pattern>аия4</pattern>
+  <pattern>аоа4</pattern>
+  <pattern>аое4</pattern>
+  <pattern>аои4</pattern>
+  <pattern>аоо4</pattern>
+  <pattern>аоу4</pattern>
+  <pattern>аоъ4</pattern>
+  <pattern>аою4</pattern>
+  <pattern>аоя4</pattern>
+  <pattern>ауа4</pattern>
+  <pattern>ауе4</pattern>
+  <pattern>ауи4</pattern>
+  <pattern>ауо4</pattern>
+  <pattern>ауу4</pattern>
+  <pattern>ауъ4</pattern>
+  <pattern>аую4</pattern>
+  <pattern>ауя4</pattern>
+  <pattern>аъа4</pattern>
+  <pattern>аъе4</pattern>
+  <pattern>аъи4</pattern>
+  <pattern>аъо4</pattern>
+  <pattern>аъу4</pattern>
+  <pattern>аъъ4</pattern>
+  <pattern>аъю4</pattern>
+  <pattern>аъя4</pattern>
+  <pattern>аюа4</pattern>
+  <pattern>аюе4</pattern>
+  <pattern>аюи4</pattern>
+  <pattern>аюо4</pattern>
+  <pattern>аюу4</pattern>
+  <pattern>аюъ4</pattern>
+  <pattern>аюю4</pattern>
+  <pattern>аюя4</pattern>
+  <pattern>аяа4</pattern>
+  <pattern>аяе4</pattern>
+  <pattern>аяи4</pattern>
+  <pattern>аяо4</pattern>
+  <pattern>аяу4</pattern>
+  <pattern>аяъ4</pattern>
+  <pattern>аяю4</pattern>
+  <pattern>аяя4</pattern>
+  <pattern>б1</pattern>
+  <pattern>б2а</pattern>
+  <pattern>б2е</pattern>
+  <pattern>б2и</pattern>
+  <pattern>б2о</pattern>
+  <pattern>б2у</pattern>
+  <pattern>б2ъ</pattern>
+  <pattern>б2ю</pattern>
+  <pattern>б2я</pattern>
+  <pattern>ббб8</pattern>
+  <pattern>ббв8</pattern>
+  <pattern>ббг8</pattern>
+  <pattern>ббд8</pattern>
+  <pattern>ббж8</pattern>
+  <pattern>ббз8</pattern>
+  <pattern>ббй8</pattern>
+  <pattern>ббк8</pattern>
+  <pattern>ббл8</pattern>
+  <pattern>ббм8</pattern>
+  <pattern>ббн8</pattern>
+  <pattern>ббп8</pattern>
+  <pattern>ббр8</pattern>
+  <pattern>ббс8</pattern>
+  <pattern>ббт8</pattern>
+  <pattern>ббф8</pattern>
+  <pattern>ббх8</pattern>
+  <pattern>ббц8</pattern>
+  <pattern>ббч8</pattern>
+  <pattern>ббш8</pattern>
+  <pattern>ббщ8</pattern>
+  <pattern>бвб8</pattern>
+  <pattern>бвв8</pattern>
+  <pattern>бвг8</pattern>
+  <pattern>бвд8</pattern>
+  <pattern>бвж8</pattern>
+  <pattern>бвз8</pattern>
+  <pattern>бвй8</pattern>
+  <pattern>бвк8</pattern>
+  <pattern>бвл8</pattern>
+  <pattern>бвм8</pattern>
+  <pattern>бвн8</pattern>
+  <pattern>бвп8</pattern>
+  <pattern>бвр8</pattern>
+  <pattern>бвс8</pattern>
+  <pattern>бвт8</pattern>
+  <pattern>бвф8</pattern>
+  <pattern>бвх8</pattern>
+  <pattern>бвц8</pattern>
+  <pattern>бвч8</pattern>
+  <pattern>бвш8</pattern>
+  <pattern>бвщ8</pattern>
+  <pattern>бгб8</pattern>
+  <pattern>бгв8</pattern>
+  <pattern>бгг8</pattern>
+  <pattern>бгд8</pattern>
+  <pattern>бгж8</pattern>
+  <pattern>бгз8</pattern>
+  <pattern>бгй8</pattern>
+  <pattern>бгк8</pattern>
+  <pattern>бгл8</pattern>
+  <pattern>бгм8</pattern>
+  <pattern>бгн8</pattern>
+  <pattern>бгп8</pattern>
+  <pattern>бгр8</pattern>
+  <pattern>бгс8</pattern>
+  <pattern>бгт8</pattern>
+  <pattern>бгф8</pattern>
+  <pattern>бгх8</pattern>
+  <pattern>бгц8</pattern>
+  <pattern>бгч8</pattern>
+  <pattern>бгш8</pattern>
+  <pattern>бгщ8</pattern>
+  <pattern>бдб8</pattern>
+  <pattern>бдв8</pattern>
+  <pattern>бдг8</pattern>
+  <pattern>бдд8</pattern>
+  <pattern>бдж8</pattern>
+  <pattern>бдз8</pattern>
+  <pattern>бдй8</pattern>
+  <pattern>бдк8</pattern>
+  <pattern>бдл8</pattern>
+  <pattern>бдм8</pattern>
+  <pattern>бдн8</pattern>
+  <pattern>бдп8</pattern>
+  <pattern>бдр8</pattern>
+  <pattern>бдс8</pattern>
+  <pattern>бдт8</pattern>
+  <pattern>бдф8</pattern>
+  <pattern>бдх8</pattern>
+  <pattern>бдц8</pattern>
+  <pattern>бдч8</pattern>
+  <pattern>бдш8</pattern>
+  <pattern>бдщ8</pattern>
+  <pattern>бжб8</pattern>
+  <pattern>бжв8</pattern>
+  <pattern>бжг8</pattern>
+  <pattern>бжд8</pattern>
+  <pattern>бжж8</pattern>
+  <pattern>бжз8</pattern>
+  <pattern>бжй8</pattern>
+  <pattern>бжк8</pattern>
+  <pattern>бжл8</pattern>
+  <pattern>бжм8</pattern>
+  <pattern>бжн8</pattern>
+  <pattern>бжп8</pattern>
+  <pattern>бжр8</pattern>
+  <pattern>бжс8</pattern>
+  <pattern>бжт8</pattern>
+  <pattern>бжф8</pattern>
+  <pattern>бжх8</pattern>
+  <pattern>бжц8</pattern>
+  <pattern>бжч8</pattern>
+  <pattern>бжш8</pattern>
+  <pattern>бжщ8</pattern>
+  <pattern>бзб8</pattern>
+  <pattern>бзв8</pattern>
+  <pattern>бзг8</pattern>
+  <pattern>бзд8</pattern>
+  <pattern>бзж8</pattern>
+  <pattern>бзз8</pattern>
+  <pattern>бзй8</pattern>
+  <pattern>бзк8</pattern>
+  <pattern>бзл8</pattern>
+  <pattern>бзм8</pattern>
+  <pattern>бзн8</pattern>
+  <pattern>бзп8</pattern>
+  <pattern>бзр8</pattern>
+  <pattern>бзс8</pattern>
+  <pattern>бзт8</pattern>
+  <pattern>бзф8</pattern>
+  <pattern>бзх8</pattern>
+  <pattern>бзц8</pattern>
+  <pattern>бзч8</pattern>
+  <pattern>бзш8</pattern>
+  <pattern>бзщ8</pattern>
+  <pattern>бй4</pattern>
+  <pattern>бйб8</pattern>
+  <pattern>бйв8</pattern>
+  <pattern>бйг8</pattern>
+  <pattern>бйд8</pattern>
+  <pattern>бйж8</pattern>
+  <pattern>бйз8</pattern>
+  <pattern>бйй8</pattern>
+  <pattern>бйк8</pattern>
+  <pattern>бйл8</pattern>
+  <pattern>бйм8</pattern>
+  <pattern>бйн8</pattern>
+  <pattern>бйп8</pattern>
+  <pattern>бйр8</pattern>
+  <pattern>бйс8</pattern>
+  <pattern>бйт8</pattern>
+  <pattern>бйф8</pattern>
+  <pattern>бйх8</pattern>
+  <pattern>бйц8</pattern>
+  <pattern>бйч8</pattern>
+  <pattern>бйш8</pattern>
+  <pattern>бйщ8</pattern>
+  <pattern>бкб8</pattern>
+  <pattern>бкв8</pattern>
+  <pattern>бкг8</pattern>
+  <pattern>бкд8</pattern>
+  <pattern>бкж8</pattern>
+  <pattern>бкз8</pattern>
+  <pattern>бкй8</pattern>
+  <pattern>бкк8</pattern>
+  <pattern>бкл8</pattern>
+  <pattern>бкм8</pattern>
+  <pattern>бкн8</pattern>
+  <pattern>бкп8</pattern>
+  <pattern>бкр8</pattern>
+  <pattern>бкс8</pattern>
+  <pattern>бкт8</pattern>
+  <pattern>бкф8</pattern>
+  <pattern>бкх8</pattern>
+  <pattern>бкц8</pattern>
+  <pattern>бкч8</pattern>
+  <pattern>бкш8</pattern>
+  <pattern>бкщ8</pattern>
+  <pattern>бл4</pattern>
+  <pattern>блб8</pattern>
+  <pattern>блв8</pattern>
+  <pattern>блг8</pattern>
+  <pattern>блд8</pattern>
+  <pattern>блж8</pattern>
+  <pattern>блз8</pattern>
+  <pattern>блй8</pattern>
+  <pattern>блк8</pattern>
+  <pattern>блл8</pattern>
+  <pattern>блм8</pattern>
+  <pattern>блн8</pattern>
+  <pattern>блп8</pattern>
+  <pattern>блр8</pattern>
+  <pattern>блс8</pattern>
+  <pattern>блт8</pattern>
+  <pattern>блф8</pattern>
+  <pattern>блх8</pattern>
+  <pattern>блц8</pattern>
+  <pattern>блч8</pattern>
+  <pattern>блш8</pattern>
+  <pattern>блщ8</pattern>
+  <pattern>бм4</pattern>
+  <pattern>бмб8</pattern>
+  <pattern>бмв8</pattern>
+  <pattern>бмг8</pattern>
+  <pattern>бмд8</pattern>
+  <pattern>бмж8</pattern>
+  <pattern>бмз8</pattern>
+  <pattern>бмй8</pattern>
+  <pattern>бмк8</pattern>
+  <pattern>бмл8</pattern>
+  <pattern>бмм8</pattern>
+  <pattern>бмн8</pattern>
+  <pattern>бмп8</pattern>
+  <pattern>бмр8</pattern>
+  <pattern>бмс8</pattern>
+  <pattern>бмт8</pattern>
+  <pattern>бмф8</pattern>
+  <pattern>бмх8</pattern>
+  <pattern>бмц8</pattern>
+  <pattern>бмч8</pattern>
+  <pattern>бмш8</pattern>
+  <pattern>бмщ8</pattern>
+  <pattern>бн4</pattern>
+  <pattern>бнб8</pattern>
+  <pattern>бнв8</pattern>
+  <pattern>бнг8</pattern>
+  <pattern>бнд8</pattern>
+  <pattern>бнж8</pattern>
+  <pattern>бнз8</pattern>
+  <pattern>бнй8</pattern>
+  <pattern>бнк8</pattern>
+  <pattern>бнл8</pattern>
+  <pattern>бнм8</pattern>
+  <pattern>бнн8</pattern>
+  <pattern>бнп8</pattern>
+  <pattern>бнр8</pattern>
+  <pattern>бнс8</pattern>
+  <pattern>бнт8</pattern>
+  <pattern>бнф8</pattern>
+  <pattern>бнх8</pattern>
+  <pattern>бнц8</pattern>
+  <pattern>бнч8</pattern>
+  <pattern>бнш8</pattern>
+  <pattern>бнщ8</pattern>
+  <pattern>бпб8</pattern>
+  <pattern>бпв8</pattern>
+  <pattern>бпг8</pattern>
+  <pattern>бпд8</pattern>
+  <pattern>бпж8</pattern>
+  <pattern>бпз8</pattern>
+  <pattern>бпй8</pattern>
+  <pattern>бпк8</pattern>
+  <pattern>бпл8</pattern>
+  <pattern>бпм8</pattern>
+  <pattern>бпн8</pattern>
+  <pattern>бпп8</pattern>
+  <pattern>бпр8</pattern>
+  <pattern>бпс8</pattern>
+  <pattern>бпт8</pattern>
+  <pattern>бпф8</pattern>
+  <pattern>бпх8</pattern>
+  <pattern>бпц8</pattern>
+  <pattern>бпч8</pattern>
+  <pattern>бпш8</pattern>
+  <pattern>бпщ8</pattern>
+  <pattern>бр4</pattern>
+  <pattern>брб8</pattern>
+  <pattern>брв8</pattern>
+  <pattern>брг8</pattern>
+  <pattern>брд8</pattern>
+  <pattern>брж8</pattern>
+  <pattern>брз8</pattern>
+  <pattern>брй8</pattern>
+  <pattern>брк8</pattern>
+  <pattern>брл8</pattern>
+  <pattern>брм8</pattern>
+  <pattern>брн8</pattern>
+  <pattern>брп8</pattern>
+  <pattern>брр8</pattern>
+  <pattern>брс8</pattern>
+  <pattern>брт8</pattern>
+  <pattern>брф8</pattern>
+  <pattern>брх8</pattern>
+  <pattern>брц8</pattern>
+  <pattern>брч8</pattern>
+  <pattern>брш8</pattern>
+  <pattern>брщ8</pattern>
+  <pattern>бсб8</pattern>
+  <pattern>бсв8</pattern>
+  <pattern>бсг8</pattern>
+  <pattern>бсд8</pattern>
+  <pattern>бсж8</pattern>
+  <pattern>бсз8</pattern>
+  <pattern>бсй8</pattern>
+  <pattern>бск8</pattern>
+  <pattern>бсл8</pattern>
+  <pattern>бсм8</pattern>
+  <pattern>бсн8</pattern>
+  <pattern>бсп8</pattern>
+  <pattern>бср8</pattern>
+  <pattern>бсс8</pattern>
+  <pattern>бст8</pattern>
+  <pattern>бсф8</pattern>
+  <pattern>бсх8</pattern>
+  <pattern>бсц8</pattern>
+  <pattern>бсч8</pattern>
+  <pattern>бсш8</pattern>
+  <pattern>бсщ8</pattern>
+  <pattern>бтб8</pattern>
+  <pattern>бтв8</pattern>
+  <pattern>бтг8</pattern>
+  <pattern>бтд8</pattern>
+  <pattern>бтж8</pattern>
+  <pattern>бтз8</pattern>
+  <pattern>бтй8</pattern>
+  <pattern>бтк8</pattern>
+  <pattern>бтл8</pattern>
+  <pattern>бтм8</pattern>
+  <pattern>бтн8</pattern>
+  <pattern>бтп8</pattern>
+  <pattern>бтр8</pattern>
+  <pattern>бтс8</pattern>
+  <pattern>бтт8</pattern>
+  <pattern>бтф8</pattern>
+  <pattern>бтх8</pattern>
+  <pattern>бтц8</pattern>
+  <pattern>бтч8</pattern>
+  <pattern>бтш8</pattern>
+  <pattern>бтщ8</pattern>
+  <pattern>бфб8</pattern>
+  <pattern>бфв8</pattern>
+  <pattern>бфг8</pattern>
+  <pattern>бфд8</pattern>
+  <pattern>бфж8</pattern>
+  <pattern>бфз8</pattern>
+  <pattern>бфй8</pattern>
+  <pattern>бфк8</pattern>
+  <pattern>бфл8</pattern>
+  <pattern>бфм8</pattern>
+  <pattern>бфн8</pattern>
+  <pattern>бфп8</pattern>
+  <pattern>бфр8</pattern>
+  <pattern>бфс8</pattern>
+  <pattern>бфт8</pattern>
+  <pattern>бфф8</pattern>
+  <pattern>бфх8</pattern>
+  <pattern>бфц8</pattern>
+  <pattern>бфч8</pattern>
+  <pattern>бфш8</pattern>
+  <pattern>бфщ8</pattern>
+  <pattern>бхб8</pattern>
+  <pattern>бхв8</pattern>
+  <pattern>бхг8</pattern>
+  <pattern>бхд8</pattern>
+  <pattern>бхж8</pattern>
+  <pattern>бхз8</pattern>
+  <pattern>бхй8</pattern>
+  <pattern>бхк8</pattern>
+  <pattern>бхл8</pattern>
+  <pattern>бхм8</pattern>
+  <pattern>бхн8</pattern>
+  <pattern>бхп8</pattern>
+  <pattern>бхр8</pattern>
+  <pattern>бхс8</pattern>
+  <pattern>бхт8</pattern>
+  <pattern>бхф8</pattern>
+  <pattern>бхх8</pattern>
+  <pattern>бхц8</pattern>
+  <pattern>бхч8</pattern>
+  <pattern>бхш8</pattern>
+  <pattern>бхщ8</pattern>
+  <pattern>бцб8</pattern>
+  <pattern>бцв8</pattern>
+  <pattern>бцг8</pattern>
+  <pattern>бцд8</pattern>
+  <pattern>бцж8</pattern>
+  <pattern>бцз8</pattern>
+  <pattern>бцй8</pattern>
+  <pattern>бцк8</pattern>
+  <pattern>бцл8</pattern>
+  <pattern>бцм8</pattern>
+  <pattern>бцн8</pattern>
+  <pattern>бцп8</pattern>
+  <pattern>бцр8</pattern>
+  <pattern>бцс8</pattern>
+  <pattern>бцт8</pattern>
+  <pattern>бцф8</pattern>
+  <pattern>бцх8</pattern>
+  <pattern>бцц8</pattern>
+  <pattern>бцч8</pattern>
+  <pattern>бцш8</pattern>
+  <pattern>бцщ8</pattern>
+  <pattern>бчб8</pattern>
+  <pattern>бчв8</pattern>
+  <pattern>бчг8</pattern>
+  <pattern>бчд8</pattern>
+  <pattern>бчж8</pattern>
+  <pattern>бчз8</pattern>
+  <pattern>бчй8</pattern>
+  <pattern>бчк8</pattern>
+  <pattern>бчл8</pattern>
+  <pattern>бчм8</pattern>
+  <pattern>бчн8</pattern>
+  <pattern>бчп8</pattern>
+  <pattern>бчр8</pattern>
+  <pattern>бчс8</pattern>
+  <pattern>бчт8</pattern>
+  <pattern>бчф8</pattern>
+  <pattern>бчх8</pattern>
+  <pattern>бчц8</pattern>
+  <pattern>бчч8</pattern>
+  <pattern>бчш8</pattern>
+  <pattern>бчщ8</pattern>
+  <pattern>бшб8</pattern>
+  <pattern>бшв8</pattern>
+  <pattern>бшг8</pattern>
+  <pattern>бшд8</pattern>
+  <pattern>бшж8</pattern>
+  <pattern>бшз8</pattern>
+  <pattern>бшй8</pattern>
+  <pattern>бшк8</pattern>
+  <pattern>бшл8</pattern>
+  <pattern>бшм8</pattern>
+  <pattern>бшн8</pattern>
+  <pattern>бшп8</pattern>
+  <pattern>бшр8</pattern>
+  <pattern>бшс8</pattern>
+  <pattern>бшт8</pattern>
+  <pattern>бшф8</pattern>
+  <pattern>бшх8</pattern>
+  <pattern>бшц8</pattern>
+  <pattern>бшч8</pattern>
+  <pattern>бшш8</pattern>
+  <pattern>бшщ8</pattern>
+  <pattern>бщб8</pattern>
+  <pattern>бщв8</pattern>
+  <pattern>бщг8</pattern>
+  <pattern>бщд8</pattern>
+  <pattern>бщж8</pattern>
+  <pattern>бщз8</pattern>
+  <pattern>бщй8</pattern>
+  <pattern>бщк8</pattern>
+  <pattern>бщл8</pattern>
+  <pattern>бщм8</pattern>
+  <pattern>бщн8</pattern>
+  <pattern>бщп8</pattern>
+  <pattern>бщр8</pattern>
+  <pattern>бщс8</pattern>
+  <pattern>бщт8</pattern>
+  <pattern>бщф8</pattern>
+  <pattern>бщх8</pattern>
+  <pattern>бщц8</pattern>
+  <pattern>бщч8</pattern>
+  <pattern>бщш8</pattern>
+  <pattern>бщщ8</pattern>
+  <pattern>в1</pattern>
+  <pattern>в2а</pattern>
+  <pattern>в2е</pattern>
+  <pattern>в2и</pattern>
+  <pattern>в2о</pattern>
+  <pattern>в2у</pattern>
+  <pattern>в2ъ</pattern>
+  <pattern>в2ю</pattern>
+  <pattern>в2я</pattern>
+  <pattern>вй4</pattern>
+  <pattern>вл4</pattern>
+  <pattern>вм4</pattern>
+  <pattern>вн4</pattern>
+  <pattern>вр4</pattern>
+  <pattern>г1</pattern>
+  <pattern>г2а</pattern>
+  <pattern>г2е</pattern>
+  <pattern>г2и</pattern>
+  <pattern>г2о</pattern>
+  <pattern>г2у</pattern>
+  <pattern>г2ъ</pattern>
+  <pattern>г2ю</pattern>
+  <pattern>г2я</pattern>
+  <pattern>гй4</pattern>
+  <pattern>гл4</pattern>
+  <pattern>гм4</pattern>
+  <pattern>гн4</pattern>
+  <pattern>гр4</pattern>
+  <pattern>д1</pattern>
+  <pattern>д2а</pattern>
+  <pattern>д2е</pattern>
+  <pattern>д2и</pattern>
+  <pattern>д2о</pattern>
+  <pattern>д2у</pattern>
+  <pattern>д2ъ</pattern>
+  <pattern>д2ю</pattern>
+  <pattern>д2я</pattern>
+  <pattern>д4ж</pattern>
+  <pattern>д4з</pattern>
+  <pattern>дбб8</pattern>
+  <pattern>дбв8</pattern>
+  <pattern>дбг8</pattern>
+  <pattern>дбд8</pattern>
+  <pattern>дбж8</pattern>
+  <pattern>дбз8</pattern>
+  <pattern>дбй8</pattern>
+  <pattern>дбк8</pattern>
+  <pattern>дбл8</pattern>
+  <pattern>дбм8</pattern>
+  <pattern>дбн8</pattern>
+  <pattern>дбп8</pattern>
+  <pattern>дбр8</pattern>
+  <pattern>дбс8</pattern>
+  <pattern>дбт8</pattern>
+  <pattern>дбф8</pattern>
+  <pattern>дбх8</pattern>
+  <pattern>дбц8</pattern>
+  <pattern>дбч8</pattern>
+  <pattern>дбш8</pattern>
+  <pattern>дбщ8</pattern>
+  <pattern>двб8</pattern>
+  <pattern>двв8</pattern>
+  <pattern>двг8</pattern>
+  <pattern>двд8</pattern>
+  <pattern>двж8</pattern>
+  <pattern>двз8</pattern>
+  <pattern>двй8</pattern>
+  <pattern>двк8</pattern>
+  <pattern>двл8</pattern>
+  <pattern>двм8</pattern>
+  <pattern>двн8</pattern>
+  <pattern>двп8</pattern>
+  <pattern>двр8</pattern>
+  <pattern>двс8</pattern>
+  <pattern>двт8</pattern>
+  <pattern>двф8</pattern>
+  <pattern>двх8</pattern>
+  <pattern>двц8</pattern>
+  <pattern>двч8</pattern>
+  <pattern>двш8</pattern>
+  <pattern>двщ8</pattern>
+  <pattern>дгб8</pattern>
+  <pattern>дгв8</pattern>
+  <pattern>дгг8</pattern>
+  <pattern>дгд8</pattern>
+  <pattern>дгж8</pattern>
+  <pattern>дгз8</pattern>
+  <pattern>дгй8</pattern>
+  <pattern>дгк8</pattern>
+  <pattern>дгл8</pattern>
+  <pattern>дгм8</pattern>
+  <pattern>дгн8</pattern>
+  <pattern>дгп8</pattern>
+  <pattern>дгр8</pattern>
+  <pattern>дгс8</pattern>
+  <pattern>дгт8</pattern>
+  <pattern>дгф8</pattern>
+  <pattern>дгх8</pattern>
+  <pattern>дгц8</pattern>
+  <pattern>дгч8</pattern>
+  <pattern>дгш8</pattern>
+  <pattern>дгщ8</pattern>
+  <pattern>ддб8</pattern>
+  <pattern>ддв8</pattern>
+  <pattern>ддг8</pattern>
+  <pattern>ддд8</pattern>
+  <pattern>ддж8</pattern>
+  <pattern>ддз8</pattern>
+  <pattern>ддй8</pattern>
+  <pattern>ддк8</pattern>
+  <pattern>ддл8</pattern>
+  <pattern>ддм8</pattern>
+  <pattern>ддн8</pattern>
+  <pattern>ддп8</pattern>
+  <pattern>ддр8</pattern>
+  <pattern>ддс8</pattern>
+  <pattern>ддт8</pattern>
+  <pattern>ддф8</pattern>
+  <pattern>ддх8</pattern>
+  <pattern>ддц8</pattern>
+  <pattern>ддч8</pattern>
+  <pattern>ддш8</pattern>
+  <pattern>ддщ8</pattern>
+  <pattern>джб8</pattern>
+  <pattern>джв8</pattern>
+  <pattern>джг8</pattern>
+  <pattern>джд8</pattern>
+  <pattern>джж8</pattern>
+  <pattern>джз8</pattern>
+  <pattern>джй8</pattern>
+  <pattern>джк8</pattern>
+  <pattern>джл8</pattern>
+  <pattern>джм8</pattern>
+  <pattern>джн8</pattern>
+  <pattern>джп8</pattern>
+  <pattern>джр8</pattern>
+  <pattern>джс8</pattern>
+  <pattern>джт8</pattern>
+  <pattern>джф8</pattern>
+  <pattern>джх8</pattern>
+  <pattern>джц8</pattern>
+  <pattern>джч8</pattern>
+  <pattern>джш8</pattern>
+  <pattern>джщ8</pattern>
+  <pattern>дзб8</pattern>
+  <pattern>дзв8</pattern>
+  <pattern>дзг8</pattern>
+  <pattern>дзд8</pattern>
+  <pattern>дзж8</pattern>
+  <pattern>дзз8</pattern>
+  <pattern>дзй8</pattern>
+  <pattern>дзк8</pattern>
+  <pattern>дзл8</pattern>
+  <pattern>дзм8</pattern>
+  <pattern>дзн8</pattern>
+  <pattern>дзп8</pattern>
+  <pattern>дзр8</pattern>
+  <pattern>дзс8</pattern>
+  <pattern>дзт8</pattern>
+  <pattern>дзф8</pattern>
+  <pattern>дзх8</pattern>
+  <pattern>дзц8</pattern>
+  <pattern>дзч8</pattern>
+  <pattern>дзш8</pattern>
+  <pattern>дзщ8</pattern>
+  <pattern>дй4</pattern>
+  <pattern>дйб8</pattern>
+  <pattern>дйв8</pattern>
+  <pattern>дйг8</pattern>
+  <pattern>дйд8</pattern>
+  <pattern>дйж8</pattern>
+  <pattern>дйз8</pattern>
+  <pattern>дйй8</pattern>
+  <pattern>дйк8</pattern>
+  <pattern>дйл8</pattern>
+  <pattern>дйм8</pattern>
+  <pattern>дйн8</pattern>
+  <pattern>дйп8</pattern>
+  <pattern>дйр8</pattern>
+  <pattern>дйс8</pattern>
+  <pattern>дйт8</pattern>
+  <pattern>дйф8</pattern>
+  <pattern>дйх8</pattern>
+  <pattern>дйц8</pattern>
+  <pattern>дйч8</pattern>
+  <pattern>дйш8</pattern>
+  <pattern>дйщ8</pattern>
+  <pattern>дкб8</pattern>
+  <pattern>дкв8</pattern>
+  <pattern>дкг8</pattern>
+  <pattern>дкд8</pattern>
+  <pattern>дкж8</pattern>
+  <pattern>дкз8</pattern>
+  <pattern>дкй8</pattern>
+  <pattern>дкк8</pattern>
+  <pattern>дкл8</pattern>
+  <pattern>дкм8</pattern>
+  <pattern>дкн8</pattern>
+  <pattern>дкп8</pattern>
+  <pattern>дкр8</pattern>
+  <pattern>дкс8</pattern>
+  <pattern>дкт8</pattern>
+  <pattern>дкф8</pattern>
+  <pattern>дкх8</pattern>
+  <pattern>дкц8</pattern>
+  <pattern>дкч8</pattern>
+  <pattern>дкш8</pattern>
+  <pattern>дкщ8</pattern>
+  <pattern>дл4</pattern>
+  <pattern>длб8</pattern>
+  <pattern>длв8</pattern>
+  <pattern>длг8</pattern>
+  <pattern>длд8</pattern>
+  <pattern>длж8</pattern>
+  <pattern>длз8</pattern>
+  <pattern>длй8</pattern>
+  <pattern>длк8</pattern>
+  <pattern>длл8</pattern>
+  <pattern>длм8</pattern>
+  <pattern>длн8</pattern>
+  <pattern>длп8</pattern>
+  <pattern>длр8</pattern>
+  <pattern>длс8</pattern>
+  <pattern>длт8</pattern>
+  <pattern>длф8</pattern>
+  <pattern>длх8</pattern>
+  <pattern>длц8</pattern>
+  <pattern>длч8</pattern>
+  <pattern>длш8</pattern>
+  <pattern>длщ8</pattern>
+  <pattern>дм4</pattern>
+  <pattern>дмб8</pattern>
+  <pattern>дмв8</pattern>
+  <pattern>дмг8</pattern>
+  <pattern>дмд8</pattern>
+  <pattern>дмж8</pattern>
+  <pattern>дмз8</pattern>
+  <pattern>дмй8</pattern>
+  <pattern>дмк8</pattern>
+  <pattern>дмл8</pattern>
+  <pattern>дмм8</pattern>
+  <pattern>дмн8</pattern>
+  <pattern>дмп8</pattern>
+  <pattern>дмр8</pattern>
+  <pattern>дмс8</pattern>
+  <pattern>дмт8</pattern>
+  <pattern>дмф8</pattern>
+  <pattern>дмх8</pattern>
+  <pattern>дмц8</pattern>
+  <pattern>дмч8</pattern>
+  <pattern>дмш8</pattern>
+  <pattern>дмщ8</pattern>
+  <pattern>дн4</pattern>
+  <pattern>днб8</pattern>
+  <pattern>днв8</pattern>
+  <pattern>днг8</pattern>
+  <pattern>днд8</pattern>
+  <pattern>днж8</pattern>
+  <pattern>днз8</pattern>
+  <pattern>днй8</pattern>
+  <pattern>днк8</pattern>
+  <pattern>днл8</pattern>
+  <pattern>днм8</pattern>
+  <pattern>днн8</pattern>
+  <pattern>днп8</pattern>
+  <pattern>днр8</pattern>
+  <pattern>днс8</pattern>
+  <pattern>днт8</pattern>
+  <pattern>днф8</pattern>
+  <pattern>днх8</pattern>
+  <pattern>днц8</pattern>
+  <pattern>днч8</pattern>
+  <pattern>днш8</pattern>
+  <pattern>днщ8</pattern>
+  <pattern>дпб8</pattern>
+  <pattern>дпв8</pattern>
+  <pattern>дпг8</pattern>
+  <pattern>дпд8</pattern>
+  <pattern>дпж8</pattern>
+  <pattern>дпз8</pattern>
+  <pattern>дпй8</pattern>
+  <pattern>дпк8</pattern>
+  <pattern>дпл8</pattern>
+  <pattern>дпм8</pattern>
+  <pattern>дпн8</pattern>
+  <pattern>дпп8</pattern>
+  <pattern>дпр8</pattern>
+  <pattern>дпс8</pattern>
+  <pattern>дпт8</pattern>
+  <pattern>дпф8</pattern>
+  <pattern>дпх8</pattern>
+  <pattern>дпц8</pattern>
+  <pattern>дпч8</pattern>
+  <pattern>дпш8</pattern>
+  <pattern>дпщ8</pattern>
+  <pattern>др4</pattern>
+  <pattern>дрб8</pattern>
+  <pattern>дрв8</pattern>
+  <pattern>дрг8</pattern>
+  <pattern>дрд8</pattern>
+  <pattern>држ8</pattern>
+  <pattern>дрз8</pattern>
+  <pattern>дрй8</pattern>
+  <pattern>дрк8</pattern>
+  <pattern>дрл8</pattern>
+  <pattern>дрм8</pattern>
+  <pattern>дрн8</pattern>
+  <pattern>дрп8</pattern>
+  <pattern>дрр8</pattern>
+  <pattern>дрс8</pattern>
+  <pattern>дрт8</pattern>
+  <pattern>дрф8</pattern>
+  <pattern>дрх8</pattern>
+  <pattern>дрц8</pattern>
+  <pattern>дрч8</pattern>
+  <pattern>дрш8</pattern>
+  <pattern>дрщ8</pattern>
+  <pattern>дсб8</pattern>
+  <pattern>дсв8</pattern>
+  <pattern>дсг8</pattern>
+  <pattern>дсд8</pattern>
+  <pattern>дсж8</pattern>
+  <pattern>дсз8</pattern>
+  <pattern>дсй8</pattern>
+  <pattern>дск8</pattern>
+  <pattern>дсл8</pattern>
+  <pattern>дсм8</pattern>
+  <pattern>дсн8</pattern>
+  <pattern>дсп8</pattern>
+  <pattern>дср8</pattern>
+  <pattern>дсс8</pattern>
+  <pattern>дст8</pattern>
+  <pattern>дсф8</pattern>
+  <pattern>дсх8</pattern>
+  <pattern>дсц8</pattern>
+  <pattern>дсч8</pattern>
+  <pattern>дсш8</pattern>
+  <pattern>дсщ8</pattern>
+  <pattern>дтб8</pattern>
+  <pattern>дтв8</pattern>
+  <pattern>дтг8</pattern>
+  <pattern>дтд8</pattern>
+  <pattern>дтж8</pattern>
+  <pattern>дтз8</pattern>
+  <pattern>дтй8</pattern>
+  <pattern>дтк8</pattern>
+  <pattern>дтл8</pattern>
+  <pattern>дтм8</pattern>
+  <pattern>дтн8</pattern>
+  <pattern>дтп8</pattern>
+  <pattern>дтр8</pattern>
+  <pattern>дтс8</pattern>
+  <pattern>дтт8</pattern>
+  <pattern>дтф8</pattern>
+  <pattern>дтх8</pattern>
+  <pattern>дтц8</pattern>
+  <pattern>дтч8</pattern>
+  <pattern>дтш8</pattern>
+  <pattern>дтщ8</pattern>
+  <pattern>дфб8</pattern>
+  <pattern>дфв8</pattern>
+  <pattern>дфг8</pattern>
+  <pattern>дфд8</pattern>
+  <pattern>дфж8</pattern>
+  <pattern>дфз8</pattern>
+  <pattern>дфй8</pattern>
+  <pattern>дфк8</pattern>
+  <pattern>дфл8</pattern>
+  <pattern>дфм8</pattern>
+  <pattern>дфн8</pattern>
+  <pattern>дфп8</pattern>
+  <pattern>дфр8</pattern>
+  <pattern>дфс8</pattern>
+  <pattern>дфт8</pattern>
+  <pattern>дфф8</pattern>
+  <pattern>дфх8</pattern>
+  <pattern>дфц8</pattern>
+  <pattern>дфч8</pattern>
+  <pattern>дфш8</pattern>
+  <pattern>дфщ8</pattern>
+  <pattern>дхб8</pattern>
+  <pattern>дхв8</pattern>
+  <pattern>дхг8</pattern>
+  <pattern>дхд8</pattern>
+  <pattern>дхж8</pattern>
+  <pattern>дхз8</pattern>
+  <pattern>дхй8</pattern>
+  <pattern>дхк8</pattern>
+  <pattern>дхл8</pattern>
+  <pattern>дхм8</pattern>
+  <pattern>дхн8</pattern>
+  <pattern>дхп8</pattern>
+  <pattern>дхр8</pattern>
+  <pattern>дхс8</pattern>
+  <pattern>дхт8</pattern>
+  <pattern>дхф8</pattern>
+  <pattern>дхх8</pattern>
+  <pattern>дхц8</pattern>
+  <pattern>дхч8</pattern>
+  <pattern>дхш8</pattern>
+  <pattern>дхщ8</pattern>
+  <pattern>дцб8</pattern>
+  <pattern>дцв8</pattern>
+  <pattern>дцг8</pattern>
+  <pattern>дцд8</pattern>
+  <pattern>дцж8</pattern>
+  <pattern>дцз8</pattern>
+  <pattern>дцй8</pattern>
+  <pattern>дцк8</pattern>
+  <pattern>дцл8</pattern>
+  <pattern>дцм8</pattern>
+  <pattern>дцн8</pattern>
+  <pattern>дцп8</pattern>
+  <pattern>дцр8</pattern>
+  <pattern>дцс8</pattern>
+  <pattern>дцт8</pattern>
+  <pattern>дцф8</pattern>
+  <pattern>дцх8</pattern>
+  <pattern>дцц8</pattern>
+  <pattern>дцч8</pattern>
+  <pattern>дцш8</pattern>
+  <pattern>дцщ8</pattern>
+  <pattern>дчб8</pattern>
+  <pattern>дчв8</pattern>
+  <pattern>дчг8</pattern>
+  <pattern>дчд8</pattern>
+  <pattern>дчж8</pattern>
+  <pattern>дчз8</pattern>
+  <pattern>дчй8</pattern>
+  <pattern>дчк8</pattern>
+  <pattern>дчл8</pattern>
+  <pattern>дчм8</pattern>
+  <pattern>дчн8</pattern>
+  <pattern>дчп8</pattern>
+  <pattern>дчр8</pattern>
+  <pattern>дчс8</pattern>
+  <pattern>дчт8</pattern>
+  <pattern>дчф8</pattern>
+  <pattern>дчх8</pattern>
+  <pattern>дчц8</pattern>
+  <pattern>дчч8</pattern>
+  <pattern>дчш8</pattern>
+  <pattern>дчщ8</pattern>
+  <pattern>дшб8</pattern>
+  <pattern>дшв8</pattern>
+  <pattern>дшг8</pattern>
+  <pattern>дшд8</pattern>
+  <pattern>дшж8</pattern>
+  <pattern>дшз8</pattern>
+  <pattern>дшй8</pattern>
+  <pattern>дшк8</pattern>
+  <pattern>дшл8</pattern>
+  <pattern>дшм8</pattern>
+  <pattern>дшн8</pattern>
+  <pattern>дшп8</pattern>
+  <pattern>дшр8</pattern>
+  <pattern>дшс8</pattern>
+  <pattern>дшт8</pattern>
+  <pattern>дшф8</pattern>
+  <pattern>дшх8</pattern>
+  <pattern>дшц8</pattern>
+  <pattern>дшч8</pattern>
+  <pattern>дшш8</pattern>
+  <pattern>дшщ8</pattern>
+  <pattern>дщб8</pattern>
+  <pattern>дщв8</pattern>
+  <pattern>дщг8</pattern>
+  <pattern>дщд8</pattern>
+  <pattern>дщж8</pattern>
+  <pattern>дщз8</pattern>
+  <pattern>дщй8</pattern>
+  <pattern>дщк8</pattern>
+  <pattern>дщл8</pattern>
+  <pattern>дщм8</pattern>
+  <pattern>дщн8</pattern>
+  <pattern>дщп8</pattern>
+  <pattern>дщр8</pattern>
+  <pattern>дщс8</pattern>
+  <pattern>дщт8</pattern>
+  <pattern>дщф8</pattern>
+  <pattern>дщх8</pattern>
+  <pattern>дщц8</pattern>
+  <pattern>дщч8</pattern>
+  <pattern>дщш8</pattern>
+  <pattern>дщщ8</pattern>
+  <pattern>е1</pattern>
+  <pattern>е2б</pattern>
+  <pattern>е2в</pattern>
+  <pattern>е2г</pattern>
+  <pattern>е2д</pattern>
+  <pattern>е2ж</pattern>
+  <pattern>е2з</pattern>
+  <pattern>е2й</pattern>
+  <pattern>е2к</pattern>
+  <pattern>е2л</pattern>
+  <pattern>е2м</pattern>
+  <pattern>е2н</pattern>
+  <pattern>е2п</pattern>
+  <pattern>е2р</pattern>
+  <pattern>е2с</pattern>
+  <pattern>е2т</pattern>
+  <pattern>е2ф</pattern>
+  <pattern>е2х</pattern>
+  <pattern>е2ц</pattern>
+  <pattern>е2ч</pattern>
+  <pattern>е2ш</pattern>
+  <pattern>е2щ</pattern>
+  <pattern>е3ба</pattern>
+  <pattern>е3бе</pattern>
+  <pattern>е3би</pattern>
+  <pattern>е3бо</pattern>
+  <pattern>е3бу</pattern>
+  <pattern>е3бъ</pattern>
+  <pattern>е3бь</pattern>
+  <pattern>е3бю</pattern>
+  <pattern>е3бя</pattern>
+  <pattern>е3ва</pattern>
+  <pattern>е3ве</pattern>
+  <pattern>е3ви</pattern>
+  <pattern>е3во</pattern>
+  <pattern>е3ву</pattern>
+  <pattern>е3въ</pattern>
+  <pattern>е3вь</pattern>
+  <pattern>е3вю</pattern>
+  <pattern>е3вя</pattern>
+  <pattern>е3га</pattern>
+  <pattern>е3ге</pattern>
+  <pattern>е3ги</pattern>
+  <pattern>е3го</pattern>
+  <pattern>е3гу</pattern>
+  <pattern>е3гъ</pattern>
+  <pattern>е3гь</pattern>
+  <pattern>е3гю</pattern>
+  <pattern>е3гя</pattern>
+  <pattern>е3да</pattern>
+  <pattern>е3де</pattern>
+  <pattern>е3джа</pattern>
+  <pattern>е3дже</pattern>
+  <pattern>е3джи</pattern>
+  <pattern>е3джо</pattern>
+  <pattern>е3джу</pattern>
+  <pattern>е3джъ</pattern>
+  <pattern>е3джь</pattern>
+  <pattern>е3джю</pattern>
+  <pattern>е3джя</pattern>
+  <pattern>е3дза</pattern>
+  <pattern>е3дзе</pattern>
+  <pattern>е3дзи</pattern>
+  <pattern>е3дзо</pattern>
+  <pattern>е3дзу</pattern>
+  <pattern>е3дзъ</pattern>
+  <pattern>е3дзь</pattern>
+  <pattern>е3дзю</pattern>
+  <pattern>е3дзя</pattern>
+  <pattern>е3ди</pattern>
+  <pattern>е3до</pattern>
+  <pattern>е3ду</pattern>
+  <pattern>е3дъ</pattern>
+  <pattern>е3дь</pattern>
+  <pattern>е3дю</pattern>
+  <pattern>е3дя</pattern>
+  <pattern>е3жа</pattern>
+  <pattern>е3же</pattern>
+  <pattern>е3жи</pattern>
+  <pattern>е3жо</pattern>
+  <pattern>е3жу</pattern>
+  <pattern>е3жъ</pattern>
+  <pattern>е3жь</pattern>
+  <pattern>е3жю</pattern>
+  <pattern>е3жя</pattern>
+  <pattern>е3за</pattern>
+  <pattern>е3зе</pattern>
+  <pattern>е3зи</pattern>
+  <pattern>е3зо</pattern>
+  <pattern>е3зу</pattern>
+  <pattern>е3зъ</pattern>
+  <pattern>е3зь</pattern>
+  <pattern>е3зю</pattern>
+  <pattern>е3зя</pattern>
+  <pattern>е3йа</pattern>
+  <pattern>е3йе</pattern>
+  <pattern>е3йи</pattern>
+  <pattern>е3йо</pattern>
+  <pattern>е3йу</pattern>
+  <pattern>е3йъ</pattern>
+  <pattern>е3йь</pattern>
+  <pattern>е3йю</pattern>
+  <pattern>е3йя</pattern>
+  <pattern>е3ка</pattern>
+  <pattern>е3ке</pattern>
+  <pattern>е3ки</pattern>
+  <pattern>е3ко</pattern>
+  <pattern>е3ку</pattern>
+  <pattern>е3къ</pattern>
+  <pattern>е3кь</pattern>
+  <pattern>е3кю</pattern>
+  <pattern>е3кя</pattern>
+  <pattern>е3ла</pattern>
+  <pattern>е3ле</pattern>
+  <pattern>е3ли</pattern>
+  <pattern>е3ло</pattern>
+  <pattern>е3лу</pattern>
+  <pattern>е3лъ</pattern>
+  <pattern>е3ль</pattern>
+  <pattern>е3лю</pattern>
+  <pattern>е3ля</pattern>
+  <pattern>е3ма</pattern>
+  <pattern>е3ме</pattern>
+  <pattern>е3ми</pattern>
+  <pattern>е3мо</pattern>
+  <pattern>е3му</pattern>
+  <pattern>е3мъ</pattern>
+  <pattern>е3мь</pattern>
+  <pattern>е3мю</pattern>
+  <pattern>е3мя</pattern>
+  <pattern>е3на</pattern>
+  <pattern>е3не</pattern>
+  <pattern>е3ни</pattern>
+  <pattern>е3но</pattern>
+  <pattern>е3ну</pattern>
+  <pattern>е3нъ</pattern>
+  <pattern>е3нь</pattern>
+  <pattern>е3ню</pattern>
+  <pattern>е3ня</pattern>
+  <pattern>е3па</pattern>
+  <pattern>е3пе</pattern>
+  <pattern>е3пи</pattern>
+  <pattern>е3по</pattern>
+  <pattern>е3пу</pattern>
+  <pattern>е3пъ</pattern>
+  <pattern>е3пь</pattern>
+  <pattern>е3пю</pattern>
+  <pattern>е3пя</pattern>
+  <pattern>е3ра</pattern>
+  <pattern>е3ре</pattern>
+  <pattern>е3ри</pattern>
+  <pattern>е3ро</pattern>
+  <pattern>е3ру</pattern>
+  <pattern>е3ръ</pattern>
+  <pattern>е3рь</pattern>
+  <pattern>е3рю</pattern>
+  <pattern>е3ря</pattern>
+  <pattern>е3са</pattern>
+  <pattern>е3се</pattern>
+  <pattern>е3си</pattern>
+  <pattern>е3со</pattern>
+  <pattern>е3су</pattern>
+  <pattern>е3съ</pattern>
+  <pattern>е3сь</pattern>
+  <pattern>е3сю</pattern>
+  <pattern>е3ся</pattern>
+  <pattern>е3та</pattern>
+  <pattern>е3те</pattern>
+  <pattern>е3ти</pattern>
+  <pattern>е3то</pattern>
+  <pattern>е3ту</pattern>
+  <pattern>е3тъ</pattern>
+  <pattern>е3ть</pattern>
+  <pattern>е3тю</pattern>
+  <pattern>е3тя</pattern>
+  <pattern>е3фа</pattern>
+  <pattern>е3фе</pattern>
+  <pattern>е3фи</pattern>
+  <pattern>е3фо</pattern>
+  <pattern>е3фу</pattern>
+  <pattern>е3фъ</pattern>
+  <pattern>е3фь</pattern>
+  <pattern>е3фю</pattern>
+  <pattern>е3фя</pattern>
+  <pattern>е3ха</pattern>
+  <pattern>е3хе</pattern>
+  <pattern>е3хи</pattern>
+  <pattern>е3хо</pattern>
+  <pattern>е3ху</pattern>
+  <pattern>е3хъ</pattern>
+  <pattern>е3хь</pattern>
+  <pattern>е3хю</pattern>
+  <pattern>е3хя</pattern>
+  <pattern>е3ца</pattern>
+  <pattern>е3це</pattern>
+  <pattern>е3ци</pattern>
+  <pattern>е3цо</pattern>
+  <pattern>е3цу</pattern>
+  <pattern>е3цъ</pattern>
+  <pattern>е3ць</pattern>
+  <pattern>е3цю</pattern>
+  <pattern>е3ця</pattern>
+  <pattern>е3ча</pattern>
+  <pattern>е3че</pattern>
+  <pattern>е3чи</pattern>
+  <pattern>е3чо</pattern>
+  <pattern>е3чу</pattern>
+  <pattern>е3чъ</pattern>
+  <pattern>е3чь</pattern>
+  <pattern>е3чю</pattern>
+  <pattern>е3чя</pattern>
+  <pattern>е3ша</pattern>
+  <pattern>е3ше</pattern>
+  <pattern>е3ши</pattern>
+  <pattern>е3шо</pattern>
+  <pattern>е3шу</pattern>
+  <pattern>е3шъ</pattern>
+  <pattern>е3шь</pattern>
+  <pattern>е3шю</pattern>
+  <pattern>е3шя</pattern>
+  <pattern>е3ща</pattern>
+  <pattern>е3ще</pattern>
+  <pattern>е3щи</pattern>
+  <pattern>е3що</pattern>
+  <pattern>е3щу</pattern>
+  <pattern>е3щъ</pattern>
+  <pattern>е3щь</pattern>
+  <pattern>е3щю</pattern>
+  <pattern>е3щя</pattern>
+  <pattern>еаа4</pattern>
+  <pattern>еае4</pattern>
+  <pattern>еаи4</pattern>
+  <pattern>еао4</pattern>
+  <pattern>еау4</pattern>
+  <pattern>еаъ4</pattern>
+  <pattern>еаю4</pattern>
+  <pattern>еая4</pattern>
+  <pattern>ееа4</pattern>
+  <pattern>еее4</pattern>
+  <pattern>ееи4</pattern>
+  <pattern>еео4</pattern>
+  <pattern>ееу4</pattern>
+  <pattern>ееъ4</pattern>
+  <pattern>еею4</pattern>
+  <pattern>еея4</pattern>
+  <pattern>еиа4</pattern>
+  <pattern>еие4</pattern>
+  <pattern>еии4</pattern>
+  <pattern>еио4</pattern>
+  <pattern>еиу4</pattern>
+  <pattern>еиъ4</pattern>
+  <pattern>еию4</pattern>
+  <pattern>еия4</pattern>
+  <pattern>еоа4</pattern>
+  <pattern>еое4</pattern>
+  <pattern>еои4</pattern>
+  <pattern>еоо4</pattern>
+  <pattern>еоу4</pattern>
+  <pattern>еоъ4</pattern>
+  <pattern>еою4</pattern>
+  <pattern>еоя4</pattern>
+  <pattern>еуа4</pattern>
+  <pattern>еуе4</pattern>
+  <pattern>еуи4</pattern>
+  <pattern>еуо4</pattern>
+  <pattern>еуу4</pattern>
+  <pattern>еуъ4</pattern>
+  <pattern>еую4</pattern>
+  <pattern>еуя4</pattern>
+  <pattern>еъа4</pattern>
+  <pattern>еъе4</pattern>
+  <pattern>еъи4</pattern>
+  <pattern>еъо4</pattern>
+  <pattern>еъу4</pattern>
+  <pattern>еъъ4</pattern>
+  <pattern>еъю4</pattern>
+  <pattern>еъя4</pattern>
+  <pattern>еюа4</pattern>
+  <pattern>еюе4</pattern>
+  <pattern>еюи4</pattern>
+  <pattern>еюо4</pattern>
+  <pattern>еюу4</pattern>
+  <pattern>еюъ4</pattern>
+  <pattern>еюю4</pattern>
+  <pattern>еюя4</pattern>
+  <pattern>еяа4</pattern>
+  <pattern>еяе4</pattern>
+  <pattern>еяи4</pattern>
+  <pattern>еяо4</pattern>
+  <pattern>еяу4</pattern>
+  <pattern>еяъ4</pattern>
+  <pattern>еяю4</pattern>
+  <pattern>еяя4</pattern>
+  <pattern>ж1</pattern>
+  <pattern>ж2а</pattern>
+  <pattern>ж2е</pattern>
+  <pattern>ж2и</pattern>
+  <pattern>ж2о</pattern>
+  <pattern>ж2у</pattern>
+  <pattern>ж2ъ</pattern>
+  <pattern>ж2ю</pattern>
+  <pattern>ж2я</pattern>
+  <pattern>жй4</pattern>
+  <pattern>жл4</pattern>
+  <pattern>жм4</pattern>
+  <pattern>жн4</pattern>
+  <pattern>жр4</pattern>
+  <pattern>з1</pattern>
+  <pattern>з2а</pattern>
+  <pattern>з2е</pattern>
+  <pattern>з2и</pattern>
+  <pattern>з2о</pattern>
+  <pattern>з2у</pattern>
+  <pattern>з2ъ</pattern>
+  <pattern>з2ю</pattern>
+  <pattern>з2я</pattern>
+  <pattern>збб8</pattern>
+  <pattern>збв8</pattern>
+  <pattern>збг8</pattern>
+  <pattern>збд8</pattern>
+  <pattern>збж8</pattern>
+  <pattern>збз8</pattern>
+  <pattern>збй8</pattern>
+  <pattern>збк8</pattern>
+  <pattern>збл8</pattern>
+  <pattern>збм8</pattern>
+  <pattern>збн8</pattern>
+  <pattern>збп8</pattern>
+  <pattern>збр8</pattern>
+  <pattern>збс8</pattern>
+  <pattern>збт8</pattern>
+  <pattern>збф8</pattern>
+  <pattern>збх8</pattern>
+  <pattern>збц8</pattern>
+  <pattern>збч8</pattern>
+  <pattern>збш8</pattern>
+  <pattern>збщ8</pattern>
+  <pattern>звб8</pattern>
+  <pattern>звв8</pattern>
+  <pattern>звг8</pattern>
+  <pattern>звд8</pattern>
+  <pattern>звж8</pattern>
+  <pattern>звз8</pattern>
+  <pattern>звй8</pattern>
+  <pattern>звк8</pattern>
+  <pattern>звл8</pattern>
+  <pattern>звм8</pattern>
+  <pattern>звн8</pattern>
+  <pattern>звп8</pattern>
+  <pattern>звр8</pattern>
+  <pattern>звс8</pattern>
+  <pattern>звт8</pattern>
+  <pattern>звф8</pattern>
+  <pattern>звх8</pattern>
+  <pattern>звц8</pattern>
+  <pattern>звч8</pattern>
+  <pattern>звш8</pattern>
+  <pattern>звщ8</pattern>
+  <pattern>згб8</pattern>
+  <pattern>згв8</pattern>
+  <pattern>згг8</pattern>
+  <pattern>згд8</pattern>
+  <pattern>згж8</pattern>
+  <pattern>згз8</pattern>
+  <pattern>згй8</pattern>
+  <pattern>згк8</pattern>
+  <pattern>згл8</pattern>
+  <pattern>згм8</pattern>
+  <pattern>згн8</pattern>
+  <pattern>згп8</pattern>
+  <pattern>згр8</pattern>
+  <pattern>згс8</pattern>
+  <pattern>згт8</pattern>
+  <pattern>згф8</pattern>
+  <pattern>згх8</pattern>
+  <pattern>згц8</pattern>
+  <pattern>згч8</pattern>
+  <pattern>згш8</pattern>
+  <pattern>згщ8</pattern>
+  <pattern>здб8</pattern>
+  <pattern>здв8</pattern>
+  <pattern>здг8</pattern>
+  <pattern>здд8</pattern>
+  <pattern>здж8</pattern>
+  <pattern>здз8</pattern>
+  <pattern>здй8</pattern>
+  <pattern>здк8</pattern>
+  <pattern>здл8</pattern>
+  <pattern>здм8</pattern>
+  <pattern>здн8</pattern>
+  <pattern>здп8</pattern>
+  <pattern>здр8</pattern>
+  <pattern>здс8</pattern>
+  <pattern>здт8</pattern>
+  <pattern>здф8</pattern>
+  <pattern>здх8</pattern>
+  <pattern>здц8</pattern>
+  <pattern>здч8</pattern>
+  <pattern>здш8</pattern>
+  <pattern>здщ8</pattern>
+  <pattern>зжб8</pattern>
+  <pattern>зжв8</pattern>
+  <pattern>зжг8</pattern>
+  <pattern>зжд8</pattern>
+  <pattern>зжж8</pattern>
+  <pattern>зжз8</pattern>
+  <pattern>зжй8</pattern>
+  <pattern>зжк8</pattern>
+  <pattern>зжл8</pattern>
+  <pattern>зжм8</pattern>
+  <pattern>зжн8</pattern>
+  <pattern>зжп8</pattern>
+  <pattern>зжр8</pattern>
+  <pattern>зжс8</pattern>
+  <pattern>зжт8</pattern>
+  <pattern>зжф8</pattern>
+  <pattern>зжх8</pattern>
+  <pattern>зжц8</pattern>
+  <pattern>зжч8</pattern>
+  <pattern>зжш8</pattern>
+  <pattern>зжщ8</pattern>
+  <pattern>ззб8</pattern>
+  <pattern>ззв8</pattern>
+  <pattern>ззг8</pattern>
+  <pattern>ззд8</pattern>
+  <pattern>ззж8</pattern>
+  <pattern>ззз8</pattern>
+  <pattern>ззй8</pattern>
+  <pattern>ззк8</pattern>
+  <pattern>ззл8</pattern>
+  <pattern>ззм8</pattern>
+  <pattern>ззн8</pattern>
+  <pattern>ззп8</pattern>
+  <pattern>ззр8</pattern>
+  <pattern>ззс8</pattern>
+  <pattern>ззт8</pattern>
+  <pattern>ззф8</pattern>
+  <pattern>ззх8</pattern>
+  <pattern>ззц8</pattern>
+  <pattern>ззч8</pattern>
+  <pattern>ззш8</pattern>
+  <pattern>ззщ8</pattern>
+  <pattern>зй4</pattern>
+  <pattern>зйб8</pattern>
+  <pattern>зйв8</pattern>
+  <pattern>зйг8</pattern>
+  <pattern>зйд8</pattern>
+  <pattern>зйж8</pattern>
+  <pattern>зйз8</pattern>
+  <pattern>зйй8</pattern>
+  <pattern>зйк8</pattern>
+  <pattern>зйл8</pattern>
+  <pattern>зйм8</pattern>
+  <pattern>зйн8</pattern>
+  <pattern>зйп8</pattern>
+  <pattern>зйр8</pattern>
+  <pattern>зйс8</pattern>
+  <pattern>зйт8</pattern>
+  <pattern>зйф8</pattern>
+  <pattern>зйх8</pattern>
+  <pattern>зйц8</pattern>
+  <pattern>зйч8</pattern>
+  <pattern>зйш8</pattern>
+  <pattern>зйщ8</pattern>
+  <pattern>зкб8</pattern>
+  <pattern>зкв8</pattern>
+  <pattern>зкг8</pattern>
+  <pattern>зкд8</pattern>
+  <pattern>зкж8</pattern>
+  <pattern>зкз8</pattern>
+  <pattern>зкй8</pattern>
+  <pattern>зкк8</pattern>
+  <pattern>зкл8</pattern>
+  <pattern>зкм8</pattern>
+  <pattern>зкн8</pattern>
+  <pattern>зкп8</pattern>
+  <pattern>зкр8</pattern>
+  <pattern>зкс8</pattern>
+  <pattern>зкт8</pattern>
+  <pattern>зкф8</pattern>
+  <pattern>зкх8</pattern>
+  <pattern>зкц8</pattern>
+  <pattern>зкч8</pattern>
+  <pattern>зкш8</pattern>
+  <pattern>зкщ8</pattern>
+  <pattern>зл4</pattern>
+  <pattern>злб8</pattern>
+  <pattern>злв8</pattern>
+  <pattern>злг8</pattern>
+  <pattern>злд8</pattern>
+  <pattern>злж8</pattern>
+  <pattern>злз8</pattern>
+  <pattern>злй8</pattern>
+  <pattern>злк8</pattern>
+  <pattern>злл8</pattern>
+  <pattern>злм8</pattern>
+  <pattern>злн8</pattern>
+  <pattern>злп8</pattern>
+  <pattern>злр8</pattern>
+  <pattern>злс8</pattern>
+  <pattern>злт8</pattern>
+  <pattern>злф8</pattern>
+  <pattern>злх8</pattern>
+  <pattern>злц8</pattern>
+  <pattern>злч8</pattern>
+  <pattern>злш8</pattern>
+  <pattern>злщ8</pattern>
+  <pattern>зм4</pattern>
+  <pattern>змб8</pattern>
+  <pattern>змв8</pattern>
+  <pattern>змг8</pattern>
+  <pattern>змд8</pattern>
+  <pattern>змж8</pattern>
+  <pattern>змз8</pattern>
+  <pattern>змй8</pattern>
+  <pattern>змк8</pattern>
+  <pattern>змл8</pattern>
+  <pattern>змм8</pattern>
+  <pattern>змн8</pattern>
+  <pattern>змп8</pattern>
+  <pattern>змр8</pattern>
+  <pattern>змс8</pattern>
+  <pattern>змт8</pattern>
+  <pattern>змф8</pattern>
+  <pattern>змх8</pattern>
+  <pattern>змц8</pattern>
+  <pattern>змч8</pattern>
+  <pattern>змш8</pattern>
+  <pattern>змщ8</pattern>
+  <pattern>зн4</pattern>
+  <pattern>знб8</pattern>
+  <pattern>знв8</pattern>
+  <pattern>знг8</pattern>
+  <pattern>знд8</pattern>
+  <pattern>знж8</pattern>
+  <pattern>знз8</pattern>
+  <pattern>знй8</pattern>
+  <pattern>знк8</pattern>
+  <pattern>знл8</pattern>
+  <pattern>знм8</pattern>
+  <pattern>знн8</pattern>
+  <pattern>знп8</pattern>
+  <pattern>знр8</pattern>
+  <pattern>знс8</pattern>
+  <pattern>знт8</pattern>
+  <pattern>знф8</pattern>
+  <pattern>знх8</pattern>
+  <pattern>знц8</pattern>
+  <pattern>знч8</pattern>
+  <pattern>знш8</pattern>
+  <pattern>знщ8</pattern>
+  <pattern>зпб8</pattern>
+  <pattern>зпв8</pattern>
+  <pattern>зпг8</pattern>
+  <pattern>зпд8</pattern>
+  <pattern>зпж8</pattern>
+  <pattern>зпз8</pattern>
+  <pattern>зпй8</pattern>
+  <pattern>зпк8</pattern>
+  <pattern>зпл8</pattern>
+  <pattern>зпм8</pattern>
+  <pattern>зпн8</pattern>
+  <pattern>зпп8</pattern>
+  <pattern>зпр8</pattern>
+  <pattern>зпс8</pattern>
+  <pattern>зпт8</pattern>
+  <pattern>зпф8</pattern>
+  <pattern>зпх8</pattern>
+  <pattern>зпц8</pattern>
+  <pattern>зпч8</pattern>
+  <pattern>зпш8</pattern>
+  <pattern>зпщ8</pattern>
+  <pattern>зр4</pattern>
+  <pattern>зрб8</pattern>
+  <pattern>зрв8</pattern>
+  <pattern>зрг8</pattern>
+  <pattern>зрд8</pattern>
+  <pattern>зрж8</pattern>
+  <pattern>зрз8</pattern>
+  <pattern>зрй8</pattern>
+  <pattern>зрк8</pattern>
+  <pattern>зрл8</pattern>
+  <pattern>зрм8</pattern>
+  <pattern>зрн8</pattern>
+  <pattern>зрп8</pattern>
+  <pattern>зрр8</pattern>
+  <pattern>зрс8</pattern>
+  <pattern>зрт8</pattern>
+  <pattern>зрф8</pattern>
+  <pattern>зрх8</pattern>
+  <pattern>зрц8</pattern>
+  <pattern>зрч8</pattern>
+  <pattern>зрш8</pattern>
+  <pattern>зрщ8</pattern>
+  <pattern>зсб8</pattern>
+  <pattern>зсв8</pattern>
+  <pattern>зсг8</pattern>
+  <pattern>зсд8</pattern>
+  <pattern>зсж8</pattern>
+  <pattern>зсз8</pattern>
+  <pattern>зсй8</pattern>
+  <pattern>зск8</pattern>
+  <pattern>зсл8</pattern>
+  <pattern>зсм8</pattern>
+  <pattern>зсн8</pattern>
+  <pattern>зсп8</pattern>
+  <pattern>зср8</pattern>
+  <pattern>зсс8</pattern>
+  <pattern>зст8</pattern>
+  <pattern>зсф8</pattern>
+  <pattern>зсх8</pattern>
+  <pattern>зсц8</pattern>
+  <pattern>зсч8</pattern>
+  <pattern>зсш8</pattern>
+  <pattern>зсщ8</pattern>
+  <pattern>зтб8</pattern>
+  <pattern>зтв8</pattern>
+  <pattern>зтг8</pattern>
+  <pattern>зтд8</pattern>
+  <pattern>зтж8</pattern>
+  <pattern>зтз8</pattern>
+  <pattern>зтй8</pattern>
+  <pattern>зтк8</pattern>
+  <pattern>зтл8</pattern>
+  <pattern>зтм8</pattern>
+  <pattern>зтн8</pattern>
+  <pattern>зтп8</pattern>
+  <pattern>зтр8</pattern>
+  <pattern>зтс8</pattern>
+  <pattern>зтт8</pattern>
+  <pattern>зтф8</pattern>
+  <pattern>зтх8</pattern>
+  <pattern>зтц8</pattern>
+  <pattern>зтч8</pattern>
+  <pattern>зтш8</pattern>
+  <pattern>зтщ8</pattern>
+  <pattern>зфб8</pattern>
+  <pattern>зфв8</pattern>
+  <pattern>зфг8</pattern>
+  <pattern>зфд8</pattern>
+  <pattern>зфж8</pattern>
+  <pattern>зфз8</pattern>
+  <pattern>зфй8</pattern>
+  <pattern>зфк8</pattern>
+  <pattern>зфл8</pattern>
+  <pattern>зфм8</pattern>
+  <pattern>зфн8</pattern>
+  <pattern>зфп8</pattern>
+  <pattern>зфр8</pattern>
+  <pattern>зфс8</pattern>
+  <pattern>зфт8</pattern>
+  <pattern>зфф8</pattern>
+  <pattern>зфх8</pattern>
+  <pattern>зфц8</pattern>
+  <pattern>зфч8</pattern>
+  <pattern>зфш8</pattern>
+  <pattern>зфщ8</pattern>
+  <pattern>зхб8</pattern>
+  <pattern>зхв8</pattern>
+  <pattern>зхг8</pattern>
+  <pattern>зхд8</pattern>
+  <pattern>зхж8</pattern>
+  <pattern>зхз8</pattern>
+  <pattern>зхй8</pattern>
+  <pattern>зхк8</pattern>
+  <pattern>зхл8</pattern>
+  <pattern>зхм8</pattern>
+  <pattern>зхн8</pattern>
+  <pattern>зхп8</pattern>
+  <pattern>зхр8</pattern>
+  <pattern>зхс8</pattern>
+  <pattern>зхт8</pattern>
+  <pattern>зхф8</pattern>
+  <pattern>зхх8</pattern>
+  <pattern>зхц8</pattern>
+  <pattern>зхч8</pattern>
+  <pattern>зхш8</pattern>
+  <pattern>зхщ8</pattern>
+  <pattern>зцб8</pattern>
+  <pattern>зцв8</pattern>
+  <pattern>зцг8</pattern>
+  <pattern>зцд8</pattern>
+  <pattern>зцж8</pattern>
+  <pattern>зцз8</pattern>
+  <pattern>зцй8</pattern>
+  <pattern>зцк8</pattern>
+  <pattern>зцл8</pattern>
+  <pattern>зцм8</pattern>
+  <pattern>зцн8</pattern>
+  <pattern>зцп8</pattern>
+  <pattern>зцр8</pattern>
+  <pattern>зцс8</pattern>
+  <pattern>зцт8</pattern>
+  <pattern>зцф8</pattern>
+  <pattern>зцх8</pattern>
+  <pattern>зцц8</pattern>
+  <pattern>зцч8</pattern>
+  <pattern>зцш8</pattern>
+  <pattern>зцщ8</pattern>
+  <pattern>зчб8</pattern>
+  <pattern>зчв8</pattern>
+  <pattern>зчг8</pattern>
+  <pattern>зчд8</pattern>
+  <pattern>зчж8</pattern>
+  <pattern>зчз8</pattern>
+  <pattern>зчй8</pattern>
+  <pattern>зчк8</pattern>
+  <pattern>зчл8</pattern>
+  <pattern>зчм8</pattern>
+  <pattern>зчн8</pattern>
+  <pattern>зчп8</pattern>
+  <pattern>зчр8</pattern>
+  <pattern>зчс8</pattern>
+  <pattern>зчт8</pattern>
+  <pattern>зчф8</pattern>
+  <pattern>зчх8</pattern>
+  <pattern>зчц8</pattern>
+  <pattern>зчч8</pattern>
+  <pattern>зчш8</pattern>
+  <pattern>зчщ8</pattern>
+  <pattern>зшб8</pattern>
+  <pattern>зшв8</pattern>
+  <pattern>зшг8</pattern>
+  <pattern>зшд8</pattern>
+  <pattern>зшж8</pattern>
+  <pattern>зшз8</pattern>
+  <pattern>зшй8</pattern>
+  <pattern>зшк8</pattern>
+  <pattern>зшл8</pattern>
+  <pattern>зшм8</pattern>
+  <pattern>зшн8</pattern>
+  <pattern>зшп8</pattern>
+  <pattern>зшр8</pattern>
+  <pattern>зшс8</pattern>
+  <pattern>зшт8</pattern>
+  <pattern>зшф8</pattern>
+  <pattern>зшх8</pattern>
+  <pattern>зшц8</pattern>
+  <pattern>зшч8</pattern>
+  <pattern>зшш8</pattern>
+  <pattern>зшщ8</pattern>
+  <pattern>зщб8</pattern>
+  <pattern>зщв8</pattern>
+  <pattern>зщг8</pattern>
+  <pattern>зщд8</pattern>
+  <pattern>зщж8</pattern>
+  <pattern>зщз8</pattern>
+  <pattern>зщй8</pattern>
+  <pattern>зщк8</pattern>
+  <pattern>зщл8</pattern>
+  <pattern>зщм8</pattern>
+  <pattern>зщн8</pattern>
+  <pattern>зщп8</pattern>
+  <pattern>зщр8</pattern>
+  <pattern>зщс8</pattern>
+  <pattern>зщт8</pattern>
+  <pattern>зщф8</pattern>
+  <pattern>зщх8</pattern>
+  <pattern>зщц8</pattern>
+  <pattern>зщч8</pattern>
+  <pattern>зщш8</pattern>
+  <pattern>зщщ8</pattern>
+  <pattern>и1</pattern>
+  <pattern>и2б</pattern>
+  <pattern>и2в</pattern>
+  <pattern>и2г</pattern>
+  <pattern>и2д</pattern>
+  <pattern>и2ж</pattern>
+  <pattern>и2з</pattern>
+  <pattern>и2й</pattern>
+  <pattern>и2к</pattern>
+  <pattern>и2л</pattern>
+  <pattern>и2м</pattern>
+  <pattern>и2н</pattern>
+  <pattern>и2п</pattern>
+  <pattern>и2р</pattern>
+  <pattern>и2с</pattern>
+  <pattern>и2т</pattern>
+  <pattern>и2ф</pattern>
+  <pattern>и2х</pattern>
+  <pattern>и2ц</pattern>
+  <pattern>и2ч</pattern>
+  <pattern>и2ш</pattern>
+  <pattern>и2щ</pattern>
+  <pattern>и3ба</pattern>
+  <pattern>и3бе</pattern>
+  <pattern>и3би</pattern>
+  <pattern>и3бо</pattern>
+  <pattern>и3бу</pattern>
+  <pattern>и3бъ</pattern>
+  <pattern>и3бь</pattern>
+  <pattern>и3бю</pattern>
+  <pattern>и3бя</pattern>
+  <pattern>и3ва</pattern>
+  <pattern>и3ве</pattern>
+  <pattern>и3ви</pattern>
+  <pattern>и3во</pattern>
+  <pattern>и3ву</pattern>
+  <pattern>и3въ</pattern>
+  <pattern>и3вь</pattern>
+  <pattern>и3вю</pattern>
+  <pattern>и3вя</pattern>
+  <pattern>и3га</pattern>
+  <pattern>и3ге</pattern>
+  <pattern>и3ги</pattern>
+  <pattern>и3го</pattern>
+  <pattern>и3гу</pattern>
+  <pattern>и3гъ</pattern>
+  <pattern>и3гь</pattern>
+  <pattern>и3гю</pattern>
+  <pattern>и3гя</pattern>
+  <pattern>и3да</pattern>
+  <pattern>и3де</pattern>
+  <pattern>и3джа</pattern>
+  <pattern>и3дже</pattern>
+  <pattern>и3джи</pattern>
+  <pattern>и3джо</pattern>
+  <pattern>и3джу</pattern>
+  <pattern>и3джъ</pattern>
+  <pattern>и3джь</pattern>
+  <pattern>и3джю</pattern>
+  <pattern>и3джя</pattern>
+  <pattern>и3дза</pattern>
+  <pattern>и3дзе</pattern>
+  <pattern>и3дзи</pattern>
+  <pattern>и3дзо</pattern>
+  <pattern>и3дзу</pattern>
+  <pattern>и3дзъ</pattern>
+  <pattern>и3дзь</pattern>
+  <pattern>и3дзю</pattern>
+  <pattern>и3дзя</pattern>
+  <pattern>и3ди</pattern>
+  <pattern>и3до</pattern>
+  <pattern>и3ду</pattern>
+  <pattern>и3дъ</pattern>
+  <pattern>и3дь</pattern>
+  <pattern>и3дю</pattern>
+  <pattern>и3дя</pattern>
+  <pattern>и3жа</pattern>
+  <pattern>и3же</pattern>
+  <pattern>и3жи</pattern>
+  <pattern>и3жо</pattern>
+  <pattern>и3жу</pattern>
+  <pattern>и3жъ</pattern>
+  <pattern>и3жь</pattern>
+  <pattern>и3жю</pattern>
+  <pattern>и3жя</pattern>
+  <pattern>и3за</pattern>
+  <pattern>и3зе</pattern>
+  <pattern>и3зи</pattern>
+  <pattern>и3зо</pattern>
+  <pattern>и3зу</pattern>
+  <pattern>и3зъ</pattern>
+  <pattern>и3зь</pattern>
+  <pattern>и3зю</pattern>
+  <pattern>и3зя</pattern>
+  <pattern>и3йа</pattern>
+  <pattern>и3йе</pattern>
+  <pattern>и3йи</pattern>
+  <pattern>и3йо</pattern>
+  <pattern>и3йу</pattern>
+  <pattern>и3йъ</pattern>
+  <pattern>и3йь</pattern>
+  <pattern>и3йю</pattern>
+  <pattern>и3йя</pattern>
+  <pattern>и3ка</pattern>
+  <pattern>и3ке</pattern>
+  <pattern>и3ки</pattern>
+  <pattern>и3ко</pattern>
+  <pattern>и3ку</pattern>
+  <pattern>и3къ</pattern>
+  <pattern>и3кь</pattern>
+  <pattern>и3кю</pattern>
+  <pattern>и3кя</pattern>
+  <pattern>и3ла</pattern>
+  <pattern>и3ле</pattern>
+  <pattern>и3ли</pattern>
+  <pattern>и3ло</pattern>
+  <pattern>и3лу</pattern>
+  <pattern>и3лъ</pattern>
+  <pattern>и3ль</pattern>
+  <pattern>и3лю</pattern>
+  <pattern>и3ля</pattern>
+  <pattern>и3ма</pattern>
+  <pattern>и3ме</pattern>
+  <pattern>и3ми</pattern>
+  <pattern>и3мо</pattern>
+  <pattern>и3му</pattern>
+  <pattern>и3мъ</pattern>
+  <pattern>и3мь</pattern>
+  <pattern>и3мю</pattern>
+  <pattern>и3мя</pattern>
+  <pattern>и3на</pattern>
+  <pattern>и3не</pattern>
+  <pattern>и3ни</pattern>
+  <pattern>и3но</pattern>
+  <pattern>и3ну</pattern>
+  <pattern>и3нъ</pattern>
+  <pattern>и3нь</pattern>
+  <pattern>и3ню</pattern>
+  <pattern>и3ня</pattern>
+  <pattern>и3па</pattern>
+  <pattern>и3пе</pattern>
+  <pattern>и3пи</pattern>
+  <pattern>и3по</pattern>
+  <pattern>и3пу</pattern>
+  <pattern>и3пъ</pattern>
+  <pattern>и3пь</pattern>
+  <pattern>и3пю</pattern>
+  <pattern>и3пя</pattern>
+  <pattern>и3ра</pattern>
+  <pattern>и3ре</pattern>
+  <pattern>и3ри</pattern>
+  <pattern>и3ро</pattern>
+  <pattern>и3ру</pattern>
+  <pattern>и3ръ</pattern>
+  <pattern>и3рь</pattern>
+  <pattern>и3рю</pattern>
+  <pattern>и3ря</pattern>
+  <pattern>и3са</pattern>
+  <pattern>и3се</pattern>
+  <pattern>и3си</pattern>
+  <pattern>и3со</pattern>
+  <pattern>и3су</pattern>
+  <pattern>и3съ</pattern>
+  <pattern>и3сь</pattern>
+  <pattern>и3сю</pattern>
+  <pattern>и3ся</pattern>
+  <pattern>и3та</pattern>
+  <pattern>и3те</pattern>
+  <pattern>и3ти</pattern>
+  <pattern>и3то</pattern>
+  <pattern>и3ту</pattern>
+  <pattern>и3тъ</pattern>
+  <pattern>и3ть</pattern>
+  <pattern>и3тю</pattern>
+  <pattern>и3тя</pattern>
+  <pattern>и3фа</pattern>
+  <pattern>и3фе</pattern>
+  <pattern>и3фи</pattern>
+  <pattern>и3фо</pattern>
+  <pattern>и3фу</pattern>
+  <pattern>и3фъ</pattern>
+  <pattern>и3фь</pattern>
+  <pattern>и3фю</pattern>
+  <pattern>и3фя</pattern>
+  <pattern>и3ха</pattern>
+  <pattern>и3хе</pattern>
+  <pattern>и3хи</pattern>
+  <pattern>и3хо</pattern>
+  <pattern>и3ху</pattern>
+  <pattern>и3хъ</pattern>
+  <pattern>и3хь</pattern>
+  <pattern>и3хю</pattern>
+  <pattern>и3хя</pattern>
+  <pattern>и3ца</pattern>
+  <pattern>и3це</pattern>
+  <pattern>и3ци</pattern>
+  <pattern>и3цо</pattern>
+  <pattern>и3цу</pattern>
+  <pattern>и3цъ</pattern>
+  <pattern>и3ць</pattern>
+  <pattern>и3цю</pattern>
+  <pattern>и3ця</pattern>
+  <pattern>и3ча</pattern>
+  <pattern>и3че</pattern>
+  <pattern>и3чи</pattern>
+  <pattern>и3чо</pattern>
+  <pattern>и3чу</pattern>
+  <pattern>и3чъ</pattern>
+  <pattern>и3чь</pattern>
+  <pattern>и3чю</pattern>
+  <pattern>и3чя</pattern>
+  <pattern>и3ша</pattern>
+  <pattern>и3ше</pattern>
+  <pattern>и3ши</pattern>
+  <pattern>и3шо</pattern>
+  <pattern>и3шу</pattern>
+  <pattern>и3шъ</pattern>
+  <pattern>и3шь</pattern>
+  <pattern>и3шю</pattern>
+  <pattern>и3шя</pattern>
+  <pattern>и3ща</pattern>
+  <pattern>и3ще</pattern>
+  <pattern>и3щи</pattern>
+  <pattern>и3що</pattern>
+  <pattern>и3щу</pattern>
+  <pattern>и3щъ</pattern>
+  <pattern>и3щь</pattern>
+  <pattern>и3щю</pattern>
+  <pattern>и3щя</pattern>
+  <pattern>иаа4</pattern>
+  <pattern>иае4</pattern>
+  <pattern>иаи4</pattern>
+  <pattern>иао4</pattern>
+  <pattern>иау4</pattern>
+  <pattern>иаъ4</pattern>
+  <pattern>иаю4</pattern>
+  <pattern>иая4</pattern>
+  <pattern>иеа4</pattern>
+  <pattern>иее4</pattern>
+  <pattern>иеи4</pattern>
+  <pattern>иео4</pattern>
+  <pattern>иеу4</pattern>
+  <pattern>иеъ4</pattern>
+  <pattern>иею4</pattern>
+  <pattern>иея4</pattern>
+  <pattern>ииа4</pattern>
+  <pattern>иие4</pattern>
+  <pattern>иии4</pattern>
+  <pattern>иио4</pattern>
+  <pattern>ииу4</pattern>
+  <pattern>ииъ4</pattern>
+  <pattern>иию4</pattern>
+  <pattern>иия4</pattern>
+  <pattern>иоа4</pattern>
+  <pattern>иое4</pattern>
+  <pattern>иои4</pattern>
+  <pattern>иоо4</pattern>
+  <pattern>иоу4</pattern>
+  <pattern>иоъ4</pattern>
+  <pattern>иою4</pattern>
+  <pattern>иоя4</pattern>
+  <pattern>иуа4</pattern>
+  <pattern>иуе4</pattern>
+  <pattern>иуи4</pattern>
+  <pattern>иуо4</pattern>
+  <pattern>иуу4</pattern>
+  <pattern>иуъ4</pattern>
+  <pattern>иую4</pattern>
+  <pattern>иуя4</pattern>
+  <pattern>иъа4</pattern>
+  <pattern>иъе4</pattern>
+  <pattern>иъи4</pattern>
+  <pattern>иъо4</pattern>
+  <pattern>иъу4</pattern>
+  <pattern>иъъ4</pattern>
+  <pattern>иъю4</pattern>
+  <pattern>иъя4</pattern>
+  <pattern>июа4</pattern>
+  <pattern>июе4</pattern>
+  <pattern>июи4</pattern>
+  <pattern>июо4</pattern>
+  <pattern>июу4</pattern>
+  <pattern>июъ4</pattern>
+  <pattern>июю4</pattern>
+  <pattern>июя4</pattern>
+  <pattern>ияа4</pattern>
+  <pattern>ияе4</pattern>
+  <pattern>ияи4</pattern>
+  <pattern>ияо4</pattern>
+  <pattern>ияу4</pattern>
+  <pattern>ияъ4</pattern>
+  <pattern>ияю4</pattern>
+  <pattern>ияя4</pattern>
+  <pattern>й1ба</pattern>
+  <pattern>й1бе</pattern>
+  <pattern>й1би</pattern>
+  <pattern>й1бо</pattern>
+  <pattern>й1бу</pattern>
+  <pattern>й1бъ</pattern>
+  <pattern>й1бю</pattern>
+  <pattern>й1бя</pattern>
+  <pattern>й1ва</pattern>
+  <pattern>й1ве</pattern>
+  <pattern>й1ви</pattern>
+  <pattern>й1во</pattern>
+  <pattern>й1ву</pattern>
+  <pattern>й1въ</pattern>
+  <pattern>й1вю</pattern>
+  <pattern>й1вя</pattern>
+  <pattern>й1га</pattern>
+  <pattern>й1ге</pattern>
+  <pattern>й1ги</pattern>
+  <pattern>й1го</pattern>
+  <pattern>й1гу</pattern>
+  <pattern>й1гъ</pattern>
+  <pattern>й1гю</pattern>
+  <pattern>й1гя</pattern>
+  <pattern>й1да</pattern>
+  <pattern>й1де</pattern>
+  <pattern>й1ди</pattern>
+  <pattern>й1до</pattern>
+  <pattern>й1ду</pattern>
+  <pattern>й1дъ</pattern>
+  <pattern>й1дю</pattern>
+  <pattern>й1дя</pattern>
+  <pattern>й1жа</pattern>
+  <pattern>й1же</pattern>
+  <pattern>й1жи</pattern>
+  <pattern>й1жо</pattern>
+  <pattern>й1жу</pattern>
+  <pattern>й1жъ</pattern>
+  <pattern>й1жю</pattern>
+  <pattern>й1жя</pattern>
+  <pattern>й1за</pattern>
+  <pattern>й1зе</pattern>
+  <pattern>й1зи</pattern>
+  <pattern>й1зо</pattern>
+  <pattern>й1зу</pattern>
+  <pattern>й1зъ</pattern>
+  <pattern>й1зю</pattern>
+  <pattern>й1зя</pattern>
+  <pattern>й1йа</pattern>
+  <pattern>й1йе</pattern>
+  <pattern>й1йи</pattern>
+  <pattern>й1йо</pattern>
+  <pattern>й1йу</pattern>
+  <pattern>й1йъ</pattern>
+  <pattern>й1йю</pattern>
+  <pattern>й1йя</pattern>
+  <pattern>й1ка</pattern>
+  <pattern>й1ке</pattern>
+  <pattern>й1ки</pattern>
+  <pattern>й1ко</pattern>
+  <pattern>й1ку</pattern>
+  <pattern>й1къ</pattern>
+  <pattern>й1кю</pattern>
+  <pattern>й1кя</pattern>
+  <pattern>й1ла</pattern>
+  <pattern>й1ле</pattern>
+  <pattern>й1ли</pattern>
+  <pattern>й1ло</pattern>
+  <pattern>й1лу</pattern>
+  <pattern>й1лъ</pattern>
+  <pattern>й1лю</pattern>
+  <pattern>й1ля</pattern>
+  <pattern>й1ма</pattern>
+  <pattern>й1ме</pattern>
+  <pattern>й1ми</pattern>
+  <pattern>й1мо</pattern>
+  <pattern>й1му</pattern>
+  <pattern>й1мъ</pattern>
+  <pattern>й1мю</pattern>
+  <pattern>й1мя</pattern>
+  <pattern>й1на</pattern>
+  <pattern>й1не</pattern>
+  <pattern>й1ни</pattern>
+  <pattern>й1но</pattern>
+  <pattern>й1ну</pattern>
+  <pattern>й1нъ</pattern>
+  <pattern>й1ню</pattern>
+  <pattern>й1ня</pattern>
+  <pattern>й1па</pattern>
+  <pattern>й1пе</pattern>
+  <pattern>й1пи</pattern>
+  <pattern>й1по</pattern>
+  <pattern>й1пу</pattern>
+  <pattern>й1пъ</pattern>
+  <pattern>й1пю</pattern>
+  <pattern>й1пя</pattern>
+  <pattern>й1ра</pattern>
+  <pattern>й1ре</pattern>
+  <pattern>й1ри</pattern>
+  <pattern>й1ро</pattern>
+  <pattern>й1ру</pattern>
+  <pattern>й1ръ</pattern>
+  <pattern>й1рю</pattern>
+  <pattern>й1ря</pattern>
+  <pattern>й1са</pattern>
+  <pattern>й1се</pattern>
+  <pattern>й1си</pattern>
+  <pattern>й1со</pattern>
+  <pattern>й1су</pattern>
+  <pattern>й1съ</pattern>
+  <pattern>й1сю</pattern>
+  <pattern>й1ся</pattern>
+  <pattern>й1та</pattern>
+  <pattern>й1те</pattern>
+  <pattern>й1ти</pattern>
+  <pattern>й1то</pattern>
+  <pattern>й1ту</pattern>
+  <pattern>й1тъ</pattern>
+  <pattern>й1тю</pattern>
+  <pattern>й1тя</pattern>
+  <pattern>й1фа</pattern>
+  <pattern>й1фе</pattern>
+  <pattern>й1фи</pattern>
+  <pattern>й1фо</pattern>
+  <pattern>й1фу</pattern>
+  <pattern>й1фъ</pattern>
+  <pattern>й1фю</pattern>
+  <pattern>й1фя</pattern>
+  <pattern>й1ха</pattern>
+  <pattern>й1хе</pattern>
+  <pattern>й1хи</pattern>
+  <pattern>й1хо</pattern>
+  <pattern>й1ху</pattern>
+  <pattern>й1хъ</pattern>
+  <pattern>й1хю</pattern>
+  <pattern>й1хя</pattern>
+  <pattern>й1ца</pattern>
+  <pattern>й1це</pattern>
+  <pattern>й1ци</pattern>
+  <pattern>й1цо</pattern>
+  <pattern>й1цу</pattern>
+  <pattern>й1цъ</pattern>
+  <pattern>й1цю</pattern>
+  <pattern>й1ця</pattern>
+  <pattern>й1ча</pattern>
+  <pattern>й1че</pattern>
+  <pattern>й1чи</pattern>
+  <pattern>й1чо</pattern>
+  <pattern>й1чу</pattern>
+  <pattern>й1чъ</pattern>
+  <pattern>й1чю</pattern>
+  <pattern>й1чя</pattern>
+  <pattern>й1ша</pattern>
+  <pattern>й1ше</pattern>
+  <pattern>й1ши</pattern>
+  <pattern>й1шо</pattern>
+  <pattern>й1шу</pattern>
+  <pattern>й1шъ</pattern>
+  <pattern>й1шю</pattern>
+  <pattern>й1шя</pattern>
+  <pattern>й1ща</pattern>
+  <pattern>й1ще</pattern>
+  <pattern>й1щи</pattern>
+  <pattern>й1що</pattern>
+  <pattern>й1щу</pattern>
+  <pattern>й1щъ</pattern>
+  <pattern>й1щю</pattern>
+  <pattern>й1щя</pattern>
+  <pattern>й2а</pattern>
+  <pattern>й2е</pattern>
+  <pattern>й2и</pattern>
+  <pattern>й2о</pattern>
+  <pattern>й2у</pattern>
+  <pattern>й2ъ</pattern>
+  <pattern>й2ю</pattern>
+  <pattern>й2я</pattern>
+  <pattern>к1</pattern>
+  <pattern>к2а</pattern>
+  <pattern>к2е</pattern>
+  <pattern>к2и</pattern>
+  <pattern>к2о</pattern>
+  <pattern>к2у</pattern>
+  <pattern>к2ъ</pattern>
+  <pattern>к2ю</pattern>
+  <pattern>к2я</pattern>
+  <pattern>кй4</pattern>
+  <pattern>кл4</pattern>
+  <pattern>км4</pattern>
+  <pattern>кн4</pattern>
+  <pattern>кр4</pattern>
+  <pattern>л1</pattern>
+  <pattern>л2а</pattern>
+  <pattern>л2е</pattern>
+  <pattern>л2и</pattern>
+  <pattern>л2о</pattern>
+  <pattern>л2у</pattern>
+  <pattern>л2ъ</pattern>
+  <pattern>л2ю</pattern>
+  <pattern>л2я</pattern>
+  <pattern>м1</pattern>
+  <pattern>м2а</pattern>
+  <pattern>м2е</pattern>
+  <pattern>м2и</pattern>
+  <pattern>м2о</pattern>
+  <pattern>м2у</pattern>
+  <pattern>м2ъ</pattern>
+  <pattern>м2ю</pattern>
+  <pattern>м2я</pattern>
+  <pattern>н1</pattern>
+  <pattern>н2а</pattern>
+  <pattern>н2е</pattern>
+  <pattern>н2и</pattern>
+  <pattern>н2о</pattern>
+  <pattern>н2у</pattern>
+  <pattern>н2ъ</pattern>
+  <pattern>н2ю</pattern>
+  <pattern>н2я</pattern>
+  <pattern>о1</pattern>
+  <pattern>о2б</pattern>
+  <pattern>о2в</pattern>
+  <pattern>о2г</pattern>
+  <pattern>о2д</pattern>
+  <pattern>о2ж</pattern>
+  <pattern>о2з</pattern>
+  <pattern>о2й</pattern>
+  <pattern>о2к</pattern>
+  <pattern>о2л</pattern>
+  <pattern>о2м</pattern>
+  <pattern>о2н</pattern>
+  <pattern>о2п</pattern>
+  <pattern>о2р</pattern>
+  <pattern>о2с</pattern>
+  <pattern>о2т</pattern>
+  <pattern>о2ф</pattern>
+  <pattern>о2х</pattern>
+  <pattern>о2ц</pattern>
+  <pattern>о2ч</pattern>
+  <pattern>о2ш</pattern>
+  <pattern>о2щ</pattern>
+  <pattern>о3ба</pattern>
+  <pattern>о3бе</pattern>
+  <pattern>о3би</pattern>
+  <pattern>о3бо</pattern>
+  <pattern>о3бу</pattern>
+  <pattern>о3бъ</pattern>
+  <pattern>о3бь</pattern>
+  <pattern>о3бю</pattern>
+  <pattern>о3бя</pattern>
+  <pattern>о3ва</pattern>
+  <pattern>о3ве</pattern>
+  <pattern>о3ви</pattern>
+  <pattern>о3во</pattern>
+  <pattern>о3ву</pattern>
+  <pattern>о3въ</pattern>
+  <pattern>о3вь</pattern>
+  <pattern>о3вю</pattern>
+  <pattern>о3вя</pattern>
+  <pattern>о3га</pattern>
+  <pattern>о3ге</pattern>
+  <pattern>о3ги</pattern>
+  <pattern>о3го</pattern>
+  <pattern>о3гу</pattern>
+  <pattern>о3гъ</pattern>
+  <pattern>о3гь</pattern>
+  <pattern>о3гю</pattern>
+  <pattern>о3гя</pattern>
+  <pattern>о3да</pattern>
+  <pattern>о3де</pattern>
+  <pattern>о3джа</pattern>
+  <pattern>о3дже</pattern>
+  <pattern>о3джи</pattern>
+  <pattern>о3джо</pattern>
+  <pattern>о3джу</pattern>
+  <pattern>о3джъ</pattern>
+  <pattern>о3джь</pattern>
+  <pattern>о3джю</pattern>
+  <pattern>о3джя</pattern>
+  <pattern>о3дза</pattern>
+  <pattern>о3дзе</pattern>
+  <pattern>о3дзи</pattern>
+  <pattern>о3дзо</pattern>
+  <pattern>о3дзу</pattern>
+  <pattern>о3дзъ</pattern>
+  <pattern>о3дзь</pattern>
+  <pattern>о3дзю</pattern>
+  <pattern>о3дзя</pattern>
+  <pattern>о3ди</pattern>
+  <pattern>о3до</pattern>
+  <pattern>о3ду</pattern>
+  <pattern>о3дъ</pattern>
+  <pattern>о3дь</pattern>
+  <pattern>о3дю</pattern>
+  <pattern>о3дя</pattern>
+  <pattern>о3жа</pattern>
+  <pattern>о3же</pattern>
+  <pattern>о3жи</pattern>
+  <pattern>о3жо</pattern>
+  <pattern>о3жу</pattern>
+  <pattern>о3жъ</pattern>
+  <pattern>о3жь</pattern>
+  <pattern>о3жю</pattern>
+  <pattern>о3жя</pattern>
+  <pattern>о3за</pattern>
+  <pattern>о3зе</pattern>
+  <pattern>о3зи</pattern>
+  <pattern>о3зо</pattern>
+  <pattern>о3зу</pattern>
+  <pattern>о3зъ</pattern>
+  <pattern>о3зь</pattern>
+  <pattern>о3зю</pattern>
+  <pattern>о3зя</pattern>
+  <pattern>о3йа</pattern>
+  <pattern>о3йе</pattern>
+  <pattern>о3йи</pattern>
+  <pattern>о3йо</pattern>
+  <pattern>о3йу</pattern>
+  <pattern>о3йъ</pattern>
+  <pattern>о3йь</pattern>
+  <pattern>о3йю</pattern>
+  <pattern>о3йя</pattern>
+  <pattern>о3ка</pattern>
+  <pattern>о3ке</pattern>
+  <pattern>о3ки</pattern>
+  <pattern>о3ко</pattern>
+  <pattern>о3ку</pattern>
+  <pattern>о3къ</pattern>
+  <pattern>о3кь</pattern>
+  <pattern>о3кю</pattern>
+  <pattern>о3кя</pattern>
+  <pattern>о3ла</pattern>
+  <pattern>о3ле</pattern>
+  <pattern>о3ли</pattern>
+  <pattern>о3ло</pattern>
+  <pattern>о3лу</pattern>
+  <pattern>о3лъ</pattern>
+  <pattern>о3ль</pattern>
+  <pattern>о3лю</pattern>
+  <pattern>о3ля</pattern>
+  <pattern>о3ма</pattern>
+  <pattern>о3ме</pattern>
+  <pattern>о3ми</pattern>
+  <pattern>о3мо</pattern>
+  <pattern>о3му</pattern>
+  <pattern>о3мъ</pattern>
+  <pattern>о3мь</pattern>
+  <pattern>о3мю</pattern>
+  <pattern>о3мя</pattern>
+  <pattern>о3на</pattern>
+  <pattern>о3не</pattern>
+  <pattern>о3ни</pattern>
+  <pattern>о3но</pattern>
+  <pattern>о3ну</pattern>
+  <pattern>о3нъ</pattern>
+  <pattern>о3нь</pattern>
+  <pattern>о3ню</pattern>
+  <pattern>о3ня</pattern>
+  <pattern>о3па</pattern>
+  <pattern>о3пе</pattern>
+  <pattern>о3пи</pattern>
+  <pattern>о3по</pattern>
+  <pattern>о3пу</pattern>
+  <pattern>о3пъ</pattern>
+  <pattern>о3пь</pattern>
+  <pattern>о3пю</pattern>
+  <pattern>о3пя</pattern>
+  <pattern>о3ра</pattern>
+  <pattern>о3ре</pattern>
+  <pattern>о3ри</pattern>
+  <pattern>о3ро</pattern>
+  <pattern>о3ру</pattern>
+  <pattern>о3ръ</pattern>
+  <pattern>о3рь</pattern>
+  <pattern>о3рю</pattern>
+  <pattern>о3ря</pattern>
+  <pattern>о3са</pattern>
+  <pattern>о3се</pattern>
+  <pattern>о3си</pattern>
+  <pattern>о3со</pattern>
+  <pattern>о3су</pattern>
+  <pattern>о3съ</pattern>
+  <pattern>о3сь</pattern>
+  <pattern>о3сю</pattern>
+  <pattern>о3ся</pattern>
+  <pattern>о3та</pattern>
+  <pattern>о3те</pattern>
+  <pattern>о3ти</pattern>
+  <pattern>о3то</pattern>
+  <pattern>о3ту</pattern>
+  <pattern>о3тъ</pattern>
+  <pattern>о3ть</pattern>
+  <pattern>о3тю</pattern>
+  <pattern>о3тя</pattern>
+  <pattern>о3фа</pattern>
+  <pattern>о3фе</pattern>
+  <pattern>о3фи</pattern>
+  <pattern>о3фо</pattern>
+  <pattern>о3фу</pattern>
+  <pattern>о3фъ</pattern>
+  <pattern>о3фь</pattern>
+  <pattern>о3фю</pattern>
+  <pattern>о3фя</pattern>
+  <pattern>о3ха</pattern>
+  <pattern>о3хе</pattern>
+  <pattern>о3хи</pattern>
+  <pattern>о3хо</pattern>
+  <pattern>о3ху</pattern>
+  <pattern>о3хъ</pattern>
+  <pattern>о3хь</pattern>
+  <pattern>о3хю</pattern>
+  <pattern>о3хя</pattern>
+  <pattern>о3ца</pattern>
+  <pattern>о3це</pattern>
+  <pattern>о3ци</pattern>
+  <pattern>о3цо</pattern>
+  <pattern>о3цу</pattern>
+  <pattern>о3цъ</pattern>
+  <pattern>о3ць</pattern>
+  <pattern>о3цю</pattern>
+  <pattern>о3ця</pattern>
+  <pattern>о3ча</pattern>
+  <pattern>о3че</pattern>
+  <pattern>о3чи</pattern>
+  <pattern>о3чо</pattern>
+  <pattern>о3чу</pattern>
+  <pattern>о3чъ</pattern>
+  <pattern>о3чь</pattern>
+  <pattern>о3чю</pattern>
+  <pattern>о3чя</pattern>
+  <pattern>о3ша</pattern>
+  <pattern>о3ше</pattern>
+  <pattern>о3ши</pattern>
+  <pattern>о3шо</pattern>
+  <pattern>о3шу</pattern>
+  <pattern>о3шъ</pattern>
+  <pattern>о3шь</pattern>
+  <pattern>о3шю</pattern>
+  <pattern>о3шя</pattern>
+  <pattern>о3ща</pattern>
+  <pattern>о3ще</pattern>
+  <pattern>о3щи</pattern>
+  <pattern>о3що</pattern>
+  <pattern>о3щу</pattern>
+  <pattern>о3щъ</pattern>
+  <pattern>о3щь</pattern>
+  <pattern>о3щю</pattern>
+  <pattern>о3щя</pattern>
+  <pattern>оаа4</pattern>
+  <pattern>оае4</pattern>
+  <pattern>оаи4</pattern>
+  <pattern>оао4</pattern>
+  <pattern>оау4</pattern>
+  <pattern>оаъ4</pattern>
+  <pattern>оаю4</pattern>
+  <pattern>оая4</pattern>
+  <pattern>оеа4</pattern>
+  <pattern>оее4</pattern>
+  <pattern>оеи4</pattern>
+  <pattern>оео4</pattern>
+  <pattern>оеу4</pattern>
+  <pattern>оеъ4</pattern>
+  <pattern>оею4</pattern>
+  <pattern>оея4</pattern>
+  <pattern>оиа4</pattern>
+  <pattern>оие4</pattern>
+  <pattern>оии4</pattern>
+  <pattern>оио4</pattern>
+  <pattern>оиу4</pattern>
+  <pattern>оиъ4</pattern>
+  <pattern>оию4</pattern>
+  <pattern>оия4</pattern>
+  <pattern>ооа4</pattern>
+  <pattern>оое4</pattern>
+  <pattern>оои4</pattern>
+  <pattern>ооо4</pattern>
+  <pattern>ооу4</pattern>
+  <pattern>ооъ4</pattern>
+  <pattern>оою4</pattern>
+  <pattern>ооя4</pattern>
+  <pattern>оуа4</pattern>
+  <pattern>оуе4</pattern>
+  <pattern>оуи4</pattern>
+  <pattern>оуо4</pattern>
+  <pattern>оуу4</pattern>
+  <pattern>оуъ4</pattern>
+  <pattern>оую4</pattern>
+  <pattern>оуя4</pattern>
+  <pattern>оъа4</pattern>
+  <pattern>оъе4</pattern>
+  <pattern>оъи4</pattern>
+  <pattern>оъо4</pattern>
+  <pattern>оъу4</pattern>
+  <pattern>оъъ4</pattern>
+  <pattern>оъю4</pattern>
+  <pattern>оъя4</pattern>
+  <pattern>оюа4</pattern>
+  <pattern>оюе4</pattern>
+  <pattern>оюи4</pattern>
+  <pattern>оюо4</pattern>
+  <pattern>оюу4</pattern>
+  <pattern>оюъ4</pattern>
+  <pattern>оюю4</pattern>
+  <pattern>оюя4</pattern>
+  <pattern>ояа4</pattern>
+  <pattern>ояе4</pattern>
+  <pattern>ояи4</pattern>
+  <pattern>ояо4</pattern>
+  <pattern>ояу4</pattern>
+  <pattern>ояъ4</pattern>
+  <pattern>ояю4</pattern>
+  <pattern>ояя4</pattern>
+  <pattern>п1</pattern>
+  <pattern>п2а</pattern>
+  <pattern>п2е</pattern>
+  <pattern>п2и</pattern>
+  <pattern>п2о</pattern>
+  <pattern>п2у</pattern>
+  <pattern>п2ъ</pattern>
+  <pattern>п2ю</pattern>
+  <pattern>п2я</pattern>
+  <pattern>пй4</pattern>
+  <pattern>пл4</pattern>
+  <pattern>пм4</pattern>
+  <pattern>пн4</pattern>
+  <pattern>пр4</pattern>
+  <pattern>р1</pattern>
+  <pattern>р2а</pattern>
+  <pattern>р2е</pattern>
+  <pattern>р2и</pattern>
+  <pattern>р2о</pattern>
+  <pattern>р2у</pattern>
+  <pattern>р2ъ</pattern>
+  <pattern>р2ю</pattern>
+  <pattern>р2я</pattern>
+  <pattern>с1</pattern>
+  <pattern>с2а</pattern>
+  <pattern>с2е</pattern>
+  <pattern>с2и</pattern>
+  <pattern>с2о</pattern>
+  <pattern>с2у</pattern>
+  <pattern>с2ъ</pattern>
+  <pattern>с2ю</pattern>
+  <pattern>с2я</pattern>
+  <pattern>сй4</pattern>
+  <pattern>сл4</pattern>
+  <pattern>см4</pattern>
+  <pattern>сн4</pattern>
+  <pattern>ср4</pattern>
+  <pattern>т1</pattern>
+  <pattern>т2а</pattern>
+  <pattern>т2е</pattern>
+  <pattern>т2и</pattern>
+  <pattern>т2о</pattern>
+  <pattern>т2у</pattern>
+  <pattern>т2ъ</pattern>
+  <pattern>т2ю</pattern>
+  <pattern>т2я</pattern>
+  <pattern>тбб8</pattern>
+  <pattern>тбв8</pattern>
+  <pattern>тбг8</pattern>
+  <pattern>тбд8</pattern>
+  <pattern>тбж8</pattern>
+  <pattern>тбз8</pattern>
+  <pattern>тбй8</pattern>
+  <pattern>тбк8</pattern>
+  <pattern>тбл8</pattern>
+  <pattern>тбм8</pattern>
+  <pattern>тбн8</pattern>
+  <pattern>тбп8</pattern>
+  <pattern>тбр8</pattern>
+  <pattern>тбс8</pattern>
+  <pattern>тбт8</pattern>
+  <pattern>тбф8</pattern>
+  <pattern>тбх8</pattern>
+  <pattern>тбц8</pattern>
+  <pattern>тбч8</pattern>
+  <pattern>тбш8</pattern>
+  <pattern>тбщ8</pattern>
+  <pattern>твб8</pattern>
+  <pattern>твв8</pattern>
+  <pattern>твг8</pattern>
+  <pattern>твд8</pattern>
+  <pattern>твж8</pattern>
+  <pattern>твз8</pattern>
+  <pattern>твй8</pattern>
+  <pattern>твк8</pattern>
+  <pattern>твл8</pattern>
+  <pattern>твм8</pattern>
+  <pattern>твн8</pattern>
+  <pattern>твп8</pattern>
+  <pattern>твр8</pattern>
+  <pattern>твс8</pattern>
+  <pattern>твт8</pattern>
+  <pattern>твф8</pattern>
+  <pattern>твх8</pattern>
+  <pattern>твц8</pattern>
+  <pattern>твч8</pattern>
+  <pattern>твш8</pattern>
+  <pattern>твщ8</pattern>
+  <pattern>тгб8</pattern>
+  <pattern>тгв8</pattern>
+  <pattern>тгг8</pattern>
+  <pattern>тгд8</pattern>
+  <pattern>тгж8</pattern>
+  <pattern>тгз8</pattern>
+  <pattern>тгй8</pattern>
+  <pattern>тгк8</pattern>
+  <pattern>тгл8</pattern>
+  <pattern>тгм8</pattern>
+  <pattern>тгн8</pattern>
+  <pattern>тгп8</pattern>
+  <pattern>тгр8</pattern>
+  <pattern>тгс8</pattern>
+  <pattern>тгт8</pattern>
+  <pattern>тгф8</pattern>
+  <pattern>тгх8</pattern>
+  <pattern>тгц8</pattern>
+  <pattern>тгч8</pattern>
+  <pattern>тгш8</pattern>
+  <pattern>тгщ8</pattern>
+  <pattern>тдб8</pattern>
+  <pattern>тдв8</pattern>
+  <pattern>тдг8</pattern>
+  <pattern>тдд8</pattern>
+  <pattern>тдж8</pattern>
+  <pattern>тдз8</pattern>
+  <pattern>тдй8</pattern>
+  <pattern>тдк8</pattern>
+  <pattern>тдл8</pattern>
+  <pattern>тдм8</pattern>
+  <pattern>тдн8</pattern>
+  <pattern>тдп8</pattern>
+  <pattern>тдр8</pattern>
+  <pattern>тдс8</pattern>
+  <pattern>тдт8</pattern>
+  <pattern>тдф8</pattern>
+  <pattern>тдх8</pattern>
+  <pattern>тдц8</pattern>
+  <pattern>тдч8</pattern>
+  <pattern>тдш8</pattern>
+  <pattern>тдщ8</pattern>
+  <pattern>тжб8</pattern>
+  <pattern>тжв8</pattern>
+  <pattern>тжг8</pattern>
+  <pattern>тжд8</pattern>
+  <pattern>тжж8</pattern>
+  <pattern>тжз8</pattern>
+  <pattern>тжй8</pattern>
+  <pattern>тжк8</pattern>
+  <pattern>тжл8</pattern>
+  <pattern>тжм8</pattern>
+  <pattern>тжн8</pattern>
+  <pattern>тжп8</pattern>
+  <pattern>тжр8</pattern>
+  <pattern>тжс8</pattern>
+  <pattern>тжт8</pattern>
+  <pattern>тжф8</pattern>
+  <pattern>тжх8</pattern>
+  <pattern>тжц8</pattern>
+  <pattern>тжч8</pattern>
+  <pattern>тжш8</pattern>
+  <pattern>тжщ8</pattern>
+  <pattern>тзб8</pattern>
+  <pattern>тзв8</pattern>
+  <pattern>тзг8</pattern>
+  <pattern>тзд8</pattern>
+  <pattern>тзж8</pattern>
+  <pattern>тзз8</pattern>
+  <pattern>тзй8</pattern>
+  <pattern>тзк8</pattern>
+  <pattern>тзл8</pattern>
+  <pattern>тзм8</pattern>
+  <pattern>тзн8</pattern>
+  <pattern>тзп8</pattern>
+  <pattern>тзр8</pattern>
+  <pattern>тзс8</pattern>
+  <pattern>тзт8</pattern>
+  <pattern>тзф8</pattern>
+  <pattern>тзх8</pattern>
+  <pattern>тзц8</pattern>
+  <pattern>тзч8</pattern>
+  <pattern>тзш8</pattern>
+  <pattern>тзщ8</pattern>
+  <pattern>тй4</pattern>
+  <pattern>тйб8</pattern>
+  <pattern>тйв8</pattern>
+  <pattern>тйг8</pattern>
+  <pattern>тйд8</pattern>
+  <pattern>тйж8</pattern>
+  <pattern>тйз8</pattern>
+  <pattern>тйй8</pattern>
+  <pattern>тйк8</pattern>
+  <pattern>тйл8</pattern>
+  <pattern>тйм8</pattern>
+  <pattern>тйн8</pattern>
+  <pattern>тйп8</pattern>
+  <pattern>тйр8</pattern>
+  <pattern>тйс8</pattern>
+  <pattern>тйт8</pattern>
+  <pattern>тйф8</pattern>
+  <pattern>тйх8</pattern>
+  <pattern>тйц8</pattern>
+  <pattern>тйч8</pattern>
+  <pattern>тйш8</pattern>
+  <pattern>тйщ8</pattern>
+  <pattern>ткб8</pattern>
+  <pattern>ткв8</pattern>
+  <pattern>ткг8</pattern>
+  <pattern>ткд8</pattern>
+  <pattern>ткж8</pattern>
+  <pattern>ткз8</pattern>
+  <pattern>ткй8</pattern>
+  <pattern>ткк8</pattern>
+  <pattern>ткл8</pattern>
+  <pattern>ткм8</pattern>
+  <pattern>ткн8</pattern>
+  <pattern>ткп8</pattern>
+  <pattern>ткр8</pattern>
+  <pattern>ткс8</pattern>
+  <pattern>ткт8</pattern>
+  <pattern>ткф8</pattern>
+  <pattern>ткх8</pattern>
+  <pattern>ткц8</pattern>
+  <pattern>ткч8</pattern>
+  <pattern>ткш8</pattern>
+  <pattern>ткщ8</pattern>
+  <pattern>тл4</pattern>
+  <pattern>тлб8</pattern>
+  <pattern>тлв8</pattern>
+  <pattern>тлг8</pattern>
+  <pattern>тлд8</pattern>
+  <pattern>тлж8</pattern>
+  <pattern>тлз8</pattern>
+  <pattern>тлй8</pattern>
+  <pattern>тлк8</pattern>
+  <pattern>тлл8</pattern>
+  <pattern>тлм8</pattern>
+  <pattern>тлн8</pattern>
+  <pattern>тлп8</pattern>
+  <pattern>тлр8</pattern>
+  <pattern>тлс8</pattern>
+  <pattern>тлт8</pattern>
+  <pattern>тлф8</pattern>
+  <pattern>тлх8</pattern>
+  <pattern>тлц8</pattern>
+  <pattern>тлч8</pattern>
+  <pattern>тлш8</pattern>
+  <pattern>тлщ8</pattern>
+  <pattern>тм4</pattern>
+  <pattern>тмб8</pattern>
+  <pattern>тмв8</pattern>
+  <pattern>тмг8</pattern>
+  <pattern>тмд8</pattern>
+  <pattern>тмж8</pattern>
+  <pattern>тмз8</pattern>
+  <pattern>тмй8</pattern>
+  <pattern>тмк8</pattern>
+  <pattern>тмл8</pattern>
+  <pattern>тмм8</pattern>
+  <pattern>тмн8</pattern>
+  <pattern>тмп8</pattern>
+  <pattern>тмр8</pattern>
+  <pattern>тмс8</pattern>
+  <pattern>тмт8</pattern>
+  <pattern>тмф8</pattern>
+  <pattern>тмх8</pattern>
+  <pattern>тмц8</pattern>
+  <pattern>тмч8</pattern>
+  <pattern>тмш8</pattern>
+  <pattern>тмщ8</pattern>
+  <pattern>тн4</pattern>
+  <pattern>тнб8</pattern>
+  <pattern>тнв8</pattern>
+  <pattern>тнг8</pattern>
+  <pattern>тнд8</pattern>
+  <pattern>тнж8</pattern>
+  <pattern>тнз8</pattern>
+  <pattern>тнй8</pattern>
+  <pattern>тнк8</pattern>
+  <pattern>тнл8</pattern>
+  <pattern>тнм8</pattern>
+  <pattern>тнн8</pattern>
+  <pattern>тнп8</pattern>
+  <pattern>тнр8</pattern>
+  <pattern>тнс8</pattern>
+  <pattern>тнт8</pattern>
+  <pattern>тнф8</pattern>
+  <pattern>тнх8</pattern>
+  <pattern>тнц8</pattern>
+  <pattern>тнч8</pattern>
+  <pattern>тнш8</pattern>
+  <pattern>тнщ8</pattern>
+  <pattern>тпб8</pattern>
+  <pattern>тпв8</pattern>
+  <pattern>тпг8</pattern>
+  <pattern>тпд8</pattern>
+  <pattern>тпж8</pattern>
+  <pattern>тпз8</pattern>
+  <pattern>тпй8</pattern>
+  <pattern>тпк8</pattern>
+  <pattern>тпл8</pattern>
+  <pattern>тпм8</pattern>
+  <pattern>тпн8</pattern>
+  <pattern>тпп8</pattern>
+  <pattern>тпр8</pattern>
+  <pattern>тпс8</pattern>
+  <pattern>тпт8</pattern>
+  <pattern>тпф8</pattern>
+  <pattern>тпх8</pattern>
+  <pattern>тпц8</pattern>
+  <pattern>тпч8</pattern>
+  <pattern>тпш8</pattern>
+  <pattern>тпщ8</pattern>
+  <pattern>тр4</pattern>
+  <pattern>трб8</pattern>
+  <pattern>трв8</pattern>
+  <pattern>трг8</pattern>
+  <pattern>трд8</pattern>
+  <pattern>трж8</pattern>
+  <pattern>трз8</pattern>
+  <pattern>трй8</pattern>
+  <pattern>трк8</pattern>
+  <pattern>трл8</pattern>
+  <pattern>трм8</pattern>
+  <pattern>трн8</pattern>
+  <pattern>трп8</pattern>
+  <pattern>трр8</pattern>
+  <pattern>трс8</pattern>
+  <pattern>трт8</pattern>
+  <pattern>трф8</pattern>
+  <pattern>трх8</pattern>
+  <pattern>трц8</pattern>
+  <pattern>трч8</pattern>
+  <pattern>трш8</pattern>
+  <pattern>трщ8</pattern>
+  <pattern>тсб8</pattern>
+  <pattern>тсв8</pattern>
+  <pattern>тсг8</pattern>
+  <pattern>тсд8</pattern>
+  <pattern>тсж8</pattern>
+  <pattern>тсз8</pattern>
+  <pattern>тсй8</pattern>
+  <pattern>тск8</pattern>
+  <pattern>тсл8</pattern>
+  <pattern>тсм8</pattern>
+  <pattern>тсн8</pattern>
+  <pattern>тсп8</pattern>
+  <pattern>тср8</pattern>
+  <pattern>тсс8</pattern>
+  <pattern>тст8</pattern>
+  <pattern>тсф8</pattern>
+  <pattern>тсх8</pattern>
+  <pattern>тсц8</pattern>
+  <pattern>тсч8</pattern>
+  <pattern>тсш8</pattern>
+  <pattern>тсщ8</pattern>
+  <pattern>ттб8</pattern>
+  <pattern>ттв8</pattern>
+  <pattern>ттг8</pattern>
+  <pattern>ттд8</pattern>
+  <pattern>ттж8</pattern>
+  <pattern>ттз8</pattern>
+  <pattern>ттй8</pattern>
+  <pattern>ттк8</pattern>
+  <pattern>ттл8</pattern>
+  <pattern>ттм8</pattern>
+  <pattern>ттн8</pattern>
+  <pattern>ттп8</pattern>
+  <pattern>ттр8</pattern>
+  <pattern>ттс8</pattern>
+  <pattern>ттт8</pattern>
+  <pattern>ттф8</pattern>
+  <pattern>ттх8</pattern>
+  <pattern>ттц8</pattern>
+  <pattern>ттч8</pattern>
+  <pattern>ттш8</pattern>
+  <pattern>ттщ8</pattern>
+  <pattern>тфб8</pattern>
+  <pattern>тфв8</pattern>
+  <pattern>тфг8</pattern>
+  <pattern>тфд8</pattern>
+  <pattern>тфж8</pattern>
+  <pattern>тфз8</pattern>
+  <pattern>тфй8</pattern>
+  <pattern>тфк8</pattern>
+  <pattern>тфл8</pattern>
+  <pattern>тфм8</pattern>
+  <pattern>тфн8</pattern>
+  <pattern>тфп8</pattern>
+  <pattern>тфр8</pattern>
+  <pattern>тфс8</pattern>
+  <pattern>тфт8</pattern>
+  <pattern>тфф8</pattern>
+  <pattern>тфх8</pattern>
+  <pattern>тфц8</pattern>
+  <pattern>тфч8</pattern>
+  <pattern>тфш8</pattern>
+  <pattern>тфщ8</pattern>
+  <pattern>тхб8</pattern>
+  <pattern>тхв8</pattern>
+  <pattern>тхг8</pattern>
+  <pattern>тхд8</pattern>
+  <pattern>тхж8</pattern>
+  <pattern>тхз8</pattern>
+  <pattern>тхй8</pattern>
+  <pattern>тхк8</pattern>
+  <pattern>тхл8</pattern>
+  <pattern>тхм8</pattern>
+  <pattern>тхн8</pattern>
+  <pattern>тхп8</pattern>
+  <pattern>тхр8</pattern>
+  <pattern>тхс8</pattern>
+  <pattern>тхт8</pattern>
+  <pattern>тхф8</pattern>
+  <pattern>тхх8</pattern>
+  <pattern>тхц8</pattern>
+  <pattern>тхч8</pattern>
+  <pattern>тхш8</pattern>
+  <pattern>тхщ8</pattern>
+  <pattern>тцб8</pattern>
+  <pattern>тцв8</pattern>
+  <pattern>тцг8</pattern>
+  <pattern>тцд8</pattern>
+  <pattern>тцж8</pattern>
+  <pattern>тцз8</pattern>
+  <pattern>тцй8</pattern>
+  <pattern>тцк8</pattern>
+  <pattern>тцл8</pattern>
+  <pattern>тцм8</pattern>
+  <pattern>тцн8</pattern>
+  <pattern>тцп8</pattern>
+  <pattern>тцр8</pattern>
+  <pattern>тцс8</pattern>
+  <pattern>тцт8</pattern>
+  <pattern>тцф8</pattern>
+  <pattern>тцх8</pattern>
+  <pattern>тцц8</pattern>
+  <pattern>тцч8</pattern>
+  <pattern>тцш8</pattern>
+  <pattern>тцщ8</pattern>
+  <pattern>тчб8</pattern>
+  <pattern>тчв8</pattern>
+  <pattern>тчг8</pattern>
+  <pattern>тчд8</pattern>
+  <pattern>тчж8</pattern>
+  <pattern>тчз8</pattern>
+  <pattern>тчй8</pattern>
+  <pattern>тчк8</pattern>
+  <pattern>тчл8</pattern>
+  <pattern>тчм8</pattern>
+  <pattern>тчн8</pattern>
+  <pattern>тчп8</pattern>
+  <pattern>тчр8</pattern>
+  <pattern>тчс8</pattern>
+  <pattern>тчт8</pattern>
+  <pattern>тчф8</pattern>
+  <pattern>тчх8</pattern>
+  <pattern>тчц8</pattern>
+  <pattern>тчч8</pattern>
+  <pattern>тчш8</pattern>
+  <pattern>тчщ8</pattern>
+  <pattern>тшб8</pattern>
+  <pattern>тшв8</pattern>
+  <pattern>тшг8</pattern>
+  <pattern>тшд8</pattern>
+  <pattern>тшж8</pattern>
+  <pattern>тшз8</pattern>
+  <pattern>тшй8</pattern>
+  <pattern>тшк8</pattern>
+  <pattern>тшл8</pattern>
+  <pattern>тшм8</pattern>
+  <pattern>тшн8</pattern>
+  <pattern>тшп8</pattern>
+  <pattern>тшр8</pattern>
+  <pattern>тшс8</pattern>
+  <pattern>тшт8</pattern>
+  <pattern>тшф8</pattern>
+  <pattern>тшх8</pattern>
+  <pattern>тшц8</pattern>
+  <pattern>тшч8</pattern>
+  <pattern>тшш8</pattern>
+  <pattern>тшщ8</pattern>
+  <pattern>тщб8</pattern>
+  <pattern>тщв8</pattern>
+  <pattern>тщг8</pattern>
+  <pattern>тщд8</pattern>
+  <pattern>тщж8</pattern>
+  <pattern>тщз8</pattern>
+  <pattern>тщй8</pattern>
+  <pattern>тщк8</pattern>
+  <pattern>тщл8</pattern>
+  <pattern>тщм8</pattern>
+  <pattern>тщн8</pattern>
+  <pattern>тщп8</pattern>
+  <pattern>тщр8</pattern>
+  <pattern>тщс8</pattern>
+  <pattern>тщт8</pattern>
+  <pattern>тщф8</pattern>
+  <pattern>тщх8</pattern>
+  <pattern>тщц8</pattern>
+  <pattern>тщч8</pattern>
+  <pattern>тщш8</pattern>
+  <pattern>тщщ8</pattern>
+  <pattern>у1</pattern>
+  <pattern>у2б</pattern>
+  <pattern>у2в</pattern>
+  <pattern>у2г</pattern>
+  <pattern>у2д</pattern>
+  <pattern>у2ж</pattern>
+  <pattern>у2з</pattern>
+  <pattern>у2й</pattern>
+  <pattern>у2к</pattern>
+  <pattern>у2л</pattern>
+  <pattern>у2м</pattern>
+  <pattern>у2н</pattern>
+  <pattern>у2п</pattern>
+  <pattern>у2р</pattern>
+  <pattern>у2с</pattern>
+  <pattern>у2т</pattern>
+  <pattern>у2ф</pattern>
+  <pattern>у2х</pattern>
+  <pattern>у2ц</pattern>
+  <pattern>у2ч</pattern>
+  <pattern>у2ш</pattern>
+  <pattern>у2щ</pattern>
+  <pattern>у3ба</pattern>
+  <pattern>у3бе</pattern>
+  <pattern>у3би</pattern>
+  <pattern>у3бо</pattern>
+  <pattern>у3бу</pattern>
+  <pattern>у3бъ</pattern>
+  <pattern>у3бь</pattern>
+  <pattern>у3бю</pattern>
+  <pattern>у3бя</pattern>
+  <pattern>у3ва</pattern>
+  <pattern>у3ве</pattern>
+  <pattern>у3ви</pattern>
+  <pattern>у3во</pattern>
+  <pattern>у3ву</pattern>
+  <pattern>у3въ</pattern>
+  <pattern>у3вь</pattern>
+  <pattern>у3вю</pattern>
+  <pattern>у3вя</pattern>
+  <pattern>у3га</pattern>
+  <pattern>у3ге</pattern>
+  <pattern>у3ги</pattern>
+  <pattern>у3го</pattern>
+  <pattern>у3гу</pattern>
+  <pattern>у3гъ</pattern>
+  <pattern>у3гь</pattern>
+  <pattern>у3гю</pattern>
+  <pattern>у3гя</pattern>
+  <pattern>у3да</pattern>
+  <pattern>у3де</pattern>
+  <pattern>у3джа</pattern>
+  <pattern>у3дже</pattern>
+  <pattern>у3джи</pattern>
+  <pattern>у3джо</pattern>
+  <pattern>у3джу</pattern>
+  <pattern>у3джъ</pattern>
+  <pattern>у3джь</pattern>
+  <pattern>у3джю</pattern>
+  <pattern>у3джя</pattern>
+  <pattern>у3дза</pattern>
+  <pattern>у3дзе</pattern>
+  <pattern>у3дзи</pattern>
+  <pattern>у3дзо</pattern>
+  <pattern>у3дзу</pattern>
+  <pattern>у3дзъ</pattern>
+  <pattern>у3дзь</pattern>
+  <pattern>у3дзю</pattern>
+  <pattern>у3дзя</pattern>
+  <pattern>у3ди</pattern>
+  <pattern>у3до</pattern>
+  <pattern>у3ду</pattern>
+  <pattern>у3дъ</pattern>
+  <pattern>у3дь</pattern>
+  <pattern>у3дю</pattern>
+  <pattern>у3дя</pattern>
+  <pattern>у3жа</pattern>
+  <pattern>у3же</pattern>
+  <pattern>у3жи</pattern>
+  <pattern>у3жо</pattern>
+  <pattern>у3жу</pattern>
+  <pattern>у3жъ</pattern>
+  <pattern>у3жь</pattern>
+  <pattern>у3жю</pattern>
+  <pattern>у3жя</pattern>
+  <pattern>у3за</pattern>
+  <pattern>у3зе</pattern>
+  <pattern>у3зи</pattern>
+  <pattern>у3зо</pattern>
+  <pattern>у3зу</pattern>
+  <pattern>у3зъ</pattern>
+  <pattern>у3зь</pattern>
+  <pattern>у3зю</pattern>
+  <pattern>у3зя</pattern>
+  <pattern>у3йа</pattern>
+  <pattern>у3йе</pattern>
+  <pattern>у3йи</pattern>
+  <pattern>у3йо</pattern>
+  <pattern>у3йу</pattern>
+  <pattern>у3йъ</pattern>
+  <pattern>у3йь</pattern>
+  <pattern>у3йю</pattern>
+  <pattern>у3йя</pattern>
+  <pattern>у3ка</pattern>
+  <pattern>у3ке</pattern>
+  <pattern>у3ки</pattern>
+  <pattern>у3ко</pattern>
+  <pattern>у3ку</pattern>
+  <pattern>у3къ</pattern>
+  <pattern>у3кь</pattern>
+  <pattern>у3кю</pattern>
+  <pattern>у3кя</pattern>
+  <pattern>у3ла</pattern>
+  <pattern>у3ле</pattern>
+  <pattern>у3ли</pattern>
+  <pattern>у3ло</pattern>
+  <pattern>у3лу</pattern>
+  <pattern>у3лъ</pattern>
+  <pattern>у3ль</pattern>
+  <pattern>у3лю</pattern>
+  <pattern>у3ля</pattern>
+  <pattern>у3ма</pattern>
+  <pattern>у3ме</pattern>
+  <pattern>у3ми</pattern>
+  <pattern>у3мо</pattern>
+  <pattern>у3му</pattern>
+  <pattern>у3мъ</pattern>
+  <pattern>у3мь</pattern>
+  <pattern>у3мю</pattern>
+  <pattern>у3мя</pattern>
+  <pattern>у3на</pattern>
+  <pattern>у3не</pattern>
+  <pattern>у3ни</pattern>
+  <pattern>у3но</pattern>
+  <pattern>у3ну</pattern>
+  <pattern>у3нъ</pattern>
+  <pattern>у3нь</pattern>
+  <pattern>у3ню</pattern>
+  <pattern>у3ня</pattern>
+  <pattern>у3па</pattern>
+  <pattern>у3пе</pattern>
+  <pattern>у3пи</pattern>
+  <pattern>у3по</pattern>
+  <pattern>у3пу</pattern>
+  <pattern>у3пъ</pattern>
+  <pattern>у3пь</pattern>
+  <pattern>у3пю</pattern>
+  <pattern>у3пя</pattern>
+  <pattern>у3ра</pattern>
+  <pattern>у3ре</pattern>
+  <pattern>у3ри</pattern>
+  <pattern>у3ро</pattern>
+  <pattern>у3ру</pattern>
+  <pattern>у3ръ</pattern>
+  <pattern>у3рь</pattern>
+  <pattern>у3рю</pattern>
+  <pattern>у3ря</pattern>
+  <pattern>у3са</pattern>
+  <pattern>у3се</pattern>
+  <pattern>у3си</pattern>
+  <pattern>у3со</pattern>
+  <pattern>у3су</pattern>
+  <pattern>у3съ</pattern>
+  <pattern>у3сь</pattern>
+  <pattern>у3сю</pattern>
+  <pattern>у3ся</pattern>
+  <pattern>у3та</pattern>
+  <pattern>у3те</pattern>
+  <pattern>у3ти</pattern>
+  <pattern>у3то</pattern>
+  <pattern>у3ту</pattern>
+  <pattern>у3тъ</pattern>
+  <pattern>у3ть</pattern>
+  <pattern>у3тю</pattern>
+  <pattern>у3тя</pattern>
+  <pattern>у3фа</pattern>
+  <pattern>у3фе</pattern>
+  <pattern>у3фи</pattern>
+  <pattern>у3фо</pattern>
+  <pattern>у3фу</pattern>
+  <pattern>у3фъ</pattern>
+  <pattern>у3фь</pattern>
+  <pattern>у3фю</pattern>
+  <pattern>у3фя</pattern>
+  <pattern>у3ха</pattern>
+  <pattern>у3хе</pattern>
+  <pattern>у3хи</pattern>
+  <pattern>у3хо</pattern>
+  <pattern>у3ху</pattern>
+  <pattern>у3хъ</pattern>
+  <pattern>у3хь</pattern>
+  <pattern>у3хю</pattern>
+  <pattern>у3хя</pattern>
+  <pattern>у3ца</pattern>
+  <pattern>у3це</pattern>
+  <pattern>у3ци</pattern>
+  <pattern>у3цо</pattern>
+  <pattern>у3цу</pattern>
+  <pattern>у3цъ</pattern>
+  <pattern>у3ць</pattern>
+  <pattern>у3цю</pattern>
+  <pattern>у3ця</pattern>
+  <pattern>у3ча</pattern>
+  <pattern>у3че</pattern>
+  <pattern>у3чи</pattern>
+  <pattern>у3чо</pattern>
+  <pattern>у3чу</pattern>
+  <pattern>у3чъ</pattern>
+  <pattern>у3чь</pattern>
+  <pattern>у3чю</pattern>
+  <pattern>у3чя</pattern>
+  <pattern>у3ша</pattern>
+  <pattern>у3ше</pattern>
+  <pattern>у3ши</pattern>
+  <pattern>у3шо</pattern>
+  <pattern>у3шу</pattern>
+  <pattern>у3шъ</pattern>
+  <pattern>у3шь</pattern>
+  <pattern>у3шю</pattern>
+  <pattern>у3шя</pattern>
+  <pattern>у3ща</pattern>
+  <pattern>у3ще</pattern>
+  <pattern>у3щи</pattern>
+  <pattern>у3що</pattern>
+  <pattern>у3щу</pattern>
+  <pattern>у3щъ</pattern>
+  <pattern>у3щь</pattern>
+  <pattern>у3щю</pattern>
+  <pattern>у3щя</pattern>
+  <pattern>уаа4</pattern>
+  <pattern>уае4</pattern>
+  <pattern>уаи4</pattern>
+  <pattern>уао4</pattern>
+  <pattern>уау4</pattern>
+  <pattern>уаъ4</pattern>
+  <pattern>уаю4</pattern>
+  <pattern>уая4</pattern>
+  <pattern>уеа4</pattern>
+  <pattern>уее4</pattern>
+  <pattern>уеи4</pattern>
+  <pattern>уео4</pattern>
+  <pattern>уеу4</pattern>
+  <pattern>уеъ4</pattern>
+  <pattern>уею4</pattern>
+  <pattern>уея4</pattern>
+  <pattern>уиа4</pattern>
+  <pattern>уие4</pattern>
+  <pattern>уии4</pattern>
+  <pattern>уио4</pattern>
+  <pattern>уиу4</pattern>
+  <pattern>уиъ4</pattern>
+  <pattern>уию4</pattern>
+  <pattern>уия4</pattern>
+  <pattern>уоа4</pattern>
+  <pattern>уое4</pattern>
+  <pattern>уои4</pattern>
+  <pattern>уоо4</pattern>
+  <pattern>уоу4</pattern>
+  <pattern>уоъ4</pattern>
+  <pattern>уою4</pattern>
+  <pattern>уоя4</pattern>
+  <pattern>ууа4</pattern>
+  <pattern>ууе4</pattern>
+  <pattern>ууи4</pattern>
+  <pattern>ууо4</pattern>
+  <pattern>ууу4</pattern>
+  <pattern>ууъ4</pattern>
+  <pattern>уую4</pattern>
+  <pattern>ууя4</pattern>
+  <pattern>уъа4</pattern>
+  <pattern>уъе4</pattern>
+  <pattern>уъи4</pattern>
+  <pattern>уъо4</pattern>
+  <pattern>уъу4</pattern>
+  <pattern>уъъ4</pattern>
+  <pattern>уъю4</pattern>
+  <pattern>уъя4</pattern>
+  <pattern>уюа4</pattern>
+  <pattern>уюе4</pattern>
+  <pattern>уюи4</pattern>
+  <pattern>уюо4</pattern>
+  <pattern>уюу4</pattern>
+  <pattern>уюъ4</pattern>
+  <pattern>уюю4</pattern>
+  <pattern>уюя4</pattern>
+  <pattern>уяа4</pattern>
+  <pattern>уяе4</pattern>
+  <pattern>уяи4</pattern>
+  <pattern>уяо4</pattern>
+  <pattern>уяу4</pattern>
+  <pattern>уяъ4</pattern>
+  <pattern>уяю4</pattern>
+  <pattern>уяя4</pattern>
+  <pattern>ф1</pattern>
+  <pattern>ф2а</pattern>
+  <pattern>ф2е</pattern>
+  <pattern>ф2и</pattern>
+  <pattern>ф2о</pattern>
+  <pattern>ф2у</pattern>
+  <pattern>ф2ъ</pattern>
+  <pattern>ф2ю</pattern>
+  <pattern>ф2я</pattern>
+  <pattern>фй4</pattern>
+  <pattern>фл4</pattern>
+  <pattern>фм4</pattern>
+  <pattern>фн4</pattern>
+  <pattern>фр4</pattern>
+  <pattern>х1</pattern>
+  <pattern>х2а</pattern>
+  <pattern>х2е</pattern>
+  <pattern>х2и</pattern>
+  <pattern>х2о</pattern>
+  <pattern>х2у</pattern>
+  <pattern>х2ъ</pattern>
+  <pattern>х2ю</pattern>
+  <pattern>х2я</pattern>
+  <pattern>хй4</pattern>
+  <pattern>хл4</pattern>
+  <pattern>хм4</pattern>
+  <pattern>хн4</pattern>
+  <pattern>хр4</pattern>
+  <pattern>ц1</pattern>
+  <pattern>ц2а</pattern>
+  <pattern>ц2е</pattern>
+  <pattern>ц2и</pattern>
+  <pattern>ц2о</pattern>
+  <pattern>ц2у</pattern>
+  <pattern>ц2ъ</pattern>
+  <pattern>ц2ю</pattern>
+  <pattern>ц2я</pattern>
+  <pattern>цй4</pattern>
+  <pattern>цл4</pattern>
+  <pattern>цм4</pattern>
+  <pattern>цн4</pattern>
+  <pattern>цр4</pattern>
+  <pattern>ч1</pattern>
+  <pattern>ч2а</pattern>
+  <pattern>ч2е</pattern>
+  <pattern>ч2и</pattern>
+  <pattern>ч2о</pattern>
+  <pattern>ч2у</pattern>
+  <pattern>ч2ъ</pattern>
+  <pattern>ч2ю</pattern>
+  <pattern>ч2я</pattern>
+  <pattern>чй4</pattern>
+  <pattern>чл4</pattern>
+  <pattern>чм4</pattern>
+  <pattern>чн4</pattern>
+  <pattern>чр4</pattern>
+  <pattern>ш1</pattern>
+  <pattern>ш2а</pattern>
+  <pattern>ш2е</pattern>
+  <pattern>ш2и</pattern>
+  <pattern>ш2о</pattern>
+  <pattern>ш2у</pattern>
+  <pattern>ш2ъ</pattern>
+  <pattern>ш2ю</pattern>
+  <pattern>ш2я</pattern>
+  <pattern>шй4</pattern>
+  <pattern>шл4</pattern>
+  <pattern>шм4</pattern>
+  <pattern>шн4</pattern>
+  <pattern>шр4</pattern>
+  <pattern>щ1</pattern>
+  <pattern>щ2а</pattern>
+  <pattern>щ2е</pattern>
+  <pattern>щ2и</pattern>
+  <pattern>щ2о</pattern>
+  <pattern>щ2у</pattern>
+  <pattern>щ2ъ</pattern>
+  <pattern>щ2ю</pattern>
+  <pattern>щ2я</pattern>
+  <pattern>щй4</pattern>
+  <pattern>щл4</pattern>
+  <pattern>щм4</pattern>
+  <pattern>щн4</pattern>
+  <pattern>щр4</pattern>
+  <pattern>ъ1</pattern>
+  <pattern>ъ2б</pattern>
+  <pattern>ъ2в</pattern>
+  <pattern>ъ2г</pattern>
+  <pattern>ъ2д</pattern>
+  <pattern>ъ2ж</pattern>
+  <pattern>ъ2з</pattern>
+  <pattern>ъ2й</pattern>
+  <pattern>ъ2к</pattern>
+  <pattern>ъ2л</pattern>
+  <pattern>ъ2м</pattern>
+  <pattern>ъ2н</pattern>
+  <pattern>ъ2п</pattern>
+  <pattern>ъ2р</pattern>
+  <pattern>ъ2с</pattern>
+  <pattern>ъ2т</pattern>
+  <pattern>ъ2ф</pattern>
+  <pattern>ъ2х</pattern>
+  <pattern>ъ2ц</pattern>
+  <pattern>ъ2ч</pattern>
+  <pattern>ъ2ш</pattern>
+  <pattern>ъ2щ</pattern>
+  <pattern>ъ3ба</pattern>
+  <pattern>ъ3бе</pattern>
+  <pattern>ъ3би</pattern>
+  <pattern>ъ3бо</pattern>
+  <pattern>ъ3бу</pattern>
+  <pattern>ъ3бъ</pattern>
+  <pattern>ъ3бь</pattern>
+  <pattern>ъ3бю</pattern>
+  <pattern>ъ3бя</pattern>
+  <pattern>ъ3ва</pattern>
+  <pattern>ъ3ве</pattern>
+  <pattern>ъ3ви</pattern>
+  <pattern>ъ3во</pattern>
+  <pattern>ъ3ву</pattern>
+  <pattern>ъ3въ</pattern>
+  <pattern>ъ3вь</pattern>
+  <pattern>ъ3вю</pattern>
+  <pattern>ъ3вя</pattern>
+  <pattern>ъ3га</pattern>
+  <pattern>ъ3ге</pattern>
+  <pattern>ъ3ги</pattern>
+  <pattern>ъ3го</pattern>
+  <pattern>ъ3гу</pattern>
+  <pattern>ъ3гъ</pattern>
+  <pattern>ъ3гь</pattern>
+  <pattern>ъ3гю</pattern>
+  <pattern>ъ3гя</pattern>
+  <pattern>ъ3да</pattern>
+  <pattern>ъ3де</pattern>
+  <pattern>ъ3джа</pattern>
+  <pattern>ъ3дже</pattern>
+  <pattern>ъ3джи</pattern>
+  <pattern>ъ3джо</pattern>
+  <pattern>ъ3джу</pattern>
+  <pattern>ъ3джъ</pattern>
+  <pattern>ъ3джь</pattern>
+  <pattern>ъ3джю</pattern>
+  <pattern>ъ3джя</pattern>
+  <pattern>ъ3дза</pattern>
+  <pattern>ъ3дзе</pattern>
+  <pattern>ъ3дзи</pattern>
+  <pattern>ъ3дзо</pattern>
+  <pattern>ъ3дзу</pattern>
+  <pattern>ъ3дзъ</pattern>
+  <pattern>ъ3дзь</pattern>
+  <pattern>ъ3дзю</pattern>
+  <pattern>ъ3дзя</pattern>
+  <pattern>ъ3ди</pattern>
+  <pattern>ъ3до</pattern>
+  <pattern>ъ3ду</pattern>
+  <pattern>ъ3дъ</pattern>
+  <pattern>ъ3дь</pattern>
+  <pattern>ъ3дю</pattern>
+  <pattern>ъ3дя</pattern>
+  <pattern>ъ3жа</pattern>
+  <pattern>ъ3же</pattern>
+  <pattern>ъ3жи</pattern>
+  <pattern>ъ3жо</pattern>
+  <pattern>ъ3жу</pattern>
+  <pattern>ъ3жъ</pattern>
+  <pattern>ъ3жь</pattern>
+  <pattern>ъ3жю</pattern>
+  <pattern>ъ3жя</pattern>
+  <pattern>ъ3за</pattern>
+  <pattern>ъ3зе</pattern>
+  <pattern>ъ3зи</pattern>
+  <pattern>ъ3зо</pattern>
+  <pattern>ъ3зу</pattern>
+  <pattern>ъ3зъ</pattern>
+  <pattern>ъ3зь</pattern>
+  <pattern>ъ3зю</pattern>
+  <pattern>ъ3зя</pattern>
+  <pattern>ъ3йа</pattern>
+  <pattern>ъ3йе</pattern>
+  <pattern>ъ3йи</pattern>
+  <pattern>ъ3йо</pattern>
+  <pattern>ъ3йу</pattern>
+  <pattern>ъ3йъ</pattern>
+  <pattern>ъ3йь</pattern>
+  <pattern>ъ3йю</pattern>
+  <pattern>ъ3йя</pattern>
+  <pattern>ъ3ка</pattern>
+  <pattern>ъ3ке</pattern>
+  <pattern>ъ3ки</pattern>
+  <pattern>ъ3ко</pattern>
+  <pattern>ъ3ку</pattern>
+  <pattern>ъ3къ</pattern>
+  <pattern>ъ3кь</pattern>
+  <pattern>ъ3кю</pattern>
+  <pattern>ъ3кя</pattern>
+  <pattern>ъ3ла</pattern>
+  <pattern>ъ3ле</pattern>
+  <pattern>ъ3ли</pattern>
+  <pattern>ъ3ло</pattern>
+  <pattern>ъ3лу</pattern>
+  <pattern>ъ3лъ</pattern>
+  <pattern>ъ3ль</pattern>
+  <pattern>ъ3лю</pattern>
+  <pattern>ъ3ля</pattern>
+  <pattern>ъ3ма</pattern>
+  <pattern>ъ3ме</pattern>
+  <pattern>ъ3ми</pattern>
+  <pattern>ъ3мо</pattern>
+  <pattern>ъ3му</pattern>
+  <pattern>ъ3мъ</pattern>
+  <pattern>ъ3мь</pattern>
+  <pattern>ъ3мю</pattern>
+  <pattern>ъ3мя</pattern>
+  <pattern>ъ3на</pattern>
+  <pattern>ъ3не</pattern>
+  <pattern>ъ3ни</pattern>
+  <pattern>ъ3но</pattern>
+  <pattern>ъ3ну</pattern>
+  <pattern>ъ3нъ</pattern>
+  <pattern>ъ3нь</pattern>
+  <pattern>ъ3ню</pattern>
+  <pattern>ъ3ня</pattern>
+  <pattern>ъ3па</pattern>
+  <pattern>ъ3пе</pattern>
+  <pattern>ъ3пи</pattern>
+  <pattern>ъ3по</pattern>
+  <pattern>ъ3пу</pattern>
+  <pattern>ъ3пъ</pattern>
+  <pattern>ъ3пь</pattern>
+  <pattern>ъ3пю</pattern>
+  <pattern>ъ3пя</pattern>
+  <pattern>ъ3ра</pattern>
+  <pattern>ъ3ре</pattern>
+  <pattern>ъ3ри</pattern>
+  <pattern>ъ3ро</pattern>
+  <pattern>ъ3ру</pattern>
+  <pattern>ъ3ръ</pattern>
+  <pattern>ъ3рь</pattern>
+  <pattern>ъ3рю</pattern>
+  <pattern>ъ3ря</pattern>
+  <pattern>ъ3са</pattern>
+  <pattern>ъ3се</pattern>
+  <pattern>ъ3си</pattern>
+  <pattern>ъ3со</pattern>
+  <pattern>ъ3су</pattern>
+  <pattern>ъ3съ</pattern>
+  <pattern>ъ3сь</pattern>
+  <pattern>ъ3сю</pattern>
+  <pattern>ъ3ся</pattern>
+  <pattern>ъ3та</pattern>
+  <pattern>ъ3те</pattern>
+  <pattern>ъ3ти</pattern>
+  <pattern>ъ3то</pattern>
+  <pattern>ъ3ту</pattern>
+  <pattern>ъ3тъ</pattern>
+  <pattern>ъ3ть</pattern>
+  <pattern>ъ3тю</pattern>
+  <pattern>ъ3тя</pattern>
+  <pattern>ъ3фа</pattern>
+  <pattern>ъ3фе</pattern>
+  <pattern>ъ3фи</pattern>
+  <pattern>ъ3фо</pattern>
+  <pattern>ъ3фу</pattern>
+  <pattern>ъ3фъ</pattern>
+  <pattern>ъ3фь</pattern>
+  <pattern>ъ3фю</pattern>
+  <pattern>ъ3фя</pattern>
+  <pattern>ъ3ха</pattern>
+  <pattern>ъ3хе</pattern>
+  <pattern>ъ3хи</pattern>
+  <pattern>ъ3хо</pattern>
+  <pattern>ъ3ху</pattern>
+  <pattern>ъ3хъ</pattern>
+  <pattern>ъ3хь</pattern>
+  <pattern>ъ3хю</pattern>
+  <pattern>ъ3хя</pattern>
+  <pattern>ъ3ца</pattern>
+  <pattern>ъ3це</pattern>
+  <pattern>ъ3ци</pattern>
+  <pattern>ъ3цо</pattern>
+  <pattern>ъ3цу</pattern>
+  <pattern>ъ3цъ</pattern>
+  <pattern>ъ3ць</pattern>
+  <pattern>ъ3цю</pattern>
+  <pattern>ъ3ця</pattern>
+  <pattern>ъ3ча</pattern>
+  <pattern>ъ3че</pattern>
+  <pattern>ъ3чи</pattern>
+  <pattern>ъ3чо</pattern>
+  <pattern>ъ3чу</pattern>
+  <pattern>ъ3чъ</pattern>
+  <pattern>ъ3чь</pattern>
+  <pattern>ъ3чю</pattern>
+  <pattern>ъ3чя</pattern>
+  <pattern>ъ3ша</pattern>
+  <pattern>ъ3ше</pattern>
+  <pattern>ъ3ши</pattern>
+  <pattern>ъ3шо</pattern>
+  <pattern>ъ3шу</pattern>
+  <pattern>ъ3шъ</pattern>
+  <pattern>ъ3шь</pattern>
+  <pattern>ъ3шю</pattern>
+  <pattern>ъ3шя</pattern>
+  <pattern>ъ3ща</pattern>
+  <pattern>ъ3ще</pattern>
+  <pattern>ъ3щи</pattern>
+  <pattern>ъ3що</pattern>
+  <pattern>ъ3щу</pattern>
+  <pattern>ъ3щъ</pattern>
+  <pattern>ъ3щь</pattern>
+  <pattern>ъ3щю</pattern>
+  <pattern>ъ3щя</pattern>
+  <pattern>ъаа4</pattern>
+  <pattern>ъае4</pattern>
+  <pattern>ъаи4</pattern>
+  <pattern>ъао4</pattern>
+  <pattern>ъау4</pattern>
+  <pattern>ъаъ4</pattern>
+  <pattern>ъаю4</pattern>
+  <pattern>ъая4</pattern>
+  <pattern>ъеа4</pattern>
+  <pattern>ъее4</pattern>
+  <pattern>ъеи4</pattern>
+  <pattern>ъео4</pattern>
+  <pattern>ъеу4</pattern>
+  <pattern>ъеъ4</pattern>
+  <pattern>ъею4</pattern>
+  <pattern>ъея4</pattern>
+  <pattern>ъиа4</pattern>
+  <pattern>ъие4</pattern>
+  <pattern>ъии4</pattern>
+  <pattern>ъио4</pattern>
+  <pattern>ъиу4</pattern>
+  <pattern>ъиъ4</pattern>
+  <pattern>ъию4</pattern>
+  <pattern>ъия4</pattern>
+  <pattern>ъоа4</pattern>
+  <pattern>ъое4</pattern>
+  <pattern>ъои4</pattern>
+  <pattern>ъоо4</pattern>
+  <pattern>ъоу4</pattern>
+  <pattern>ъоъ4</pattern>
+  <pattern>ъою4</pattern>
+  <pattern>ъоя4</pattern>
+  <pattern>ъуа4</pattern>
+  <pattern>ъуе4</pattern>
+  <pattern>ъуи4</pattern>
+  <pattern>ъуо4</pattern>
+  <pattern>ъуу4</pattern>
+  <pattern>ъуъ4</pattern>
+  <pattern>ъую4</pattern>
+  <pattern>ъуя4</pattern>
+  <pattern>ъъа4</pattern>
+  <pattern>ъъе4</pattern>
+  <pattern>ъъи4</pattern>
+  <pattern>ъъо4</pattern>
+  <pattern>ъъу4</pattern>
+  <pattern>ъъъ4</pattern>
+  <pattern>ъъю4</pattern>
+  <pattern>ъъя4</pattern>
+  <pattern>ъюа4</pattern>
+  <pattern>ъюе4</pattern>
+  <pattern>ъюи4</pattern>
+  <pattern>ъюо4</pattern>
+  <pattern>ъюу4</pattern>
+  <pattern>ъюъ4</pattern>
+  <pattern>ъюю4</pattern>
+  <pattern>ъюя4</pattern>
+  <pattern>ъяа4</pattern>
+  <pattern>ъяе4</pattern>
+  <pattern>ъяи4</pattern>
+  <pattern>ъяо4</pattern>
+  <pattern>ъяу4</pattern>
+  <pattern>ъяъ4</pattern>
+  <pattern>ъяю4</pattern>
+  <pattern>ъяя4</pattern>
+  <pattern>ю1</pattern>
+  <pattern>ю2б</pattern>
+  <pattern>ю2в</pattern>
+  <pattern>ю2г</pattern>
+  <pattern>ю2д</pattern>
+  <pattern>ю2ж</pattern>
+  <pattern>ю2з</pattern>
+  <pattern>ю2й</pattern>
+  <pattern>ю2к</pattern>
+  <pattern>ю2л</pattern>
+  <pattern>ю2м</pattern>
+  <pattern>ю2н</pattern>
+  <pattern>ю2п</pattern>
+  <pattern>ю2р</pattern>
+  <pattern>ю2с</pattern>
+  <pattern>ю2т</pattern>
+  <pattern>ю2ф</pattern>
+  <pattern>ю2х</pattern>
+  <pattern>ю2ц</pattern>
+  <pattern>ю2ч</pattern>
+  <pattern>ю2ш</pattern>
+  <pattern>ю2щ</pattern>
+  <pattern>ю3ба</pattern>
+  <pattern>ю3бе</pattern>
+  <pattern>ю3би</pattern>
+  <pattern>ю3бо</pattern>
+  <pattern>ю3бу</pattern>
+  <pattern>ю3бъ</pattern>
+  <pattern>ю3бь</pattern>
+  <pattern>ю3бю</pattern>
+  <pattern>ю3бя</pattern>
+  <pattern>ю3ва</pattern>
+  <pattern>ю3ве</pattern>
+  <pattern>ю3ви</pattern>
+  <pattern>ю3во</pattern>
+  <pattern>ю3ву</pattern>
+  <pattern>ю3въ</pattern>
+  <pattern>ю3вь</pattern>
+  <pattern>ю3вю</pattern>
+  <pattern>ю3вя</pattern>
+  <pattern>ю3га</pattern>
+  <pattern>ю3ге</pattern>
+  <pattern>ю3ги</pattern>
+  <pattern>ю3го</pattern>
+  <pattern>ю3гу</pattern>
+  <pattern>ю3гъ</pattern>
+  <pattern>ю3гь</pattern>
+  <pattern>ю3гю</pattern>
+  <pattern>ю3гя</pattern>
+  <pattern>ю3да</pattern>
+  <pattern>ю3де</pattern>
+  <pattern>ю3джа</pattern>
+  <pattern>ю3дже</pattern>
+  <pattern>ю3джи</pattern>
+  <pattern>ю3джо</pattern>
+  <pattern>ю3джу</pattern>
+  <pattern>ю3джъ</pattern>
+  <pattern>ю3джь</pattern>
+  <pattern>ю3джю</pattern>
+  <pattern>ю3джя</pattern>
+  <pattern>ю3дза</pattern>
+  <pattern>ю3дзе</pattern>
+  <pattern>ю3дзи</pattern>
+  <pattern>ю3дзо</pattern>
+  <pattern>ю3дзу</pattern>
+  <pattern>ю3дзъ</pattern>
+  <pattern>ю3дзь</pattern>
+  <pattern>ю3дзю</pattern>
+  <pattern>ю3дзя</pattern>
+  <pattern>ю3ди</pattern>
+  <pattern>ю3до</pattern>
+  <pattern>ю3ду</pattern>
+  <pattern>ю3дъ</pattern>
+  <pattern>ю3дь</pattern>
+  <pattern>ю3дю</pattern>
+  <pattern>ю3дя</pattern>
+  <pattern>ю3жа</pattern>
+  <pattern>ю3же</pattern>
+  <pattern>ю3жи</pattern>
+  <pattern>ю3жо</pattern>
+  <pattern>ю3жу</pattern>
+  <pattern>ю3жъ</pattern>
+  <pattern>ю3жь</pattern>
+  <pattern>ю3жю</pattern>
+  <pattern>ю3жя</pattern>
+  <pattern>ю3за</pattern>
+  <pattern>ю3зе</pattern>
+  <pattern>ю3зи</pattern>
+  <pattern>ю3зо</pattern>
+  <pattern>ю3зу</pattern>
+  <pattern>ю3зъ</pattern>
+  <pattern>ю3зь</pattern>
+  <pattern>ю3зю</pattern>
+  <pattern>ю3зя</pattern>
+  <pattern>ю3йа</pattern>
+  <pattern>ю3йе</pattern>
+  <pattern>ю3йи</pattern>
+  <pattern>ю3йо</pattern>
+  <pattern>ю3йу</pattern>
+  <pattern>ю3йъ</pattern>
+  <pattern>ю3йь</pattern>
+  <pattern>ю3йю</pattern>
+  <pattern>ю3йя</pattern>
+  <pattern>ю3ка</pattern>
+  <pattern>ю3ке</pattern>
+  <pattern>ю3ки</pattern>
+  <pattern>ю3ко</pattern>
+  <pattern>ю3ку</pattern>
+  <pattern>ю3къ</pattern>
+  <pattern>ю3кь</pattern>
+  <pattern>ю3кю</pattern>
+  <pattern>ю3кя</pattern>
+  <pattern>ю3ла</pattern>
+  <pattern>ю3ле</pattern>
+  <pattern>ю3ли</pattern>
+  <pattern>ю3ло</pattern>
+  <pattern>ю3лу</pattern>
+  <pattern>ю3лъ</pattern>
+  <pattern>ю3ль</pattern>
+  <pattern>ю3лю</pattern>
+  <pattern>ю3ля</pattern>
+  <pattern>ю3ма</pattern>
+  <pattern>ю3ме</pattern>
+  <pattern>ю3ми</pattern>
+  <pattern>ю3мо</pattern>
+  <pattern>ю3му</pattern>
+  <pattern>ю3мъ</pattern>
+  <pattern>ю3мь</pattern>
+  <pattern>ю3мю</pattern>
+  <pattern>ю3мя</pattern>
+  <pattern>ю3на</pattern>
+  <pattern>ю3не</pattern>
+  <pattern>ю3ни</pattern>
+  <pattern>ю3но</pattern>
+  <pattern>ю3ну</pattern>
+  <pattern>ю3нъ</pattern>
+  <pattern>ю3нь</pattern>
+  <pattern>ю3ню</pattern>
+  <pattern>ю3ня</pattern>
+  <pattern>ю3па</pattern>
+  <pattern>ю3пе</pattern>
+  <pattern>ю3пи</pattern>
+  <pattern>ю3по</pattern>
+  <pattern>ю3пу</pattern>
+  <pattern>ю3пъ</pattern>
+  <pattern>ю3пь</pattern>
+  <pattern>ю3пю</pattern>
+  <pattern>ю3пя</pattern>
+  <pattern>ю3ра</pattern>
+  <pattern>ю3ре</pattern>
+  <pattern>ю3ри</pattern>
+  <pattern>ю3ро</pattern>
+  <pattern>ю3ру</pattern>
+  <pattern>ю3ръ</pattern>
+  <pattern>ю3рь</pattern>
+  <pattern>ю3рю</pattern>
+  <pattern>ю3ря</pattern>
+  <pattern>ю3са</pattern>
+  <pattern>ю3се</pattern>
+  <pattern>ю3си</pattern>
+  <pattern>ю3со</pattern>
+  <pattern>ю3су</pattern>
+  <pattern>ю3съ</pattern>
+  <pattern>ю3сь</pattern>
+  <pattern>ю3сю</pattern>
+  <pattern>ю3ся</pattern>
+  <pattern>ю3та</pattern>
+  <pattern>ю3те</pattern>
+  <pattern>ю3ти</pattern>
+  <pattern>ю3то</pattern>
+  <pattern>ю3ту</pattern>
+  <pattern>ю3тъ</pattern>
+  <pattern>ю3ть</pattern>
+  <pattern>ю3тю</pattern>
+  <pattern>ю3тя</pattern>
+  <pattern>ю3фа</pattern>
+  <pattern>ю3фе</pattern>
+  <pattern>ю3фи</pattern>
+  <pattern>ю3фо</pattern>
+  <pattern>ю3фу</pattern>
+  <pattern>ю3фъ</pattern>
+  <pattern>ю3фь</pattern>
+  <pattern>ю3фю</pattern>
+  <pattern>ю3фя</pattern>
+  <pattern>ю3ха</pattern>
+  <pattern>ю3хе</pattern>
+  <pattern>ю3хи</pattern>
+  <pattern>ю3хо</pattern>
+  <pattern>ю3ху</pattern>
+  <pattern>ю3хъ</pattern>
+  <pattern>ю3хь</pattern>
+  <pattern>ю3хю</pattern>
+  <pattern>ю3хя</pattern>
+  <pattern>ю3ца</pattern>
+  <pattern>ю3це</pattern>
+  <pattern>ю3ци</pattern>
+  <pattern>ю3цо</pattern>
+  <pattern>ю3цу</pattern>
+  <pattern>ю3цъ</pattern>
+  <pattern>ю3ць</pattern>
+  <pattern>ю3цю</pattern>
+  <pattern>ю3ця</pattern>
+  <pattern>ю3ча</pattern>
+  <pattern>ю3че</pattern>
+  <pattern>ю3чи</pattern>
+  <pattern>ю3чо</pattern>
+  <pattern>ю3чу</pattern>
+  <pattern>ю3чъ</pattern>
+  <pattern>ю3чь</pattern>
+  <pattern>ю3чю</pattern>
+  <pattern>ю3чя</pattern>
+  <pattern>ю3ша</pattern>
+  <pattern>ю3ше</pattern>
+  <pattern>ю3ши</pattern>
+  <pattern>ю3шо</pattern>
+  <pattern>ю3шу</pattern>
+  <pattern>ю3шъ</pattern>
+  <pattern>ю3шь</pattern>
+  <pattern>ю3шю</pattern>
+  <pattern>ю3шя</pattern>
+  <pattern>ю3ща</pattern>
+  <pattern>ю3ще</pattern>
+  <pattern>ю3щи</pattern>
+  <pattern>ю3що</pattern>
+  <pattern>ю3щу</pattern>
+  <pattern>ю3щъ</pattern>
+  <pattern>ю3щь</pattern>
+  <pattern>ю3щю</pattern>
+  <pattern>ю3щя</pattern>
+  <pattern>юаа4</pattern>
+  <pattern>юае4</pattern>
+  <pattern>юаи4</pattern>
+  <pattern>юао4</pattern>
+  <pattern>юау4</pattern>
+  <pattern>юаъ4</pattern>
+  <pattern>юаю4</pattern>
+  <pattern>юая4</pattern>
+  <pattern>юеа4</pattern>
+  <pattern>юее4</pattern>
+  <pattern>юеи4</pattern>
+  <pattern>юео4</pattern>
+  <pattern>юеу4</pattern>
+  <pattern>юеъ4</pattern>
+  <pattern>юею4</pattern>
+  <pattern>юея4</pattern>
+  <pattern>юиа4</pattern>
+  <pattern>юие4</pattern>
+  <pattern>юии4</pattern>
+  <pattern>юио4</pattern>
+  <pattern>юиу4</pattern>
+  <pattern>юиъ4</pattern>
+  <pattern>юию4</pattern>
+  <pattern>юия4</pattern>
+  <pattern>юоа4</pattern>
+  <pattern>юое4</pattern>
+  <pattern>юои4</pattern>
+  <pattern>юоо4</pattern>
+  <pattern>юоу4</pattern>
+  <pattern>юоъ4</pattern>
+  <pattern>юою4</pattern>
+  <pattern>юоя4</pattern>
+  <pattern>юуа4</pattern>
+  <pattern>юуе4</pattern>
+  <pattern>юуи4</pattern>
+  <pattern>юуо4</pattern>
+  <pattern>юуу4</pattern>
+  <pattern>юуъ4</pattern>
+  <pattern>юую4</pattern>
+  <pattern>юуя4</pattern>
+  <pattern>юъа4</pattern>
+  <pattern>юъе4</pattern>
+  <pattern>юъи4</pattern>
+  <pattern>юъо4</pattern>
+  <pattern>юъу4</pattern>
+  <pattern>юъъ4</pattern>
+  <pattern>юъю4</pattern>
+  <pattern>юъя4</pattern>
+  <pattern>ююа4</pattern>
+  <pattern>ююе4</pattern>
+  <pattern>ююи4</pattern>
+  <pattern>ююо4</pattern>
+  <pattern>ююу4</pattern>
+  <pattern>ююъ4</pattern>
+  <pattern>ююю4</pattern>
+  <pattern>ююя4</pattern>
+  <pattern>юяа4</pattern>
+  <pattern>юяе4</pattern>
+  <pattern>юяи4</pattern>
+  <pattern>юяо4</pattern>
+  <pattern>юяу4</pattern>
+  <pattern>юяъ4</pattern>
+  <pattern>юяю4</pattern>
+  <pattern>юяя4</pattern>
+  <pattern>я1</pattern>
+  <pattern>я2б</pattern>
+  <pattern>я2в</pattern>
+  <pattern>я2г</pattern>
+  <pattern>я2д</pattern>
+  <pattern>я2ж</pattern>
+  <pattern>я2з</pattern>
+  <pattern>я2й</pattern>
+  <pattern>я2к</pattern>
+  <pattern>я2л</pattern>
+  <pattern>я2м</pattern>
+  <pattern>я2н</pattern>
+  <pattern>я2п</pattern>
+  <pattern>я2р</pattern>
+  <pattern>я2с</pattern>
+  <pattern>я2т</pattern>
+  <pattern>я2ф</pattern>
+  <pattern>я2х</pattern>
+  <pattern>я2ц</pattern>
+  <pattern>я2ч</pattern>
+  <pattern>я2ш</pattern>
+  <pattern>я2щ</pattern>
+  <pattern>я3ба</pattern>
+  <pattern>я3бе</pattern>
+  <pattern>я3би</pattern>
+  <pattern>я3бо</pattern>
+  <pattern>я3бу</pattern>
+  <pattern>я3бъ</pattern>
+  <pattern>я3бь</pattern>
+  <pattern>я3бю</pattern>
+  <pattern>я3бя</pattern>
+  <pattern>я3ва</pattern>
+  <pattern>я3ве</pattern>
+  <pattern>я3ви</pattern>
+  <pattern>я3во</pattern>
+  <pattern>я3ву</pattern>
+  <pattern>я3въ</pattern>
+  <pattern>я3вь</pattern>
+  <pattern>я3вю</pattern>
+  <pattern>я3вя</pattern>
+  <pattern>я3га</pattern>
+  <pattern>я3ге</pattern>
+  <pattern>я3ги</pattern>
+  <pattern>я3го</pattern>
+  <pattern>я3гу</pattern>
+  <pattern>я3гъ</pattern>
+  <pattern>я3гь</pattern>
+  <pattern>я3гю</pattern>
+  <pattern>я3гя</pattern>
+  <pattern>я3да</pattern>
+  <pattern>я3де</pattern>
+  <pattern>я3джа</pattern>
+  <pattern>я3дже</pattern>
+  <pattern>я3джи</pattern>
+  <pattern>я3джо</pattern>
+  <pattern>я3джу</pattern>
+  <pattern>я3джъ</pattern>
+  <pattern>я3джь</pattern>
+  <pattern>я3джю</pattern>
+  <pattern>я3джя</pattern>
+  <pattern>я3дза</pattern>
+  <pattern>я3дзе</pattern>
+  <pattern>я3дзи</pattern>
+  <pattern>я3дзо</pattern>
+  <pattern>я3дзу</pattern>
+  <pattern>я3дзъ</pattern>
+  <pattern>я3дзь</pattern>
+  <pattern>я3дзю</pattern>
+  <pattern>я3дзя</pattern>
+  <pattern>я3ди</pattern>
+  <pattern>я3до</pattern>
+  <pattern>я3ду</pattern>
+  <pattern>я3дъ</pattern>
+  <pattern>я3дь</pattern>
+  <pattern>я3дю</pattern>
+  <pattern>я3дя</pattern>
+  <pattern>я3жа</pattern>
+  <pattern>я3же</pattern>
+  <pattern>я3жи</pattern>
+  <pattern>я3жо</pattern>
+  <pattern>я3жу</pattern>
+  <pattern>я3жъ</pattern>
+  <pattern>я3жь</pattern>
+  <pattern>я3жю</pattern>
+  <pattern>я3жя</pattern>
+  <pattern>я3за</pattern>
+  <pattern>я3зе</pattern>
+  <pattern>я3зи</pattern>
+  <pattern>я3зо</pattern>
+  <pattern>я3зу</pattern>
+  <pattern>я3зъ</pattern>
+  <pattern>я3зь</pattern>
+  <pattern>я3зю</pattern>
+  <pattern>я3зя</pattern>
+  <pattern>я3йа</pattern>
+  <pattern>я3йе</pattern>
+  <pattern>я3йи</pattern>
+  <pattern>я3йо</pattern>
+  <pattern>я3йу</pattern>
+  <pattern>я3йъ</pattern>
+  <pattern>я3йь</pattern>
+  <pattern>я3йю</pattern>
+  <pattern>я3йя</pattern>
+  <pattern>я3ка</pattern>
+  <pattern>я3ке</pattern>
+  <pattern>я3ки</pattern>
+  <pattern>я3ко</pattern>
+  <pattern>я3ку</pattern>
+  <pattern>я3къ</pattern>
+  <pattern>я3кь</pattern>
+  <pattern>я3кю</pattern>
+  <pattern>я3кя</pattern>
+  <pattern>я3ла</pattern>
+  <pattern>я3ле</pattern>
+  <pattern>я3ли</pattern>
+  <pattern>я3ло</pattern>
+  <pattern>я3лу</pattern>
+  <pattern>я3лъ</pattern>
+  <pattern>я3ль</pattern>
+  <pattern>я3лю</pattern>
+  <pattern>я3ля</pattern>
+  <pattern>я3ма</pattern>
+  <pattern>я3ме</pattern>
+  <pattern>я3ми</pattern>
+  <pattern>я3мо</pattern>
+  <pattern>я3му</pattern>
+  <pattern>я3мъ</pattern>
+  <pattern>я3мь</pattern>
+  <pattern>я3мю</pattern>
+  <pattern>я3мя</pattern>
+  <pattern>я3на</pattern>
+  <pattern>я3не</pattern>
+  <pattern>я3ни</pattern>
+  <pattern>я3но</pattern>
+  <pattern>я3ну</pattern>
+  <pattern>я3нъ</pattern>
+  <pattern>я3нь</pattern>
+  <pattern>я3ню</pattern>
+  <pattern>я3ня</pattern>
+  <pattern>я3па</pattern>
+  <pattern>я3пе</pattern>
+  <pattern>я3пи</pattern>
+  <pattern>я3по</pattern>
+  <pattern>я3пу</pattern>
+  <pattern>я3пъ</pattern>
+  <pattern>я3пь</pattern>
+  <pattern>я3пю</pattern>
+  <pattern>я3пя</pattern>
+  <pattern>я3ра</pattern>
+  <pattern>я3ре</pattern>
+  <pattern>я3ри</pattern>
+  <pattern>я3ро</pattern>
+  <pattern>я3ру</pattern>
+  <pattern>я3ръ</pattern>
+  <pattern>я3рь</pattern>
+  <pattern>я3рю</pattern>
+  <pattern>я3ря</pattern>
+  <pattern>я3са</pattern>
+  <pattern>я3се</pattern>
+  <pattern>я3си</pattern>
+  <pattern>я3со</pattern>
+  <pattern>я3су</pattern>
+  <pattern>я3съ</pattern>
+  <pattern>я3сь</pattern>
+  <pattern>я3сю</pattern>
+  <pattern>я3ся</pattern>
+  <pattern>я3та</pattern>
+  <pattern>я3те</pattern>
+  <pattern>я3ти</pattern>
+  <pattern>я3то</pattern>
+  <pattern>я3ту</pattern>
+  <pattern>я3тъ</pattern>
+  <pattern>я3ть</pattern>
+  <pattern>я3тю</pattern>
+  <pattern>я3тя</pattern>
+  <pattern>я3фа</pattern>
+  <pattern>я3фе</pattern>
+  <pattern>я3фи</pattern>
+  <pattern>я3фо</pattern>
+  <pattern>я3фу</pattern>
+  <pattern>я3фъ</pattern>
+  <pattern>я3фь</pattern>
+  <pattern>я3фю</pattern>
+  <pattern>я3фя</pattern>
+  <pattern>я3ха</pattern>
+  <pattern>я3хе</pattern>
+  <pattern>я3хи</pattern>
+  <pattern>я3хо</pattern>
+  <pattern>я3ху</pattern>
+  <pattern>я3хъ</pattern>
+  <pattern>я3хь</pattern>
+  <pattern>я3хю</pattern>
+  <pattern>я3хя</pattern>
+  <pattern>я3ца</pattern>
+  <pattern>я3це</pattern>
+  <pattern>я3ци</pattern>
+  <pattern>я3цо</pattern>
+  <pattern>я3цу</pattern>
+  <pattern>я3цъ</pattern>
+  <pattern>я3ць</pattern>
+  <pattern>я3цю</pattern>
+  <pattern>я3ця</pattern>
+  <pattern>я3ча</pattern>
+  <pattern>я3че</pattern>
+  <pattern>я3чи</pattern>
+  <pattern>я3чо</pattern>
+  <pattern>я3чу</pattern>
+  <pattern>я3чъ</pattern>
+  <pattern>я3чь</pattern>
+  <pattern>я3чю</pattern>
+  <pattern>я3чя</pattern>
+  <pattern>я3ша</pattern>
+  <pattern>я3ше</pattern>
+  <pattern>я3ши</pattern>
+  <pattern>я3шо</pattern>
+  <pattern>я3шу</pattern>
+  <pattern>я3шъ</pattern>
+  <pattern>я3шь</pattern>
+  <pattern>я3шю</pattern>
+  <pattern>я3шя</pattern>
+  <pattern>я3ща</pattern>
+  <pattern>я3ще</pattern>
+  <pattern>я3щи</pattern>
+  <pattern>я3що</pattern>
+  <pattern>я3щу</pattern>
+  <pattern>я3щъ</pattern>
+  <pattern>я3щь</pattern>
+  <pattern>я3щю</pattern>
+  <pattern>я3щя</pattern>
+  <pattern>яаа4</pattern>
+  <pattern>яае4</pattern>
+  <pattern>яаи4</pattern>
+  <pattern>яао4</pattern>
+  <pattern>яау4</pattern>
+  <pattern>яаъ4</pattern>
+  <pattern>яаю4</pattern>
+  <pattern>яая4</pattern>
+  <pattern>яеа4</pattern>
+  <pattern>яее4</pattern>
+  <pattern>яеи4</pattern>
+  <pattern>яео4</pattern>
+  <pattern>яеу4</pattern>
+  <pattern>яеъ4</pattern>
+  <pattern>яею4</pattern>
+  <pattern>яея4</pattern>
+  <pattern>яиа4</pattern>
+  <pattern>яие4</pattern>
+  <pattern>яии4</pattern>
+  <pattern>яио4</pattern>
+  <pattern>яиу4</pattern>
+  <pattern>яиъ4</pattern>
+  <pattern>яию4</pattern>
+  <pattern>яия4</pattern>
+  <pattern>яоа4</pattern>
+  <pattern>яое4</pattern>
+  <pattern>яои4</pattern>
+  <pattern>яоо4</pattern>
+  <pattern>яоу4</pattern>
+  <pattern>яоъ4</pattern>
+  <pattern>яою4</pattern>
+  <pattern>яоя4</pattern>
+  <pattern>яуа4</pattern>
+  <pattern>яуе4</pattern>
+  <pattern>яуи4</pattern>
+  <pattern>яуо4</pattern>
+  <pattern>яуу4</pattern>
+  <pattern>яуъ4</pattern>
+  <pattern>яую4</pattern>
+  <pattern>яуя4</pattern>
+  <pattern>яъа4</pattern>
+  <pattern>яъе4</pattern>
+  <pattern>яъи4</pattern>
+  <pattern>яъо4</pattern>
+  <pattern>яъу4</pattern>
+  <pattern>яъъ4</pattern>
+  <pattern>яъю4</pattern>
+  <pattern>яъя4</pattern>
+  <pattern>яюа4</pattern>
+  <pattern>яюе4</pattern>
+  <pattern>яюи4</pattern>
+  <pattern>яюо4</pattern>
+  <pattern>яюу4</pattern>
+  <pattern>яюъ4</pattern>
+  <pattern>яюю4</pattern>
+  <pattern>яюя4</pattern>
+  <pattern>яяа4</pattern>
+  <pattern>яяе4</pattern>
+  <pattern>яяи4</pattern>
+  <pattern>яяо4</pattern>
+  <pattern>яяу4</pattern>
+  <pattern>яяъ4</pattern>
+  <pattern>яяю4</pattern>
+  <pattern>яяя4</pattern>
+</HyphenationDescription>

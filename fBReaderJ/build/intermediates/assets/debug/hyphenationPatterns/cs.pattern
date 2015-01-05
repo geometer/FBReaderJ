@@ -1,0 +1,3672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Czech hyphenations description for FBReader (original was taken from the teTeX distribution)
+
+	From the original /usr/share/texmf-texlive/tex/csplain/base/czhyphen.tex:
+
+%%% ====================================================================
+% This is CZHYPHEN.TEX, containing czech hyphenation patterns.
+% Prepared by:
+%   Pavel Sevecek (\v{S}eve\v{c}ek)
+%   Lingea s.r.o., Brno, Czech Republic
+%   E-mail: pavel@lingea.cz
+%
+% This is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This file is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+%%% ====================================================================
+-->
+<HyphenationDescription>
+  <pattern> a2</pattern>
+  <pattern> a4da</pattern>
+  <pattern> a4de</pattern>
+  <pattern> a4di</pattern>
+  <pattern> a4do</pattern>
+  <pattern> a4dé</pattern>
+  <pattern> a4kl</pattern>
+  <pattern> a4ko</pattern>
+  <pattern> a4kr</pattern>
+  <pattern> a4ku</pattern>
+  <pattern> ale3x</pattern>
+  <pattern> a4ra</pattern>
+  <pattern> a4re</pattern>
+  <pattern> a4ri</pattern>
+  <pattern> a4ro</pattern>
+  <pattern> a4ry</pattern>
+  <pattern> a4rá</pattern>
+  <pattern> a4sa</pattern>
+  <pattern> a4se</pattern>
+  <pattern> a4so</pattern>
+  <pattern> as3t3</pattern>
+  <pattern> a4sy</pattern>
+  <pattern> a4ta</pattern>
+  <pattern> a4te</pattern>
+  <pattern> at3l</pattern>
+  <pattern> a4to</pattern>
+  <pattern> a4tr</pattern>
+  <pattern> a4ty</pattern>
+  <pattern> a4ve</pattern>
+  <pattern> b2</pattern>
+  <pattern> c2</pattern>
+  <pattern> ch2</pattern>
+  <pattern> cyk3</pattern>
+  <pattern> d2</pattern>
+  <pattern> dez3</pattern>
+  <pattern> d4na</pattern>
+  <pattern> dne4</pattern>
+  <pattern> dneš4k</pattern>
+  <pattern> d4ny</pattern>
+  <pattern> dos4</pattern>
+  <pattern> d4ve</pattern>
+  <pattern> d4ví</pattern>
+  <pattern> d4vě</pattern>
+  <pattern> e2</pattern>
+  <pattern> e4ch</pattern>
+  <pattern> e4ko</pattern>
+  <pattern> es3k</pattern>
+  <pattern> es3t</pattern>
+  <pattern> e4ve</pattern>
+  <pattern> f4ri</pattern>
+  <pattern> g2</pattern>
+  <pattern> h2</pattern>
+  <pattern> h4le</pattern>
+  <pattern> h4ne</pattern>
+  <pattern> i2</pattern>
+  <pattern> i4na</pattern>
+  <pattern> i4ni</pattern>
+  <pattern> i4no</pattern>
+  <pattern> is3l</pattern>
+  <pattern> j2</pattern>
+  <pattern> j4ak</pattern>
+  <pattern> je4dl</pattern>
+  <pattern> j4se</pattern>
+  <pattern> j4zd</pattern>
+  <pattern> jád4</pattern>
+  <pattern> k2</pattern>
+  <pattern> k4li</pattern>
+  <pattern> k4ly</pattern>
+  <pattern> k8o8e7f8i7c8i7e8n8t </pattern>
+  <pattern> k8o8e7f8i7c8i7e8n7t8y </pattern>
+  <pattern> kří3d</pattern>
+  <pattern> l2</pattern>
+  <pattern> le4gr</pattern>
+  <pattern> li3kv</pattern>
+  <pattern> m2</pattern>
+  <pattern> mi3st4</pattern>
+  <pattern> moud3</pattern>
+  <pattern> na3č4</pattern>
+  <pattern> ne3c</pattern>
+  <pattern> neč4</pattern>
+  <pattern> ne3š</pattern>
+  <pattern> ni2t</pattern>
+  <pattern> no4s3t</pattern>
+  <pattern> n4vp</pattern>
+  <pattern> ná1</pattern>
+  <pattern> nář4k</pattern>
+  <pattern> o2</pattern>
+  <pattern> o4bé</pattern>
+  <pattern> ode3</pattern>
+  <pattern> od3l</pattern>
+  <pattern> od3rá</pattern>
+  <pattern> o4ka</pattern>
+  <pattern> o4ko</pattern>
+  <pattern> o4na</pattern>
+  <pattern> o4ne</pattern>
+  <pattern> o4ni</pattern>
+  <pattern> o4no</pattern>
+  <pattern> o4nu</pattern>
+  <pattern> o4ny</pattern>
+  <pattern> o4ní</pattern>
+  <pattern> o4ně</pattern>
+  <pattern> o4pe</pattern>
+  <pattern> o4po</pattern>
+  <pattern> o4se</pattern>
+  <pattern> o4sl</pattern>
+  <pattern> os4to</pattern>
+  <pattern> os3t3r</pattern>
+  <pattern> os4tě</pattern>
+  <pattern> ot3rá</pattern>
+  <pattern> ot3v</pattern>
+  <pattern> o4tí</pattern>
+  <pattern> o4tř</pattern>
+  <pattern> ově4t</pattern>
+  <pattern> o4za</pattern>
+  <pattern> oz3do</pattern>
+  <pattern> o4zi</pattern>
+  <pattern> o4zo</pattern>
+  <pattern> o4zu</pattern>
+  <pattern> o4šk</pattern>
+  <pattern> o4šl</pattern>
+  <pattern> o4ži</pattern>
+  <pattern> p2</pattern>
+  <pattern> pa4re</pattern>
+  <pattern> pa3tř</pattern>
+  <pattern> polk4l</pattern>
+  <pattern> po3č4</pattern>
+  <pattern> p4ro</pattern>
+  <pattern> p8r8o7j8e8k7č8n8í </pattern>
+  <pattern> p4rý</pattern>
+  <pattern> p4se</pattern>
+  <pattern> pu3b</pattern>
+  <pattern> r2</pattern>
+  <pattern> rej4</pattern>
+  <pattern> re3s</pattern>
+  <pattern> ro4k</pattern>
+  <pattern> roze3</pattern>
+  <pattern> roz3r</pattern>
+  <pattern> ru4dl</pattern>
+  <pattern> s2</pattern>
+  <pattern> s4ch</pattern>
+  <pattern> s4ci</pattern>
+  <pattern> sem4</pattern>
+  <pattern> se3pn</pattern>
+  <pattern> s4ke</pattern>
+  <pattern> sk4l</pattern>
+  <pattern> s4ká</pattern>
+  <pattern> s4le</pattern>
+  <pattern> s4na</pattern>
+  <pattern> s4ny</pattern>
+  <pattern> s4pe</pattern>
+  <pattern> s4po</pattern>
+  <pattern> st2</pattern>
+  <pattern> s4tá</pattern>
+  <pattern> s4ži</pattern>
+  <pattern> t2</pattern>
+  <pattern> u2</pattern>
+  <pattern> u4ba</pattern>
+  <pattern> u4be</pattern>
+  <pattern> u4bi</pattern>
+  <pattern> u4bo</pattern>
+  <pattern> u4de</pattern>
+  <pattern> u4di</pattern>
+  <pattern> u4do</pattern>
+  <pattern> u4du</pattern>
+  <pattern> u4dí</pattern>
+  <pattern> uh4n</pattern>
+  <pattern> uj4m</pattern>
+  <pattern> u4ko</pattern>
+  <pattern> u4ku</pattern>
+  <pattern> ul4h</pattern>
+  <pattern> u4ma</pattern>
+  <pattern> u4me</pattern>
+  <pattern> u4mi</pattern>
+  <pattern> u4mu</pattern>
+  <pattern> u4ne</pattern>
+  <pattern> u4ni</pattern>
+  <pattern> u4pa</pattern>
+  <pattern> u4pe</pattern>
+  <pattern> u4pi</pattern>
+  <pattern> up4n</pattern>
+  <pattern> u4po</pattern>
+  <pattern> u4pu</pattern>
+  <pattern> u4pá</pattern>
+  <pattern> u4pí</pattern>
+  <pattern> u4pě</pattern>
+  <pattern> u4ra</pattern>
+  <pattern> u4ro</pattern>
+  <pattern> u4rá</pattern>
+  <pattern> us2</pattern>
+  <pattern> u4so</pattern>
+  <pattern> u4st</pattern>
+  <pattern> u4sy</pattern>
+  <pattern> u4sí</pattern>
+  <pattern> ut2</pattern>
+  <pattern> u4vi</pattern>
+  <pattern> u4ze</pattern>
+  <pattern> u4če</pattern>
+  <pattern> u4či</pattern>
+  <pattern> u4čí</pattern>
+  <pattern> u4še</pattern>
+  <pattern> u4ši</pattern>
+  <pattern> u4šk</pattern>
+  <pattern> uš4t</pattern>
+  <pattern> u4ší</pattern>
+  <pattern> u4ži</pattern>
+  <pattern> už4n</pattern>
+  <pattern> u4žo</pattern>
+  <pattern> u4ží</pattern>
+  <pattern> v2</pattern>
+  <pattern> va4dl</pattern>
+  <pattern> v4po</pattern>
+  <pattern> vy3</pattern>
+  <pattern> v4zá</pattern>
+  <pattern> vý1</pattern>
+  <pattern> v4ži</pattern>
+  <pattern> y4or</pattern>
+  <pattern> y4ve</pattern>
+  <pattern> z2</pattern>
+  <pattern> za3</pattern>
+  <pattern> zao3s</pattern>
+  <pattern> zar2</pattern>
+  <pattern> zač2</pattern>
+  <pattern> zd2</pattern>
+  <pattern> z4di</pattern>
+  <pattern> z4dr</pattern>
+  <pattern> z4ky</pattern>
+  <pattern> z4mn</pattern>
+  <pattern> z4no</pattern>
+  <pattern> z4nu</pattern>
+  <pattern> z4ní</pattern>
+  <pattern> z4ně</pattern>
+  <pattern> z4pe</pattern>
+  <pattern> z4po</pattern>
+  <pattern> z4tř</pattern>
+  <pattern> z4ve</pattern>
+  <pattern> z4vi</pattern>
+  <pattern> é2</pattern>
+  <pattern> í2</pattern>
+  <pattern> ó2</pattern>
+  <pattern> ú2</pattern>
+  <pattern> ú4dů</pattern>
+  <pattern> ú8h8l8o7p8ř8í8č7k8a </pattern>
+  <pattern> ú8h8l8o7p8ř8í8č7k8y </pattern>
+  <pattern> č2</pattern>
+  <pattern> č4te</pattern>
+  <pattern> š2</pattern>
+  <pattern> še3t</pattern>
+  <pattern> š4ka</pattern>
+  <pattern> š4ke</pattern>
+  <pattern> š4ky</pattern>
+  <pattern> š4ťo</pattern>
+  <pattern> š4ťá</pattern>
+  <pattern> ž2</pattern>
+  <pattern>8'8</pattern>
+  <pattern>a1</pattern>
+  <pattern>2a </pattern>
+  <pattern>aa3t2</pattern>
+  <pattern>ab3lon</pattern>
+  <pattern>ab4lý</pattern>
+  <pattern>ab3ri</pattern>
+  <pattern>ab4sb</pattern>
+  <pattern>ab2st</pattern>
+  <pattern>ac4ci</pattern>
+  <pattern>a2d</pattern>
+  <pattern>a3da</pattern>
+  <pattern>a3de</pattern>
+  <pattern>a3di</pattern>
+  <pattern>ad2la</pattern>
+  <pattern>a4dli</pattern>
+  <pattern>a4dlá</pattern>
+  <pattern>a4dlé</pattern>
+  <pattern>ad4me</pattern>
+  <pattern>ad4mu</pattern>
+  <pattern>a3do</pattern>
+  <pattern>ado4s</pattern>
+  <pattern>a3d3ra</pattern>
+  <pattern>ad3ri</pattern>
+  <pattern>a3drž</pattern>
+  <pattern>a3du</pattern>
+  <pattern>a4duž</pattern>
+  <pattern>3a3dva</pattern>
+  <pattern>ad3vo</pattern>
+  <pattern>a3dy</pattern>
+  <pattern>a3dá</pattern>
+  <pattern>a3dé</pattern>
+  <pattern>a3dí</pattern>
+  <pattern>ad4úz</pattern>
+  <pattern>ad4úř</pattern>
+  <pattern>a3dý</pattern>
+  <pattern>a3dě</pattern>
+  <pattern>a3dů</pattern>
+  <pattern>ae4vi</pattern>
+  <pattern>afi2a</pattern>
+  <pattern>a2g</pattern>
+  <pattern>a3ga</pattern>
+  <pattern>ag4fa</pattern>
+  <pattern>a3go</pattern>
+  <pattern>ag3ro</pattern>
+  <pattern>a3gu</pattern>
+  <pattern>a3gá</pattern>
+  <pattern>ah4li</pattern>
+  <pattern>ah3v</pattern>
+  <pattern>a2i</pattern>
+  <pattern>a3in</pattern>
+  <pattern>ai4re</pattern>
+  <pattern>a3iv</pattern>
+  <pattern>a2jd</pattern>
+  <pattern>a2jm</pattern>
+  <pattern>aj4me</pattern>
+  <pattern>aj2o</pattern>
+  <pattern>a2k</pattern>
+  <pattern>a3ke</pattern>
+  <pattern>a3ki</pattern>
+  <pattern>a3kl</pattern>
+  <pattern>ak4ni</pattern>
+  <pattern>a3ko</pattern>
+  <pattern>a3kr</pattern>
+  <pattern>a3ku</pattern>
+  <pattern>a3ky</pattern>
+  <pattern>a3ká</pattern>
+  <pattern>a3ké</pattern>
+  <pattern>a3kó</pattern>
+  <pattern>a3ký</pattern>
+  <pattern>a3ků</pattern>
+  <pattern>al4fb</pattern>
+  <pattern>al4kl</pattern>
+  <pattern>al4tz</pattern>
+  <pattern>al3ží</pattern>
+  <pattern>am4bd</pattern>
+  <pattern>am4kl</pattern>
+  <pattern>am4nu</pattern>
+  <pattern>amo3s</pattern>
+  <pattern>am4ži</pattern>
+  <pattern>a4nae</pattern>
+  <pattern>a4name</pattern>
+  <pattern>an4dt</pattern>
+  <pattern>ane4sk</pattern>
+  <pattern>aneu4</pattern>
+  <pattern>an4sc</pattern>
+  <pattern>an4sg</pattern>
+  <pattern>an4sl</pattern>
+  <pattern>an4sm</pattern>
+  <pattern>an2sp</pattern>
+  <pattern>an4sv</pattern>
+  <pattern>an4tč</pattern>
+  <pattern>an4žh</pattern>
+  <pattern>ao4ed</pattern>
+  <pattern>ao4hm</pattern>
+  <pattern>ao4stř</pattern>
+  <pattern>ao4tč</pattern>
+  <pattern>ap4r </pattern>
+  <pattern>a4pso</pattern>
+  <pattern>ap3t</pattern>
+  <pattern>a4př </pattern>
+  <pattern>a2r</pattern>
+  <pattern>a3ra</pattern>
+  <pattern>ar4dw</pattern>
+  <pattern>a3re</pattern>
+  <pattern>a4rer</pattern>
+  <pattern>ar4gl</pattern>
+  <pattern>a3ri</pattern>
+  <pattern>ar4kh</pattern>
+  <pattern>a3ro</pattern>
+  <pattern>a4rox</pattern>
+  <pattern>ar3st</pattern>
+  <pattern>a3ru</pattern>
+  <pattern>ar2va</pattern>
+  <pattern>a3ry</pattern>
+  <pattern>a3rá</pattern>
+  <pattern>a3ró</pattern>
+  <pattern>a3rý</pattern>
+  <pattern>ar3š2</pattern>
+  <pattern>ar4šr</pattern>
+  <pattern>a3rů</pattern>
+  <pattern>arůs3</pattern>
+  <pattern>a2s</pattern>
+  <pattern>a3sa</pattern>
+  <pattern>a3se</pattern>
+  <pattern>a3sh</pattern>
+  <pattern>a3sin</pattern>
+  <pattern>as3ná</pattern>
+  <pattern>a3so</pattern>
+  <pattern>as3pi</pattern>
+  <pattern>as4tat</pattern>
+  <pattern>a4stk</pattern>
+  <pattern>as4tm</pattern>
+  <pattern>a4stru </pattern>
+  <pattern>as3tv</pattern>
+  <pattern>a3su</pattern>
+  <pattern>a3sv</pattern>
+  <pattern>a3sy</pattern>
+  <pattern>a3sá</pattern>
+  <pattern>a3sé</pattern>
+  <pattern>a3sí</pattern>
+  <pattern>a3sů</pattern>
+  <pattern>a2t</pattern>
+  <pattern>a3ta</pattern>
+  <pattern>at4ch</pattern>
+  <pattern>a3te</pattern>
+  <pattern>a3ti</pattern>
+  <pattern>a4tio</pattern>
+  <pattern>at4kl</pattern>
+  <pattern>at3lo</pattern>
+  <pattern>a3to</pattern>
+  <pattern>a3tr</pattern>
+  <pattern>at3re</pattern>
+  <pattern>at3ron</pattern>
+  <pattern>at3rov</pattern>
+  <pattern>a4tru</pattern>
+  <pattern>at4rá</pattern>
+  <pattern>at4th</pattern>
+  <pattern>a3tu</pattern>
+  <pattern>a3tv</pattern>
+  <pattern>a3ty</pattern>
+  <pattern>a3tá</pattern>
+  <pattern>a3té</pattern>
+  <pattern>a3tí</pattern>
+  <pattern>a3tó</pattern>
+  <pattern>a3tý</pattern>
+  <pattern>a3tě</pattern>
+  <pattern>at1ř</pattern>
+  <pattern>a4tří </pattern>
+  <pattern>a3tů</pattern>
+  <pattern>a2u</pattern>
+  <pattern>au4gs</pattern>
+  <pattern>a3uj</pattern>
+  <pattern>auj4m</pattern>
+  <pattern>aus3t</pattern>
+  <pattern>a3uč</pattern>
+  <pattern>2av</pattern>
+  <pattern>av3d</pattern>
+  <pattern>av4d </pattern>
+  <pattern>av3lo</pattern>
+  <pattern>a4vlu</pattern>
+  <pattern>a4vlí</pattern>
+  <pattern>av3t</pattern>
+  <pattern>av4ti</pattern>
+  <pattern>2ay</pattern>
+  <pattern>ay4on</pattern>
+  <pattern>az3k</pattern>
+  <pattern>az3la</pattern>
+  <pattern>az4lé</pattern>
+  <pattern>az3ni</pattern>
+  <pattern>a3zp</pattern>
+  <pattern>aú3t</pattern>
+  <pattern>a2č</pattern>
+  <pattern>a3ča</pattern>
+  <pattern>a3če</pattern>
+  <pattern>a3či</pattern>
+  <pattern>a3čl</pattern>
+  <pattern>ač4má</pattern>
+  <pattern>a3čo</pattern>
+  <pattern>a3ču</pattern>
+  <pattern>a3čá</pattern>
+  <pattern>a3čí</pattern>
+  <pattern>a3čů</pattern>
+  <pattern>a2ň</pattern>
+  <pattern>a3ňo</pattern>
+  <pattern>a3ňu</pattern>
+  <pattern>aře4k</pattern>
+  <pattern>a3ří</pattern>
+  <pattern>a4špl</pattern>
+  <pattern>a4špy</pattern>
+  <pattern>a2ť</pattern>
+  <pattern>2b </pattern>
+  <pattern>3ba </pattern>
+  <pattern>ba4br</pattern>
+  <pattern>ba4chr</pattern>
+  <pattern>ba3ka</pattern>
+  <pattern>ba4se</pattern>
+  <pattern>2b1c</pattern>
+  <pattern>b1d</pattern>
+  <pattern>be4ef</pattern>
+  <pattern>be4et</pattern>
+  <pattern>bej4m</pattern>
+  <pattern>be3p</pattern>
+  <pattern>beu4r</pattern>
+  <pattern>be2z3</pattern>
+  <pattern>beze3</pattern>
+  <pattern>b1h</pattern>
+  <pattern>1bi</pattern>
+  <pattern>bi2b3</pattern>
+  <pattern>bis3</pattern>
+  <pattern>bist4</pattern>
+  <pattern>bi4tr</pattern>
+  <pattern>b1j</pattern>
+  <pattern>2bk</pattern>
+  <pattern>3bl </pattern>
+  <pattern>bl4bl</pattern>
+  <pattern>b2lem</pattern>
+  <pattern>b2les</pattern>
+  <pattern>3blk</pattern>
+  <pattern>b4lán</pattern>
+  <pattern>b2lém</pattern>
+  <pattern>b1m</pattern>
+  <pattern>2bn</pattern>
+  <pattern>1bo</pattern>
+  <pattern>bo4et</pattern>
+  <pattern>bo4jm</pattern>
+  <pattern>bo4ok</pattern>
+  <pattern>bo4tr</pattern>
+  <pattern>bou3s</pattern>
+  <pattern>bo4šk</pattern>
+  <pattern>b2ral</pattern>
+  <pattern>b2ran</pattern>
+  <pattern>2bri</pattern>
+  <pattern>b4rodit</pattern>
+  <pattern>b4rou</pattern>
+  <pattern>broz4</pattern>
+  <pattern>b2ru</pattern>
+  <pattern>b3ru </pattern>
+  <pattern>b3rub</pattern>
+  <pattern>b2rán</pattern>
+  <pattern>2b1s2</pattern>
+  <pattern>bs3tr</pattern>
+  <pattern>2b1t</pattern>
+  <pattern>btáh4</pattern>
+  <pattern>bu2c</pattern>
+  <pattern>bu4en</pattern>
+  <pattern>3by </pattern>
+  <pattern>bys3</pattern>
+  <pattern>by4sm</pattern>
+  <pattern>by4tč</pattern>
+  <pattern>by4zn</pattern>
+  <pattern>b2z</pattern>
+  <pattern>1bá</pattern>
+  <pattern>bé4rc</pattern>
+  <pattern>1bí</pattern>
+  <pattern>3bín</pattern>
+  <pattern>bí4rc</pattern>
+  <pattern>2b1č</pattern>
+  <pattern>1bě </pattern>
+  <pattern>bě3ta</pattern>
+  <pattern>2bň</pattern>
+  <pattern>b3řa</pattern>
+  <pattern>b3ře </pattern>
+  <pattern>bře4s</pattern>
+  <pattern>b1ří</pattern>
+  <pattern>2bš2</pattern>
+  <pattern>2c </pattern>
+  <pattern>1ca</pattern>
+  <pattern>cad4l</pattern>
+  <pattern>ca4es</pattern>
+  <pattern>2cc</pattern>
+  <pattern>1ce</pattern>
+  <pattern>cech4</pattern>
+  <pattern>ced4l</pattern>
+  <pattern>celo3</pattern>
+  <pattern>ce4ns</pattern>
+  <pattern>ce4ov</pattern>
+  <pattern>ce4ps</pattern>
+  <pattern>cer4v</pattern>
+  <pattern>ce2u</pattern>
+  <pattern>2ch </pattern>
+  <pattern>1cha</pattern>
+  <pattern>4chalg</pattern>
+  <pattern>3che</pattern>
+  <pattern>4che </pattern>
+  <pattern>2chl</pattern>
+  <pattern>ch4ly</pattern>
+  <pattern>ch4mb</pattern>
+  <pattern>2ch3n</pattern>
+  <pattern>2cht</pattern>
+  <pattern>4chte</pattern>
+  <pattern>1chu</pattern>
+  <pattern>ch4u </pattern>
+  <pattern>1chy</pattern>
+  <pattern>1chá</pattern>
+  <pattern>2chř</pattern>
+  <pattern>1ci</pattern>
+  <pattern>cien4c</pattern>
+  <pattern>cik4l</pattern>
+  <pattern>2ck2</pattern>
+  <pattern>c4ket</pattern>
+  <pattern>ckte4rý</pattern>
+  <pattern>2cl</pattern>
+  <pattern>c3la</pattern>
+  <pattern>c3lé</pattern>
+  <pattern>2cn</pattern>
+  <pattern>1co</pattern>
+  <pattern>co4at</pattern>
+  <pattern>co4mm</pattern>
+  <pattern>co4žp</pattern>
+  <pattern>c2p</pattern>
+  <pattern>2ct</pattern>
+  <pattern>c2ti</pattern>
+  <pattern>ctis4</pattern>
+  <pattern>ct4la</pattern>
+  <pattern>ct2n</pattern>
+  <pattern>c3tv</pattern>
+  <pattern>c2tě</pattern>
+  <pattern>cuk1</pattern>
+  <pattern>1c2v</pattern>
+  <pattern>cy2</pattern>
+  <pattern>1cá</pattern>
+  <pattern>1cí</pattern>
+  <pattern>cí4pl</pattern>
+  <pattern>2cň</pattern>
+  <pattern>1ců</pattern>
+  <pattern>2d </pattern>
+  <pattern>1da</pattern>
+  <pattern>da3d</pattern>
+  <pattern>da4jš</pattern>
+  <pattern>da4kl</pattern>
+  <pattern>da4tr</pattern>
+  <pattern>d1b</pattern>
+  <pattern>d2ba</pattern>
+  <pattern>4dbat </pattern>
+  <pattern>d2bá</pattern>
+  <pattern>2d1c</pattern>
+  <pattern>dch4l</pattern>
+  <pattern>3dch4n</pattern>
+  <pattern>d1d</pattern>
+  <pattern>dd4ha</pattern>
+  <pattern>1de</pattern>
+  <pattern>de4bre</pattern>
+  <pattern>de3hn</pattern>
+  <pattern>de3jd</pattern>
+  <pattern>dej4mo</pattern>
+  <pattern>de3kl</pattern>
+  <pattern>de3kv</pattern>
+  <pattern>de2na</pattern>
+  <pattern>de2oz</pattern>
+  <pattern>de3sl</pattern>
+  <pattern>de4sm</pattern>
+  <pattern>de4so</pattern>
+  <pattern>de2sp</pattern>
+  <pattern>des4t</pattern>
+  <pattern>de3str</pattern>
+  <pattern>de1x</pattern>
+  <pattern>de4xt</pattern>
+  <pattern>de2z</pattern>
+  <pattern>de3zn</pattern>
+  <pattern>dez3o</pattern>
+  <pattern>de3čt</pattern>
+  <pattern>de4žp</pattern>
+  <pattern>2d1h</pattern>
+  <pattern>1di</pattern>
+  <pattern>di4gg</pattern>
+  <pattern>4dind</pattern>
+  <pattern>dis3k</pattern>
+  <pattern>di4so</pattern>
+  <pattern>d1j</pattern>
+  <pattern>dj4us</pattern>
+  <pattern>2dk</pattern>
+  <pattern>d3kv</pattern>
+  <pattern>3dl </pattern>
+  <pattern>d1la</pattern>
+  <pattern>d4lab</pattern>
+  <pattern>d4lak</pattern>
+  <pattern>d3li</pattern>
+  <pattern>1dln</pattern>
+  <pattern>d2lou</pattern>
+  <pattern>d3lou </pattern>
+  <pattern>d2lu</pattern>
+  <pattern>d3luč</pattern>
+  <pattern>d4láž</pattern>
+  <pattern>d1lé</pattern>
+  <pattern>2d1lí</pattern>
+  <pattern>d2lů</pattern>
+  <pattern>d1m</pattern>
+  <pattern>1dmd</pattern>
+  <pattern>dmýš4</pattern>
+  <pattern>2dn</pattern>
+  <pattern>1do</pattern>
+  <pattern>4dobl</pattern>
+  <pattern>4doboj</pattern>
+  <pattern>dob4rat</pattern>
+  <pattern>do3by</pattern>
+  <pattern>do3bý</pattern>
+  <pattern>do3bě</pattern>
+  <pattern>do1d</pattern>
+  <pattern>4do4dd</pattern>
+  <pattern>4do4dj</pattern>
+  <pattern>dod4n</pattern>
+  <pattern>do3h</pattern>
+  <pattern>doj4m</pattern>
+  <pattern>4dokn</pattern>
+  <pattern>4doly</pattern>
+  <pattern>do3mn</pattern>
+  <pattern>domoh4</pattern>
+  <pattern>do3p</pattern>
+  <pattern>do4pc</pattern>
+  <pattern>dop4n</pattern>
+  <pattern>dor2v</pattern>
+  <pattern>do1s</pattern>
+  <pattern>dos4p</pattern>
+  <pattern>dos4tiv</pattern>
+  <pattern>do3t</pattern>
+  <pattern>do3uk</pattern>
+  <pattern>do3uč</pattern>
+  <pattern>do3z2</pattern>
+  <pattern>doz4n</pattern>
+  <pattern>do3č</pattern>
+  <pattern>4do4čn</pattern>
+  <pattern>doč4t</pattern>
+  <pattern>do4žp</pattern>
+  <pattern>4dran</pattern>
+  <pattern>d4rap</pattern>
+  <pattern>d1re</pattern>
+  <pattern>d4ren</pattern>
+  <pattern>3drobn</pattern>
+  <pattern>d3ros</pattern>
+  <pattern>d3rou</pattern>
+  <pattern>d3roš</pattern>
+  <pattern>dr4sc</pattern>
+  <pattern>d3ruš</pattern>
+  <pattern>d3ré</pattern>
+  <pattern>d3rý</pattern>
+  <pattern>d4rýv</pattern>
+  <pattern>2d1s2</pattern>
+  <pattern>ds4ků</pattern>
+  <pattern>ds4po</pattern>
+  <pattern>d1t</pattern>
+  <pattern>d3tl</pattern>
+  <pattern>d3tř</pattern>
+  <pattern>1du</pattern>
+  <pattern>dum3ř</pattern>
+  <pattern>du3na</pattern>
+  <pattern>du3p</pattern>
+  <pattern>du4pn</pattern>
+  <pattern>2dur</pattern>
+  <pattern>du3si</pattern>
+  <pattern>du4í </pattern>
+  <pattern>d2v</pattern>
+  <pattern>d4vac</pattern>
+  <pattern>d3ve</pattern>
+  <pattern>d3vl</pattern>
+  <pattern>d3vr</pattern>
+  <pattern>d3vy</pattern>
+  <pattern>d3vá</pattern>
+  <pattern>d3ví</pattern>
+  <pattern>d3vě</pattern>
+  <pattern>1dy</pattern>
+  <pattern>dy4su</pattern>
+  <pattern>d3zb</pattern>
+  <pattern>d3zd</pattern>
+  <pattern>d3zn</pattern>
+  <pattern>1dá</pattern>
+  <pattern>1dé</pattern>
+  <pattern>1dí</pattern>
+  <pattern>1dý</pattern>
+  <pattern>2d1č</pattern>
+  <pattern>1dě</pattern>
+  <pattern>3děj</pattern>
+  <pattern>2dň</pattern>
+  <pattern>d1řa</pattern>
+  <pattern>dře4k</pattern>
+  <pattern>d4řep</pattern>
+  <pattern>dře4pn</pattern>
+  <pattern>d4řev</pattern>
+  <pattern>d1ří</pattern>
+  <pattern>d2řít</pattern>
+  <pattern>2dš2</pattern>
+  <pattern>d3šk</pattern>
+  <pattern>d3št</pattern>
+  <pattern>1dů</pattern>
+  <pattern>3dů </pattern>
+  <pattern>dů3s</pattern>
+  <pattern>d2ž2</pattern>
+  <pattern>2e </pattern>
+  <pattern>e1a</pattern>
+  <pattern>ea3dr</pattern>
+  <pattern>e2ar</pattern>
+  <pattern>e1b</pattern>
+  <pattern>eb4er</pattern>
+  <pattern>ebez2</pattern>
+  <pattern>eb4li</pattern>
+  <pattern>e2bř</pattern>
+  <pattern>e4ch </pattern>
+  <pattern>e3chl </pattern>
+  <pattern>e4chm</pattern>
+  <pattern>e3cho</pattern>
+  <pattern>e2chr</pattern>
+  <pattern>e3chv</pattern>
+  <pattern>e4chť</pattern>
+  <pattern>ed4be</pattern>
+  <pattern>ed4kv</pattern>
+  <pattern>ed1l</pattern>
+  <pattern>ed2ma</pattern>
+  <pattern>e3dmn</pattern>
+  <pattern>ed3v</pattern>
+  <pattern>ed4ří</pattern>
+  <pattern>e1e</pattern>
+  <pattern>ee4th</pattern>
+  <pattern>ee3xi</pattern>
+  <pattern>eg4gi</pattern>
+  <pattern>e1ha</pattern>
+  <pattern>e1he</pattern>
+  <pattern>ehno4</pattern>
+  <pattern>eh4ně</pattern>
+  <pattern>e1ho</pattern>
+  <pattern>e1hr</pattern>
+  <pattern>e1hu</pattern>
+  <pattern>e1hy</pattern>
+  <pattern>e1há</pattern>
+  <pattern>e1hý</pattern>
+  <pattern>e1i</pattern>
+  <pattern>eilus3</pattern>
+  <pattern>ej3ag</pattern>
+  <pattern>e3jas</pattern>
+  <pattern>e1je</pattern>
+  <pattern>e3jed</pattern>
+  <pattern>ej3ele</pattern>
+  <pattern>e3jez</pattern>
+  <pattern>ej3in</pattern>
+  <pattern>e3jis</pattern>
+  <pattern>ej1m</pattern>
+  <pattern>ej3mo</pattern>
+  <pattern>e3jmu</pattern>
+  <pattern>ej1o</pattern>
+  <pattern>ej1u</pattern>
+  <pattern>eju3st</pattern>
+  <pattern>ej3v</pattern>
+  <pattern>e2k</pattern>
+  <pattern>e3ka</pattern>
+  <pattern>e3ke</pattern>
+  <pattern>e4kly</pattern>
+  <pattern>e3ko</pattern>
+  <pattern>e3kr</pattern>
+  <pattern>e3ku</pattern>
+  <pattern>e3ky</pattern>
+  <pattern>e3ká</pattern>
+  <pattern>e3ké</pattern>
+  <pattern>e3kó</pattern>
+  <pattern>e3kř</pattern>
+  <pattern>e3ků</pattern>
+  <pattern>e1la</pattern>
+  <pattern>e4lau</pattern>
+  <pattern>el4dv</pattern>
+  <pattern>e1le</pattern>
+  <pattern>e1lo</pattern>
+  <pattern>e1lu</pattern>
+  <pattern>e1ly</pattern>
+  <pattern>el4ze</pattern>
+  <pattern>e1lá</pattern>
+  <pattern>e1lé</pattern>
+  <pattern>e1lí</pattern>
+  <pattern>e1ml</pattern>
+  <pattern>e4mlí</pattern>
+  <pattern>emo3k</pattern>
+  <pattern>e1mr</pattern>
+  <pattern>e1my</pattern>
+  <pattern>e3má</pattern>
+  <pattern>e1mí</pattern>
+  <pattern>e1mý</pattern>
+  <pattern>e1mě</pattern>
+  <pattern>e3mř</pattern>
+  <pattern>e3mů</pattern>
+  <pattern>em3že</pattern>
+  <pattern>en4dv</pattern>
+  <pattern>enitos4</pattern>
+  <pattern>en4sc</pattern>
+  <pattern>en4si</pattern>
+  <pattern>ent3r</pattern>
+  <pattern>e1o</pattern>
+  <pattern>eo3by</pattern>
+  <pattern>eoch3r</pattern>
+  <pattern>eod3l</pattern>
+  <pattern>eo4du</pattern>
+  <pattern>e4ole</pattern>
+  <pattern>eo1s</pattern>
+  <pattern>eo2st</pattern>
+  <pattern>eo4tř</pattern>
+  <pattern>eo3z</pattern>
+  <pattern>eo4zb</pattern>
+  <pattern>eo4zd</pattern>
+  <pattern>eoše3</pattern>
+  <pattern>epa3t</pattern>
+  <pattern>e2pl</pattern>
+  <pattern>e4pni</pattern>
+  <pattern>ep2no</pattern>
+  <pattern>e4pný</pattern>
+  <pattern>epoč3t</pattern>
+  <pattern>epro4zř</pattern>
+  <pattern>ep4tl</pattern>
+  <pattern>ep4tm</pattern>
+  <pattern>ep4tn</pattern>
+  <pattern>e4ptu</pattern>
+  <pattern>epy3</pattern>
+  <pattern>2er</pattern>
+  <pattern>e1ra</pattern>
+  <pattern>er4a </pattern>
+  <pattern>e1re</pattern>
+  <pattern>e1ri</pattern>
+  <pattern>e1ro</pattern>
+  <pattern>er3s</pattern>
+  <pattern>er4s </pattern>
+  <pattern>er4sn</pattern>
+  <pattern>e1ru</pattern>
+  <pattern>e1ry</pattern>
+  <pattern>e1rá</pattern>
+  <pattern>e1ré</pattern>
+  <pattern>e1rý</pattern>
+  <pattern>e1rů</pattern>
+  <pattern>e1s</pattern>
+  <pattern>e4sag</pattern>
+  <pattern>e2sce</pattern>
+  <pattern>e4sin</pattern>
+  <pattern>esi4s</pattern>
+  <pattern>e2sk</pattern>
+  <pattern>es4k </pattern>
+  <pattern>e4s4kn</pattern>
+  <pattern>es3ku </pattern>
+  <pattern>es3ky</pattern>
+  <pattern>es3ké</pattern>
+  <pattern>e2sl</pattern>
+  <pattern>e4s3li</pattern>
+  <pattern>e4sly</pattern>
+  <pattern>es2m</pattern>
+  <pattern>e4sp </pattern>
+  <pattern>es4pe</pattern>
+  <pattern>e2st</pattern>
+  <pattern>e4st </pattern>
+  <pattern>e4ste</pattern>
+  <pattern>es3tiž</pattern>
+  <pattern>es4tol</pattern>
+  <pattern>e4strou</pattern>
+  <pattern>es3tán</pattern>
+  <pattern>e1t</pattern>
+  <pattern>e4tki</pattern>
+  <pattern>e4tkr</pattern>
+  <pattern>e4tli</pattern>
+  <pattern>e4tly</pattern>
+  <pattern>et3ri</pattern>
+  <pattern>et3ro</pattern>
+  <pattern>et3rů</pattern>
+  <pattern>et4ún</pattern>
+  <pattern>et1ř</pattern>
+  <pattern>e1u</pattern>
+  <pattern>eu3b</pattern>
+  <pattern>eu3ct</pattern>
+  <pattern>eu3d</pattern>
+  <pattern>eu3k</pattern>
+  <pattern>eu3m</pattern>
+  <pattern>eu4m </pattern>
+  <pattern>eu3n</pattern>
+  <pattern>eu3p</pattern>
+  <pattern>eu3r</pattern>
+  <pattern>eu4r </pattern>
+  <pattern>e4ura</pattern>
+  <pattern>eu4ras</pattern>
+  <pattern>eu4rg</pattern>
+  <pattern>eu3s2</pattern>
+  <pattern>eu3t</pattern>
+  <pattern>e4u4t </pattern>
+  <pattern>eu4tra</pattern>
+  <pattern>eu4ts</pattern>
+  <pattern>eu3v</pattern>
+  <pattern>eu3z</pattern>
+  <pattern>eu3ž</pattern>
+  <pattern>e3vd</pattern>
+  <pattern>eve4š</pattern>
+  <pattern>e3v2k</pattern>
+  <pattern>e4vsk</pattern>
+  <pattern>evy3</pattern>
+  <pattern>evyjad4</pattern>
+  <pattern>evypá4t</pattern>
+  <pattern>evy4čk</pattern>
+  <pattern>evě4tr</pattern>
+  <pattern>ex4ta</pattern>
+  <pattern>e3xu</pattern>
+  <pattern>ey4or</pattern>
+  <pattern>ey4ov</pattern>
+  <pattern>ezaos3</pattern>
+  <pattern>ez4ap</pattern>
+  <pattern>ez4bo</pattern>
+  <pattern>ez3de</pattern>
+  <pattern>ez3dov</pattern>
+  <pattern>ez3du</pattern>
+  <pattern>ez4dě</pattern>
+  <pattern>e3ze</pattern>
+  <pattern>ez4ed2</pattern>
+  <pattern>ez4ej</pattern>
+  <pattern>ez4el</pattern>
+  <pattern>ez4er</pattern>
+  <pattern>ez4es</pattern>
+  <pattern>ez4ez</pattern>
+  <pattern>ez4eš</pattern>
+  <pattern>ezis4</pattern>
+  <pattern>ez4it</pattern>
+  <pattern>ez4le</pattern>
+  <pattern>ez4ná</pattern>
+  <pattern>ez4ně</pattern>
+  <pattern>ez4py</pattern>
+  <pattern>ez2t</pattern>
+  <pattern>ez4ác</pattern>
+  <pattern>ez4áh</pattern>
+  <pattern>e3zí</pattern>
+  <pattern>ez4če</pattern>
+  <pattern>e3zř</pattern>
+  <pattern>ez4ře</pattern>
+  <pattern>e1á</pattern>
+  <pattern>e3ón</pattern>
+  <pattern>eú1</pattern>
+  <pattern>eúmy4</pattern>
+  <pattern>eú3n</pattern>
+  <pattern>eú3p</pattern>
+  <pattern>eú3t</pattern>
+  <pattern>eú3č</pattern>
+  <pattern>eč4kat</pattern>
+  <pattern>e1čt</pattern>
+  <pattern>eč4te</pattern>
+  <pattern>e4čti</pattern>
+  <pattern>e4čtí</pattern>
+  <pattern>e2ň</pattern>
+  <pattern>e3ňo</pattern>
+  <pattern>e3ňu</pattern>
+  <pattern>e3ňá</pattern>
+  <pattern>e1ř</pattern>
+  <pattern>eře4k</pattern>
+  <pattern>eř4ku</pattern>
+  <pattern>e3ří</pattern>
+  <pattern>e2š</pattern>
+  <pattern>e3še</pattern>
+  <pattern>e3ši</pattern>
+  <pattern>e4ška</pattern>
+  <pattern>e3šl</pattern>
+  <pattern>eš4lá</pattern>
+  <pattern>e3šo</pattern>
+  <pattern>eš4to</pattern>
+  <pattern>eštíh4</pattern>
+  <pattern>e3ší</pattern>
+  <pattern>ežíš4</pattern>
+  <pattern>1f</pattern>
+  <pattern>2f </pattern>
+  <pattern>fe4in</pattern>
+  <pattern>fene4</pattern>
+  <pattern>fe4ue</pattern>
+  <pattern>fi4em</pattern>
+  <pattern>fi4fl</pattern>
+  <pattern>f2l</pattern>
+  <pattern>f3lí</pattern>
+  <pattern>fló4r</pattern>
+  <pattern>fm4no</pattern>
+  <pattern>2fn</pattern>
+  <pattern>2fr</pattern>
+  <pattern>f4ran</pattern>
+  <pattern>f4ras</pattern>
+  <pattern>3frek</pattern>
+  <pattern>f1ri</pattern>
+  <pattern>2fs</pattern>
+  <pattern>fs4te</pattern>
+  <pattern>2ft</pattern>
+  <pattern>fu4ch</pattern>
+  <pattern>2fé</pattern>
+  <pattern>f2ú</pattern>
+  <pattern>1g</pattern>
+  <pattern>2g </pattern>
+  <pattern>ga4uč</pattern>
+  <pattern>ge2s</pattern>
+  <pattern>ghou4</pattern>
+  <pattern>3gic</pattern>
+  <pattern>3gin</pattern>
+  <pattern>gi4ím</pattern>
+  <pattern>g4lom</pattern>
+  <pattern>2g1m</pattern>
+  <pattern>2gn</pattern>
+  <pattern>g4noi</pattern>
+  <pattern>g4nos</pattern>
+  <pattern>go1</pattern>
+  <pattern>go4hm</pattern>
+  <pattern>3graf</pattern>
+  <pattern>gu4el</pattern>
+  <pattern>gu4it</pattern>
+  <pattern>gu3m</pattern>
+  <pattern>gu4m </pattern>
+  <pattern>gus4t</pattern>
+  <pattern>gu3v</pattern>
+  <pattern>2h </pattern>
+  <pattern>ha4ag</pattern>
+  <pattern>ha4ar</pattern>
+  <pattern>ha4bl</pattern>
+  <pattern>ha4br</pattern>
+  <pattern>ha3dl</pattern>
+  <pattern>ha4dla</pattern>
+  <pattern>ha4ke</pattern>
+  <pattern>has3t</pattern>
+  <pattern>hatos4</pattern>
+  <pattern>ha4yd</pattern>
+  <pattern>h2b</pattern>
+  <pattern>h2c</pattern>
+  <pattern>2hd</pattern>
+  <pattern>he4br</pattern>
+  <pattern>he4id</pattern>
+  <pattern>hej4s</pattern>
+  <pattern>he2s</pattern>
+  <pattern>he2u</pattern>
+  <pattern>he3x</pattern>
+  <pattern>hi4an</pattern>
+  <pattern>hi3er</pattern>
+  <pattern>hi4gh</pattern>
+  <pattern>hi4re</pattern>
+  <pattern>2hk</pattern>
+  <pattern>4hla </pattern>
+  <pattern>h4led</pattern>
+  <pattern>h3len</pattern>
+  <pattern>2hli</pattern>
+  <pattern>4h3lo </pattern>
+  <pattern>h3lob</pattern>
+  <pattern>h3lop</pattern>
+  <pattern>h3lov</pattern>
+  <pattern>h3luj</pattern>
+  <pattern>2h1ly</pattern>
+  <pattern>4hlá </pattern>
+  <pattern>h4lás</pattern>
+  <pattern>h3lí </pattern>
+  <pattern>4hlík</pattern>
+  <pattern>2hlý</pattern>
+  <pattern>h2m</pattern>
+  <pattern>2h2n</pattern>
+  <pattern>h3ne</pattern>
+  <pattern>h4ned</pattern>
+  <pattern>h3niv</pattern>
+  <pattern>h4noj</pattern>
+  <pattern>3hněd</pattern>
+  <pattern>3hodin</pattern>
+  <pattern>ho3str</pattern>
+  <pattern>hos4tě</pattern>
+  <pattern>4hove</pattern>
+  <pattern>4hovna</pattern>
+  <pattern>4hovny</pattern>
+  <pattern>4hovná</pattern>
+  <pattern>4hovně</pattern>
+  <pattern>h2r</pattern>
+  <pattern>hra4p</pattern>
+  <pattern>2h1t</pattern>
+  <pattern>h4tin</pattern>
+  <pattern>h4tít</pattern>
+  <pattern>h2tě</pattern>
+  <pattern>hu4ch</pattern>
+  <pattern>hu3mo</pattern>
+  <pattern>hu4tň</pattern>
+  <pattern>2h2v</pattern>
+  <pattern>hyd1</pattern>
+  <pattern>hy4do</pattern>
+  <pattern>hy4ps</pattern>
+  <pattern>hys3</pattern>
+  <pattern>hy2t3r</pattern>
+  <pattern>hy4zd</pattern>
+  <pattern>hý4bl</pattern>
+  <pattern>h1č</pattern>
+  <pattern>2hň</pattern>
+  <pattern>hř2</pattern>
+  <pattern>hř4by</pattern>
+  <pattern>h2ž</pattern>
+  <pattern>2i </pattern>
+  <pattern>i1a</pattern>
+  <pattern>ia3d</pattern>
+  <pattern>ia3g2</pattern>
+  <pattern>i4al </pattern>
+  <pattern>ias4t</pattern>
+  <pattern>ia4tr</pattern>
+  <pattern>i1b</pattern>
+  <pattern>ib2l</pattern>
+  <pattern>i2b1r</pattern>
+  <pattern>i1ch</pattern>
+  <pattern>i4chž</pattern>
+  <pattern>i1d</pattern>
+  <pattern>id4ge</pattern>
+  <pattern>id2l</pattern>
+  <pattern>id4lo </pattern>
+  <pattern>i4dlý</pattern>
+  <pattern>i1em</pattern>
+  <pattern>i1en</pattern>
+  <pattern>i1et</pattern>
+  <pattern>if1r</pattern>
+  <pattern>ig4ne</pattern>
+  <pattern>i1h</pattern>
+  <pattern>i2hl</pattern>
+  <pattern>i3hl </pattern>
+  <pattern>i4hli</pattern>
+  <pattern>ih3n</pattern>
+  <pattern>ih4na</pattern>
+  <pattern>i3im</pattern>
+  <pattern>i1j</pattern>
+  <pattern>ijed4</pattern>
+  <pattern>ij4me</pattern>
+  <pattern>ij4mi</pattern>
+  <pattern>i2kl</pattern>
+  <pattern>ik3le</pattern>
+  <pattern>ik3lo </pattern>
+  <pattern>ik3m</pattern>
+  <pattern>ik4ry</pattern>
+  <pattern>i4kve</pattern>
+  <pattern>ik4úř</pattern>
+  <pattern>i1l</pattern>
+  <pattern>il4ba</pattern>
+  <pattern>ilič4n</pattern>
+  <pattern>i4lnu</pattern>
+  <pattern>ilu3</pattern>
+  <pattern>i1m</pattern>
+  <pattern>i4mla</pattern>
+  <pattern>i4mly</pattern>
+  <pattern>i4mun</pattern>
+  <pattern>i2n</pattern>
+  <pattern>i3na</pattern>
+  <pattern>ina3d</pattern>
+  <pattern>in4cm</pattern>
+  <pattern>in4dl</pattern>
+  <pattern>i3ne</pattern>
+  <pattern>3infe</pattern>
+  <pattern>in4gh</pattern>
+  <pattern>in4gp</pattern>
+  <pattern>in4gs</pattern>
+  <pattern>in4gt</pattern>
+  <pattern>i3ni</pattern>
+  <pattern>i3no</pattern>
+  <pattern>i3nu</pattern>
+  <pattern>i3ny</pattern>
+  <pattern>i3ná</pattern>
+  <pattern>i3né</pattern>
+  <pattern>i3ní</pattern>
+  <pattern>i3ný</pattern>
+  <pattern>i3ně</pattern>
+  <pattern>in4šp</pattern>
+  <pattern>i3nů</pattern>
+  <pattern>i1o</pattern>
+  <pattern>io4sk</pattern>
+  <pattern>i2ps</pattern>
+  <pattern>i1r</pattern>
+  <pattern>iro4s</pattern>
+  <pattern>i1sa</pattern>
+  <pattern>is3c</pattern>
+  <pattern>is4ch</pattern>
+  <pattern>is4k </pattern>
+  <pattern>is3ka</pattern>
+  <pattern>is3ke</pattern>
+  <pattern>is3ko </pattern>
+  <pattern>is3kr</pattern>
+  <pattern>is3ku</pattern>
+  <pattern>is3kv</pattern>
+  <pattern>is3ky</pattern>
+  <pattern>i3slav</pattern>
+  <pattern>is3lo</pattern>
+  <pattern>is3lé</pattern>
+  <pattern>is3pl</pattern>
+  <pattern>is3po</pattern>
+  <pattern>is1t</pattern>
+  <pattern>is4tal</pattern>
+  <pattern>is4tat</pattern>
+  <pattern>is4th</pattern>
+  <pattern>ist3v</pattern>
+  <pattern>is3tí</pattern>
+  <pattern>i1sy</pattern>
+  <pattern>i3sá</pattern>
+  <pattern>i1t</pattern>
+  <pattern>it1r</pattern>
+  <pattern>it4rh</pattern>
+  <pattern>it4rp</pattern>
+  <pattern>it4se</pattern>
+  <pattern>it4su</pattern>
+  <pattern>i2tv</pattern>
+  <pattern>i1um</pattern>
+  <pattern>iv3d</pattern>
+  <pattern>i1x</pattern>
+  <pattern>ix4td</pattern>
+  <pattern>i3zp</pattern>
+  <pattern>iz1r</pattern>
+  <pattern>i1á</pattern>
+  <pattern>i1é</pattern>
+  <pattern>ié4re </pattern>
+  <pattern>i1íc</pattern>
+  <pattern>i1ím</pattern>
+  <pattern>i1ó</pattern>
+  <pattern>i1čl</pattern>
+  <pattern>ič3t</pattern>
+  <pattern>ič4tl</pattern>
+  <pattern>ič4to</pattern>
+  <pattern>i2ď</pattern>
+  <pattern>i1ř</pattern>
+  <pattern>iř4kl</pattern>
+  <pattern>iř4če</pattern>
+  <pattern>i2š</pattern>
+  <pattern>i3še</pattern>
+  <pattern>i3ši</pattern>
+  <pattern>iš3k</pattern>
+  <pattern>iš4kr</pattern>
+  <pattern>iš4kv</pattern>
+  <pattern>i3šo</pattern>
+  <pattern>iš4to</pattern>
+  <pattern>i3šu</pattern>
+  <pattern>i3šá</pattern>
+  <pattern>i3ší</pattern>
+  <pattern>i2ž</pattern>
+  <pattern>i3ža</pattern>
+  <pattern>i3že</pattern>
+  <pattern>i3ži</pattern>
+  <pattern>i3žo</pattern>
+  <pattern>i3žu</pattern>
+  <pattern>i3žá</pattern>
+  <pattern>2j </pattern>
+  <pattern>ja2b2</pattern>
+  <pattern>jac4k</pattern>
+  <pattern>ja4cq</pattern>
+  <pattern>ja3d</pattern>
+  <pattern>ja3g</pattern>
+  <pattern>j3akt</pattern>
+  <pattern>j1b2</pattern>
+  <pattern>jbyst3</pattern>
+  <pattern>2j1c</pattern>
+  <pattern>j2d</pattern>
+  <pattern>j3dob</pattern>
+  <pattern>j3dok</pattern>
+  <pattern>j3dos</pattern>
+  <pattern>j3dr</pattern>
+  <pattern>j3dá</pattern>
+  <pattern>jd4ří</pattern>
+  <pattern>j3dů</pattern>
+  <pattern>jech4</pattern>
+  <pattern>j3ef</pattern>
+  <pattern>j3ex</pattern>
+  <pattern>jez3dí</pattern>
+  <pattern>jg4ra</pattern>
+  <pattern>2j1h</pattern>
+  <pattern>1ji</pattern>
+  <pattern>ji4ch</pattern>
+  <pattern>jih3l</pattern>
+  <pattern>ji4mž</pattern>
+  <pattern>j4ina</pattern>
+  <pattern>jis3k</pattern>
+  <pattern>jit4ro</pattern>
+  <pattern>ji2zv</pattern>
+  <pattern>j1j</pattern>
+  <pattern>2jk</pattern>
+  <pattern>j3kv</pattern>
+  <pattern>2j1l</pattern>
+  <pattern>j2m</pattern>
+  <pattern>j3ma</pattern>
+  <pattern>j3mi</pattern>
+  <pattern>jmou3d</pattern>
+  <pattern>2jmí</pattern>
+  <pattern>2jn</pattern>
+  <pattern>jne3</pattern>
+  <pattern>j1ob</pattern>
+  <pattern>j1od</pattern>
+  <pattern>jod2ř</pattern>
+  <pattern>j1oh</pattern>
+  <pattern>j1op</pattern>
+  <pattern>j4ora</pattern>
+  <pattern>j1os</pattern>
+  <pattern>jo3sv</pattern>
+  <pattern>j2ov</pattern>
+  <pattern>j3ovl</pattern>
+  <pattern>j1o3z2</pattern>
+  <pattern>2jp</pattern>
+  <pattern>jpor4</pattern>
+  <pattern>jpo4zv</pattern>
+  <pattern>jpříz4</pattern>
+  <pattern>2j1r</pattern>
+  <pattern>2j1s2</pattern>
+  <pattern>j4sem</pattern>
+  <pattern>j4si </pattern>
+  <pattern>j4sk </pattern>
+  <pattern>js4ko</pattern>
+  <pattern>js4ká</pattern>
+  <pattern>j4s4ků</pattern>
+  <pattern>j4s4me</pattern>
+  <pattern>j3sn</pattern>
+  <pattern>j4sou </pattern>
+  <pattern>j4souc</pattern>
+  <pattern>js4po</pattern>
+  <pattern>j4s4te</pattern>
+  <pattern>2j1t</pattern>
+  <pattern>j3tl</pattern>
+  <pattern>ju4an</pattern>
+  <pattern>ju3na</pattern>
+  <pattern>ju3p</pattern>
+  <pattern>j1us</pattern>
+  <pattern>ju3sp</pattern>
+  <pattern>ju3t</pattern>
+  <pattern>ju4t </pattern>
+  <pattern>ju3v</pattern>
+  <pattern>ju4xt</pattern>
+  <pattern>ju3z</pattern>
+  <pattern>j1už</pattern>
+  <pattern>ju3ži</pattern>
+  <pattern>2jv2</pattern>
+  <pattern>j3vd</pattern>
+  <pattern>j3vn</pattern>
+  <pattern>2jz</pattern>
+  <pattern>j3zb</pattern>
+  <pattern>j3zd</pattern>
+  <pattern>j3zk</pattern>
+  <pattern>j3zn</pattern>
+  <pattern>j3zp</pattern>
+  <pattern>jád2r</pattern>
+  <pattern>1jí</pattern>
+  <pattern>2jú1</pattern>
+  <pattern>jú3n</pattern>
+  <pattern>jú3č</pattern>
+  <pattern>jú3ž</pattern>
+  <pattern>2j1č</pattern>
+  <pattern>2jď</pattern>
+  <pattern>j3št</pattern>
+  <pattern>jš4ti</pattern>
+  <pattern>j3šť</pattern>
+  <pattern>2jž</pattern>
+  <pattern>1k</pattern>
+  <pattern>2k </pattern>
+  <pattern>ka4bl</pattern>
+  <pattern>ka4ch</pattern>
+  <pattern>ka3dl</pattern>
+  <pattern>3kaj</pattern>
+  <pattern>ka3ka</pattern>
+  <pattern>3kami</pattern>
+  <pattern>3kaně</pattern>
+  <pattern>ka2p3l</pattern>
+  <pattern>ka2p3r</pattern>
+  <pattern>ka2ps</pattern>
+  <pattern>ka4pv</pattern>
+  <pattern>ka2př</pattern>
+  <pattern>kas3t</pattern>
+  <pattern>kast3r</pattern>
+  <pattern>3kat</pattern>
+  <pattern>ka4uč</pattern>
+  <pattern>3kav</pattern>
+  <pattern>3kač</pattern>
+  <pattern>3kař</pattern>
+  <pattern>kaš3l</pattern>
+  <pattern>ka4šp</pattern>
+  <pattern>2k1c</pattern>
+  <pattern>k2d</pattern>
+  <pattern>k2e</pattern>
+  <pattern>ke4bl</pattern>
+  <pattern>ke3jo</pattern>
+  <pattern>ke4pr</pattern>
+  <pattern>ke4ps</pattern>
+  <pattern>3ket</pattern>
+  <pattern>2kf</pattern>
+  <pattern>2kk</pattern>
+  <pattern>k2l</pattern>
+  <pattern>3kl </pattern>
+  <pattern>4k3la </pattern>
+  <pattern>k3lej</pattern>
+  <pattern>4k3li </pattern>
+  <pattern>k4lib</pattern>
+  <pattern>k3lic</pattern>
+  <pattern>4klička</pattern>
+  <pattern>4klo </pattern>
+  <pattern>k3los</pattern>
+  <pattern>2k3ly</pattern>
+  <pattern>k3lá </pattern>
+  <pattern>k3lé</pattern>
+  <pattern>k3ló</pattern>
+  <pattern>k3lý</pattern>
+  <pattern>2k2m</pattern>
+  <pattern>k3mě</pattern>
+  <pattern>2kn</pattern>
+  <pattern>kna4s</pattern>
+  <pattern>ko3by</pattern>
+  <pattern>3kof</pattern>
+  <pattern>ko4jm</pattern>
+  <pattern>ko2př</pattern>
+  <pattern>ko4sk</pattern>
+  <pattern>ko2t3v</pattern>
+  <pattern>kous3k</pattern>
+  <pattern>3kov</pattern>
+  <pattern>ko3zá</pattern>
+  <pattern>4kroa</pattern>
+  <pattern>k3rob</pattern>
+  <pattern>k3rof</pattern>
+  <pattern>kr2s</pattern>
+  <pattern>kr4ú </pattern>
+  <pattern>2ks</pattern>
+  <pattern>2k1t</pattern>
+  <pattern>kt2r</pattern>
+  <pattern>kuch4</pattern>
+  <pattern>ku4fř</pattern>
+  <pattern>ku4hr</pattern>
+  <pattern>3kuj</pattern>
+  <pattern>ku3se</pattern>
+  <pattern>ku3si</pattern>
+  <pattern>ku3su</pattern>
+  <pattern>ku4th</pattern>
+  <pattern>ku3v</pattern>
+  <pattern>2k2v</pattern>
+  <pattern>k4vrň</pattern>
+  <pattern>3kyn</pattern>
+  <pattern>ky2pr</pattern>
+  <pattern>kyp3ř</pattern>
+  <pattern>ky4zn</pattern>
+  <pattern>3kác</pattern>
+  <pattern>ká4pl</pattern>
+  <pattern>3kár</pattern>
+  <pattern>3kář</pattern>
+  <pattern>2kč</pattern>
+  <pattern>k2ň</pattern>
+  <pattern>k2ř2</pattern>
+  <pattern>k3řej</pattern>
+  <pattern>kš4ti</pattern>
+  <pattern>3ků </pattern>
+  <pattern>2l </pattern>
+  <pattern>1la </pattern>
+  <pattern>la4br</pattern>
+  <pattern>lab4s</pattern>
+  <pattern>la3ka</pattern>
+  <pattern>la4nq</pattern>
+  <pattern>la4ps</pattern>
+  <pattern>4la3si</pattern>
+  <pattern>la4vš</pattern>
+  <pattern>la4y </pattern>
+  <pattern>la2zm</pattern>
+  <pattern>2l1b</pattern>
+  <pattern>2l1c</pattern>
+  <pattern>2l1d</pattern>
+  <pattern>ld4ne</pattern>
+  <pattern>le4ad</pattern>
+  <pattern>le4au</pattern>
+  <pattern>lech3t</pattern>
+  <pattern>leh3n</pattern>
+  <pattern>le2i</pattern>
+  <pattern>1lej</pattern>
+  <pattern>le3jo</pattern>
+  <pattern>4lejšk</pattern>
+  <pattern>1lel</pattern>
+  <pattern>4lench</pattern>
+  <pattern>lepa3d</pattern>
+  <pattern>lepo4s</pattern>
+  <pattern>le4pr</pattern>
+  <pattern>le4ps</pattern>
+  <pattern>le4sc</pattern>
+  <pattern>le4sm</pattern>
+  <pattern>le4sv</pattern>
+  <pattern>let4li</pattern>
+  <pattern>let3m</pattern>
+  <pattern>le2tr</pattern>
+  <pattern>le4tč</pattern>
+  <pattern>le4uk</pattern>
+  <pattern>le4vh</pattern>
+  <pattern>le4vk</pattern>
+  <pattern>le3xi</pattern>
+  <pattern>lez3n</pattern>
+  <pattern>2lf</pattern>
+  <pattern>2lg</pattern>
+  <pattern>2lh</pattern>
+  <pattern>3lhan</pattern>
+  <pattern>1li</pattern>
+  <pattern>li4az</pattern>
+  <pattern>li4bl</pattern>
+  <pattern>li4bv</pattern>
+  <pattern>li4dm</pattern>
+  <pattern>lind4</pattern>
+  <pattern>3lio</pattern>
+  <pattern>li4tň</pattern>
+  <pattern>li4vr</pattern>
+  <pattern>2liž</pattern>
+  <pattern>2lj</pattern>
+  <pattern>2lk</pattern>
+  <pattern>l4kat</pattern>
+  <pattern>l2kl</pattern>
+  <pattern>lk4nu</pattern>
+  <pattern>2ll</pattern>
+  <pattern>2l1m</pattern>
+  <pattern>2ln</pattern>
+  <pattern>l4nul</pattern>
+  <pattern>lo3br</pattern>
+  <pattern>lo4id</pattern>
+  <pattern>lo4is</pattern>
+  <pattern>1los</pattern>
+  <pattern>lo3sp</pattern>
+  <pattern>lo3stř</pattern>
+  <pattern>lo3sv</pattern>
+  <pattern>lo2tr</pattern>
+  <pattern>lo4tř</pattern>
+  <pattern>lo4u </pattern>
+  <pattern>lo3z</pattern>
+  <pattern>loz4d</pattern>
+  <pattern>lo4šk</pattern>
+  <pattern>2lp</pattern>
+  <pattern>l2pě</pattern>
+  <pattern>2l1s2</pattern>
+  <pattern>l4sla</pattern>
+  <pattern>ls3n</pattern>
+  <pattern>lst4n</pattern>
+  <pattern>l4stí</pattern>
+  <pattern>2l1t</pattern>
+  <pattern>lt4ra</pattern>
+  <pattern>lt4ru</pattern>
+  <pattern>lt4ry</pattern>
+  <pattern>lu4id</pattern>
+  <pattern>lu4j </pattern>
+  <pattern>lu4k </pattern>
+  <pattern>lu4lk</pattern>
+  <pattern>lu4m </pattern>
+  <pattern>lu4mn</pattern>
+  <pattern>lu3pr</pattern>
+  <pattern>lu3va</pattern>
+  <pattern>lu3vl</pattern>
+  <pattern>lu3vy</pattern>
+  <pattern>lu3ví</pattern>
+  <pattern>2lv</pattern>
+  <pattern>2lz</pattern>
+  <pattern>1lá </pattern>
+  <pattern>lá4jš</pattern>
+  <pattern>lá4vš</pattern>
+  <pattern>1lé </pattern>
+  <pattern>1lík</pattern>
+  <pattern>lí4pl</pattern>
+  <pattern>lí4zn</pattern>
+  <pattern>1líř</pattern>
+  <pattern>1lý</pattern>
+  <pattern>lý2t</pattern>
+  <pattern>2l1č</pattern>
+  <pattern>2lň</pattern>
+  <pattern>2lš2</pattern>
+  <pattern>l3št</pattern>
+  <pattern>l4štý</pattern>
+  <pattern>1lů</pattern>
+  <pattern>2l2ž</pattern>
+  <pattern>2m </pattern>
+  <pattern>1ma</pattern>
+  <pattern>maj4s</pattern>
+  <pattern>ma4kl</pattern>
+  <pattern>ma4kr</pattern>
+  <pattern>4mald</pattern>
+  <pattern>mas3k</pattern>
+  <pattern>mat3r</pattern>
+  <pattern>ma4tra</pattern>
+  <pattern>ma4vš</pattern>
+  <pattern>maz3l</pattern>
+  <pattern>2m1b</pattern>
+  <pattern>2m1c</pattern>
+  <pattern>2m1d2</pattern>
+  <pattern>m2dl</pattern>
+  <pattern>1me</pattern>
+  <pattern>3me </pattern>
+  <pattern>me4go</pattern>
+  <pattern>me4is</pattern>
+  <pattern>met3re</pattern>
+  <pattern>me3x</pattern>
+  <pattern>mezi3s</pattern>
+  <pattern>2mf</pattern>
+  <pattern>mh4le</pattern>
+  <pattern>1mi</pattern>
+  <pattern>mid3l</pattern>
+  <pattern>mik3r</pattern>
+  <pattern>mi4xt</pattern>
+  <pattern>2mk2</pattern>
+  <pattern>3m2kl</pattern>
+  <pattern>mk4la</pattern>
+  <pattern>mk4li</pattern>
+  <pattern>m2l</pattern>
+  <pattern>4mla </pattern>
+  <pattern>2mle</pattern>
+  <pattern>ml3h</pattern>
+  <pattern>ml4h </pattern>
+  <pattern>2mli</pattern>
+  <pattern>ml4sc</pattern>
+  <pattern>ml4sk</pattern>
+  <pattern>4mlu </pattern>
+  <pattern>2mn</pattern>
+  <pattern>m3na</pattern>
+  <pattern>mna4s</pattern>
+  <pattern>m4noh</pattern>
+  <pattern>m3nos</pattern>
+  <pattern>m4noz</pattern>
+  <pattern>3množ</pattern>
+  <pattern>m3ná</pattern>
+  <pattern>m3né</pattern>
+  <pattern>m4néz</pattern>
+  <pattern>m3ný</pattern>
+  <pattern>m3něj</pattern>
+  <pattern>1mo</pattern>
+  <pattern>mod3r</pattern>
+  <pattern>mo2hl</pattern>
+  <pattern>mo2k</pattern>
+  <pattern>mo2s</pattern>
+  <pattern>mo4s </pattern>
+  <pattern>mot3ř</pattern>
+  <pattern>4mout</pattern>
+  <pattern>moza4</pattern>
+  <pattern>mo3zř</pattern>
+  <pattern>moú3</pattern>
+  <pattern>2mp</pattern>
+  <pattern>m4plo</pattern>
+  <pattern>mpo4s</pattern>
+  <pattern>m2ps</pattern>
+  <pattern>mp4se</pattern>
+  <pattern>mp2t</pattern>
+  <pattern>mr2s</pattern>
+  <pattern>2m1s2</pattern>
+  <pattern>m4stl</pattern>
+  <pattern>2m1t</pattern>
+  <pattern>1mu</pattern>
+  <pattern>mu4fl</pattern>
+  <pattern>mu3n</pattern>
+  <pattern>mu4n </pattern>
+  <pattern>mu4nd</pattern>
+  <pattern>mu4nn</pattern>
+  <pattern>mu4ns</pattern>
+  <pattern>mu4nš</pattern>
+  <pattern>2muš</pattern>
+  <pattern>2mv</pattern>
+  <pattern>mys3lo</pattern>
+  <pattern>my4šk</pattern>
+  <pattern>2mz</pattern>
+  <pattern>3má </pattern>
+  <pattern>málo3</pattern>
+  <pattern>má2s</pattern>
+  <pattern>mí1c</pattern>
+  <pattern>mí4rň</pattern>
+  <pattern>3mý </pattern>
+  <pattern>2mč</pattern>
+  <pattern>m2če</pattern>
+  <pattern>2m2š</pattern>
+  <pattern>mš4či</pattern>
+  <pattern>mš3ť</pattern>
+  <pattern>mš4ťan </pattern>
+  <pattern>3mů </pattern>
+  <pattern>m2ž</pattern>
+  <pattern>1n</pattern>
+  <pattern>2n </pattern>
+  <pattern>3na </pattern>
+  <pattern>na3ch</pattern>
+  <pattern>na4do</pattern>
+  <pattern>na4em</pattern>
+  <pattern>na3h</pattern>
+  <pattern>na4h </pattern>
+  <pattern>na3jd</pattern>
+  <pattern>na3ka</pattern>
+  <pattern>nam4ne</pattern>
+  <pattern>na3p2</pattern>
+  <pattern>na3s2</pattern>
+  <pattern>na4s </pattern>
+  <pattern>nat2</pattern>
+  <pattern>na3tl</pattern>
+  <pattern>na3tř</pattern>
+  <pattern>na3z</pattern>
+  <pattern>naz4k</pattern>
+  <pattern>na4zš</pattern>
+  <pattern>na4č </pattern>
+  <pattern>na3š</pattern>
+  <pattern>naž4n</pattern>
+  <pattern>2nb</pattern>
+  <pattern>2n1c</pattern>
+  <pattern>n4chc</pattern>
+  <pattern>2n1d</pattern>
+  <pattern>nd4hi</pattern>
+  <pattern>ndo4t</pattern>
+  <pattern>nd2re</pattern>
+  <pattern>nd4ri</pattern>
+  <pattern>nd4ří</pattern>
+  <pattern>ne1d</pattern>
+  <pattern>ne4gl</pattern>
+  <pattern>ne1h</pattern>
+  <pattern>ne3h4n</pattern>
+  <pattern>ne2j</pattern>
+  <pattern>nej3t</pattern>
+  <pattern>nej3u</pattern>
+  <pattern>ne3kl</pattern>
+  <pattern>ne4kro</pattern>
+  <pattern>ne3kv</pattern>
+  <pattern>ne4m </pattern>
+  <pattern>ne3p</pattern>
+  <pattern>ne3s2</pattern>
+  <pattern>ne4s </pattern>
+  <pattern>nes4le</pattern>
+  <pattern>ne4ss</pattern>
+  <pattern>4nesti</pattern>
+  <pattern>ne3tl</pattern>
+  <pattern>net4r</pattern>
+  <pattern>ne3ud</pattern>
+  <pattern>ne3v2</pattern>
+  <pattern>ne4v </pattern>
+  <pattern>ne3z</pattern>
+  <pattern>nez4n</pattern>
+  <pattern>ne3šk</pattern>
+  <pattern>ne3šť</pattern>
+  <pattern>2nf</pattern>
+  <pattern>n3fr</pattern>
+  <pattern>2ng</pattern>
+  <pattern>ng1l</pattern>
+  <pattern>ng4la</pattern>
+  <pattern>ng4le</pattern>
+  <pattern>ng4lí</pattern>
+  <pattern>n4gro</pattern>
+  <pattern>ng4vi</pattern>
+  <pattern>nik4t</pattern>
+  <pattern>ni4mr</pattern>
+  <pattern>ni4mž</pattern>
+  <pattern>3nio</pattern>
+  <pattern>3nisk</pattern>
+  <pattern>2nitř</pattern>
+  <pattern>n1j</pattern>
+  <pattern>2nk</pattern>
+  <pattern>2n1l</pattern>
+  <pattern>2nn</pattern>
+  <pattern>no3b2</pattern>
+  <pattern>no4bs</pattern>
+  <pattern>no3hn</pattern>
+  <pattern>no4hs</pattern>
+  <pattern>no4ir</pattern>
+  <pattern>no4mž</pattern>
+  <pattern>no4sky</pattern>
+  <pattern>no3sm</pattern>
+  <pattern>no3str</pattern>
+  <pattern>not4r</pattern>
+  <pattern>no3z</pattern>
+  <pattern>no4zd</pattern>
+  <pattern>no4šk</pattern>
+  <pattern>2nož</pattern>
+  <pattern>2n1s2</pattern>
+  <pattern>n2sa</pattern>
+  <pattern>ns3ak</pattern>
+  <pattern>ns4ko</pattern>
+  <pattern>n4soc</pattern>
+  <pattern>ns3po</pattern>
+  <pattern>nst4ra</pattern>
+  <pattern>2n1t</pattern>
+  <pattern>nte4r3a</pattern>
+  <pattern>nt4lem</pattern>
+  <pattern>nt4r </pattern>
+  <pattern>nt3ru</pattern>
+  <pattern>nt3rá</pattern>
+  <pattern>2nub</pattern>
+  <pattern>nu4gg</pattern>
+  <pattern>3ny </pattern>
+  <pattern>2nz</pattern>
+  <pattern>3nák</pattern>
+  <pattern>ná3s2</pattern>
+  <pattern>ná4s </pattern>
+  <pattern>2nív</pattern>
+  <pattern>2níž</pattern>
+  <pattern>2nó</pattern>
+  <pattern>2n1č</pattern>
+  <pattern>2nď</pattern>
+  <pattern>2nš2</pattern>
+  <pattern>n3št</pattern>
+  <pattern>nš4ťo</pattern>
+  <pattern>nů2</pattern>
+  <pattern>2nž</pattern>
+  <pattern>2o </pattern>
+  <pattern>o1a</pattern>
+  <pattern>oang4</pattern>
+  <pattern>o1ba</pattern>
+  <pattern>o1be</pattern>
+  <pattern>obe3j</pattern>
+  <pattern>obe3s</pattern>
+  <pattern>obe3z</pattern>
+  <pattern>ob1l</pattern>
+  <pattern>ob1r</pattern>
+  <pattern>ob4rň</pattern>
+  <pattern>o1bu</pattern>
+  <pattern>obys4</pattern>
+  <pattern>ob3z</pattern>
+  <pattern>o3bé</pattern>
+  <pattern>ob3řez</pattern>
+  <pattern>o1c</pattern>
+  <pattern>o4chl</pattern>
+  <pattern>o2chr</pattern>
+  <pattern>oc4ke</pattern>
+  <pattern>oc4ko</pattern>
+  <pattern>o4ct </pattern>
+  <pattern>oct3n</pattern>
+  <pattern>ocy3</pattern>
+  <pattern>oc4ún</pattern>
+  <pattern>od3b</pattern>
+  <pattern>odej4m</pattern>
+  <pattern>ode3p</pattern>
+  <pattern>ode3s</pattern>
+  <pattern>od1l</pattern>
+  <pattern>o4doc</pattern>
+  <pattern>odos4</pattern>
+  <pattern>odo4tk</pattern>
+  <pattern>od3ra</pattern>
+  <pattern>od4ran</pattern>
+  <pattern>od3rů</pattern>
+  <pattern>o3drž</pattern>
+  <pattern>od3v</pattern>
+  <pattern>od1ř</pattern>
+  <pattern>o1e2</pattern>
+  <pattern>oe3g</pattern>
+  <pattern>oe3ti</pattern>
+  <pattern>o2fl</pattern>
+  <pattern>ofrek4</pattern>
+  <pattern>og2</pattern>
+  <pattern>o3gn</pattern>
+  <pattern>o1h</pattern>
+  <pattern>oh4ne</pattern>
+  <pattern>o1i</pattern>
+  <pattern>oi4ce</pattern>
+  <pattern>o4int</pattern>
+  <pattern>o1j</pattern>
+  <pattern>o4jar</pattern>
+  <pattern>oje4dl</pattern>
+  <pattern>o4jmi</pattern>
+  <pattern>o4jmov</pattern>
+  <pattern>o4jmu</pattern>
+  <pattern>o4jmů</pattern>
+  <pattern>oj2o</pattern>
+  <pattern>o4juz</pattern>
+  <pattern>2oka</pattern>
+  <pattern>ok2te</pattern>
+  <pattern>o1l</pattern>
+  <pattern>ol4gl</pattern>
+  <pattern>ol4to</pattern>
+  <pattern>o1m</pattern>
+  <pattern>om4kl</pattern>
+  <pattern>om2n</pattern>
+  <pattern>o2n</pattern>
+  <pattern>o3na</pattern>
+  <pattern>ona4s</pattern>
+  <pattern>o3ne</pattern>
+  <pattern>o3ni</pattern>
+  <pattern>o3no</pattern>
+  <pattern>ont4ra</pattern>
+  <pattern>o3nu</pattern>
+  <pattern>o3ny</pattern>
+  <pattern>o3ná</pattern>
+  <pattern>onář4ka</pattern>
+  <pattern>o3ní</pattern>
+  <pattern>o3ný</pattern>
+  <pattern>o3ně</pattern>
+  <pattern>o3nů</pattern>
+  <pattern>o1o</pattern>
+  <pattern>oo4hř</pattern>
+  <pattern>oote2</pattern>
+  <pattern>opoč3t</pattern>
+  <pattern>opro4s</pattern>
+  <pattern>o2ps</pattern>
+  <pattern>o4ptu</pattern>
+  <pattern>opá4t</pattern>
+  <pattern>o4př </pattern>
+  <pattern>opřej4</pattern>
+  <pattern>opře4jm</pattern>
+  <pattern>o1ra</pattern>
+  <pattern>o4rae</pattern>
+  <pattern>or4dm</pattern>
+  <pattern>o1re</pattern>
+  <pattern>o1ri</pattern>
+  <pattern>o1ro</pattern>
+  <pattern>or3st</pattern>
+  <pattern>o1ru</pattern>
+  <pattern>or4vá</pattern>
+  <pattern>o1ry</pattern>
+  <pattern>o1rá</pattern>
+  <pattern>o3ré</pattern>
+  <pattern>o3rý</pattern>
+  <pattern>o1rů</pattern>
+  <pattern>orůs3</pattern>
+  <pattern>o1sa</pattern>
+  <pattern>o4sai</pattern>
+  <pattern>ose4s</pattern>
+  <pattern>osi4d</pattern>
+  <pattern>o1sk</pattern>
+  <pattern>o4s3ke</pattern>
+  <pattern>o4sku</pattern>
+  <pattern>osk3v</pattern>
+  <pattern>o4ská</pattern>
+  <pattern>o4ský</pattern>
+  <pattern>o1sl</pattern>
+  <pattern>os4la</pattern>
+  <pattern>os4li</pattern>
+  <pattern>os4lý</pattern>
+  <pattern>os3mo</pattern>
+  <pattern>os4mu</pattern>
+  <pattern>o4st </pattern>
+  <pattern>o4stg</pattern>
+  <pattern>o4stm</pattern>
+  <pattern>os4tor</pattern>
+  <pattern>os3trů</pattern>
+  <pattern>o4sté</pattern>
+  <pattern>o4stý</pattern>
+  <pattern>o4stš</pattern>
+  <pattern>o1sy</pattern>
+  <pattern>o1t</pattern>
+  <pattern>ot4kl</pattern>
+  <pattern>o4tlý</pattern>
+  <pattern>oto3s</pattern>
+  <pattern>ot3ro</pattern>
+  <pattern>ot3ví</pattern>
+  <pattern>o3tí</pattern>
+  <pattern>o3tř</pattern>
+  <pattern>ot3ři</pattern>
+  <pattern>o2u</pattern>
+  <pattern>ou3bě</pattern>
+  <pattern>ou3dě</pattern>
+  <pattern>ou4fl</pattern>
+  <pattern>ou4il</pattern>
+  <pattern>ou4is</pattern>
+  <pattern>ou4k </pattern>
+  <pattern>ou3ka</pattern>
+  <pattern>o4ukl</pattern>
+  <pattern>ou3kr</pattern>
+  <pattern>ou3ká</pattern>
+  <pattern>ou3m</pattern>
+  <pattern>oup3n</pattern>
+  <pattern>oupo4</pattern>
+  <pattern>ou4s </pattern>
+  <pattern>ou3sa</pattern>
+  <pattern>ou3se</pattern>
+  <pattern>ou4sk</pattern>
+  <pattern>ou3sm</pattern>
+  <pattern>ou4tv</pattern>
+  <pattern>ou3v</pattern>
+  <pattern>ou4vl</pattern>
+  <pattern>ou4vn</pattern>
+  <pattern>ouz3d</pattern>
+  <pattern>o4učk</pattern>
+  <pattern>ou3ži</pattern>
+  <pattern>ovi4dla</pattern>
+  <pattern>o4vsk</pattern>
+  <pattern>ovy2p</pattern>
+  <pattern>o2všt</pattern>
+  <pattern>o1x</pattern>
+  <pattern>o2z</pattern>
+  <pattern>o3za</pattern>
+  <pattern>oz1b</pattern>
+  <pattern>oz4d </pattern>
+  <pattern>oz3dá</pattern>
+  <pattern>oz3dí</pattern>
+  <pattern>oz3dě</pattern>
+  <pattern>o3ze</pattern>
+  <pattern>oze3d2</pattern>
+  <pattern>ozer4</pattern>
+  <pattern>oz1h</pattern>
+  <pattern>o3zi</pattern>
+  <pattern>oz3j</pattern>
+  <pattern>oz3k</pattern>
+  <pattern>oz4ko</pattern>
+  <pattern>oz1l</pattern>
+  <pattern>oz3m</pattern>
+  <pattern>o4zn </pattern>
+  <pattern>o3zo</pattern>
+  <pattern>oz3p</pattern>
+  <pattern>oz4py</pattern>
+  <pattern>oz4pí</pattern>
+  <pattern>oz4pě</pattern>
+  <pattern>oz3ro</pattern>
+  <pattern>oz3ru</pattern>
+  <pattern>oz3rů</pattern>
+  <pattern>oz3t</pattern>
+  <pattern>o3zu</pattern>
+  <pattern>o4zut</pattern>
+  <pattern>oz3vr</pattern>
+  <pattern>oz3vá</pattern>
+  <pattern>o3zí</pattern>
+  <pattern>o3zů</pattern>
+  <pattern>ozů4s</pattern>
+  <pattern>o1č</pattern>
+  <pattern>oč2k</pattern>
+  <pattern>oč4ka</pattern>
+  <pattern>o2ň</pattern>
+  <pattern>o3ňa</pattern>
+  <pattern>o3ňo</pattern>
+  <pattern>o1ř</pattern>
+  <pattern>oři2s</pattern>
+  <pattern>o3šk</pattern>
+  <pattern>o4šku</pattern>
+  <pattern>o4šky</pattern>
+  <pattern>o3šl</pattern>
+  <pattern>oš4lá</pattern>
+  <pattern>oš4mo</pattern>
+  <pattern>oš4ti</pattern>
+  <pattern>oš4ťu</pattern>
+  <pattern>o3žl</pattern>
+  <pattern>ož4mo</pattern>
+  <pattern>1p</pattern>
+  <pattern>2p </pattern>
+  <pattern>pa4ed</pattern>
+  <pattern>pa4es</pattern>
+  <pattern>pa4kl</pattern>
+  <pattern>pa3si</pattern>
+  <pattern>pa4t </pattern>
+  <pattern>pat4ri</pattern>
+  <pattern>2p1c</pattern>
+  <pattern>pe4al</pattern>
+  <pattern>pede4</pattern>
+  <pattern>pe4ig</pattern>
+  <pattern>pe4np</pattern>
+  <pattern>peri3</pattern>
+  <pattern>pes3t3</pattern>
+  <pattern>pe4tra</pattern>
+  <pattern>3peč</pattern>
+  <pattern>pi4kr</pattern>
+  <pattern>pi4pl</pattern>
+  <pattern>2pk</pattern>
+  <pattern>p2kl</pattern>
+  <pattern>p2l</pattern>
+  <pattern>3pl </pattern>
+  <pattern>4p3la </pattern>
+  <pattern>pl3h</pattern>
+  <pattern>pl4h </pattern>
+  <pattern>4p3li </pattern>
+  <pattern>4plo </pattern>
+  <pattern>2pn</pattern>
+  <pattern>p2nu</pattern>
+  <pattern>po1b2</pattern>
+  <pattern>po3c2</pattern>
+  <pattern>3pod</pattern>
+  <pattern>podbě4h</pattern>
+  <pattern>pod4nes</pattern>
+  <pattern>po3dru</pattern>
+  <pattern>po3drá</pattern>
+  <pattern>po3h</pattern>
+  <pattern>poly3</pattern>
+  <pattern>po3m2</pattern>
+  <pattern>po4mp</pattern>
+  <pattern>po4ol</pattern>
+  <pattern>po3p</pattern>
+  <pattern>po4p </pattern>
+  <pattern>po4pm</pattern>
+  <pattern>po1s2</pattern>
+  <pattern>pos4p</pattern>
+  <pattern>post4r</pattern>
+  <pattern>po3t2</pattern>
+  <pattern>po4t </pattern>
+  <pattern>po4tn</pattern>
+  <pattern>po3uk</pattern>
+  <pattern>po3uč</pattern>
+  <pattern>po3už</pattern>
+  <pattern>3po3v</pattern>
+  <pattern>po3z2</pattern>
+  <pattern>po4zd</pattern>
+  <pattern>poč2</pattern>
+  <pattern>po3čk</pattern>
+  <pattern>poč3te</pattern>
+  <pattern>po3ří</pattern>
+  <pattern>po4šv</pattern>
+  <pattern>2pp</pattern>
+  <pattern>4pra </pattern>
+  <pattern>pra3st</pattern>
+  <pattern>pr2c</pattern>
+  <pattern>pro1</pattern>
+  <pattern>prob2</pattern>
+  <pattern>pro3p</pattern>
+  <pattern>pro3t4</pattern>
+  <pattern>pro3z</pattern>
+  <pattern>pr2s</pattern>
+  <pattern>4prán</pattern>
+  <pattern>prů3</pattern>
+  <pattern>pse4s</pattern>
+  <pattern>2p1sk</pattern>
+  <pattern>p4sut</pattern>
+  <pattern>2pt</pattern>
+  <pattern>p4tej</pattern>
+  <pattern>p4ter</pattern>
+  <pattern>p4tev</pattern>
+  <pattern>pt4ri</pattern>
+  <pattern>p3tu</pattern>
+  <pattern>p4tá </pattern>
+  <pattern>pu4dl</pattern>
+  <pattern>pu4tr</pattern>
+  <pattern>pyt3l</pattern>
+  <pattern>pá1</pattern>
+  <pattern>pá2c</pattern>
+  <pattern>pád3l</pattern>
+  <pattern>pá4nv</pattern>
+  <pattern>pá4sl</pattern>
+  <pattern>pé4rh</pattern>
+  <pattern>2pč</pattern>
+  <pattern>2př </pattern>
+  <pattern>pře3h</pattern>
+  <pattern>pře3j</pattern>
+  <pattern>pře3t4</pattern>
+  <pattern>pře3z</pattern>
+  <pattern>pře3č2</pattern>
+  <pattern>při3</pattern>
+  <pattern>přih4</pattern>
+  <pattern>2pš</pattern>
+  <pattern>pš4ti</pattern>
+  <pattern>2pť</pattern>
+  <pattern>qu2</pattern>
+  <pattern>2r </pattern>
+  <pattern>1ra </pattern>
+  <pattern>ra4br</pattern>
+  <pattern>ra4em</pattern>
+  <pattern>ra4es</pattern>
+  <pattern>ra4ff</pattern>
+  <pattern>ra4hl</pattern>
+  <pattern>ra4hm</pattern>
+  <pattern>ra4jg</pattern>
+  <pattern>ra4jš</pattern>
+  <pattern>2rak</pattern>
+  <pattern>ra4nh</pattern>
+  <pattern>ra3si</pattern>
+  <pattern>rast4r</pattern>
+  <pattern>ra4vv</pattern>
+  <pattern>ra4wl</pattern>
+  <pattern>ra4y </pattern>
+  <pattern>ra4yo</pattern>
+  <pattern>ra4ďm</pattern>
+  <pattern>4raži</pattern>
+  <pattern>r1b</pattern>
+  <pattern>r2bl</pattern>
+  <pattern>r1c</pattern>
+  <pattern>rca3</pattern>
+  <pattern>r3cha</pattern>
+  <pattern>r3cho</pattern>
+  <pattern>rc4ki</pattern>
+  <pattern>r1d</pattern>
+  <pattern>r4dla</pattern>
+  <pattern>rdo2s</pattern>
+  <pattern>re4ad</pattern>
+  <pattern>re4au</pattern>
+  <pattern>red4r</pattern>
+  <pattern>re4et</pattern>
+  <pattern>re3kl</pattern>
+  <pattern>re3kvi</pattern>
+  <pattern>re4mr</pattern>
+  <pattern>re2sb</pattern>
+  <pattern>res3l</pattern>
+  <pattern>retis4</pattern>
+  <pattern>ret4r</pattern>
+  <pattern>re4um</pattern>
+  <pattern>r1ha</pattern>
+  <pattern>r3hl </pattern>
+  <pattern>rh3n</pattern>
+  <pattern>r1ho</pattern>
+  <pattern>r3hu</pattern>
+  <pattern>r1há</pattern>
+  <pattern>ri4bb</pattern>
+  <pattern>1ric</pattern>
+  <pattern>ric4ku</pattern>
+  <pattern>ri4dg</pattern>
+  <pattern>ri4dr</pattern>
+  <pattern>ri4fl</pattern>
+  <pattern>ri4gh</pattern>
+  <pattern>ri4zm</pattern>
+  <pattern>2rk</pattern>
+  <pattern>r2kl</pattern>
+  <pattern>r1l</pattern>
+  <pattern>2r1m</pattern>
+  <pattern>r4mio</pattern>
+  <pattern>2rn</pattern>
+  <pattern>rna4vš</pattern>
+  <pattern>rn4dr</pattern>
+  <pattern>ro4ad</pattern>
+  <pattern>ro3by</pattern>
+  <pattern>rod2l</pattern>
+  <pattern>ro3d4r</pattern>
+  <pattern>3rofy</pattern>
+  <pattern>ro3h</pattern>
+  <pattern>ro4h </pattern>
+  <pattern>ro4jb</pattern>
+  <pattern>ro4kš</pattern>
+  <pattern>rom3n</pattern>
+  <pattern>romy4s</pattern>
+  <pattern>ropát4</pattern>
+  <pattern>ro2sb</pattern>
+  <pattern>ro4skv</pattern>
+  <pattern>ro4sky</pattern>
+  <pattern>ro3sv</pattern>
+  <pattern>ro3ti</pattern>
+  <pattern>ro3tl</pattern>
+  <pattern>ro4tč</pattern>
+  <pattern>ro3vd</pattern>
+  <pattern>3rový</pattern>
+  <pattern>rově4t</pattern>
+  <pattern>roz3d</pattern>
+  <pattern>roz3n</pattern>
+  <pattern>ro4zo</pattern>
+  <pattern>roz3v</pattern>
+  <pattern>ro3zá</pattern>
+  <pattern>ro4čp</pattern>
+  <pattern>rpa3d</pattern>
+  <pattern>2rr</pattern>
+  <pattern>rr4ha</pattern>
+  <pattern>rr4ho</pattern>
+  <pattern>2r1s</pattern>
+  <pattern>r2st</pattern>
+  <pattern>r4stu</pattern>
+  <pattern>rs3tvý</pattern>
+  <pattern>rs3tvě</pattern>
+  <pattern>2r1t</pattern>
+  <pattern>r2th</pattern>
+  <pattern>r4trá</pattern>
+  <pattern>rt4sm</pattern>
+  <pattern>rtu3</pattern>
+  <pattern>r2t3v</pattern>
+  <pattern>rt4zu</pattern>
+  <pattern>1ru </pattern>
+  <pattern>ru3se</pattern>
+  <pattern>ru3si</pattern>
+  <pattern>rus3k</pattern>
+  <pattern>ru3ži</pattern>
+  <pattern>3rvaní</pattern>
+  <pattern>r1x</pattern>
+  <pattern>1ry </pattern>
+  <pattern>rych3</pattern>
+  <pattern>ryd2</pattern>
+  <pattern>rys3ky</pattern>
+  <pattern>rys3t</pattern>
+  <pattern>ry4zk</pattern>
+  <pattern>ry4zn</pattern>
+  <pattern>ry4í </pattern>
+  <pattern>ry4šk</pattern>
+  <pattern>2rz</pattern>
+  <pattern>rz3d</pattern>
+  <pattern>rz3l</pattern>
+  <pattern>rád4l</pattern>
+  <pattern>rá4dž</pattern>
+  <pattern>1rák</pattern>
+  <pattern>rá3ri</pattern>
+  <pattern>1rář</pattern>
+  <pattern>3ré </pattern>
+  <pattern>2ró</pattern>
+  <pattern>3rý </pattern>
+  <pattern>rý4zn</pattern>
+  <pattern>r1č</pattern>
+  <pattern>4rčitý </pattern>
+  <pattern>rč3t</pattern>
+  <pattern>2rš</pattern>
+  <pattern>rš4ní</pattern>
+  <pattern>rů4m </pattern>
+  <pattern>růs3ta</pattern>
+  <pattern>rů4v </pattern>
+  <pattern>2s </pattern>
+  <pattern>sa4pf</pattern>
+  <pattern>sa4pr</pattern>
+  <pattern>sas3k</pattern>
+  <pattern>s2b2</pattern>
+  <pattern>s2c</pattern>
+  <pattern>s3ca</pattern>
+  <pattern>s3ce </pattern>
+  <pattern>sch2</pattern>
+  <pattern>sch4l</pattern>
+  <pattern>sch4n</pattern>
+  <pattern>3schop</pattern>
+  <pattern>s3ci</pattern>
+  <pattern>sci4e</pattern>
+  <pattern>s3cí</pattern>
+  <pattern>s2d</pattern>
+  <pattern>1se</pattern>
+  <pattern>se4au</pattern>
+  <pattern>se3h</pattern>
+  <pattern>se4ig</pattern>
+  <pattern>se4il</pattern>
+  <pattern>sej4m</pattern>
+  <pattern>se4ku</pattern>
+  <pattern>3sel</pattern>
+  <pattern>se3lh</pattern>
+  <pattern>3sem</pattern>
+  <pattern>ser4va</pattern>
+  <pattern>se3s2</pattern>
+  <pattern>ses4k</pattern>
+  <pattern>se4ss</pattern>
+  <pattern>se4stra</pattern>
+  <pattern>se4stru</pattern>
+  <pattern>se4stř</pattern>
+  <pattern>set2</pattern>
+  <pattern>se3tk</pattern>
+  <pattern>se3tř</pattern>
+  <pattern>se4ur</pattern>
+  <pattern>se3z</pattern>
+  <pattern>se3čt</pattern>
+  <pattern>2sf</pattern>
+  <pattern>s3fo</pattern>
+  <pattern>3sfé</pattern>
+  <pattern>s3fú</pattern>
+  <pattern>1si</pattern>
+  <pattern>3sic</pattern>
+  <pattern>3sif</pattern>
+  <pattern>si4fl</pattern>
+  <pattern>sig4no</pattern>
+  <pattern>3sik</pattern>
+  <pattern>si3ste</pattern>
+  <pattern>3sit</pattern>
+  <pattern>s2j</pattern>
+  <pattern>s3ju</pattern>
+  <pattern>s2k</pattern>
+  <pattern>4skac</pattern>
+  <pattern>s4kak</pattern>
+  <pattern>4skam</pattern>
+  <pattern>s4kok</pattern>
+  <pattern>2skon</pattern>
+  <pattern>skos4</pattern>
+  <pattern>4skot</pattern>
+  <pattern>sk4ra</pattern>
+  <pattern>sk4ru</pattern>
+  <pattern>sk4ry</pattern>
+  <pattern>4skve</pattern>
+  <pattern>sk4vo</pattern>
+  <pattern>s3kán</pattern>
+  <pattern>s3ků</pattern>
+  <pattern>3sl </pattern>
+  <pattern>4s3la </pattern>
+  <pattern>s4lav</pattern>
+  <pattern>s3le </pattern>
+  <pattern>s4led</pattern>
+  <pattern>s3lem</pattern>
+  <pattern>s3len</pattern>
+  <pattern>s3let</pattern>
+  <pattern>s4lib</pattern>
+  <pattern>s4liči</pattern>
+  <pattern>3sln</pattern>
+  <pattern>4s3lo </pattern>
+  <pattern>s2ly</pattern>
+  <pattern>s3ly </pattern>
+  <pattern>s1lí</pattern>
+  <pattern>s2ma</pattern>
+  <pattern>s4mek</pattern>
+  <pattern>s2mo</pattern>
+  <pattern>2sn</pattern>
+  <pattern>s2na</pattern>
+  <pattern>s3nat</pattern>
+  <pattern>s2ne</pattern>
+  <pattern>s3ne </pattern>
+  <pattern>sn4tl</pattern>
+  <pattern>s2ná</pattern>
+  <pattern>s3ná </pattern>
+  <pattern>s4níd</pattern>
+  <pattern>1so</pattern>
+  <pattern>sob4l</pattern>
+  <pattern>so3br</pattern>
+  <pattern>so4sk</pattern>
+  <pattern>so4tv</pattern>
+  <pattern>sou3h</pattern>
+  <pattern>sou3s</pattern>
+  <pattern>souz4</pattern>
+  <pattern>so4šk</pattern>
+  <pattern>s2p</pattern>
+  <pattern>s4pol</pattern>
+  <pattern>spro4s</pattern>
+  <pattern>1sr</pattern>
+  <pattern>2ss</pattern>
+  <pattern>ss4sr</pattern>
+  <pattern>2st </pattern>
+  <pattern>4sta </pattern>
+  <pattern>s3taj</pattern>
+  <pattern>s2tan</pattern>
+  <pattern>st4at</pattern>
+  <pattern>4stec</pattern>
+  <pattern>s4tep</pattern>
+  <pattern>st4er</pattern>
+  <pattern>s4tero</pattern>
+  <pattern>s4tich</pattern>
+  <pattern>2stil</pattern>
+  <pattern>s4tink</pattern>
+  <pattern>4stit </pattern>
+  <pattern>4stič</pattern>
+  <pattern>st3lo</pattern>
+  <pattern>2stn</pattern>
+  <pattern>4sto </pattern>
+  <pattern>s4tona</pattern>
+  <pattern>4stou </pattern>
+  <pattern>4str </pattern>
+  <pattern>4stram</pattern>
+  <pattern>s4trik</pattern>
+  <pattern>4strn</pattern>
+  <pattern>4strác</pattern>
+  <pattern>4stupni</pattern>
+  <pattern>s2tv</pattern>
+  <pattern>st4ve</pattern>
+  <pattern>3ství</pattern>
+  <pattern>4sty </pattern>
+  <pattern>s4tyl</pattern>
+  <pattern>3styš</pattern>
+  <pattern>s2tá</pattern>
+  <pattern>4stá </pattern>
+  <pattern>s3tář</pattern>
+  <pattern>s1tí</pattern>
+  <pattern>2stí </pattern>
+  <pattern>4stě </pattern>
+  <pattern>s4těd</pattern>
+  <pattern>3stěh</pattern>
+  <pattern>s2těr</pattern>
+  <pattern>s2těž</pattern>
+  <pattern>s3třej</pattern>
+  <pattern>1su</pattern>
+  <pattern>su4ba</pattern>
+  <pattern>su4bo</pattern>
+  <pattern>suma4</pattern>
+  <pattern>su3ve</pattern>
+  <pattern>s2v</pattern>
+  <pattern>sy3c</pattern>
+  <pattern>sych3r</pattern>
+  <pattern>sy4nes</pattern>
+  <pattern>sá2d</pattern>
+  <pattern>3sáh</pattern>
+  <pattern>sá2kl</pattern>
+  <pattern>1sé</pattern>
+  <pattern>1sí</pattern>
+  <pattern>2s2č</pattern>
+  <pattern>s3či</pattern>
+  <pattern>2sň</pattern>
+  <pattern>2sť</pattern>
+  <pattern>s3ťo</pattern>
+  <pattern>1sů</pattern>
+  <pattern>s2ž</pattern>
+  <pattern>2t </pattern>
+  <pattern>1ta </pattern>
+  <pattern>ta2bl</pattern>
+  <pattern>tac4tvo</pattern>
+  <pattern>t2a3d</pattern>
+  <pattern>1taj</pattern>
+  <pattern>ta4jf</pattern>
+  <pattern>ta4jg</pattern>
+  <pattern>4talt</pattern>
+  <pattern>4tand</pattern>
+  <pattern>3taně</pattern>
+  <pattern>t1ao</pattern>
+  <pattern>2tark</pattern>
+  <pattern>tast4</pattern>
+  <pattern>ta3str</pattern>
+  <pattern>ta4čk</pattern>
+  <pattern>2t1b</pattern>
+  <pattern>2t1c</pattern>
+  <pattern>1te</pattern>
+  <pattern>3te </pattern>
+  <pattern>te4ak</pattern>
+  <pattern>te4fl</pattern>
+  <pattern>te4in</pattern>
+  <pattern>4teném</pattern>
+  <pattern>teob4</pattern>
+  <pattern>tep3l</pattern>
+  <pattern>ters4</pattern>
+  <pattern>tes3ta</pattern>
+  <pattern>te4tr</pattern>
+  <pattern>te4uc</pattern>
+  <pattern>te4ur</pattern>
+  <pattern>te4ut</pattern>
+  <pattern>2tf</pattern>
+  <pattern>2tg</pattern>
+  <pattern>1ti</pattern>
+  <pattern>ti4gr</pattern>
+  <pattern>2tih</pattern>
+  <pattern>ti3kl</pattern>
+  <pattern>tin4g</pattern>
+  <pattern>ti4pl</pattern>
+  <pattern>ti3sl</pattern>
+  <pattern>tis4tr</pattern>
+  <pattern>ti4tr</pattern>
+  <pattern>2titu</pattern>
+  <pattern>tiz4r</pattern>
+  <pattern>4tizí</pattern>
+  <pattern>tiú3</pattern>
+  <pattern>2tiž</pattern>
+  <pattern>2tk2</pattern>
+  <pattern>t4kal</pattern>
+  <pattern>4t2kan</pattern>
+  <pattern>t4kat</pattern>
+  <pattern>t2kl</pattern>
+  <pattern>tk4la</pattern>
+  <pattern>tk4li</pattern>
+  <pattern>4tkně</pattern>
+  <pattern>t2ká</pattern>
+  <pattern>2tl</pattern>
+  <pattern>3tl </pattern>
+  <pattern>4tla </pattern>
+  <pattern>t1le</pattern>
+  <pattern>tles3</pattern>
+  <pattern>3tlm</pattern>
+  <pattern>t3lo </pattern>
+  <pattern>t4lou</pattern>
+  <pattern>tlu3</pattern>
+  <pattern>tlu4s</pattern>
+  <pattern>t1ly</pattern>
+  <pattern>t1lé</pattern>
+  <pattern>2tm</pattern>
+  <pattern>t2ma</pattern>
+  <pattern>2tn</pattern>
+  <pattern>t3ní</pattern>
+  <pattern>1to</pattern>
+  <pattern>to4as</pattern>
+  <pattern>to3b</pattern>
+  <pattern>tob4l</pattern>
+  <pattern>to3dr</pattern>
+  <pattern>to4hm</pattern>
+  <pattern>to4ir</pattern>
+  <pattern>2toj</pattern>
+  <pattern>tol4s</pattern>
+  <pattern>to4ol</pattern>
+  <pattern>4top </pattern>
+  <pattern>4topt</pattern>
+  <pattern>4topu</pattern>
+  <pattern>2torn</pattern>
+  <pattern>2toup</pattern>
+  <pattern>2tp</pattern>
+  <pattern>t3rant</pattern>
+  <pattern>t4rea</pattern>
+  <pattern>t4ref</pattern>
+  <pattern>tre4t</pattern>
+  <pattern>4tric </pattern>
+  <pattern>trip4</pattern>
+  <pattern>t4rit</pattern>
+  <pattern>t4rog</pattern>
+  <pattern>t3rol</pattern>
+  <pattern>tro4sk</pattern>
+  <pattern>t4rou</pattern>
+  <pattern>4trouh</pattern>
+  <pattern>4troň </pattern>
+  <pattern>4trun</pattern>
+  <pattern>t4rus</pattern>
+  <pattern>4t4ruž</pattern>
+  <pattern>t3ráln</pattern>
+  <pattern>4tráš</pattern>
+  <pattern>2trý</pattern>
+  <pattern>2trč</pattern>
+  <pattern>t3rům</pattern>
+  <pattern>t3rův</pattern>
+  <pattern>2t1s</pattern>
+  <pattern>ts4ko</pattern>
+  <pattern>ts2t</pattern>
+  <pattern>2t1t</pattern>
+  <pattern>tt4ch</pattern>
+  <pattern>tt4ri</pattern>
+  <pattern>1tu </pattern>
+  <pattern>tu4ff</pattern>
+  <pattern>1tuj</pattern>
+  <pattern>tu4lk</pattern>
+  <pattern>2tup</pattern>
+  <pattern>tu4r </pattern>
+  <pattern>tu3ry</pattern>
+  <pattern>tu4s </pattern>
+  <pattern>tu4ť </pattern>
+  <pattern>tu3ži</pattern>
+  <pattern>t2v</pattern>
+  <pattern>2tve</pattern>
+  <pattern>2t3vi</pattern>
+  <pattern>t4vinn</pattern>
+  <pattern>t4viš</pattern>
+  <pattern>t4výc</pattern>
+  <pattern>1ty </pattern>
+  <pattern>ty4gř</pattern>
+  <pattern>ty2la</pattern>
+  <pattern>ty4ře</pattern>
+  <pattern>ty4řh</pattern>
+  <pattern>ty4řj</pattern>
+  <pattern>ty4řo</pattern>
+  <pattern>ty4řr</pattern>
+  <pattern>ty4řú</pattern>
+  <pattern>3tá </pattern>
+  <pattern>tá4fl</pattern>
+  <pattern>1té</pattern>
+  <pattern>té2bl</pattern>
+  <pattern>3tém</pattern>
+  <pattern>1tíc</pattern>
+  <pattern>4tíc </pattern>
+  <pattern>4tíce</pattern>
+  <pattern>1tím</pattern>
+  <pattern>2tín</pattern>
+  <pattern>2tír</pattern>
+  <pattern>1tý </pattern>
+  <pattern>1tým</pattern>
+  <pattern>1týř</pattern>
+  <pattern>3týš</pattern>
+  <pattern>t2č</pattern>
+  <pattern>t3či</pattern>
+  <pattern>2tčí</pattern>
+  <pattern>1tě</pattern>
+  <pattern>tě3d4l</pattern>
+  <pattern>2těh</pattern>
+  <pattern>2těnn</pattern>
+  <pattern>2těp</pattern>
+  <pattern>2tř</pattern>
+  <pattern>t4řeb</pattern>
+  <pattern>třeh3n</pattern>
+  <pattern>t2řel</pattern>
+  <pattern>t2řic</pattern>
+  <pattern>t3řil</pattern>
+  <pattern>tř4ti</pattern>
+  <pattern>t1řu</pattern>
+  <pattern>t2řá</pattern>
+  <pattern>3třáb</pattern>
+  <pattern>tří4s</pattern>
+  <pattern>2tš</pattern>
+  <pattern>t3št</pattern>
+  <pattern>tš4ti</pattern>
+  <pattern>1tů</pattern>
+  <pattern>u1</pattern>
+  <pattern>2u </pattern>
+  <pattern>u2at</pattern>
+  <pattern>u2b</pattern>
+  <pattern>u3ba</pattern>
+  <pattern>u3be</pattern>
+  <pattern>u3bi</pattern>
+  <pattern>u3bo</pattern>
+  <pattern>ubs4t</pattern>
+  <pattern>u3bu</pattern>
+  <pattern>u3bá</pattern>
+  <pattern>u3bí </pattern>
+  <pattern>u3bů</pattern>
+  <pattern>uc4tí</pattern>
+  <pattern>2u2d</pattern>
+  <pattern>u3de</pattern>
+  <pattern>u3di</pattern>
+  <pattern>u3do</pattern>
+  <pattern>u3dru</pattern>
+  <pattern>u3du</pattern>
+  <pattern>u3dy</pattern>
+  <pattern>u3dí</pattern>
+  <pattern>ue4fa</pattern>
+  <pattern>2uf</pattern>
+  <pattern>u2hl</pattern>
+  <pattern>uh3lá</pattern>
+  <pattern>uh3no</pattern>
+  <pattern>u2in</pattern>
+  <pattern>u2jm</pattern>
+  <pattern>u2k</pattern>
+  <pattern>u3ka </pattern>
+  <pattern>uk4aj</pattern>
+  <pattern>uk4al</pattern>
+  <pattern>uk4at</pattern>
+  <pattern>u3ke</pattern>
+  <pattern>uk3la</pattern>
+  <pattern>uk3le</pattern>
+  <pattern>u3ko</pattern>
+  <pattern>u3ku</pattern>
+  <pattern>u3ky</pattern>
+  <pattern>uk4á </pattern>
+  <pattern>u3ků</pattern>
+  <pattern>ul4fa</pattern>
+  <pattern>ul1h</pattern>
+  <pattern>ul4pí</pattern>
+  <pattern>u2m</pattern>
+  <pattern>u3ma</pattern>
+  <pattern>u3me</pattern>
+  <pattern>u3mi</pattern>
+  <pattern>um4pl</pattern>
+  <pattern>um4ru</pattern>
+  <pattern>u3mu</pattern>
+  <pattern>u3má</pattern>
+  <pattern>3umř</pattern>
+  <pattern>u2n</pattern>
+  <pattern>un4dl</pattern>
+  <pattern>u3ne</pattern>
+  <pattern>u3no</pattern>
+  <pattern>u3nu</pattern>
+  <pattern>u3ní</pattern>
+  <pattern>u3ně</pattern>
+  <pattern>u3nů</pattern>
+  <pattern>un4žr</pattern>
+  <pattern>u2p</pattern>
+  <pattern>u3pa</pattern>
+  <pattern>u3pe</pattern>
+  <pattern>upe2r3</pattern>
+  <pattern>u3pi</pattern>
+  <pattern>u3pln</pattern>
+  <pattern>u3pu</pattern>
+  <pattern>u3py</pattern>
+  <pattern>u3pá</pattern>
+  <pattern>u3pí</pattern>
+  <pattern>u3pě</pattern>
+  <pattern>u3pů</pattern>
+  <pattern>u2r</pattern>
+  <pattern>u3ra</pattern>
+  <pattern>u3re</pattern>
+  <pattern>u3ri</pattern>
+  <pattern>2u3ro</pattern>
+  <pattern>u3ru</pattern>
+  <pattern>u3ry </pattern>
+  <pattern>u3rá</pattern>
+  <pattern>1urč</pattern>
+  <pattern>u3rů</pattern>
+  <pattern>u2s</pattern>
+  <pattern>us3ky</pattern>
+  <pattern>us3ká</pattern>
+  <pattern>us3ké</pattern>
+  <pattern>us3ký</pattern>
+  <pattern>us1l</pattern>
+  <pattern>us2lo</pattern>
+  <pattern>u3so</pattern>
+  <pattern>u4ste</pattern>
+  <pattern>u4sty</pattern>
+  <pattern>u4sté</pattern>
+  <pattern>u4stý</pattern>
+  <pattern>u4stě</pattern>
+  <pattern>u3stř</pattern>
+  <pattern>u4stš</pattern>
+  <pattern>u3su </pattern>
+  <pattern>u3sy</pattern>
+  <pattern>u3sá</pattern>
+  <pattern>u3sí</pattern>
+  <pattern>u3sů</pattern>
+  <pattern>u4tro</pattern>
+  <pattern>u4trá</pattern>
+  <pattern>u2v</pattern>
+  <pattern>u3vi</pattern>
+  <pattern>u3vu</pattern>
+  <pattern>u2z</pattern>
+  <pattern>u3ze</pattern>
+  <pattern>u3zi</pattern>
+  <pattern>uz1l</pattern>
+  <pattern>u3zo</pattern>
+  <pattern>u3zu</pattern>
+  <pattern>u3zí</pattern>
+  <pattern>u2č</pattern>
+  <pattern>u3ča</pattern>
+  <pattern>u3če</pattern>
+  <pattern>u3či</pattern>
+  <pattern>u3čo</pattern>
+  <pattern>uč3t</pattern>
+  <pattern>u3ču</pattern>
+  <pattern>u3čá</pattern>
+  <pattern>u3čí</pattern>
+  <pattern>u2ď</pattern>
+  <pattern>u2ň</pattern>
+  <pattern>u2š</pattern>
+  <pattern>u3še</pattern>
+  <pattern>u3ši</pattern>
+  <pattern>uš4kl</pattern>
+  <pattern>u3šo</pattern>
+  <pattern>uš3tí</pattern>
+  <pattern>u3šu</pattern>
+  <pattern>u3šá</pattern>
+  <pattern>u3ší</pattern>
+  <pattern>u2ž</pattern>
+  <pattern>u3že</pattern>
+  <pattern>u3žo</pattern>
+  <pattern>u3žu</pattern>
+  <pattern>u3žá</pattern>
+  <pattern>u3ží</pattern>
+  <pattern>1v</pattern>
+  <pattern>2v </pattern>
+  <pattern>va3dl</pattern>
+  <pattern>va4jť</pattern>
+  <pattern>va4kl</pattern>
+  <pattern>2v1b</pattern>
+  <pattern>2v1c</pattern>
+  <pattern>v2ch</pattern>
+  <pattern>2v2d</pattern>
+  <pattern>v4dal</pattern>
+  <pattern>v3di</pattern>
+  <pattern>v4děk</pattern>
+  <pattern>v4děč</pattern>
+  <pattern>ve3dle</pattern>
+  <pattern>ve3jd</pattern>
+  <pattern>3ven</pattern>
+  <pattern>ve2p</pattern>
+  <pattern>ve3ps</pattern>
+  <pattern>vep3ř</pattern>
+  <pattern>ves3l</pattern>
+  <pattern>ve4sm</pattern>
+  <pattern>ves4p</pattern>
+  <pattern>ve3sta</pattern>
+  <pattern>ve3t4ř</pattern>
+  <pattern>ve2z3m</pattern>
+  <pattern>vi4ch</pattern>
+  <pattern>vide2</pattern>
+  <pattern>vi4dr</pattern>
+  <pattern>vi4et</pattern>
+  <pattern>vi4kr</pattern>
+  <pattern>vi2tr</pattern>
+  <pattern>2vk</pattern>
+  <pattern>v2kr</pattern>
+  <pattern>v2l</pattern>
+  <pattern>2v3la </pattern>
+  <pattern>4vle </pattern>
+  <pattern>4vlem</pattern>
+  <pattern>2vlo</pattern>
+  <pattern>2vm</pattern>
+  <pattern>2vn</pattern>
+  <pattern>v4nad</pattern>
+  <pattern>vo3b</pattern>
+  <pattern>vo4ic</pattern>
+  <pattern>vo4ja</pattern>
+  <pattern>vo4jb</pattern>
+  <pattern>vo4jd</pattern>
+  <pattern>vo4jj</pattern>
+  <pattern>vo4jm</pattern>
+  <pattern>vo4jř</pattern>
+  <pattern>vo2s</pattern>
+  <pattern>vo4tř</pattern>
+  <pattern>vou3</pattern>
+  <pattern>vous2</pattern>
+  <pattern>v2p</pattern>
+  <pattern>vr2c</pattern>
+  <pattern>vr2dl</pattern>
+  <pattern>4vrny</pattern>
+  <pattern>v1ro</pattern>
+  <pattern>vr4st</pattern>
+  <pattern>vrst3v</pattern>
+  <pattern>vrs4tvě</pattern>
+  <pattern>2vs2</pattern>
+  <pattern>v1sk</pattern>
+  <pattern>v3stv</pattern>
+  <pattern>2v2t</pattern>
+  <pattern>vy3c</pattern>
+  <pattern>vy3d2</pattern>
+  <pattern>vy4dra</pattern>
+  <pattern>vyp2</pattern>
+  <pattern>vy3s2</pattern>
+  <pattern>vy4sn</pattern>
+  <pattern>vys4t</pattern>
+  <pattern>vy3t</pattern>
+  <pattern>vy3č</pattern>
+  <pattern>vyč4k</pattern>
+  <pattern>vyš2</pattern>
+  <pattern>vy4š </pattern>
+  <pattern>vy4šm</pattern>
+  <pattern>vy4šš</pattern>
+  <pattern>vy4žl</pattern>
+  <pattern>v2z2</pattern>
+  <pattern>vz4no</pattern>
+  <pattern>vz4né</pattern>
+  <pattern>vz4ní</pattern>
+  <pattern>vz4ně</pattern>
+  <pattern>vá3ri</pattern>
+  <pattern>více3</pattern>
+  <pattern>ví4hat</pattern>
+  <pattern>3vín</pattern>
+  <pattern>3výs</pattern>
+  <pattern>vý3t</pattern>
+  <pattern>3vý3z</pattern>
+  <pattern>2v2č</pattern>
+  <pattern>v3čá</pattern>
+  <pattern>v3čí</pattern>
+  <pattern>v4čír</pattern>
+  <pattern>vě4cm</pattern>
+  <pattern>vě3t4a</pattern>
+  <pattern>2vň</pattern>
+  <pattern>2vří</pattern>
+  <pattern>v3řín</pattern>
+  <pattern>v2š2</pattern>
+  <pattern>vše3s</pattern>
+  <pattern>v3ští </pattern>
+  <pattern>v2ž2</pattern>
+  <pattern>wa4fd</pattern>
+  <pattern>3war</pattern>
+  <pattern>wa4re</pattern>
+  <pattern>we2</pattern>
+  <pattern>2x </pattern>
+  <pattern>xand4</pattern>
+  <pattern>2xf</pattern>
+  <pattern>xisk4</pattern>
+  <pattern>2xn</pattern>
+  <pattern>3xov</pattern>
+  <pattern>x1t</pattern>
+  <pattern>xt4ra</pattern>
+  <pattern>xy4sm</pattern>
+  <pattern>y1</pattern>
+  <pattern>y2a</pattern>
+  <pattern>y2bl</pattern>
+  <pattern>yb3ri</pattern>
+  <pattern>y2ch</pattern>
+  <pattern>y4chr</pattern>
+  <pattern>y2d1l</pattern>
+  <pattern>yd4lá</pattern>
+  <pattern>y2dr</pattern>
+  <pattern>yd4y </pattern>
+  <pattern>y2e</pattern>
+  <pattern>y2gr</pattern>
+  <pattern>y3hn</pattern>
+  <pattern>yh4ne</pattern>
+  <pattern>yj4ma</pattern>
+  <pattern>yj4me</pattern>
+  <pattern>y2kl</pattern>
+  <pattern>yk3la</pattern>
+  <pattern>y3klop</pattern>
+  <pattern>yk4ly</pattern>
+  <pattern>ymané4</pattern>
+  <pattern>ym4kl</pattern>
+  <pattern>yna4s</pattern>
+  <pattern>y3ni</pattern>
+  <pattern>ype4r</pattern>
+  <pattern>yp4si</pattern>
+  <pattern>yp4tá</pattern>
+  <pattern>y2př</pattern>
+  <pattern>yr2v</pattern>
+  <pattern>y2s</pattern>
+  <pattern>y3sa</pattern>
+  <pattern>y3se</pattern>
+  <pattern>y3si</pattern>
+  <pattern>ys3lu</pattern>
+  <pattern>y3sm</pattern>
+  <pattern>y3so</pattern>
+  <pattern>y3sp</pattern>
+  <pattern>ys2t</pattern>
+  <pattern>ys3te</pattern>
+  <pattern>yst4r</pattern>
+  <pattern>y3su</pattern>
+  <pattern>y3sv</pattern>
+  <pattern>y3sy</pattern>
+  <pattern>y3sá</pattern>
+  <pattern>y3sé</pattern>
+  <pattern>y3sí</pattern>
+  <pattern>yt4me</pattern>
+  <pattern>yu3ž</pattern>
+  <pattern>y3vs</pattern>
+  <pattern>yvě4t</pattern>
+  <pattern>y3zb</pattern>
+  <pattern>y3zd</pattern>
+  <pattern>y3zk</pattern>
+  <pattern>y3zn</pattern>
+  <pattern>yz4ní</pattern>
+  <pattern>yz4ně</pattern>
+  <pattern>y3zp</pattern>
+  <pattern>yz4po</pattern>
+  <pattern>yč2k</pattern>
+  <pattern>y2ň</pattern>
+  <pattern>yř3b</pattern>
+  <pattern>yřk4n</pattern>
+  <pattern>y3ří</pattern>
+  <pattern>yř4če</pattern>
+  <pattern>y2š</pattern>
+  <pattern>y3še</pattern>
+  <pattern>y3ši</pattern>
+  <pattern>y3šk</pattern>
+  <pattern>yš1l</pattern>
+  <pattern>y3šo</pattern>
+  <pattern>y3šp</pattern>
+  <pattern>y3šu</pattern>
+  <pattern>y3ší</pattern>
+  <pattern>yž2</pattern>
+  <pattern>y3žd</pattern>
+  <pattern>1z</pattern>
+  <pattern>2z </pattern>
+  <pattern>zab2l</pattern>
+  <pattern>za4bs</pattern>
+  <pattern>za4dk</pattern>
+  <pattern>za3dl</pattern>
+  <pattern>za4dn</pattern>
+  <pattern>za3h</pattern>
+  <pattern>za3i</pattern>
+  <pattern>za3j</pattern>
+  <pattern>za4jk</pattern>
+  <pattern>za3k</pattern>
+  <pattern>za4kt</pattern>
+  <pattern>zal4k</pattern>
+  <pattern>zam4n</pattern>
+  <pattern>za3p2</pattern>
+  <pattern>za3s2</pattern>
+  <pattern>zat2</pattern>
+  <pattern>za3tl</pattern>
+  <pattern>zat4r</pattern>
+  <pattern>za4ut</pattern>
+  <pattern>za3z</pattern>
+  <pattern>zaz4n</pattern>
+  <pattern>za4zš</pattern>
+  <pattern>za4č </pattern>
+  <pattern>za3š</pattern>
+  <pattern>zaš4k</pattern>
+  <pattern>za4šs</pattern>
+  <pattern>2zb</pattern>
+  <pattern>zban4</pattern>
+  <pattern>z2by</pattern>
+  <pattern>zbys4</pattern>
+  <pattern>2z1c</pattern>
+  <pattern>2z2d</pattern>
+  <pattern>z3di</pattern>
+  <pattern>zdně4ní</pattern>
+  <pattern>z4doba</pattern>
+  <pattern>z4dobný</pattern>
+  <pattern>zd4re</pattern>
+  <pattern>zd4ví</pattern>
+  <pattern>z2e</pattern>
+  <pattern>ze3h</pattern>
+  <pattern>ze3p2</pattern>
+  <pattern>4zerot</pattern>
+  <pattern>ze3s2</pattern>
+  <pattern>zes4p</pattern>
+  <pattern>zet2</pattern>
+  <pattern>zev2</pattern>
+  <pattern>ze3vn</pattern>
+  <pattern>ze3z</pattern>
+  <pattern>ze4z </pattern>
+  <pattern>2z2f</pattern>
+  <pattern>z1há</pattern>
+  <pattern>z4ine</pattern>
+  <pattern>z2j</pattern>
+  <pattern>z3jí</pattern>
+  <pattern>2z2k</pattern>
+  <pattern>z3ka </pattern>
+  <pattern>z3ky</pattern>
+  <pattern>z3ké</pattern>
+  <pattern>z3ký</pattern>
+  <pattern>z3ků</pattern>
+  <pattern>2zl</pattern>
+  <pattern>3zl </pattern>
+  <pattern>zlhos4</pattern>
+  <pattern>zlik3</pattern>
+  <pattern>z3ly </pattern>
+  <pattern>z2m2</pattern>
+  <pattern>2zme</pattern>
+  <pattern>z3mn</pattern>
+  <pattern>z3my</pattern>
+  <pattern>z4měn</pattern>
+  <pattern>2z2n</pattern>
+  <pattern>3znak</pattern>
+  <pattern>z4nal</pattern>
+  <pattern>z3ne </pattern>
+  <pattern>z3nic</pattern>
+  <pattern>z3no</pattern>
+  <pattern>z3nu</pattern>
+  <pattern>z3ny</pattern>
+  <pattern>z3né</pattern>
+  <pattern>z3ní</pattern>
+  <pattern>z4nít</pattern>
+  <pattern>z4nív</pattern>
+  <pattern>z3ný</pattern>
+  <pattern>z3ně</pattern>
+  <pattern>z4něl</pattern>
+  <pattern>zo4tr</pattern>
+  <pattern>zo4šk</pattern>
+  <pattern>2z2p</pattern>
+  <pattern>z3pt</pattern>
+  <pattern>z4pát</pattern>
+  <pattern>3zrak</pattern>
+  <pattern>2z1s2</pattern>
+  <pattern>2zt</pattern>
+  <pattern>ztros3</pattern>
+  <pattern>z4trá</pattern>
+  <pattern>z3tř</pattern>
+  <pattern>3zu </pattern>
+  <pattern>zu3mo</pattern>
+  <pattern>zu3mí</pattern>
+  <pattern>zu3mě</pattern>
+  <pattern>zu3š</pattern>
+  <pattern>z2v</pattern>
+  <pattern>zva4d</pattern>
+  <pattern>z3vař</pattern>
+  <pattern>z3vi</pattern>
+  <pattern>zvik4</pattern>
+  <pattern>zv4ně</pattern>
+  <pattern>z3vod</pattern>
+  <pattern>z3voj</pattern>
+  <pattern>z4von</pattern>
+  <pattern>zv4ro</pattern>
+  <pattern>z4ván</pattern>
+  <pattern>z3víj</pattern>
+  <pattern>z4věs</pattern>
+  <pattern>3zy </pattern>
+  <pattern>2zz</pattern>
+  <pattern>zá1</pattern>
+  <pattern>záh2</pattern>
+  <pattern>zá4kl </pattern>
+  <pattern>3záp</pattern>
+  <pattern>zá3s2</pattern>
+  <pattern>zá3z</pattern>
+  <pattern>záš2</pattern>
+  <pattern>2z2ú1</pattern>
+  <pattern>zú3č</pattern>
+  <pattern>zú3ž</pattern>
+  <pattern>2zč</pattern>
+  <pattern>z3čl</pattern>
+  <pattern>2zň</pattern>
+  <pattern>z2ř</pattern>
+  <pattern>zřej3</pattern>
+  <pattern>z3řez</pattern>
+  <pattern>z3řeš</pattern>
+  <pattern>2zš2</pattern>
+  <pattern>z3šk</pattern>
+  <pattern>zš4ka</pattern>
+  <pattern>z3št</pattern>
+  <pattern>zů3s</pattern>
+  <pattern>á1b</pattern>
+  <pattern>á2bl</pattern>
+  <pattern>áb4ry</pattern>
+  <pattern>á4bř </pattern>
+  <pattern>á3cho</pattern>
+  <pattern>ác3ti3</pattern>
+  <pattern>á1d</pattern>
+  <pattern>á2dl</pattern>
+  <pattern>ádo4s</pattern>
+  <pattern>ádos4ti</pattern>
+  <pattern>ád1ř</pattern>
+  <pattern>á1ha</pattern>
+  <pattern>á3he</pattern>
+  <pattern>áh1l</pattern>
+  <pattern>á3hl </pattern>
+  <pattern>áh3n</pattern>
+  <pattern>á1ho</pattern>
+  <pattern>á1hr</pattern>
+  <pattern>á1há</pattern>
+  <pattern>á1j</pattern>
+  <pattern>á4jmu</pattern>
+  <pattern>áj4mů</pattern>
+  <pattern>á4kli</pattern>
+  <pattern>ák4ni</pattern>
+  <pattern>á1la</pattern>
+  <pattern>á1le</pattern>
+  <pattern>á1lo</pattern>
+  <pattern>á1lu</pattern>
+  <pattern>á1ly</pattern>
+  <pattern>á3lé</pattern>
+  <pattern>á1lí</pattern>
+  <pattern>á3my</pattern>
+  <pattern>á3mé</pattern>
+  <pattern>á3mí</pattern>
+  <pattern>á3mý</pattern>
+  <pattern>á1mě</pattern>
+  <pattern>áne4v</pattern>
+  <pattern>á1ra</pattern>
+  <pattern>á1re</pattern>
+  <pattern>ár2m</pattern>
+  <pattern>á1ro</pattern>
+  <pattern>á1ru</pattern>
+  <pattern>á3rů</pattern>
+  <pattern>á1s</pattern>
+  <pattern>á2sc</pattern>
+  <pattern>á2s3k</pattern>
+  <pattern>ás4k </pattern>
+  <pattern>ás4kl</pattern>
+  <pattern>ás4kn</pattern>
+  <pattern>á2sla</pattern>
+  <pattern>ás4ly</pattern>
+  <pattern>á2sm</pattern>
+  <pattern>ás4po</pattern>
+  <pattern>á2st</pattern>
+  <pattern>át3k</pattern>
+  <pattern>át1r</pattern>
+  <pattern>á1tu</pattern>
+  <pattern>á1ty</pattern>
+  <pattern>á1tí</pattern>
+  <pattern>á3tý</pattern>
+  <pattern>áv4si</pattern>
+  <pattern>áv4sí</pattern>
+  <pattern>áz3k</pattern>
+  <pattern>áz3ni</pattern>
+  <pattern>ázni4c</pattern>
+  <pattern>áz4vi</pattern>
+  <pattern>á2ň</pattern>
+  <pattern>á1ř</pattern>
+  <pattern>ář4ke</pattern>
+  <pattern>ář4ků</pattern>
+  <pattern>á2š</pattern>
+  <pattern>á3še</pattern>
+  <pattern>á3ší</pattern>
+  <pattern>é1</pattern>
+  <pattern>é2d</pattern>
+  <pattern>é3di</pattern>
+  <pattern>é3do</pattern>
+  <pattern>é2f</pattern>
+  <pattern>é3fo</pattern>
+  <pattern>éf1r</pattern>
+  <pattern>é2kl</pattern>
+  <pattern>é2l</pattern>
+  <pattern>é2m</pattern>
+  <pattern>é3ma</pattern>
+  <pattern>é3me</pattern>
+  <pattern>é3mi</pattern>
+  <pattern>é3mo</pattern>
+  <pattern>é3mu</pattern>
+  <pattern>é3mů</pattern>
+  <pattern>4ére </pattern>
+  <pattern>é2s</pattern>
+  <pattern>é2t</pattern>
+  <pattern>é3ta</pattern>
+  <pattern>é3to</pattern>
+  <pattern>é3tá</pattern>
+  <pattern>é2š</pattern>
+  <pattern>é2ž</pattern>
+  <pattern>í1b</pattern>
+  <pattern>íb3ř</pattern>
+  <pattern>í3cho</pattern>
+  <pattern>ích4t</pattern>
+  <pattern>íd1l</pattern>
+  <pattern>í1h</pattern>
+  <pattern>í2hl</pattern>
+  <pattern>íh3n</pattern>
+  <pattern>í1j</pattern>
+  <pattern>íjed4</pattern>
+  <pattern>íj4mů</pattern>
+  <pattern>í2kr</pattern>
+  <pattern>í1l</pattern>
+  <pattern>í1má</pattern>
+  <pattern>í3mé</pattern>
+  <pattern>í1mě</pattern>
+  <pattern>í1r</pattern>
+  <pattern>í1sa</pattern>
+  <pattern>í2s3k</pattern>
+  <pattern>ís4kl</pattern>
+  <pattern>ís4kn</pattern>
+  <pattern>ís4l </pattern>
+  <pattern>ís3le</pattern>
+  <pattern>ís4ln</pattern>
+  <pattern>ísáh2</pattern>
+  <pattern>í1t</pattern>
+  <pattern>ít3k</pattern>
+  <pattern>í3t3ře</pattern>
+  <pattern>íz3da</pattern>
+  <pattern>íz3de</pattern>
+  <pattern>íz3k</pattern>
+  <pattern>í3zna</pattern>
+  <pattern>í3z3ni</pattern>
+  <pattern>í3zněn</pattern>
+  <pattern>í2ň</pattern>
+  <pattern>í1ř</pattern>
+  <pattern>í2š</pattern>
+  <pattern>í3še</pattern>
+  <pattern>í3ši</pattern>
+  <pattern>í3šo</pattern>
+  <pattern>í3ší</pattern>
+  <pattern>ó1</pattern>
+  <pattern>ó2z</pattern>
+  <pattern>ó3za</pattern>
+  <pattern>ó3zi</pattern>
+  <pattern>ó3zo</pattern>
+  <pattern>ó3zy</pattern>
+  <pattern>1ú</pattern>
+  <pattern>ú2c2</pattern>
+  <pattern>ú2d</pattern>
+  <pattern>új4ma</pattern>
+  <pattern>ú2k</pattern>
+  <pattern>ú2l</pattern>
+  <pattern>ú2n</pattern>
+  <pattern>ú2p</pattern>
+  <pattern>ú2t</pattern>
+  <pattern>út4ko</pattern>
+  <pattern>ú2v</pattern>
+  <pattern>ú2z</pattern>
+  <pattern>úz3k</pattern>
+  <pattern>ú2č</pattern>
+  <pattern>3úče</pattern>
+  <pattern>úře4z</pattern>
+  <pattern>úš4ti</pattern>
+  <pattern>ú2ž</pattern>
+  <pattern>ý1b</pattern>
+  <pattern>ý3cho</pattern>
+  <pattern>ý1d</pattern>
+  <pattern>ýd4la</pattern>
+  <pattern>ý1h</pattern>
+  <pattern>ý1j</pattern>
+  <pattern>ý1l</pattern>
+  <pattern>ý1ml</pattern>
+  <pattern>ý1mě</pattern>
+  <pattern>ý2n</pattern>
+  <pattern>ý3no</pattern>
+  <pattern>ýpo3č4</pattern>
+  <pattern>ý1r</pattern>
+  <pattern>ý1s2</pattern>
+  <pattern>ý2sk</pattern>
+  <pattern>ý1t</pattern>
+  <pattern>ýt4ku</pattern>
+  <pattern>ýt4ky</pattern>
+  <pattern>ý1u</pattern>
+  <pattern>ý4vli</pattern>
+  <pattern>ý3zk</pattern>
+  <pattern>ý3zn</pattern>
+  <pattern>ý4zvu</pattern>
+  <pattern>ýč4ně</pattern>
+  <pattern>ý1ř</pattern>
+  <pattern>ýš3l</pattern>
+  <pattern>2č </pattern>
+  <pattern>1ča</pattern>
+  <pattern>ča4br</pattern>
+  <pattern>2čb</pattern>
+  <pattern>2č1c</pattern>
+  <pattern>1če</pattern>
+  <pattern>3če </pattern>
+  <pattern>če1c</pattern>
+  <pattern>čes3k</pattern>
+  <pattern>1či</pattern>
+  <pattern>2čk</pattern>
+  <pattern>č3ka </pattern>
+  <pattern>č3ko</pattern>
+  <pattern>č3ku</pattern>
+  <pattern>č3ky</pattern>
+  <pattern>2č1m</pattern>
+  <pattern>2čn</pattern>
+  <pattern>č2ne</pattern>
+  <pattern>1čo</pattern>
+  <pattern>č2p</pattern>
+  <pattern>2čs</pattern>
+  <pattern>č1sk</pattern>
+  <pattern>čs4la</pattern>
+  <pattern>čs4sr</pattern>
+  <pattern>2č2t</pattern>
+  <pattern>č4tené </pattern>
+  <pattern>č4tený</pattern>
+  <pattern>čt4la</pattern>
+  <pattern>č4tový </pattern>
+  <pattern>3čtv</pattern>
+  <pattern>č3tí</pattern>
+  <pattern>4čtěn</pattern>
+  <pattern>1ču</pattern>
+  <pattern>1čá</pattern>
+  <pattern>1čí</pattern>
+  <pattern>čís3l</pattern>
+  <pattern>1čů</pattern>
+  <pattern>2ď </pattern>
+  <pattern>1ďa</pattern>
+  <pattern>1ďo</pattern>
+  <pattern>ďs4te</pattern>
+  <pattern>2ď1t</pattern>
+  <pattern>3ďuj</pattern>
+  <pattern>ě1c</pattern>
+  <pattern>ěd3r</pattern>
+  <pattern>ě3ha</pattern>
+  <pattern>ě3he</pattern>
+  <pattern>ě3hl </pattern>
+  <pattern>ěh3lo</pattern>
+  <pattern>ěh3n</pattern>
+  <pattern>ě1ho</pattern>
+  <pattern>ě3hu</pattern>
+  <pattern>ě3hů</pattern>
+  <pattern>ě3ja</pattern>
+  <pattern>ě1je</pattern>
+  <pattern>ě1jo</pattern>
+  <pattern>ě3jů</pattern>
+  <pattern>ě4klé</pattern>
+  <pattern>ě3k2t</pattern>
+  <pattern>ě1l</pattern>
+  <pattern>ě1ra</pattern>
+  <pattern>ěra3d</pattern>
+  <pattern>ě1re</pattern>
+  <pattern>ě1ro</pattern>
+  <pattern>ěr3s</pattern>
+  <pattern>ěrs4t</pattern>
+  <pattern>ě1ru</pattern>
+  <pattern>ě1ry</pattern>
+  <pattern>ě1rů</pattern>
+  <pattern>ěs3k</pattern>
+  <pattern>ěs3n</pattern>
+  <pattern>ět1a3</pattern>
+  <pattern>ět4ac</pattern>
+  <pattern>ět1l</pattern>
+  <pattern>ě1tr</pattern>
+  <pattern>ět3ra</pattern>
+  <pattern>ě4traj</pattern>
+  <pattern>ět3v</pattern>
+  <pattern>ě1tí</pattern>
+  <pattern>ět3ří</pattern>
+  <pattern>ě2v</pattern>
+  <pattern>ě3va</pattern>
+  <pattern>ě3ve</pattern>
+  <pattern>ě3vl</pattern>
+  <pattern>ě3vo</pattern>
+  <pattern>ě3vu</pattern>
+  <pattern>ě3vá</pattern>
+  <pattern>ěv3č</pattern>
+  <pattern>ě2z</pattern>
+  <pattern>ě3ze</pattern>
+  <pattern>ě3zi</pattern>
+  <pattern>ěz3n</pattern>
+  <pattern>ě3zo</pattern>
+  <pattern>ě3zí</pattern>
+  <pattern>ě1ř</pattern>
+  <pattern>ě2š</pattern>
+  <pattern>ě3še</pattern>
+  <pattern>ě3ši</pattern>
+  <pattern>ě3šo</pattern>
+  <pattern>ě3šu</pattern>
+  <pattern>ě3šá</pattern>
+  <pattern>ě3ší</pattern>
+  <pattern>ěš3ť</pattern>
+  <pattern>ěš4ťs</pattern>
+  <pattern>ě2ť</pattern>
+  <pattern>ě3ťo</pattern>
+  <pattern>ě2ž</pattern>
+  <pattern>ě3že</pattern>
+  <pattern>ě3ži</pattern>
+  <pattern>ě3žo</pattern>
+  <pattern>ě3žu</pattern>
+  <pattern>ě3ží</pattern>
+  <pattern>1ň</pattern>
+  <pattern>2ň </pattern>
+  <pattern>2ňa</pattern>
+  <pattern>ňa3d</pattern>
+  <pattern>2ňk</pattern>
+  <pattern>2ňm</pattern>
+  <pattern>3ňov</pattern>
+  <pattern>ň1s</pattern>
+  <pattern>2ň1t</pattern>
+  <pattern>2ř </pattern>
+  <pattern>řa4pl</pattern>
+  <pattern>řa4ďm</pattern>
+  <pattern>2ř2b</pattern>
+  <pattern>2řc</pattern>
+  <pattern>2řd</pattern>
+  <pattern>ře3ch</pattern>
+  <pattern>ře4dob</pattern>
+  <pattern>ře1h</pattern>
+  <pattern>ře3jd</pattern>
+  <pattern>ře3kl</pattern>
+  <pattern>ře3kv</pattern>
+  <pattern>ře4kří</pattern>
+  <pattern>řeo4r</pattern>
+  <pattern>ře3p2</pattern>
+  <pattern>ře4p </pattern>
+  <pattern>ře4pk</pattern>
+  <pattern>ře4pč</pattern>
+  <pattern>řer4v</pattern>
+  <pattern>2řes</pattern>
+  <pattern>ře3ska</pattern>
+  <pattern>ře3sko</pattern>
+  <pattern>ře2sp</pattern>
+  <pattern>řes3po</pattern>
+  <pattern>ře4sr</pattern>
+  <pattern>ře3sta</pattern>
+  <pattern>ře3stu</pattern>
+  <pattern>ře3stá</pattern>
+  <pattern>ře3stř</pattern>
+  <pattern>ře3tl</pattern>
+  <pattern>řet4ř</pattern>
+  <pattern>ře3zd</pattern>
+  <pattern>ře3zk</pattern>
+  <pattern>4řezl</pattern>
+  <pattern>ře3čt</pattern>
+  <pattern>ři1</pattern>
+  <pattern>řia3</pattern>
+  <pattern>ři3h</pattern>
+  <pattern>ři4h </pattern>
+  <pattern>ři4hn</pattern>
+  <pattern>ři4jď</pattern>
+  <pattern>ři4l </pattern>
+  <pattern>ři4lb</pattern>
+  <pattern>řil2n</pattern>
+  <pattern>4řine</pattern>
+  <pattern>řis2</pattern>
+  <pattern>3ři4t </pattern>
+  <pattern>ři4v </pattern>
+  <pattern>ři4vk</pattern>
+  <pattern>ři4vn</pattern>
+  <pattern>ři3z</pattern>
+  <pattern>řič4t</pattern>
+  <pattern>ři3ř</pattern>
+  <pattern>ři4š </pattern>
+  <pattern>2řk</pattern>
+  <pattern>ř2kl</pattern>
+  <pattern>řk4la</pattern>
+  <pattern>řk4li</pattern>
+  <pattern>řk4ly</pattern>
+  <pattern>řk4no</pattern>
+  <pattern>2ř1l</pattern>
+  <pattern>2ř1m</pattern>
+  <pattern>2řn</pattern>
+  <pattern>1řo</pattern>
+  <pattern>2řou</pattern>
+  <pattern>2ř2p</pattern>
+  <pattern>2ř1s</pattern>
+  <pattern>řs4to</pattern>
+  <pattern>2ř1t</pattern>
+  <pattern>ř2v</pattern>
+  <pattern>2řz</pattern>
+  <pattern>řá4pl</pattern>
+  <pattern>řá2sl</pattern>
+  <pattern>2říd</pattern>
+  <pattern>ří4kř</pattern>
+  <pattern>ří1s</pattern>
+  <pattern>2ř1č</pattern>
+  <pattern>2řš</pattern>
+  <pattern>ř3št</pattern>
+  <pattern>řš4ti</pattern>
+  <pattern>1š</pattern>
+  <pattern>2š </pattern>
+  <pattern>šab3</pattern>
+  <pattern>ša4vl</pattern>
+  <pattern>2š1c</pattern>
+  <pattern>šej4d</pattern>
+  <pattern>šep3t</pattern>
+  <pattern>ši4mr</pattern>
+  <pattern>2š2k</pattern>
+  <pattern>š3ka</pattern>
+  <pattern>š3ke</pattern>
+  <pattern>š3k3li</pattern>
+  <pattern>4š3kou</pattern>
+  <pattern>4škov</pattern>
+  <pattern>3škr</pattern>
+  <pattern>šk4ro</pattern>
+  <pattern>š3ku </pattern>
+  <pattern>š3ky</pattern>
+  <pattern>2šl</pattern>
+  <pattern>š2la</pattern>
+  <pattern>š2li</pattern>
+  <pattern>š3liv</pattern>
+  <pattern>š2lo</pattern>
+  <pattern>šlá2</pattern>
+  <pattern>š2lé</pattern>
+  <pattern>š2lý</pattern>
+  <pattern>2š1m</pattern>
+  <pattern>šmi4d</pattern>
+  <pattern>2šn</pattern>
+  <pattern>š2p</pattern>
+  <pattern>2š1s</pattern>
+  <pattern>2št</pattern>
+  <pattern>š4tip</pattern>
+  <pattern>št4ka</pattern>
+  <pattern>št4kl</pattern>
+  <pattern>š4típ</pattern>
+  <pattern>š4těk</pattern>
+  <pattern>š2těs</pattern>
+  <pattern>š4těv</pattern>
+  <pattern>š2v</pattern>
+  <pattern>ší3d</pattern>
+  <pattern>š2ň</pattern>
+  <pattern>š3ší</pattern>
+  <pattern>2š2ť</pattern>
+  <pattern>š3ťo</pattern>
+  <pattern>š3ťu</pattern>
+  <pattern>š3ťá</pattern>
+  <pattern>1ť</pattern>
+  <pattern>2ť </pattern>
+  <pattern>3ťal</pattern>
+  <pattern>2ťk</pattern>
+  <pattern>2ťm</pattern>
+  <pattern>2ťt</pattern>
+  <pattern>ťáč4k</pattern>
+  <pattern>ů1b</pattern>
+  <pattern>ů1c</pattern>
+  <pattern>ů1hl</pattern>
+  <pattern>ů3jd</pattern>
+  <pattern>ů4jmový</pattern>
+  <pattern>ů1le</pattern>
+  <pattern>ů1my</pattern>
+  <pattern>ů1mě</pattern>
+  <pattern>ů1ra</pattern>
+  <pattern>ůr4va</pattern>
+  <pattern>ůr4vy</pattern>
+  <pattern>ů1s2</pattern>
+  <pattern>ů2st</pattern>
+  <pattern>ůs3te</pattern>
+  <pattern>ůs3tán</pattern>
+  <pattern>ůt2</pattern>
+  <pattern>ů3tkl</pattern>
+  <pattern>ů2v</pattern>
+  <pattern>ů3va</pattern>
+  <pattern>ů3vo</pattern>
+  <pattern>ů3vě</pattern>
+  <pattern>ů2z</pattern>
+  <pattern>ů3zo</pattern>
+  <pattern>ů2ž</pattern>
+  <pattern>ů3že</pattern>
+  <pattern>ů3ži</pattern>
+  <pattern>ů3žo</pattern>
+  <pattern>1ž</pattern>
+  <pattern>2ž </pattern>
+  <pattern>ža3d</pattern>
+  <pattern>ža4tv</pattern>
+  <pattern>3žač</pattern>
+  <pattern>2ž1b</pattern>
+  <pattern>2ž1c</pattern>
+  <pattern>2ž1d</pattern>
+  <pattern>že2b3</pattern>
+  <pattern>žeh3n</pattern>
+  <pattern>že4ml</pattern>
+  <pattern>že4zg</pattern>
+  <pattern>ži4dl</pattern>
+  <pattern>ži4jm</pattern>
+  <pattern>3žil</pattern>
+  <pattern>ži2vl</pattern>
+  <pattern>2žk</pattern>
+  <pattern>žk4ni</pattern>
+  <pattern>2žl</pattern>
+  <pattern>ž4lic</pattern>
+  <pattern>3žlo</pattern>
+  <pattern>2ž1m</pattern>
+  <pattern>2žn</pattern>
+  <pattern>žon2</pattern>
+  <pattern>2ž1s2</pattern>
+  <pattern>2ž1t</pattern>
+  <pattern>ž2v</pattern>
+  <pattern>žá4br</pattern>
+  <pattern>žá4nr</pattern>
+  <pattern>ží4zn</pattern>
+  <pattern>2žď</pattern>
+  <pattern>2žň</pattern>
+  <pattern>2žš</pattern>
+  <pattern>žš4ti</pattern>
+  <pattern>žš4tě</pattern>
+</HyphenationDescription>

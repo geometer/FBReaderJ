@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\libs\json-simple-1.1.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5d6f9b6a9ddca2a28c0216cc44efb2e20d9c23b5">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\json-simple-1.1.1-cfd1d510f41bc275bf90ea7f051a4dbe74f0d2a7.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\classes-3f35ac5b4c5c9984f447d335625d0f6799a690ea.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-037f2da0e77556e53179516291688c7cc15b37d2.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\exploded-aar\FBReaderJ1\ambilWarna\unspecified\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="924353251c32c3f0e8fd652be6bfcbf1c9ff150d">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\classes-108ba5201eb3d0b6dbd2208c9edcdcaac00f575a.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\libs\httpmime-4.2.5.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="36f95a7708086636806d7ed3e64f010855742bd2">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\httpmime-4.2.5-59a8c43c473b87061a9377a5375b501975286a35.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\libs\nanohttpd-2.0.5.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c3d42a4f9a2203a2f31cbe5a303620db1593b952">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\nanohttpd-2.0.5-06113b9e4b6425557a6b28a5ac3e2582f10c3c9f.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\exploded-aar\FBReaderJ1\library\unspecified\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4fedd7a0783aa7a475bbde2ae6c6327f7b3e23d8">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\classes-972cadb7d9fb430e182f4e331be71fde60bf6120.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-cb20d495034d2ecc6055877c1df61a307031c557.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\libs\LingvoIntegration_2.5.2.12.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1f7b7852ec6e7567e6096d8ac7c14908c3047500">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\LingvoIntegration_2.5.2.12-d02ceb6002dc10139cc9b2043f925c22935a98e2.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\exploded-aar\FBReaderJ1\code\unspecified\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3c0fe5a6c60609c04cf525e6584768292224d988">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\classes-4fcb060f80b7bcdab4614955394010f78a7708a1.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\libs\pdfparse.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a73e32b031244de43af228ee69a3a1c28011c62c">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\pdfparse-f60a56e4a0c1144f6fbe60d8e7bca3a3d0fbf042.jar" />
+    </item>
+    <item
+        jar="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\libs\open-dictionary-api-1.2.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c4817fa5e7ad1f4fc0fcf4d2d81025356ea1b1b3">
+        <dex dex="C:\Users\Steven\AndroidStudioProjects\FBReaderJ1\fBReaderJ\build\intermediates\pre-dexed\debug\open-dictionary-api-1.2.1-50db7119cb451254ba97584316b43d7499b34c40.jar" />
+    </item>
+
+</items>

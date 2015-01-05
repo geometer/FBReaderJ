@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Italian hyphenation patterns for FBReader (original was taken from teTeX distribution)
+
+	From the original /usr/share/texmf-texlive/tex/generic/hyphen/ithyph.tex file:
+
+% Prepared by Claudio Beccari   e-mail  claudio.beccari@polito.it
+%
+%                                       Dipartimento di Elettronica
+%                                       Politecnico di Torino
+%                                       Corso Duca degli Abruzzi, 24
+%                                       10129 TORINO
+%
+% Copyright  1998, 2007 Claudio Beccari
+%
+% This program is free software; it can be redistributed and/or modified 
+% under the terms of the GNU Lesser General Public Licence,
+% as published by the Free Software Foundation, either version 2.1 of the
+% Licence or (at your option) any later version.
+%
+% \versionnumber{4.8f}   \versiondate{2007/01/12}
+%
+% These hyphenation patterns for the Italian language are supposed to comply
+% with the Recommendation UNI 6461 on hyphenation issued by the Italian
+% Standards Institution (Ente Nazionale di Unificazione UNI).  No guarantee
+% or declaration of fitness to any particular purpose is given and any
+% liability is disclaimed.
+-->
+<HyphenationDescription>
+  <pattern> anti1</pattern>
+  <pattern> anti3m2n</pattern>
+  <pattern> a3p2n</pattern>
+  <pattern> bio1</pattern>
+  <pattern> c2</pattern>
+  <pattern> ca4p3s</pattern>
+  <pattern> circu2m1</pattern>
+  <pattern> contro1</pattern>
+  <pattern> d2</pattern>
+  <pattern> di2s3cine</pattern>
+  <pattern> e2x1eu</pattern>
+  <pattern> fran2k3</pattern>
+  <pattern> free3</pattern>
+  <pattern> narco1</pattern>
+  <pattern> opto1</pattern>
+  <pattern> orto3p2</pattern>
+  <pattern> para1</pattern>
+  <pattern> poli3p2</pattern>
+  <pattern> pre1</pattern>
+  <pattern> p2s</pattern>
+  <pattern> re1i2scr</pattern>
+  <pattern> sha2re3</pattern>
+  <pattern> su2b3lu</pattern>
+  <pattern> su2b3r</pattern>
+  <pattern> tran2s3c</pattern>
+  <pattern> tran2s3d</pattern>
+  <pattern> tran2s3l</pattern>
+  <pattern> tran2s3n</pattern>
+  <pattern> tran2s3p</pattern>
+  <pattern> tran2s3r</pattern>
+  <pattern> tran2s3t</pattern>
+  <pattern> wa2g3n</pattern>
+  <pattern> wel2t1</pattern>
+  <pattern> z2</pattern>
+  <pattern>8'8</pattern>
+  <pattern>'2</pattern>
+  <pattern>a1ia</pattern>
+  <pattern>a1ie</pattern>
+  <pattern>a1io</pattern>
+  <pattern>a1iu</pattern>
+  <pattern>2at </pattern>
+  <pattern>a1uo</pattern>
+  <pattern>a1ya</pattern>
+  <pattern>1b</pattern>
+  <pattern>2b </pattern>
+  <pattern>2b'</pattern>
+  <pattern>2bb</pattern>
+  <pattern>2bc</pattern>
+  <pattern>2bd</pattern>
+  <pattern>2bf</pattern>
+  <pattern>b2l</pattern>
+  <pattern>2bm</pattern>
+  <pattern>2bn</pattern>
+  <pattern>2bp</pattern>
+  <pattern>b2r</pattern>
+  <pattern>2bs</pattern>
+  <pattern>2bt</pattern>
+  <pattern>2bv</pattern>
+  <pattern>1c</pattern>
+  <pattern>2c </pattern>
+  <pattern>2c'</pattern>
+  <pattern>2cb</pattern>
+  <pattern>2cc</pattern>
+  <pattern>2cd</pattern>
+  <pattern>2cf</pattern>
+  <pattern>c2h</pattern>
+  <pattern>2chb</pattern>
+  <pattern>2chh</pattern>
+  <pattern>2chn</pattern>
+  <pattern>ch2r</pattern>
+  <pattern>2ck</pattern>
+  <pattern>c2l</pattern>
+  <pattern>2cm</pattern>
+  <pattern>2cn</pattern>
+  <pattern>2cq</pattern>
+  <pattern>c2r</pattern>
+  <pattern>2cs</pattern>
+  <pattern>2ct</pattern>
+  <pattern>2cz</pattern>
+  <pattern>1d</pattern>
+  <pattern>2d </pattern>
+  <pattern>2d'</pattern>
+  <pattern>2db</pattern>
+  <pattern>2dd</pattern>
+  <pattern>2dg</pattern>
+  <pattern>2dl</pattern>
+  <pattern>2dm</pattern>
+  <pattern>2dn</pattern>
+  <pattern>2dp</pattern>
+  <pattern>d2r</pattern>
+  <pattern>2ds</pattern>
+  <pattern>2dt</pattern>
+  <pattern>2dv</pattern>
+  <pattern>2dw</pattern>
+  <pattern>e1iu</pattern>
+  <pattern>e2w</pattern>
+  <pattern>1f</pattern>
+  <pattern>2f </pattern>
+  <pattern>2f'</pattern>
+  <pattern>2fb</pattern>
+  <pattern>2ff</pattern>
+  <pattern>2fg</pattern>
+  <pattern>f2l</pattern>
+  <pattern>2fn</pattern>
+  <pattern>f2r</pattern>
+  <pattern>2fs</pattern>
+  <pattern>2ft</pattern>
+  <pattern>1g</pattern>
+  <pattern>2g </pattern>
+  <pattern>2g'</pattern>
+  <pattern>2gb</pattern>
+  <pattern>2gd</pattern>
+  <pattern>2gf</pattern>
+  <pattern>2gg</pattern>
+  <pattern>g2h</pattern>
+  <pattern>2gh2t</pattern>
+  <pattern>g2l</pattern>
+  <pattern>2gm</pattern>
+  <pattern>g2n</pattern>
+  <pattern>2gp</pattern>
+  <pattern>g2r</pattern>
+  <pattern>2gs</pattern>
+  <pattern>2gt</pattern>
+  <pattern>2gv</pattern>
+  <pattern>2gw</pattern>
+  <pattern>2gz</pattern>
+  <pattern>1h</pattern>
+  <pattern>2h </pattern>
+  <pattern>2h'</pattern>
+  <pattern>2hb</pattern>
+  <pattern>2hd</pattern>
+  <pattern>2hh</pattern>
+  <pattern>hi3p2n</pattern>
+  <pattern>h2l</pattern>
+  <pattern>2hm</pattern>
+  <pattern>2hn</pattern>
+  <pattern>2hr</pattern>
+  <pattern>2hv</pattern>
+  <pattern>1j</pattern>
+  <pattern>2j </pattern>
+  <pattern>2j'</pattern>
+  <pattern>1k</pattern>
+  <pattern>2k </pattern>
+  <pattern>2k'</pattern>
+  <pattern>2kf</pattern>
+  <pattern>2kg</pattern>
+  <pattern>k2h</pattern>
+  <pattern>2kk</pattern>
+  <pattern>k2l</pattern>
+  <pattern>2km</pattern>
+  <pattern>k2r</pattern>
+  <pattern>2ks</pattern>
+  <pattern>2kt</pattern>
+  <pattern>1l</pattern>
+  <pattern>2l </pattern>
+  <pattern>2l' </pattern>
+  <pattern>2l''</pattern>
+  <pattern>2lb</pattern>
+  <pattern>2lc</pattern>
+  <pattern>2ld</pattern>
+  <pattern>2l3f2</pattern>
+  <pattern>2lg</pattern>
+  <pattern>l2h</pattern>
+  <pattern>2lk</pattern>
+  <pattern>2ll</pattern>
+  <pattern>2lm</pattern>
+  <pattern>2ln</pattern>
+  <pattern>2lp</pattern>
+  <pattern>2lq</pattern>
+  <pattern>2lr</pattern>
+  <pattern>2ls</pattern>
+  <pattern>2lt</pattern>
+  <pattern>2lv</pattern>
+  <pattern>2lw</pattern>
+  <pattern>2lz</pattern>
+  <pattern>1m</pattern>
+  <pattern>2m </pattern>
+  <pattern>2m'</pattern>
+  <pattern>2mb</pattern>
+  <pattern>2mc</pattern>
+  <pattern>2mf</pattern>
+  <pattern>2ml</pattern>
+  <pattern>2mm</pattern>
+  <pattern>2mn</pattern>
+  <pattern>2mp</pattern>
+  <pattern>2mq</pattern>
+  <pattern>2mr</pattern>
+  <pattern>2ms</pattern>
+  <pattern>2mt</pattern>
+  <pattern>2mv</pattern>
+  <pattern>2mw</pattern>
+  <pattern>1n</pattern>
+  <pattern>2n </pattern>
+  <pattern>2n'</pattern>
+  <pattern>2nb</pattern>
+  <pattern>2nc</pattern>
+  <pattern>2nd</pattern>
+  <pattern>2nf</pattern>
+  <pattern>2ng</pattern>
+  <pattern>n2g3n</pattern>
+  <pattern>2nheit</pattern>
+  <pattern>2nk</pattern>
+  <pattern>2nl</pattern>
+  <pattern>2nm</pattern>
+  <pattern>2nn</pattern>
+  <pattern>2np</pattern>
+  <pattern>2nq</pattern>
+  <pattern>2nr</pattern>
+  <pattern>2ns</pattern>
+  <pattern>n2s3fer</pattern>
+  <pattern>2nt</pattern>
+  <pattern>2nv</pattern>
+  <pattern>2nz</pattern>
+  <pattern>o1ia</pattern>
+  <pattern>o1ie</pattern>
+  <pattern>o1io</pattern>
+  <pattern>o1iu</pattern>
+  <pattern>1p</pattern>
+  <pattern>2p </pattern>
+  <pattern>2p'</pattern>
+  <pattern>2pd</pattern>
+  <pattern>p2h</pattern>
+  <pattern>p2l</pattern>
+  <pattern>2pn</pattern>
+  <pattern>3p2ne</pattern>
+  <pattern>2pp</pattern>
+  <pattern>p2r</pattern>
+  <pattern>2ps</pattern>
+  <pattern>3p2sic</pattern>
+  <pattern>2pt</pattern>
+  <pattern>2pz</pattern>
+  <pattern>1q</pattern>
+  <pattern>2q </pattern>
+  <pattern>2q'</pattern>
+  <pattern>2qq</pattern>
+  <pattern>1r</pattern>
+  <pattern>2r </pattern>
+  <pattern>2r'</pattern>
+  <pattern>2rb</pattern>
+  <pattern>2rc</pattern>
+  <pattern>2rd</pattern>
+  <pattern>2rf</pattern>
+  <pattern>2rg</pattern>
+  <pattern>r2h</pattern>
+  <pattern>2rk</pattern>
+  <pattern>2rl</pattern>
+  <pattern>2rm</pattern>
+  <pattern>2rn</pattern>
+  <pattern>2rp</pattern>
+  <pattern>2rq</pattern>
+  <pattern>2rr</pattern>
+  <pattern>2rs</pattern>
+  <pattern>2rt</pattern>
+  <pattern>r2t2s3</pattern>
+  <pattern>2rv</pattern>
+  <pattern>2rw</pattern>
+  <pattern>2rx</pattern>
+  <pattern>2rz</pattern>
+  <pattern>1s2</pattern>
+  <pattern>4s </pattern>
+  <pattern>4s' </pattern>
+  <pattern>4s''</pattern>
+  <pattern>2shm</pattern>
+  <pattern>2s3p2n</pattern>
+  <pattern>2s3s</pattern>
+  <pattern>s4s3m</pattern>
+  <pattern>2stb</pattern>
+  <pattern>2stc</pattern>
+  <pattern>2std</pattern>
+  <pattern>2stf</pattern>
+  <pattern>2stg</pattern>
+  <pattern>2stm</pattern>
+  <pattern>2stn</pattern>
+  <pattern>2stp</pattern>
+  <pattern>2sts</pattern>
+  <pattern>2stt</pattern>
+  <pattern>2stv</pattern>
+  <pattern>s8u7p8e8r7i8n7d8u8t7t8o7r8e</pattern>
+  <pattern>s8u7p8e8r7i8n7d8u8t7t8o7r8i</pattern>
+  <pattern>2sz</pattern>
+  <pattern>1t</pattern>
+  <pattern>2t </pattern>
+  <pattern>2t' </pattern>
+  <pattern>2t''</pattern>
+  <pattern>2tb</pattern>
+  <pattern>2tc</pattern>
+  <pattern>2td</pattern>
+  <pattern>2tf</pattern>
+  <pattern>2tg</pattern>
+  <pattern>t2h</pattern>
+  <pattern>t2l</pattern>
+  <pattern>2tm</pattern>
+  <pattern>2tn</pattern>
+  <pattern>2tp</pattern>
+  <pattern>t2r</pattern>
+  <pattern>t2s</pattern>
+  <pattern>3t2sch</pattern>
+  <pattern>2tt</pattern>
+  <pattern>t2t3s</pattern>
+  <pattern>2tv</pattern>
+  <pattern>2tw</pattern>
+  <pattern>t2z</pattern>
+  <pattern>2tzk</pattern>
+  <pattern>tz2s</pattern>
+  <pattern>1v</pattern>
+  <pattern>2v </pattern>
+  <pattern>2v' </pattern>
+  <pattern>2v''</pattern>
+  <pattern>2vc</pattern>
+  <pattern>v2l</pattern>
+  <pattern>v2r</pattern>
+  <pattern>2vv</pattern>
+  <pattern>1w</pattern>
+  <pattern>2w </pattern>
+  <pattern>2w'</pattern>
+  <pattern>wa2r</pattern>
+  <pattern>w2h</pattern>
+  <pattern>2w1y</pattern>
+  <pattern>1x</pattern>
+  <pattern>2x </pattern>
+  <pattern>2x'</pattern>
+  <pattern>2xb</pattern>
+  <pattern>2xc</pattern>
+  <pattern>2xf</pattern>
+  <pattern>2xh</pattern>
+  <pattern>2xm</pattern>
+  <pattern>2xp</pattern>
+  <pattern>2xt</pattern>
+  <pattern>2xw</pattern>
+  <pattern>y1i</pattern>
+  <pattern>y1ou</pattern>
+  <pattern>1z</pattern>
+  <pattern>2z </pattern>
+  <pattern>2z' </pattern>
+  <pattern>2z''</pattern>
+  <pattern>2zb</pattern>
+  <pattern>2zd</pattern>
+  <pattern>2zl</pattern>
+  <pattern>2zn</pattern>
+  <pattern>2zp</pattern>
+  <pattern>2zs</pattern>
+  <pattern>2zt</pattern>
+  <pattern>2zv</pattern>
+  <pattern>2zz</pattern>
+</HyphenationDescription>

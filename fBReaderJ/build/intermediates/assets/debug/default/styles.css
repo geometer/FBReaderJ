@@ -1,0 +1,268 @@
+/* This file uses simplified CSS-like format,
+   only small subset of CSS features is supported */
+p {
+	fbreader-id: 0;
+	fbreader-name: "Regular Paragraph";
+	text-indent: 10pt;
+	hyphens: auto;
+}
+
+p.xhtml {
+	fbreader-id: 51;
+	fbreader-name: xhtml-tag-p;
+	text-indent: 10pt;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	hyphens: auto;
+}
+
+title {
+	fbreader-id: 1;
+	fbreader-name: Title;
+	font-size: 1.5em;
+	font-weight: bold;
+	margin-top: 0.2em;
+	margin-bottom: 0.5em;
+	text-align: center;
+	hyphens: none;
+}
+
+section {
+	fbreader-id: 2;
+	fbreader-name: "Section Title";
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-bottom: 0.4em;
+	text-align: center;
+	hyphens: none;
+}
+
+subtitle {
+	fbreader-id: 4;
+	fbreader-name: "Subtitle";
+	font-weight: bold;
+}
+
+h1 {
+	fbreader-id: 31;
+	fbreader-name: "Header 1";
+	font-size: 2em;
+	font-weight: bold;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	hyphens: none;
+}
+
+h2 {
+	fbreader-id: 32;
+	fbreader-name: "Header 2";
+	font-size: 1.5em;
+	font-weight: bold;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	hyphens: none;
+}
+
+h3 {
+	fbreader-id: 33;
+	fbreader-name: "Header 3";
+	font-size: 1.17em;
+	font-weight: bold;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+}
+
+h4 {
+	fbreader-id: 34;
+	fbreader-name: "Header 4";
+	font-weight: bold;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+}
+
+h5 {
+	fbreader-id: 35;
+	fbreader-name: "Header 5";
+	font-size: 0.83em;
+	font-weight: bold;
+	margin-top: 0.22em;
+	margin-bottom: 0.22em;
+}
+
+h6 {
+	fbreader-id: 36;
+	fbreader-name: "Header 6";
+	font-size: 0.67em;
+	font-weight: bold;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+}
+
+annotation {
+	fbreader-id: 5;
+	fbreader-name: "Annotation";
+	font-size: 0.91em;
+	text-indent: 10pt;
+	hyphens: auto;
+}
+
+epigraph {
+	fbreader-id: 6;
+	fbreader-name: "Epigraph";
+	font-size: 0.91em;
+	font-style: italic;
+	margin-left: 40pt;
+	hyphens: auto;
+}
+
+author {
+	fbreader-id: 13;
+	fbreader-name: "Author";
+	margin-left: 20pt;
+	hyphens: none;
+}
+
+poem {
+	fbreader-id: 3;
+	fbreader-name: "Poem Title";
+	font-size: 1.09em;
+	font-weight: bold;
+	margin-top: 0.25em;
+	margin-bottom: 0.25em;
+	margin-left: 30pt;
+	hyphens: none;
+}
+
+stanza {
+	fbreader-id: 7;
+	fbreader-name: "Stanza";
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	text-align: left;
+	hyphens: none;
+}
+
+verse {
+	fbreader-id: 8;
+	fbreader-name: "Verse";
+	margin-left: 20pt;
+	text-align: left;
+	hyphens: none;
+}
+
+cite {
+	fbreader-id: 12;
+	fbreader-name: "Cite";
+	font-style: italic;
+}
+
+a.internal {
+	fbreader-id: 15;
+	fbreader-name: "Internal Hyperlink";
+	hyphens: none;
+	text-decoration: underline;
+}
+
+a.external {
+	fbreader-id: 37;
+	fbreader-name: "External Hyperlink";
+	hyphens: none;
+	text-decoration: underline;
+}
+
+footnote {
+	fbreader-id: 16;
+	fbreader-name: "Footnote";
+	font-size: 0.7em;
+	vertical-align: 0.5em;
+	hyphens: none;
+}
+
+i {
+	fbreader-id: 27;
+	fbreader-name: "Italic";
+	font-style: italic;
+}
+
+em {
+	fbreader-id: 17;
+	fbreader-name: "Emphasis";
+	font-style: italic;
+}
+
+b {
+	fbreader-id: 28;
+	fbreader-name: "Bold";
+	font-weight: bold;
+}
+
+strong {
+	fbreader-id: 18;
+	fbreader-name: "Strong";
+	font-weight: bold;
+}
+
+dfn {
+	fbreader-id: 29;
+	fbreader-name: "Definition";
+	font-style: italic;
+}
+
+dd {
+	fbreader-id: 30;
+	fbreader-name: "Definition Description";
+	font-style: italic;
+}
+
+pre {
+	fbreader-id: 9;
+	fbreader-name: "Preformatted text";
+	font-family: Monospace;
+	text-align: left;
+	hyphens: none;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+code {
+	fbreader-id: 21;
+	fbreader-name: "Code";
+	font-family: Monospace;
+	hyphens: none;
+}
+
+strike {
+	fbreader-id: 22;
+	fbreader-name: "StrikeThrough";
+	text-decoration: line-through;
+}
+
+sup {
+	fbreader-id: 20;
+	fbreader-name: "Superscript";
+	font-size: 0.7em;
+	vertical-align: 0.5em;
+	hyphens: none;
+}
+
+sub {
+	fbreader-id: 19;
+	fbreader-name: "Subscript";
+	font-size: 0.7em;
+	vertical-align: -0.5em;
+	hyphens: none;
+}
+
+image {
+	fbreader-id: 10;
+	fbreader-name: "Image";
+	margin-top: 0.4em;
+	text-align: center;
+}
+
+date {
+	fbreader-id: 14;
+	fbreader-name: "Date";
+	margin-left: 30pt;
+	hyphens: none;
+}

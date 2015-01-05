@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="ОК"/>
+			<node name="cancel" value="გაუქმება"/>
+			<node name="yes" value="კი"/>
+			<node name="no" value="არა"/>
+			<node name="apply" value="გამოყენება"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="შეცდომა ქსელთან მუშაობისას"/>
+			<node name="unknownErrorMessage" value="უცნობი შეცდომა"/>
+			<node name="operationTimedOutMessage" value="განკუთვნილი დრო ამოიწურა"/>
+			<node name="somethingWrongMessage" value="შეცდომა %s-სთან მუშაობისას"/>
+			<node name="couldntCreateDirectoryMessage" value="ვერ შეიქმნა კატალოგი %s"/>
+			<node name="couldntCreateFileMessage" value="ვერ შეიქმნა ფაილი %s"/>
+			<node name="couldntConnectMessage" value="ვერ მოხდა საიტთან დაკავშირება %s"/>
+			<node name="couldntResolveHostMessage" value="არ მოიძებნა საიტი %s"/>
+			<node name="authenticationFailed" value="ავტორიზაციის შეცდომა"/>
+			<node name="unsupportedProtocol" value="უცნობი პროტოკოლი"/>
+			<node name="invalidURL" value="არასწორი URL"/>
+			<node name="hostCantBeReached" value="საიტი %s მიუწვდომელია"/>
+			<node name="connectionRefused" value="დაკავშირება დახურულია საიტის %s მიერ"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="წითელი"/>
+		<node name="green" value="მწვანე"/>
+		<node name="blue" value="ლურჟი"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="არაბული"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="bg" value="ბულგარული"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="ჩეხური"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="de" value="გერმანული"/>
+		<node name="de-traditional" value="გერმანული (ძველი ორთოგრაფია)"/>
+		<node name="el" value="ბერძნული"/>
+		<node name="en" value="ინგლისური"/>
+		<node name="eo" value="ესპერანტო"/>
+		<node name="es" value="ესპანური"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fi" value="ფინური"/>
+		<node name="fr" value="ფრანგული"/>
+		<node name="gl" value="გალიციური"/>
+		<node name="he" value="ივრითი"/>
+		<node name="hu" value="უნგრული"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="id" value="ინდონეზიური"/>
+		<node name="it" value="იტალიური"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="ქართული"/>
+		<node name="lt" value="ლიტვური"/>
+		<node name="nb" value="ნორვეგიული"/>
+		<node name="nl" value="ჰოლანდიური"/>
+		<node name="pl" value="პოლონური"/>
+		<node name="pt" value="პორტუგალიური"/>
+		<node name="ro" value="რუმინული"/>
+		<node name="ru" value="რუსული"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sv" value="შვედური"/>
+		<node name="ta" value="ტამილური"/>
+		<node name="th" value="ტაილანდური"/>
+		<node name="tr" value="თურქული"/>
+		<node name="uk" value="უკრაინული"/>
+		<node name="vi" value="ვიეტნამური"/>
+		<node name="zh" value="ჩინური"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="other" value="სხვა"/>
+		<node name="multi" value="მრავალენოვანი"/>
+		<node name="system" value="System" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="ჩართვა"/>
+		<node name="off" value="გამორთვა"/>
+		<node name="unchanged" value="შეუცვლელი"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="მოქმედება"/>
+	</node>
+</resources>

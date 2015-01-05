@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    French zlibrary resources, by Pierre Senellart
+    Updated by Sébastien Rodriguez
+    Current maintainer: Mathias Monnerville <mathias@monnerville.com>
+-->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok"/>
+			<node name="cancel" value="Annuler"/>
+			<node name="yes" value="Oui"/>
+			<node name="no" value="Non"/>
+			<node name="apply" value="Appliquer"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Erreur réseau"/>
+			<node name="unknownErrorMessage" value="Erreur inconnue"/>
+			<node name="operationTimedOutMessage" value="Le délai réseau a expiré"/>
+			<node name="somethingWrongMessage" value="Il y a un problème avec&#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value="Impossible de créer un répertoire&#10;%s"/>
+			<node name="couldntCreateFileMessage" value="Impossible de créer un fichier&#10;%s"/>
+			<node name="couldntConnectMessage" value="Impossible de se connecter à l'hôte %s"/>
+			<node name="couldntResolveHostMessage" value="Résolution du nom %s impossible"/>
+			<node name="authenticationFailed" value="Authentification échouée"/>
+			<node name="unsupportedProtocol" value="Protocole non supporté"/>
+			<node name="invalidURL" value="URL invalide"/>
+			<node name="hostCantBeReached" value="L'hôte %s&#10;ne peut être joint"/>
+			<node name="connectionRefused" value="La connexion a été refusée par&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rouge"/>
+		<node name="green" value="Vert"/>
+		<node name="blue" value="Bleu"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabe"/>
+		<node name="be" value="Biélorusse"/>
+		<node name="bg" value="Bulgare"/>
+		<node name="ca" value="Catalan"/>
+		<node name="cs" value="Tchèque"/>
+		<node name="da" value="Danois"/>
+		<node name="de" value="Allemand"/>
+		<node name="de-traditional" value="Allemand (orthographe traditionnelle)"/>
+		<node name="el" value="Grec"/>
+		<node name="en" value="Anglais"/>
+		<node name="eo" value="Espéranto"/>
+		<node name="es" value="Espagnol"/>
+		<node name="eu" value="Basque"/>
+		<node name="fa" value="Persan"/>
+		<node name="fi" value="Finnois"/>
+		<node name="fr" value="Français"/>
+		<node name="gl" value="Galique"/>
+		<node name="he" value="Hébreu"/>
+		<node name="hu" value="Hongrois"/>
+		<node name="hy" value="Armenien"/>
+		<node name="id" value="Indonésien"/>
+		<node name="it" value="Italien"/>
+		<node name="ja" value="Japonais"/>
+		<node name="ka" value="Géorgien"/>
+		<node name="lt" value="Lithuanien"/>
+		<node name="nb" value="Norvégien"/>
+		<node name="nl" value="Néerlandais"/>
+		<node name="pl" value="Polonais"/>
+		<node name="pt" value="Portugais"/>
+		<node name="ro" value="Roumain"/>
+		<node name="ru" value="Russe"/>
+		<node name="sr" value="Serbe"/>
+		<node name="sv" value="Suédois"/>
+		<node name="ta" value="Tamil"/>
+		<node name="th" value="Thailandais"/>
+		<node name="tr" value="Turc"/>
+		<node name="uk" value="Ukrainien"/>
+		<node name="vi" value="Vietnamien"/>
+		<node name="zh" value="Chinois"/>
+		<node name="zh_TW" value="Chinois traditionnel"/>
+		<node name="any" value="Quelconque"/>
+		<node name="other" value="Autre"/>
+		<node name="multi" value="Multi-langage"/>
+		<node name="system" value="Système"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="activé"/>
+		<node name="off" value="désactivé"/>
+		<node name="unchanged" value="inchangé"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Action pour la touche"/>
+	</node>
+</resources>

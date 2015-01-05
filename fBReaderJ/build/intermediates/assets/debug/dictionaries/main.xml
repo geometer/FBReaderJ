@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dictionaries>
+	<dictionary
+		id="ColorDict"
+		title="ColorDict&#160;3"
+		package="com.socialnmobile.colordict"
+		action="colordict.intent.action.SEARCH"
+		dataKey="EXTRA_QUERY"
+		pattern="%s"
+		list="always"
+	/>
+	<dictionary
+		id="ColorDict2"
+		title="ColorDict&#160;Old&#160;Style"
+		package="com.socialnmobile.colordict"
+		class=".activity.Main"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+		pattern="%s"
+		list="always"
+	/>
+	<dictionary
+		id="Fora Dictionary"
+		package="com.ngc.fora"
+		class=".ForaDictionary"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+		pattern="%s"
+		list="always"
+	/>
+	<dictionary
+		id="Free Dictionary . org"
+		title="Free&#160;Dictionary&#160;.&#160;org"
+		package="org.freedictionary"
+		class=".MainActivity"
+		action="android.intent.action.VIEW"
+		pattern="%s"
+		list="always"
+	/>
+	<dictionary
+		id="ABBYY Lingvo"
+		title="ABBYY&#160;Lingvo"
+		package="com.abbyy.mobile.lingvo.market"
+		action="com.abbyy.mobile.lingvo.intent.action.TRANSLATE"
+		dataKey="com.abbyy.mobile.lingvo.intent.extra.TEXT"
+		pattern="%s"
+		role="dictionary"
+		supportsTargetLanguage="true"
+	/>
+	<dictionary
+		id="Lingo Quiz Lite"
+		package="mnm.lite.lingoquiz"
+		class=".ExchangeActivity"
+		action="lingoquiz.intent.action.ADD_WORD"
+		dataKey="EXTRA_WORD"
+		pattern="%s"
+	/>
+	<dictionary
+		id="Lingo Quiz"
+		package="mnm.lingoquiz"
+		class=".ExchangeActivity"
+		action="lingoquiz.intent.action.ADD_WORD"
+		dataKey="EXTRA_WORD"
+		pattern="%s"
+	/>
+	<dictionary
+		id="Aard Dictionary"
+		package="aarddict.android"
+		class=".Article"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+		pattern="%s"
+	/>
+	<dictionary
+		id="Aard Dictionary Lookup"
+		package="aarddict.android"
+		class=".Lookup"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+		pattern="%s"
+	/>
+	<dictionary
+		id="LEO Dictionary"
+		package="org.leo.android.dict"
+		class=".LeoDict"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+		pattern="%s"
+	/>
+	<dictionary
+		id="Popup Dictionary"
+		package="com.barisatamer.popupdictionary"
+		class=".MainActivity"
+		action="android.intent.action.VIEW"
+		pattern="%s"
+	/>
+</dictionaries>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="Windows-1251"?>
-<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink">
-<body>
-  <p><a l:href="note1" type="note">[1]</a></p>
-</body>
-</FictionBook>
-

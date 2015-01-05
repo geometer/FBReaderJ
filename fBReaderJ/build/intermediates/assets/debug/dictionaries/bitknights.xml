@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionaries>
+	<dictionary
+		title="BK Brazilian/Portuguese English Dictionary"
+		package="com.bitknights.dict.engbra"
+	/>
+	<dictionary
+		title="BK Bulgarian English Dictionary"
+		package="com.bitknights.dict.engbul"
+	/>
+	<dictionary
+		title="BK Croatian English Dictionary"
+		package="com.bitknights.dict.engcro"
+	/>
+	<dictionary
+		title="BK Czech English Dictionary"
+		package="com.bitknights.dict.engcze"
+	/>
+	<dictionary
+		title="BK Danish English Dictionary"
+		package="com.bitknights.dict.engdan"
+	/>
+	<dictionary
+		title="BK Dutch English Dictionary"
+		package="com.bitknights.dict.engdut"
+	/>
+	<dictionary
+		title="BK Esperanto English Dictionary"
+		package="com.bitknights.dict.engesp"
+	/>
+	<dictionary
+		title="BK Finnish English Dictionary"
+		package="com.bitknights.dict.engfin"
+	/>
+	<dictionary
+		title="BK French English Dictionary"
+		package="com.bitknights.dict.engfre"
+	/>
+	<dictionary
+		title="BK German English Dictionary"
+		package="com.bitknights.dict.engger"
+	/>
+	<dictionary
+		title="BK Greek English Dictionary"
+		package="com.bitknights.dict.enggre"
+	/>
+	<dictionary
+		title="BK Hungarian English Dictionary"
+		package="com.bitknights.dict.enghun"
+	/>
+	<dictionary
+		title="BK Italian English Dictionary"
+		package="com.bitknights.dict.engita"
+	/>
+	<dictionary
+		title="BK Latin English Dictionary"
+		package="com.bitknights.dict.englat"
+	/>
+	<dictionary
+		title="BK Polish English Dictionary"
+		package="com.bitknights.dict.engpol"
+	/>
+	<dictionary
+		title="BK Romanian English Dictionary"
+		package="com.bitknights.dict.engrom"
+	/>
+	<dictionary
+		title="BK Russian English Dictionary"
+		package="com.bitknights.dict.engrus"
+	/>
+	<dictionary
+		title="BK Slovak English Dictionary"
+		package="com.bitknights.dict.engslo"
+	/>
+	<dictionary
+		title="BK Spanish English Dictionary"
+		package="com.bitknights.dict.engspa"
+	/>
+	<dictionary
+		title="BK Swedish English Dictionary"
+		package="com.bitknights.dict.engswe"
+	/>
+	<dictionary
+		title="BK Turkish English Dictionary"
+		package="com.bitknights.dict.engtur"
+	/>
+	<dictionary
+		title="BK Ukraine English Dictionary"
+		package="com.bitknights.dict.engukr"
+	/>
+	<dictionary
+		title="BK French Italian Dictionary"
+		package="com.bitknights.dict.freita"
+	/>
+	<dictionary
+		title="BK German Hungarian Dictionary"
+		package="com.bitknights.dict.gerhun"
+	/>
+	<dictionary
+		title="BK Spanish French Dictionary"
+		package="com.bitknights.dict.spafre"
+	/>
+	<dictionary
+		title="BK Spanish Italian Dictionary"
+		package="com.bitknights.dict.spaita"
+	/>
+</dictionaries>

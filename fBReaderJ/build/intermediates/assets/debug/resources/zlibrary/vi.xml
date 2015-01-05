@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Vietnamese zlibrary resources, by Phạm Văn Hùng_Firestork -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok"/>
+			<node name="cancel" value="Hủy"/>
+			<node name="yes" value="Có"/>
+			<node name="no" value="Không"/>
+			<node name="apply" value="Đồng ý"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Lỗi mạng"/>
+			<node name="unknownErrorMessage" value="Lỗi chưa rõ"/>
+			<node name="operationTimedOutMessage" value="Hết thời gian thao tác"/>
+			<node name="somethingWrongMessage" value="Vài thứ bị lỗi vì&#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value="Không thể tạo thư mục&#10;%s"/>
+			<node name="couldntCreateFileMessage" value="Không thể tạo tập tin&#10;%s"/>
+			<node name="couldntConnectMessage" value="Không thể kết nối máy chủ&#10;%s"/>
+			<node name="couldntResolveHostMessage" value="Không thể phân giải máy chủ&#10;%s"/>
+			<node name="authenticationFailed" value="Xác thực thất bại"/>
+			<node name="unsupportedProtocol" value="Giao thức không hỗ trợ"/>
+			<node name="invalidURL" value="Địa chỉ sai"/>
+			<node name="hostCantBeReached" value="Máy chủ %s&#10;không thể truy cập"/>
+			<node name="connectionRefused" value="Kết nối bị từ chối bởi&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Đỏ"/>
+		<node name="green" value="Xanh lá cây"/>
+		<node name="blue" value="Xanh sẫm"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Tiếng Ả Rập"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="Tiếng Séc"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="de" value="Tiếng Đức"/>
+		<node name="de-traditional" value="Tiếng Đức (truyền thống)"/>
+		<node name="el" value="Tiếng Hy Lạp"/>
+		<node name="en" value="Tiếng Anh"/>
+		<node name="eo" value="Quốc tế ngữ"/>
+		<node name="es" value="Tiếng Tây Ban Nha "/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fi" value="Tiếng Phần Lan"/>
+		<node name="fr" value="Tiếng Pháp"/>
+		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="he" value="Tiếng Do Thái"/>
+		<node name="hu" value="Tiếng Hungari"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="id" value="Tiếng Inđônêxia"/>
+		<node name="it" value="Tiếng Ý"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="lt" value="Tiếng Lát-vi"/>
+		<node name="nb" value="Tiếng Nauy"/>
+		<node name="nl" value="Tiếng Hà Lan"/>
+		<node name="pl" value="Polish" toBeTranslated="true"/>
+		<node name="pt" value="Tiếng Bồ Đào Nha"/>
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ru" value="Tiếng Nga"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sv" value="Tiếng Thụy Điển"/>
+		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="tr" value="Tiếng Thổ Nhĩ kỳ"/>
+		<node name="uk" value="Tiếng Ukraina"/>
+		<node name="vi" value="Tiếng Việt"/>
+		<node name="zh" value="Tiếng Tàu"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="other" value="Khác"/>
+		<node name="multi" value="Multilanguage" toBeTranslated="true"/>
+		<node name="system" value="System" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="bật"/>
+		<node name="off" value="tắt"/>
+		<node name="unchanged" value="không đổi"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Tác dụng cho Phím"/>
+	</node>
+</resources>

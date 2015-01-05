@@ -1,0 +1,10 @@
+<tapZones v="3" h="3">
+	<zone x="0" y="0" action="previousPage" action2="navigate"/>
+	<zone x="0" y="1" action2="navigate"/>
+	<zone x="0" y="2" action="nextPage" action2="navigate"/>
+	<zone x="1" y="0" action="previousPage"/>
+	<zone x="1" y="2" action="nextPage"/>
+	<zone x="2" y="0" action="previousPage" action2="menu"/>
+	<zone x="2" y="1" action2="menu"/>
+	<zone x="2" y="2" action="nextPage" action2="menu"/>
+</tapZones>

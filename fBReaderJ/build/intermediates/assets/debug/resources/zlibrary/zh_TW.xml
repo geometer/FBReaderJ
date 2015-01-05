@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FBReaderJ, Traditional Chinese, by Fung.T -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="確定"/>
+			<node name="cancel" value="取消"/>
+			<node name="yes" value="是"/>
+			<node name="no" value="否"/>
+			<node name="apply" value="實施"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="網絡錯誤"/>
+			<node name="unknownErrorMessage" value="未知錯誤"/>
+			<node name="operationTimedOutMessage" value="操作逾時"/>
+			<node name="somethingWrongMessage" value="出錯&#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value="無法創建目錄&#10;%s"/>
+			<node name="couldntCreateFileMessage" value="無法創建檔案&#10;%s"/>
+			<node name="couldntConnectMessage" value="無法連接主機"/>
+			<node name="couldntResolveHostMessage" value="無法解析主機&#10;%s"/>
+			<node name="authenticationFailed" value="驗證失敗"/>
+			<node name="unsupportedProtocol" value="未支授的協議"/>
+			<node name="invalidURL" value="網址無效"/>
+			<node name="hostCantBeReached" value="未能連接主機 %s&#10;"/>
+			<node name="connectionRefused" value="連接被拒 &#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="紅色"/>
+		<node name="green" value="綠色"/>
+		<node name="blue" value="藍色"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabic" toBeTranslated="true"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="Czech" toBeTranslated="true"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="de" value="German" toBeTranslated="true"/>
+		<node name="de-traditional" value="German (traditional orthography)"/>
+		<node name="el" value="Greek" toBeTranslated="true"/>
+		<node name="en" value="English" toBeTranslated="true"/>
+		<node name="eo" value="Esperanto" toBeTranslated="true"/>
+		<node name="es" value="Spanish" toBeTranslated="true"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fi" value="Finnish" toBeTranslated="true"/>
+		<node name="fr" value="French" toBeTranslated="true"/>
+		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="he" value="Hebrew" toBeTranslated="true"/>
+		<node name="hu" value="Hungarian" toBeTranslated="true"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="id" value="Indonesian" toBeTranslated="true"/>
+		<node name="it" value="Italian" toBeTranslated="true"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="lt" value="Lithuanian" toBeTranslated="true"/>
+		<node name="nb" value="Norwegian" toBeTranslated="true"/>
+		<node name="nl" value="Dutch" toBeTranslated="true"/>
+		<node name="pl" value="Polish" toBeTranslated="true"/>
+		<node name="pt" value="Portuguese" toBeTranslated="true"/>
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ru" value="Russian" toBeTranslated="true"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sv" value="Swedish" toBeTranslated="true"/>
+		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="tr" value="Turkish" toBeTranslated="true"/>
+		<node name="uk" value="Ukrainian" toBeTranslated="true"/>
+		<node name="vi" value="Vietnamese" toBeTranslated="true"/>
+		<node name="zh" value="中文"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="other" value="其他"/>
+		<node name="multi" value="多種語言"/>
+		<node name="system" value="System" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="開"/>
+		<node name="off" value="關"/>
+		<node name="unchanged" value="不變"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="按鍵動作"/>
+	</node>
+</resources>

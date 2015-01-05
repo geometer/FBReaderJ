@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Tamam"/>
+			<node name="cancel" value="İptal"/>
+			<node name="yes" value="Evet"/>
+			<node name="no" value="Hayır"/>
+			<node name="apply" value="Uygula"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Bağlantı sorunu"/>
+			<node name="unknownErrorMessage" value="Bilinmeyen hata"/>
+			<node name="operationTimedOutMessage" value="İşlem zaman aşımına uğradı"/>
+			<node name="somethingWrongMessage" value="%s de bir sorun var"/>
+			<node name="couldntCreateDirectoryMessage" value="%s dizini oluşturulamadı"/>
+			<node name="couldntCreateFileMessage" value="%s dosyası oluşturulamadı"/>
+			<node name="couldntConnectMessage" value="%s sunucuya bağlanılamadı"/>
+			<node name="couldntResolveHostMessage" value="%s çözümlenemiyor"/>
+			<node name="authenticationFailed" value="Kimlik doğrulanamadı"/>
+			<node name="unsupportedProtocol" value="Desteklenmeyen protokol"/>
+			<node name="invalidURL" value="Geçersiz URL"/>
+			<node name="hostCantBeReached" value="%s ulaşılamıyor"/>
+			<node name="connectionRefused" value="Bağlantı isteği %s tarafından reddedildi"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Kırmızı"/>
+		<node name="green" value="Yeşil"/>
+		<node name="blue" value="Mavi"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabic" toBeTranslated="true"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="Czech" toBeTranslated="true"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="de" value="German" toBeTranslated="true"/>
+		<node name="de-traditional" value="German (traditional orthography)" toBeTranslated="true"/>
+		<node name="el" value="Greek" toBeTranslated="true"/>
+		<node name="en" value="English" toBeTranslated="true"/>
+		<node name="eo" value="Esperanto" toBeTranslated="true"/>
+		<node name="es" value="Spanish" toBeTranslated="true"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fi" value="Finnish" toBeTranslated="true"/>
+		<node name="fr" value="French" toBeTranslated="true"/>
+		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="he" value="Hebrew" toBeTranslated="true"/>
+		<node name="hu" value="Hungarian" toBeTranslated="true"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="id" value="Indonesian" toBeTranslated="true"/>
+		<node name="it" value="Italian" toBeTranslated="true"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="lt" value="Lithuanian" toBeTranslated="true"/>
+		<node name="nb" value="Norwegian" toBeTranslated="true"/>
+		<node name="nl" value="Dutch" toBeTranslated="true"/>
+		<node name="pl" value="Polish" toBeTranslated="true"/>
+		<node name="pt" value="Portuguese" toBeTranslated="true"/>
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ru" value="Russian" toBeTranslated="true"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sv" value="Swedish" toBeTranslated="true"/>
+		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="tr" value="Türkçe"/>
+		<node name="uk" value="Ukrainian" toBeTranslated="true"/>
+		<node name="vi" value="Vietnamese" toBeTranslated="true"/>
+		<node name="zh" value="Chinese" toBeTranslated="true"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="other" value="Diğer"/>
+		<node name="multi" value="Çoklu dil"/>
+		<node name="system" value="System" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="açık"/>
+		<node name="off" value="kapalı"/>
+		<node name="unchanged" value="eski hali"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Düğme eylemleri"/>
+	</node>
+</resources>

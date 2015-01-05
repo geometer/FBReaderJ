@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Chinese zlibrary resources, by http://shucang.com/ -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="确定"/>
+			<node name="cancel" value="取消"/>
+			<node name="yes" value="是"/>
+			<node name="no" value="否"/>
+			<node name="apply" value="应用"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="网络错误"/>
+			<node name="unknownErrorMessage" value="未知错误"/>
+			<node name="operationTimedOutMessage" value="操作超时"/>
+			<node name="somethingWrongMessage" value="出错 %s"/>
+			<node name="couldntCreateDirectoryMessage" value="无法创建目录 %s"/>
+			<node name="couldntCreateFileMessage" value="无法创建文件 %s"/>
+			<node name="couldntConnectMessage" value="无法连接到主机%s"/>
+			<node name="couldntResolveHostMessage" value="无法解析主机 %s"/>
+			<node name="authenticationFailed" value="无法辨识"/>
+			<node name="unsupportedProtocol" value="不支持的协议"/>
+			<node name="invalidURL" value="无效网址"/>
+			<node name="hostCantBeReached" value="网站无法访问 %s"/>
+			<node name="connectionRefused" value="连接被拒绝&#10;%s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="红色"/>
+		<node name="green" value="绿色"/>
+		<node name="blue" value="蓝色"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="阿拉伯语"/>
+		<node name="be" value="白俄罗斯语"/>
+		<node name="bg" value="保加利亚语"/>
+		<node name="ca" value="加泰罗尼亚语"/>
+		<node name="cs" value="捷克语"/>
+		<node name="da" value="丹麦语"/>
+		<node name="de" value="德语"/>
+		<node name="de-traditional" value="德语 (传统正字法)"/>
+		<node name="el" value="希腊语"/>
+		<node name="en" value="英语"/>
+		<node name="eo" value="世界语"/>
+		<node name="es" value="西班牙语"/>
+		<node name="eu" value="巴斯克语"/>
+		<node name="fa" value="波斯语"/>
+		<node name="fi" value="芬兰语"/>
+		<node name="fr" value="法语"/>
+		<node name="gl" value="加里西亚语"/>
+		<node name="he" value="希伯来语"/>
+		<node name="hu" value="匈牙利语"/>
+		<node name="hy" value="亚美尼亚语"/>
+		<node name="id" value="印度语"/>
+		<node name="it" value="意大利语"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="格鲁吉亚语"/>
+		<node name="lt" value="立陶宛语"/>
+		<node name="nb" value="挪威语"/>
+		<node name="nl" value="荷兰语"/>
+		<node name="pl" value="波兰语"/>
+		<node name="pt" value="葡萄牙语"/>
+		<node name="ro" value="罗马尼亚语"/>
+		<node name="ru" value="俄罗斯语"/>
+		<node name="sr" value="塞尔维亚语"/>
+		<node name="sv" value="瑞典语"/>
+		<node name="ta" value="泰米尔语"/>
+		<node name="th" value="泰国语"/>
+		<node name="tr" value="土耳其语"/>
+		<node name="uk" value="乌克兰语"/>
+		<node name="vi" value="越南语"/>
+		<node name="zh" value="简体中文"/>
+		<node name="zh_TW" value="繁体中文"/>
+		<node name="any" value="任意"/>
+		<node name="other" value="其他"/>
+		<node name="multi" value="多语言"/>
+		<node name="system" value="系统"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="开"/>
+		<node name="off" value="关"/>
+		<node name="unchanged" value="不变"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="按键设置快捷操作"/>
+	</node>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DefaultStyles>
+	<base screen="Base" family="sans-serif" fontSize="18"/>
+	<base screen="Yota" family="PT Sans" fontSize="10"/>
+</DefaultStyles>

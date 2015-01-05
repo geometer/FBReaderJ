@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Dutch zlibrary resources, by Frank Fesevur 07-Jan-2011, Last update 16-Nov-2014 -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK"/>
+			<node name="cancel" value="Annuleren"/>
+			<node name="yes" value="Ja"/>
+			<node name="no" value="Nee"/>
+			<node name="apply" value="Toepassen"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Netwerkfout"/>
+			<node name="unknownErrorMessage" value="Onbekende fout"/>
+			<node name="operationTimedOutMessage" value="Time-out bij bewerking"/>
+			<node name="somethingWrongMessage" value="Er gaat iets mis bij&#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value="Kan geen map %s niet maken"/>
+			<node name="couldntCreateFileMessage" value="Kan bestand %s niet maken"/>
+			<node name="couldntConnectMessage" value="Kan geen verbinding met host %s maken"/>
+			<node name="couldntResolveHostMessage" value="Hostnaam %s niet gevonden"/>
+			<node name="authenticationFailed" value="Authenticatie mislukt"/>
+			<node name="unsupportedProtocol" value="Protocol niet ondersteund"/>
+			<node name="invalidURL" value="Ongeldige URL"/>
+			<node name="hostCantBeReached" value="Host %s is onbereikbaar"/>
+			<node name="connectionRefused" value="Verbinding was geweigerd door&#10;%s"/>
+			<node name="networkNotAvailable" value="Netwerk is niet beschikbaar"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rood"/>
+		<node name="green" value="Groen"/>
+		<node name="blue" value="Blauw"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabisch"/>
+		<node name="be" value="Wit-Russisch"/>
+		<node name="bg" value="Bulgaars"/>
+		<node name="ca" value="Catalaans"/>
+		<node name="cs" value="Tsjechisch"/>
+		<node name="da" value="Deens"/>
+		<node name="de" value="Duits"/>
+		<node name="de-traditional" value="Duits (traditionele spelling)"/>
+		<node name="el" value="Grieks"/>
+		<node name="en" value="Engels"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Spaans"/>
+		<node name="eu" value="Baskisch"/>
+		<node name="fa" value="Perzisch"/>
+		<node name="fi" value="Fins"/>
+		<node name="fr" value="Frans"/>
+		<node name="gl" value="Galicisch"/>
+		<node name="he" value="Hebreeuws"/>
+		<node name="hu" value="Hongaars"/>
+		<node name="hy" value="Armeens"/>
+		<node name="id" value="Indonesisch"/>
+		<node name="it" value="Italiaans"/>
+		<node name="ja" value="Japans"/>
+		<node name="ka" value="Georgisch"/>
+		<node name="lt" value="Litouws"/>
+		<node name="nb" value="Noors"/>
+		<node name="nl" value="Nederlands"/>
+		<node name="pl" value="Pools"/>
+		<node name="pt" value="Portugees"/>
+		<node name="ro" value="Roemeens"/>
+		<node name="ru" value="Russisch"/>
+		<node name="sr" value="Servisch"/>
+		<node name="sv" value="Zweeds"/>
+		<node name="ta" value="Tamil"/>
+		<node name="th" value="Thais"/>
+		<node name="tr" value="Turks"/>
+		<node name="uk" value="Oekraïens"/>
+		<node name="vi" value="Vietnamees"/>
+		<node name="zh" value="Chinees"/>
+		<node name="zh_TW" value="Chinees (traditioneel)"/>
+		<node name="any" value="Elke"/>
+		<node name="other" value="Anders"/>
+		<node name="multi" value="Meertalig"/>
+		<node name="system" value="Systeem"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="aan"/>
+		<node name="off" value="uit"/>
+		<node name="unchanged" value="ongewijzigd"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Actie voor toets"/>
+	</node>
+</resources>

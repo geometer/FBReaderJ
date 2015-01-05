@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok"/>
+			<node name="cancel" value="Avbryt"/>
+			<node name="yes" value="Ja"/>
+			<node name="no" value="Nei"/>
+			<node name="apply" value="Bruk"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Nettverksfeil"/>
+			<node name="unknownErrorMessage" value="Ukjent feil"/>
+			<node name="operationTimedOutMessage" value="Handlingen tok for lang tid"/>
+			<node name="somethingWrongMessage" value="Noe gikk galt med %s"/>
+			<node name="couldntCreateDirectoryMessage" value="Kan ikke lage katalogen %s"/>
+			<node name="couldntCreateFileMessage" value="Kan ikke lage filen %s"/>
+			<node name="couldntConnectMessage" value="Kan ikke koble til tjeneren %s"/>
+			<node name="couldntResolveHostMessage" value="Kan ikke slå opp tjeneren %s"/>
+			<node name="authenticationFailed" value="Autentisering mislyktes"/>
+			<node name="unsupportedProtocol" value="Protokollen er ikke støttet"/>
+			<node name="invalidURL" value="Ugyldig URL"/>
+			<node name="hostCantBeReached" value="Tjeneren %s kan ikke nås"/>
+			<node name="connectionRefused" value="Koblingen ble avslått av %s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rød"/>
+		<node name="green" value="Grønn"/>
+		<node name="blue" value="Blå"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabisk"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="Tsjekkisk"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="de" value="Tysk"/>
+		<node name="de-traditional" value="Tysk (tradisjonell stavemåte)"/>
+		<node name="el" value="Gresk"/>
+		<node name="en" value="Engelsk"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Spansk"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fi" value="Finsk"/>
+		<node name="fr" value="Fransk"/>
+		<node name="gl" value="Galisisk"/>
+		<node name="he" value="Hebraisk"/>
+		<node name="hu" value="Ungarsk"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="id" value="Indonesisk"/>
+		<node name="it" value="Italiensk"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="lt" value="Lituensk"/>
+		<node name="nb" value="Norsk"/>
+		<node name="nl" value="Nederlansk"/>
+		<node name="pl" value="Polsk"/>
+		<node name="pt" value="Portugisisk"/>
+		<node name="ro" value="Romansk"/>
+		<node name="ru" value="Russisk"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sv" value="Svensk"/>
+		<node name="ta" value="Tamilsk"/>
+		<node name="th" value="Thai"/>
+		<node name="tr" value="Tyrkisk"/>
+		<node name="uk" value="Ukrainsk"/>
+		<node name="vi" value="Vietnamesisk"/>
+		<node name="zh" value="Kinesisk"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="other" value="Annet"/>
+		<node name="multi" value="Flerspråklig"/>
+		<node name="system" value="System" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="på"/>
+		<node name="off" value="av"/>
+		<node name="unchanged" value="uforandret"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Handling for knapp"/>
+	</node>
+</resources>

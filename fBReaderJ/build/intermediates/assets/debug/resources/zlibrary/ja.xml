@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK"/>
+			<node name="cancel" value="キャンセル"/>
+			<node name="yes" value="はい"/>
+			<node name="no" value="いいえ"/>
+			<node name="apply" value="適用"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="ネットワークエラー"/>
+			<node name="unknownErrorMessage" value="不明なエラー"/>
+			<node name="operationTimedOutMessage" value="動作が時間切れ"/>
+			<node name="somethingWrongMessage" value="どこかがおかしいようです: %s"/>
+			<node name="couldntCreateDirectoryMessage" value="ディレクトリ %s を作成できませんでした"/>
+			<node name="couldntCreateFileMessage" value="ファイル %s を作成できませんでした"/>
+			<node name="couldntConnectMessage" value="ホスト %s に接続できませんでした"/>
+			<node name="couldntResolveHostMessage" value="ホスト名 %s が解決できませんでした"/>
+			<node name="authenticationFailed" value="認証失敗"/>
+			<node name="unsupportedProtocol" value="対応していないプロトコル"/>
+			<node name="invalidURL" value="不正な URL"/>
+			<node name="hostCantBeReached" value="ホスト %s に到達できません"/>
+			<node name="connectionRefused" value="接続が %s に拒否されました"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="赤"/>
+		<node name="green" value="緑"/>
+		<node name="blue" value="青"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="アラビア語"/>
+		<node name="be" value="ベラルーシ語"/>
+		<node name="bg" value="ブルガリア語"/>
+		<node name="ca" value="カタルーニャ語"/>
+		<node name="cs" value="チェコ語"/>
+		<node name="da" value="オランダ語"/>
+		<node name="de" value="ドイツ語"/>
+		<node name="de-traditional" value="ドイツ語 (旧正書法)"/>
+		<node name="el" value="ギリシャ語"/>
+		<node name="en" value="英語"/>
+		<node name="eo" value="エスペラント"/>
+		<node name="es" value="スペイン語"/>
+		<node name="eu" value="バスク語"/>
+		<node name="fa" value="ペルシャ語"/>
+		<node name="fi" value="フィンランド語"/>
+		<node name="fr" value="フランス語"/>
+		<node name="gl" value="ガリシア・ポルトガル語"/>
+		<node name="he" value="ヘブライ語"/>
+		<node name="hu" value="ハンガリー語"/>
+		<node name="hy" value="アルメニア語"/>
+		<node name="id" value="インドネシア語"/>
+		<node name="it" value="イタリア語"/>
+		<node name="ja" value="日本語"/>
+		<node name="ka" value="グルジア (ジョージア) 語"/>
+		<node name="lt" value="リトアニア語"/>
+		<node name="nb" value="ノルウェー語"/>
+		<node name="nl" value="オランダ語"/>
+		<node name="pl" value="ポーランド語"/>
+		<node name="pt" value="ポルトガル語"/>
+		<node name="ro" value="ルーマニア語"/>
+		<node name="ru" value="ロシア語"/>
+		<node name="sr" value="セルビア語"/>
+		<node name="sv" value="スウェーデン語"/>
+		<node name="ta" value="タミル語"/>
+		<node name="th" value="タイ語"/>
+		<node name="tr" value="トルコ語"/>
+		<node name="uk" value="ウクライナ語"/>
+		<node name="vi" value="ベトナム語"/>
+		<node name="zh" value="中国語"/>
+		<node name="zh_TW" value="中国語 (台湾)"/>
+		<node name="any" value="すべて"/>
+		<node name="other" value="その他"/>
+		<node name="multi" value="多言語"/>
+		<node name="system" value="システム"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="オン"/>
+		<node name="off" value="オフ"/>
+		<node name="unchanged" value="変更なし"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="キー動作"/>
+	</node>
+</resources>

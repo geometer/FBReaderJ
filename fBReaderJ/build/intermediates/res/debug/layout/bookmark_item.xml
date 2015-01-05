@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:minHeight="?android:attr/listPreferredItemHeight"
+	android:paddingLeft="5dip"
+	android:orientation="horizontal"
+>
+	<ImageView
+		android:id="@+id/bookmark_item_icon"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:singleLine="true"
+	/>
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:minHeight="?android:attr/listPreferredItemHeight"
+		android:paddingLeft="5dip"
+		android:paddingRight="8dp"
+		android:layout_marginTop="5dip"
+		android:layout_marginBottom="5dip"
+		android:orientation="vertical"
+		android:gravity="center_vertical|left"
+	>
+		<TextView
+			android:id="@+id/bookmark_item_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:singleLine="false"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:gravity="center_vertical|left"
+		/>
+		<TextView
+			android:id="@+id/bookmark_item_booktitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="7dip"
+			android:layout_below="@id/bookmark_item_text"
+			android:singleLine="true"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:ellipsize="marquee"
+			android:marqueeRepeatLimit="marquee_forever"
+		/>
+	</LinearLayout>
+</LinearLayout>
+<!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/src/main/res/layout/bookmark_item.xml -->

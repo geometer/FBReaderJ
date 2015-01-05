@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/build/intermediates/exploded-aar/FBReaderJ1/code/unspecified/res/values-mdpi-v4/values.xml -->
+    <eat-comment/>
+    <dimen name="afc_button_navigators_min_height">32px</dimen>
+    <dimen name="afc_button_ok_saveas_size">32px</dimen>
+    <dimen name="afc_thumbnail_size">48px</dimen>
+</resources>

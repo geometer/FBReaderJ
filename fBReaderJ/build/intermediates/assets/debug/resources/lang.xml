@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="language-self">
+		<node name="ar" value="العربية"/>
+		<node name="be" value="Беларуская"/>
+		<node name="bg" value="Български"/>
+		<node name="ca" value="Català"/>
+		<node name="cs" value="Česky"/>
+		<node name="da" value="Dansk"/>
+		<node name="de" value="Deutsch"/>
+		<node name="el" value="Ελληνικά"/>
+		<node name="en" value="English"/>
+		<node name="es" value="Español"/>
+		<node name="eu" value="Euskara"/>
+		<node name="fa" value="فارسی"/>
+		<node name="fr" value="Français"/>
+		<node name="gl" value="Galego"/>
+		<node name="hu" value="Magyar"/>
+		<node name="hy" value="Հայերեն"/>
+		<node name="it" value="Italiano"/>
+		<node name="ja" value="日本語"/>
+		<node name="ka" value="ქართული"/>
+		<node name="nb" value="Norsk"/>
+		<node name="nl" value="Nederlands"/>
+		<node name="pl" value="Polski"/>
+		<node name="pt" value="Português"/>
+		<node name="ro" value="Romana"/>
+		<node name="ru" value="Русский"/>
+		<node name="sr" value="Српски"/>
+		<node name="th" value="ไทย"/>
+		<node name="tr" value="Türkçe"/>
+		<node name="uk" value="Українська"/>
+		<node name="vi" value="Tiếng Việt"/>
+		<node name="zh" value="简体中文"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+	</node>
+</resources>

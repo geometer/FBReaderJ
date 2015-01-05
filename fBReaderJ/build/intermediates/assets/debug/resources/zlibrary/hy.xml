@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Armenian zlibrary resources, by Yavruhrat -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Լավ"/>
+			<node name="cancel" value="Չեղարկել"/>
+			<node name="yes" value="Այո"/>
+			<node name="no" value="Ոչ"/>
+			<node name="apply" value="Գործադրել"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Սխալ՝ ցանցի հետ աշխատելիս"/>
+			<node name="unknownErrorMessage" value="Անհայտ սխալ"/>
+			<node name="operationTimedOutMessage" value="Ժամանակը սպառվեց"/>
+			<node name="somethingWrongMessage" value="Սխալ %s-ի հետ աշխատելիս"/>
+			<node name="couldntCreateDirectoryMessage" value="Չհաջողվեց ստեղծել %s գրացուցակը"/>
+			<node name="couldntCreateFileMessage" value="Չհաջողվեց ստեղծել %s նիշքը"/>
+			<node name="couldntConnectMessage" value="Չհաջողվեց կապ հաստատել %s կայքի հետ"/>
+			<node name="couldntResolveHostMessage" value="%s կայքը չգտնվեց"/>
+			<node name="authenticationFailed" value="Հեղինակացման սխալ"/>
+			<node name="unsupportedProtocol" value="Անհայտ հաղորդակարգ"/>
+			<node name="invalidURL" value="Սխալ URL"/>
+			<node name="hostCantBeReached" value="%s կայքն անհասանելի է"/>
+			<node name="connectionRefused" value="%s կայքի հետ կապն ավարտվեց"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Կարմիր"/>
+		<node name="green" value="Կանաչ"/>
+		<node name="blue" value="Կապույտ"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="արաբերեն"/>
+		<node name="be" value="բելառուսերեն"/>
+		<node name="bg" value="բուլղարերեն"/>
+		<node name="ca" value="կատալոներեն"/>
+		<node name="cs" value="չեխերեն"/>
+		<node name="da" value="դանիերեն"/>
+		<node name="de" value="գերմաներեն"/>
+		<node name="de-traditional" value="գերմաներեն (հին ուղղագրությամբ)"/>
+		<node name="el" value="հունարեն"/>
+		<node name="en" value="անգլերեն"/>
+		<node name="eo" value="էսպերանտո"/>
+		<node name="es" value="իսպաներեն"/>
+		<node name="eu" value="բասկերեն"/>
+		<node name="fa" value="պարսկերեն"/>
+		<node name="fi" value="ֆիններեն"/>
+		<node name="fr" value="ֆրանսերեն"/>
+		<node name="gl" value="գալիսերեն"/>
+		<node name="he" value="եբրայերեն"/>
+		<node name="hu" value="հունգարերեն"/>
+		<node name="hy" value="հայերեն"/>
+		<node name="id" value="ինդոնեզերեն (կավի)"/>
+		<node name="it" value="իտալերեն"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="վրացերեն"/>
+		<node name="lt" value="լիտվաներեն"/>
+		<node name="nb" value="նորվեգերեն"/>
+		<node name="nl" value="հոլանդերեն"/>
+		<node name="pl" value="լեհերեն"/>
+		<node name="pt" value="պորտուգալերեն"/>
+		<node name="ro" value="ռումիներեն"/>
+		<node name="ru" value="ռուսերեն"/>
+		<node name="sr" value="սերբերեն"/>
+		<node name="sv" value="շվեդերեն"/>
+		<node name="ta" value="թամիլերեն"/>
+		<node name="th" value="թայ"/>
+		<node name="tr" value="թուրքերեն"/>
+		<node name="uk" value="ուկրաիներեն"/>
+		<node name="vi" value="վիետնամերեն"/>
+		<node name="zh" value="չինարեն"/>
+		<node name="zh_TW" value="չինարեն (ավանդական)"/>
+		<node name="any" value="ցանկացած"/>
+		<node name="other" value="այլ"/>
+		<node name="multi" value="բազմալեզու"/>
+		<node name="system" value="Համապատասխանեցնել համակարգին"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="միացնել"/>
+		<node name="off" value="անջատել"/>
+		<node name="unchanged" value="անփոփոխ"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Գործողություն %s-ի համար"/>
+	</node>
+</resources>

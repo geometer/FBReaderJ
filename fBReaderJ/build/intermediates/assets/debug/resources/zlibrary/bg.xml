@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Bulgarian FBReaderJ resources, by Ники Арсов -->
+<!-- Updated by Георги Георгиев, 22.07.2014 -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="ОК"/>
+			<node name="cancel" value="Отмени"/>
+			<node name="yes" value="Да"/>
+			<node name="no" value="Не"/>
+			<node name="apply" value="Приложи"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Грешка при работа с мрежата"/>
+			<node name="unknownErrorMessage" value="Неизвестна грешка"/>
+			<node name="operationTimedOutMessage" value="Времето за операцията изтече"/>
+			<node name="somethingWrongMessage" value="Грешка при работа с %s"/>
+			<node name="couldntCreateDirectoryMessage" value="Невъзможност на създаване на каталог %s"/>
+			<node name="couldntCreateFileMessage" value="Невъзможност на създаване на файл %s"/>
+			<node name="couldntConnectMessage" value="Невъзможност за връзка със сайта %s"/>
+			<node name="couldntResolveHostMessage" value="Не бе намерен сайтът %s"/>
+			<node name="authenticationFailed" value="Грешка при ауторизацията"/>
+			<node name="unsupportedProtocol" value="Неизвестен протокол"/>
+			<node name="invalidURL" value="Неправилен URL"/>
+			<node name="hostCantBeReached" value="Сайтът %s е недостъпен"/>
+			<node name="connectionRefused" value="Връзката е пекъсната от сайта %s"/>
+			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Чевен"/>
+		<node name="green" value="Зелен"/>
+		<node name="blue" value="Син"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="арабски"/>
+		<node name="be" value="белоруски"/>
+		<node name="bg" value="български"/>
+		<node name="ca" value="каталунски"/>
+		<node name="cs" value="чешки"/>
+		<node name="da" value="датски"/>
+		<node name="de" value="немски"/>
+		<node name="de-traditional" value="немски (традиционен)"/>
+		<node name="el" value="гръцки"/>
+		<node name="en" value="английски"/>
+		<node name="eo" value="есперанто"/>
+		<node name="es" value="испански"/>
+		<node name="eu" value="баскски"/>
+		<node name="fa" value="персийски"/>
+		<node name="fi" value="фински"/>
+		<node name="fr" value="френски"/>
+		<node name="gl" value="галски"/>
+		<node name="he" value="иврит"/>
+		<node name="hu" value="унгаски"/>
+		<node name="hy" value="арменски"/>
+		<node name="id" value="индонезийски"/>
+		<node name="it" value="италиански"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="грузински"/>
+		<node name="lt" value="литовски"/>
+		<node name="nb" value="норвежски"/>
+		<node name="nl" value="холандски"/>
+		<node name="pl" value="польский"/>
+		<node name="pt" value="португалски"/>
+		<node name="ro" value="румънски"/>
+		<node name="ru" value="руски"/>
+		<node name="sr" value="сръбски"/>
+		<node name="sv" value="шведски"/>
+		<node name="ta" value="тамилски"/>
+		<node name="th" value="тайски"/>
+		<node name="tr" value="турски"/>
+		<node name="uk" value="украински"/>
+		<node name="vi" value="виетнамски"/>
+		<node name="zh" value="китайски"/>
+		<node name="zh_TW" value="китайски (традиционен)"/>
+		<node name="any" value="кой да е"/>
+		<node name="other" value="друг"/>
+		<node name="multi" value="многоезичен"/>
+		<node name="system" value="системен"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="включи"/>
+		<node name="off" value="изключи"/>
+		<node name="unchanged" value="без промяна"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Действие за"/>
+	</node>
+</resources>

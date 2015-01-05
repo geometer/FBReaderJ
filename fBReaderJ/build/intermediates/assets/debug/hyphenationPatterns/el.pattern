@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Greek hyphenations description for FBReader (original was taken from the texlive distribution)
+
+  From the original /usr/share/texmf-texlive/tex/generic/hyphen/grmhyph4.tex
+
+% Created:       June 1st, 1999
+% First release: Apr. 13, 2000
+% Revised:       Aug. 16, 2004
+% Version:       4.0
+%%
+% Hyphenation patterns for uni-accent (monotonic) Modern Greek.
+%
+% Created by Dimitrios Filippou with some ideas borrowed from 
+% Yannis Haralambous, Kostis Dryllerakis and Claudio Beccari.
+-->
+<HyphenationDescription>
+  <pattern>4β1ζ</pattern>
+  <pattern>4β1θ</pattern>
+  <pattern>4β1ν</pattern>
+  <pattern>4β1ξ</pattern>
+  <pattern>4β1π</pattern>
+  <pattern>4β1σ</pattern>
+  <pattern>4β1τ</pattern>
+  <pattern>3β1φ</pattern>
+  <pattern>4β1χ</pattern>
+  <pattern>3β1ψ</pattern>
+  <pattern>4γ1β</pattern>
+  <pattern>4γ2ζ</pattern>
+  <pattern>4γ1θ</pattern>
+  <pattern>4γ1μ</pattern>
+  <pattern>4ρ5γ2μ</pattern>
+  <pattern>4γ1χ</pattern>
+  <pattern>4γ1π</pattern>
+  <pattern>4γ1τ</pattern>
+  <pattern>4γ1φ</pattern>
+  <pattern>4γ1χ</pattern>
+  <pattern>4γ1ψ</pattern>
+  <pattern>4δ1β</pattern>
+  <pattern>4δ1γ</pattern>
+  <pattern>4δ1ζ</pattern>
+  <pattern>4δ1κ</pattern>
+  <pattern>4δ1λ</pattern>
+  <pattern>4δ1ξ</pattern>
+  <pattern>4δ1π</pattern>
+  <pattern>4δ1σ</pattern>
+  <pattern>4δ1τ</pattern>
+  <pattern>4δ1χ</pattern>
+  <pattern>4δ1ψ</pattern>
+  <pattern>4ζ1β</pattern>
+  <pattern>4ζ1δ</pattern>
+  <pattern>4ζ1θ</pattern>
+  <pattern>4ζ1κ</pattern>
+  <pattern>4ζ1λ</pattern>
+  <pattern>4ζ1μ</pattern>
+  <pattern>τζ2μ</pattern>
+  <pattern>4ζ1ν</pattern>
+  <pattern>4ζ1ξ</pattern>
+  <pattern>4ζ1π</pattern>
+  <pattern>4ζ1ρ</pattern>
+  <pattern>4ζ1σ</pattern>
+  <pattern>4ζ1τ</pattern>
+  <pattern>4ζ1φ</pattern>
+  <pattern>4ζ1χ</pattern>
+  <pattern>4ζ1ψ</pattern>
+  <pattern>4θ1β</pattern>
+  <pattern>4θ1γ</pattern>
+  <pattern>4θ1δ</pattern>
+  <pattern>4θ1ζ</pattern>
+  <pattern>4κ1κ</pattern>
+  <pattern>4κ1π</pattern>
+  <pattern>4κ1χ</pattern>
+  <pattern>4κ1ψ</pattern>
+  <pattern>4λ1β</pattern>
+  <pattern>4λ1γ</pattern>
+  <pattern>4λ1δ</pattern>
+  <pattern>4λ1ζ</pattern>
+  <pattern>4λ1θ</pattern>
+  <pattern>4λ1κ</pattern>
+  <pattern>4λ1μ</pattern>
+  <pattern>4λ1ν</pattern>
+  <pattern>4λ1ξ</pattern>
+  <pattern>4λ1π</pattern>
+  <pattern>4λ1ρ</pattern>
+  <pattern>4λ1σ</pattern>
+  <pattern>4λ1τ</pattern>
+  <pattern>4λ1φ</pattern>
+  <pattern>4λ1χ</pattern>
+  <pattern>4λ1ψ</pattern>
+  <pattern>4μ1β</pattern>
+  <pattern>4μ1γ</pattern>
+  <pattern>4μ1δ</pattern>
+  <pattern>4μ1ζ</pattern>
+  <pattern>4μ1θ</pattern>
+  <pattern>4μ1κ</pattern>
+  <pattern>4μ1λ</pattern>
+  <pattern>4μ1φ</pattern>
+  <pattern>4μ1χ</pattern>
+  <pattern>4μ1ψ</pattern>
+  <pattern>4ν1β</pattern>
+  <pattern>4ν1γ</pattern>
+  <pattern>4ν1δ</pattern>
+  <pattern>4ν1ζ</pattern>
+  <pattern>4ν1θ</pattern>
+  <pattern>4ν1κ</pattern>
+  <pattern>4ν1λ</pattern>
+  <pattern>4ν1μ</pattern>
+  <pattern>4ν1ξ</pattern>
+  <pattern>4ν1π</pattern>
+  <pattern>4ν1ρ</pattern>
+  <pattern>4ν1σ</pattern>
+  <pattern>4ν1φ</pattern>
+  <pattern>4ν1χ</pattern>
+  <pattern>4ν1ψ</pattern>
+  <pattern>4ξ1β</pattern>
+  <pattern>4ξ1γ</pattern>
+  <pattern>4ξ1δ</pattern>
+  <pattern>4ξ1ζ</pattern>
+  <pattern>4ξ1θ</pattern>
+  <pattern>4ξ1κ</pattern>
+  <pattern>4ξ1λ</pattern>
+  <pattern>4ξ1μ</pattern>
+  <pattern>4ξ1ν</pattern>
+  <pattern>4ξ1π</pattern>
+  <pattern>4ξ1ρ</pattern>
+  <pattern>4ξ1σ</pattern>
+  <pattern>4ξ1τ</pattern>
+  <pattern>4γ4ξ2τ</pattern>
+  <pattern>4ρ4ξ2τ</pattern>
+  <pattern>4ξ1φ</pattern>
+  <pattern>4ξ1χ</pattern>
+  <pattern>4ξ1ψ</pattern>
+  <pattern>4π1β</pattern>
+  <pattern>4π1γ</pattern>
+  <pattern>4π1δ</pattern>
+  <pattern>4π1ζ</pattern>
+  <pattern>4π1θ</pattern>
+  <pattern>4π1κ</pattern>
+  <pattern>4π1μ</pattern>
+  <pattern>4π1ξ</pattern>
+  <pattern>4π1σ</pattern>
+  <pattern>4π1φ</pattern>
+  <pattern>4π1χ</pattern>
+  <pattern>4π1ψ</pattern>
+  <pattern>4ρ1β</pattern>
+  <pattern>4ρ1γ</pattern>
+  <pattern>4ρ1δ</pattern>
+  <pattern>4ρ1ζ</pattern>
+  <pattern>4ρ1θ</pattern>
+  <pattern>4ρ1κ</pattern>
+  <pattern>4ρ1λ</pattern>
+  <pattern>4ρ1μ</pattern>
+  <pattern>4ρ1ν</pattern>
+  <pattern>4ρ1ξ</pattern>
+  <pattern>4ρ1π</pattern>
+  <pattern>4ρ1σ</pattern>
+  <pattern>4ρ1τ</pattern>
+  <pattern>4ρ1φ</pattern>
+  <pattern>4ρ1χ</pattern>
+  <pattern>4ρ1ψ</pattern>
+  <pattern>4σ1δ</pattern>
+  <pattern>4σ1ζ</pattern>
+  <pattern>4σ1ν</pattern>
+  <pattern>4σ1ξ</pattern>
+  <pattern>4σ1ρ</pattern>
+  <pattern>4σ1ψ</pattern>
+  <pattern>4τ1β</pattern>
+  <pattern>4τ1γ</pattern>
+  <pattern>4τ1δ</pattern>
+  <pattern>4τ1θ</pattern>
+  <pattern>4τ1κ</pattern>
+  <pattern>4τ1ν</pattern>
+  <pattern>4τ1ξ</pattern>
+  <pattern>4τ1π</pattern>
+  <pattern>4τ1φ</pattern>
+  <pattern>στ2φ</pattern>
+  <pattern>4τ1χ</pattern>
+  <pattern>4τ1ψ</pattern>
+  <pattern>4φ1β</pattern>
+  <pattern>4φ1γ</pattern>
+  <pattern>4φ1δ</pattern>
+  <pattern>4φ1ζ</pattern>
+  <pattern>4φ1μ</pattern>
+  <pattern>4φ1ν</pattern>
+  <pattern>4φ1ξ</pattern>
+  <pattern>4φ1π</pattern>
+  <pattern>4φ1σ</pattern>
+  <pattern>4φ1χ</pattern>
+  <pattern>4φ1ψ</pattern>
+  <pattern>4ψ1β</pattern>
+  <pattern>4ψ1γ</pattern>
+  <pattern>4ψ1δ</pattern>
+  <pattern>4ψ1ζ</pattern>
+  <pattern>4ψ1θ</pattern>
+  <pattern>4ψ1κ</pattern>
+  <pattern>4ψ1λ</pattern>
+  <pattern>4ψ1μ</pattern>
+  <pattern>4ψ1ν</pattern>
+  <pattern>4ψ1ξ</pattern>
+  <pattern>4ψ1π</pattern>
+  <pattern>4ψ1ρ</pattern>
+  <pattern>4ψ1σ</pattern>
+  <pattern>4ψ1τ</pattern>
+  <pattern>4ψ1φ</pattern>
+  <pattern>4ψ1χ</pattern>
+  <pattern>α1</pattern>
+  <pattern>ε1</pattern>
+  <pattern>η1</pattern>
+  <pattern>ι1</pattern>
+  <pattern>ο1</pattern>
+  <pattern>υ1</pattern>
+  <pattern>ω1</pattern>
+  <pattern>ώ1</pattern>
+  <pattern>α2ι</pattern>
+  <pattern>α2ί</pattern>
+  <pattern>α2υ</pattern>
+  <pattern>α2ύ</pattern>
+  <pattern>ά3υ</pattern>
+  <pattern>ε2ι</pattern>
+  <pattern>ε2ί</pattern>
+  <pattern>ε2υ</pattern>
+  <pattern>ε2ύ</pattern>
+  <pattern>έ3υ</pattern>
+  <pattern>η2υ</pattern>
+  <pattern>ή3υ</pattern>
+  <pattern>ο2ι</pattern>
+  <pattern>ο2ί</pattern>
+  <pattern>ο2υ</pattern>
+  <pattern>ο2ύ</pattern>
+  <pattern>ό3υ</pattern>
+  <pattern>υ2ι</pattern>
+  <pattern>υ2ί</pattern>
+  <pattern>ύ3ι</pattern>
+  <pattern>α2η</pattern>
+  <pattern>ά3η</pattern>
+  <pattern>α2ϊ</pattern>
+  <pattern>α2ϋ</pattern>
+  <pattern>ε2ϊ</pattern>
+  <pattern>ό2ει</pattern>
+  <pattern>ο2η</pattern>
+  <pattern>ό3η</pattern>
+  <pattern>ο2ϊ</pattern>
+  <pattern>ό3ι</pattern>
+  <pattern>ι2α</pattern>
+  <pattern>ι2ά</pattern>
+  <pattern>ι2ε</pattern>
+  <pattern>ι2έ</pattern>
+  <pattern>ι2ο</pattern>
+  <pattern>ι2ό</pattern>
+  <pattern>4β </pattern>
+  <pattern>4γ </pattern>
+  <pattern>4γκ </pattern>
+  <pattern>4δ </pattern>
+  <pattern>4ζ </pattern>
+  <pattern>4θ </pattern>
+  <pattern>4κ </pattern>
+  <pattern>4λ </pattern>
+  <pattern>4μ </pattern>
+  <pattern>4μπ </pattern>
+  <pattern>4ν </pattern>
+  <pattern>4ντ </pattern>
+  <pattern>4ξ </pattern>
+  <pattern>4π </pattern>
+  <pattern>4ρ </pattern>
+  <pattern>4σ </pattern>
+  <pattern>4τ </pattern>
+  <pattern>4τζ </pattern>
+  <pattern>4τσ </pattern>
+  <pattern>4φ </pattern>
+  <pattern>4χ </pattern>
+  <pattern>4ψ </pattern>
+  <pattern>4'</pattern>
+  <pattern>4β'</pattern>
+  <pattern>4γκ'</pattern>
+  <pattern>4ζ'</pattern>
+  <pattern>4λ'</pattern>
+  <pattern>4μ'</pattern>
+  <pattern>4μπ'</pattern>
+  <pattern>4ν'</pattern>
+  <pattern>4ντ'</pattern>
+  <pattern>4ξ'</pattern>
+  <pattern>4π'</pattern>
+  <pattern>4ρ'</pattern>
+  <pattern>4σ'</pattern>
+  <pattern>4τ'</pattern>
+  <pattern>4τζ'</pattern>
+  <pattern>4τσ'</pattern>
+  <pattern>4φ'</pattern>
+  <pattern>4χ'</pattern>
+  <pattern>4ψ'</pattern>
+  <pattern> β4</pattern>
+  <pattern> γ4</pattern>
+  <pattern> δ4</pattern>
+  <pattern> ζ4</pattern>
+  <pattern> θ4</pattern>
+  <pattern> κ4</pattern>
+  <pattern> λ4</pattern>
+  <pattern> μ4</pattern>
+  <pattern> ν4</pattern>
+  <pattern> ξ4</pattern>
+  <pattern> π4</pattern>
+  <pattern> ρ4</pattern>
+  <pattern> σ4</pattern>
+  <pattern> τ4</pattern>
+  <pattern> φ4</pattern>
+  <pattern> χ4</pattern>
+  <pattern> ψ4</pattern>
+  <pattern>4β1β</pattern>
+  <pattern>4γ1γ</pattern>
+  <pattern>4ζ1ζ</pattern>
+  <pattern>4θ1θ</pattern>
+  <pattern>4λ1λ</pattern>
+  <pattern>4μ1μ</pattern>
+  <pattern>4ν1ν</pattern>
+  <pattern>4π1π</pattern>
+  <pattern>4ρ1ρ</pattern>
+  <pattern>4σ1σ</pattern>
+  <pattern>4τ1τ</pattern>
+  <pattern>τφ1φ</pattern>
+  <pattern>4χ1χ</pattern>
+  <pattern>3ψ1ψ</pattern>
+  <pattern>4γ5κ2φ</pattern>
+  <pattern>4γ1κτ</pattern>
+  <pattern>4μ1πτ</pattern>
+  <pattern>4ν1τζ</pattern>
+  <pattern>4ν1τσ</pattern>
+  <pattern>4βρ </pattern>
+  <pattern>4γλ </pattern>
+  <pattern>4κτ </pattern>
+  <pattern>4γκσ </pattern>
+  <pattern>4κσ </pattern>
+  <pattern>4λσ </pattern>
+  <pattern>4μπλ </pattern>
+  <pattern>4μπν </pattern>
+  <pattern>4μπρ </pattern>
+  <pattern>4μσ </pattern>
+  <pattern>4νσ </pattern>
+  <pattern>4ρσ </pattern>
+  <pattern>4σκ </pattern>
+  <pattern>4στ </pattern>
+  <pattern>4τλ </pattern>
+  <pattern>4τρ </pattern>
+  <pattern> δ8ι7ά </pattern>
+  <pattern> π8ο8ι7ό8ν </pattern>
+  <pattern> π8ο8ι7ο8ύ </pattern>
+</HyphenationDescription>
