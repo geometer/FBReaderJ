@@ -12,4 +12,13 @@ READY/
 .settings
 *.so
 *~
-.idea
+
+# Android Studio
+#.idea Just in case
+
+# Gradle files
+.gradle
+build/
+
+# Windows VIM
+*.swp
