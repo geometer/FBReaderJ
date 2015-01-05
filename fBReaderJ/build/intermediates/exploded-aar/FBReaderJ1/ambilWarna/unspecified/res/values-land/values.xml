@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/ambilWarna/src/main/res/values-land/dimen.xml -->
-    <eat-comment/>
-    <dimen name="ambilwarna_hsvHeight">120dp</dimen>
-    <dimen name="ambilwarna_hsvWidth">240dp</dimen>
-</resources>

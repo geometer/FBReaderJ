@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/code/build/intermediates/bundles/debug/res/values-ldpi-v4/values.xml -->
-    <eat-comment/>
-    <dimen name="afc_button_navigators_min_height">24px</dimen>
-    <dimen name="afc_button_ok_saveas_size">24px</dimen>
-    <dimen name="afc_thumbnail_size">36px</dimen>
-</resources>

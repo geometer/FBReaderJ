@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@drawable/selection_translate_active" />
-    <item android:drawable="@drawable/selection_translate_default" />
-</selector>
-<!-- From: file:/C:/Users/Steven/AndroidStudioProjects/FBReaderJ1/fBReaderJ/src/main/res/drawable/selection_translate.xml -->

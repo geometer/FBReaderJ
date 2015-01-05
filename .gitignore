@@ -14,11 +14,14 @@ READY/
 *~
 
 # Android Studio
-#.idea Just in case
+#.idea Keep this for now
 
 # Gradle files
-.gradle
-build/
+*.iml
+*.iws
+*.ipr
+.gradle/
+*/build/
 
 # Windows VIM
 *.swp

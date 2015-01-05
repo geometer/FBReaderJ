@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="open-dictionary-api-1.2.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/fBReaderJ/libs/open-dictionary-api-1.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
