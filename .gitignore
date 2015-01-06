@@ -14,11 +14,12 @@ READY/
 *~
 
 # Android Studio
-#.idea Keep this for now
+.idea/
 *.apk
 *.txt
 
 # Gradle files
+*.bin
 *.iml
 *.iws
 *.ipr
