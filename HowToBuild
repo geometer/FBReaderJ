@@ -28,14 +28,14 @@ E.g., on my computer 'local.properties' consists of 2 lines:
   2b. by copying the Android support v4 lib:
       cp libs/android-support-v4.jar third-party/drag-sort-listview/library/libs/
 
-2. If you use Linux or MacOS, just run 'ant dist' and go to step 3. For debugging
+3. If you use Linux or MacOS, just run 'ant dist' and go to step 3. For debugging
 purposes, you might want to run 'ant debug' for building the package in debug mode, signing
 with your debug key (in this case, you can skip step 3).
 
 If you are Windows user
-  2a. Run ndk-build (a program from Android NDK directory) in your project catalog;
+  3a. Run ndk-build (a program from Android NDK directory) in your project catalog;
       This program only runs from Cygwin >= 1.7, please read NDK docs for details.
       Read and try config cygwin using 'cygwin_installation_and_configuration.pdf'
-  2b. Run 'ant release'.
+  3b. Run 'ant release'.
 
-3. Sign your package manually.
+4. Sign your package manually.
