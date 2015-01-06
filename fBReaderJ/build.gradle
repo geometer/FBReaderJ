@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+
+import org.apache.tools.ant.taskdefs.condition.Os
+
+android {
+    compileSdkVersion 14
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "org.geometerplus.zlibrary.ui.android"
+        minSdkVersion 5
+        targetSdkVersion 9
+
+        ndk {
+            moduleName "DeflatingDecompressor-v3"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    sourceSets.main {
+        jniLibs.srcDir 'src/main/libs'
+        jni.srcDirs = [] //disable automatic ndk-build call
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:21.0.3'
+    compile project(':ambilWarna')
+    compile project(':library')
+    compile project(':code')
+    compile files('libs/httpmime-4.2.5.jar')
+    compile files('libs/json-simple-1.1.1.jar')
+    compile files('libs/LingvoIntegration_2.5.2.12.jar')
+    compile files('libs/nanohttpd-2.0.5.jar')
+    compile files('libs/open-dictionary-api-1.2.1.jar')
+    compile files('libs/pdfparse.jar')
+}
+
+// couldn't get ndk working with gradle, so we need to build ndk manually in a terminal:
+/* ndk-build -C %userprofile%\AndroidStudioProjects\FBReaderJ1\fBReaderJ\src\main\jni
+
+// call regular ndk-build(.cmd) script from app directory
+task ndkBuild(type: Exec) {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'ndk-build.cmd', '-C', file('src/main/jni').absolutePath
+    } else {
+        commandLine 'ndk-build', '-C', file('src/main/jni').absolutePath
+    }
+}
+
+tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn ndkBuild
+}
+*/

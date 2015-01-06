@@ -12,3 +12,19 @@ READY/
 .settings
 *.so
 *~
+
+# Android Studio
+.idea/
+*.apk
+*.txt
+
+# Gradle files
+*.bin
+*.iml
+*.iws
+*.ipr
+.gradle/
+*/build/
+
+# Windows VIM
+*.swp
