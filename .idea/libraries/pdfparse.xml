@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="pdfparse">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/fBReaderJ/libs/pdfparse.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
