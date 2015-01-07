@@ -49,6 +49,12 @@ dependencies {
     compile files('libs/pdfparse.jar')
 }
 
+/* TODO: Gradle task to generate the help epubs.
+For now...
+> cd help
+> generate.py proto html ..\fBReaderJ\src\main\assets\data\intro\
+ */
+
 // couldn't get ndk working with gradle, so we need to build ndk manually in a terminal:
 /* ndk-build -C %userprofile%\AndroidStudioProjects\FBReaderJ1\fBReaderJ\src\main\jni
 
