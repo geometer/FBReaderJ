@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<package xmlns='http://www.idpf.org/2007/opf' unique-identifier='dcidid' version='2.0'> 
+<metadata xmlns:dc='http://purl.org/dc/elements/1.1/'>
+	<dc:title>$TITLE$</dc:title> 
+	<dc:language>$LANG$</dc:language> 
+	<dc:identifier>$ID$</dc:identifier> 
+	<dc:creator>FBReader</dc:creator> 
+  <meta content='cover_image' name='cover'/>
+</metadata>   
+<manifest> 
+	<item id='stylesheet' href='styles.css' media-type='text/css'/> 
+	<item id='main'  href='main.html' media-type='application/xhtml+xml'/> 
+  <item href='fbreader.png' id='cover_image' media-type='image/png'/>
+</manifest> 
+<spine toc='ncx'> 
+  <itemref idref='main'/> 
+</spine> 
+</package> 

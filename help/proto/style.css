@@ -1,0 +1,5 @@
+h3 { page-break-after: avoid; }
+h2 { text-indent: 0; text-align:center; padding-bottom: 1em; }
+p { margin: 10px 0 0 0; }
+p.opds { padding-top: 0.5em; text-align: center; text-indent: 0; page-break-before: avoid; }
+.last { padding-bottom: 1.3em; }
