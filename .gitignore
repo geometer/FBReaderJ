@@ -26,5 +26,8 @@ READY/
 .gradle/
 */build/
 
+# FBReader help books
+intro/
+
 # Windows VIM
 *.swp
