@@ -1,0 +1,69 @@
+* 'sign out' feature for basic-auth
+
+DONE show 'empty basket' message without opening of catalog
+DONE update basket view if basket content is changed
+DONE basket summary
+DONE show recommendation item if basket is not empty
+DONE new actions in main menu: clear; buy all
+* update recommendations list after each basket updating/purchasing/signing in/out
+* update recommendations list visibility after each basket updating/purchasing/signing in/out
+* remove book from basket on purchasing
+
+* search item behaviour like search item in local library
+DONE separate search for each catalog (if search URL is presented)
+DONE menu search button should be available for all catalog levels
+
+DONE float point numbers as series index
+DONE replace AuthenticationCatalog by AuthenticationActivity
+* 'recently visited catalogs' item
+* load search URL for catalogs from these catalogs, not from our generic file
+DONE show library name in network book activity
+
+DONE litres: credit card top up
+* litres: self-service kiosk top up
+DONE litres: similar books link
+
+------------------------------
+
+NP: оповещение об изменениях в namespace'ах происходит после того,
+    как был обработан тег, объявляющий эти namespace'ы... Нужно сделать:
+    DONE 1) вызов namespaceMapChangedHandler перед вызовом startElementHandler
+    DONE 2) вызов namespaceMapChangedHandler после вызова endElementHandler
+    3) вызов namespaceMapChangedHandler для пустых тегов <tagname />
+
+------------------------------
+
+** восстановление пароля (use default e-mail)
+** сделать отдельную ветку (?) для скачанных samples
+** (?) удалять sample при покупке/скачивании полного варианта
+** Authentication на других сайтах
+** Просмотр пользовательских рецензий на litres
+** Добавление своих рецензий на litres
+** Сделать поддержку каталогов без main-link'а (только для поиска) -- например ebooksearch.webfactional.com
+** Сделать еще пункты "Новинки" и "Популярные книги" -- собирая книги со всех сайтов (?)
+
+------------------------------
+
+* Убирать notification'ы для тех книжек, файлы которых были удалены
+
+библиотека:
+* возможность перечитать из файла метаинформацию для отдельной книги
+
+------------------------------
+
+DELAYED асинхронная работа с сетью
+
+DONE кэширование картинок
+	DONE "протухание" кэша
+	DELAYED чистить кэш при старте программы, а не только при открытии изображения?
+
+DELAYED что делать, когда мало памяти???
+	** можно удалять некоторые загруженные подкаталоги из памяти, когда вызывается метод Activity.onLowMemory(); какие?
+		*** закрытые
+		*** самые редко используемые... какой порог удаления?
+		*** все кроме текущего... как определить текущий?
+
+-----------------------------
+
+другое:
+* поддержка hufdic в mobipocket

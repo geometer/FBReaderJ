@@ -1,0 +1,40 @@
+проблема с продолжением загрузки каталога "авторы на букву C" в manybooks
+добавить "восстановление пароля" в litres menu
+honeycomb:
+  TTS
+do we cache cover images?
+
+states:
+  A registered, logged in
+  B registered, logging state is unclear
+  C registered, not logged in, name is stored
+  D registered, not logged in, name is not stored, name = fbreader-auto-*
+  E registered, not logged in, name is not stored, name is user-defined
+  F not registered
+
+actions:
+  1 topup account
+		1c from list item
+  	1b from menu
+  2 buy book, I have sufficient funds
+    2a from list context menu
+    2b from book info activity using menu
+    2c from book info activity using button
+  3 buy book, I have no sufficient funds
+    3a from list context menu
+    3b from book info activity using menu
+    3c from book info activity using button
+
+иконки в main menu
+
+Search actions
+  interrupt search
+	reload
+
+recently visited catalogs
+использовать переданную сумму в sms
+добавить "другие книги" в "мои книги" по авторам-сериям
+yandex money
+self service
+paypal
+"cannot read DRM'd ePub"

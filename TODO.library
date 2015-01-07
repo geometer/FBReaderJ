@@ -1,0 +1,18 @@
+After 0.99:
+DONE returning from footnotes (ask if footnote is in the same model and there was page scrolling)
+* prevent from sleep if battery is in charging mode
+* Open the help file if the current book is deleted from library
+DONE Partial loading from database
+* Database updating in backgorund
+* Watch filesystem after loading
+DONE Show wait message during search
+* Reload book info for all the files
+* garbage in Boris Akunin, Сказки для идиотов
+
+
+** A problem in UI:
+	1. Select any footnote link by trackball movement (selection border will be shown);
+	2. Open selected footnote by trackball click;
+	3. Close opened footnote by "Back" key press;
+	problem: selection isn't displayed;
+	description: selection of footnote link will never be shown until any other link will be selected.

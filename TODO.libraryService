@@ -1,0 +1,32 @@
+restore:
+DONE group titles by first letter
+DONE summaries for libraryTrees
+DONE progress indicator in library activity
+DONE book search
+DONE books for series _and_ author
+DONE update book collection on path changing (from options dialog)
+
+new:
+DONE filesystem event listener
+DONE read book => go to library => go to book info => update book info => return to reading mode: book info is not updated
+DONE 'rescan' button in library menu
+DELAYED getHelpFile => getHelpBook
+DELAYED move BookCollection to libraryService package; change access rights to package local
+
+bugs:
+* trim author names in fb2 (and may be in other formats)
+DONE action hyperlinks
+* double tap only for action bar
+* text search => found multiple occurencies => turn page right => right button is disabled
+
+small features:
+* min/max font size
+* decrease min brightness level
+
+large features:
+DONE two page view
+DONE bookmarks highlighting
+* https://en.wikipedia.org/wiki/Alphabetical_order
+
+plugin:
+* bookmarks import/export
