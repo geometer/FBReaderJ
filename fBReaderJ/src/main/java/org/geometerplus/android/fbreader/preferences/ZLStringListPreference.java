@@ -51,6 +51,7 @@ abstract class ZLStringListPreference extends ListPreference {
 			// It appears that setEntries() DOES NOT perform any extra formatting on the char
 			// sequences, so to get just a single %, we'd have to perform the substitution manually.
 			// http://developer.android.com/reference/android/preference/ListPreference.html#setEntries(java.lang.CharSequence[])
+			// TODO: We should probably do an assert() and tell people to check their xml here.
 			texts[i] = resource.hasValue() ? resource.getValue().replace("%%","%") : values[i];
 		}
 		setLists(values, texts);
@@ -81,12 +82,7 @@ abstract class ZLStringListPreference extends ListPreference {
 		// However, setSummary() DOES perform extra formatting on the char sequences, so we'd need
 		// to correct this.
 		// http://developer.android.com/reference/android/preference/ListPreference.html#setSummary(java.lang.CharSequence)
-		String verify = getEntry().toString();
-		verify = verify.replace("%", "%%");
-		Log.d("CheckIdenticalv: ", verify);
 		setSummary(getEntry().toString().replace("%", "%%"));
-		String checkValid = getSummary().toString();
-		Log.d("CheckIdentical: ", checkValid);
 		return found;
 	}
 
@@ -94,12 +90,7 @@ abstract class ZLStringListPreference extends ListPreference {
 	protected void onDialogClosed(boolean result) {
 		super.onDialogClosed(result);
 		if (result) {
-			String verify = getEntry().toString();
-			verify = verify.replace("%", "%%");
-			Log.d("CheckIdenticalv: ", verify);
-			setSummary(verify);
-			String checkValid = getSummary().toString();
-			Log.d("CheckIdentical: ", checkValid);
+			setSummary(getEntry().toString().replace("%", "%%"));
 		}
 	}
 }
