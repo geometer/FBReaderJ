@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Context;
 import android.preference.ListPreference;
+import android.util.Log;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -33,7 +34,8 @@ abstract class ZLStringListPreference extends ListPreference {
 
 	ZLStringListPreference(Context context, ZLResource resource, ZLResource valuesResource) {
 		super(context);
-		setTitle(resource.getValue());
+		String val = resource.getValue();
+		setTitle(val);
 		myValuesResource = valuesResource;
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
@@ -43,9 +45,16 @@ abstract class ZLStringListPreference extends ListPreference {
 
 	protected final void setList(String[] values) {
 		String[] texts = new String[values.length];
+		boolean relevant = false;
 		for (int i = 0; i < values.length; ++i) {
 			final ZLResource resource = myValuesResource.getResource(values[i]);
-			texts[i] = resource.hasValue() ? resource.getValue() : values[i];
+			if(resource.hasValue()) {
+				relevant = resource.getValue().contains("Falls Akkuladung");
+				if(relevant)
+					Log.d("wtf1", values[i] + ":" + resource.getValue());
+			}
+			texts[i] = resource.hasValue() ? resource.getValue().replace("%%","%") : values[i];
+			//texts[i] = resource.hasValue() ? resource.getValue() : values[i];
 		}
 		setLists(values, texts);
 	}
@@ -70,7 +79,14 @@ abstract class ZLStringListPreference extends ListPreference {
 			}
 		}
 		setValueIndex(index);
-		setSummary(getEntry());
+		String verify = getEntry().toString();
+		int numPercentSigns = verify.length() - verify.replace("%", "").length();
+		Log.d("wtf2", "" + numPercentSigns);
+		if(numPercentSigns == 1)
+			verify = verify.replace("%", "%%");
+		setSummary(verify);
+		String checkValid = getSummary().toString();
+		Log.d("CheckIdentical: ", checkValid);
 		return found;
 	}
 
@@ -78,7 +94,12 @@ abstract class ZLStringListPreference extends ListPreference {
 	protected void onDialogClosed(boolean result) {
 		super.onDialogClosed(result);
 		if (result) {
-			setSummary(getEntry());
+			String verify = getEntry().toString();
+			int numPercentSigns = verify.length() - verify.replace("%", "").length();
+			Log.d("wtf3", verify + ": " + numPercentSigns);
+			if(numPercentSigns == 1)
+				verify = verify.replace("%", "%%");
+			setSummary(verify);
 		}
 	}
 }
