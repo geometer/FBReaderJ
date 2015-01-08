@@ -1,7 +1,22 @@
-# TODO: add pertinent build info here
+# The following steps have been found to successfully build FBReader using Android Studio.
+## Tested on a fresh installation of Windows 8.1 x64 using Android Studio v1.02 build 1653844, jdk-7u71-windows-x64, and android-ndk-r10d.
+1) Clone the project into your %userprofile%\AndroidStudioProjects\
+2) Import the project into Android Studio
+3) Perform a project level gradle sync (CTR+SHIFT+A and search for "project sync", double click the first result)
+3.1) Android Studio may complain about not finding a git.exe in your path, but this will not prevent you from building the project
+3.2) Install Android SDK Platform 14 when prompted
+3.3) Install Android SDK Platform 5 when prompted
+3.4) Install Android SDK Platform 11 when prompted
+4) FBReader has now been successfully built using Android Studio, but is missing the neccessary binaries (*.so)
+5) To compile the binaries from source, navigate to where you extracted the NDK
+5.1) Execute command: ndk-build -C %userprofile%\AndroidStudioProjects\FBReaderJ\fBReaderJ\src\main\jni
+The binaries should be automatically placed into the appropriate directories (%userprofile%\AndroidStudioProjects\FBReaderJ\fBReaderJ\src\main\lib)
+6) Finally, rebuild the project. FBReader should now run without issue on the emulator/on your device.
 
-<hr>
-<hr>
+TODO: Gradle task to generate the help epubs.
+For now...
+> cd help
+> generate.py proto html ..\fBReaderJ\src\main\assets\data\intro\
 
 ECLIPSE ANDROID PROJECT IMPORT SUMMARY
 ======================================
