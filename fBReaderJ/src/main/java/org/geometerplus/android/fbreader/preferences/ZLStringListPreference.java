@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Context;
 import android.preference.ListPreference;
-import android.util.Log;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -34,8 +33,7 @@ abstract class ZLStringListPreference extends ListPreference {
 
 	ZLStringListPreference(Context context, ZLResource resource, ZLResource valuesResource) {
 		super(context);
-		String val = resource.getValue();
-		setTitle(val);
+		setTitle(resource.getValue());
 		myValuesResource = valuesResource;
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
@@ -45,7 +43,6 @@ abstract class ZLStringListPreference extends ListPreference {
 
 	protected final void setList(String[] values) {
 		String[] texts = new String[values.length];
-		boolean relevant = false;
 		for (int i = 0; i < values.length; ++i) {
 			final ZLResource resource = myValuesResource.getResource(values[i]);
 			// It appears that setEntries() DOES NOT perform any extra formatting on the char
