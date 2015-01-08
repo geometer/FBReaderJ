@@ -48,13 +48,10 @@ abstract class ZLStringListPreference extends ListPreference {
 		boolean relevant = false;
 		for (int i = 0; i < values.length; ++i) {
 			final ZLResource resource = myValuesResource.getResource(values[i]);
-			if(resource.hasValue()) {
-				relevant = resource.getValue().contains("Falls Akkuladung");
-				if(relevant)
-					Log.d("wtf1", values[i] + ":" + resource.getValue());
-			}
+			// It appears that setEntries() DOES NOT perform any extra formatting on the char
+			// sequences, so to get just a single %, we'd have to perform the substitution manually.
+			// http://developer.android.com/reference/android/preference/ListPreference.html#setEntries(java.lang.CharSequence[])
 			texts[i] = resource.hasValue() ? resource.getValue().replace("%%","%") : values[i];
-			//texts[i] = resource.hasValue() ? resource.getValue() : values[i];
 		}
 		setLists(values, texts);
 	}
@@ -79,12 +76,15 @@ abstract class ZLStringListPreference extends ListPreference {
 			}
 		}
 		setValueIndex(index);
+		// We have previously called setEntries() on the assumption that it does not perform any
+		// extra formatting on the char sequences.
+		// However, setSummary() DOES perform extra formatting on the char sequences, so we'd need
+		// to correct this.
+		// http://developer.android.com/reference/android/preference/ListPreference.html#setSummary(java.lang.CharSequence)
 		String verify = getEntry().toString();
-		int numPercentSigns = verify.length() - verify.replace("%", "").length();
-		Log.d("wtf2", "" + numPercentSigns);
-		if(numPercentSigns == 1)
-			verify = verify.replace("%", "%%");
-		setSummary(verify);
+		verify = verify.replace("%", "%%");
+		Log.d("CheckIdenticalv: ", verify);
+		setSummary(getEntry().toString().replace("%", "%%"));
 		String checkValid = getSummary().toString();
 		Log.d("CheckIdentical: ", checkValid);
 		return found;
@@ -95,11 +95,11 @@ abstract class ZLStringListPreference extends ListPreference {
 		super.onDialogClosed(result);
 		if (result) {
 			String verify = getEntry().toString();
-			int numPercentSigns = verify.length() - verify.replace("%", "").length();
-			Log.d("wtf3", verify + ": " + numPercentSigns);
-			if(numPercentSigns == 1)
-				verify = verify.replace("%", "%%");
+			verify = verify.replace("%", "%%");
+			Log.d("CheckIdenticalv: ", verify);
 			setSummary(verify);
+			String checkValid = getSummary().toString();
+			Log.d("CheckIdentical: ", checkValid);
 		}
 	}
 }
