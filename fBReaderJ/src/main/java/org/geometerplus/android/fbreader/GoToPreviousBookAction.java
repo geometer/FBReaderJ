@@ -25,7 +25,6 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import group.pals.android.lib.ui.filechooser.utils.ui.Dlg;
 
 class GoToPreviousBookAction extends FBAndroidAction {
-
 	GoToPreviousBookAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader);
 	}
