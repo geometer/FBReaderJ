@@ -22,7 +22,6 @@ package org.geometerplus.zlibrary.ui.android.view;
 import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
