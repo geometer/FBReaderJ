@@ -25,21 +25,17 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import group.pals.android.lib.ui.filechooser.utils.ui.Dlg;
 
 class GoToPreviousBookAction extends FBAndroidAction {
-	FBReader myFBReader;
-	FBReaderApp myFBReaderApp;
 
 	GoToPreviousBookAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader);
-		myFBReader = baseActivity;
-		myFBReaderApp = fbreader;
 	}
 
 	@Override
 	protected void run(Object ... params) {
-		Book recentBook = myFBReaderApp.Collection.getRecentBook(1);
+		Book recentBook = Reader.Collection.getRecentBook(1);
 		// TODO: use resource file
-		Dlg.toast(myFBReader, recentBook == null ?
+		Dlg.toast(BaseActivity, recentBook == null ?
 				"No previous book" : "Returned to " + recentBook.getTitle(), 1);
-		myFBReaderApp.openBook(recentBook, null, null, null);
+		Reader.openBook(recentBook, null, null, null);
 	}
 }
