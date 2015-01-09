@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.ui.android.view;
 import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -30,6 +31,8 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.android.fbreader.FBReader;
+
+import group.pals.android.lib.ui.filechooser.utils.ui.Dlg;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
@@ -447,7 +450,16 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			bindings.hasBinding(keyCode, false)) {
 			if (myKeyUnderTracking != -1) {
 				if (myKeyUnderTracking == keyCode) {
-					return true;
+					final boolean longPress = System.currentTimeMillis() >
+							myTrackingStartTime + ViewConfiguration.getLongPressTimeout()/3;
+					if(longPress) {
+						application.runActionByKey(keyCode, longPress);
+						Dlg.toast(getContext(), "auto detected", 1);
+						myKeyUnderTracking = -1;
+						return true;
+					} else {
+						return false;
+					}
 				} else {
 					myKeyUnderTracking = -1;
 				}
@@ -468,9 +480,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (myKeyUnderTracking != -1) {
 			if (myKeyUnderTracking == keyCode) {
-				final boolean longPress = System.currentTimeMillis() >
-					myTrackingStartTime + ViewConfiguration.getLongPressTimeout();
-				ZLApplication.Instance().runActionByKey(keyCode, longPress);
+				ZLApplication.Instance().runActionByKey(keyCode, false);
 			}
 			myKeyUnderTracking = -1;
 			return true;
