@@ -1,4 +1,4 @@
-## The following steps should successfully build FBReader on Android Studio
+## Building FBReader using Android Studio and Gradle
 
 #####Tested on a fresh installation of Windows 8.1 x64 using Android Studio v1.02 build 1653844, jdk-7u71-windows-x64, and android-ndk-r10d.
 
