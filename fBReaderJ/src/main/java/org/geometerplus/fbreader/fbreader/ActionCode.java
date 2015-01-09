@@ -56,6 +56,9 @@ public interface ActionCode {
 	String GO_BACK = "goBack";
 	String EXIT = "exit";
 	String SHOW_CANCEL_MENU = "cancelMenu";
+	String GO_TO_LIBRARY = "goToLibary";
+	String GO_TO_NETWORK_LIBRARY = "goToNetworkLibary";
+	String GO_TO_PREVIOUS_BOOK = "goToPreviousBook";
 
 	String SET_SCREEN_ORIENTATION_SYSTEM = "screenOrientationSystem";
 	String SET_SCREEN_ORIENTATION_SENSOR = "screenOrientationSensor";

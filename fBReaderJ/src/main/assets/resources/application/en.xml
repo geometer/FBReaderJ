@@ -795,11 +795,13 @@
 			</node>
 			<node name="backKeyAction" value="Back key action">
 				<node name="exit" value="Close FBReader"/>
+				<node name="goToPreviousBook" value="Go to previously opened book"/>
 				<node name="goBack" value="Navigate back"/>
 				<node name="cancelMenu" value="Show cancel menu"/>
 			</node>
 			<node name="backKeyLongPressAction" value="Back key long press action">
 				<node name="exit" value="Close FBReader"/>
+				<node name="goToPreviousBook" value="Go to previously opened book"/>
 				<node name="goBack" value="Navigate back"/>
 				<node name="cancelMenu" value="Show cancel menu"/>
 				<node name="none" value="No action"/>

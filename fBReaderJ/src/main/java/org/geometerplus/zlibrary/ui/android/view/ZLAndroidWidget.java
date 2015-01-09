@@ -32,8 +32,6 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.android.fbreader.FBReader;
 
-import group.pals.android.lib.ui.filechooser.utils.ui.Dlg;
-
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
 	private final BitmapManager myBitmapManager = new BitmapManager(this);
@@ -454,12 +452,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 							myTrackingStartTime + ViewConfiguration.getLongPressTimeout()/3;
 					if(longPress) {
 						application.runActionByKey(keyCode, longPress);
-						Dlg.toast(getContext(), "auto detected", 1);
 						myKeyUnderTracking = -1;
-						return true;
-					} else {
-						return false;
 					}
+					return longPress;
 				} else {
 					myKeyUnderTracking = -1;
 				}
