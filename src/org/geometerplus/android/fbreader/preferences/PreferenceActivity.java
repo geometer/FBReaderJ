@@ -716,14 +716,24 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		cancelMenuScreen.addOption(cancelMenuHelper.ShowNetworkLibraryItemOption, "networkLibrary");
 		cancelMenuScreen.addOption(cancelMenuHelper.ShowPreviousBookItemOption, "previousBook");
 		cancelMenuScreen.addOption(cancelMenuHelper.ShowPositionItemsOption, "positions");
-		final String[] backKeyActions =
-			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
+		final String[] backKeyActions = {
+			ActionCode.SHOW_CANCEL_MENU,
+			ActionCode.GO_TO_LIBRARY,
+			ActionCode.GO_TO_NETWORK_LIBRARY,
+			ActionCode.GO_TO_PREVIOUS_BOOK,
+			ActionCode.EXIT,
+			FBReaderApp.NoAction };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
 			this, cancelMenuScreen.Resource.getResource("backKeyAction"),
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, false), backKeyActions
 		));
-		final String[] backKeyLongPressActions =
-			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
+		final String[] backKeyLongPressActions = {
+			ActionCode.SHOW_CANCEL_MENU,
+			ActionCode.GO_TO_LIBRARY,
+			ActionCode.GO_TO_NETWORK_LIBRARY,
+			ActionCode.GO_TO_PREVIOUS_BOOK,
+			ActionCode.EXIT,
+			FBReaderApp.NoAction };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
 			this, cancelMenuScreen.Resource.getResource("backKeyLongPressAction"),
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
