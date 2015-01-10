@@ -268,12 +268,24 @@ public class LibraryService extends Service {
 			));
 		}
 
+		@Override
 		public boolean isHyperlinkVisited(String book, String linkId) {
 			return myCollection.isHyperlinkVisited(SerializerUtil.deserializeBook(book), linkId);
 		}
 
+		@Override
 		public void markHyperlinkAsVisited(String book, String linkId) {
 			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book), linkId);
+		}
+
+		@Override
+		public String getCoverUrl(String path) {
+			return DataUtil.buildUrl(DataConnection, "cover", path);
+		}
+
+		@Override
+		public String getDescription(String book) {
+			return BookUtil.getAnnotation(SerializerUtil.deserializeBook(book));
 		}
 
 		@Override
@@ -331,10 +343,6 @@ public class LibraryService extends Service {
 
 			myCoversCache.put(book.getId(), null);
 			return null;
-		}
-
-		public String getCoverUrl(String path) {
-			return DataUtil.buildUrl(DataConnection, "cover", path);
 		}
 
 		private Bitmap getResizedBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
