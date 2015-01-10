@@ -21,8 +21,11 @@ package org.geometerplus.zlibrary.text.view.style;
 
 import java.util.*;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.xml.*;
+import org.geometerplus.zlibrary.core.util.XmlUtil;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
 public class ZLTextStyleCollection {
@@ -41,7 +44,10 @@ public class ZLTextStyleCollection {
 		for (Map.Entry<Integer,ZLTextNGStyleDescription> entry : descriptions.entrySet()) {
 			myDescriptionMap[entry.getKey() & 0xFF] = entry.getValue();
 		}
-		new TextStyleReader().readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
+		XmlUtil.parseQuietly(
+			ZLResourceFile.createResourceFile("default/styles.xml"),
+			new TextStyleReader()
+		);
 	}
 
 	public ZLTextBaseStyle getBaseStyle() {
@@ -56,13 +62,8 @@ public class ZLTextStyleCollection {
 		return myDescriptionMap[kind & 0xFF];
 	}
 
-	private class TextStyleReader extends ZLXMLReaderAdapter {
-		@Override
-		public boolean dontCacheAttributeValues() {
-			return true;
-		}
-
-		private int intValue(ZLStringMap attributes, String name, int defaultValue) {
+	private class TextStyleReader extends DefaultHandler {
+		private int intValue(Attributes attributes, String name, int defaultValue) {
 			final String value = attributes.getValue(name);
 			if (value != null) {
 				try {
@@ -74,15 +75,14 @@ public class ZLTextStyleCollection {
 		}
 
 		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			if ("base".equals(tag) && Screen.equals(attributes.getValue("screen"))) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) {
+			if ("base".equals(localName) && Screen.equals(attributes.getValue("screen"))) {
 				myBaseStyle = new ZLTextBaseStyle(
 					Screen,
 					attributes.getValue("family"),
 					intValue(attributes, "fontSize", 0)
 				);
 			}
-			return false;
 		}
 	}
 }
