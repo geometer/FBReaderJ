@@ -30,7 +30,7 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.sort.TitledEntity;
 
-public class Book extends TitledEntity {
+public class Book extends TitledEntity<Book> {
 	public static final String FAVORITE_LABEL = "favorite";
 	public static final String READ_LABEL = "read";
 	public static final String SYNCHRONISED_LABEL = "sync-success";
