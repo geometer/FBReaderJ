@@ -6,11 +6,13 @@ import android.util.Xml;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public abstract class XmlUtil {
-	public static void parseQuietly(ZLFile file, DefaultHandler handler) {
+	public static boolean parseQuietly(ZLFile file, DefaultHandler handler) {
 		try {
 			Xml.parse(file.getInputStream(), Xml.Encoding.UTF_8, handler);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 }
