@@ -22,6 +22,9 @@ package org.geometerplus.zlibrary.ui.android.view;
 import java.util.*;
 import java.io.*;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
+
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 
@@ -29,8 +32,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FileInfo;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.util.XmlUtil;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
@@ -45,20 +47,22 @@ public final class AndroidFontUtil {
 	private static Map<String,String[]> getFontAssetMap() {
 		if (ourFontAssetMap == null) {
 			ourFontAssetMap = new HashMap<String,String[]>();
-			new ZLXMLReaderAdapter() {
-				@Override
-				public boolean startElementHandler(String tag, ZLStringMap attributes) {
-					if ("font".equals(tag)) {
-						ourFontAssetMap.put(attributes.getValue("family"), new String[] {
-							"fonts/" + attributes.getValue("regular"),
-							"fonts/" + attributes.getValue("bold"),
-							"fonts/" + attributes.getValue("italic"),
-							"fonts/" + attributes.getValue("boldItalic")
-						});
+			XmlUtil.parseQuietly(
+				ZLFile.createFileByPath("fonts/fonts.xml"),
+				new DefaultHandler() {
+					@Override
+					public void startElement(String uri, String localName, String qName, Attributes attributes) {
+						if ("font".equals(localName)) {
+							ourFontAssetMap.put(attributes.getValue("family"), new String[] {
+								"fonts/" + attributes.getValue("regular"),
+								"fonts/" + attributes.getValue("bold"),
+								"fonts/" + attributes.getValue("italic"),
+								"fonts/" + attributes.getValue("boldItalic")
+							});
+						}
 					}
-					return false;
 				}
-			}.readQuietly(ZLFile.createFileByPath("fonts/fonts.xml"));
+			);
 		}
 		return ourFontAssetMap;
 	}
