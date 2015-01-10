@@ -430,6 +430,18 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
+	public String getDescription(Book book) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return myInterface.getDescription(SerializerUtil.serialize(book));
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
+	@Override
 	public synchronized List<Bookmark> bookmarks(BookmarkQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
