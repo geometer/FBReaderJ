@@ -23,6 +23,9 @@ import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -33,8 +36,7 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.util.XmlUtil;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.PackageUtil;
@@ -62,7 +64,7 @@ public class PluginListActivity extends ListActivity {
 		}
 	}
 
-	private class Reader extends ZLXMLReaderAdapter {
+	private class Reader extends DefaultHandler {
 		final PackageManager myPackageManager = getPackageManager();
 		final List<Plugin> myPlugins;
 
@@ -71,16 +73,11 @@ public class PluginListActivity extends ListActivity {
 		}
 
 		@Override
-		public boolean dontCacheAttributeValues() {
-			return true;
-		}
-
-		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			if ("plugin".equals(tag)) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) {
+			if ("plugin".equals(localName)) {
 				try {
 					if (Integer.valueOf(attributes.getValue("min-api")) > Build.VERSION.SDK_INT) {
-						return false;
+						return;
 					}
 				} catch (Throwable t) {
 					// ignore
@@ -93,7 +90,6 @@ public class PluginListActivity extends ListActivity {
 					myPlugins.add(new Plugin(id, packageName));
 				}
 			}
-			return false;
 		}
 	}
 
@@ -101,7 +97,10 @@ public class PluginListActivity extends ListActivity {
 		private final List<Plugin> myPlugins = new LinkedList<Plugin>();
 
 		PluginListAdapter() {
-			new Reader(myPlugins).readQuietly(ZLFile.createFileByPath("default/plugins.xml"));
+			XmlUtil.parseQuietly(
+				ZLFile.createFileByPath("default/plugins.xml"),
+				new Reader(myPlugins)
+			);
 		}
 
 		public final int getCount() {
