@@ -26,7 +26,7 @@ import java.util.Map;
 import android.annotation.TargetApi;
 import android.os.Build;
 
-public abstract class TitledEntity {
+public abstract class TitledEntity<T extends TitledEntity<T>> implements Comparable<T> {
 	private String myTitle;
 	private String mySortKey;
 
@@ -62,6 +62,11 @@ public abstract class TitledEntity {
 			}
 		}
 		return mySortKey;
+	}
+
+	@Override
+	public int compareTo(T other) {
+		return getSortKey().compareTo(other.getSortKey());
 	}
 
 	private final static Map<String, String[]> ARTICLES = new HashMap<String, String[]>();
