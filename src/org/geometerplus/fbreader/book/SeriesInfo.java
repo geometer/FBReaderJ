@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
-public final class SeriesInfo {
+public final class SeriesInfo implements Comparable<SeriesInfo> {
 	public static SeriesInfo createSeriesInfo(String title, String index) {
 		if (title == null) {
 			return null;
@@ -62,5 +62,12 @@ public final class SeriesInfo {
 	@Override
 	public int hashCode() {
 		return 23 * MiscUtil.hashCode(Series) + 31 * MiscUtil.hashCode(Index);
+	}
+
+	@Override
+	public int compareTo(SeriesInfo other) {
+		final BigDecimal i0 = Index != null ? Index : BigDecimal.ZERO;
+		final BigDecimal i1 = other.Index != null ? other.Index : BigDecimal.ZERO;
+		return i0.compareTo(i1);
 	}
 }
