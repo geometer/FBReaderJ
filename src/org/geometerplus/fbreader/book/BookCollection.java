@@ -667,6 +667,12 @@ public class BookCollection extends AbstractBookCollection {
 		return null;
 	}
 
+	@Override
+	public String getDescription(Book book) {
+		// not implemented in non-shadow collection
+		return null;
+	}
+
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
 		return myDatabase.loadBookmarks(query);
 	}

@@ -87,6 +87,7 @@ public interface IBookCollection {
 
 	ZLImage getCover(Book book, int maxWidth, int maxHeight);
 	String getCoverUrl(Book book);
+	String getDescription(Book book);
 
 	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);
