@@ -1349,7 +1349,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 	}
 
 	public void refreshYotaScreen() {
-		if (!myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
+		refreshYotaScreen(myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue());
+	}
+
+	public void refreshYotaScreen(boolean onBackScreen) {
+		if (!onBackScreen) {
 			boolean isServiceRunning = false;
 			final String serviceClassName = FBReaderYotaService.class.getName();
 			final ActivityManager manager =
@@ -1367,9 +1371,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 		final Intent intent = new Intent(this, FBReaderYotaService.class);
 		intent.putExtra(
-			FBReaderYotaService.KEY_BACK_SCREEN_IS_ACTIVE,
-			myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()
-		);
+			FBReaderYotaService.KEY_BACK_SCREEN_IS_ACTIVE, onBackScreen);
 		if (myFBReaderApp.Model != null) {
 			FBReaderIntents.putBookExtra(intent, myFBReaderApp.Model.Book);
 		}

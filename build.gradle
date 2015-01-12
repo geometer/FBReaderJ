@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.android.tools.build:gradle:1.0.+'
     }
 }
 
@@ -63,11 +63,12 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+
             signingConfig signingConfigs.release
             applicationVariants.all { variant ->
-                def file = variant.outputFile
-                variant.outputFile = new File(file.parent, file.name.replace("-release", ""))
+                variant.outputs.each { var ->
+                    def file = var.outputFile
+                    var.outputFile = new File(file.parent, file.name.replace("-release", "")) }
             }
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

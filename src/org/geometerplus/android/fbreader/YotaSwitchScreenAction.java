@@ -59,11 +59,9 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		final View mainView = BaseActivity.findViewById(R.id.main_view);
 		final View mainHiddenView = BaseActivity.findViewById(R.id.yota_main_hidden_view);
 
-		Reader.ViewOptions.YotaDrawOnBackScreen.setValue(toBack);
-
 		if (toBack) {
-			BaseActivity.refreshYotaScreen();
-			ZLAndroidPaintContext.AntiAliasOption.setValue(false);
+			BaseActivity.refreshYotaScreen(true);
+			ZLAndroidPaintContext.AntiAliasOption.setValue(true);
 			Reader.getTextView().clearSelection();
 			BaseActivity.hideSelectionPanel();
 			if (BaseActivity.barsAreShown()) {
@@ -77,6 +75,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 //			RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).issueStandardToastAndVibration();
 
 		} else {
+			Reader.ViewOptions.YotaDrawOnBackScreen.setValue(false);
 			((ZLAndroidLibrary) ZLibrary.Instance()).setDisplayMetrics(null);
 			ZLAndroidPaintContext.AntiAliasOption.setValue(true);
 			Reader.setFrontScreenActionMap();

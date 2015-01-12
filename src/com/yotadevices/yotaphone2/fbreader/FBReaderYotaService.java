@@ -104,6 +104,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (myFBReaderApp == null) {
             myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
         }
+	    ((ZLAndroidLibrary)ZLibrary.Instance()).setDisplayMetrics(getBsContext().getResources().getDisplayMetrics());
         myFBReaderApp.setWindow(this);
         myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.setValue(true);
         mRootView = getBSDrawer().getBSLayoutInflater().inflate(R.layout.bs_main, null);
