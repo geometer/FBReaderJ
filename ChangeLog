@@ -7,8 +7,10 @@
 * (planned) CSS selectors priority
 
 ===== 2.2.2 (Jan ??, 2015) =====
-* Added French, German and Polish intro translations
+* Added French, German, Greek, Polish, and Ukrainian intro translations
 * Updated Dutch localisation + Dutch intro (by Frank Fesevur)
+* Updated German localisation (by Matthias Dill)
+* added IBookCollection.getDescription(book) method
 
 ===== 2.2.1 (Jan 03, 2015) =====
 * Fixed English mistakes (thanks to Sahak Petrosyan)
