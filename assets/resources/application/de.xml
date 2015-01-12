@@ -7,6 +7,7 @@
 <!-- Updated by Matthias Dill 2014/06/10 -->
 <!-- Updated by Matthias Dill 2014/08/11 -->
 <!-- Updated by Matthias Dill 2014/10/07 -->
+<!-- Updated by Matthias Dill 2015/01/12 -->
 <resources>
 	<node name="library" value="FBReader Bibliothek">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
@@ -123,8 +124,8 @@
 		<node name="stopSearching" value="Suchen stoppen"/>
 		<node name="signIn" value="Anmelden"/>
 		<node name="signOut" value="Abmelden (%s)"/>
-		<node name="signUp" value="Sign up" toBeTranslated="true"/>
-		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		<node name="signUp" value="Registrieren"/>
+		<node name="quickBuy" value="Schnellkauf"/>
 		<node name="topup" value="Konto aufladen (derzeit: %s)"/>
 		<node name="topupTitle" value="Konto aufladen"/>
 		<node name="topupViaBrowser" value="Seite im Browser öffnen"/>
@@ -656,10 +657,10 @@
 			<node name="hyperlinkVisited" value="Besuchte Hyperlinks"/>
 			<node name="highlightingForeground" value="Suchergebnisse"/>
 			<node name="highlightingBackground" value="Hintergrund der Suchergebnisse"/>
-			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
-			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
-			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
-			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
+			<node name="footerOldStyle" value="Fußzeile (alte Art)"/>
+			<node name="footerBackground" value="Hintergrund der Fußzeile"/>
+			<node name="footerForeground" value="Fußzeile"/>
+			<node name="footerForegroundUnread" value="Fußzeile (ungelesen)"/>
 		</node>
 		<node name="margins" value="Ränder">
 			<node name="summary" value="Seitenränder festlegen"/>
@@ -676,13 +677,13 @@
 				<node name="show" value="Vertikal"/>
 				<node name="showAsProgress" value="Vertikal progressiv"/>
 				<node name="showAsFooter" value="Horizontal"/>
-				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
+				<node name="showAsFooterOldStyle" value="Horizontal (alte Art)"/>
 			</node>
 			<node name="footerHeight" value="Höhe der Fußleiste"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="Farbe der Fußleiste (alte Art)"/>
+			<node name="footerBackgroundColor" value="Hintergrund der Fußleiste"/>
+			<node name="footerForegroundColor" value="Farbe der Fußleiste"/>
+			<node name="footerForegroundUnreadColor" value="Farbe der Fußleiste (ungelesen)"/>
 			<node name="tocMarks" value="Kapitelmarken anzeigen">
 				<node name="summaryOn" value="Kapitelmarken in der Fußzeile anzeigen"/>
 				<node name="summaryOff" value="Keine Kapitelmarken in der Fußzeile anzeigen"/>
@@ -724,7 +725,7 @@
 				<node name="none" value="Ohne Animation umblättern"/>
 				<node name="curl" value="Blättern"/>
 				<node name="slide" value="Gleiten"/>
-				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
+				<node name="slideOldStyle" value="Gleiten (alte Art)"/>
 				<node name="shift" value="Schieben"/>
 			</node>
 			<node name="animationSpeed" value="Animationsgeschwindigkeit">
@@ -902,20 +903,20 @@
 			<node name="login" value="Benutzername"/>
 			<node name="password" value="Passwort"/>
 			<node name="confirmPassword" value="Passwortbestätigung"/>
-			<node name="email" value="Email"/>
+			<node name="email" value="E-Mail"/>
 		</node>
 		<node name="litresAutoSignIn">
-			<node name="title" value="Signing in" toBeTranslated="true"/>
-			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="title" value="Anmelden"/>
+			<node name="email" value="E-Mail"/>
 			<node name="actions">
-				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
-				<node name="recover" value="Recover account information" toBeTranslated="true"/>
-				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
-				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+				<node name="title" value="Fehler beim Anmelden mit der E-Mail&#10;%s Adresse"/>
+				<node name="recover" value="Konto Informationen wiederherstellen"/>
+				<node name="signIn" value="Manuell anmelden"/>
+				<node name="anotherEmail" value="Eine andere E-Mail Adresse auswählen"/>
 			</node>
-			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
-			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
-			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+			<node name="signedIn" value="Sie sind mit der E-Mail Address %s angemeldet."/>
+			<node name="registrationSuccessful" value="Es wurde für Sie ein LitRes Konto angelegt. Weiter Informationen wurden an %s gesendet."/>
+			<node name="passwordSent" value="Ihre Konto Informationen wurden an %s gesendet. Bitte prüfen Sie ihr Postfach"/>
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="Verbindungsversuch. Bitte warten…"/>
@@ -937,8 +938,8 @@
 			<node name="initDRMEngine" value="Initialisiere das Rechtemanagement. Bitte warten…"/>
 			<node name="acquireLicense" value="Empfange Lizenz. Bitte warten…"/>
 			<node name="registerUser" value="Neues Benutzerkonto wird registriert. Bitte warten…"/>
-			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
-			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
+			<node name="autoSignIn" value="Anmeldung. Bitte warten…"/>
+			<node name="recoverPassword" value="Passwortwiederherstellung. Bitte warten…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interner Server-Fehler"/>
@@ -947,7 +948,7 @@
 			<node name="purchaseAlreadyPurchased" value="Das Buch wurde bereits gekauft."/>
 			<node name="bookNotPurchased" value="Das Buch wurde nicht gekauft."/>
 			<node name="downloadLimitExceeded" value="Download-Limit ist überschritten."/>
-			<node name="noUserForEmail" value="Es gibt keinen registrierten Nutzer mit dieser Email-Adresse&#10;"/>
+			<node name="noUserEmail" value="Es gibt keinen registrierten Nutzer mit dieser E-Mail-Adresse&#10;"/>
 			<node name="unsupportedOperation" value="Operation wird nicht unterstützt."/>
 			<node name="notAnOPDS" value="Dies ist kein OPDS Katalog."/>
 			<node name="noRequiredInformation" value="Die benötigte Information ist in dem Katalog nicht spezifiziert."/>
@@ -956,9 +957,9 @@
 			<node name="usernameNotSpecified" value="Bitte den Benutzernamen eingeben."/>
 			<node name="passwordNotSpecified" value="Bitte ein Passwort eingeben."/>
 			<node name="passwordsDoNotMatch" value="Passwort und Passwortbestätigung müssen identisch sein."/>
-			<node name="emailNotSpecified" value="Bitte eine Email-Adresse eingeben."/>
-			<node name="emailAlreadyInUse" value="Die Email-Adresse ist bereits verwendet."/>
-			<node name="invalidEMail" value="Ungültige Email-Adresse."/>
+			<node name="emailNotSpecified" value="Bitte eine E-Mail-Adresse eingeben."/>
+			<node name="emailAlreadyInUse" value="Die E-Mail-Adresse ist bereits verwendet."/>
+			<node name="invalidEMail" value="Ungültige E-Mail-Adresse."/>
 			<node name="tooManyRegistrations" value="Zu viele Registrierungen von Ihrer IP-Adresse.;&#10;Bitte in einigen Minuten noch einmal versuchen."/>
 		</node>
 		<node name="AuthenticationDialog">
@@ -1063,7 +1064,7 @@
 		<node name="emptyNetworkSearchResults" value="Es wurden leider keine Bücher gefunden."/>
 		<node name="videoServiceNotWorking" value="Der Videoservice ist nicht verfügbar."/>
 		<node name="videoPlayerNotFound" value="Kein installierter Videoplayer gefunden."/>
-		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
+		<node name="bookIsMissingTitle" value="Buch nicht gefunden"/>
 		<node name="bookIsMissing" value="Buch '%s' konnte nicht auf dem Gerät gefunden werden."/>
 		<node name="downloadFailed" value="Download fehlgeschlagen"/>
 	</node>
@@ -1118,8 +1119,8 @@
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="Bücher im  DjVu Format lesen"/>
 		</node>
-		<node name="cbr" value="Comic Books" toBeTranslated="true">
-			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
+		<node name="cbr" value="Comic">
+			<node name="summary" value="Bücher im Comic Format (CBR, CBZ) lesen"/>
 		</node>
 	</node>
 	<node name="drm">
