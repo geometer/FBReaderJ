@@ -67,4 +67,8 @@ interface LibraryInterface {
 
 	String getCoverUrl(in String bookPath);
 	String getDescription(in String book);
+
+	List<String> recentlyAddedBooks(int count);
+	List<String> recentlyOpenedBooks(int count);
+	void removeFromRecentlyOpened(String book);
 }
