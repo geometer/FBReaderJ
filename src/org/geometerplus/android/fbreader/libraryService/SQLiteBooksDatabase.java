@@ -29,7 +29,6 @@ import android.database.Cursor;
 
 import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
@@ -76,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 29;
+		final int currentVersion = 30;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -142,6 +141,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables27();
 			case 28:
 				updateTables28();
+			case 29:
+				updateTables29();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -725,30 +726,43 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return infos;
 	}
 
-	protected void saveRecentBookIds(final List<Long> ids) {
+	@Override
+	protected void addBookHistoryEvent(long bookId, int event) {
 		final SQLiteStatement statement = get(
-			"INSERT OR IGNORE INTO RecentBooks (book_id) VALUES (?)"
+			"INSERT INTO BookHistory (book_id,timestamp,event) VALUES (?,?,?)"
 		);
-		executeAsTransaction(new Runnable() {
-			public void run() {
-				myDatabase.delete("RecentBooks", null, null);
-				for (long id : ids) {
-					statement.bindLong(1, id);
-					statement.execute();
-				}
-			}
-		});
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, System.currentTimeMillis());
+			statement.bindLong(3, event);
+			statement.executeInsert();
+		}
 	}
 
 	@Override
-	protected List<Long> loadRecentBookIds() {
+	protected void removeBookHistoryEvents(long bookId, int event) {
+		final SQLiteStatement statement = get(
+			"DELETE FROM BookHistory WHERE book_id=? and event=?"
+		);
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, event);
+			statement.executeInsert();
+		}
+	}
+
+	@Override
+	protected List<Long> loadRecentBookIds(int event, int limit) {
+		System.err.println("REQUESTED: " + event + " LIMIT " + limit);
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT book_id FROM RecentBooks ORDER BY book_index", null
+			"SELECT book_id FROM BookHistory WHERE event=? GROUP BY book_id ORDER BY timestamp DESC LIMIT ?",
+			new String[] { String.valueOf(event), String.valueOf(limit) }
 		);
 		final LinkedList<Long> ids = new LinkedList<Long>();
 		while (cursor.moveToNext()) {
 			ids.add(cursor.getLong(0));
 		}
+		System.err.println("RESULT: " + ids);
 		cursor.close();
 		return ids;
 	}
@@ -1054,6 +1068,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected void deleteBook(long bookId) {
 		myDatabase.beginTransaction();
+		myDatabase.execSQL("DELETE FROM BookHistory WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookHash WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookAuthor WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookLabel WHERE book_id=" + bookId);
@@ -1063,7 +1078,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL("DELETE FROM BookTag WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookUid WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id=" + bookId);
-		myDatabase.execSQL("DELETE FROM RecentBooks WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM VisitedHyperlinks WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM Books WHERE book_id=" + bookId);
 		myDatabase.setTransactionSuccessful();
@@ -1165,26 +1179,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"CREATE TABLE IF NOT EXISTS RecentBooks(" +
 				"book_index INTEGER PRIMARY KEY," +
 				"book_id INTEGER REFERENCES Books(book_id))");
-		final ArrayList<Long> ids = new ArrayList<Long>();
-
-		final SQLiteStatement statement = myDatabase.compileStatement(
-			"SELECT book_id FROM Books WHERE file_name = ?"
-		);
-
-		for (int i = 0; i < 20; ++i) {
-			final ZLStringOption option = new ZLStringOption("LastOpenedBooks", "Book" + i, "");
-			final String fileName = option.getValue();
-			option.setValue("");
-			try {
-				statement.bindString(1, fileName);
-				final long bookId = statement.simpleQueryForLong();
-				if (bookId != -1) {
-					ids.add(bookId);
-				}
-			} catch (SQLException e) {
-			}
-		}
-		saveRecentBookIds(ids);
 	}
 
 	private void updateTables5() {
@@ -1477,12 +1471,12 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private void updateTables26() {
-		myDatabase.execSQL("DROP TABLE IF EXISTS BookSynchronizationInfo");
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS BookHash(" +
 				"book_id INTEGER PRIMARY KEY REFERENCES Books(book_id)," +
 				"timestamp INTEGER NOT NULL," +
-				"hash TEXT(40) NOT NULL)");
+				"hash TEXT(40) NOT NULL)"
+		);
 	}
 
 	private void updateTables27() {
@@ -1491,6 +1485,55 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables28() {
 		myDatabase.execSQL("ALTER TABLE HighlightingStyle ADD COLUMN fg_color INTEGER NOT NULL DEFAULT -1");
+	}
+
+	private void updateTables29() {
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookHistory");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookHistory(" +
+				"book_id INTEGER REFERENCES Books(book_id)," +
+				"timestamp INTEGER NOT NULL," +
+				"event INTEGER NOT NULL)"
+		);
+
+		Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM RecentBooks ORDER BY book_index", null
+		);
+		SQLiteStatement insert = myDatabase.compileStatement(
+			"INSERT INTO BookHistory(book_id,timestamp,event) VALUES (?,?,?)"
+		);
+		insert.bindLong(3, HistoryEvent.Opened);
+		int count = -1;
+		while (cursor.moveToNext()) {
+			insert.bindLong(1, cursor.getLong(0));
+			insert.bindLong(2, count);
+			insert.executeInsert();
+			--count;
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM Books ORDER BY book_id DESC", null
+		);
+		insert = myDatabase.compileStatement(
+			"INSERT INTO BookHistory(book_id,timestamp,event) VALUES (?,?,?)"
+		);
+		insert.bindLong(3, HistoryEvent.Added);
+		while (cursor.moveToNext()) {
+			insert.bindLong(1, cursor.getLong(0));
+			insert.bindLong(2, count);
+			insert.executeInsert();
+			--count;
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id,timestamp,event FROM BookHistory", null
+		);
+		while (cursor.moveToNext()) {
+			System.err.println("HISTORY RECORD: " + cursor.getLong(0) + " : " + cursor.getLong(1) + " : " + cursor.getLong(2));
+		}
+		cursor.close();
 	}
 
 	private SQLiteStatement get(String sql) {
