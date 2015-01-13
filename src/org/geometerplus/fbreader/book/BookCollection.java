@@ -408,7 +408,7 @@ public class BookCollection extends AbstractBookCollection {
 		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
 	}
 
-	public void addBookToRecentList(Book book) {
+	public void addToRecentlyOpened(Book book) {
 		final List<Long> ids = myDatabase.loadRecentBookIds();
 		final Long bookId = book.getId();
 		ids.remove(bookId);
