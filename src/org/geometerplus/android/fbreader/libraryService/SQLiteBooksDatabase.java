@@ -753,7 +753,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	@Override
 	protected List<Long> loadRecentBookIds(int event, int limit) {
-		System.err.println("REQUESTED: " + event + " LIMIT " + limit);
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM BookHistory WHERE event=? GROUP BY book_id ORDER BY timestamp DESC LIMIT ?",
 			new String[] { String.valueOf(event), String.valueOf(limit) }
@@ -762,7 +761,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		while (cursor.moveToNext()) {
 			ids.add(cursor.getLong(0));
 		}
-		System.err.println("RESULT: " + ids);
 		cursor.close();
 		return ids;
 	}
