@@ -41,7 +41,7 @@ interface LibraryInterface {
 
 	boolean saveBook(in String book);
 	void removeBook(in String book, in boolean deleteFromDisk);
-	void addBookToRecentList(in String book);
+	void addToRecentlyOpened(in String book);
 
 	String getHash(in String book, in boolean force);
 
