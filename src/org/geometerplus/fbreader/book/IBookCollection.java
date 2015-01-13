@@ -56,9 +56,13 @@ public interface IBookCollection {
 	boolean hasBooks(Filter filter);
 	List<String> titles(BookQuery query);
 
+	// kept for compatibility, shortcut fo recentlyOpenedBooks(12)
 	List<Book> recentBooks();
+	List<Book> recentlyOpenedBooks(int count);
+	List<Book> recentlyAddedBooks(int count);
 	Book getRecentBook(int index);
 	void addBookToRecentList(Book book);
+	void removeFromRecentlyOpened(Book book);
 
 	Book getBookByFile(String path);
 	Book getBookByFile(ZLFile file);
