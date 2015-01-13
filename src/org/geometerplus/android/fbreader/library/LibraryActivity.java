@@ -172,6 +172,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		int UploadAgain           = 2;
 		int TryAgain              = 3;
 		int DeleteAll             = 4;
+		int ExternalView          = 5;
 	}
 
 	@Override
@@ -280,6 +281,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	// Options menu
 	//
 
+	private Boolean myIsExternalViewSupported = null;
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -288,6 +291,15 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		addMenuItem(menu, OptionsItemId.UploadAgain, "uploadAgain", -1);
 		addMenuItem(menu, OptionsItemId.TryAgain, "tryAgain", -1);
 		addMenuItem(menu, OptionsItemId.DeleteAll, "deleteAll", -1);
+
+		if (myIsExternalViewSupported == null) {
+			final Intent externalIntent = new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY);
+			myIsExternalViewSupported = PackageUtil.canBeStarted(this, externalIntent, true);
+		}
+		if (myIsExternalViewSupported) {
+			addMenuItem(menu, OptionsItemId.ExternalView, "materialView", -1);
+		}
+
 		return true;
 	}
 
@@ -361,6 +373,17 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 					}
 				}
 				tryToDeleteBooks(books);
+			}
+			case OptionsItemId.ExternalView:
+			{
+				final Intent externalIntent = new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY);
+				try {
+					startActivity(externalIntent);
+					finish();
+				} catch (ActivityNotFoundException e) {
+					// ignore
+				}
+				return true;
 			}
 			default:
 				return true;
