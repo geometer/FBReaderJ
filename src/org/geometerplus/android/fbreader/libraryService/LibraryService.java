@@ -184,6 +184,14 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookList(myCollection.recentBooks());
 		}
 
+		public List<String> recentlyOpenedBooks(int count) {
+			return SerializerUtil.serializeBookList(myCollection.recentlyOpenedBooks(count));
+		}
+
+		public List<String> recentlyAddedBooks(int count) {
+			return SerializerUtil.serializeBookList(myCollection.recentlyAddedBooks(count));
+		}
+
 		public String getRecentBook(int index) {
 			return SerializerUtil.serialize(myCollection.getRecentBook(index));
 		}
@@ -248,6 +256,10 @@ public class LibraryService extends Service {
 
 		public void addBookToRecentList(String book) {
 			myCollection.addBookToRecentList(SerializerUtil.deserializeBook(book));
+		}
+
+		public void removeFromRecentlyOpened(String book) {
+			myCollection.removeFromRecentlyOpened(SerializerUtil.deserializeBook(book));
 		}
 
 		public List<String> labels() {
