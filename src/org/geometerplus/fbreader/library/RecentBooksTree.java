@@ -34,7 +34,7 @@ public class RecentBooksTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : Collection.recentBooks()) {
+		for (Book book : Collection.recentlyOpenedBooks(12)) {
 			new BookWithAuthorsTree(this, book);
 		}
 	}
