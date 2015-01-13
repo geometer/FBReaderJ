@@ -254,8 +254,8 @@ public class LibraryService extends Service {
 			myCollection.removeBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
 		}
 
-		public void addBookToRecentList(String book) {
-			myCollection.addBookToRecentList(SerializerUtil.deserializeBook(book));
+		public void addToRecentlyOpened(String book) {
+			myCollection.addToRecentlyOpened(SerializerUtil.deserializeBook(book));
 		}
 
 		public void removeFromRecentlyOpened(String book) {
