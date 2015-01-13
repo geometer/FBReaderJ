@@ -287,18 +287,18 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		addMenuItem(menu, OptionsItemId.Search, "localSearch", R.drawable.ic_menu_search);
-		addMenuItem(menu, OptionsItemId.Rescan, "rescan", R.drawable.ic_menu_refresh);
-		addMenuItem(menu, OptionsItemId.UploadAgain, "uploadAgain", -1);
-		addMenuItem(menu, OptionsItemId.TryAgain, "tryAgain", -1);
-		addMenuItem(menu, OptionsItemId.DeleteAll, "deleteAll", -1);
+		addMenuItem(menu, OptionsItemId.Search, "localSearch", R.drawable.ic_menu_search, true);
+		addMenuItem(menu, OptionsItemId.Rescan, "rescan", R.drawable.ic_menu_refresh, true);
+		addMenuItem(menu, OptionsItemId.UploadAgain, "uploadAgain", -1, true);
+		addMenuItem(menu, OptionsItemId.TryAgain, "tryAgain", -1, true);
+		addMenuItem(menu, OptionsItemId.DeleteAll, "deleteAll", -1, true);
 
 		if (myIsExternalViewSupported == null) {
 			final Intent externalIntent = new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY);
 			myIsExternalViewSupported = PackageUtil.canBeStarted(this, externalIntent, true);
 		}
 		if (myIsExternalViewSupported) {
-			addMenuItem(menu, OptionsItemId.ExternalView, "materialView", -1);
+			addMenuItem(menu, OptionsItemId.ExternalView, "materialView", -1, false);
 		}
 
 		return true;
@@ -336,14 +336,14 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		return true;
 	}
 
-	private MenuItem addMenuItem(Menu menu, int id, String resourceKey, int iconId) {
+	private MenuItem addMenuItem(Menu menu, int id, String resourceKey, int iconId, boolean showAsAction) {
 		final String label = LibraryTree.resource().getResource(resourceKey).getValue();
 		final MenuItem item = menu.add(0, id, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
 		if (iconId != -1) {
 			//item.setIcon(iconId);
 		}
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		item.setShowAsAction(showAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER);
 		return item;
 	}
 
