@@ -100,9 +100,4 @@ public interface IBookCollection {
 	void saveHighlightingStyle(HighlightingStyle style);
 
 	void rescan(String path);
-
-	// deprecated methods, kept for compatibility
-
-	// shortcut to recentlyOpenedBooks(12)
-	List<Book> recentBooks();
 }
