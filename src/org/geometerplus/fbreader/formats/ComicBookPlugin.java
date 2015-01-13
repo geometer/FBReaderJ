@@ -21,14 +21,14 @@ package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.fbreader.book.Book;
 
-public class CBZPlugin extends ExternalFormatPlugin {
-	public CBZPlugin() {
+public class ComicBookPlugin extends ExternalFormatPlugin {
+	public ComicBookPlugin() {
 		super("CBZ");
 	}
 
 	@Override
 	public String packageName() {
-		return "org.geometerplus.fbreader.plugin.cbz";
+		return "org.geometerplus.fbreader.plugin.comicbook";
 	}
 
 	@Override
