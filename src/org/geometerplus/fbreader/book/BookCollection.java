@@ -301,7 +301,13 @@ public class BookCollection extends AbstractBookCollection {
 		return titles;
 	}
 
-	public List<Book> recentBooks() {
+	public List<Book> recentlyAddedBooks(int count) {
+		// TODO: implement
+		return books(myDatabase.loadRecentBookIds());
+	}
+
+	public List<Book> recentlyOpenedBooks(int count) {
+		// TODO: implement
 		return books(myDatabase.loadRecentBookIds());
 	}
 
@@ -412,6 +418,10 @@ public class BookCollection extends AbstractBookCollection {
 		}
 		myDatabase.saveRecentBookIds(ids);
 		fireBookEvent(BookEvent.Opened, book);
+	}
+
+	public void removeFromRecentlyOpened(Book book) {
+		// TODO: implement
 	}
 
 	private void setStatus(Status status) {
