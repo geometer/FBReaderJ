@@ -153,12 +153,23 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Book> recentBooks() {
+	public synchronized List<Book> recentlyAddedBooks(int count) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
 		try {
-			return SerializerUtil.deserializeBookList(myInterface.recentBooks());
+			return SerializerUtil.deserializeBookList(myInterface.recentlyAddedBooks(count));
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
+	public synchronized List<Book> recentlyOpenedBooks(int count) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookList(myInterface.recentlyOpenedBooks(count));
 		} catch (RemoteException e) {
 			return Collections.emptyList();
 		}
@@ -319,6 +330,15 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		if (myInterface != null) {
 			try {
 				myInterface.addBookToRecentList(SerializerUtil.serialize(book));
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
+	public synchronized void removeFromRecentlyOpened(Book book) {
+		if (myInterface != null) {
+			try {
+				myInterface.removeFromRecentlyOpened(SerializerUtil.serialize(book));
 			} catch (RemoteException e) {
 			}
 		}
