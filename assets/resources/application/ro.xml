@@ -69,6 +69,7 @@
 		<node name="deleteAll" value="Sterge pe toate"/>
 		<node name="uploadAgain" value="Incarca iarasi"/>
 		<node name="tryAgain" value="Incearca iarasi"/>
+		<node name="materialView" value="Material view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Reteaua de biblioteci Online">
 		<node name="sync" value="Reteaua de carti FBReader®">
