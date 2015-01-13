@@ -333,7 +333,7 @@ public final class FBReaderApp extends ZLApplication {
 			} else {
 				gotoBookmark(bookmark, false);
 			}
-			Collection.addBookToRecentList(book);
+			Collection.addToRecentlyOpened(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
 			if (!book.authors().isEmpty()) {
 				boolean first = true;
