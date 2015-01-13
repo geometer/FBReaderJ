@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 30;
+		final int currentVersion = 31;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -143,6 +143,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables28();
 			case 29:
 				updateTables29();
+			case 30:
+				updateTables30();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -1532,6 +1534,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			System.err.println("HISTORY RECORD: " + cursor.getLong(0) + " : " + cursor.getLong(1) + " : " + cursor.getLong(2));
 		}
 		cursor.close();
+	}
+
+	private void updateTables30() {
+		myDatabase.execSQL("DROP TABLE IF EXISTS RecentBooks");
 	}
 
 	private SQLiteStatement get(String sql) {
