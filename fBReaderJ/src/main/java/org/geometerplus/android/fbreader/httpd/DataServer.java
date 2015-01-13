@@ -26,8 +26,7 @@ import java.util.Map;
 import fi.iki.elonen.NanoHTTPD;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLFileImageProxy;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
 
@@ -55,7 +54,11 @@ public class DataServer extends NanoHTTPD {
 			if (image instanceof ZLFileImageProxy) {
 				final ZLFileImageProxy proxy = (ZLFileImageProxy)image;
 				proxy.synchronize();
-				final InputStream stream = proxy.getRealImage().inputStream();
+				final ZLStreamImage realImage = proxy.getRealImage();
+				if (realImage == null) {
+					return notFound(uri);
+				}
+				final InputStream stream = realImage.inputStream();
 				if (stream == null) {
 					return notFound(uri);
 				}
