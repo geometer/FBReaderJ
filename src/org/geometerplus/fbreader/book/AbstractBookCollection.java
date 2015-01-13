@@ -59,4 +59,9 @@ public abstract class AbstractBookCollection implements IBookCollection {
 	public final Book getBookByFile(String path) {
 		return getBookByFile(ZLFile.createFileByPath(path));
 	}
+
+	// deprecated methods
+	public final List<Book> recentBooks() {
+		return recentlyOpenedBooks(12);
+	}
 }
