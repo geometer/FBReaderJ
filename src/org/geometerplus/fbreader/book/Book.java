@@ -506,6 +506,7 @@ public class Book extends TitledEntity<Book> {
 			return false;
 		}
 
+		final boolean[] result = new boolean[] { true };
 		database.executeAsTransaction(new Runnable() {
 			public void run() {
 				if (myId >= 0) {
@@ -513,11 +514,16 @@ public class Book extends TitledEntity<Book> {
 					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, getTitle());
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, getTitle());
-					if (myId != -1 && myVisitedHyperlinks != null) {
+					if (myId == -1) {
+						result[0] = false;
+						return;
+					}
+					if (myVisitedHyperlinks != null) {
 						for (String linkId : myVisitedHyperlinks) {
 							database.addVisitedHyperlink(myId, linkId);
 						}
 					}
+					database.addBookHistoryEvent(myId, BooksDatabase.HistoryEvent.Added);
 				}
 
 				long index = 0;
@@ -551,8 +557,12 @@ public class Book extends TitledEntity<Book> {
 			}
 		});
 
-		myIsSaved = true;
-		return true;
+		if (result[0]) {
+			myIsSaved = true;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private Set<String> myVisitedHyperlinks;
