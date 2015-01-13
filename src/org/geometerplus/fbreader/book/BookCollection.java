@@ -233,10 +233,6 @@ public class BookCollection extends AbstractBookCollection {
 			myDuplicateResolver.removeFile(book.File);
 			myBooksById.remove(book.getId());
 
-			final List<Long> ids = myDatabase.loadRecentBookIds();
-			if (ids.remove(book.getId())) {
-				myDatabase.saveRecentBookIds(ids);
-			}
 			if (deleteFromDisk) {
 				book.File.getPhysicalFile().delete();
 			}
@@ -302,13 +298,11 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<Book> recentlyAddedBooks(int count) {
-		// TODO: implement
-		return books(myDatabase.loadRecentBookIds());
+		return books(myDatabase.loadRecentBookIds(BooksDatabase.HistoryEvent.Added, count));
 	}
 
 	public List<Book> recentlyOpenedBooks(int count) {
-		// TODO: implement
-		return books(myDatabase.loadRecentBookIds());
+		return books(myDatabase.loadRecentBookIds(BooksDatabase.HistoryEvent.Opened, count));
 	}
 
 	private List<Book> books(List<Long> ids) {
@@ -404,24 +398,17 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public Book getRecentBook(int index) {
-		final List<Long> recentIds = myDatabase.loadRecentBookIds();
+		final List<Long> recentIds = myDatabase.loadRecentBookIds(BooksDatabase.HistoryEvent.Opened, index + 1);
 		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
 	}
 
 	public void addToRecentlyOpened(Book book) {
-		final List<Long> ids = myDatabase.loadRecentBookIds();
-		final Long bookId = book.getId();
-		ids.remove(bookId);
-		ids.add(0, bookId);
-		if (ids.size() > 12) {
-			ids.remove(12);
-		}
-		myDatabase.saveRecentBookIds(ids);
+		myDatabase.addBookHistoryEvent(book.getId(), BooksDatabase.HistoryEvent.Opened);
 		fireBookEvent(BookEvent.Opened, book);
 	}
 
 	public void removeFromRecentlyOpened(Book book) {
-		// TODO: implement
+		myDatabase.removeBookHistoryEvents(book.getId(), BooksDatabase.HistoryEvent.Opened);
 	}
 
 	private void setStatus(Status status) {

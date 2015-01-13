@@ -29,6 +29,11 @@ import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 public abstract class BooksDatabase {
+	protected interface HistoryEvent {
+		int Added = 0;
+		int Opened = 1;
+	}
+
 	public static final class NotAvailable extends Exception {
 	}
 
@@ -89,8 +94,9 @@ public abstract class BooksDatabase {
 	protected abstract void removeFileInfo(long fileId);
 	protected abstract void saveFileInfo(FileInfo fileInfo);
 
-	protected abstract List<Long> loadRecentBookIds();
-	protected abstract void saveRecentBookIds(final List<Long> ids);
+	protected abstract void addBookHistoryEvent(long bookId, int event);
+	protected abstract void removeBookHistoryEvents(long bookId, int event);
+	protected abstract List<Long> loadRecentBookIds(int event, int limit);
 
 	protected abstract void setLabel(long bookId, String label);
 	protected abstract void removeLabel(long bookId, String label);
