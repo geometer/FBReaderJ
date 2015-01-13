@@ -326,10 +326,10 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized void addBookToRecentList(Book book) {
+	public synchronized void addToRecentlyOpened(Book book) {
 		if (myInterface != null) {
 			try {
-				myInterface.addBookToRecentList(SerializerUtil.serialize(book));
+				myInterface.addToRecentlyOpened(SerializerUtil.serialize(book));
 			} catch (RemoteException e) {
 			}
 		}
