@@ -181,7 +181,7 @@ public class LibraryService extends Service {
 		}
 
 		public List<String> recentBooks() {
-			return SerializerUtil.serializeBookList(myCollection.recentBooks());
+			return recentlyOpenedBooks(12);
 		}
 
 		public List<String> recentlyOpenedBooks(int count) {
