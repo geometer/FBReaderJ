@@ -108,7 +108,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 					parent = getTreeByKey(myHistory.remove(myHistory.size() - 1));
 				}
 			}
-			if (parent == null) {
+			if (parent == null && myCurrentTree != null) {
 				parent = myCurrentTree.Parent;
 			}
 			if (parent != null && !isTreeInvisible(parent)) {
