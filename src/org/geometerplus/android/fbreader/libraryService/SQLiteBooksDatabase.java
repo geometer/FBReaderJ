@@ -1500,14 +1500,18 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id FROM RecentBooks ORDER BY book_index", null
 		);
 		SQLiteStatement insert = myDatabase.compileStatement(
-			"INSERT INTO BookHistory(book_id,timestamp,event) VALUES (?,?,?)"
+			"INSERT OR IGNORE INTO BookHistory(book_id,timestamp,event) VALUES (?,?,?)"
 		);
 		insert.bindLong(3, HistoryEvent.Opened);
 		int count = -1;
 		while (cursor.moveToNext()) {
 			insert.bindLong(1, cursor.getLong(0));
 			insert.bindLong(2, count);
-			insert.executeInsert();
+			try {
+				insert.executeInsert();
+			} catch (Throwable t) {
+				// ignore
+			}
 			--count;
 		}
 		cursor.close();
@@ -1516,13 +1520,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id FROM Books ORDER BY book_id DESC", null
 		);
 		insert = myDatabase.compileStatement(
-			"INSERT INTO BookHistory(book_id,timestamp,event) VALUES (?,?,?)"
+			"INSERT OR IGNORE INTO BookHistory(book_id,timestamp,event) VALUES (?,?,?)"
 		);
 		insert.bindLong(3, HistoryEvent.Added);
 		while (cursor.moveToNext()) {
 			insert.bindLong(1, cursor.getLong(0));
 			insert.bindLong(2, count);
-			insert.executeInsert();
+			try {
+				insert.executeInsert();
+			} catch (Throwable t) {
+				// ignore
+			}
 			--count;
 		}
 		cursor.close();
