@@ -6,6 +6,10 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.2.2.1 (Jan 14, 2015) =====
+* Fixed SQL exception in DB update (updateTables29)
+* Fixed language code de, fr & pl help
+
 ===== 2.2.2 (Jan 13, 2015) =====
 * Added French, German, Greek, Polish, and Ukrainian intro translations
 * Updated Dutch localisation + Dutch intro (by Frank Fesevur)
