@@ -38,7 +38,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.fbreader.BookElement;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -46,7 +45,7 @@ import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-
+import org.geometerplus.android.fbreader.util.VersionDependentViewUtil;
 import org.geometerplus.android.util.UIUtil;
 
 class DisplayBookPopupAction extends FBAndroidAction {
@@ -98,7 +97,8 @@ class DisplayBookPopupAction extends FBAndroidAction {
 				? R.layout.book_popup_night : R.layout.book_popup,
 			null
 		);
-		FBReader.ensureFullscreen(bookView);
+		VersionDependentViewUtil.ensureFullscreen(bookView, FBReader.getZLibrary().EnableFullscreenModeOption,
+				FBReader.getZLibrary().DisableButtonLightsOption);
 		final int inch = (int)TypedValue.applyDimension(
 			TypedValue.COMPLEX_UNIT_IN, 1, BaseActivity.getResources().getDisplayMetrics()
 		);

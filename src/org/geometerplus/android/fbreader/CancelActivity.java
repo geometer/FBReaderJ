@@ -28,14 +28,11 @@ import android.widget.*;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.options.Config;
-
 import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
-
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-
+import org.geometerplus.android.fbreader.util.VersionDependentViewUtil;
 import org.geometerplus.android.util.ViewUtil;
 
 public class CancelActivity extends ListActivity {
@@ -45,7 +42,8 @@ public class CancelActivity extends ListActivity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		FBReader.ensureFullscreen(getListView());
+		VersionDependentViewUtil.ensureFullscreen(getListView(), FBReader.getZLibrary().EnableFullscreenModeOption,
+				FBReader.getZLibrary().DisableButtonLightsOption);
 	}
 
 	@Override
