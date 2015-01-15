@@ -409,6 +409,7 @@ public class BookCollection extends AbstractBookCollection {
 
 	public void removeFromRecentlyOpened(Book book) {
 		myDatabase.removeBookHistoryEvents(book.getId(), BooksDatabase.HistoryEvent.Opened);
+		fireBookEvent(BookEvent.Updated, book);
 	}
 
 	private void setStatus(Status status) {
