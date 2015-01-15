@@ -79,10 +79,6 @@ public abstract class ZLApplication {
 		return myTitle;
 	}
 
-	public String getTitle() {
-		return myTitle;
-	}
-
 	protected void showErrorMessage(String resourceKey) {
 		if (myWindow != null) {
 			myWindow.showErrorMessage(resourceKey);
