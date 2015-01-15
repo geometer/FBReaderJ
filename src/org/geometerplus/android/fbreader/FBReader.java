@@ -832,8 +832,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		});
 
-		myRootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-
 		if (myNavigationPopup == null) {
 			myFBReaderApp.hideActivePopup();
 			myNavigationPopup = new NavigationPopup(myFBReaderApp);
