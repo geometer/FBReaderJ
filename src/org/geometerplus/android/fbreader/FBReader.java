@@ -24,50 +24,46 @@ import java.io.StringWriter;
 import java.util.*;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.SearchManager;
+import android.app.*;
 import android.content.*;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.*;
 import android.view.*;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
-
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.tips.TipsManager;
-
 import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
-
+import org.geometerplus.android.fbreader.util.VersionDependentViewUtil;
+import org.geometerplus.android.fbreader.util.VersionDependentViewUtil.WidgetPreserver;
 import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
-	static final int ACTION_BAR_COLOR = Color.DKGRAY;
 
 	public static final int REQUEST_PREFERENCES = 1;
 	public static final int REQUEST_CANCEL_MENU = 2;
@@ -94,7 +90,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	private RelativeLayout myRootView;
 	private ZLAndroidWidget myMainView;
 
-	private volatile boolean myShowStatusBarFlag;
 	private String myMenuLanguage;
 
 	final DataService.Connection DataConnection = new DataService.Connection();
@@ -107,6 +102,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	private Intent myOpenBookIntent = null;
 
 	private final FBReaderApp.Notifier myNotifier = new AppNotifier(this);
+	
+	private VersionDependentViewUtil.ActionProvider myActionProvider;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -225,20 +222,37 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		});
 
 		final ZLAndroidLibrary zlibrary = getZLibrary();
-		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
-
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.main);
-		myRootView = (RelativeLayout)findViewById(R.id.root_view);
-		myMainView = (ZLAndroidWidget)findViewById(R.id.main_view);
-		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-
-		zlibrary.setActivity(this);
 
 		myFBReaderApp = (FBReaderApp)FBReaderApp.Instance();
 		if (myFBReaderApp == null) {
 			myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
 		}
+		myActionProvider = new VersionDependentViewUtil.ActionProvider() {
+			@Override
+			public void runAction(String id) {
+				myFBReaderApp.runAction(id);
+			}
+			@Override
+			public boolean isActionVisible(String id) {
+				return myFBReaderApp.isActionVisible(id);
+			}
+			@Override
+			public boolean isActionEnabled(String id) {
+				return myFBReaderApp.isActionEnabled(id);
+			}
+			@Override
+			public ZLBoolean3 isActionChecked(String id) {
+				return myFBReaderApp.isActionChecked(id);
+			}
+		};
+		VersionDependentViewUtil.doAtOnCreate(this, null, myActionProvider,
+				getZLibrary().ShowActionBarOption, getZLibrary().ShowStatusBarOption, myFBReaderApp.getTitle());
+		setContentView(R.layout.main);
+		myRootView = (RelativeLayout)findViewById(R.id.root_view);
+		myMainView = (ZLAndroidWidget)findViewById(R.id.main_view);
+		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+		zlibrary.setActivity(this);
+
 		getCollection().bindToService(this, null);
 		myBook = null;
 
@@ -246,11 +260,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.initWindow();
 
 		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
-
-		getWindow().setFlags(
-			WindowManager.LayoutParams.FLAG_FULLSCREEN,
-			myShowStatusBarFlag ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
-		);
 
 		if (myFBReaderApp.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(myFBReaderApp);
@@ -321,7 +330,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		setStatusBarVisibility(true);
+		VersionDependentViewUtil.setStatusBarVisibility(this, true, new VersionDependentViewUtil.WidgetPreserver() {
+			@Override
+			public void setPreserveSize(boolean visible) {
+			}
+		});
 		setupMenu(menu);
 
 		return super.onPrepareOptionsMenu(menu);
@@ -330,12 +343,20 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	public void onOptionsMenuClosed(Menu menu) {
 		super.onOptionsMenuClosed(menu);
-		setStatusBarVisibility(false);
+		VersionDependentViewUtil.setStatusBarVisibility(this, false, new VersionDependentViewUtil.WidgetPreserver() {
+			@Override
+			public void setPreserveSize(boolean visible) {
+			}
+		});
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		setStatusBarVisibility(false);
+		VersionDependentViewUtil.setStatusBarVisibility(this, false, new VersionDependentViewUtil.WidgetPreserver() {
+			@Override
+			public void setPreserveSize(boolean visible) {
+			}
+		});
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -429,12 +450,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				final boolean showStatusBar = zlibrary.ShowStatusBarOption.getValue();
-				if (showStatusBar != myShowStatusBarFlag) {
-					finish();
-					startActivity(new Intent(FBReader.this, FBReader.class));
-				}
-				zlibrary.ShowStatusBarOption.saveSpecialValue();
+				VersionDependentViewUtil.doAtOnStartRunnable(FBReader.this, new Intent(FBReader.this, FBReader.class),
+						getZLibrary().ShowActionBarOption, getZLibrary().ShowStatusBarOption);
 				myFBReaderApp.ViewOptions.ColorProfileName.saveSpecialValue();
 				SetScreenOrientationAction.setOrientation(FBReader.this, zlibrary.getOrientationOption().getValue());
 			}
@@ -730,12 +747,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (name == null) {
 			name = ZLResource.resource("menu").getResource(actionId).getValue();
 		}
-		final MenuItem menuItem = menu.add(name);
-		if (iconId != null) {
-			menuItem.setIcon(iconId);
-		}
-		menuItem.setOnMenuItemClickListener(myMenuListener);
-		myMenuItemMap.put(menuItem, actionId);
+		VersionDependentViewUtil.addMenuItemInternal(menu, actionId, iconId, name, false);
 	}
 
 	private void addMenuItem(Menu menu, String actionId, String name) {
@@ -813,17 +825,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		});
 	}
 
-	private void setStatusBarVisibility(boolean visible) {
-		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (DeviceType.Instance() != DeviceType.KINDLE_FIRE_1ST_GENERATION && !myShowStatusBarFlag) {
-			if (visible) {
-				getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-			} else {
-				getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-			}
-		}
-	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		return (myMainView != null && myMainView.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);
@@ -885,7 +886,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		}
 	}
-
 	private BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			final int level = intent.getIntExtra("level", 100);
@@ -960,38 +960,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		return myMainView;
 	}
 
-	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
-
-	private final MenuItem.OnMenuItemClickListener myMenuListener =
-		new MenuItem.OnMenuItemClickListener() {
-			public boolean onMenuItemClick(MenuItem item) {
-				myFBReaderApp.runAction(myMenuItemMap.get(item));
-				return true;
-			}
-		};
-
 	@Override
 	public void refresh() {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
-					final String actionId = entry.getValue();
-					final MenuItem menuItem = entry.getKey();
-					menuItem.setVisible(myFBReaderApp.isActionVisible(actionId) && myFBReaderApp.isActionEnabled(actionId));
-					switch (myFBReaderApp.isActionChecked(actionId)) {
-						case B3_TRUE:
-							menuItem.setCheckable(true);
-							menuItem.setChecked(true);
-							break;
-						case B3_FALSE:
-							menuItem.setCheckable(true);
-							menuItem.setChecked(false);
-							break;
-						case B3_UNDEFINED:
-							menuItem.setCheckable(false);
-							break;
-					}
-				}
+				VersionDependentViewUtil.refreshMenu(myActionProvider);
 			}
 		});
 	}
@@ -1029,7 +1002,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	public void setWindowTitle(final String title) {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				setTitle(title);
+				VersionDependentViewUtil.setTitle(FBReader.this, title);
 			}
 		});
 	}
@@ -1039,4 +1012,5 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myFBReaderApp.useSyncInfo(myResumeTimestamp + 10 * 1000 > System.currentTimeMillis(), myNotifier);
 		}
 	};
+
 }
