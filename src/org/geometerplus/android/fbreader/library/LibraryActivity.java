@@ -298,7 +298,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			myIsExternalViewSupported = PackageUtil.canBeStarted(this, externalIntent, true);
 		}
 		if (myIsExternalViewSupported) {
-			addMenuItem(menu, OptionsItemId.ExternalView, "materialView", -1, false);
+			addMenuItem(menu, OptionsItemId.ExternalView, "bookshelfView", -1, false);
 		}
 
 		return true;
