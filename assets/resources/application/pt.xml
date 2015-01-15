@@ -68,7 +68,7 @@
 		<node name="deleteAll" value="Eliminar tudo"/>
 		<node name="uploadAgain" value="Enviar outra vez"/>
 		<node name="tryAgain" value="Tentar de novo"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
+		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Rede de bibliotecas FBReader">
 		<node name="sync" value="Rede de livros FBReader®">
