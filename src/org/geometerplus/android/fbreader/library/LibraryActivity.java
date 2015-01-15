@@ -204,7 +204,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		} else {
 			menu.add(0, ContextItemId.MarkAsRead, 0, resource.getResource("markAsRead").getValue());
 		}
-		if (BookUtil.canRemoveBookFile(book)) {
+		if (myCollection.canRemoveBook(book, true)) {
 			menu.add(0, ContextItemId.DeleteBook, 0, resource.getResource("deleteBook").getValue());
 		}
 		if (labels.contains(Book.SYNC_DELETED_LABEL)) {
