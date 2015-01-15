@@ -74,6 +74,10 @@ public abstract class ZLApplication {
 			myWindow.setWindowTitle(title);
 		}
 	}
+	
+	public String getTitle() {
+		return myTitle;
+	}
 
 	public String getTitle() {
 		return myTitle;
