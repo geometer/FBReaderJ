@@ -6,6 +6,7 @@ import java.util.Map;
 import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -103,12 +104,12 @@ public abstract class VersionDependentViewUtil {
 		}
 	}
 
-	public static void addMenuItemInternal(Menu menu, String actionId, Integer iconId, String name, boolean showInActionBar) {
+	public static void addMenuItemInternal(Menu menu, String actionId, Integer iconId, String name) {
 		final MenuItem menuItem = menu.add(name);
 		if (iconId != null) {
 			menuItem.setIcon(iconId);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-				setupMenuInActionBar(menuItem, showInActionBar);
+				setupMenuInActionBar(menuItem, myActionBarIsVisible);
 			}
 		}
 		menuItem.setOnMenuItemClickListener(myMenuListener);
@@ -140,6 +141,23 @@ public abstract class VersionDependentViewUtil {
 			}
 		}
 	}
+	
+	public static void ensureFullscreen(View view, ZLBooleanOption fullscreenModeOption, ZLBooleanOption buttonLightsOption) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+				&& fullscreenModeOption.getValue()) {
+			view.setSystemUiVisibility(
+				View.SYSTEM_UI_FLAG_LOW_PROFILE |
+				View.SYSTEM_UI_FLAG_IMMERSIVE |
+				View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+				View.SYSTEM_UI_FLAG_FULLSCREEN |
+				View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+			);
+		} else if (buttonLightsOption.getValue()) {
+			view.setSystemUiVisibility(
+				View.SYSTEM_UI_FLAG_LOW_PROFILE
+			);
+		}
+	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static void hideBarsInternal(Activity a, View rootView, ZLBooleanOption fullscreenModeOption, ZLBooleanOption buttonLightsOption, WidgetPreserver p) {
@@ -149,20 +167,7 @@ public abstract class VersionDependentViewUtil {
 			a.invalidateOptionsMenu();
 		}
 
-		if (Build.VERSION.SDK_INT >= 19/*Build.VERSION_CODES.KITKAT*/
-				&& fullscreenModeOption.getValue()) {
-			rootView.setSystemUiVisibility(
-					View.SYSTEM_UI_FLAG_LOW_PROFILE |
-					2048 /*View.SYSTEM_UI_FLAG_IMMERSIVE*/ |
-					4096 /*View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY*/ |
-					4 /*View.SYSTEM_UI_FLAG_FULLSCREEN*/ |
-					View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-					);
-		} else if (buttonLightsOption.getValue()) {
-			rootView.setSystemUiVisibility(
-					View.SYSTEM_UI_FLAG_LOW_PROFILE
-					);
-		}
+		ensureFullscreen(rootView, fullscreenModeOption, buttonLightsOption);
 
 		setStatusBarVisibility(a, false, p);
 	}
