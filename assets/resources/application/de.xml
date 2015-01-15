@@ -75,7 +75,7 @@
 		<node name="deleteAll" value="Alle löschen"/>
 		<node name="uploadAgain" value="Wieder hochladen"/>
 		<node name="tryAgain" value="Wieder versuchen"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
+		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader Netzwerk-Bibliothek">
 		<node name="sync" value="FBReader® Bücher Netzwerk">

@@ -67,7 +67,7 @@
 		<node name="deleteAll" value="Delete all"/>
 		<node name="uploadAgain" value="Upload again"/>
 		<node name="tryAgain" value="Try again"/>
-		<node name="materialView" value="Material view"/>
+		<node name="bookshelfView" value="Bookshelf view"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library">
 		<node name="sync" value="FBReader® book network">

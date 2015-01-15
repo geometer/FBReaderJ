@@ -73,7 +73,7 @@
 		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
 		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
 		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
+		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Biblioteca en xarxa de l'FBReader">
 		<node name="sync" value="FBReader® book network" toBeTranslated="true">
