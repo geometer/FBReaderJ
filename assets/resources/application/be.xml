@@ -67,7 +67,7 @@
 		<node name="deleteAll" value="Выдаліць усе"/>
 		<node name="uploadAgain" value="Заладаваць зноў"/>
 		<node name="tryAgain" value="Паспрабаваць зноў"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
+		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Сеткавая бібліятэка FBReader">
 		<node name="sync" value="Кніжная сетка FBReader®">
