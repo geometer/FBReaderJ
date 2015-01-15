@@ -22,8 +22,7 @@ package org.geometerplus.fbreader.book;
 import java.io.File;
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
@@ -239,6 +238,25 @@ public class BookCollection extends AbstractBookCollection {
 			myDatabase.deleteBook(book.getId());
 		}
 		fireBookEvent(BookEvent.Removed, book);
+	}
+
+	public boolean canRemoveBook(Book book, boolean deleteFromDisk) {
+		if (deleteFromDisk) {
+			ZLFile file = book.File;
+			if (file.getPhysicalFile() == null) {
+				return false;
+			}
+			while (file instanceof ZLArchiveEntryFile) {
+				file = file.getParent();
+				if (file.children().size() != 1) {
+					return false;
+				}
+			}
+			return true;
+		} else {
+			// TODO: implement
+			return false;
+		}
 	}
 
 	public Status status() {
