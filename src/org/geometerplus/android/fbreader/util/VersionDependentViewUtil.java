@@ -142,15 +142,16 @@ public abstract class VersionDependentViewUtil {
 		}
 	}
 	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static void ensureFullscreen(View view, ZLBooleanOption fullscreenModeOption, ZLBooleanOption buttonLightsOption) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+		if (Build.VERSION.SDK_INT >= 19 //Build.VERSION_CODES.KITKAT
 				&& fullscreenModeOption.getValue()) {
 			view.setSystemUiVisibility(
 				View.SYSTEM_UI_FLAG_LOW_PROFILE |
-				View.SYSTEM_UI_FLAG_IMMERSIVE |
-				View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
-				View.SYSTEM_UI_FLAG_FULLSCREEN |
-				View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+				2048 /*View.SYSTEM_UI_FLAG_IMMERSIVE*/ |
+				4096 /*View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY*/ |
+				4 /*View.SYSTEM_UI_FLAG_FULLSCREEN*/ |
+				2 /*View.SYSTEM_UI_FLAG_HIDE_NAVIGATION*/
 			);
 		} else if (buttonLightsOption.getValue()) {
 			view.setSystemUiVisibility(
