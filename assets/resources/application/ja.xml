@@ -67,7 +67,7 @@
 		<node name="deleteAll" value="すべて削除"/>
 		<node name="uploadAgain" value="再アップロード"/>
 		<node name="tryAgain" value="もう一度"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
+		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader ネットワークライブラリ">
 		<node name="sync" value="FBReader® ブックネットワーク">
