@@ -317,6 +317,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized boolean canRemoveBook(Book book, boolean deleteFromDisk) {
+		if (myInterface == null) {
+			return false;
+		}
+		try {
+			return myInterface.canRemoveBook(SerializerUtil.serialize(book), deleteFromDisk);
+		} catch (RemoteException e) {
+			return false;
+		}
+	}
+
 	public synchronized void removeBook(Book book, boolean deleteFromDisk) {
 		if (myInterface != null) {
 			try {
