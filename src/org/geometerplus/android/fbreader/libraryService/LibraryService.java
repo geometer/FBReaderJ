@@ -250,6 +250,10 @@ public class LibraryService extends Service {
 			return myCollection.saveBook(SerializerUtil.deserializeBook(book));
 		}
 
+		public boolean canRemoveBook(String book, boolean deleteFromDisk) {
+			return myCollection.canRemoveBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
+		}
+
 		public void removeBook(String book, boolean deleteFromDisk) {
 			myCollection.removeBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
 		}
