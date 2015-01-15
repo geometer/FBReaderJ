@@ -6,16 +6,17 @@ import java.util.Map;
 import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.util.Log;
 import android.view.*;
 import android.widget.TextView;
 
@@ -108,6 +109,18 @@ public abstract class VersionDependentViewUtil {
 		final MenuItem menuItem = menu.add(name);
 		if (iconId != null) {
 			menuItem.setIcon(iconId);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+				setupMenuInActionBar(menuItem, myActionBarIsVisible);
+			}
+		}
+		menuItem.setOnMenuItemClickListener(myMenuListener);
+		myMenuItemMap.put(menuItem, actionId);
+	}
+	
+	public static void addMenuItemInternal(Menu menu, String actionId, Bitmap bmp, String name, Context c) {
+		final MenuItem menuItem = menu.add(name);
+		if (bmp != null) {
+			menuItem.setIcon(new BitmapDrawable(c.getResources(), bmp));
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 				setupMenuInActionBar(menuItem, myActionBarIsVisible);
 			}
