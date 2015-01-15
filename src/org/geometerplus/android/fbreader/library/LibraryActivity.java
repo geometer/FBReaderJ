@@ -24,6 +24,7 @@ import java.util.*;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -281,8 +282,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	// Options menu
 	//
 
-	private Boolean myIsExternalViewSupported = null;
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -291,15 +290,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		addMenuItem(menu, OptionsItemId.UploadAgain, "uploadAgain", -1);
 		addMenuItem(menu, OptionsItemId.TryAgain, "tryAgain", -1);
 		addMenuItem(menu, OptionsItemId.DeleteAll, "deleteAll", -1);
-
-		if (myIsExternalViewSupported == null) {
-			final Intent externalIntent = new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY);
-			myIsExternalViewSupported = PackageUtil.canBeStarted(this, externalIntent, true);
-		}
-		if (myIsExternalViewSupported) {
+		if (Build.VERSION.SDK_INT >= 9) {
 			addMenuItem(menu, OptionsItemId.ExternalView, "bookshelfView", -1);
 		}
-
 		return true;
 	}
 
@@ -376,12 +369,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			}
 			case OptionsItemId.ExternalView:
 			{
-				final Intent externalIntent = new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY);
 				try {
-					startActivity(externalIntent);
+					startActivity(new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY));
 					finish();
 				} catch (ActivityNotFoundException e) {
-					// ignore
+					PackageUtil.installFromMarket(this, "org.fbreader.plugin.library");
 				}
 				return true;
 			}
