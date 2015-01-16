@@ -33,9 +33,11 @@ updateVersion() {
 	micro=`echo $fixed | cut -d . -f 3`
 	local=`echo $fixed | cut -d . -f 4`
 	if [ "$branch" == "nook" -o "$branch" == "lr-nook" ]; then
-		version=$version-nst
+		readable_version=$version-nst
 	elif [ "$branch" == "kindle" -o "$branch" == "lr-kindle" ]; then
-		version=$version-kindlehd
+		readable_version=$version-kindlehd
+	else
+		readable_version=$version
 	fi
 	
 	if [ "$micro" == "" ]; then
@@ -49,7 +51,7 @@ updateVersion() {
     local=0
   fi
 	intversion=$((1000000*$major+10000*$minor+100*$micro+10*$variant+$local))
-	sed "s/@INTVERSION@/$intversion/" AndroidManifest.xml.pattern | sed "s/@VERSION@/$version/" > AndroidManifest.xml
+	sed "s/@INTVERSION@/$intversion/" AndroidManifest.xml.pattern | sed "s/@VERSION@/$readable_version/" > AndroidManifest.xml
 }
 
 buildSourceArchive() {
