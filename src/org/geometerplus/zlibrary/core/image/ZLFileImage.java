@@ -88,6 +88,22 @@ public class ZLFileImage implements ZLStreamImage {
 		return result;
 	}
 
+	private InputStream baseInputStream() throws IOException {
+		if (myOffsets.length == 1) {
+			final int offset = myOffsets[0];
+			final int length = myLengths[0];
+			return new SliceInputStream(myFile.getInputStream(), offset, length != 0 ? length : Integer.MAX_VALUE);
+		} else {
+			final InputStream[] streams = new InputStream[myOffsets.length];
+			for (int i = 0; i < myOffsets.length; ++i) {
+				final int offset = myOffsets[i];
+				final int length = myLengths[i];
+				streams[i] = new SliceInputStream(myFile.getInputStream(), offset, length != 0 ? length : Integer.MAX_VALUE);
+			}
+			return new MergedInputStream(streams);
+		}
+	}
+
 	@Override
 	public InputStream inputStream() {
 		try {
@@ -95,26 +111,15 @@ public class ZLFileImage implements ZLStreamImage {
 				return null;
 			}
 
-			final InputStream stream;
-			if (myOffsets.length == 1) {
-				final int offset = myOffsets[0];
-				final int length = myLengths[0];
-				stream = new SliceInputStream(myFile.getInputStream(), offset, length != 0 ? length : Integer.MAX_VALUE);
-			} else {
-				final InputStream[] streams = new InputStream[myOffsets.length];
-				for (int i = 0; i < myOffsets.length; ++i) {
-					final int offset = myOffsets[i];
-					final int length = myLengths[i];
-					streams[i] = new SliceInputStream(myFile.getInputStream(), offset, length != 0 ? length : Integer.MAX_VALUE);
-				}
-				stream = new MergedInputStream(streams);
-			}
+			InputStream stream = baseInputStream();
 			if (ENCODING_NONE.equals(myEncoding)) {
 				return stream;
 			} else if (ENCODING_HEX.equals(myEncoding)) {
 				return new HexInputStream(stream);
 			} else if (ENCODING_BASE64.equals(myEncoding)) {
-				return new Base64InputStream(stream);
+				stream = new Base64InputStream(stream);
+				final int len = (int)stream.skip(stream.available());
+				return new SliceInputStream(new Base64InputStream(baseInputStream()), 0, len);
 			} else {
 				System.err.println("unsupported encoding: " + myEncoding);
 				return null;
