@@ -67,7 +67,7 @@
 		<node name="deleteAll" value="Odstranit vše"/>
 		<node name="uploadAgain" value="Znovu nahrát"/>
 		<node name="tryAgain" value="Zkusit znovu"/>
-		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true"/>
+		<node name="bookshelfView" value="Zobrazení Poličky knih"/>
 	</node>
 	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
 		<node name="sync" value="Síťová knihovna FBReaderu®">
