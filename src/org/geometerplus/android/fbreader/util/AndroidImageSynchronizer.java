@@ -54,6 +54,15 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 			}
 		}
 
+		synchronized boolean runImmediately(Runnable action) {
+			if (Reader != null) {
+				action.run();
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 		public synchronized void onServiceConnected(ComponentName className, IBinder binder) {
 			Reader = CoverReader.Stub.asInterface(binder);
 			for (Runnable action : myPostActions) {
@@ -86,6 +95,21 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	public void startImageLoading(ZLImageProxy image, Runnable postAction) {
 		final ZLAndroidImageManager manager = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 		manager.startImageLoading(this, image, postAction);
+	}
+
+	public boolean synchronizeImmediately(final PluginImage image) {
+		final Connection connection = getConnection(image.Plugin);
+		return connection.runImmediately(new Runnable() {
+			public void run() {
+				try {
+					image.setRealImage(new ZLBitmapImage(connection.Reader.readBitmap(
+						image.File.getPath(), Integer.MAX_VALUE, Integer.MAX_VALUE
+					)));
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+		});
 	}
 
 	@Override

@@ -26,7 +26,11 @@ import android.content.*;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
+
 public class DataService extends Service {
+	final AndroidImageSynchronizer ImageSynchronizer = new AndroidImageSynchronizer(this);
+
 	public static class Connection implements ServiceConnection {
 		private DataInterface myDataInterface;
 
@@ -56,7 +60,7 @@ public class DataService extends Service {
 			public void run () {
 				for (int port = 12000; port < 12500; ++port) {
 					try {
-						myServer = new DataServer(port);
+						myServer = new DataServer(DataService.this, port);
 						myServer.start();
 						myPort = port;
 						break;
@@ -80,6 +84,7 @@ public class DataService extends Service {
 				}
 			}).start();
 		}
+		ImageSynchronizer.clear();
 		super.onDestroy();
 	}
 
