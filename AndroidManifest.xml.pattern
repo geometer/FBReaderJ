@@ -159,7 +159,7 @@
 				<action android:name="android.fbreader.action.LIBRARY_SERVICE"/>
 			</intent-filter>
 		</service>
-		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService" android:permission="fbreader.permission.CONFIG">
+		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CONFIG_SERVICE"/>
 			</intent-filter>
