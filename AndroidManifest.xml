@@ -2,8 +2,8 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
-		android:versionCode="2020311"
-		android:versionName="2.2.3"
+		android:versionCode="2020410"
+		android:versionName="2.2.4"
 		android:installLocation="auto"
 >
 	<uses-sdk
@@ -156,7 +156,7 @@
 				<action android:name="android.fbreader.action.LIBRARY_SERVICE"/>
 			</intent-filter>
 		</service>
-		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService" android:permission="fbreader.permission.CONFIG">
+		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CONFIG_SERVICE"/>
 			</intent-filter>
