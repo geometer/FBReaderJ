@@ -19,22 +19,28 @@
 
 package org.geometerplus.android.fbreader.httpd;
 
-import java.io.InputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
+
+import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
+import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
 import org.geometerplus.fbreader.book.BookUtil;
+import org.geometerplus.fbreader.formats.PluginImage;
 
 public class DataServer extends NanoHTTPD {
-	DataServer(int port) {
+	private final DataService myService;
+
+	DataServer(DataService service, int port) {
 		super(port);
+		myService = service;
 	}
 
 	@Override
@@ -63,11 +69,22 @@ public class DataServer extends NanoHTTPD {
 					return notFound(uri);
 				}
 				return new Response(Response.Status.OK, MimeType.IMAGE_PNG.toString(), stream);
-			} else /* TODO: process PluginImage & null */ {
+			} else if (image instanceof PluginImage) {
+				final PluginImage pluginImage = (PluginImage)image;
+				if (myService.ImageSynchronizer.synchronizeImmediately(pluginImage)) {
+					final Bitmap bitmap = ((ZLBitmapImage)pluginImage.getRealImage()).getBitmap();
+					final ByteArrayOutputStream os = new ByteArrayOutputStream();
+					bitmap.compress(Bitmap.CompressFormat.JPEG, 85, os);
+					final InputStream is = new ByteArrayInputStream(os.toByteArray());
+					return new Response(Response.Status.OK, MimeType.IMAGE_JPEG.toString(), is);
+				} else {
+					return noContent(uri);
+				}
+			} else {
 				return notFound(uri);
 			}
-		} catch (Exception e) {
-			return forbidden(uri, e);
+		} catch (Throwable t) {
+			return forbidden(uri, t);
 		}
 	}
 
@@ -152,6 +169,14 @@ public class DataServer extends NanoHTTPD {
 			Response.Status.NOT_FOUND,
 			MimeType.TEXT_HTML.toString(),
 			"<html><body><h1>Not found: " + uri + "</h1></body></html>"
+		);
+	}
+
+	private Response noContent(String uri) {
+		return new Response(
+			Response.Status.NO_CONTENT,
+			MimeType.TEXT_HTML.toString(),
+			"<html><body><h1>No content: " + uri + "</h1></body></html>"
 		);
 	}
 
