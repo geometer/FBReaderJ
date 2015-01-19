@@ -76,6 +76,7 @@ public interface IBookCollection {
 	List<String> firstTitleLetters();
 
 	boolean saveBook(Book book);
+	boolean canRemoveBook(Book book, boolean deleteFromDisk);
 	void removeBook(Book book, boolean deleteFromDisk);
 
 	String getHash(Book book, boolean force);

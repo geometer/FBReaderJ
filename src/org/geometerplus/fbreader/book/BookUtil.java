@@ -107,20 +107,6 @@ public abstract class BookUtil {
 		return ZLResourceFile.createResourceFile("data/intro/intro-en.epub");
 	}
 
-	public static boolean canRemoveBookFile(Book book) {
-		ZLFile file = book.File;
-		if (file.getPhysicalFile() == null) {
-			return false;
-		}
-		while (file instanceof ZLArchiveEntryFile) {
-			file = file.getParent();
-			if (file.children().size() != 1) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	public static UID createUid(ZLFile file, String algorithm) {
 		InputStream stream = null;
 

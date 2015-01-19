@@ -2,8 +2,8 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
-		android:versionCode="2020211"
-		android:versionName="2.2.2.1"
+		android:versionCode="2020510"
+		android:versionName="2.2.5"
 		android:installLocation="auto"
 >
 	<uses-sdk
@@ -151,12 +151,12 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.image.ImageViewActivity" android:process=":imageView" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize"/>
-		<service android:name="org.geometerplus.android.fbreader.libraryService.LibraryService" android:launchMode="singleTask" android:process=":libraryService" android:permission="fbreader.permission.LIBRARY">
+		<service android:name="org.geometerplus.android.fbreader.libraryService.LibraryService" android:launchMode="singleTask" android:process=":libraryService">
 			<intent-filter>
 				<action android:name="android.fbreader.action.LIBRARY_SERVICE"/>
 			</intent-filter>
 		</service>
-		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService" android:permission="fbreader.permission.CONFIG">
+		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CONFIG_SERVICE"/>
 			</intent-filter>

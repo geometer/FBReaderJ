@@ -63,21 +63,25 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	};
 
-	public synchronized void bindToService(Context context, Runnable onBindAction) {
+	public synchronized boolean bindToService(Context context, Runnable onBindAction) {
 		if (myInterface != null && myContext == context) {
 			if (onBindAction != null) {
 				Config.Instance().runOnConnect(onBindAction);
 			}
+			return true;
 		} else {
 			if (onBindAction != null) {
 				myOnBindActions.add(onBindAction);
 			}
-			context.bindService(
+			final boolean result = context.bindService(
 				FBReaderIntents.internalIntent(FBReaderIntents.Action.LIBRARY_SERVICE),
 				this,
 				LibraryService.BIND_AUTO_CREATE
 			);
-			myContext = context;
+			if (result) {
+				myContext = context;
+			}
+			return result;
 		}
 	}
 
@@ -312,6 +316,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 		try {
 			return myInterface.saveBook(SerializerUtil.serialize(book));
+		} catch (RemoteException e) {
+			return false;
+		}
+	}
+
+	public synchronized boolean canRemoveBook(Book book, boolean deleteFromDisk) {
+		if (myInterface == null) {
+			return false;
+		}
+		try {
+			return myInterface.canRemoveBook(SerializerUtil.serialize(book), deleteFromDisk);
 		} catch (RemoteException e) {
 			return false;
 		}

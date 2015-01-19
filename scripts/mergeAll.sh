@@ -41,7 +41,7 @@ git merge lr
 git merge yota2
 
 git checkout lr-kindle
-git merge lr
+git merge lr-ics
 git merge kindle
 
 git checkout lr-nook
