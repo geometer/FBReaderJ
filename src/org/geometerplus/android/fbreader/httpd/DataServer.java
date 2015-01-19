@@ -79,6 +79,7 @@ public class DataServer extends NanoHTTPD {
 				if (options.outWidth <= 0 || options.outHeight <= 0) {
 					return notFound(uri);
 				}
+				stream.close();
 				stream = realImage.inputStream();
 				if (stream == null) {
 					return notFound(uri);
