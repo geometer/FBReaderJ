@@ -1,13 +1,22 @@
 package com.yotadevices.sdk;
 
+/**
+ * Copyright 2012 Yota Devices LLC, Russia
+ * 
+ * This source code is Yota Devices Confidential Proprietary
+ * This software is protected by copyright.  All rights and titles are reserved.
+ * You shall not use, copy, distribute, modify, decompile, disassemble or
+ * reverse engineer the software. Otherwise this violation would be treated by
+ * law and would be subject to legal prosecution.  Legal use of the software
+ * provides receipt of a license from the right holder only.
+ * 
+ * */
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * @hide
- */
 public abstract class Drawer {
 
     /**
@@ -27,9 +36,7 @@ public abstract class Drawer {
      * those pixels are updated, that were actually changed.<br>
      */
     public enum Waveform {
-        /**
-         * @hide
-         */
+
         WAVEFORM_DEFAULT, WAVEFORM_A2, WAVEFORM_DU, WAVEFORM_GC_PARTIAL, WAVEFORM_GC_FULL, WAVEFORM_GL, WAVEFORM_GLR, WAVEFORM_GLD, WAVEFORM_A2_REGION, WAVEFORM_DU_REGION, WAVEFORM_GC_PARTIAL_REGION, WAVEFORM_GC_FULL_REGION, WAVEFORM_GL_REGION, WAVEFORM_GLR_REGION, WAVEFORM_GLD_REGION;
 
         // define for driver
@@ -92,9 +99,7 @@ public abstract class Drawer {
     }
 
     public enum Dithering {
-        /**
-         * @hide
-         */
+
         DITHER_DEFAULT, DITHER_NONE, DITHER_ATKINSON, DITHER_ATKINSON_BINARY, DITHER_FLOYD_STEINBERG, DITHER_FLOYD_STEINBERG_BINARY, BLACK_AND_WHITE_ONLY;
     }
 

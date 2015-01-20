@@ -1,5 +1,17 @@
 package com.yotadevices.sdk.utils;
 
+/**
+ * Copyright 2012 Yota Devices LLC, Russia
+ * 
+ * This source code is Yota Devices Confidential Proprietary
+ * This software is protected by copyright.  All rights and titles are reserved.
+ * You shall not use, copy, distribute, modify, decompile, disassemble or
+ * reverse engineer the software. Otherwise this violation would be treated by 
+ * law and would be subject to legal prosecution.  Legal use of the software 
+ * provides receipt of a license from the right holder only.
+ * 
+ * */
+
 import com.yotadevices.sdk.Drawer.Waveform;
 import com.yotadevices.sdk.helper.IFrameworkService;
 import com.yotadevices.sdk.helper.ServiceBSHelper;
@@ -17,6 +29,7 @@ public class FrameworkUtils {
     private final static int COMMAND_IS_LOCK_SCREEN_DISABLED = 1;
     private final static int COMMAND_PERFORM_SINGLE_UPDATE = 2;
     private final static int COMMAND_GET_TOP_BSACTIVITY = 3;
+	private final static int COMMAND_IS_MIRRORING_ON = 4;
 
     private static void executeCommand(Context ctx, final Message msg) {
         final ServiceBSHelper h = new ServiceBSHelper(ctx);
@@ -45,6 +58,12 @@ public class FrameworkUtils {
                             bsActivityCallback.onTopBSActivityReturned(service.getTopBSActivity());
                         }
                         break;
+	                case COMMAND_IS_MIRRORING_ON:
+		                IMirroringCallback callback = (IMirroringCallback)msg.obj;
+		                if (callback != null) {
+			                callback.onMirroringStatusChanged(service.isMirroringOn());
+		                }
+		                break;
                     default:
                         break;
                     }
@@ -71,4 +90,7 @@ public class FrameworkUtils {
         executeCommand(ctx, Message.obtain(null, COMMAND_GET_TOP_BSACTIVITY, callback));
     }
 
+	public static void isMirroringEnabled(Context ctx, IMirroringCallback callback) {
+		executeCommand(ctx, Message.obtain(null, COMMAND_IS_MIRRORING_ON, callback));
+	}
 }

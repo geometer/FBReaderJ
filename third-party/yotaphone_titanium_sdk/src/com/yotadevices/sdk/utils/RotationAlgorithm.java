@@ -1,5 +1,17 @@
 package com.yotadevices.sdk.utils;
 
+/**
+ * Copyright 2012 Yota Devices LLC, Russia
+ * 
+ * This source code is Yota Devices Confidential Proprietary
+ * This software is protected by copyright.  All rights and titles are reserved.
+ * You shall not use, copy, distribute, modify, decompile, disassemble or
+ * reverse engineer the software. Otherwise this violation would be treated by 
+ * law and would be subject to legal prosecution.  Legal use of the software 
+ * provides receipt of a license from the right holder only.
+ * 
+ * */
+
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.res.Resources;
@@ -309,12 +321,12 @@ public class RotationAlgorithm implements SensorEventListener {
 
     {
         RESOURCE.put("en", "Application is updated on Back Screen");
-        RESOURCE.put("ar", "تم تحديث التطبيق على الشاشة الخلفية");
-        RESOURCE.put("de", "Die Anwendung wird auf dem rückseitigen Bildschirm aktualisiert");
-        RESOURCE.put("es", "La aplicación está actualizada en la pantalla trasera");
-        RESOURCE.put("fr", "L\'application est mise à jour sur l\'écran arrière");
+        RESOURCE.put("ar", "ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„ØªØ·Ø¨ÙŠÙ‚ Ø¹Ù„Ù‰ Ø§Ù„Ø´Ø§Ø´Ø© Ø§Ù„Ø®Ù„Ù�ÙŠØ©");
+        RESOURCE.put("de", "Die Anwendung wird auf dem rÃ¼ckseitigen Bildschirm aktualisiert");
+        RESOURCE.put("es", "La aplicaciÃ³n estÃ¡ actualizada en la pantalla trasera");
+        RESOURCE.put("fr", "L\'application est mise Ã  jour sur l\'Ã©cran arriÃ¨re");
         RESOURCE.put("it", "Applicazione aggiornata sullo schermo posteriore");
-        RESOURCE.put("ru", "Приложение обновлено\nна втором экране");
+        RESOURCE.put("ru", "ÐŸÑ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¾\nÐ½Ð° Ð²Ñ‚Ð¾Ñ€Ð¾Ð¼ Ñ�ÐºÑ€Ð°Ð½Ðµ");
     }
 
     @Override

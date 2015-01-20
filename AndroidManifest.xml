@@ -2,8 +2,8 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="com.yotadevices.yotaphone2.yotareader"
-		android:versionCode="24996"
-		android:versionName="1.0.24996"
+		android:versionCode="16504"
+		android:versionName="1.0.16504"
 		android:installLocation="auto"
 >
 	<uses-sdk

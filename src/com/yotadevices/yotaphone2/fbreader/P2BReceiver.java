@@ -4,12 +4,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 
+import com.yotadevices.sdk.helper.HelperConstant;
+import com.yotadevices.sdk.helper.IFrameworkService;
+import com.yotadevices.sdk.utils.FrameworkUtils;
+import com.yotadevices.sdk.utils.IMirroringCallback;
 import com.yotadevices.sdk.utils.RotationAlgorithm;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class P2BReceiver extends BroadcastReceiver {
     public P2BReceiver() {
@@ -40,10 +50,23 @@ public class P2BReceiver extends BroadcastReceiver {
             }
         }
         if ("yotaphone.intent.action.IS_BS_SUPPORTED".equalsIgnoreCase(intent.getAction())) {
-            Log.d("YD_FBReader", "P2BReceiver p2b action is supported");
-            Bundle b = new Bundle();
-            b.putInt("support_bs", 1);
-            setResultExtras(b);
+			IBinder binder = peekService(context, new Intent(HelperConstant.FRAMEWORK_SERVICE_ACTION));
+	        boolean isMirroringOn = false;
+	        if (binder != null) {
+		        try {
+			        isMirroringOn = IFrameworkService.Stub.asInterface(binder).isMirroringOn();
+		        }
+		        catch (RemoteException e) {
+			        Log.e("YD_FBReader", "Can not connect to service", e);
+		        }
+	        }
+	        else {
+		        Log.d("YD_FBReader", "P2BReceiver p2b action binder is null");
+	        }
+	        Log.d("YD_FBReader", "P2BReceiver p2b action is supported " + isMirroringOn);
+	        Bundle b = new Bundle();
+	        b.putInt("support_bs", !isMirroringOn ? 1 : 0); //p2b works only if mirroring not enabled
+	        setResultExtras(b);
         }
     }
 }
