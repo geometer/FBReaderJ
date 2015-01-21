@@ -370,9 +370,6 @@ public class SyncService extends Service implements IBookCollection.Listener {
 
 	private Status uploadBookToServerInternal(Book book) {
 		final File file = book.File.getPhysicalFile().javaFile();
-		if (file.length() > 30 * 1024 * 1024) {
-			return Status.Failure;
-		}
 		final String hash = myCollection.getHash(book, false);
 		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {
@@ -383,6 +380,9 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			return Status.ToBeDeleted;
 		} else if (!force && book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
 			return Status.FailedPreviuousTime;
+		}
+		if (file.length() > 50 * 1024 * 1024) {
+			return Status.Failure;
 		}
 
 		initHashTables();
