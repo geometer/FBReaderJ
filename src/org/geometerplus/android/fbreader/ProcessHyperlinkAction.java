@@ -74,7 +74,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 				try {
 					final Intent intent = new Intent();
 					intent.setClass(BaseActivity, ImageViewActivity.class);
-					intent.setData(Uri.parse(url));
+					intent.putExtra(ImageViewActivity.URL_KEY, url);
 					intent.putExtra(
 						ImageViewActivity.BACKGROUND_COLOR_KEY,
 						Reader.ImageOptions.ImageViewBackground.getValue().intValue()
