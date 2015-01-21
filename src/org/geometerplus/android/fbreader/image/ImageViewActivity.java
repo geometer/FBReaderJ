@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.image;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.*;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.view.*;
@@ -37,7 +36,8 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 import org.geometerplus.android.fbreader.OrientationUtil;
 
 public class ImageViewActivity extends Activity {
-	public static final String BACKGROUND_COLOR_KEY = "bgColor";
+	public static final String URL_KEY = "fbreader.imageview.url";
+	public static final String BACKGROUND_COLOR_KEY = "fbreader.imageview.background";
 
 	private Bitmap myBitmap;
 	private ZLColor myBgColor;
@@ -66,9 +66,10 @@ public class ImageViewActivity extends Activity {
 			intent.getIntExtra(BACKGROUND_COLOR_KEY, new ZLColor(127, 127, 127).intValue())
 		);
 
-		final Uri uri = intent.getData();
-		if (ZLFileImage.SCHEME.equals(uri.getScheme())) {
-			final ZLFileImage image = ZLFileImage.byUrlPath(uri.getPath());
+		final String url = intent.getStringExtra(URL_KEY);
+		final String prefix = ZLFileImage.SCHEME + "://";
+		if (url != null && url.startsWith(prefix)) {
+			final ZLFileImage image = ZLFileImage.byUrlPath(url.substring(prefix.length()));
 			if (image == null) {
 				// TODO: error message (?)
 				finish();
