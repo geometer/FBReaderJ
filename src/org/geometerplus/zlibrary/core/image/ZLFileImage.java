@@ -119,6 +119,7 @@ public class ZLFileImage implements ZLStreamImage {
 			} else if (ENCODING_BASE64.equals(myEncoding)) {
 				stream = new Base64InputStream(stream);
 				final int len = (int)stream.skip(stream.available());
+				stream.close();
 				return new SliceInputStream(new Base64InputStream(baseInputStream()), 0, len);
 			} else {
 				System.err.println("unsupported encoding: " + myEncoding);
