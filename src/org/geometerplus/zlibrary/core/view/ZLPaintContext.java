@@ -177,6 +177,11 @@ abstract public class ZLPaintContext {
 			final Size s = (Size)other;
 			return Width == s.Width && Height == s.Height;
 		}
+
+		@Override
+		public String toString() {
+			return "ZLPaintContext.Size[" + Width + "x" + Height + "]";
+		}
 	}
 	public static enum ScalingType {
 		OriginalSize,
