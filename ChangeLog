@@ -6,6 +6,10 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.2.7 (Jan ??, 2015) =====
+* Fixed behaviour for images with # in name
+* No sync permission required for sync service call
+
 ===== 2.2.6 (Jan 20, 2015) =====
 * No crach in cover service
 * Cover service sends image sizes in headed
