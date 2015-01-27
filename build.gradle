@@ -24,7 +24,7 @@ def getVerName(String versionName, int versionCode) {
 apply plugin: 'android'
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 'YotaDevices:YotaPhone2 Add-On:19'
     buildToolsVersion "19.1.0"
     project.archivesBaseName = "YD_YotaReader";
     sourceSets {
@@ -90,7 +90,6 @@ android {
 dependencies {
 	compile 'com.google.android.gms:play-services:4+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-	compile project(':third-party:yotaphone_titanium_sdk')
     compile project(':third-party:AmbilWarna')
     compile project(':third-party:android-filechooser:code')
     compile project(':third-party:drag-sort-listview:library')

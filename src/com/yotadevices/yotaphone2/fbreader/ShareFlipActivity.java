@@ -17,7 +17,7 @@ public class ShareFlipActivity extends FlipBSActivity {
 	@Override
 	protected void onBSCreate() {
 		super.onBSCreate();
-		setDescription(R.string.flip_popup_default_description);
+		setDescription(com.yotadevices.sdk.R.string.flip_popup_default_description);
 		mSelf = this;
 		final Intent intent = new Intent(FBReaderIntents.Action.SHARE);
 		intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);

@@ -478,7 +478,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 					try {
 						Bitmap outBitmap = BitmapUtils.toGrayscale(coverBitmap, coverBitmap.getWidth(), coverBitmap.getHeight());
 						outBitmap = BitmapUtils.prepareImageForBS(outBitmap);
-						outBitmap = BitmapUtils.ditherBitmap(outBitmap, BitmapUtils.DITHER_ATKINSON, false);
+						outBitmap = BitmapUtils.ditherBitmap(outBitmap, Drawer.Dithering.DITHER_ATKINSON);
 
 						FileOutputStream out = new FileOutputStream(coverFile);
 						outBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);

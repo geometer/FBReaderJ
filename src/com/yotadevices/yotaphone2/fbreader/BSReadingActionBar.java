@@ -25,7 +25,7 @@ import com.yotadevices.yotaphone2.yotareader.R;
 import java.util.List;
 
 public class BSReadingActionBar {
-    private final PopupWindow mPopup;
+    private PopupWindow mPopup;
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
     private final View mRootView;
@@ -67,12 +67,6 @@ public class BSReadingActionBar {
 
         mTitle.setOnClickListener(mOpenCollection);
         mBackButton.setOnClickListener(mOpenCollection);
-
-        mPopup = new PopupWindow(ctx);
-        mPopup.setBackgroundDrawable(new ColorDrawable(0));
-        mPopup.setContentView(mPopupView);
-        mPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        mPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
     }
 
 	private void updateTitle() {
@@ -125,6 +119,13 @@ public class BSReadingActionBar {
     public void show() {
         updateData();
 	    updateTitle();
+
+	    mPopup = new PopupWindow(mContext);
+	    mPopup.setBackgroundDrawable(new ColorDrawable(0));
+	    mPopup.setContentView(mPopupView);
+	    mPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+	    mPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+
         mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, 0);
     }
 
@@ -132,11 +133,13 @@ public class BSReadingActionBar {
         if (mFontSettingsPopup != null && mFontSettingsPopup.isShowing()) {
             mFontSettingsPopup.hide();
         }
-        mPopup.dismiss();
+	    if (mPopup != null) {
+		    mPopup.dismiss();
+	    }
     }
 
     public boolean isShowing() {
-        return mPopup.isShowing();
+        return mPopup != null && mPopup.isShowing();
     }
 
     private View.OnClickListener fontClickListener = new View.OnClickListener() {

@@ -11,7 +11,6 @@ import android.util.Log;
 import com.yotadevices.sdk.helper.HelperConstant;
 import com.yotadevices.sdk.helper.IFrameworkService;
 import com.yotadevices.sdk.utils.FrameworkUtils;
-import com.yotadevices.sdk.utils.IMirroringCallback;
 import com.yotadevices.sdk.utils.RotationAlgorithm;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;

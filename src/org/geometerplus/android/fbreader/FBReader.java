@@ -42,6 +42,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yotadevices.sdk.utils.BitmapUtils;
+import com.yotadevices.sdk.Drawer;
 import com.yotadevices.yotaphone2.fbreader.Consts;
 import com.yotadevices.yotaphone2.fbreader.FBReaderYotaService;
 import com.yotadevices.yotaphone2.fbreader.YotaBookContentPopup;
@@ -1426,7 +1427,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 					try {
 						Bitmap outBitmap = BitmapUtils.toGrayscale(coverBitmap, coverBitmap.getWidth(), coverBitmap.getHeight());
 						outBitmap = BitmapUtils.prepareImageForBS(outBitmap);
-						outBitmap = BitmapUtils.ditherBitmap(outBitmap, BitmapUtils.DITHER_ATKINSON, false);
+						outBitmap = BitmapUtils.ditherBitmap(outBitmap, Drawer.Dithering.DITHER_ATKINSON);
 
 						FileOutputStream out = new FileOutputStream(coverFile);
 						outBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
