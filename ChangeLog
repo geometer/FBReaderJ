@@ -7,7 +7,7 @@
 * (planned) CSS selectors priority
 
 ===== 2.2.7 (Jan ??, 2015) =====
-* Fixed behaviour for pages with multiple images (ePubs and fb2.zip only)
+* Fixed behaviour for pages with multiple images (fb2.zip only)
 * Fixed behaviour for images with # in name
 * No sync permission required for sync service call
 
