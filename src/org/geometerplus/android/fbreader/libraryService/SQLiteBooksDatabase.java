@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 31;
+		final int currentVersion = 32;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -145,6 +145,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables29();
 			case 30:
 				updateTables30();
+			case 31:
+				updateTables31();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -771,11 +773,12 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void setLabel(long bookId, String label) {
 		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES (?)", new Object[] { label });
 		final SQLiteStatement statement = get(
-			"INSERT OR IGNORE INTO BookLabel(label_id,book_id)" +
-			" SELECT label_id,? FROM Labels WHERE name=?"
+			"INSERT OR IGNORE INTO BookLabel(label_id,book_id,timestamp)" +
+			" SELECT label_id,?,? FROM Labels WHERE name=?"
 		);
 		statement.bindLong(1, bookId);
-		statement.bindString(2, label);
+		statement.bindLong(2, System.currentTimeMillis());
+		statement.bindString(3, label);
 		statement.execute();
 	}
 
@@ -1546,6 +1549,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables30() {
 		myDatabase.execSQL("DROP TABLE IF EXISTS RecentBooks");
+	}
+
+	private void updateTables31() {
+		myDatabase.execSQL("ALTER TABLE BookLabel ADD COLUMN timestamp INTEGER NOT NULL DEFAULT -1");
+		myDatabase.execSQL("ALTER TABLE BookLabel ADD COLUMN comment TEXT DEFAULT NULL");
 	}
 
 	private SQLiteStatement get(String sql) {
