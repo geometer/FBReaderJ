@@ -10,6 +10,7 @@
 * Fixed behaviour for pages with multiple images (fb2.zip only)
 * Fixed behaviour for images with # in name
 * No sync permission required for sync service call
+* Async plugin covers loading
 * (internal) added timestamp & comment fields for labels
 
 ===== 2.2.6 (Jan 20, 2015) =====
