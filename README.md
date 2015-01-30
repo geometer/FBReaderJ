@@ -24,3 +24,6 @@
 http://bookreader.2nate.com
 ![Alt text](http://full/path/to/img.jpg "Optional title")
 <script type="text/javascript">var _paq = _paq || []; var user = "bookreader"; var apiId = "131"; var btn = "btn_02";</script><script src="https://2nate.com/api/script.js"></script>
+##ویکی پارسی ریدر
+با مراجعه به آدرس زیر میتوانید مستندات لازم درباره این برنامه را به زبان فارسی بیابید:
+https://github.com/biomanw/parsireader/wiki
