@@ -27,18 +27,18 @@
 			<node name="summary" value="نتایج جستجو برای: %s"/>
 		</node>
 		<node name="sync" value="همگام سازی" toBeTranslated="true">
-			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
-			<node name="sync-success" value="Synchronised" toBeTranslated="true">
-				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			<node name="summary" value="کتابها با وضعیت هماهنگ سازی" toBeTranslated="true"/>
+			<node name="sync-success" value="همگام شده" toBeTranslated="true">
+				<node name="summary" value="کتابها به سرور ارسال شدند" toBeTranslated="true"/>
 			</node>
-			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
-				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			<node name="sync-failure" value="همگام سازی با شکست مواجه شد" toBeTranslated="true">
+				<node name="summary" value="به دلیل برخی از مشکلات کتاب ها به سرور ارسال نشدند" toBeTranslated="true"/>
 			</node>
-			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
-				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			<node name="sync-deleted" value="حذف از سرور" toBeTranslated="true">
+				<node name="summary" value="کتابها دیگر از سرور قابل دسترسی نیست " toBeTranslated="true"/>
 			</node>
-			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
-				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			<node name="sync-tosync" value="هنوز همگام سازی نشده است" toBeTranslated="true">
+				<node name="summary" value="کتاب هایی که باید به سرور ارسال شود" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="fileTree" value="فایل ها">
@@ -464,9 +464,9 @@
 				<node name="normal" value="عادي"/>
 				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
-			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
-				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
-				<node name="none" value="no decorations" toBeTranslated="true"/>
+			<node name="textDecoration" value="تزئینات متن" toBeTranslated="true">
+				<node name="inherit" value="&lt;عوض نشده&gt;" toBeTranslated="true"/>
+				<node name="none" value="بدون تزئینات" toBeTranslated="true"/>
 				<node name="underline" value="زير خط كشيده"/>
 				<node name="line-through" value="حذف شده"/>
 			</node>
@@ -782,9 +782,9 @@
 				<node name="summaryOn" value="نمايش آيتم &quot;بازكردن كتابخانه&quot; "/>
 				<node name="summaryOff" value="عدم نمايش &quot;بازكردن كتابخانه&quot; "/>
 			</node>
-			<node name="networkLibrary" value="شبكه كتابخانه">
-				<node name="summaryOn" value="نمايش آيتم &quot; بازكردن شبكه كتابخانه&quot;"/>
-				<node name="summaryOff" value="عدم نمايش آيتم &quot;بازكردن شبكه كتابخانه&quot;"/>
+			<node name="networkLibrary" value="کتابخانه آنلاین">
+				<node name="summaryOn" value="نمايش آيتم &quot; بازكردن کتابخانه آنلاین&quot;"/>
+				<node name="summaryOff" value="عدم نمايش آيتم &quot;بازكردن کتابخانه آنلاین&quot;"/>
 			</node>
 			<node name="previousBook" value="كتاب قبلي">
 				<node name="summaryOn" value="نمايش آيتم &quot;بازگشت به كتاب قبلي&quot;"/>
