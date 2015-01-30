@@ -91,7 +91,7 @@ public class DataServer extends NanoHTTPD {
 				return res;
 			} else if (image instanceof PluginImage) {
 				final PluginImage pluginImage = (PluginImage)image;
-				if (myService.ImageSynchronizer.synchronizeImmediately(pluginImage)) {
+				if (pluginImage.isSynchronized()) {
 					try {
 						final Bitmap bitmap =
 							((ZLBitmapImage)pluginImage.getRealImage()).getBitmap();
@@ -107,6 +107,7 @@ public class DataServer extends NanoHTTPD {
 						return noContent(uri);
 					}
 				} else {
+					myService.ImageSynchronizer.synchronize(pluginImage, null);
 					return noContent(uri);
 				}
 			} else {
