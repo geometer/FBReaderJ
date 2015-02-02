@@ -61,6 +61,9 @@
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
+				<category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
+				<category android:name="android.intent.category.PENWINDOW_LAUNCHER"/>
+				<category android:name="com.samsung.android.intent.category.PENWINDOW_LAUNCHER"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.fbreader.action.VIEW"/>
@@ -337,6 +340,13 @@
 		<uses-library android:required="false" android:name="com.yotadevices.platinum"/>
 		<meta-data android:name="com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
 		<meta-data android:name="com.yotadevices.BS_TITLE" android:value="FBReader"/>
+		<uses-library android:required="false" android:name="com.sec.android.app.multiwindow"/>
+		<meta-data android:name="com.sec.android.support.multiwindow" android:value="true"/>
+		<meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W" android:resource="@dimen/app_defaultsize_w"/>
+		<meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H" android:resource="@dimen/app_defaultsize_h"/>
+		<meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W" android:resource="@dimen/app_minimumsize_w"/>
+		<meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:resource="@dimen/app_minimumsize_h"/>
+		<meta-data android:name="com.samsung.android.sdk.multiwindow.penwindow.enable" android:value="true"/>
 		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
 	</application>
 </manifest>
