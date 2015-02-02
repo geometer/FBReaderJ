@@ -6,7 +6,10 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.2.7 (Jan ??, 2015) =====
+===== 2.2.8 (Feb ??, 2015) =====
+* Samsung multi-window support
+
+===== 2.2.7 (Jan 30, 2015) =====
 * Fixed behaviour for pages with multiple images (fb2.zip only)
 * Fixed behaviour for images with # in name
 * No sync permission required for sync service call
