@@ -76,7 +76,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android 4.4.2 YotaPhone2 Add-On" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="open-dictionary-api-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-4.4.52" level="project" />
@@ -87,7 +87,6 @@
     <orderEntry type="library" exported="" name="httpmime-4.2.5" level="project" />
     <orderEntry type="library" exported="" name="LingvoIntegration_2.5.2.12" level="project" />
     <orderEntry type="module" module-name="library" exported="" />
-    <orderEntry type="module" module-name="yotaphone_titanium_sdk" exported="" />
     <orderEntry type="module" module-name="AmbilWarna" exported="" />
     <orderEntry type="module" module-name="code" exported="" />
   </component>

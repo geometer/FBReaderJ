@@ -1,2 +1,0 @@
-login = yotadevices
-password = yotadevices
