@@ -32,6 +32,7 @@ public enum DeviceType {
 	EKEN_M001,
 	PAN_DIGITAL,
 	SAMSUNG_GT_S5830,
+	SAMSUNG_TAB_MULTIWINDOW,
 	LENOVO_TAB;
 
 	private static DeviceType ourInstance;
@@ -69,6 +70,9 @@ public enum DeviceType {
 					   Build.MODEL != null &&
 					   Build.MODEL.toLowerCase().matches("lenovo.*tab.*")) {
 				ourInstance = LENOVO_TAB;
+			} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH &&
+					   "samsung".equalsIgnoreCase(Build.MANUFACTURER)) {
+				ourInstance = SAMSUNG_TAB_MULTIWINDOW;
 			} else {
 				ourInstance = GENERIC;
 			}
