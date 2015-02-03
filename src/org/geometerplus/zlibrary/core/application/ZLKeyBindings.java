@@ -112,6 +112,11 @@ public final class ZLKeyBindings {
 	}
 
 	public boolean hasBinding(int key, boolean longPress) {
+		if (key == KeyEvent.KEYCODE_BACK &&
+			DeviceType.Instance() == DeviceType.SAMSUNG_TAB_MULTIWINDOW) {
+			return true;
+		}
+
 		return !ZLApplication.NoAction.equals(getBinding(key, longPress));
 	}
 
