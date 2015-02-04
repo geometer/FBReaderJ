@@ -29,6 +29,9 @@
 		<node name="favorites" value="Favorits">
 			<node name="summary" value="Els meus llibres favorits"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="Trobats">
 			<node name="summary" value="Resultats de la cerca per a: %s"/>
 		</node>
