@@ -23,6 +23,9 @@
 		<node name="favorites" value="Yêu thích">
 			<node name="summary" value="Sách của tôi"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="Tìm thấy">
 			<node name="summary" value="Kết quả tìm kiếm khoảng: %s"/>
 		</node>

@@ -23,6 +23,9 @@
 		<node name="favorites" value="Favourites">
 			<node name="summary" value="My selected books"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view">
+			<node name="summary" value="Modern (material design style) library view"/>
+		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>

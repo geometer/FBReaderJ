@@ -23,6 +23,9 @@
 		<node name="favorites" value="Favoritter">
 			<node name="summary" value="Mine utvalgte bøker"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="Funnet">
 			<node name="summary" value="Søkeresultat for: %s"/>
 		</node>

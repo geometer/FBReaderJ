@@ -23,6 +23,9 @@
 		<node name="favorites" value="Favoriler">
 			<node name="summary" value="Seçtiğim kitaplar"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="Bulunan">
 			<node name="summary" value="%s için arama sonuçları"/>
 		</node>

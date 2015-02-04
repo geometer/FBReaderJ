@@ -23,6 +23,9 @@
 		<node name="favorites" value="Избранное">
 			<node name="summary" value="Мои любимые книги"/>
 		</node>
+		<node name="bookshelfView" value="Книжная полка">
+			<node name="summary" value="Современный внешний вид для библиотеки"/>
+		</node>
 		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s"/>
 		</node>

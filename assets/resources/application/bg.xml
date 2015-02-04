@@ -24,6 +24,9 @@
 		<node name="favorites" value="Избрани">
 			<node name="summary" value="Моите любими книги"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="Намерени">
 			<node name="summary" value="Резултат от търсенето за: %s"/>
 		</node>
