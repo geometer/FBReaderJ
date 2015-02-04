@@ -29,7 +29,7 @@ public class RootTree extends LibraryTree {
 	public RootTree(IBookCollection collection) {
 		super(collection);
 
-		//new ExternalViewTree(this);
+		new ExternalViewTree(this);
 		new FavoritesTree(this);
 		new RecentBooksTree(this);
 		new AuthorListTree(this);
