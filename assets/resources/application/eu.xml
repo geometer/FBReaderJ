@@ -23,6 +23,9 @@
 		<node name="favorites" value="Gogokoak">
 			<node name="summary" value="Aukeratutako nire liburuak"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="Aurkituta">
 			<node name="summary" value="%s bilaketaren emaitzak"/>
 		</node>
