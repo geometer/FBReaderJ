@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,18 +21,12 @@ package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.book.*;
-
-public class SearchResultsTree extends FilteredTree {
-	public final String Pattern;
-	private final String myId;
+public class ExternalViewTree extends LibraryTree {
 	private final ZLResource myResource;
 
-	SearchResultsTree(RootTree root, String id, String pattern, int position) {
-		super(root, new Filter.ByPattern(pattern), position);
-		myId = id;
-		myResource = resource().getResource(myId);
-		Pattern = pattern != null ? pattern : "";
+	ExternalViewTree(RootTree parent) {
+		super(parent);
+		myResource = resource().getResource(ROOT_EXTERNAL_VIEW);
 	}
 
 	@Override
@@ -41,27 +35,12 @@ public class SearchResultsTree extends FilteredTree {
 	}
 
 	@Override
-	public String getTreeTitle() {
-		return getSummary();
-	}
-
-	@Override
 	protected String getStringId() {
-		return myId;
-	}
-
-	@Override
-	public boolean isSelectable() {
-		return false;
+		return ROOT_EXTERNAL_VIEW;
 	}
 
 	@Override
 	public String getSummary() {
-		return myResource.getResource("summary").getValue().replace("%s", Pattern);
-	}
-
-	@Override
-	protected boolean createSubtree(Book book) {
-		return createBookWithAuthorsSubtree(book);
+		return myResource.getResource("summary").getValue();
 	}
 }

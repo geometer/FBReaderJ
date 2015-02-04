@@ -25,6 +25,9 @@
 		<node name="favorites" value="Favoritele mele">
 			<node name="summary" value="Cartile mele selectate"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="S-au gasit">
 			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
 		</node>
