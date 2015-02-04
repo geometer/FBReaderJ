@@ -33,6 +33,7 @@ public abstract class LibraryTree extends FBTree {
 
 	public final IBookCollection Collection;
 
+	static final String ROOT_EXTERNAL_VIEW = "bookshelfView";
 	static final String ROOT_FOUND = "found";
 	static final String ROOT_FAVORITES = "favorites";
 	static final String ROOT_RECENT = "recent";
