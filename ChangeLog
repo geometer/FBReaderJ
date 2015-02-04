@@ -1,4 +1,4 @@
-===== 2.3 (Feb ??, 2015) =====
+===== 2.4 (Feb ??, 2015) =====
 * (planned) Tablet-oriented preferences dialog
 * (planned) Material Design support
 * (planned) Sync: single book upload
@@ -6,8 +6,9 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.2.8 (Feb ??, 2015) =====
+===== 2.3 (Feb ??, 2015) =====
 * Samsung multi-window support
+* Bookshelf view item in the library
 
 ===== 2.2.7 (Jan 30, 2015) =====
 * Fixed behaviour for pages with multiple images (fb2.zip only)
