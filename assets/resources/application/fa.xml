@@ -23,6 +23,9 @@
 		<node name="favorites" value="علاقه مندی ها">
 			<node name="summary" value="کتابهای منتخب من"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="پیدا شد">
 			<node name="summary" value="نتایج جستجو برای: %s"/>
 		</node>

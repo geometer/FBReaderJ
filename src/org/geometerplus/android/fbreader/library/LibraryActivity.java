@@ -115,11 +115,15 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
 		final LibraryTree tree = (LibraryTree)getListAdapter().getItem(position);
-		final Book book = tree.getBook();
-		if (book != null) {
-			showBookInfo(book);
+		if (tree instanceof ExternalViewTree) {
+			runOrInstallExternalView();
 		} else {
-			openTree(tree);
+			final Book book = tree.getBook();
+			if (book != null) {
+				showBookInfo(book);
+			} else {
+				openTree(tree);
+			}
 		}
 	}
 
@@ -368,17 +372,19 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				tryToDeleteBooks(books);
 			}
 			case OptionsItemId.ExternalView:
-			{
-				try {
-					startActivity(new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY));
-					finish();
-				} catch (ActivityNotFoundException e) {
-					PackageUtil.installFromMarket(this, "org.fbreader.plugin.library");
-				}
+				runOrInstallExternalView();
 				return true;
-			}
 			default:
 				return true;
+		}
+	}
+
+	private void runOrInstallExternalView() {
+		try {
+			startActivity(new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY));
+			finish();
+		} catch (ActivityNotFoundException e) {
+			PackageUtil.installFromMarket(this, "org.fbreader.plugin.library");
 		}
 	}
 

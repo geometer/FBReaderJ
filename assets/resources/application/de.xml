@@ -31,6 +31,9 @@
 		<node name="favorites" value="Favoriten">
 			<node name="summary" value="Meine Lieblingsbücher"/>
 		</node>
+		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="Gefunden">
 			<node name="summary" value="Suchergebnisse für: %s"/>
 		</node>
