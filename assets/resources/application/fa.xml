@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- English FBReaderJ resources, by Geometer Plus -->
 <resources>
-	<node name="library" value="کتابخانه پارسی ریدر">
+	<node name="library" value="کتابخانه اف بی ریدر">
 		<node name="unknownAuthor" value="نویسنده نامشخص"/>
 		<node name="booksWithNoTags" value="کتابهای بدون برچسب"/>
 		<node name="demo" value="ساده"/>
@@ -51,7 +51,7 @@
 			<node name="summary" value="کارت حافظه وارد شد"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader کتابخانه">
-			<node name="summary" value="پوشه کتابهای پارسی ریدر"/>
+			<node name="summary" value="پوشه کتابهای اف بی ریدر"/>
 		</node>
 		<node name="localSearch" value="جستجو"/>
 		<node name="rescan" value="اسکن مجدد"/>
@@ -252,7 +252,7 @@
 		<node name="returnTo" value="برگرد به ..."/>
 		<node name="back" value="عقب"/>
 		<node name="forward" value="جلو"/>
-		<node name="close" value="بستن پارسی ریدر"/>
+		<node name="close" value="بستن اف بی ریدر"/>
 	</node>
 	<node name="style" value="سبک %s"/>
 	<node name="highlightingStyleMenu">
@@ -276,7 +276,7 @@
 		<node name="clearSelection" value="پاک کردن"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="به اشتراک گذاري شده توسط &lt;a href=&quot;http://preader.ir/&quot;&gt;parsireader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="به اشتراک گذاري شده توسط &lt;a href=&quot;http://fbreader.org/&quot;&gt;parsireader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="صفحه شروع" toBeTranslated="true"/>
@@ -817,19 +817,19 @@
 			<node name="summary" value="اطلاعات نسخه،‌ارتباط"/>
 			<node name="version" value="نسخه"/>
 			<node name="site" value="بازديد وب سايت ما">
-				<node name="url" value="http://preader.ir/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="ايميلي به ما بفرستيد">
-				<node name="url" value="mailto:gshs99@gmail.com"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
-			<node name="googleplus" value="به ما در گوگل پلاس بپیوندید*بزودی" toBeTranslated="true">
-				<node name="url" value="بزودی"/>
+			<node name="googleplus" value="به ما در گوگل پلاس بپیوندید* " toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
 			<node name="twitter" value="در توييتر مارا دنبال كنيد">
-				<node name="url" value="بزودی"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="پارسی ریدر در فیسبوک" toBeTranslated="true">
-				<node name="url" value="بزودی"/>
+			<node name="facebook" value="اف بی ریدر در فیسبوک" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="کتابخانه های شخص ثالث" toBeTranslated="true"/>
 		</node>
@@ -874,7 +874,7 @@
 			<node name="dontAskAgain" value="مجدد سوال نپرس"/>
 		</node>
 		<node name="backgroundAuthentication">
-			<node name="message" value="احراز هویت مورد نیاز است" toBeTranslated="true"/>
+			<node name="message" value="باید وارد بشی که دسترسی پیدا کنی" toBeTranslated="true"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="نصب ديكشنري"/>
@@ -963,7 +963,7 @@
 			<node name="register" value="ثبت نام"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="پارسی ريدر: افزودن كاتالوگ سفارشي"/>
+			<node name="title" value="اف بی ریر افزودن كاتالوگ سفارشي"/>
 			<node name="catalogTitle" value="عنوان"/>
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="خلاصه"/>
@@ -986,7 +986,7 @@
 			<node name="more" value="راهنمایی بعدي"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="پارسی ریدر بصورت پیش فرض بصورت تمام صفحه کتاب را نمایش میدهد.با چندبار ضربه زدن به مرکز صفحه کنترل ها نمایش داده میشوند.شما با رفتن به قسمت ظاهر در بخش تنظیمات میتوانید این رفتار برنامه را تغییر دهید." toBeTranslated="true"/>
+			<node name="message1" value="اف بی ریدر بصورت پیش فرض بصورت تمام صفحه کتاب را نمایش میدهد.با چندبار ضربه زدن به مرکز صفحه کنترل ها نمایش داده میشوند.شما با رفتن به قسمت ظاهر در بخش تنظیمات میتوانید این رفتار برنامه را تغییر دهید." toBeTranslated="true"/>
 			<node name="message2" value="خیلی خب!حالا دوباره به مرکز صفحه ضربه بزنید برای مخفی کردن کنترل ها و همچنین این نکته.اگر شما میخواهید کنترل ها را در حین مطالعه نگه دارید گزینه “نمایش نوار فعالیت” را در قسمت  “ظاهر” بخش نتظیمات انتخاب کنید." toBeTranslated="true"/>
 		</node>
 		<node name="folderList">
@@ -1038,7 +1038,7 @@
 		<node name="pluginNotFound" value="پلاگینی وجود ندارد برای '%s'"/>
 		<node name="unknownPluginType" value="نوع پلاگین ناشناخته است: %s"/>
 		<node name="fileNotFound" value="فایل پیدا نشد: %s"/>
-		<node name="unsupportedEncryptionMethod" value="فایل %s با روشی که توسط پارسی ریدر پشتیبانی نمی گردد رمزگذاری شده است. بعضی از صفحات قابل خواندن نیست" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="فایل %s با روشی که توسط اف بی ریدر پشتیبانی نمی گردد رمزگذاری شده است. بعضی از صفحات قابل خواندن نیست" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF در %s پیدا نشد"/>
 		<node name="unsupportedFileFormat" value="فرمت فایل پشتیبانی نمیشود برای '%s'"/>
 		<node name="errorParsingRtf" value="خطای تجزیه RTF در: %s" toBeTranslated="true"/>
@@ -1066,21 +1066,21 @@
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
-			<node name="title" value="مشکل پارسی ریدر"/>
+			<node name="title" value="مشکل اف بی ریدر"/>
 			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
-			<node name="title" value="خطای پارسی ریدر"/>
-			<node name="text" value="پارسی ریدر نمیتواند کتابخانه محلی را بارگذاری کند. ممکن است نصب نشده باشد. اگر مشکل حل نشد برنامه را دوباره نصب کنید"/>
+			<node name="title" value="خطای اف بی ریدر"/>
+			<node name="text" value="اف بی ریدر نمیتواند کتابخانه محلی را بارگذاری کند. ممکن است نصب نشده باشد. اگر مشکل حل نشد برنامه را دوباره نصب کنید"/>
 		</node>
 	</node>
 	<node name="error">
 		<node name="bookReading">
-			<node name="title" value="مشکل پارسی ریدر"/>
+			<node name="title" value="مشکل اف بی ریدر"/>
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://Preader.ir/faq-page"/>
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="نصب افزونه ها" toBeTranslated="true">
 		<node name="noMorePlugins" value="ما در حال حاضر هیچ پلاگین جدیدی  نداریم، متاسفم" toBeTranslated="true"/>
