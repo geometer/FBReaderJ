@@ -264,6 +264,10 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<Book> books(BookQuery query) {
+		if (query == null) {
+			return Collections.emptyList();
+		}
+
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
 			//allBooks = new ArrayList<Book>(new LinkedHashSet<Book>(myBooksByFile.values()));
