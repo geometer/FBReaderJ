@@ -53,12 +53,8 @@ public abstract class FormatPlugin {
 	public abstract ZLImage readCover(ZLFile file);
 	public abstract String readAnnotation(ZLFile file);
 
-	public enum Type {
-		ANY,
-		BUILTIN,
-		EXTERNAL;
-	};
-	public abstract Type type();
+	/* lesser is higher: 0 for ePub/fb2, 5 for other native, 10 for external */
+	public abstract int priority();
 
 	public abstract EncodingCollection supportedEncodings();
 }

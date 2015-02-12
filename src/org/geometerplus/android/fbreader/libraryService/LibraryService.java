@@ -425,6 +425,18 @@ public class LibraryService extends Service {
 		public void setHash(String book, String hash) {
 			myCollection.setHash(SerializerUtil.deserializeBook(book), hash);
 		}
+
+		public List<String> formats() {
+			return myCollection.formats();
+		}
+
+		public List<String> activeFormats() {
+			return myCollection.activeFormats();
+		}
+
+		public void setActiveFormats(List<String> formats) {
+			myCollection.setActiveFormats(formats);
+		}
 	}
 
 	private volatile LibraryImplementation myLibrary;
