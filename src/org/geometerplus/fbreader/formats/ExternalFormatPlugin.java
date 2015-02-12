@@ -35,8 +35,8 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public Type type() {
-		return Type.EXTERNAL;
+	public int priority() {
+		return 10;
 	}
 
 	public abstract String packageName();
@@ -65,5 +65,10 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 		if (book.uids().isEmpty()) {
 			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "ExternalFormatPlugin [" + supportedFileType() + "]";
 	}
 }

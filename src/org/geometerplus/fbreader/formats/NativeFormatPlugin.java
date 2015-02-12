@@ -134,8 +134,8 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	protected native String readAnnotationInternal(ZLFile file);
 
 	@Override
-	public Type type() {
-		return Type.BUILTIN;
+	public int priority() {
+		return 5;
 	}
 
 	@Override
