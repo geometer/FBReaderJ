@@ -33,8 +33,6 @@ public abstract class BookModel {
 	public static BookModel createModel(Book book) throws BookReadingException {
 		final FormatPlugin plugin = book.getPlugin();
 
-		System.err.println("using plugin: " + plugin.supportedFileType() + "/" + plugin.type());
-
 		if (plugin instanceof BuiltinFormatPlugin) {
 			final BookModel model = new NativeBookModel(book);
 			((BuiltinFormatPlugin)plugin).readModel(model);
@@ -42,7 +40,7 @@ public abstract class BookModel {
 		}
 
 		throw new BookReadingException(
-			"unknownPluginType", null, new String[] { plugin.type().toString() }
+			"unknownPluginType", null, new String[] { String.valueOf(plugin) }
 		);
 	}
 

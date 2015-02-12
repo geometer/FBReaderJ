@@ -73,4 +73,8 @@ interface LibraryInterface {
 	void removeFromRecentlyOpened(in String book);
 
 	boolean canRemoveBook(in String book, in boolean deleteFromDisk);
+
+	List<String> formats();
+	List<String> activeFormats();
+	void setActiveFormats(in List<String> formats);
 }
