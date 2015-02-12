@@ -800,4 +800,22 @@ public class BookCollection extends AbstractBookCollection {
 			// ignore
 		}
 	}
+
+	public List<String> formats() {
+		final List<FormatPlugin> plugins = PluginCollection.Instance().plugins();
+		final List<String> ids = new ArrayList<String>(plugins.size());
+		for (FormatPlugin p : plugins) {
+			ids.add(p.supportedFileType());
+		}
+		return ids;
+	}
+
+	public List<String> activeFormats() {
+		// TODO: implement
+		return Collections.emptyList();
+	}
+
+	public void setActiveFormats(List<String> formats) {
+		// TODO: implement
+	}
 }
