@@ -100,5 +100,9 @@ public interface IBookCollection {
 	List<HighlightingStyle> highlightingStyles();
 	void saveHighlightingStyle(HighlightingStyle style);
 
+	List<String> formats();
+	List<String> activeFormats();
+	void setActiveFormats(List<String> formats);
+
 	void rescan(String path);
 }
