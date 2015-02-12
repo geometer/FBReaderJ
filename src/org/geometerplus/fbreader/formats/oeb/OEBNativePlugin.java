@@ -98,4 +98,9 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 		}
 		throw new BookReadingException("opfFileNotFound", oebFile);
 	}
+
+	@Override
+	public int priority() {
+		return 0;
+	}
 }

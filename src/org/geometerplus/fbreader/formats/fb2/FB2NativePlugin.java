@@ -81,4 +81,9 @@ public class FB2NativePlugin extends NativeFormatPlugin {
 	public String readAnnotation(ZLFile file) {
 		return new FB2AnnotationReader().readAnnotation(file);
 	}
+
+	@Override
+	public int priority() {
+		return 0;
+	}
 }
