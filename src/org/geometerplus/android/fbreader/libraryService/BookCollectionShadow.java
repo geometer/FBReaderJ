@@ -536,7 +536,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		});
 	}
 
-	public void setActiveFormats(List<String> formats) {
+	public synchronized void setActiveFormats(List<String> formats) {
 		if (myInterface != null) {
 			try {
 				myInterface.setActiveFormats(formats);
