@@ -19,21 +19,24 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
-import org.geometerplus.fbreader.book.Author;
-import org.geometerplus.fbreader.book.Tag;
+import org.geometerplus.fbreader.book.*;
 
 abstract class Util {
 	static String authorToString(Author author) {
-		return new StringBuilder(author.DisplayName).append('\000').append(author.SortKey).toString();
+		return author.DisplayName + "\000" + author.SortKey;
 	}
 
 	static Author stringToAuthor(String string) {
-		final String[] split = string.split("\000");
-		if (split.length == 2) {
-			return new Author(split[0], split[1]);
-		} else {
+		if (string == null) {
 			return Author.NULL;
 		}
+
+		final String[] split = string.split("\000");
+		if (split.length != 2) {
+			return Author.NULL;
+		}
+
+		return new Author(split[0], split[1]);
 	}
 
 	static String tagToString(Tag tag) {
@@ -41,11 +44,36 @@ abstract class Util {
 	}
 
 	static Tag stringToTag(String string) {
-		final String[] split = string.split("\000");
-		if (split.length > 0) {
-			return Tag.getTag(split);
-		} else {
+		if (string == null) {
 			return Tag.NULL;
 		}
+
+		final String[] split = string.split("\000");
+		if (split.length == 0) {
+			return Tag.NULL;
+		}
+
+		return Tag.getTag(split);
+	}
+
+	static String formatDescriptorToString(IBookCollection.FormatDescriptor descriptor) {
+		return descriptor.Id + "\000" + descriptor.Name + "\000" + (descriptor.IsActive ? 1 : 0);
+	}
+
+	static IBookCollection.FormatDescriptor stringToFormatDescriptor(String string) {
+		if (string == null) {
+			throw new IllegalArgumentException();
+		}
+
+		final String[] split = string.split("\000");
+		if (split.length != 3) {
+			throw new IllegalArgumentException();
+		}
+
+		final IBookCollection.FormatDescriptor descriptor = new IBookCollection.FormatDescriptor();
+		descriptor.Id = split[0];
+		descriptor.Name = split[1];
+		descriptor.IsActive = "1".equals(split[2]);
+		return descriptor;
 	}
 }
