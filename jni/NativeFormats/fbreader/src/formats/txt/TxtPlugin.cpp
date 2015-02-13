@@ -35,7 +35,7 @@ bool TxtPlugin::providesMetainfo() const {
 }
 
 const std::string TxtPlugin::supportedFileType() const {
-	return "plain text";
+	return "txt";
 }
 
 bool TxtPlugin::readMetainfo(Book &/*book*/) const {
