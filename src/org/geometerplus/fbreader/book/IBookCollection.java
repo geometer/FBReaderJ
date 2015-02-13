@@ -100,12 +100,11 @@ public interface IBookCollection {
 	List<HighlightingStyle> highlightingStyles();
 	void saveHighlightingStyle(HighlightingStyle style);
 
-	public static class FormatDescriptor {
+	public class FormatDescriptor {
 		public String Id;
 		public String Name;
 		public boolean IsActive;
 	}
-
 	List<FormatDescriptor> formats();
 	void setActiveFormats(List<String> formatIds);
 
