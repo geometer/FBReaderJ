@@ -801,21 +801,20 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public List<String> formats() {
+	public List<FormatDescriptor> formats() {
 		final List<FormatPlugin> plugins = PluginCollection.Instance().plugins();
-		final List<String> ids = new ArrayList<String>(plugins.size());
+		final List<FormatDescriptor> descriptors = new ArrayList<FormatDescriptor>(plugins.size());
 		for (FormatPlugin p : plugins) {
-			ids.add(p.supportedFileType());
+			final FormatDescriptor d = new FormatDescriptor();
+			d.Id = p.supportedFileType();
+			d.Name = p.name();
+			d.IsActive = true;
+			descriptors.add(d);
 		}
-		return ids;
+		return descriptors;
 	}
 
-	public List<String> activeFormats() {
-		// TODO: implement
-		return Collections.emptyList();
-	}
-
-	public void setActiveFormats(List<String> formats) {
+	public void setActiveFormats(List<String> formatIds) {
 		// TODO: implement
 	}
 }
