@@ -41,7 +41,7 @@ bool DocPlugin::providesMetainfo() const {
 }
 
 const std::string DocPlugin::supportedFileType() const {
-	return "MS Word document";
+	return "msdoc";
 }
 
 bool DocPlugin::acceptsFile(const ZLFile &file) const {
