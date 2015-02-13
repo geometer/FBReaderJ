@@ -175,6 +175,7 @@ final class ZLTreeResource extends ZLResource {
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/zlibrary/" + fileName));
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/application/" + fileName));
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/lang.xml"));
+		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/application/neutral.xml"));
 	}
 
 	private static void loadData() {

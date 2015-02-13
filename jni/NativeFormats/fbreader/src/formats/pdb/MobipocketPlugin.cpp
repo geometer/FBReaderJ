@@ -35,7 +35,7 @@
 #include "../../bookmodel/BookModel.h"
 
 const std::string MobipocketPlugin::supportedFileType() const {
-	return "Mobipocket";
+	return "mobi";
 }
 //bool MobipocketPlugin::acceptsFile(const ZLFile &file) const {
 //	return PdbPlugin::fileType(file) == "BOOKMOBI";
