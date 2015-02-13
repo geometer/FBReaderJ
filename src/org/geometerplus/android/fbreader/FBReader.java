@@ -623,16 +623,19 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			unregisterReceiver(mySyncUpdateReceiver);
 		} catch (IllegalArgumentException e) {
 		}
+
 		try {
 			unregisterReceiver(myBatteryInfoReceiver);
 		} catch (IllegalArgumentException e) {
-			// do nothing, this exception means myBatteryInfoReceiver was not registered
+			// do nothing, this exception means that myBatteryInfoReceiver was not registered
 		}
+
 		myFBReaderApp.stopTimer();
 		if (getZLibrary().DisableButtonLightsOption.getValue()) {
 			setButtonLight(true);
 		}
 		myFBReaderApp.onWindowClosing();
+
 		super.onPause();
 	}
 
