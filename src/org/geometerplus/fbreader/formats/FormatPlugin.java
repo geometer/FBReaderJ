@@ -41,6 +41,10 @@ public abstract class FormatPlugin {
 		return myFileType;
 	}
 
+	public final String name() {
+		return myFileType + "!!!";
+	}
+
 	public ZLFile realBookFile(ZLFile file) throws BookReadingException {
 		return file;
 	}

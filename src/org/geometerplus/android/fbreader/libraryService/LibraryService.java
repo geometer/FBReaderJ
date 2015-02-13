@@ -427,15 +427,16 @@ public class LibraryService extends Service {
 		}
 
 		public List<String> formats() {
-			return myCollection.formats();
+			final List<IBookCollection.FormatDescriptor> descriptors = myCollection.formats();
+			final List<String> serialized = new ArrayList<String>(descriptors.size());
+			for (IBookCollection.FormatDescriptor d : descriptors) {
+				serialized.add(Util.formatDescriptorToString(d));
+			}
+			return serialized;
 		}
 
-		public List<String> activeFormats() {
-			return myCollection.activeFormats();
-		}
-
-		public void setActiveFormats(List<String> formats) {
-			myCollection.setActiveFormats(formats);
+		public void setActiveFormats(List<String> formatIds) {
+			myCollection.setActiveFormats(formatIds);
 		}
 	}
 
