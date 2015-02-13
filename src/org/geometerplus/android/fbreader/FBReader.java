@@ -601,7 +601,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		} catch (IllegalArgumentException e) {
 			// do nothing, this exception means that myBatteryInfoReceiver was not registered
 		}
-		switchWakeLock(false);
 
 		myFBReaderApp.stopTimer();
 		if (getZLibrary().DisableButtonLightsOption.getValue()) {
