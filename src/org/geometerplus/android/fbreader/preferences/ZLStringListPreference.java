@@ -25,6 +25,8 @@ import android.preference.ListPreference;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class ZLStringListPreference extends ListPreference {
+	private String[] myEntries;
+
 	protected final ZLResource myValuesResource;
 
 	ZLStringListPreference(Context context, ZLResource resource) {
@@ -45,19 +47,26 @@ abstract class ZLStringListPreference extends ListPreference {
 		String[] texts = new String[values.length];
 		for (int i = 0; i < values.length; ++i) {
 			final ZLResource resource = myValuesResource.getResource(values[i]);
-			// It appears that setEntries() DOES NOT perform any extra formatting on the char
-			// sequences, so to get just a single %, we'd have to perform the substitution manually.
-			// http://developer.android.com/reference/android/preference/ListPreference.html#setEntries(java.lang.CharSequence[])
-			// TODO: We should probably do an assert() and tell people to check their xml here.
-			texts[i] = resource.hasValue() ? resource.getValue().replace("%%","%") : values[i];
+			texts[i] = resource.hasValue() ? resource.getValue() : values[i];
 		}
 		setLists(values, texts);
 	}
 
 	protected final void setLists(String[] values, String[] texts) {
 		assert(values.length == texts.length);
-		setEntries(texts);
+
 		setEntryValues(values);
+
+		myEntries = texts;
+		final String[] entries = new String[texts.length];
+		// It appears that setEntries() DOES NOT perform any extra formatting on the char
+		// sequences, so to get just a single %, we'd have to perform the substitution manually.
+		// http://developer.android.com/reference/android/preference/ListPreference.html#setEntries(java.lang.CharSequence[])
+		// TODO: We should probably do an assert() and tell people to check their xml here.
+		for (int i = 0; i < texts.length; ++i) {
+			entries[i] = texts[i].replace("%%", "%");
+		}
+		setEntries(entries);
 	}
 
 	protected final boolean setInitialValue(String value) {
@@ -87,11 +96,8 @@ abstract class ZLStringListPreference extends ListPreference {
 	}
 
 	private void updateSummary() {
-		// We have previously called setEntries() on the assumption that it does not perform any
-		// extra formatting on the char sequences.
-		// However, setSummary() DOES perform extra formatting on the char sequences, so we'd need
-		// to correct this.
-		// http://developer.android.com/reference/android/preference/ListPreference.html#setSummary(java.lang.CharSequence)
-		setSummary(getEntry().toString().replace("%", "%%"));
+		if (myEntries != null) {
+			setSummary(myEntries[findIndexOfValue(getValue())]);
+		}
 	}
 }
