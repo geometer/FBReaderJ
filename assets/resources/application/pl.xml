@@ -23,7 +23,7 @@
 		<node name="favorites" value="Ulubione">
 			<node name="summary" value="Moje wybrane książki"/>
 		</node>
-		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
 			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="Wyszukane">
@@ -70,7 +70,6 @@
 		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
 		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
 		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
-		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Sieciowa biblioteka FBReadera">
 		<node name="sync" value="FBReader® book network" toBeTranslated="true">

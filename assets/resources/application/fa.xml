@@ -23,25 +23,25 @@
 		<node name="favorites" value="علاقه مندی ها">
 			<node name="summary" value="کتابهای منتخب من"/>
 		</node>
-		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+		<node name="bookshelfView" value="مشاهده قفسه کتاب">
 			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="پیدا شد">
 			<node name="summary" value="نتایج جستجو برای: %s"/>
 		</node>
-		<node name="sync" value="همگام سازی" toBeTranslated="true">
-			<node name="summary" value="کتابها با وضعیت هماهنگ سازی" toBeTranslated="true"/>
-			<node name="sync-success" value="همگام شده" toBeTranslated="true">
-				<node name="summary" value="کتابها به سرور ارسال شدند" toBeTranslated="true"/>
+		<node name="sync" value="همگام سازی">
+			<node name="summary" value="کتابها با وضعیت هماهنگ سازی"/>
+			<node name="sync-success" value="همگام شده">
+				<node name="summary" value="کتابها به سرور ارسال شدند"/>
 			</node>
-			<node name="sync-failure" value="همگام سازی با شکست مواجه شد" toBeTranslated="true">
-				<node name="summary" value="به دلیل برخی از مشکلات کتاب ها به سرور ارسال نشدند" toBeTranslated="true"/>
+			<node name="sync-failure" value="همگام سازی با شکست مواجه شد">
+				<node name="summary" value="به دلیل برخی از مشکلات کتاب ها به سرور ارسال نشدند"/>
 			</node>
-			<node name="sync-deleted" value="حذف از سرور" toBeTranslated="true">
-				<node name="summary" value="کتابها دیگر از سرور قابل دسترسی نیست " toBeTranslated="true"/>
+			<node name="sync-deleted" value="حذف از سرور">
+				<node name="summary" value="کتابها دیگر از سرور قابل دسترسی نیست "/>
 			</node>
-			<node name="sync-tosync" value="هنوز همگام سازی نشده است" toBeTranslated="true">
-				<node name="summary" value="کتاب هایی که باید به سرور ارسال شود" toBeTranslated="true"/>
+			<node name="sync-tosync" value="هنوز همگام سازی نشده است">
+				<node name="summary" value="کتاب هایی که باید به سرور ارسال شود"/>
 			</node>
 		</node>
 		<node name="fileTree" value="فایل ها">
@@ -64,17 +64,16 @@
 		<node name="deleteBook" value="حذف کتاب"/>
 		<node name="addToFavorites" value="افزودن به علاقه مندیها"/>
 		<node name="removeFromFavorites" value="حذف از علاقه مندیها"/>
-		<node name="removeFromRecents" value="حذف از لیست اخیر" toBeTranslated="true"/>
+		<node name="removeFromRecents" value="حذف از لیست اخیر"/>
 		<node name="markAsRead" value="علامت گذاری بعنوان خوانده شده"/>
 		<node name="markAsUnread" value="علامت گذاری بعنوان خوانده نشده"/>
-		<node name="deleteAll" value=" حذف همه" toBeTranslated="true"/>
-		<node name="uploadAgain" value=" آپلود مجدد" toBeTranslated="true"/>
-		<node name="tryAgain" value=" تلاش دوباره" toBeTranslated="true"/>
-		<node name="bookshelfView" value="مشاهده قفسه کتاب" toBeTranslated="true"/>
+		<node name="deleteAll" value=" حذف همه"/>
+		<node name="uploadAgain" value=" آپلود مجدد"/>
+		<node name="tryAgain" value=" تلاش دوباره"/>
 	</node>
 	<node name="networkLibrary" value="کتابخانه آنلاین">
 		<node name="sync" value="FBReader® book network" toBeTranslated="true">
-			<node name="summary" value="کاتالوگ شخصی من" toBeTranslated="true"/>
+			<node name="summary" value="کاتالوگ شخصی من"/>
 		</node>
 		<node name="byAuthor" value="بر اساس نویسنده">
 			<node name="summary" value="کتابها بر اساس نویسنده دسته بندی شده"/>
@@ -96,8 +95,8 @@
 		<node name="found" value="پیدا شد">
 			<node name="summary" value="نتایج جستوجو برای: %s"/>
 		</node>
-		<node name="recent" value="کاتالوگ اخیر" toBeTranslated="true">
-			<node name="summary" value="کاتالوگ هایی که به تازگی بازدید کرده اید" toBeTranslated="true"/>
+		<node name="recent" value="کاتالوگ اخیر">
+			<node name="summary" value="کاتالوگ هایی که به تازگی بازدید کرده اید"/>
 		</node>
 		<node name="openCatalog" value="باز کردن کاتالوگ"/>
 		<node name="networkSearch" value="جستوجو"/>
@@ -120,8 +119,8 @@
 		<node name="stopSearching" value="توقف جستجو"/>
 		<node name="signIn" value="ورود"/>
 		<node name="signOut" value="خروج (%s)"/>
-		<node name="signUp" value="ثبت نام" toBeTranslated="true"/>
-		<node name="quickBuy" value="فروش سریع" toBeTranslated="true"/>
+		<node name="signUp" value="ثبت نام"/>
+		<node name="quickBuy" value="فروش سریع"/>
 		<node name="topup" value="بالا حساب (ارز: %s)"/>
 		<node name="topupTitle" value="بالا حساب"/>
 		<node name="topupViaBrowser" value="بازکردن صفحه در مرورگر"/>
@@ -143,7 +142,7 @@
 		<node name="removeCustomCatalog" value="حذف کاتالوگ"/>
 		<node name="addCustomCatalog" value="افزودن کاتالوگ"/>
 		<node name="addCustomCatalogSummary" value="افزودن کاتالوگ OPDS به صورت دستی"/>
-		<node name="disableCatalog" value="کاتالوگ غیرفعال" toBeTranslated="true"/>
+		<node name="disableCatalog" value="کاتالوگ غیرفعال"/>
 		<node name="confirmQuestions">
 			<node name="read" value="آیا میخواهید کپی محلی را بخوانید؟"/>
 			<node name="download" value="ایا میخواهید این کتاب را دانلود کنید؟"/>
@@ -160,13 +159,13 @@
 			<node name="title" value="افزودن کاتالوگ"/>
 			<node name="editUrl" value="آدرس را دستی وارد کنید"/>
 		</node>
-		<node name="manageCatalogs" value=" مدیریت کاتالوگ ها" toBeTranslated="true">
-			<node name="summary" value=" لیست کاتالوگ خود را پیکربندی کنید" toBeTranslated="true"/>
-			<node name="enabled" value="فعال شد" toBeTranslated="true"/>
-			<node name="disabled" value="غیرفعال شد" toBeTranslated="true"/>
+		<node name="manageCatalogs" value=" مدیریت کاتالوگ ها">
+			<node name="summary" value=" لیست کاتالوگ خود را پیکربندی کنید"/>
+			<node name="enabled" value="فعال شد"/>
+			<node name="disabled" value="غیرفعال شد"/>
 		</node>
 		<node name="menu">
-			<node name="openRoot" value="کاتالوگ ریشه" toBeTranslated="true"/>
+			<node name="openRoot" value="کاتالوگ ریشه"/>
 			<node name="networkSearch" value="جستجو"/>
 			<node name="reload" value="بارگذاری مجدد"/>
 			<node name="signIn" value="ورود"/>
@@ -175,7 +174,7 @@
 			<node name="topup" value="حساب بالا"/>
 			<node name="addCustomCatalog" value="افزودن کاتالوگ"/>
 			<node name="refreshCatalogsList" value="بروزرسانی کاتالوگها"/>
-			<node name="manageCatalogs" value="مدیریت کاتالوگها" toBeTranslated="true"/>
+			<node name="manageCatalogs" value="مدیریت کاتالوگها"/>
 			<node name="clearBasket" value="خالی کردن سبد"/>
 			<node name="buyAllBooks" value="خرید همه کتابها"/>
 		</node>
@@ -259,16 +258,16 @@
 	</node>
 	<node name="style" value="سبک %s"/>
 	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="تغییر سبک…" toBeTranslated="true"/>
+		<node name="editStyle" value="تغییر سبک…"/>
 		<node name="deleteBookmark" value="حذف آدرس"/>
 	</node>
 	<node name="editStyle">
-		<node name="name" value="نام سبک" toBeTranslated="true"/>
-		<node name="invisible" value="مخفی" toBeTranslated="true">
-			<node name="summaryOn" value="نشانه ها را برجسته نکن" toBeTranslated="true"/>
-			<node name="summaryOff" value="نشانه ها را برجسته کن" toBeTranslated="true"/>
+		<node name="name" value="نام سبک"/>
+		<node name="invisible" value="مخفی">
+			<node name="summaryOn" value="نشانه ها را برجسته نکن"/>
+			<node name="summaryOff" value="نشانه ها را برجسته کن"/>
 		</node>
-		<node name="bgColor" value="رنگ پس زمینه" toBeTranslated="true"/>
+		<node name="bgColor" value="رنگ پس زمینه"/>
 	</node>
 	<node name="selection" value="انتخاب">
 		<node name="copyToClipboard" value="کپی به کلیپ بورد"/>
@@ -282,15 +281,15 @@
 		<node name="sharedFrom" value="به اشتراک گذاري شده توسط &lt;a href=&quot;http://fbreader.org/&quot;&gt;parsireader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
-		<node name="openStartScreen" value="صفحه شروع" toBeTranslated="true"/>
+		<node name="openStartScreen" value="صفحه شروع"/>
 		<node name="preferences" value="تنظیمات"/>
 		<node name="bookInfo" value="اطلاعات کتاب"/>
 		<node name="library" value="کتابخانه"/>
 		<node name="toc" value="فهرست مطالب"/>
 		<node name="day" value="حالت روز"/>
 		<node name="night" value="حالت شب"/>
-		<node name="yotaSwitchToBackScreen" value="سویچ به پشت صفحه" toBeTranslated="true"/>
-		<node name="yotaSwitchToFrontScreen" value="سویچ به صفحه جلویی" toBeTranslated="true"/>
+		<node name="yotaSwitchToBackScreen" value="سویچ به پشت صفحه"/>
+		<node name="yotaSwitchToFrontScreen" value="سویچ به صفحه جلویی"/>
 		<node name="networkLibrary" value="کتابخانه شبکه"/>
 		<node name="navigate" value="هدایت کردن">
 			<node name="toc" value="فهرست مطالب"/>
@@ -317,8 +316,8 @@
 		<node name="decreaseFont" value="کوچکنمایی"/>
 		<node name="toggleFullscreen" value="تمام صفحه"/>
 		<node name="bookmarks" value="نشانه گذاری"/>
-		<node name="help" value="کمک" toBeTranslated="true"/>
-		<node name="plugins" value="نصب افزونه ها" toBeTranslated="true"/>
+		<node name="help" value="کمک"/>
+		<node name="plugins" value="نصب افزونه ها"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="نام فایل"/>
@@ -330,42 +329,42 @@
 		<node name="series" value="ردیف ها"/>
 	</node>
 	<node name="Preferences">
-		<node name="sync" value="همگام سازی" toBeTranslated="true">
-			<node name="summary" value="تنظیمات شبکه کتاب" toBeTranslated="true"/>
-			<node name="enable" value="فعالسازی همگامسازی" toBeTranslated="true">
-				<node name="summaryOn" value="هماهنگی کتابخانه من با سرور شبکه کتاب برنامه" toBeTranslated="true"/>
-				<node name="summaryOnWithAccount" value="هماهنگی کتابخانه من بعنوان %s" toBeTranslated="true"/>
-				<node name="summaryOff" value="هماهنگ نکن کتابخانه من را با سرور شبکه کتاب برنامه" toBeTranslated="true"/>
+		<node name="sync" value="همگام سازی">
+			<node name="summary" value="تنظیمات شبکه کتاب"/>
+			<node name="enable" value="فعالسازی همگامسازی">
+				<node name="summaryOn" value="هماهنگی کتابخانه من با سرور شبکه کتاب برنامه"/>
+				<node name="summaryOnWithAccount" value="هماهنگی کتابخانه من بعنوان %s"/>
+				<node name="summaryOff" value="هماهنگ نکن کتابخانه من را با سرور شبکه کتاب برنامه"/>
 			</node>
 			<node name="values">
-				<node name="always" value="همیشه" toBeTranslated="true"/>
-				<node name="viaWifi" value="اگر دستگاه به شبکه وای فای متصل بود" toBeTranslated="true"/>
-				<node name="never" value="هرگز" toBeTranslated="true"/>
+				<node name="always" value="همیشه"/>
+				<node name="viaWifi" value="اگر دستگاه به شبکه وای فای متصل بود"/>
+				<node name="never" value="هرگز"/>
 			</node>
-			<node name="uploadAllBooks" value="آپلود همه کتابها روی سرور" toBeTranslated="true"/>
-			<node name="downloadAllBooks" value="دانلود همه کتاب ها روی سرور" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="دانلود همین کتاب از سرور" toBeTranslated="true"/>
-			<node name="positions" value="همگام سازی مکان مطالعه" toBeTranslated="true"/>
-			<node name="bookmarks" value="همگام سازی نشانه ها" toBeTranslated="true"/>
-			<node name="metainfo" value="همگامسازی متا اینفو (عنوان, تگ ها,... .)" toBeTranslated="true"/>
-			<node name="changeCurrentBook" value="تغییر همین کتاب" toBeTranslated="true">
-				<node name="summaryOn" value="باز کردن یک کتاب روی چند دستگاه" toBeTranslated="true"/>
-				<node name="summaryOff" value="فقط مکان های مطالعه را همگام سازی کنید،کتاب را بصورت خودکار تغییر نده" toBeTranslated="true"/>
+			<node name="uploadAllBooks" value="آپلود همه کتابها روی سرور"/>
+			<node name="downloadAllBooks" value="دانلود همه کتاب ها روی سرور"/>
+			<node name="downloadCurrentBook" value="دانلود همین کتاب از سرور"/>
+			<node name="positions" value="همگام سازی مکان مطالعه"/>
+			<node name="bookmarks" value="همگام سازی نشانه ها"/>
+			<node name="metainfo" value="همگامسازی متا اینفو (عنوان, تگ ها,... .)"/>
+			<node name="changeCurrentBook" value="تغییر همین کتاب">
+				<node name="summaryOn" value="باز کردن یک کتاب روی چند دستگاه"/>
+				<node name="summaryOff" value="فقط مکان های مطالعه را همگام سازی کنید،کتاب را بصورت خودکار تغییر نده"/>
 			</node>
 		</node>
 		<node name="directories" value="پوشه ها">
 			<node name="summary" value="پوشه های جستجوی فایل ها"/>
-			<node name="bookPath" value="کجا دنبال کتاب ها بگردم" toBeTranslated="true">
+			<node name="bookPath" value="کجا دنبال کتاب ها بگردم">
 				<node name="chooserTitle" value="پوشه کتابها"/>
 			</node>
-			<node name="downloadDir" value="کجا کتاب های دانلود شده را ذخیره کنم" toBeTranslated="true">
+			<node name="downloadDir" value="کجا کتاب های دانلود شده را ذخیره کنم">
 				<node name="chooserTitle" value="پوشه کتابها"/>
 			</node>
-			<node name="fontPath" value="کجا فونت ها را پیدا کنم" toBeTranslated="true">
+			<node name="fontPath" value="کجا فونت ها را پیدا کنم">
 				<node name="chooserTitle" value="پوشه فونتها"/>
 			</node>
-			<node name="tempDir" value="فایل های موقت اینجا ذخیره میشود" toBeTranslated="true">
-				<node name="chooserTitle" value="پوشه فایل های موقت" toBeTranslated="true"/>
+			<node name="tempDir" value="فایل های موقت اینجا ذخیره میشود">
+				<node name="chooserTitle" value="پوشه فایل های موقت"/>
 			</node>
 		</node>
 		<node name="appearance" value="نمایش">
@@ -395,9 +394,9 @@
 				<node name="summaryOn" value="نمایش نوار وضعیت هنگامی که منو فعال میشود"/>
 				<node name="summaryOff" value="عدم نمایش نوار وضعیت هنگامی که منو فعال میشود"/>
 			</node>
-			<node name="fullscreenMode" value="حالت تمام صفحه" toBeTranslated="true">
-				<node name="summaryOn" value="پنهان کردن کنترل های هدایت" toBeTranslated="true"/>
-				<node name="summaryOff" value="نمایش کنترل های هدایت" toBeTranslated="true"/>
+			<node name="fullscreenMode" value="حالت تمام صفحه">
+				<node name="summaryOn" value="پنهان کردن کنترل های هدایت"/>
+				<node name="summaryOff" value="نمایش کنترل های هدایت"/>
 			</node>
 			<node name="disableButtonLights" value="غیرفعال کردن نور کلیدها هنگام خواندن">
 				<node name="summaryOn" value="غیرفعال کردن نور کلیدها &quot; در بعضی از دستگاه ها عمل نمیکند&quot;"/>
@@ -467,9 +466,9 @@
 				<node name="normal" value="عادي"/>
 				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
-			<node name="textDecoration" value="تزئینات متن" toBeTranslated="true">
-				<node name="inherit" value="&lt;عوض نشده&gt;" toBeTranslated="true"/>
-				<node name="none" value="بدون تزئینات" toBeTranslated="true"/>
+			<node name="textDecoration" value="تزئینات متن">
+				<node name="inherit" value="&lt;عوض نشده&gt;"/>
+				<node name="none" value="بدون تزئینات"/>
 				<node name="underline" value="زير خط كشيده"/>
 				<node name="line-through" value="حذف شده"/>
 			</node>
@@ -497,14 +496,14 @@
 			<node name="spaceAfter" value="بعد فاصله"/>
 			<node name="leftIndent" value="تو بردن سمت چپ"/>
 			<node name="rightIndent" value="تو بردن سمت راست"/>
-			<node name="verticalAlignment" value="چیدمان عمودی" toBeTranslated="true"/>
+			<node name="verticalAlignment" value="چیدمان عمودی"/>
 			<node name="more" value="سبك هاي بيشتر">
 				<node name="summary" value="تنظیمات جداگانه برای عناوین، نوشته ها، و غیره"/>
 				<node name="Regular Paragraph" value="پاراگراف عادي">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="EPub پاراگراف" toBeTranslated="true">
-					<node name="summary" value="&lt;p&gt; XHTML محتوای تگ" toBeTranslated="true"/>
+				<node name="xhtml-tag-p" value="EPub پاراگراف">
+					<node name="summary" value="&lt;p&gt; XHTML محتوای تگ"/>
 				</node>
 				<node name="Title" value="عنوان">
 					<node name="summary" value=""/>
@@ -606,9 +605,9 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="اجرا / رد مقادير تعريف شده در CSS"/>
-			<node name="fontFamily" value="خانواده فونت" toBeTranslated="true">
-				<node name="summaryOn" value="استفاده از خانواده فونت تعریف شده در CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="نادیده گرفتن خانواده فونت تعریف شده در CSS" toBeTranslated="true"/>
+			<node name="fontFamily" value="خانواده فونت">
+				<node name="summaryOn" value="استفاده از خانواده فونت تعریف شده در CSS"/>
+				<node name="summaryOff" value="نادیده گرفتن خانواده فونت تعریف شده در CSS"/>
 			</node>
 			<node name="fontSize" value="اندازه فونت">
 				<node name="summaryOn" value="اجراي اندازه فونت تعريف شده در CSS "/>
@@ -618,45 +617,45 @@
 				<node name="summaryOn" value="اجراي هم ترازي متن تعريف شده در CSS"/>
 				<node name="summaryOff" value="رد هم ترازي متن تعريف شده در CSS"/>
 			</node>
-			<node name="margins" value="حاشیه ها" toBeTranslated="true">
-				<node name="summaryOn" value="درخواست حاشیه تعریف شده در CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="نادیده گرفتن حاشیه تعریف شده در CSS" toBeTranslated="true"/>
+			<node name="margins" value="حاشیه ها">
+				<node name="summaryOn" value="درخواست حاشیه تعریف شده در CSS"/>
+				<node name="summaryOff" value="نادیده گرفتن حاشیه تعریف شده در CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="رنگ ها &amp; والپيپر">
 			<node name="summary" value="تنظيمات رنگ"/>
 			<node name="background" value="زمينه ">
 				<node name="chooser">
-					<node name="solidColor" value="رنگ جامد ..." toBeTranslated="true"/>
-					<node name="predefined" value="بافت از پیش تعریف شده ..." toBeTranslated="true"/>
-					<node name="selectFile" value="انتخاب فایل ..." toBeTranslated="true"/>
+					<node name="solidColor" value="رنگ جامد ..."/>
+					<node name="predefined" value="بافت از پیش تعریف شده ..."/>
+					<node name="selectFile" value="انتخاب فایل ..."/>
 				</node>
 				<node name="solidColor" value="رنگ يكپارچه"/>
 				<node name="leather" value="چرمي"/>
 				<node name="sepia" value="قرمز قهوه اي"/>
 				<node name="wood" value="درختي"/>
-				<node name="sand" value="شن" toBeTranslated="true"/>
-				<node name="hardpaper" value="کاغذ سخت" toBeTranslated="true"/>
+				<node name="sand" value="شن"/>
+				<node name="hardpaper" value="کاغذ سخت"/>
 			</node>
-			<node name="fillMode" value="حالت پر کردن" toBeTranslated="true">
-				<node name="tile" value="عنوان" toBeTranslated="true"/>
-				<node name="tileMirror" value="کاشی آینه" toBeTranslated="true"/>
-				<node name="fullscreen" value="تمام صفحه" toBeTranslated="true"/>
-				<node name="stretch" value="کشش برای پر کردن صفحه نمایش" toBeTranslated="true"/>
-				<node name="tileVertically" value="کشش افقی، کاشی به صورت عمودی" toBeTranslated="true"/>
-				<node name="tileHorizontally" value="کشش عمودی، کاشی به صورت افقی" toBeTranslated="true"/>
+			<node name="fillMode" value="حالت پر کردن">
+				<node name="tile" value="عنوان"/>
+				<node name="tileMirror" value="کاشی آینه"/>
+				<node name="fullscreen" value="تمام صفحه"/>
+				<node name="stretch" value="کشش برای پر کردن صفحه نمایش"/>
+				<node name="tileVertically" value="کشش افقی، کاشی به صورت عمودی"/>
+				<node name="tileHorizontally" value="کشش عمودی، کاشی به صورت افقی"/>
 			</node>
 			<node name="selectionBackground" value="انتخاب زمينه"/>
 			<node name="selectionForeground" value="متن انتخاب شده"/>
 			<node name="text" value="متن عادي"/>
 			<node name="hyperlink" value="متن هايپرلينك"/>
 			<node name="hyperlinkVisited" value="متن هايپرلينك بازديد شده"/>
-			<node name="highlightingForeground" value="نتایج جستجو" toBeTranslated="true"/>
+			<node name="highlightingForeground" value="نتایج جستجو"/>
 			<node name="highlightingBackground" value="نتايج جستجوي زمينه"/>
-			<node name="footerOldStyle" value="پاورقی (سبک قدیمی)" toBeTranslated="true"/>
-			<node name="footerBackground" value="پس زمینه پاورقی" toBeTranslated="true"/>
-			<node name="footerForeground" value="متن پاورقی" toBeTranslated="true"/>
-			<node name="footerForegroundUnread" value="خط پاورقی" toBeTranslated="true"/>
+			<node name="footerOldStyle" value="پاورقی (سبک قدیمی)"/>
+			<node name="footerBackground" value="پس زمینه پاورقی"/>
+			<node name="footerForeground" value="متن پاورقی"/>
+			<node name="footerForegroundUnread" value="خط پاورقی"/>
 		</node>
 		<node name="margins" value="حاشيه ها">
 			<node name="summary" value="حاشيه هاي متن"/>
@@ -673,13 +672,13 @@
 				<node name="show" value="لغزنده عمودي"/>
 				<node name="showAsProgress" value="نوار پيشرفت عمودي"/>
 				<node name="showAsFooter" value="زير برگ افقي"/>
-				<node name="showAsFooterOldStyle" value="پاورقی افقی (سبک قدیمی)" toBeTranslated="true"/>
+				<node name="showAsFooterOldStyle" value="پاورقی افقی (سبک قدیمی)"/>
 			</node>
 			<node name="footerHeight" value="ارتفاع زيربرگ"/>
-			<node name="footerOldStyleColor" value="پاورقی (سبک قدیمی) رنگ" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="رنگ پس زمینه پاورقی" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="پاورقی رنگ متن" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="رنگ خط پاورقی" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="پاورقی (سبک قدیمی) رنگ"/>
+			<node name="footerBackgroundColor" value="رنگ پس زمینه پاورقی"/>
+			<node name="footerForegroundColor" value="پاورقی رنگ متن"/>
+			<node name="footerForegroundUnreadColor" value="رنگ خط پاورقی"/>
 			<node name="tocMarks" value="نمايش علائم فهرست مطالب">
 				<node name="summaryOn" value="نمايش علائم در نوار زيربرگ فهرست مطالب"/>
 				<node name="summaryOff" value="عدم نمايش علائم در نوار زيربرگ فهرست مطالب"/>
@@ -721,7 +720,7 @@
 				<node name="none" value="تغيير صفحه بدون انيميشن"/>
 				<node name="curl" value="چرخش انيميشن"/>
 				<node name="slide" value="اسلايد انيميشن"/>
-				<node name="slideOldStyle" value="انیمیشن اسلاید (سبک قدیمی)" toBeTranslated="true"/>
+				<node name="slideOldStyle" value="انیمیشن اسلاید (سبک قدیمی)"/>
 				<node name="shift" value="تغيير انيميشن"/>
 			</node>
 			<node name="animationSpeed" value="سرعت انيميشن">
@@ -747,8 +746,8 @@
 			<node name="summary" value="تنظيمات ديكشنري"/>
 			<node name="dictionary" value="ديكشنري"/>
 			<node name="translator" value="مترجم"/>
-			<node name="targetLanguage" value="ترجمه به" toBeTranslated="true">
-				<node name="any" value="همه زبان ها" toBeTranslated="true"/>
+			<node name="targetLanguage" value="ترجمه به">
+				<node name="any" value="همه زبان ها"/>
 			</node>
 			<node name="tappingAction" value="اقدام ضربه طولاني">
 				<node name="doNothing" value="ضربه طولاني اقدامي نمي كند"/>
@@ -774,9 +773,9 @@
 				<node name="covers" value="تنها پوشش ها"/>
 				<node name="all" value="همه"/>
 			</node>
-			<node name="matchBackground" value="شدت تطابق پس زمینه" toBeTranslated="true">
-				<node name="summaryOn" value="تنظیم رنگ تصویر با توجه پس زمینه" toBeTranslated="true"/>
-				<node name="summaryOff" value="رنگ تصویر را تنظیم نکن" toBeTranslated="true"/>
+			<node name="matchBackground" value="شدت تطابق پس زمینه">
+				<node name="summaryOn" value="تنظیم رنگ تصویر با توجه پس زمینه"/>
+				<node name="summaryOff" value="رنگ تصویر را تنظیم نکن"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="لغو منو">
@@ -825,24 +824,24 @@
 			<node name="email" value="ايميلي به ما بفرستيد">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
-			<node name="googleplus" value="به ما در گوگل پلاس بپیوندید* " toBeTranslated="true">
+			<node name="googleplus" value="به ما در گوگل پلاس بپیوندید* ">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
 			<node name="twitter" value="در توييتر مارا دنبال كنيد">
 				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="اف بی ریدر در فیسبوک" toBeTranslated="true">
+			<node name="facebook" value="اف بی ریدر در فیسبوک">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
-			<node name="thirdParty" value="کتابخانه های شخص ثالث" toBeTranslated="true"/>
+			<node name="thirdParty" value="کتابخانه های شخص ثالث"/>
 		</node>
-		<node name="eink" value="صفحه نمایش جوهر الکترونیکیE-ink screen" toBeTranslated="true">
-			<node name="summary" value="گزینه های خاص برای صفحه نمایش جوهر الکترونیکی" toBeTranslated="true"/>
-			<node name="enableFastRefresh" value="حالت تازه کردن سریع" toBeTranslated="true">
-				<node name="summaryOn" value="استفاده سریع (اما نه بسیار تمیز) به روز رسانی صفحه نمایش" toBeTranslated="true"/>
-				<node name="summaryOff" value="استفاده کامل (تمیز، اما آهسته) به روز رسانی صفحه نمایش" toBeTranslated="true"/>
+		<node name="eink" value="صفحه نمایش جوهر الکترونیکیE-ink screen">
+			<node name="summary" value="گزینه های خاص برای صفحه نمایش جوهر الکترونیکی"/>
+			<node name="enableFastRefresh" value="حالت تازه کردن سریع">
+				<node name="summaryOn" value="استفاده سریع (اما نه بسیار تمیز) به روز رسانی صفحه نمایش"/>
+				<node name="summaryOff" value="استفاده کامل (تمیز، اما آهسته) به روز رسانی صفحه نمایش"/>
 			</node>
-			<node name="interval" value="تعداد روز رسانی های سریع بین تازه شدن های کامل" toBeTranslated="true"/>
+			<node name="interval" value="تعداد روز رسانی های سریع بین تازه شدن های کامل"/>
 		</node>
 	</node>
 	<node name="dialog">
@@ -878,7 +877,7 @@
 			<node name="dontAskAgain" value="مجدد سوال نپرس"/>
 		</node>
 		<node name="backgroundAuthentication">
-			<node name="message" value="باید وارد بشی که دسترسی پیدا کنی" toBeTranslated="true"/>
+			<node name="message" value="باید وارد بشی که دسترسی پیدا کنی"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="نصب ديكشنري"/>
@@ -888,34 +887,34 @@
 			<node name="message" value="فايل كتاب بصورت برگشت ناپذير حذف خواهد شد. مطمئن هستيد؟"/>
 		</node>
 		<node name="deleteMultipleBookBox">
-			<node name="title" value="حذف کتاب ها" toBeTranslated="true"/>
-			<node name="message" value="%s فايل كتاب بصورت برگشت ناپذير حذف خواهد شد. مطمئن هستيد؟" toBeTranslated="true"/>
+			<node name="title" value="حذف کتاب ها"/>
+			<node name="message" value="%s فايل كتاب بصورت برگشت ناپذير حذف خواهد شد. مطمئن هستيد؟"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="فايل در ديسك موجود است. مجددا دانلود شود؟"/>
 		</node>
 		<node name="litresUserRegistration">
-			<node name="title" value="نام نویسی کاربر" toBeTranslated="true"/>
-			<node name="login" value="نام کاربری" toBeTranslated="true"/>
-			<node name="password" value="گذرواژه" toBeTranslated="true"/>
-			<node name="confirmPassword" value="گذرواژه&#10;تایید" toBeTranslated="true"/>
-			<node name="email" value="ایمیل" toBeTranslated="true"/>
+			<node name="title" value="نام نویسی کاربر"/>
+			<node name="login" value="نام کاربری"/>
+			<node name="password" value="گذرواژه"/>
+			<node name="confirmPassword" value="گذرواژه&#10;تایید"/>
+			<node name="email" value="ایمیل"/>
 		</node>
 		<node name="litresAutoSignIn">
-			<node name="title" value="ورود به سیستم" toBeTranslated="true"/>
-			<node name="email" value="ایمیل" toBeTranslated="true"/>
+			<node name="title" value="ورود به سیستم"/>
+			<node name="email" value="ایمیل"/>
 			<node name="actions">
-				<node name="title" value="ورود به سیستم با ایمیل امکان پذیر نیست&#10;%s" toBeTranslated="true"/>
-				<node name="recover" value="بازیابی اطلاعات حساب" toBeTranslated="true"/>
-				<node name="signIn" value="ورود بصورت دستی" toBeTranslated="true"/>
-				<node name="anotherEmail" value="ایمیل دیگری انتخاب کنید" toBeTranslated="true"/>
+				<node name="title" value="ورود به سیستم با ایمیل امکان پذیر نیست&#10;%s"/>
+				<node name="recover" value="بازیابی اطلاعات حساب"/>
+				<node name="signIn" value="ورود بصورت دستی"/>
+				<node name="anotherEmail" value="ایمیل دیگری انتخاب کنید"/>
 			</node>
-			<node name="signedIn" value="شما با این ایمیل وارد شده اید %s." toBeTranslated="true"/>
-			<node name="registrationSuccessful" value="ما یک حساب لیتر برای شما ایجاد کرده ایم. اطلاعات تفصیلی ارسال شده به %s." toBeTranslated="true"/>
-			<node name="passwordSent" value="اطلاعات حساب شما ارسال شده به %s. لطفا صندوق ایمیل خود را بررسی کنید." toBeTranslated="true"/>
+			<node name="signedIn" value="شما با این ایمیل وارد شده اید %s."/>
+			<node name="registrationSuccessful" value="ما یک حساب لیتر برای شما ایجاد کرده ایم. اطلاعات تفصیلی ارسال شده به %s."/>
+			<node name="passwordSent" value="اطلاعات حساب شما ارسال شده به %s. لطفا صندوق ایمیل خود را بررسی کنید."/>
 		</node>
 		<node name="waitMessage">
-			<node name="tryConnect" value="تلاش برای اتصال. لطفا صبر کنید ..." toBeTranslated="true"/>
+			<node name="tryConnect" value="تلاش برای اتصال. لطفا صبر کنید ..."/>
 			<node name="downloadingBook" value="دانلود كتاب %s"/>
 			<node name="search" value="در حال جستجو. لطفاً صبر كنيد..."/>
 			<node name="loadInfo" value="درحال بارگذاري اطلاعات. لطفاً صبر كنيد..."/>
@@ -931,11 +930,11 @@
 			<node name="loadingNetworkBookInfo" value="در حال بارگذاري اطلاعات كتاب. لطفاً صبر كنيد..."/>
 			<node name="updatingCatalogsList" value="در حال آپديت ليست كاتالوگ. لطفاً صبر كنيد..."/>
 			<node name="updatingAccountInformation" value="در حال آپديت اطلاعات كاربري. لطفاً صبر كنيد..."/>
-			<node name="initDRMEngine" value="مقداردهی اولیه موتور DRM. لطفا صبر کنید ..." toBeTranslated="true"/>
-			<node name="acquireLicense" value="کسب مجوز. لطفا صبر کنید ..." toBeTranslated="true"/>
-			<node name="registerUser" value="ثبت نام حساب جدید. لطفا صبر کنید ..." toBeTranslated="true"/>
-			<node name="autoSignIn" value="ورود به سیستم. لطفا، منتظر بمانید ..." toBeTranslated="true"/>
-			<node name="recoverPassword" value="بازیابی رمز عبور. لطفا صبر کنید ..." toBeTranslated="true"/>
+			<node name="initDRMEngine" value="مقداردهی اولیه موتور DRM. لطفا صبر کنید ..."/>
+			<node name="acquireLicense" value="کسب مجوز. لطفا صبر کنید ..."/>
+			<node name="registerUser" value="ثبت نام حساب جدید. لطفا صبر کنید ..."/>
+			<node name="autoSignIn" value="ورود به سیستم. لطفا، منتظر بمانید ..."/>
+			<node name="recoverPassword" value="بازیابی رمز عبور. لطفا صبر کنید ..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="خطاي سرور داخلي"/>
@@ -949,14 +948,14 @@
 			<node name="notAnOPDS" value="اين كاتالوگ OPDS نيست"/>
 			<node name="noRequiredInformation" value="اطلاعات مورد نياز در كاتالوگ مشخص نشده"/>
 			<node name="cacheDirectoryError" value="عدم توانايي در ايجاد فهرست راهنماي مخفي"/>
-			<node name="usernameAlreadyInUse" value="نام کاربری قبلا استفاده شده" toBeTranslated="true"/>
-			<node name="usernameNotSpecified" value="نام کاربری نباید خالی باشد" toBeTranslated="true"/>
-			<node name="passwordNotSpecified" value="گذرواژه نباید خالی باشد" toBeTranslated="true"/>
-			<node name="passwordsDoNotMatch" value="کلمه عبور وارد مطابقت ندارند" toBeTranslated="true"/>
-			<node name="emailNotSpecified" value="آدرس ایمیل نباید خالی باشد" toBeTranslated="true"/>
-			<node name="emailAlreadyInUse" value="ایمیل قبلا استفاده شده" toBeTranslated="true"/>
-			<node name="invalidEMail" value="آدرس ایمیل نامعتبر است" toBeTranslated="true"/>
-			<node name="tooManyRegistrations" value="ثبت نام بیش از حد از IP شما;&#10;چند دقیقه بعد دوباره امتحان کنید" toBeTranslated="true"/>
+			<node name="usernameAlreadyInUse" value="نام کاربری قبلا استفاده شده"/>
+			<node name="usernameNotSpecified" value="نام کاربری نباید خالی باشد"/>
+			<node name="passwordNotSpecified" value="گذرواژه نباید خالی باشد"/>
+			<node name="passwordsDoNotMatch" value="کلمه عبور وارد مطابقت ندارند"/>
+			<node name="emailNotSpecified" value="آدرس ایمیل نباید خالی باشد"/>
+			<node name="emailAlreadyInUse" value="ایمیل قبلا استفاده شده"/>
+			<node name="invalidEMail" value="آدرس ایمیل نامعتبر است"/>
+			<node name="tooManyRegistrations" value="ثبت نام بیش از حد از IP شما;&#10;چند دقیقه بعد دوباره امتحان کنید"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="تاييد"/>
@@ -990,62 +989,62 @@
 			<node name="more" value="راهنمایی بعدي"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="اف بی ریدر بصورت پیش فرض بصورت تمام صفحه کتاب را نمایش میدهد.با چندبار ضربه زدن به مرکز صفحه کنترل ها نمایش داده میشوند.شما با رفتن به قسمت ظاهر در بخش تنظیمات میتوانید این رفتار برنامه را تغییر دهید." toBeTranslated="true"/>
-			<node name="message2" value="خیلی خب!حالا دوباره به مرکز صفحه ضربه بزنید برای مخفی کردن کنترل ها و همچنین این نکته.اگر شما میخواهید کنترل ها را در حین مطالعه نگه دارید گزینه “نمایش نوار فعالیت” را در قسمت  “ظاهر” بخش نتظیمات انتخاب کنید." toBeTranslated="true"/>
+			<node name="message1" value="اف بی ریدر بصورت پیش فرض بصورت تمام صفحه کتاب را نمایش میدهد.با چندبار ضربه زدن به مرکز صفحه کنترل ها نمایش داده میشوند.شما با رفتن به قسمت ظاهر در بخش تنظیمات میتوانید این رفتار برنامه را تغییر دهید."/>
+			<node name="message2" value="خیلی خب!حالا دوباره به مرکز صفحه ضربه بزنید برای مخفی کردن کنترل ها و همچنین این نکته.اگر شما میخواهید کنترل ها را در حین مطالعه نگه دارید گزینه “نمایش نوار فعالیت” را در قسمت  “ظاهر” بخش نتظیمات انتخاب کنید."/>
 		</node>
 		<node name="folderList">
-			<node name="addFolder" value="افزودن پوشه" toBeTranslated="true"/>
-			<node name="removeDialog" value="حذف پوشه" toBeTranslated="true">
-				<node name="message" value="حذف “%s” از لیست؟" toBeTranslated="true"/>
+			<node name="addFolder" value="افزودن پوشه"/>
+			<node name="removeDialog" value="حذف پوشه">
+				<node name="message" value="حذف “%s” از لیست؟"/>
 			</node>
-			<node name="duplicate" value="“%s” در حال حاضر در لیست است" toBeTranslated="true"/>
+			<node name="duplicate" value="“%s” در حال حاضر در لیست است"/>
 		</node>
 		<node name="editList">
-			<node name="edit" value="ویرایش" toBeTranslated="true"/>
-			<node name="remove" value="حذف" toBeTranslated="true"/>
+			<node name="edit" value="ویرایش"/>
+			<node name="remove" value="حذف"/>
 		</node>
 		<node name="editTags">
-			<node name="addTag" value="افزودن برچسب" toBeTranslated="true"/>
-			<node name="removeDialog" value="حذف برچسب" toBeTranslated="true">
-				<node name="message" value="حذف برچسب “%s” از لیست؟" toBeTranslated="true"/>
+			<node name="addTag" value="افزودن برچسب"/>
+			<node name="removeDialog" value="حذف برچسب">
+				<node name="message" value="حذف برچسب “%s” از لیست؟"/>
 			</node>
 		</node>
 		<node name="editAuthors">
-			<node name="addAuthor" value="افزودن نویسنده" toBeTranslated="true"/>
-			<node name="removeDialog" value="حذف نویسنده" toBeTranslated="true">
-				<node name="message" value="حذف نویسنده “%s” از لیست؟" toBeTranslated="true"/>
+			<node name="addAuthor" value="افزودن نویسنده"/>
+			<node name="removeDialog" value="حذف نویسنده">
+				<node name="message" value="حذف نویسنده “%s” از لیست؟"/>
 			</node>
 		</node>
 		<node name="fileChooser">
-			<node name="root" value="ریشه" toBeTranslated="true"/>
-			<node name="newFolder" value="پوشه جدید" toBeTranslated="true"/>
-			<node name="folderNameHint" value="نام پوشه" toBeTranslated="true"/>
+			<node name="root" value="ریشه"/>
+			<node name="newFolder" value="پوشه جدید"/>
+			<node name="folderNameHint" value="نام پوشه"/>
 			<node name="menu">
-				<node name="origin" value="مبدا" toBeTranslated="true"/>
-				<node name="reload" value="بازنگری" toBeTranslated="true"/>
+				<node name="origin" value="مبدا"/>
+				<node name="reload" value="بازنگری"/>
 			</node>
-			<node name="sortBy" value="چیدن با" toBeTranslated="true">
-				<node name="name" value="نام" toBeTranslated="true"/>
-				<node name="size" value="اندازه" toBeTranslated="true"/>
-				<node name="date" value="تاریخ" toBeTranslated="true"/>
+			<node name="sortBy" value="چیدن با">
+				<node name="name" value="نام"/>
+				<node name="size" value="اندازه"/>
+				<node name="date" value="تاریخ"/>
 			</node>
-			<node name="permissionDenied" value="دسترسی امکان پذیر نیست" toBeTranslated="true"/>
+			<node name="permissionDenied" value="دسترسی امکان پذیر نیست"/>
 		</node>
 		<node name="missingPlugin">
-			<node name="title" value="افزونه برای %s قایل نصب مشده است. همین الان نصب شود؟" toBeTranslated="true"/>
+			<node name="title" value="افزونه برای %s قایل نصب مشده است. همین الان نصب شود؟"/>
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="nativeCodeFailure" value="خطا %s در کد محلی در طول خواندن '%s'" toBeTranslated="true"/>
+		<node name="nativeCodeFailure" value="خطا %s در کد محلی در طول خواندن '%s'"/>
 		<node name="errorReadingFile" value="هنگام خواندن '%s' خطایی رخ داده است"/>
 		<node name="errorReadingZip" value="درهنگام استخراج '%s' خطایی رخ داده است"/>
 		<node name="pluginNotFound" value="پلاگینی وجود ندارد برای '%s'"/>
 		<node name="unknownPluginType" value="نوع پلاگین ناشناخته است: %s"/>
 		<node name="fileNotFound" value="فایل پیدا نشد: %s"/>
-		<node name="unsupportedEncryptionMethod" value="فایل %s با روشی که توسط اف بی ریدر پشتیبانی نمی گردد رمزگذاری شده است. بعضی از صفحات قابل خواندن نیست" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="فایل %s با روشی که توسط اف بی ریدر پشتیبانی نمی گردد رمزگذاری شده است. بعضی از صفحات قابل خواندن نیست"/>
 		<node name="opfFileNotFound" value="OPF در %s پیدا نشد"/>
 		<node name="unsupportedFileFormat" value="فرمت فایل پشتیبانی نمیشود برای '%s'"/>
-		<node name="errorParsingRtf" value="خطای تجزیه RTF در: %s" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="خطای تجزیه RTF در: %s"/>
 		<node name="cannotRunAndroidMarket" value="عدم قابليت دسترسي به بازار آندرويد. لطفا %s را بصورت دستي نصب كنيد"/>
 		<node name="textNotFound" value="متاسفانه متن مناسبي در كتاب موجود نيست"/>
 		<node name="bookNotFound" value="متاسفانه كتاب مناسبي در كتابخانه موجود نيست"/>
@@ -1058,10 +1057,10 @@
 		<node name="emptyCatalog" value="متاسفانه كاتالوگ خالي است"/>
 		<node name="emptyBasket" value="متاسفانه سبدشما خالي است"/>
 		<node name="emptyNetworkSearchResults" value="متاسفانه كتابي يافت نشد"/>
-		<node name="videoServiceNotWorking" value="خدمات ویدیو در دسترس نیست، متاسفم" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="هیچ پخش کننده ویدئویی در این دستگاه وجود ندارد، متاسفم" toBeTranslated="true"/>
-		<node name="bookIsMissingTitle" value="کتاب از دست رفته" toBeTranslated="true"/>
-		<node name="bookIsMissing" value="کتاب '%s' بر روی دستگاه یافت نشد، متاسفم" toBeTranslated="true"/>
+		<node name="videoServiceNotWorking" value="خدمات ویدیو در دسترس نیست، متاسفم"/>
+		<node name="videoPlayerNotFound" value="هیچ پخش کننده ویدئویی در این دستگاه وجود ندارد، متاسفم"/>
+		<node name="bookIsMissingTitle" value="کتاب از دست رفته"/>
+		<node name="bookIsMissing" value="کتاب '%s' بر روی دستگاه یافت نشد، متاسفم"/>
 		<node name="downloadFailed" value="دانلود ناموفق"/>
 	</node>
 	<node name="external">
@@ -1086,45 +1085,45 @@
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
-	<node name="plugins" value="نصب افزونه ها" toBeTranslated="true">
-		<node name="noMorePlugins" value="ما در حال حاضر هیچ پلاگین جدیدی  نداریم، متاسفم" toBeTranslated="true"/>
-		<node name="litres" value="LitRes" toBeTranslated="true">
-			<node name="summary" value="فروشگاه کتاب روسی" toBeTranslated="true"/>
+	<node name="plugins" value="نصب افزونه ها">
+		<node name="noMorePlugins" value="ما در حال حاضر هیچ پلاگین جدیدی  نداریم، متاسفم"/>
+		<node name="litres" value="LitRes">
+			<node name="summary" value="فروشگاه کتاب روسی"/>
 		</node>
-		<node name="tts_plus" value="TTS+" toBeTranslated="true">
-			<node name="summary" value="نوشتار به گفتار" toBeTranslated="true"/>
+		<node name="tts_plus" value="TTS+">
+			<node name="summary" value="نوشتار به گفتار"/>
 		</node>
-		<node name="calibre_server_integration" value="اتصال به سرور محلی کالیبره" toBeTranslated="true">
-			<node name="summary" value="اتصال به سرور محلی کالیبره" toBeTranslated="true"/>
+		<node name="calibre_server_integration" value="اتصال به سرور محلی کالیبره">
+			<node name="summary" value="اتصال به سرور محلی کالیبره"/>
 		</node>
-		<node name="local_opds_scanner" value="اسکنر opds محلی" toBeTranslated="true">
-			<node name="summary" value="جستجوی کتاب ها در کتایخانه محلی" toBeTranslated="true"/>
+		<node name="local_opds_scanner" value="اسکنر opds محلی">
+			<node name="summary" value="جستجوی کتاب ها در کتایخانه محلی"/>
 		</node>
-		<node name="bookshelf" value="قفسه کتاب" toBeTranslated="true">
-			<node name="summary" value="نمایش بند انگشتی کتابخانه" toBeTranslated="true"/>
+		<node name="bookshelf" value="قفسه کتاب">
+			<node name="summary" value="نمایش بند انگشتی کتابخانه"/>
 		</node>
-		<node name="opds_server" value="OPDS سرور" toBeTranslated="true">
-			<node name="summary" value="کتاب ها را از دستگاهتان ارائه کنید" toBeTranslated="true"/>
+		<node name="opds_server" value="OPDS سرور">
+			<node name="summary" value="کتاب ها را از دستگاهتان ارائه کنید"/>
 		</node>
-		<node name="widgets" value="ابزارک ها" toBeTranslated="true">
-			<node name="summary" value="کتاب ها را به صفحه خانگی تان بیفزاریید" toBeTranslated="true"/>
+		<node name="widgets" value="ابزارک ها">
+			<node name="summary" value="کتاب ها را به صفحه خانگی تان بیفزاریید"/>
 		</node>
-		<node name="pdf" value="PDF" toBeTranslated="true">
-			<node name="summary" value="کتاب ها را در فرمت پی دی اف بخوانید" toBeTranslated="true"/>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="کتاب ها را در فرمت پی دی اف بخوانید"/>
 		</node>
-		<node name="djvu" value="DjVu" toBeTranslated="true">
-			<node name="summary" value="کتاب ها را در فرمت DjVu بخوانید" toBeTranslated="true"/>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="کتاب ها را در فرمت DjVu بخوانید"/>
 		</node>
-		<node name="cbr" value="کتاب های کمیک" toBeTranslated="true">
-			<node name="summary" value="کتاب های کمیک را بخوانید (CBR, CBZ)" toBeTranslated="true"/>
+		<node name="cbr" value="کتاب های کمیک">
+			<node name="summary" value="کتاب های کمیک را بخوانید (CBR, CBZ)"/>
 		</node>
 	</node>
 	<node name="drm">
-		<node name="encryptedSection" value="بخش رمزگذاری شده" toBeTranslated="true"/>
+		<node name="encryptedSection" value="بخش رمزگذاری شده"/>
 	</node>
 	<node name="yota">
-		<node name="frontScreenMessage" value="به خواندن کتاب هایتان بپردازید.برای بازگشت به این صفحه دکمه زیر را بزنید." toBeTranslated="true"/>
-		<node name="frontScreenButton" value="تغییر به این صفحه" toBeTranslated="true"/>
+		<node name="frontScreenMessage" value="به خواندن کتاب هایتان بپردازید.برای بازگشت به این صفحه دکمه زیر را بزنید."/>
+		<node name="frontScreenButton" value="تغییر به این صفحه"/>
 	</node>
 	<node name="hint">
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>

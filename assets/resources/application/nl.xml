@@ -23,7 +23,7 @@
 		<node name="favorites" value="Favorieten">
 			<node name="summary" value="Mijn geselecteerde boeken"/>
 		</node>
-		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
 			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="Gevonden">
@@ -70,7 +70,6 @@
 		<node name="deleteAll" value="Alles verwijderen"/>
 		<node name="uploadAgain" value="Opnieuw versturen"/>
 		<node name="tryAgain" value="Nogmaals proberen"/>
-		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader netwerkbibliotheek">
 		<node name="sync" value="FBReader® boekennetwerk">
