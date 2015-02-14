@@ -435,8 +435,13 @@ public class LibraryService extends Service {
 			return serialized;
 		}
 
-		public void setActiveFormats(List<String> formatIds) {
-			myCollection.setActiveFormats(formatIds);
+		public boolean setActiveFormats(List<String> formatIds) {
+			if (myCollection.setActiveFormats(formatIds)) {
+				reset(true);
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
