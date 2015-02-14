@@ -38,18 +38,6 @@ public abstract class BookUtil {
 	private static final WeakHashMap<ZLFile,WeakReference<ZLImage>> ourCovers =
 		new WeakHashMap<ZLFile,WeakReference<ZLImage>>();
 
-	static FormatPlugin getPluginOrNull(ZLFile file) {
-		return PluginCollection.Instance().getPlugin(file);
-	}
-
-	static FormatPlugin getPlugin(ZLFile file) throws BookReadingException {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
-		if (plugin == null) {
-			throw new BookReadingException("pluginNotFound", file);
-		}
-		return plugin;
-	}
-
 	public static ZLImage getCover(Book book) {
 		if (book == null) {
 			return null;
@@ -71,8 +59,8 @@ public abstract class BookUtil {
 		}
 		ZLImage image = null;
 		try {
-			image = getPlugin(file).readCover(file);
-		} catch (BookReadingException e) {
+			image = PluginCollection.Instance().getPlugin(file).readCover(file);
+		} catch (Exception e) {
 			// ignore
 		}
 		ourCovers.put(file, image != null ? new WeakReference<ZLImage>(image) : NULL_IMAGE);

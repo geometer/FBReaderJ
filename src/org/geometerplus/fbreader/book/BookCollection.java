@@ -63,13 +63,16 @@ public class BookCollection extends AbstractBookCollection {
 		if (bookFile == null) {
 			return null;
 		}
+
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(bookFile);
-		if (plugin == null) {
+		if (plugin == null || !isFormatActive(plugin)) {
 			return null;
 		}
-		if (!(plugin instanceof BuiltinFormatPlugin) && bookFile != bookFile.getPhysicalFile()) {
-			return null;
-		}
+
+		return getBookByFile(bookFile, plugin);
+	}
+
+	private Book getBookByFile(ZLFile bookFile, final FormatPlugin plugin) {
 		try {
 			bookFile = plugin.realBookFile(bookFile);
 		} catch (BookReadingException e) {
@@ -109,9 +112,9 @@ public class BookCollection extends AbstractBookCollection {
 
 		try {
 			if (book == null) {
-				book = new Book(bookFile);
+				book = new Book(bookFile, plugin);
 			} else {
-				book.readMetainfo();
+				book.readMetainfo(plugin);
 			}
 		} catch (BookReadingException e) {
 			return null;
@@ -128,7 +131,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 
 		book = myDatabase.loadBook(id);
-		if (book == null || book.File == null || !book.File.exists()) {
+		if (book == null || book.File == null || !book.File.exists() || !isBookFormatActive(book)) {
 			return null;
 		}
 		book.loadLists(myDatabase);
@@ -522,14 +525,9 @@ public class BookCollection extends AbstractBookCollection {
 		// Step 0: get database books marked as "existing"
 		final FileInfoSet fileInfos = new FileInfoSet(myDatabase);
 		final Map<Long,Book> savedBooksByFileId = myDatabase.loadBooks(fileInfos, true);
-		final Map<Long,Book> savedBooksByBookId = new HashMap<Long,Book>();
-		for (Book b : savedBooksByFileId.values()) {
-			savedBooksByBookId.put(b.getId(), b);
-		}
 
 		// Step 1: check if files corresponding to "existing" books really exists;
 		//         add books to library if yes (and reload book info if needed);
-		//         remove from recent/favorites list if no;
 		//         collect newly "orphaned" books
 		final Set<Book> orphanedBooks = new HashSet<Book>();
 		final Set<ZLPhysicalFile> physicalFiles = new HashSet<ZLPhysicalFile>();
@@ -538,9 +536,18 @@ public class BookCollection extends AbstractBookCollection {
 			final ZLPhysicalFile file = book.File.getPhysicalFile();
 			if (file != null) {
 				physicalFiles.add(file);
-			}
-			if (file != book.File && file != null && file.getPath().endsWith(".epub")) {
-				continue;
+
+				// yes, we do add the file to physicalFiles set
+				//      for not testing it again later,
+				// but we do not store the book
+				if (!isBookFormatActive(book)) {
+					continue;
+				}
+
+				// a hack to skip obsolete *.epub:*.opf entries
+				if (file != book.File && file.getPath().endsWith(".epub")) {
+					continue;
+				}
 			}
 			if (book.File.exists()) {
 				boolean doAdd = true;
@@ -648,6 +655,11 @@ public class BookCollection extends AbstractBookCollection {
 			return;
 		}
 
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
+		if (plugin != null && !isFormatActive(plugin)) {
+			return;
+		}
+
 		try {
 			final Book book = orphanedBooksByFileId.get(fileId);
 			if (book != null) {
@@ -661,7 +673,7 @@ public class BookCollection extends AbstractBookCollection {
 			// ignore
 		}
 
-		final Book book = getBookByFile(file);
+		final Book book = getBookByFile(file, plugin);
 		if (book != null) {
 			newBooks.add(book);
 		} else if (file.isArchive()) {
@@ -814,7 +826,23 @@ public class BookCollection extends AbstractBookCollection {
 		return descriptors;
 	}
 
+	private Set<String> myActiveFormats;
+
 	public void setActiveFormats(List<String> formatIds) {
 		// TODO: implement
+		myActiveFormats = new HashSet<String>(formatIds);
+	}
+
+	private boolean isFormatActive(FormatPlugin plugin) {
+		// TODO: implement
+		return myActiveFormats == null || myActiveFormats.contains(plugin.supportedFileType());
+	}
+
+	private boolean isBookFormatActive(Book book) {
+		try {
+			return isFormatActive(book.getPlugin());
+		} catch (BookReadingException e) {
+			return false;
+		}
 	}
 }
