@@ -144,4 +144,7 @@ public abstract class BooksDatabase {
 	protected abstract String getHash(long bookId, long lastModified) throws NotAvailable;
 	protected abstract void setHash(long bookId, String hash) throws NotAvailable;
 	protected abstract List<Long> bookIdsByHash(String hash);
+
+	protected abstract String getOptionValue(String name);
+	protected abstract void setOptionValue(String name, String value);
 }
