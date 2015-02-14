@@ -25,8 +25,6 @@ import android.preference.ListPreference;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class ZLStringListPreference extends ListPreference {
-	private String[] myEntries;
-
 	protected final ZLResource myValuesResource;
 
 	ZLStringListPreference(Context context, ZLResource resource) {
@@ -57,14 +55,15 @@ abstract class ZLStringListPreference extends ListPreference {
 
 		setEntryValues(values);
 
-		myEntries = texts;
-		final String[] entries = new String[texts.length];
-		// It appears that setEntries() DOES NOT perform any extra formatting on the char
-		// sequences, so to get just a single %, we'd have to perform the substitution manually.
+		// It appears that setEntries() DOES NOT perform any formatting on the char sequences
 		// http://developer.android.com/reference/android/preference/ListPreference.html#setEntries(java.lang.CharSequence[])
-		// TODO: We should probably do an assert() and tell people to check their xml here.
+		final String[] entries = new String[texts.length];
 		for (int i = 0; i < texts.length; ++i) {
-			entries[i] = texts[i].replace("%%", "%");
+			try {
+				entries[i] = String.format(texts[i]);
+			} catch (Exception e) {
+				entries[i] = texts[i];
+			}
 		}
 		setEntries(entries);
 	}
@@ -83,21 +82,12 @@ abstract class ZLStringListPreference extends ListPreference {
 			}
 		}
 		setValueIndex(index);
-		updateSummary();
 		return found;
 	}
 
 	@Override
-	protected void onDialogClosed(boolean result) {
-		super.onDialogClosed(result);
-		if (result) {
-			updateSummary();
-		}
-	}
-
-	private void updateSummary() {
-		if (myEntries != null) {
-			setSummary(myEntries[findIndexOfValue(getValue())]);
-		}
+	public CharSequence getSummary() {
+		// standard getSummary() calls extra String.format(), that causes exceptions in some cases
+		return getEntry();
 	}
 }
