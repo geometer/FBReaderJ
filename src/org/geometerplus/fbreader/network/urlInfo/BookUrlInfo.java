@@ -86,6 +86,13 @@ public class BookUrlInfo extends UrlInfo {
 			path.delete(0, 4);
 		}
 		path.insert(0, File.separator);
+
+		final int port = uri.getPort();
+		if (port != -1) {
+			path.append("_").append(port);
+			path.insert(0, File.separator);
+		}
+
 		if (resolvedReferenceType == Type.BookDemo) {
 			path.insert(0, "Demos");
 			path.insert(0, File.separator);
