@@ -536,13 +536,14 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		});
 	}
 
-	public synchronized void setActiveFormats(List<String> formats) {
+	public synchronized boolean setActiveFormats(List<String> formats) {
 		if (myInterface != null) {
 			try {
-				myInterface.setActiveFormats(formats);
+				return myInterface.setActiveFormats(formats);
 			} catch (RemoteException e) {
 			}
 		}
+		return false;
 	}
 
 	private interface ListCallable<T> {
