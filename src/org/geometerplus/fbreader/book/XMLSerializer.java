@@ -35,9 +35,13 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 class XMLSerializer extends AbstractSerializer {
+	private StringBuilder builder() {
+		return new StringBuilder("<?xml version='1.1' encoding='UTF-8'?>");
+	}
+
 	@Override
 	public String serialize(BookQuery query) {
-		final StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = builder();
 		appendTag(buffer, "query", false,
 			"limit", String.valueOf(query.Limit),
 			"page", String.valueOf(query.Page)
@@ -136,7 +140,7 @@ class XMLSerializer extends AbstractSerializer {
 
 	@Override
 	public String serialize(BookmarkQuery query) {
-		final StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = builder();
 		appendTag(buffer, "query", false,
 			"visible", String.valueOf(query.Visible),
 			"limit", String.valueOf(query.Limit),
@@ -164,7 +168,7 @@ class XMLSerializer extends AbstractSerializer {
 
 	@Override
 	public String serialize(Book book) {
-		final StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = builder();
 		serialize(buffer, book);
 		return buffer.toString();
 	}
@@ -262,7 +266,7 @@ class XMLSerializer extends AbstractSerializer {
 
 	@Override
 	public String serialize(Bookmark bookmark) {
-		final StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = builder();
 		appendTag(
 			buffer, "bookmark", false,
 			"id", String.valueOf(bookmark.getId()),
@@ -325,7 +329,7 @@ class XMLSerializer extends AbstractSerializer {
 
 	@Override
 	public String serialize(HighlightingStyle style) {
-		final StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = builder();
 		final ZLColor bgColor = style.getBackgroundColor();
 		final ZLColor fgColor = style.getForegroundColor();
 		appendTag(buffer, "style", true,
@@ -441,23 +445,41 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 
-	private static String escapeForXml(String data) {
-		if (data.indexOf('&') != -1) {
-			data = data.replaceAll("&", "&amp;");
+	private static CharSequence escapeForXml(String data) {
+		final StringBuilder buffer = new StringBuilder();
+
+		final int len = data.length();
+		for (int i = 0; i < len; ++i) {
+			final char ch = data.charAt(i);
+			switch (ch) {
+				case '\u0009':
+					buffer.append(ch);
+					break;
+				default:
+					if ((ch >= '\u0020' && ch <= '\uD7FF') ||
+						(ch >= '\u0E00' && ch <= '\uFFFD')) {
+						buffer.append(ch);
+					}
+					break;
+				case '&':
+					buffer.append("&amp;");
+					break;
+				case '<':
+					buffer.append("&lt;");
+					break;
+				case '>':
+					buffer.append("&gt;");
+					break;
+				case '"':
+					buffer.append("&quot;");
+					break;
+				case '\'':
+					buffer.append("&apos;");
+					break;
+			}
 		}
-		if (data.indexOf('<') != -1) {
-			data = data.replaceAll("<", "&lt;");
-		}
-		if (data.indexOf('>') != -1) {
-			data = data.replaceAll(">", "&gt;");
-		}
-		if (data.indexOf('\'') != -1) {
-			data = data.replaceAll("'", "&apos;");
-		}
-		if (data.indexOf('"') != -1) {
-			data = data.replaceAll("\"", "&quot;");
-		}
-		return data;
+
+		return buffer;
 	}
 
 	private static void clear(StringBuilder buffer) {
