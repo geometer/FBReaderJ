@@ -86,6 +86,14 @@ public class BookUrlInfo extends UrlInfo {
 			path.delete(0, 4);
 		}
 		path.insert(0, File.separator);
+
+		final int port = uri.getPort();
+		// TODO: Create preference to toggle inclusion of port
+		if (true && port != -1) {
+			path.append(":" + port);
+			path.insert(0, File.separator);
+		}
+
 		if (resolvedReferenceType == Type.BookDemo) {
 			path.insert(0, "Demos");
 			path.insert(0, File.separator);
