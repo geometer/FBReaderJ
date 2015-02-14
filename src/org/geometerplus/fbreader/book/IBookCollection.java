@@ -106,7 +106,8 @@ public interface IBookCollection {
 		public boolean IsActive;
 	}
 	List<FormatDescriptor> formats();
-	void setActiveFormats(List<String> formatIds);
+	// returns true iff active format set is changed
+	boolean setActiveFormats(List<String> formatIds);
 
 	void rescan(String path);
 }
