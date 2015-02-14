@@ -412,8 +412,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
 				<node name="0" value="Always"/>
-				<node name="25" value="While battery level is greater than 25 percent"/>
-				<node name="50" value="While battery level is greater than 50 percent"/>
+				<node name="25" value="While battery level is greater than 25%%"/>
+				<node name="50" value="While battery level is greater than 50%%"/>
 				<node name="100" value="Never"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging">
