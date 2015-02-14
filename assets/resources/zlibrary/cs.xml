@@ -13,16 +13,16 @@
 			<node name="title" value="Chyba sítě"/>
 			<node name="unknownErrorMessage" value="Neznámá chyba"/>
 			<node name="operationTimedOutMessage" value="Vypršel časový limit operace"/>
-			<node name="somethingWrongMessage" value="Něco není v pořádku s %s"/>
-			<node name="couldntCreateDirectoryMessage" value="Nelze vytvořit adresář %s"/>
-			<node name="couldntCreateFileMessage" value="Nelze vytvořit soubor %s"/>
-			<node name="couldntConnectMessage" value="Nelze se připojit k hostiteli %s"/>
-			<node name="couldntResolveHostMessage" value="Nelze rozlišit hostitele %s"/>
+			<node name="somethingWrongMessage" value="Něco není v pořádku s&#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value="Nelze vytvořit adresář&#10;%s"/>
+			<node name="couldntCreateFileMessage" value="Nelze vytvořit soubor&#10;%s"/>
+			<node name="couldntConnectMessage" value="Nelze se připojit k hostiteli&#10;%s"/>
+			<node name="couldntResolveHostMessage" value="Nelze rozlišit hostitele&#10;%s"/>
 			<node name="authenticationFailed" value="Ověření selhalo"/>
 			<node name="unsupportedProtocol" value="Nepodporovaný protokol"/>
 			<node name="invalidURL" value="Neplatná adresa URL"/>
-			<node name="hostCantBeReached" value="Hostitel %s nemůže být dosažen"/>
-			<node name="connectionRefused" value="Spojení bylo odmítnuto: %s"/>
+			<node name="hostCantBeReached" value="Hostitel %s&#10;nemůže být dosažen"/>
+			<node name="connectionRefused" value="Spojení bylo odmítnuto:&#10;%s"/>
 			<node name="networkNotAvailable" value="Síť není dostupná"/>
 		</node>
 	</node>
