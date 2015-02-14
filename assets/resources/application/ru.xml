@@ -682,26 +682,7 @@
 			<node name="footerHeight" value="Высота подвала"/>
 			<node name="footerOldStyleColor" value="Цвет подвала (старый стиль)"/>
 			<node name="footerBackgroundColor" value="Цвет фона подвала"/>
-			<node name="footerForegroundColor" value="Footer text colour" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line colour" toBeTranslated="true"/>
-			<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
-				<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
-			</node>
-			<node name="showProgress" value="Show page number" toBeTranslated="true">
-				<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
-			</node>
-			<node name="showBattery" value="Show battery level" toBeTranslated="true">
-				<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
-			</node>
-			<node name="showClock" value="Show clock" toBeTranslated="true">
-				<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
-			</node>
-			<node name="font" value="Font family" toBeTranslated="true"/>
-			<node name="footerForegroundColot" value="Цвет текста в подвале"/>
+			<node name="footerForegroundColor" value="Цвет текста в подвале"/>
 			<node name="footerForegroundUnreadColor" value="Цвет индикатора в подвале"/>
 			<node name="tocMarks" value="Показывать метки по главам">
 				<node name="summaryOn" value="Рисовать пометку на подвале в начале главы"/>
