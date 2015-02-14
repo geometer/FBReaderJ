@@ -70,7 +70,6 @@
 		<node name="deleteAll" value="Удалить все"/>
 		<node name="uploadAgain" value="Загрузить снова"/>
 		<node name="tryAgain" value="Попробовать снова"/>
-		<node name="bookshelfView" value="Книжная полка"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
 		<node name="sync" value="Книжная сеть FBReader®">

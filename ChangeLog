@@ -10,6 +10,7 @@
 * File format filter option (can be changed from the bookshelf plugin)
 * Samsung multi-window support
 * Bookshelf view item in the library
+* Updated Persian localisation by biomanw (https://github.com/biomanw)
 
 ===== 2.2.7 (Jan 30, 2015) =====
 * Fixed behaviour for pages with multiple images (fb2.zip only)
