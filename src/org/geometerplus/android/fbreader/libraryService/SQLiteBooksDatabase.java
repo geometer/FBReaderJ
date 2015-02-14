@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 32;
+		final int currentVersion = 33;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -147,12 +147,38 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables30();
 			case 31:
 				updateTables31();
+			case 32:
+				updateTables32();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
 		myDatabase.endTransaction();
 
 		myDatabase.execSQL("VACUUM");
+	}
+
+	@Override
+	protected String getOptionValue(String name) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT value FROM Options WHERE name=?", new String[] { name }
+		);
+		try {
+			return cursor.moveToNext() ? cursor.getString(0) : null;
+		} finally {
+			cursor.close();
+		}
+	}
+
+	@Override
+	protected void setOptionValue(String name, String value) {
+		final SQLiteStatement statement = get(
+			"INSERT OR REPLACE INTO Options (name,value) VALUES (?,?)"
+		);
+		synchronized (statement) {
+			SQLiteUtil.bindString(statement, 1, name);
+			SQLiteUtil.bindString(statement, 2, value);
+			statement.execute();
+		}
 	}
 
 	@Override
@@ -1554,6 +1580,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private void updateTables31() {
 		myDatabase.execSQL("ALTER TABLE BookLabel ADD COLUMN timestamp INTEGER NOT NULL DEFAULT -1");
 		myDatabase.execSQL("ALTER TABLE BookLabel ADD COLUMN comment TEXT DEFAULT NULL");
+	}
+
+	private void updateTables32() {
+		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Options(name TEXT PRIMARY KEY, value TEXT)");
 	}
 
 	private SQLiteStatement get(String sql) {
