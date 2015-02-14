@@ -45,7 +45,11 @@ abstract class ZLStringListPreference extends ListPreference {
 		String[] texts = new String[values.length];
 		for (int i = 0; i < values.length; ++i) {
 			final ZLResource resource = myValuesResource.getResource(values[i]);
-			texts[i] = resource.hasValue() ? resource.getValue() : values[i];
+			// It appears that setEntries() DOES NOT perform any extra formatting on the char
+			// sequences, so to get just a single %, we'd have to perform the substitution manually.
+			// http://developer.android.com/reference/android/preference/ListPreference.html#setEntries(java.lang.CharSequence[])
+			// TODO: We should probably do an assert() and tell people to check their xml here.
+			texts[i] = resource.hasValue() ? resource.getValue().replace("%%","%") : values[i];
 		}
 		setLists(values, texts);
 	}
@@ -70,7 +74,7 @@ abstract class ZLStringListPreference extends ListPreference {
 			}
 		}
 		setValueIndex(index);
-		setSummary(getEntry());
+		setSummary(myValuesResource.getResource(getValue()).getValue());
 		return found;
 	}
 
@@ -78,7 +82,7 @@ abstract class ZLStringListPreference extends ListPreference {
 	protected void onDialogClosed(boolean result) {
 		super.onDialogClosed(result);
 		if (result) {
-			setSummary(getEntry());
+			setSummary(myValuesResource.getResource(getValue()).getValue());
 		}
 	}
 }
