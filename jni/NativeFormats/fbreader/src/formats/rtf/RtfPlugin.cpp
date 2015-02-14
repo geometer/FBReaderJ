@@ -34,21 +34,14 @@ bool RtfPlugin::providesMetainfo() const {
 }
 
 const std::string RtfPlugin::supportedFileType() const {
-	return "rtf";
+	return "RTF";
 }
 
 bool RtfPlugin::readMetainfo(Book &book) const {
+	readLanguageAndEncoding(book);
+
 	if (!RtfDescriptionReader(book).readDocument(book.file())) {
 		return false;
-	}
-
-	if (book.encoding().empty()) {
-		book.setEncoding(ZLEncodingConverter::UTF8);
-	} else if (book.language().empty()) {
-		shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
-		if (!stream.isNull()) {
-			detectLanguage(book, *stream, book.encoding());
-		}
 	}
 
 	return true;
@@ -64,5 +57,19 @@ bool RtfPlugin::readModel(BookModel &model) const {
 }
 
 bool RtfPlugin::readLanguageAndEncoding(Book &book) const {
+	if (book.encoding().empty()) {
+		shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
+		if (!stream.isNull()) {
+			detectEncodingAndLanguage(book, *stream);
+		}
+		if (book.encoding().empty()) {
+			book.setEncoding(ZLEncodingConverter::UTF8);
+		}
+	} else if (book.language().empty()) {
+		shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
+		if (!stream.isNull()) {
+			detectLanguage(book, *stream, book.encoding());
+		}
+	}
 	return true;
 }
