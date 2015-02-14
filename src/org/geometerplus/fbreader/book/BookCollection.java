@@ -24,6 +24,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -36,6 +37,7 @@ public class BookCollection extends AbstractBookCollection {
 
 	private final BooksDatabase myDatabase;
 	public final List<String> BookDirectories;
+	private Set<String> myActiveFormats;
 
 	private final Map<ZLFile,Book> myBooksByFile =
 		Collections.synchronizedMap(new LinkedHashMap<ZLFile,Book>());
@@ -53,6 +55,11 @@ public class BookCollection extends AbstractBookCollection {
 	public BookCollection(BooksDatabase db, List<String> bookDirectories) {
 		myDatabase = db;
 		BookDirectories = Collections.unmodifiableList(new ArrayList<String>(bookDirectories));
+
+		final String formats = db.getOptionValue("formats");
+		if (formats != null) {
+			myActiveFormats = new HashSet<String>(Arrays.asList(formats.split("\000")));
+		}
 	}
 
 	public int size() {
@@ -820,21 +827,24 @@ public class BookCollection extends AbstractBookCollection {
 			final FormatDescriptor d = new FormatDescriptor();
 			d.Id = p.supportedFileType();
 			d.Name = p.name();
-			d.IsActive = true;
+			d.IsActive = myActiveFormats == null || myActiveFormats.contains(d.Id);
 			descriptors.add(d);
 		}
 		return descriptors;
 	}
 
-	private Set<String> myActiveFormats;
+	public boolean setActiveFormats(List<String> formatIds) {
+		final Set<String> activeFormats = new HashSet<String>(formatIds);
+		if (activeFormats.equals(myActiveFormats)) {
+			return false;
+		}
 
-	public void setActiveFormats(List<String> formatIds) {
-		// TODO: implement
-		myActiveFormats = new HashSet<String>(formatIds);
+		myActiveFormats = activeFormats;
+		myDatabase.setOptionValue("formats", MiscUtil.join(formatIds, "\000"));
+		return true;
 	}
 
 	private boolean isFormatActive(FormatPlugin plugin) {
-		// TODO: implement
 		return myActiveFormats == null || myActiveFormats.contains(plugin.supportedFileType());
 	}
 
