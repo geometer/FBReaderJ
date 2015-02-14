@@ -22,7 +22,7 @@
 			<node name="invalidURL" value="آدرس اشتباه است"/>
 			<node name="hostCantBeReached" value="میزبان %s قابل دسترسی نیست"/>
 			<node name="connectionRefused" value="اتصال توسط %s رد شد"/>
-			<node name="networkNotAvailable" value="شبکه وجود ندارد" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="شبکه وجود ندارد"/>
 		</node>
 	</node>
 	<node name="color">
@@ -32,28 +32,28 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="عربی"/>
-		<node name="be" value="بلاروس" toBeTranslated="true"/>
+		<node name="be" value="بلاروس"/>
 		<node name="bg" value="بلغاری"/>
-		<node name="ca" value="کاتالان" toBeTranslated="true"/>
+		<node name="ca" value="کاتالان"/>
 		<node name="cs" value="چک"/>
-		<node name="da" value="دانمارکی" toBeTranslated="true"/>
+		<node name="da" value="دانمارکی"/>
 		<node name="de" value="آلمانی"/>
 		<node name="de-traditional" value="آلمانی سنتی"/>
 		<node name="el" value="یونانی"/>
 		<node name="en" value="انگلیسی"/>
 		<node name="eo" value="زبان بین المللی"/>
 		<node name="es" value="اسپانیایی"/>
-		<node name="eu" value="باسک" toBeTranslated="true"/>
+		<node name="eu" value="باسک"/>
 		<node name="fa" value="فارسی"/>
 		<node name="fi" value="فنلاندی"/>
 		<node name="fr" value="فرانسوی"/>
 		<node name="gl" value="گالیسی"/>
 		<node name="he" value="عبری"/>
 		<node name="hu" value="مجار"/>
-		<node name="hy" value="ارمنی" toBeTranslated="true"/>
+		<node name="hy" value="ارمنی"/>
 		<node name="id" value="اندونزیایی"/>
 		<node name="it" value="ایتالیایی"/>
-		<node name="ja" value="ژاپنی" toBeTranslated="true"/>
+		<node name="ja" value="ژاپنی"/>
 		<node name="ka" value="گرجی"/>
 		<node name="lt" value="لیتوانی"/>
 		<node name="nb" value="نروژی"/>
@@ -62,7 +62,7 @@
 		<node name="pt" value="پرتقالی"/>
 		<node name="ro" value="رومانیایی"/>
 		<node name="ru" value="روسی"/>
-		<node name="sr" value="صرب" toBeTranslated="true"/>
+		<node name="sr" value="صرب"/>
 		<node name="sv" value="سوئدی"/>
 		<node name="ta" value="تمیل"/>
 		<node name="th" value="تایلندی"/>
@@ -70,8 +70,8 @@
 		<node name="uk" value="اکراینی"/>
 		<node name="vi" value="ویتنامی"/>
 		<node name="zh" value="چینی"/>
-		<node name="zh_TW" value="چینی سنتی" toBeTranslated="true"/>
-		<node name="any" value="هر زبانی" toBeTranslated="true"/>
+		<node name="zh_TW" value="چینی سنتی"/>
+		<node name="any" value="هر زبانی"/>
 		<node name="other" value="دیگر"/>
 		<node name="multi" value="چند زبانه"/>
 		<node name="system" value="سیستم"/>
