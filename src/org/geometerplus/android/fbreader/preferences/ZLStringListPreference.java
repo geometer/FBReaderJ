@@ -74,7 +74,7 @@ abstract class ZLStringListPreference extends ListPreference {
 			}
 		}
 		setValueIndex(index);
-		setSummary(myValuesResource.getResource(getValue()).getValue());
+		updateSummary();
 		return found;
 	}
 
@@ -82,7 +82,16 @@ abstract class ZLStringListPreference extends ListPreference {
 	protected void onDialogClosed(boolean result) {
 		super.onDialogClosed(result);
 		if (result) {
-			setSummary(myValuesResource.getResource(getValue()).getValue());
+			updateSummary();
 		}
+	}
+
+	private void updateSummary() {
+		// We have previously called setEntries() on the assumption that it does not perform any
+		// extra formatting on the char sequences.
+		// However, setSummary() DOES perform extra formatting on the char sequences, so we'd need
+		// to correct this.
+		// http://developer.android.com/reference/android/preference/ListPreference.html#setSummary(java.lang.CharSequence)
+		setSummary(getEntry().toString().replace("%", "%%"));
 	}
 }
