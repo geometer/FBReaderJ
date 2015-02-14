@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.sort.TitledEntity;
 
@@ -67,13 +68,12 @@ public class Book extends TitledEntity<Book> {
 		myIsSaved = true;
 	}
 
-	Book(ZLFile file) throws BookReadingException {
+	Book(ZLFile file, FormatPlugin plugin) throws BookReadingException {
 		super(null);
 		if (file == null) {
 			throw new IllegalArgumentException("Creating book with no file");
 		}
 		myId = -1;
-		final FormatPlugin plugin = BookUtil.getPlugin(file);
 		File = plugin.realBookFile(file);
 		readMetainfo(plugin);
 		myIsSaved = false;
@@ -156,25 +156,25 @@ public class Book extends TitledEntity<Book> {
 
 	public void reloadInfoFromFile() {
 		try {
-			readMetainfo();
+			readMetainfo(getPlugin());
 		} catch (BookReadingException e) {
 			// ignore
 		}
 	}
 
 	public FormatPlugin getPlugin() throws BookReadingException {
-		return BookUtil.getPlugin(File);
-	}
-
-	public FormatPlugin getPluginOrNull() {
-		return BookUtil.getPluginOrNull(File);
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
+		if (plugin == null) {
+			throw new BookReadingException("pluginNotFound", File);
+		}
+		return plugin;
 	}
 
 	void readMetainfo() throws BookReadingException {
 		readMetainfo(getPlugin());
 	}
 
-	private void readMetainfo(FormatPlugin plugin) throws BookReadingException {
+	void readMetainfo(FormatPlugin plugin) throws BookReadingException {
 		myEncoding = null;
 		myLanguage = null;
 		setTitle(null);
@@ -208,11 +208,8 @@ public class Book extends TitledEntity<Book> {
 		myIsSaved = true;
 		if (myUids == null || myUids.isEmpty()) {
 			try {
-				final FormatPlugin plugin = getPlugin();
-				if (plugin != null) {
-					plugin.readUids(this);
-					save(database, false);
-				}
+				getPlugin().readUids(this);
+				save(database, false);
 			} catch (BookReadingException e) {
 			}
 		}
