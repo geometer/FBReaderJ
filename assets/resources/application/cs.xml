@@ -23,7 +23,7 @@
 		<node name="favorites" value="Oblíbené">
 			<node name="summary" value="Mé oblíbené knihy"/>
 		</node>
-		<node name="bookshelfView" value="Switch to bookshelf view" toBeTranslated="true">
+		<node name="bookshelfView" value="Zobrazení Poličky knih">
 			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="Nalezené">
@@ -70,7 +70,6 @@
 		<node name="deleteAll" value="Odstranit vše"/>
 		<node name="uploadAgain" value="Znovu nahrát"/>
 		<node name="tryAgain" value="Zkusit znovu"/>
-		<node name="bookshelfView" value="Zobrazení Poličky knih"/>
 	</node>
 	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
 		<node name="sync" value="Síťová knihovna FBReaderu®">
