@@ -146,7 +146,7 @@ public class FileTree extends LibraryTree {
 		final TreeSet<ZLFile> set = new TreeSet<ZLFile>(ourFileComparator);
 		for (ZLFile file : myFile.children()) {
 			if (file.isDirectory() || file.isArchive() ||
-				PluginCollection.Instance().getPlugin(file) != null) {
+				Collection.getBookByFile(file) != null) {
 				set.add(file);
 			}
 		}
