@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
@@ -41,6 +42,10 @@ public abstract class FormatPlugin {
 		return myFileType;
 	}
 
+	public final String name() {
+		return ZLResource.resource("format").getResource(myFileType).getValue();
+	}
+
 	public ZLFile realBookFile(ZLFile file) throws BookReadingException {
 		return file;
 	}
@@ -53,12 +58,8 @@ public abstract class FormatPlugin {
 	public abstract ZLImage readCover(ZLFile file);
 	public abstract String readAnnotation(ZLFile file);
 
-	public enum Type {
-		ANY,
-		BUILTIN,
-		EXTERNAL;
-	};
-	public abstract Type type();
+	/* lesser is higher: 0 for ePub/fb2, 5 for other native, 10 for external */
+	public abstract int priority();
 
 	public abstract EncodingCollection supportedEncodings();
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="format">
+		<node name="ePub" value="ePub"/>
+		<node name="fb2" value="fb2"/>
+		<node name="mobi" value="Mobipocket (azw3, kindle)"/>
+		<node name="txt" value="txt"/>
+		<node name="msdoc" value="Microsoft Word"/>
+		<node name="HTML" value="HTML"/>
+		<node name="RTF" value="RTF"/>
+		<node name="PDF" value="PDF"/>
+		<node name="DjVu" value="DjVu"/>
+		<node name="CBZ" value="Comic book archive (cbz, cbr)"/>
+	</node>
+</resources>

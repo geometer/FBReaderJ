@@ -23,6 +23,9 @@
 		<node name="favorites" value="Favourites">
 			<node name="summary" value="My selected books"/>
 		</node>
+		<node name="bookshelfView" value="Bookshelf view">
+			<node name="summary" value="Modern (material design style) library view"/>
+		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
@@ -409,8 +412,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
 				<node name="0" value="Always"/>
-				<node name="25" value="While battery level is greater than 25 percent"/>
-				<node name="50" value="While battery level is greater than 50 percent"/>
+				<node name="25" value="While battery level is greater than 25%%"/>
+				<node name="50" value="While battery level is greater than 50%%"/>
 				<node name="100" value="Never"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging">

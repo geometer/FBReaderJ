@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.fbreader.book.Book;
 
-public class RecentBooksTree extends FirstLevelTree {
-	RecentBooksTree(RootTree root) {
-		super(root, ROOT_RECENT);
+public class ComicBookPlugin extends ExternalFormatPlugin {
+	public ComicBookPlugin() {
+		super("CBZ");
 	}
 
 	@Override
-	public Status getOpeningStatus() {
-		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+	public String packageName() {
+		return "org.geometerplus.fbreader.plugin.comicbook";
 	}
 
 	@Override
-	public void waitForOpening() {
-		clear();
-		for (Book book : Collection.recentlyOpenedBooks(12)) {
-			new BookWithAuthorsTree(this, book);
-		}
+	public void readMetainfo(Book book) {
+		// TODO: implement
 	}
 }

@@ -24,6 +24,7 @@ import java.util.*;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -114,11 +115,15 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
 		final LibraryTree tree = (LibraryTree)getListAdapter().getItem(position);
-		final Book book = tree.getBook();
-		if (book != null) {
-			showBookInfo(book);
+		if (tree instanceof ExternalViewTree) {
+			runOrInstallExternalView();
 		} else {
-			openTree(tree);
+			final Book book = tree.getBook();
+			if (book != null) {
+				showBookInfo(book);
+			} else {
+				openTree(tree);
+			}
 		}
 	}
 
@@ -172,6 +177,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		int UploadAgain           = 2;
 		int TryAgain              = 3;
 		int DeleteAll             = 4;
+		int ExternalView          = 5;
 	}
 
 	@Override
@@ -202,7 +208,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		} else {
 			menu.add(0, ContextItemId.MarkAsRead, 0, resource.getResource("markAsRead").getValue());
 		}
-		if (BookUtil.canRemoveBookFile(book)) {
+		if (myCollection.canRemoveBook(book, true)) {
 			menu.add(0, ContextItemId.DeleteBook, 0, resource.getResource("deleteBook").getValue());
 		}
 		if (labels.contains(Book.SYNC_DELETED_LABEL)) {
@@ -288,6 +294,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		addMenuItem(menu, OptionsItemId.UploadAgain, "uploadAgain", -1);
 		addMenuItem(menu, OptionsItemId.TryAgain, "tryAgain", -1);
 		addMenuItem(menu, OptionsItemId.DeleteAll, "deleteAll", -1);
+		if (Build.VERSION.SDK_INT >= 9) {
+			addMenuItem(menu, OptionsItemId.ExternalView, "bookshelfView", -1);
+		}
 		return true;
 	}
 
@@ -362,8 +371,20 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				}
 				tryToDeleteBooks(books);
 			}
+			case OptionsItemId.ExternalView:
+				runOrInstallExternalView();
+				return true;
 			default:
 				return true;
+		}
+	}
+
+	private void runOrInstallExternalView() {
+		try {
+			startActivity(new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY));
+			finish();
+		} catch (ActivityNotFoundException e) {
+			PackageUtil.installFromMarket(this, "org.fbreader.plugin.library");
 		}
 	}
 

@@ -56,9 +56,11 @@ public interface IBookCollection {
 	boolean hasBooks(Filter filter);
 	List<String> titles(BookQuery query);
 
-	List<Book> recentBooks();
+	List<Book> recentlyOpenedBooks(int count);
+	List<Book> recentlyAddedBooks(int count);
 	Book getRecentBook(int index);
-	void addBookToRecentList(Book book);
+	void addToRecentlyOpened(Book book);
+	void removeFromRecentlyOpened(Book book);
 
 	Book getBookByFile(String path);
 	Book getBookByFile(ZLFile file);
@@ -74,6 +76,7 @@ public interface IBookCollection {
 	List<String> firstTitleLetters();
 
 	boolean saveBook(Book book);
+	boolean canRemoveBook(Book book, boolean deleteFromDisk);
 	void removeBook(Book book, boolean deleteFromDisk);
 
 	String getHash(Book book, boolean force);
@@ -96,6 +99,15 @@ public interface IBookCollection {
 	HighlightingStyle getHighlightingStyle(int styleId);
 	List<HighlightingStyle> highlightingStyles();
 	void saveHighlightingStyle(HighlightingStyle style);
+
+	public class FormatDescriptor {
+		public String Id;
+		public String Name;
+		public boolean IsActive;
+	}
+	List<FormatDescriptor> formats();
+	// returns true iff active format set is changed
+	boolean setActiveFormats(List<String> formatIds);
 
 	void rescan(String path);
 }

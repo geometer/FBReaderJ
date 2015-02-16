@@ -48,7 +48,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 
 		synchronized void runOrAddAction(Runnable action) {
 			if (Reader != null) {
-				action.run();
+				new Thread(action).start();
 			} else {
 				myPostActions.add(action);
 			}

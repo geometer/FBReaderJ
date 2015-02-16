@@ -304,7 +304,12 @@ public final class FBReaderApp extends ZLApplication {
 		System.gc();
 		System.gc();
 
-		final FormatPlugin plugin = book.getPluginOrNull();
+		FormatPlugin plugin = null;
+		try {
+			plugin = book.getPlugin();
+		} catch (BookReadingException e) {
+			// ignore
+		}
 		if (plugin instanceof ExternalFormatPlugin) {
 			ExternalBook = book;
 			final Bookmark bm;
@@ -333,7 +338,7 @@ public final class FBReaderApp extends ZLApplication {
 			} else {
 				gotoBookmark(bookmark, false);
 			}
-			Collection.addBookToRecentList(book);
+			Collection.addToRecentlyOpened(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
 			if (!book.authors().isEmpty()) {
 				boolean first = true;

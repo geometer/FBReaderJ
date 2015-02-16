@@ -23,6 +23,9 @@
 		<node name="favorites" value="Избранное">
 			<node name="summary" value="Мои любимые книги"/>
 		</node>
+		<node name="bookshelfView" value="Книжная полка">
+			<node name="summary" value="Современный внешний вид для библиотеки"/>
+		</node>
 		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s"/>
 		</node>
@@ -679,7 +682,7 @@
 			<node name="footerHeight" value="Высота подвала"/>
 			<node name="footerOldStyleColor" value="Цвет подвала (старый стиль)"/>
 			<node name="footerBackgroundColor" value="Цвет фона подвала"/>
-			<node name="footerForegroundColot" value="Цвет текста в подвале"/>
+			<node name="footerForegroundColor" value="Цвет текста в подвале"/>
 			<node name="footerForegroundUnreadColor" value="Цвет индикатора в подвале"/>
 			<node name="tocMarks" value="Показывать метки по главам">
 				<node name="summaryOn" value="Рисовать пометку на подвале в начале главы"/>

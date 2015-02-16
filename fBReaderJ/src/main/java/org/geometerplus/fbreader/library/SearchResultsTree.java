@@ -28,8 +28,8 @@ public class SearchResultsTree extends FilteredTree {
 	private final String myId;
 	private final ZLResource myResource;
 
-	SearchResultsTree(RootTree root, String id, String pattern) {
-		super(root, new Filter.ByPattern(pattern), 0);
+	SearchResultsTree(RootTree root, String id, String pattern, int position) {
+		super(root, new Filter.ByPattern(pattern), position);
 		myId = id;
 		myResource = resource().getResource(myId);
 		Pattern = pattern != null ? pattern : "";

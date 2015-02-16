@@ -181,7 +181,15 @@ public class LibraryService extends Service {
 		}
 
 		public List<String> recentBooks() {
-			return SerializerUtil.serializeBookList(myCollection.recentBooks());
+			return recentlyOpenedBooks(12);
+		}
+
+		public List<String> recentlyOpenedBooks(int count) {
+			return SerializerUtil.serializeBookList(myCollection.recentlyOpenedBooks(count));
+		}
+
+		public List<String> recentlyAddedBooks(int count) {
+			return SerializerUtil.serializeBookList(myCollection.recentlyAddedBooks(count));
 		}
 
 		public String getRecentBook(int index) {
@@ -242,12 +250,20 @@ public class LibraryService extends Service {
 			return myCollection.saveBook(SerializerUtil.deserializeBook(book));
 		}
 
+		public boolean canRemoveBook(String book, boolean deleteFromDisk) {
+			return myCollection.canRemoveBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
+		}
+
 		public void removeBook(String book, boolean deleteFromDisk) {
 			myCollection.removeBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
 		}
 
-		public void addBookToRecentList(String book) {
-			myCollection.addBookToRecentList(SerializerUtil.deserializeBook(book));
+		public void addToRecentlyOpened(String book) {
+			myCollection.addToRecentlyOpened(SerializerUtil.deserializeBook(book));
+		}
+
+		public void removeFromRecentlyOpened(String book) {
+			myCollection.removeFromRecentlyOpened(SerializerUtil.deserializeBook(book));
 		}
 
 		public List<String> labels() {
@@ -408,6 +424,24 @@ public class LibraryService extends Service {
 
 		public void setHash(String book, String hash) {
 			myCollection.setHash(SerializerUtil.deserializeBook(book), hash);
+		}
+
+		public List<String> formats() {
+			final List<IBookCollection.FormatDescriptor> descriptors = myCollection.formats();
+			final List<String> serialized = new ArrayList<String>(descriptors.size());
+			for (IBookCollection.FormatDescriptor d : descriptors) {
+				serialized.add(Util.formatDescriptorToString(d));
+			}
+			return serialized;
+		}
+
+		public boolean setActiveFormats(List<String> formatIds) {
+			if (myCollection.setActiveFormats(formatIds)) {
+				reset(true);
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 

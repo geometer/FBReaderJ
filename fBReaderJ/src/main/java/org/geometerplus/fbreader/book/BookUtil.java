@@ -38,18 +38,6 @@ public abstract class BookUtil {
 	private static final WeakHashMap<ZLFile,WeakReference<ZLImage>> ourCovers =
 		new WeakHashMap<ZLFile,WeakReference<ZLImage>>();
 
-	static FormatPlugin getPluginOrNull(ZLFile file) {
-		return PluginCollection.Instance().getPlugin(file);
-	}
-
-	static FormatPlugin getPlugin(ZLFile file) throws BookReadingException {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
-		if (plugin == null) {
-			throw new BookReadingException("pluginNotFound", file);
-		}
-		return plugin;
-	}
-
 	public static ZLImage getCover(Book book) {
 		if (book == null) {
 			return null;
@@ -71,8 +59,8 @@ public abstract class BookUtil {
 		}
 		ZLImage image = null;
 		try {
-			image = getPlugin(file).readCover(file);
-		} catch (BookReadingException e) {
+			image = PluginCollection.Instance().getPlugin(file).readCover(file);
+		} catch (Exception e) {
 			// ignore
 		}
 		ourCovers.put(file, image != null ? new WeakReference<ZLImage>(image) : NULL_IMAGE);
@@ -105,20 +93,6 @@ public abstract class BookUtil {
 		}
 
 		return ZLResourceFile.createResourceFile("data/intro/intro-en.epub");
-	}
-
-	public static boolean canRemoveBookFile(Book book) {
-		ZLFile file = book.File;
-		if (file.getPhysicalFile() == null) {
-			return false;
-		}
-		while (file instanceof ZLArchiveEntryFile) {
-			file = file.getParent();
-			if (file.children().size() != 1) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	public static UID createUid(ZLFile file, String algorithm) {

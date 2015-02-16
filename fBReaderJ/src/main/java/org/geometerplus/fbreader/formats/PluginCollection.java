@@ -61,7 +61,7 @@ public class PluginCollection {
 		if (Build.VERSION.SDK_INT >= 8) {
 			myExternalPlugins.add(new DjVuPlugin());
 			myExternalPlugins.add(new PDFPlugin());
-			myExternalPlugins.add(new CBZPlugin());
+			myExternalPlugins.add(new ComicBookPlugin());
 		}
 	}
 
@@ -90,6 +90,22 @@ public class PluginCollection {
 			}
 		}
 		return null;
+	}
+
+	public List<FormatPlugin> plugins() {
+		final ArrayList<FormatPlugin> all = new ArrayList<FormatPlugin>();
+		all.addAll(myBuiltinPlugins);
+		all.addAll(myExternalPlugins);
+		Collections.sort(all, new Comparator<FormatPlugin>() {
+			public int compare(FormatPlugin p0, FormatPlugin p1) {
+				final int diff = p0.priority() - p1.priority();
+				if (diff != 0) {
+					return diff;
+				}
+				return p0.supportedFileType().compareTo(p1.supportedFileType());
+			}
+		});
+		return all;
 	}
 
 	private native NativeFormatPlugin[] nativePlugins();

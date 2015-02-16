@@ -45,19 +45,27 @@ abstract class ZLStringListPreference extends ListPreference {
 		String[] texts = new String[values.length];
 		for (int i = 0; i < values.length; ++i) {
 			final ZLResource resource = myValuesResource.getResource(values[i]);
-			// It appears that setEntries() DOES NOT perform any extra formatting on the char
-			// sequences, so to get just a single %, we'd have to perform the substitution manually.
-			// http://developer.android.com/reference/android/preference/ListPreference.html#setEntries(java.lang.CharSequence[])
-			// TODO: We should probably do an assert() and tell people to check their xml here.
-			texts[i] = resource.hasValue() ? resource.getValue().replace("%%","%") : values[i];
+			texts[i] = resource.hasValue() ? resource.getValue() : values[i];
 		}
 		setLists(values, texts);
 	}
 
 	protected final void setLists(String[] values, String[] texts) {
 		assert(values.length == texts.length);
-		setEntries(texts);
+
 		setEntryValues(values);
+
+		// It appears that setEntries() DOES NOT perform any formatting on the char sequences
+		// http://developer.android.com/reference/android/preference/ListPreference.html#setEntries(java.lang.CharSequence[])
+		final String[] entries = new String[texts.length];
+		for (int i = 0; i < texts.length; ++i) {
+			try {
+				entries[i] = String.format(texts[i]);
+			} catch (Exception e) {
+				entries[i] = texts[i];
+			}
+		}
+		setEntries(entries);
 	}
 
 	protected final boolean setInitialValue(String value) {
@@ -74,20 +82,12 @@ abstract class ZLStringListPreference extends ListPreference {
 			}
 		}
 		setValueIndex(index);
-		// We have previously called setEntries() on the assumption that it does not perform any
-		// extra formatting on the char sequences.
-		// However, setSummary() DOES perform extra formatting on the char sequences, so we'd need
-		// to correct this.
-		// http://developer.android.com/reference/android/preference/ListPreference.html#setSummary(java.lang.CharSequence)
-		setSummary(getEntry().toString().replace("%", "%%"));
 		return found;
 	}
 
 	@Override
-	protected void onDialogClosed(boolean result) {
-		super.onDialogClosed(result);
-		if (result) {
-			setSummary(getEntry().toString().replace("%", "%%"));
-		}
+	public CharSequence getSummary() {
+		// standard getSummary() calls extra String.format(), that causes exceptions in some cases
+		return getEntry();
 	}
 }

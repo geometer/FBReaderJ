@@ -23,6 +23,9 @@
 		<node name="favorites" value="Oblíbené">
 			<node name="summary" value="Mé oblíbené knihy"/>
 		</node>
+		<node name="bookshelfView" value="Zobrazení Poličky knih">
+			<node name="summary" value="Moderní (styl Material designu) zobrazení knihovny"/>
+		</node>
 		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>

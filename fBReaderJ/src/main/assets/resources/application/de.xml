@@ -31,6 +31,9 @@
 		<node name="favorites" value="Favoriten">
 			<node name="summary" value="Meine Lieblingsbücher"/>
 		</node>
+		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="Gefunden">
 			<node name="summary" value="Suchergebnisse für: %s"/>
 		</node>
@@ -947,7 +950,7 @@
 			<node name="purchaseAlreadyPurchased" value="Das Buch wurde bereits gekauft."/>
 			<node name="bookNotPurchased" value="Das Buch wurde nicht gekauft."/>
 			<node name="downloadLimitExceeded" value="Download-Limit ist überschritten."/>
-			<node name="noUserEmail" value="Es gibt keinen registrierten Nutzer mit dieser E-Mail-Adresse&#10;"/>
+			<node name="noUserForEmail" value="Es gibt keinen registrierten Nutzer mit dieser E-Mail-Adresse&#10;"/>
 			<node name="unsupportedOperation" value="Operation wird nicht unterstützt."/>
 			<node name="notAnOPDS" value="Dies ist kein OPDS Katalog."/>
 			<node name="noRequiredInformation" value="Die benötigte Information ist in dem Katalog nicht spezifiziert."/>

@@ -18,12 +18,12 @@
 			<node name="couldntCreateFileMessage" value="Nelze vytvořit soubor&#10;%s"/>
 			<node name="couldntConnectMessage" value="Nelze se připojit k hostiteli&#10;%s"/>
 			<node name="couldntResolveHostMessage" value="Nelze rozlišit hostitele&#10;%s"/>
-			<node name="authenticationFailed" value="Selhalo ověření"/>
+			<node name="authenticationFailed" value="Ověření selhalo"/>
 			<node name="unsupportedProtocol" value="Nepodporovaný protokol"/>
-			<node name="invalidURL" value="Neplatná adresa"/>
+			<node name="invalidURL" value="Neplatná adresa URL"/>
 			<node name="hostCantBeReached" value="Hostitel %s&#10;nemůže být dosažen"/>
 			<node name="connectionRefused" value="Spojení bylo odmítnuto:&#10;%s"/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Síť není dostupná"/>
 		</node>
 	</node>
 	<node name="color">
