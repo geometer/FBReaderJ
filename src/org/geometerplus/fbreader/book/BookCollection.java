@@ -71,15 +71,14 @@ public class BookCollection extends AbstractBookCollection {
 			return null;
 		}
 
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(bookFile);
+		return getBookByFile(bookFile, PluginCollection.Instance().getPlugin(bookFile));
+	}
+
+	private Book getBookByFile(ZLFile bookFile, final FormatPlugin plugin) {
 		if (plugin == null || !isFormatActive(plugin)) {
 			return null;
 		}
 
-		return getBookByFile(bookFile, plugin);
-	}
-
-	private Book getBookByFile(ZLFile bookFile, final FormatPlugin plugin) {
 		try {
 			bookFile = plugin.realBookFile(bookFile);
 		} catch (BookReadingException e) {
@@ -462,6 +461,7 @@ public class BookCollection extends AbstractBookCollection {
 					setStatus(Status.Succeeded);
 				} catch (Throwable t) {
 					setStatus(Status.Failed);
+					t.printStackTrace();
 				} finally {
 					synchronized (myFilesToRescan) {
 						processFilesQueue();
