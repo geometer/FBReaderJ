@@ -54,12 +54,13 @@ public enum DeviceType {
 				ourInstance = PAN_DIGITAL;
 			} else if ("BarnesAndNoble".equals(Build.MANUFACTURER) &&
 					   "zoom2".equals(Build.DEVICE) &&
+					   Build.MODEL != null &&
 					   ("NOOK".equals(Build.MODEL) ||
 						"unknown".equals(Build.MODEL) ||
-						"BNRV350".equals(Build.MODEL) ||
-						"BNRV300".equals(Build.MODEL))) {
-				if ("1.2.0".equals(Build.VERSION.INCREMENTAL) ||
-					"1.2.1".equals(Build.VERSION.INCREMENTAL)) {
+						Build.MODEL.startsWith("BNRV"))) {
+				if (Build.VERSION.INCREMENTAL != null &&
+					(Build.VERSION.INCREMENTAL.startsWith("1.2") ||
+					 Build.VERSION.INCREMENTAL.startsWith("1.3"))) {
 					ourInstance = NOOK12;
 				} else {
 					ourInstance = NOOK;
