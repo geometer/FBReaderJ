@@ -75,9 +75,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			view.onScrollingFinished(ZLView.PageIndex.current);
 		}
 	}
-	
+
 	private int myFullRefreshCounter = 0;
-	
+
 	public void prepareFullRefresh() {
 		myFullRefreshCounter = 0;
 	}
