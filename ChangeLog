@@ -6,7 +6,10 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.3 (Feb 25, 2015) =====
+===== 2.3.2 (Mar ??, 2015) =====
+* Fixed search dialog crash on Nook Glowlight™
+
+===== 2.3.1 (Feb 25, 2015) =====
 * Fixed scanning file system for books
 
 ===== 2.3 (Feb 14, 2015) =====
