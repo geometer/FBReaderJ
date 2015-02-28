@@ -31,7 +31,7 @@ public class PluginCollection {
 		System.loadLibrary("NativeFormats-v4");
 	}
 
-	private static PluginCollection ourInstance;
+	private static volatile PluginCollection ourInstance;
 
 	private final List<BuiltinFormatPlugin> myBuiltinPlugins =
 		new LinkedList<BuiltinFormatPlugin>();
@@ -40,15 +40,22 @@ public class PluginCollection {
 
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
+			createInstance();
+		}
+		return ourInstance;
+	}
+
+	private static synchronized void createInstance() {
+		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
 
-			// This code can not be moved to constructor because nativePlugins() is a native method
+			// This code cannot be moved to constructor
+			// because nativePlugins() is a native method
 			for (NativeFormatPlugin p : ourInstance.nativePlugins()) {
 				ourInstance.myBuiltinPlugins.add(p);
 				System.err.println("native plugin: " + p);
 			}
 		}
-		return ourInstance;
 	}
 
 	public static void deleteInstance() {
