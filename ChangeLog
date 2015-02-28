@@ -8,6 +8,8 @@
 
 ===== 2.3.2 (Mar ??, 2015) =====
 * Fixed search dialog crash on Nook Glowlight™ (NG2)
+* Fixed double presence of some plugins
+* Updated copyright notice: "Geometer Plus" => "FBReader.ORG Limited", year => 2015
 
 ===== 2.3.1 (Feb 25, 2015) =====
 * Fixed scanning file system for books
