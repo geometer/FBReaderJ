@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- English FBReaderJ resources, by Geometer Plus -->
+<!-- English FBReaderJ resources, by FBReader.ORG Limited -->
 <resources>
 	<node name="library" value="FBReader library">
 		<node name="unknownAuthor" value="Unknown author"/>
