@@ -137,6 +137,8 @@
 		<node name="removeCustomCatalog" value="Verwijder catalogus"/>
 		<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 		<node name="addCustomCatalogSummary" value="Voeg handmatig eigen OPDS-catalogus toe"/>
+		<node name="yourDevice" value="Uw apparaat"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Catalogus uitschakelen"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Wil je de lokale kopie lezen?"/>

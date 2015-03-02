@@ -10,7 +10,7 @@ buildscript {
 def getVerCode() {
     def code = new ByteArrayOutputStream()
     exec {
-        commandLine 'git', 'rev-list', '--count', 'HEAD'
+        commandLine 'git', 'rev-list', '--count', '--all', 'HEAD'
         standardOutput = code
     }
     return Integer.valueOf(code.toString().trim())
@@ -44,7 +44,7 @@ android {
         int vc = getVerCode()
         minSdkVersion 19
         targetSdkVersion 19
-        versionCode vc
+        versionCode 8000+vc
         versionName getVerName("1.0", vc)
     }
     signingConfigs {

@@ -133,6 +133,8 @@
 		<node name="removeCustomCatalog" value="移除书库"/>
 		<node name="addCustomCatalog" value="增加书库"/>
 		<node name="addCustomCatalogSummary" value="手工添加自有的OPDS书库"/>
+		<node name="yourDevice" value="您的设备"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="停用书库"/>
 		<node name="confirmQuestions">
 			<node name="read" value="是否本地阅读"/>

@@ -143,6 +143,8 @@
 		<node name="removeCustomCatalog" value="Odebrat katalog"/>
 		<node name="addCustomCatalog" value="Přidat katalog"/>
 		<node name="addCustomCatalogSummary" value="Přidat vlastní OPDS katalog ručně"/>
+		<node name="yourDevice" value="Váš přístroj"/>
+		<node name="yourDeviceSummary" value=""/>
 		<node name="disableCatalog" value="Zakázat katalog"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Chcete číst místní kopii?"/>

@@ -134,6 +134,8 @@
 		<node name="removeCustomCatalog" value="Eliminati catalog"/>
 		<node name="addCustomCatalog" value="Adauga catalog"/>
 		<node name="addCustomCatalogSummary" value="Adauga particularizate catalog OPDS manual"/>
+		<node name="yourDevice" value="Dispozitivul dvs."/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Doriti sa cititi copia locala?"/>

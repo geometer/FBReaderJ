@@ -133,6 +133,8 @@
 		<node name="removeCustomCatalog" value="ลบแคตตาล็อก"/>
 		<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
 		<node name="addCustomCatalogSummary" value="เพิ่ม OPDS แคตตาล็อกที่ด้วยตนเอง"/>
+		<node name="yourDevice" value="อุปกรณ์ของคุณ"/>
+		<node name="yourDeviceSummary" value=""/>				
 		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="คุณต้องการอ่านหนังสือที่คัดลอกไว้หรือไม่?"/>

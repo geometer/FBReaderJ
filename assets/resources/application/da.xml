@@ -137,6 +137,8 @@
 		<node name="removeCustomCatalog" value="Fjern katalog"/>
 		<node name="addCustomCatalog" value="Tilføj katalog"/>
 		<node name="addCustomCatalogSummary" value="Tilføj brugerdefineret OPDS katalog manuelt"/>
+		<node name="yourDevice" value="Din enhed"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Vil du læse lokal kopi?"/>

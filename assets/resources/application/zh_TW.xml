@@ -133,6 +133,8 @@
 		<node name="removeCustomCatalog" value="刪除目錄"/>
 		<node name="addCustomCatalog" value="新增目錄"/>
 		<node name="addCustomCatalogSummary" value="手動新增 OPDS 目錄"/>
+		<node name="yourDevice" value="您的裝置"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="是否要閱讀書藉的本地存檔嗎?"/>

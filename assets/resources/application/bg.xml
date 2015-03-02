@@ -142,6 +142,8 @@
 		<node name="removeCustomCatalog" value="Премахни каталога"/>
 		<node name="addCustomCatalog" value="Добави каталог"/>
 		<node name="addCustomCatalogSummary" value="Добави OPDS каталог ръчно"/>
+		<node name="yourDevice" value="Вашето устройство"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Деактивирай каталог"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Искате ли да прочетете локално копие?"/>

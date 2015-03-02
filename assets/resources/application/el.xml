@@ -133,6 +133,8 @@
 		<node name="removeCustomCatalog" value="διαγραφή καταλόγου"/>
 		<node name="addCustomCatalog" value="προσθήκη καταλόγου"/>
 		<node name="addCustomCatalogSummary" value="Χειροκίνητη προσθήκη ενός καταλόγου OPDS"/>
+		<node name="yourDevice" value="Η συσκευή σας"/>
+		<node name="yourDeviceSummary" value=""/>
 		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Θέλετε να διαβάσετε το τοπικό αντίγραφό;"/>

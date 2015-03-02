@@ -133,6 +133,8 @@
 		<node name="removeCustomCatalog" value="Usuń katalog"/>
 		<node name="addCustomCatalog" value="Dodaj katalog"/>
 		<node name="addCustomCatalogSummary" value="Ręcznie dodaj katalog OPDS"/>
+		<node name="yourDevice" value="Twoje urządzenie"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Czy chcesz czytać lokalną kopię?"/>

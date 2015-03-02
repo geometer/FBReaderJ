@@ -440,6 +440,7 @@ public class NetworkLibrary {
 			//);
 			new SearchCatalogTree(myRootTree, mySearchItem);
 			// normal catalog items to be inserted here
+			new OpenFileChooseTree(myRootTree);
 			if (!DeviceType.Instance().isYotaPhone()) {
 				new ManageCatalogsItemTree(myRootTree);
 			}
