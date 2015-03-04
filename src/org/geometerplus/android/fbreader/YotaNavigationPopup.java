@@ -21,6 +21,7 @@ public class YotaNavigationPopup extends NavigationPopup {
 	private TextView mPage;
 	private TextView mPagesLeft;
 	private TextView mBackToPage;
+	private TextView mBackButton;
 	private TOCPopup mTOCPopup;
 	private RelativeLayout mRootView;
 	private int mStartPage;
@@ -68,9 +69,8 @@ public class YotaNavigationPopup extends NavigationPopup {
 
 		final TextView page = (TextView)layout.findViewById(R.id.page);
 		final TextView pages_left = (TextView)layout.findViewById(R.id.pages_left);
-		final TextView back_to_page = (TextView)layout.findViewById(R.id.back_to_page);
-		//back_to_page.setText(myWindow.getActivity().getString(R.string.back_to_page) + " " + mStartPage);
-		back_to_page.setOnClickListener(new View.OnClickListener() {
+		mBackButton = (TextView)layout.findViewById(R.id.back_to_page);
+		mBackButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (mNavigated) {
@@ -81,6 +81,7 @@ public class YotaNavigationPopup extends NavigationPopup {
 					myFBReader.getViewWidget().reset();
 					myFBReader.getViewWidget().repaint();
 					update();
+					mBackButton.setVisibility(View.INVISIBLE);
 				}
 				else {
 					myFBReader.jumpBack();
@@ -88,6 +89,9 @@ public class YotaNavigationPopup extends NavigationPopup {
 				}
 			}
 		});
+		if (!myFBReader.canJumpBack()) {
+			mBackButton.setVisibility(View.INVISIBLE);
+		}
 
 		final String pages_left_resource = myWindow.getActivity().getString(R.string.pages_left);
 		final String of = myWindow.getActivity().getString(R.string.of);
@@ -106,6 +110,7 @@ public class YotaNavigationPopup extends NavigationPopup {
 
 			public void onStartTrackingTouch(SeekBar seekBar) {
 				mNavigated = true;
+				mBackButton.setVisibility(View.VISIBLE);
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
