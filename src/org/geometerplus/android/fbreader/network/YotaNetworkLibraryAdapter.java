@@ -18,6 +18,8 @@ import org.geometerplus.android.fbreader.tree.TreeActivity;
 import org.geometerplus.android.util.ViewUtil;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
+
 import com.yotadevices.yotaphone2.yotareader.R;
 
 public class YotaNetworkLibraryAdapter extends NetworkLibraryAdapter {
@@ -34,6 +36,10 @@ public class YotaNetworkLibraryAdapter extends NetworkLibraryAdapter {
 		final NetworkTree tree = (NetworkTree)getItem(position);
 		if (tree == null) {
 			throw new IllegalArgumentException("tree == null");
+		}
+		if (tree instanceof SearchCatalogTree) {
+			View v = new View(parent.getContext());
+			return v;
 		}
 		if (view == null) {
 			if (tree.Level > 1) {
@@ -114,5 +120,33 @@ public class YotaNetworkLibraryAdapter extends NetworkLibraryAdapter {
 
 		return view;
 
+	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		//All this stuff was to hide Search item from list of Catalogs.
+		//The right way is not to create SearchCatalogTree but in this case search not works at all
+		final NetworkTree tree = (NetworkTree)getItem(position);
+		if (tree instanceof SearchCatalogTree) {
+			return false;
+		}
+		return super.isEnabled(position);
+	}
+
+	@Override
+	public int getViewTypeCount() {
+		return 3;
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		final NetworkTree tree = (NetworkTree)getItem(position);
+		if (tree instanceof SearchCatalogTree) {
+			return 0;
+		}
+		if (tree.Level == 1) {
+			return 1;
+		}
+		return 2;
 	}
 }
