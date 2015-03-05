@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.ui.android.view;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
+import android.os.PowerManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
@@ -51,25 +52,28 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init();
+		init(context);
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
+		init(context);
 	}
 
 	public ZLAndroidWidget(Context context) {
 		super(context);
-		init();
+		init(context);
 	}
 
-	private void init() {
+	private void init(Context context) {
 		// next line prevent ignoring first onKeyDown DPad event
 		// after any dialog was closed
 		setFocusableInTouchMode(true);
 		setDrawingCacheEnabled(false);
 		setOnLongClickListener(this);
+
+		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+		mDontSleepBS = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "YotaReaderPageFlip");
 	}
 
 	private volatile boolean myAmendSize = false;
@@ -472,6 +476,8 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	private volatile boolean myPendingDoubleTap;
 	private int myPressedX, myPressedY;
 	private boolean myScreenIsTouched;
+
+	private PowerManager.WakeLock mDontSleepBS; // prevents backscreen on YotaPhone2 from sleep.
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int x = (int)event.getX();
@@ -480,6 +486,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_UP:
+				if (!mDontSleepBS.isHeld()) {
+					mDontSleepBS.acquire(1000);
+				}
 				if (myPendingDoubleTap) {
 					view.onFingerDoubleTap(x, y);
 				} else if (myLongClickPerformed) {
