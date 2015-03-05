@@ -137,6 +137,8 @@
 		<node name="removeCustomCatalog" value="Выдаліць каталёг"/>
 		<node name="addCustomCatalog" value="Дадаць каталёг"/>
 		<node name="addCustomCatalogSummary" value="Дадаць уручную дапасаваны каталёг OPDS (адкрытай сыстэмы дастаўленьня публікацыяў)"/>
+		<node name="yourDevice" value="Your Device"/>
+		<node name="yourDeviceSummary" value=""/>
 		<node name="disableCatalog" value="Выключыць каталёг"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Чытаць лякальную копію?"/>

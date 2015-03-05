@@ -94,10 +94,10 @@ public class YotaNetworkLibraryAdapter extends NetworkLibraryAdapter {
 			statusView.requestLayout();
 			TextView itemName = ViewUtil.findTextView(view, R.id.library_tree_item_name);
 			itemName.setText(tree.getName());
-			itemName.setTypeface(Typeface.create("PT Sans Yota", Typeface.BOLD));
+			itemName.setTypeface(Typeface.create("sans", Typeface.BOLD));
 			TextView summary = ViewUtil.findTextView(view, R.id.library_tree_item_childrenlist);
 			summary.setText(tree.getSummary());
-			summary.setTypeface(Typeface.create("PT Sans Yota", Typeface.NORMAL));
+			summary.setTypeface(Typeface.create("sans", Typeface.NORMAL));
 
 		} else {
 			int colorpos = position % (COLORS.length);

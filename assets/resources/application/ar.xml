@@ -137,6 +137,8 @@
 		<node name="removeCustomCatalog" value="حذف الكتالوج"/>
 		<node name="addCustomCatalog" value="إضافة كتالوج"/>
 		<node name="addCustomCatalogSummary" value="إضافة كتالوج OPDS يدويا"/>
+		<node name="yourDevice" value="الجهاز"/>
+		<node name="yourDeviceSummary" value=""/>
 		<node name="disableCatalog" value="الغاء الكتالوج"/>
 		<node name="confirmQuestions">
 			<node name="read" value="هل تريد فتح النسخة المحلية؟"/>

@@ -133,6 +133,8 @@
 		<node name="removeCustomCatalog" value="Видалити теку"/>
 		<node name="addCustomCatalog" value="Додати теку"/>
 		<node name="addCustomCatalogSummary" value="Додати OPDS каталог вручну"/>
+		<node name="yourDevice" value="Ваш пристрій"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Бажаєте відкрити локальну копію?"/>

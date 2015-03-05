@@ -212,6 +212,12 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				NetworkLibrary.Instance().synchronize();
 				break;
 			}
+			case OpenFileChooseActivity.FILE_CHOOSER:
+			{
+				setResult(resultCode, data);
+				finish();
+				break;
+			}
 		}
 	}
 
@@ -287,6 +293,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		myListClickActions.add(new TopupAction(this));
 		myListClickActions.add(new ShowBookInfoAction(this, myNetworkContext));
 		myListClickActions.add(new ManageCatalogsAction(this));
+		myListClickActions.add(new OpenFileChooseActivity(this));
 	}
 
 	private List<? extends Action> getContextMenuActions(NetworkTree tree) {

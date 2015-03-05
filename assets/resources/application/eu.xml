@@ -137,6 +137,8 @@
 		<node name="removeCustomCatalog" value="Kendu katalogoa"/>
 		<node name="addCustomCatalog" value="Gehitu katalogoa"/>
 		<node name="addCustomCatalogSummary" value="Eskuz gehitu pertsonalizatutako OPDS motako katalogoa"/>
+		<node name="yourDevice" value="Your device"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Ezgaitu katalogoa"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Kopia lokala irakurri nahi duzu?"/>

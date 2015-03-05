@@ -143,6 +143,8 @@
 		<node name="removeCustomCatalog" value="Treure catàleg"/>
 		<node name="addCustomCatalog" value="Afegir catàleg"/>
 		<node name="addCustomCatalogSummary" value="Afegir manualment catàleg OPDS personalitzat"/>
+		<node name="yourDevice" value="Your device"/>
+		<node name="yourDeviceSummary" value=""/>				
 		<node name="disableCatalog" value="Desactivar catàleg"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Voleu llegir la còpia local?"/>

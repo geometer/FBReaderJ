@@ -141,6 +141,8 @@
 		<node name="removeCustomCatalog" value="Ջնջել գրացուցակը"/>
 		<node name="addCustomCatalog" value="Հավելել գրացուցակ"/>
 		<node name="addCustomCatalogSummary" value="Ձեռքով ավելացնել OPDS գրացուցակ"/>
+		<node name="yourDevice" value="Your device" toBeTranslated="true"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Բացե՞լ պատճենը"/>

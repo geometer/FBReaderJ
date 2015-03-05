@@ -133,6 +133,8 @@
 		<node name="removeCustomCatalog" value="Xóa catalo"/>
 		<node name="addCustomCatalog" value="Thêm"/>
 		<node name="addCustomCatalogSummary" value="Thêm tùy chỉnh OPDS bằng tay"/>
+		<node name="yourDevice" value="Thiết bị của bạn"/>
+		<node name="yourDeviceSummary" value=""/>		
 		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Bạn muốn đọc bản nội bộ?"/>
