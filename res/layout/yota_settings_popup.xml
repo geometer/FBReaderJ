@@ -124,6 +124,7 @@
 				android:button="@android:color/transparent"/>
 		</LinearLayout>
 		<ImageView
+			android:id="@+id/font_face_separator"
 			android:layout_width="match_parent"
 			android:layout_height="2dp"
 			android:layout_centerVertical="true"
@@ -132,6 +133,7 @@
 			android:layout_marginTop="15dp"
 			android:src="@drawable/gray_line"/>
 		<LinearLayout
+			android:id="@+id/font_face"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="15dp"

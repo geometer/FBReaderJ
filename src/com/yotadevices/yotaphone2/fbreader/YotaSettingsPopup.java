@@ -10,8 +10,10 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -26,6 +28,10 @@ public class YotaSettingsPopup extends ZLApplication.PopupPanel{
 	private FBReaderApp mReaderApp;
 	private View mRootView;
 	private View mPopupView;
+
+	private View mFontFaces;
+	private View mFontFacesSeparator;
+
 	private SeekBar mBrightnessSlide;
 
 	private final static int[] FONT_RADIO_BUTTONS_IDS =
@@ -143,6 +149,9 @@ public class YotaSettingsPopup extends ZLApplication.PopupPanel{
 		initRadioButtons(mPopupView, THEME_RADIO_BUTTONS_IDS, mOnThemeSelectListener, mThemeGroup);
 
 		mBrightnessSlide = (SeekBar)mPopupView.findViewById(R.id.brighness_seekbar);
+		mFontFaces = mPopupView.findViewById(R.id.font_face);
+		mFontFacesSeparator = mPopupView.findViewById(R.id.font_face_separator);
+
 		mPopup = new android.widget.PopupWindow(reader);
 		mPopup.setBackgroundDrawable(new ColorDrawable(0));
 		mPopup.setContentView(mPopupView);
@@ -173,6 +182,16 @@ public class YotaSettingsPopup extends ZLApplication.PopupPanel{
 		});
 	}
 
+	private void hideFontFaceSelector() {
+		mFontFaces.setVisibility(View.GONE);
+		mFontFacesSeparator.setVisibility(View.GONE);
+	}
+
+	private void showFontFaceSelector() {
+		mFontFaces.setVisibility(View.VISIBLE);
+		mFontFacesSeparator.setVisibility(View.VISIBLE);
+	}
+
 	private void initRadioButtons(View root, int[] buttons, View.OnClickListener listener, TreeMap<Integer, RadioButton> buttonsGroup) {
 		for (int id : buttons) {
 			RadioButton rb = (RadioButton)root.findViewById(id);
@@ -197,6 +216,20 @@ public class YotaSettingsPopup extends ZLApplication.PopupPanel{
 		}
 		else {
 			selectRadioButton(R.id.font_sans, mFontTypeGroup);
+		}
+
+		try {
+			//Font face couldn't be changed for EPUB books so we need to hide this option
+			FormatPlugin plugin = mReaderApp.getCurrentBook().getPlugin();
+			if (plugin.supportedFileType().equalsIgnoreCase("epub")) {
+				hideFontFaceSelector();
+			}
+			else {
+				showFontFaceSelector();
+			}
+		}
+		catch (BookReadingException o_O) {
+			showFontFaceSelector();
 		}
 	}
 

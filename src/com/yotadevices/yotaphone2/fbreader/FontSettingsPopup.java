@@ -22,8 +22,10 @@ import com.yotadevices.sdk.Drawer;
 import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.view.GaugeView;
 
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import com.yotadevices.yotaphone2.yotareader.R;
@@ -37,6 +39,7 @@ public class FontSettingsPopup {
     private final LayoutInflater mLayoutInflater;
     private final View mRootView;
     private final View mPopupView;
+	private final View mFontFaces;
     private final FBReaderApp mReader;
     private final OnFontChangeListener mListener;
 
@@ -63,6 +66,7 @@ public class FontSettingsPopup {
         mLayoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPopupView = mLayoutInflater.inflate(R.layout.font_popup_layout, null);
 
+	    mFontFaces = mPopupView.findViewById(R.id.font_face);
         LinearLayout lv = (LinearLayout)mPopupView.findViewById(R.id.font1);
         lv.setTag(0);
         lv.setOnClickListener(mOnFontSizeListener);
@@ -130,6 +134,14 @@ public class FontSettingsPopup {
         mPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
     }
 
+	private void hideFontFaceSelector() {
+		mFontFaces.setVisibility(View.GONE);
+	}
+
+	private void showFontFaceSelector() {
+		mFontFaces.setVisibility(View.VISIBLE);
+	}
+
     public void show() {
         setupFontSizes();
         setupFontStyle();
@@ -149,7 +161,19 @@ public class FontSettingsPopup {
         } else {
             mSansFont.second.setVisibility(View.VISIBLE);
         }
-
+	    try {
+		    //Font face couldn't be changed for EPUB books so we need to hide this option
+		    FormatPlugin plugin = mReader.getCurrentBook().getPlugin();
+		    if (plugin.supportedFileType().equalsIgnoreCase("epub")) {
+			    hideFontFaceSelector();
+		    }
+		    else {
+			    showFontFaceSelector();
+		    }
+	    }
+	    catch (BookReadingException o_O) {
+		    showFontFaceSelector();
+	    }
     }
 
     private void setupTheme() {

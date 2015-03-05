@@ -10,7 +10,7 @@
         android:src="@drawable/popup_triangle"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="174dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@android:color/black">
         <LinearLayout
@@ -42,6 +42,7 @@
                 android:id="@+id/font5" />
         </LinearLayout>
         <LinearLayout
+	        android:id="@+id/font_face"
             android:layout_width="match_parent"
             android:layout_height="28.3dp"
             android:layout_marginTop="23.3dp"
@@ -103,6 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="28.3dp"
             android:layout_marginTop="28dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="62dp"
             android:gravity="top"
             android:layout_marginRight="62dp"

@@ -171,7 +171,8 @@ public class Book extends TitledEntity {
 	}
 
 	public FormatPlugin getPlugin() throws BookReadingException {
-		return getPlugin(File);
+		final FormatPlugin plugin = getPlugin(File);
+		return plugin;
 	}
 
 	public FormatPlugin getPluginOrNull() {
