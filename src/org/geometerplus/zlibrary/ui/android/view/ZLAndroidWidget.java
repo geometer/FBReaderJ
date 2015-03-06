@@ -486,9 +486,6 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_UP:
-				if (!mDontSleepBS.isHeld()) {
-					mDontSleepBS.acquire(1000);
-				}
 				if (myPendingDoubleTap) {
 					view.onFingerDoubleTap(x, y);
 				} else if (myLongClickPerformed) {
@@ -506,6 +503,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 							postDelayed(myPendingShortClickRunnable, ViewConfiguration.getDoubleTapTimeout());
 						} else {
 							view.onFingerSingleTap(x, y);
+							if (!mDontSleepBS.isHeld()) {
+								mDontSleepBS.acquire(2000);
+							}
 						}
 					} else {
 						view.onFingerRelease(x, y);
