@@ -170,11 +170,6 @@ public class YotaNavigationPopup extends NavigationPopup {
 		builder.append(page);
 		builder.append("/");
 		builder.append(pagesNumber);
-//		final TOCTree tocElement = myFBReader.getCurrentTOCElement();
-//		if (tocElement != null) {
-//			builder.append("  ");
-//			builder.append(tocElement.getText());
-//		}
 		return UIUtils.isArabic() ? UIUtils.convertStringWithNumbersToArabic(builder.toString()) : builder.toString();
 	}
 }
