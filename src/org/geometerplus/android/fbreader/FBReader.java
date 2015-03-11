@@ -990,7 +990,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (DeviceType.Instance().isYotaPhone() && item.getItemId() == android.R.id.home) {
-			myFBReaderApp.runAction(ActionCode.SHOW_LIBRARY);
+			if (!myFBReaderApp.canJumpBack()) {
+				myFBReaderApp.runAction(ActionCode.SHOW_LIBRARY);
+			}
+			else {
+				myFBReaderApp.jumpBack();
+				myFBReaderApp.runAction(ActionCode.TOGGLE_BARS);
+			}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

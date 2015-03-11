@@ -411,28 +411,36 @@ public final class FBReaderApp extends ZLApplication {
 		return bookmarks;
 	}
 
+	public boolean canJumpBack() {
+		if (myJumpEndPosition == null || myJumpTimeStamp == null) {
+			return false;
+		}
+		// more than 2 minutes ago
+		if (myJumpTimeStamp.getTime() + 2 * 60 * 1000 < new Date().getTime()) {
+			return false;
+		}
+		if (!myJumpEndPosition.equals(BookTextView.getStartCursor())) {
+			return false;
+		}
+
+		final List<Bookmark> bookmarks = invisibleBookmarks();
+		if (bookmarks.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
 	public boolean jumpBack() {
 		try {
 			if (getTextView() != BookTextView) {
 				showBookTextView();
 				return true;
 			}
-
-			if (myJumpEndPosition == null || myJumpTimeStamp == null) {
-				return false;
-			}
-			// more than 2 minutes ago
-			if (myJumpTimeStamp.getTime() + 2 * 60 * 1000 < new Date().getTime()) {
-				return false;
-			}
-			if (!myJumpEndPosition.equals(BookTextView.getStartCursor())) {
+			if (!canJumpBack()) {
 				return false;
 			}
 
 			final List<Bookmark> bookmarks = invisibleBookmarks();
-			if (bookmarks.isEmpty()) {
-				return false;
-			}
 			final Bookmark b = bookmarks.get(0);
 			Collection.deleteBookmark(b);
 			gotoBookmark(b, true);
