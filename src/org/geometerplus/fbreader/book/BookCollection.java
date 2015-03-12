@@ -382,13 +382,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<String> labels() {
-		final Set<String> labels = new HashSet<String>();
-		synchronized (myBooksByFile) {
-			for (Book book : myBooksByFile.values()) {
-				labels.addAll(book.labels());
-			}
-		}
-		return new ArrayList<String>(labels);
+		return myDatabase.listLabels();
 	}
 
 	public boolean hasSeries() {
