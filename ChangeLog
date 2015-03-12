@@ -6,6 +6,9 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.3.3 (Mar 13, 2015) =====
+* Quick access to labels list
+
 ===== 2.3.2 (Mar 01, 2015) =====
 * Fixed search dialog crash on Nook Glowlight™ (NG2)
 * Fixed double presence of some plugins
