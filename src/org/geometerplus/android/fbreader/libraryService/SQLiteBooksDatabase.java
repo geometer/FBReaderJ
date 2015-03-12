@@ -556,7 +556,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT DISTINCT(Labels.name) FROM Labels" +
 			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
 			" INNER JOIN Books ON BookLabel.book_id=Books.book_id" +
-			" WHERE Books.exists=1",
+			" WHERE Books.`exists`=1",
 			null
 		);
 		final LinkedList<String> names = new LinkedList<String>();
