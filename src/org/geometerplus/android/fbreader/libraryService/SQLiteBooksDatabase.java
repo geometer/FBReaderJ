@@ -550,6 +550,23 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return names;
 	}
 
+	@Override
+	protected List<String> listLabels() {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT DISTINCT(Labels.name) FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
+			" INNER JOIN Books ON BookLabel.book_id=Books.book_id" +
+			" WHERE Books.exists=1",
+			null
+		);
+		final LinkedList<String> names = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			names.add(cursor.getString(0));
+		}
+		cursor.close();
+		return names;
+	}
+
 	protected void deleteAllBookUids(long bookId) {
 		final SQLiteStatement statement = get("DELETE FROM BookUid WHERE book_id=?");
 		statement.bindLong(1, bookId);
