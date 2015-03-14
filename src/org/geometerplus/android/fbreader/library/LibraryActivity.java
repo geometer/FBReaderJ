@@ -67,7 +67,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				showProgress(!myCollection.status().IsCompleted);
+				showProgress(!myCollection.status().IsComplete);
 				myRootTree = new RootTree(myCollection);
 				myCollection.addListener(LibraryActivity.this);
 				init(getIntent());
@@ -320,7 +320,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		final MenuItem rescanItem = menu.findItem(OptionsItemId.Rescan);
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				rescanItem.setEnabled(myCollection.status().IsCompleted);
+				rescanItem.setEnabled(myCollection.status().IsComplete);
 			}
 		});
 		rescanItem.setVisible(tree == myRootTree);
@@ -347,7 +347,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			case OptionsItemId.Search:
 				return onSearchRequested();
 			case OptionsItemId.Rescan:
-				if (myCollection.status().IsCompleted) {
+				if (myCollection.status().IsComplete) {
 					myCollection.reset(true);
 					openTree(myRootTree);
 				}
@@ -489,6 +489,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	public void onBuildEvent(IBookCollection.Status status) {
-		showProgress(!status.IsCompleted);
+		showProgress(!status.IsComplete);
 	}
 }

@@ -479,7 +479,7 @@ public class BookCollection extends AbstractBookCollection {
 
 	private void processFilesQueue() {
 		synchronized (myFilesToRescan) {
-			if (!myStatus.IsCompleted) {
+			if (!myStatus.IsComplete) {
 				return;
 			}
 
