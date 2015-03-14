@@ -33,10 +33,10 @@ public interface IBookCollection {
 		Succeeded(true),
 		Failed(true);
 
-		public final Boolean IsCompleted;
+		public final Boolean IsComplete;
 
-		Status(boolean completed) {
-			IsCompleted = completed;
+		Status(boolean complete) {
+			IsComplete = complete;
 		}
 	}
 
