@@ -11,10 +11,10 @@
 		<node name="networkError">
 			<node name="title" value="Erro de rede"/>
 			<node name="unknownErrorMessage" value="Erro desconhecido"/>
-			<node name="operationTimedOutMessage" value="Tempo de operação está esgotado"/>
+			<node name="operationTimedOutMessage" value="Tempo de operação esgotou"/>
 			<node name="somethingWrongMessage" value="Algo está errado para %s"/>
-			<node name="couldntCreateDirectoryMessage" value="Não foi possível criar um diretório %s"/>
-			<node name="couldntCreateFileMessage" value="Não foi possível criar um arquivo %s"/>
+			<node name="couldntCreateDirectoryMessage" value="Não foi possível criar o diretório %s"/>
+			<node name="couldntCreateFileMessage" value="Não foi possível criar o arquivo %s"/>
 			<node name="couldntConnectMessage" value="Não foi possível ligar ao host %s"/>
 			<node name="couldntResolveHostMessage" value="Não foi possível resolver host %s"/>
 			<node name="authenticationFailed" value="Falha na autenticação"/>
