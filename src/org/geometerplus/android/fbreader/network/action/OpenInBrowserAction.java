@@ -55,18 +55,22 @@ public class OpenInBrowserAction extends CatalogAction {
 		final String url =
 			((NetworkURLCatalogItem)((NetworkCatalogTree)tree).Item).getUrl(UrlInfo.Type.HtmlPage);
 
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final String message = NetworkLibrary.resource().getResource("confirmQuestions").getResource("openInBrowser").getValue();
-		new AlertDialog.Builder(myActivity)
-			.setTitle(tree.getName())
-			.setMessage(message)
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					Util.openInBrowser(myActivity, url);
-				}
-			})
-			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-			.create().show();
+		if (Util.isOurLink(url)) {
+			Util.openInBrowser(myActivity, url);
+		} else {
+			final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+			final String message = NetworkLibrary.resource().getResource("confirmQuestions").getResource("openInBrowser").getValue();
+			new AlertDialog.Builder(myActivity)
+				.setTitle(tree.getName())
+				.setMessage(message)
+				.setIcon(0)
+				.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Util.openInBrowser(myActivity, url);
+					}
+				})
+				.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+				.create().show();
+		}
 	}
 }

@@ -340,6 +340,9 @@
 	<node name="Preferences">
 		<node name="sync" value="Synchronizace">
 			<node name="summary" value="Nastavení síťové knihovny"/>
+			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
+				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			</node>
 			<node name="enable" value="Povolit synchronizaci">
 				<node name="summaryOn" value="Synchronizovat mou knihovnu se serverem síťové knihovny FBReaderu"/>
 				<node name="summaryOnWithAccount" value="Synchronizovat mou knihovnu jako %s"/>
