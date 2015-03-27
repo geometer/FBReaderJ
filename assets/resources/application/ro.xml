@@ -323,6 +323,9 @@
 	<node name="Preferences">
 		<node name="sync" value="Sincronizare">
 			<node name="summary" value="Setarile retelei de carti"/>
+			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
+				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			</node>
 			<node name="enable" value="Activeaza sincronizarea">
 				<node name="summaryOn" value="Sincronizeaza-mi libraria cu serverul FBReader"/>
 				<node name="summaryOnWithAccount" value="Sincronizeaza-mi libraria ca %s"/>
