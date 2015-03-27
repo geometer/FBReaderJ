@@ -99,6 +99,14 @@ public abstract class Util implements UserRegistrationConstants {
 		activity.startActivity(intent);
 	}
 
+	public static boolean isOurLink(String url) {
+		try {
+			return Uri.parse(url).getHost().endsWith(".fbreader.org");
+		} catch (Throwable t) {
+			return false;
+		}
+	}
+
 	public static void openInBrowser(Activity activity, String url) {
 		if (url != null) {
 			url = NetworkLibrary.Instance().rewriteUrl(url, true);

@@ -145,11 +145,11 @@
 		<node name="disableCatalog" value="Disable catalogue"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
-			<node name="download" value="Do you want to download this book?"/>
+			<node name="download" value="Do you want to download the book?"/>
 			<node name="readDemo" value="Do you want to read sample?"/>
 			<node name="downloadDemo" value="Do you want to download sample?"/>
-			<node name="buy" value="Do you want to buy this book? (%s)"/>
-			<node name="openInBrowser" value="Do you want to open this catalogue in browser?"/>
+			<node name="buy" value="Do you want to buy the book? (%s)"/>
+			<node name="openInBrowser" value="Do you want to open the link in browser?"/>
 		</node>
 		<node name="downloadingCatalogs" value="Downloading catalogues"/>
 		<!-- used as notification title -->
@@ -331,6 +331,9 @@
 	<node name="Preferences">
 		<node name="sync" value="Synchronisation">
 			<node name="summary" value="Book network settings"/>
+			<node name="site" value="Read more about synchronisation">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
+			</node>
 			<node name="enable" value="Enable synchronisation">
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server"/>
 				<node name="summaryOnWithAccount" value="Synchronise my library as %s"/>
