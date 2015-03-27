@@ -156,6 +156,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				return syncOptions.Enabled.getValue();
 			}
 		};
+		syncScreen.addPreference(new UrlPreference(this, syncScreen.Resource, "site"));
 		syncScreen.addPreference(new ZLCheckBoxPreference(
 			this, syncScreen.Resource.getResource("enable")
 		) {
