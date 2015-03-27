@@ -330,6 +330,9 @@
 	<node name="Preferences">
 		<node name="sync" value="همگام سازی">
 			<node name="summary" value="تنظیمات شبکه کتاب"/>
+			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
+				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			</node>
 			<node name="enable" value="فعالسازی همگامسازی">
 				<node name="summaryOn" value="هماهنگی کتابخانه من با سرور شبکه کتاب برنامه"/>
 				<node name="summaryOnWithAccount" value="هماهنگی کتابخانه من بعنوان %s"/>

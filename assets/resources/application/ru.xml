@@ -153,7 +153,7 @@
 			<node name="readDemo" value="Вы хотите открыть фрагмент?"/>
 			<node name="downloadDemo" value="Вы хотите скачать фрагмент?"/>
 			<node name="buy" value="Вы хотите купить эту книгу? (%s)"/>
-			<node name="openInBrowser" value="Вы хотите открыть этот каталог в браузере?"/>
+			<node name="openInBrowser" value="Вы хотите открыть эту ссылку в браузере?"/>
 		</node>
 		<node name="downloadingCatalogs" value="Идёт загрузка каталогов"/>
 		<!-- used as notification title -->
@@ -336,6 +336,9 @@
 	<node name="Preferences">
 		<node name="sync" value="Синхронизация">
 			<node name="summary" value="Настройки книжной сети"/>
+			<node name="site" value="Как работает синхронизация FBReader">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
+			</node>
 			<node name="enable" value="Включить синхронизацию">
 				<node name="summaryOn" value="Синхронизировать мою библиотеку с сервером книжной сети"/>
 				<node name="summaryOnWithAccount" value="Синхронизировать библиотеку от имени %s"/>

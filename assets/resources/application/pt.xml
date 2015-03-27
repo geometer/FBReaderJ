@@ -335,6 +335,9 @@
 	<node name="Preferences" value="Preferências">
 		<node name="sync" value="Sincronização">
 			<node name="summary" value="Marcar opções de rede"/>
+			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
+				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			</node>
 			<node name="enable" value="Ativar sicronização">
 				<node name="summaryOn" value="Sincronizar a minha biblioteca com a rede de servidores de livros do FBReader"/>
 				<node name="summaryOnWithAccount" value="Sincronizar a minha biblioteca como %s"/>
