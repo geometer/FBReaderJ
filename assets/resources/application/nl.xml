@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 16-Nov-2014 -->
+<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 23-Mar-2015 -->
 <resources>
 	<node name="library" value="FBReader bibliotheek">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
@@ -23,8 +23,8 @@
 		<node name="favorites" value="Favorieten">
 			<node name="summary" value="Mijn geselecteerde boeken"/>
 		</node>
-		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
-			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		<node name="bookshelfView" value="Boekenplank">
+			<node name="summary" value="Moderne (material design) bibliotheek"/>
 		</node>
 		<node name="found" value="Gevonden">
 			<node name="summary" value="Zoekresultaten voor: %s"/>
@@ -139,7 +139,7 @@
 		<node name="stoppingCatalogLoading" value="Stoppen met laden"/>
 		<node name="stoppingNetworkSearch" value="Stoppen met zoeken"/>
 		<node name="editCustomCatalog" value="Catalogus bewerken"/>
-		<node name="removeCustomCatalog" value="Verwijder catalogus"/>
+		<node name="removeCustomCatalog" value="Catalogus verwijderen"/>
 		<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 		<node name="addCustomCatalogSummary" value="Voeg handmatig eigen OPDS-catalogus toe"/>
 		<node name="disableCatalog" value="Catalogus uitschakelen"/>
@@ -174,7 +174,7 @@
 			<node name="topup" value="Account opwaarderen"/>
 			<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 			<node name="refreshCatalogsList" value="Catalogussen vernieuwen"/>
-			<node name="manageCatalogs" value="Beheer catalogussen"/>
+			<node name="manageCatalogs" value="Catalogussen beheren"/>
 			<node name="clearBasket" value="Leeg mandje"/>
 			<node name="buyAllBooks" value="Koop alle boeken"/>
 		</node>
