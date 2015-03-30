@@ -42,7 +42,15 @@ class CatalogExpander extends NetworkItemsLoader {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			try {
 				if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
-					mgr.initialize();
+					new Thread() {
+						public void run() {
+							try {
+								mgr.initialize();
+							} catch (ZLNetworkException e) {
+								e.printStackTrace();
+							}
+						}
+					}.start();
 				}
 			} catch (ZLNetworkException e) {
 				mgr.logOut();

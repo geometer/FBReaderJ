@@ -18,7 +18,7 @@ updateVersion() {
 		android-1.5)
 			variant=0
 			;;
-		ice-cream-sandwich|yota|yota2|kindle|betayota|yotabeta|*-ics)
+		ice-cream-sandwich|yota|yota2|lr-kindle|kindle|betayota|yotabeta|*-ics)
 			variant=2
 			;;
 		*)

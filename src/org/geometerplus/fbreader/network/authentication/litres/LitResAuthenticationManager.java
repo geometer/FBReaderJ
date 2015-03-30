@@ -332,8 +332,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public synchronized List<NetworkBookItem> purchasedBooks() {
-		return myPurchasedBooks.list();
+	public List<NetworkBookItem> purchasedBooks() {
+		synchronized (InitialisationLock) {
+			return myPurchasedBooks.list();
+		}
 	}
 
 	@Override
@@ -345,8 +347,16 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return !sid.equals(myInitializedDataSid);
 	}
 
+	private final Object InitialisationLock = new Object();
+
 	@Override
 	public void initialize() throws ZLNetworkException {
+		synchronized (InitialisationLock) {
+			initializeInternal();
+		}
+	}
+
+	private void initializeInternal() throws ZLNetworkException {
 		final String sid;
 		final LitResNetworkRequest purchasedBooksRequest;
 		final LitResNetworkRequest accountRequest;
