@@ -4,10 +4,7 @@
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Ingolf Kübler 2011/07/03 -->
 <!-- Updated by Ingolf Kübler 2012/07/01 -->
-<!-- Updated by Matthias Dill 2014/06/10 -->
-<!-- Updated by Matthias Dill 2014/08/11 -->
-<!-- Updated by Matthias Dill 2014/10/07 -->
-<!-- Updated by Matthias Dill 2015/01/12 -->
+<!-- modified by Matthias Dill 2014-2015 -->
 <resources>
 	<node name="library" value="FBReader Bibliothek">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
@@ -31,8 +28,8 @@
 		<node name="favorites" value="Favoriten">
 			<node name="summary" value="Meine Lieblingsbücher"/>
 		</node>
-		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
-			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		<node name="bookshelfView" value="Wechseln zur Buchregalansicht">
+			<node name="summary" value="Moderne (Material Design) Bibliotheksansicht"/>
 		</node>
 		<node name="found" value="Gefunden">
 			<node name="summary" value="Suchergebnisse für: %s"/>
