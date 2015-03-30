@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 33;
+		final int currentVersion = 34;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -149,6 +149,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables31();
 			case 32:
 				updateTables32();
+			case 33:
+				updateTables33();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -852,7 +854,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		final StringBuilder sql = new StringBuilder("SELECT")
 			.append(" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,")
-			.append("bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,")
+			.append("bm.creation_time,bm.modification_time,bm.access_time,")
 			.append("bm.model_id,bm.paragraph,bm.word,bm.char,")
 			.append("bm.end_paragraph,bm.end_word,bm.end_character,")
 			.append("bm.style_id")
@@ -876,16 +878,15 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				SQLiteUtil.getDate(cursor, 4),
 				SQLiteUtil.getDate(cursor, 5),
 				SQLiteUtil.getDate(cursor, 6),
-				(int)cursor.getLong(7),
-				cursor.getString(8),
+				cursor.getString(7),
+				(int)cursor.getLong(8),
 				(int)cursor.getLong(9),
 				(int)cursor.getLong(10),
 				(int)cursor.getLong(11),
-				(int)cursor.getLong(12),
+				cursor.isNull(12) ? -1 : (int)cursor.getLong(12),
 				cursor.isNull(13) ? -1 : (int)cursor.getLong(13),
-				cursor.isNull(14) ? -1 : (int)cursor.getLong(14),
 				query.Visible,
-				(int)cursor.getLong(15)
+				(int)cursor.getLong(14)
 			));
 		}
 		cursor.close();
@@ -928,11 +929,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		SQLiteStatement statement;
 		if (bookmark.getId() == -1) {
 			statement = get(
-				"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+				"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 			);
 		} else {
 			statement = get(
-				"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ?, style_id = ? WHERE bookmark_id = ?"
+				"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time = ?, modification_time = ?,access_time = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ?, style_id = ? WHERE bookmark_id = ?"
 			);
 		}
 
@@ -941,29 +942,28 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		SQLiteUtil.bindDate(statement, 3, bookmark.getDate(Bookmark.DateType.Creation));
 		SQLiteUtil.bindDate(statement, 4, bookmark.getDate(Bookmark.DateType.Modification));
 		SQLiteUtil.bindDate(statement, 5, bookmark.getDate(Bookmark.DateType.Access));
-		statement.bindLong(6, bookmark.getAccessCount());
-		SQLiteUtil.bindString(statement, 7, bookmark.ModelId);
-		statement.bindLong(8, bookmark.ParagraphIndex);
-		statement.bindLong(9, bookmark.ElementIndex);
-		statement.bindLong(10, bookmark.CharIndex);
+		SQLiteUtil.bindString(statement, 6, bookmark.ModelId);
+		statement.bindLong(7, bookmark.ParagraphIndex);
+		statement.bindLong(8, bookmark.ElementIndex);
+		statement.bindLong(9, bookmark.CharIndex);
 		final ZLTextPosition end = bookmark.getEnd();
 		if (end != null) {
-			statement.bindLong(11, end.getParagraphIndex());
-			statement.bindLong(12, end.getElementIndex());
-			statement.bindLong(13, end.getCharIndex());
+			statement.bindLong(10, end.getParagraphIndex());
+			statement.bindLong(11, end.getElementIndex());
+			statement.bindLong(12, end.getCharIndex());
 		} else {
-			statement.bindLong(11, bookmark.getLength());
+			statement.bindLong(10, bookmark.getLength());
+			statement.bindNull(11);
 			statement.bindNull(12);
-			statement.bindNull(13);
 		}
-		statement.bindLong(14, bookmark.IsVisible ? 1 : 0);
-		statement.bindLong(15, bookmark.getStyleId());
+		statement.bindLong(13, bookmark.IsVisible ? 1 : 0);
+		statement.bindLong(14, bookmark.getStyleId());
 
 		if (bookmark.getId() == -1) {
 			return statement.executeInsert();
 		} else {
 			final long id = bookmark.getId();
-			statement.bindLong(16, id);
+			statement.bindLong(15, id);
 			statement.execute();
 			return id;
 		}
@@ -1601,6 +1601,31 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables32() {
 		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Options(name TEXT PRIMARY KEY, value TEXT)");
+	}
+
+	private void updateTables33() {
+		myDatabase.execSQL("ALTER TABLE Bookmarks RENAME TO Bookmarks_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS Bookmarks(" +
+				"bookmark_id INTEGER PRIMARY KEY," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"visible INTEGER DEFAULT 1," +
+				"style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1," +
+				"bookmark_text TEXT NOT NULL," +
+				"creation_time INTEGER NOT NULL," +
+				"modification_time INTEGER," +
+				"access_time INTEGER," +
+				"model_id TEXT," +
+				"paragraph INTEGER NOT NULL," +
+				"word INTEGER NOT NULL," +
+				"char INTEGER NOT NULL," +
+				"end_paragraph INTEGER NOT NULL," +
+				"end_word INTEGER NOT NULL," +
+				"end_character INTEGER NOT NULL)"
+		);
+		final String fields = "bookmark_id,book_id,visible,style_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character";
+		myDatabase.execSQL("INSERT INTO Bookmarks (" + fields + ") SELECT " + fields + " FROM Bookmarks_Obsolete");
+		myDatabase.execSQL("DROP TABLE IF EXISTS Bookmarks_Obsolete");
 	}
 
 	private SQLiteStatement get(String sql) {
