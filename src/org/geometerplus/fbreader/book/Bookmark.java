@@ -241,11 +241,21 @@ mainLoop:
 	}
 
 	public void setStyleId(int styleId) {
-		myStyleId = styleId;
+		if (styleId != myStyleId) {
+			myStyleId = styleId;
+			myModificationDate = new Date();
+		}
 	}
 
 	public String getText() {
 		return myText;
+	}
+
+	public void setText(String text) {
+		if (!text.equals(myText)) {
+			myText = text;
+			myModificationDate = new Date();
+		}
 	}
 
 	public String getBookTitle() {
@@ -284,13 +294,6 @@ mainLoop:
 		return myLength;
 	}
 
-	public void setText(String text) {
-		if (!text.equals(myText)) {
-			myText = text;
-			myModificationDate = new Date();
-		}
-	}
-
 	public void markAsAccessed() {
 		myAccessDate = new Date();
 	}
@@ -299,10 +302,8 @@ mainLoop:
 		public int compare(Bookmark bm0, Bookmark bm1) {
 			final Date date0 = bm0.getDate(DateType.Latest);
 			final Date date1 = bm1.getDate(DateType.Latest);
-			if (date0 == null) {
-				return date1 == null ? 0 : -1;
-			}
-			return date1 == null ? 1 : date1.compareTo(date0);
+			// yes, reverse order
+			return date1.compareTo(date0);
 		}
 	}
 
