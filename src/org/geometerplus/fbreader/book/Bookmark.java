@@ -122,8 +122,6 @@ mainLoop:
 	private final Date myCreationDate;
 	private Date myModificationDate;
 	private Date myAccessDate;
-	private int myAccessCount;
-	private Date myLatestDate;
 	private ZLTextFixedPosition myEnd;
 	private int myLength;
 	private int myStyleId;
@@ -140,8 +138,6 @@ mainLoop:
 		myCreationDate = original.myCreationDate;
 		myModificationDate = original.myModificationDate;
 		myAccessDate = original.myAccessDate;
-		myAccessCount = original.myAccessCount;
-		myLatestDate = original.myLatestDate;
 		myEnd = original.myEnd;
 		myLength = original.myLength;
 		myStyleId = original.myStyleId;
@@ -151,7 +147,7 @@ mainLoop:
 
 	Bookmark(
 		long id, long bookId, String bookTitle, String text,
-		Date creationDate, Date modificationDate, Date accessDate, int accessCount,
+		Date creationDate, Date modificationDate, Date accessDate,
 		String modelId,
 		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
 		int end_paragraphIndex, int end_elementIndex, int end_charIndex,
@@ -166,14 +162,6 @@ mainLoop:
 		myText = text;
 		myCreationDate = creationDate;
 		myModificationDate = modificationDate;
-		myLatestDate = (modificationDate != null) ? modificationDate : creationDate;
-		if (accessDate != null) {
-			myAccessDate = accessDate;
-			if (myLatestDate.compareTo(accessDate) < 0) {
-				myLatestDate = accessDate;
-			}
-		}
-		myAccessCount = accessCount;
 		ModelId = modelId;
 		IsVisible = isVisible;
 
@@ -274,12 +262,18 @@ mainLoop:
 				return myAccessDate;
 			default:
 			case Latest:
-				return myLatestDate;
+			{
+				Date latest = myModificationDate;
+				if (latest == null) {
+					latest = myCreationDate;
+				}
+				if (myAccessDate != null && latest.compareTo(myAccessDate) < 0) {
+					return myAccessDate;
+				} else {
+					return latest;
+				}
+			}
 		}
-	}
-
-	public int getAccessCount() {
-		return myAccessCount;
 	}
 
 	public ZLTextPosition getEnd() {
@@ -294,14 +288,11 @@ mainLoop:
 		if (!text.equals(myText)) {
 			myText = text;
 			myModificationDate = new Date();
-			myLatestDate = myModificationDate;
 		}
 	}
 
 	public void markAsAccessed() {
 		myAccessDate = new Date();
-		++myAccessCount;
-		myLatestDate = myAccessDate;
 	}
 
 	public static class ByTimeComparator implements Comparator<Bookmark> {
