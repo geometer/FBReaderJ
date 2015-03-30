@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+>
+	<Button
+		android:id="@+id/lr_email_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/dropdown"
+		android:layout_alignParentRight="true"
+	/>
+	<EditText
+		android:id="@+id/lr_email_edit"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:singleLine="true"
+		android:inputType="textEmailAddress"
+		android:layout_toLeftOf="@id/lr_email_button"
+		android:layout_alignWithParentIfMissing="true"
+		android:layout_alignParentLeft="true"
+	/>
+</RelativeLayout>
