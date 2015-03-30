@@ -282,8 +282,7 @@ class XMLSerializer extends AbstractSerializer {
 			buffer, "history", true,
 			"date-creation", formatDate(bookmark.getDate(Bookmark.DateType.Creation)),
 			"date-modification", formatDate(bookmark.getDate(Bookmark.DateType.Modification)),
-			"date-access", formatDate(bookmark.getDate(Bookmark.DateType.Access)),
-			"access-count", String.valueOf(bookmark.getAccessCount())
+			"date-access", formatDate(bookmark.getDate(Bookmark.DateType.Access))
 		);
 		appendTag(
 			buffer, "start", true,
@@ -905,7 +904,6 @@ class XMLSerializer extends AbstractSerializer {
 		private Date myCreationDate;
 		private Date myModificationDate;
 		private Date myAccessDate;
-		private int myAccessCount;
 		private String myModelId;
 		private int myStartParagraphIndex;
 		private int myStartElementIndex;
@@ -931,7 +929,6 @@ class XMLSerializer extends AbstractSerializer {
 			myCreationDate = null;
 			myModificationDate = null;
 			myAccessDate = null;
-			myAccessCount = 0;
 			myModelId = null;
 			myStartParagraphIndex = 0;
 			myStartElementIndex = 0;
@@ -952,7 +949,7 @@ class XMLSerializer extends AbstractSerializer {
 			}
 			myBookmark = new Bookmark(
 				myId, myBookId, myBookTitle, myText.toString(),
-				myCreationDate, myModificationDate, myAccessDate, myAccessCount,
+				myCreationDate, myModificationDate, myAccessDate,
 				myModelId,
 				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
 				myEndParagraphIndex, myEndElementIndex, myEndCharIndex,
@@ -982,7 +979,6 @@ class XMLSerializer extends AbstractSerializer {
 						myCreationDate = parseDate(attributes.getValue("date-creation"));
 						myModificationDate = parseDateSafe(attributes.getValue("date-modification"));
 						myAccessDate = parseDateSafe(attributes.getValue("date-access"));
-						myAccessCount = parseIntSafe(attributes.getValue("access-count"), 0);
 					} else if ("start".equals(localName)) {
 						myModelId = attributes.getValue("model");
 						myStartParagraphIndex = parseInt(attributes.getValue("paragraph"));
