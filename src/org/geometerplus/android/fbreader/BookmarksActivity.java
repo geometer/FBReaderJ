@@ -264,7 +264,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private void gotoBookmark(Bookmark bookmark) {
 		bookmark.markAsAccessed();
 		myCollection.saveBookmark(bookmark);
-		final Book book = myCollection.getBookById(bookmark.getBookId());
+		final Book book = myCollection.getBookById(bookmark.BookId);
 		if (book != null) {
 			FBReader.openBookActivity(this, book, bookmark);
 		} else {
@@ -367,7 +367,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 					bookTitleView.setVisibility(View.GONE);
 				} else {
 					bookTitleView.setVisibility(View.VISIBLE);
-					bookTitleView.setText(bookmark.getBookTitle());
+					bookTitleView.setText(bookmark.BookTitle);
 				}
 			}
 			return view;
