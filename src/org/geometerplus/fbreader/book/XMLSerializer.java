@@ -270,12 +270,14 @@ class XMLSerializer extends AbstractSerializer {
 		appendTag(
 			buffer, "bookmark", false,
 			"id", String.valueOf(bookmark.getId()),
+			"uid", bookmark.Uid,
+			"versionUid", bookmark.getVersionUid(),
 			"visible", String.valueOf(bookmark.IsVisible)
 		);
 		appendTag(
 			buffer, "book", true,
-			"id", String.valueOf(bookmark.getBookId()),
-			"title", bookmark.getBookTitle()
+			"id", String.valueOf(bookmark.BookId),
+			"title", bookmark.BookTitle
 		);
 		appendTagWithContent(buffer, "text", bookmark.getText());
 		appendTag(
@@ -898,6 +900,8 @@ class XMLSerializer extends AbstractSerializer {
 		private Bookmark myBookmark;
 
 		private long myId = -1;
+		private String myUid;
+		private String myVersionUid;
 		private long myBookId;
 		private String myBookTitle;
 		private final StringBuilder myText = new StringBuilder();
@@ -923,6 +927,8 @@ class XMLSerializer extends AbstractSerializer {
 			myBookmark = null;
 
 			myId = -1;
+			myUid = null;
+			myVersionUid = null;
 			myBookId = -1;
 			myBookTitle = null;
 			clear(myText);
@@ -948,7 +954,8 @@ class XMLSerializer extends AbstractSerializer {
 				return;
 			}
 			myBookmark = new Bookmark(
-				myId, myBookId, myBookTitle, myText.toString(),
+				myId, myUid, myVersionUid,
+				myBookId, myBookTitle, myText.toString(),
 				myCreationDate, myModificationDate, myAccessDate,
 				myModelId,
 				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
@@ -966,6 +973,8 @@ class XMLSerializer extends AbstractSerializer {
 						throw new SAXException("Unexpected tag " + localName);
 					}
 					myId = parseLong(attributes.getValue("id"));
+					myUid = attributes.getValue("uid");
+					myVersionUid = attributes.getValue("versionUid");
 					myIsVisible = parseBoolean(attributes.getValue("visible"));
 					myState = State.READ_BOOKMARK;
 					break;

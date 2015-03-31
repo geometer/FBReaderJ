@@ -116,10 +116,14 @@ mainLoop:
 	}
 
 	private long myId;
-	private final long myBookId;
-	private final String myBookTitle;
+	public final String Uid;
+	private String myVersionUid;
+
+	public final long BookId;
+	public final String BookTitle;
 	private String myText;
-	private final Date myCreationDate;
+
+	public final Date CreationDate;
 	private Date myModificationDate;
 	private Date myAccessDate;
 	private ZLTextFixedPosition myEnd;
@@ -129,13 +133,15 @@ mainLoop:
 	public final String ModelId;
 	public final boolean IsVisible;
 
+	// used for migration only
 	private Bookmark(long bookId, Bookmark original) {
 		super(original);
 		myId = -1;
-		myBookId = bookId;
-		myBookTitle = original.myBookTitle;
+		Uid = newUUID();
+		BookId = bookId;
+		BookTitle = original.BookTitle;
 		myText = original.myText;
-		myCreationDate = original.myCreationDate;
+		CreationDate = original.CreationDate;
 		myModificationDate = original.myModificationDate;
 		myAccessDate = original.myAccessDate;
 		myEnd = original.myEnd;
@@ -145,8 +151,11 @@ mainLoop:
 		IsVisible = original.IsVisible;
 	}
 
+	// create java object for existing bookmark
+	// uid parameter can be null when comes from old format plugin!
 	Bookmark(
-		long id, long bookId, String bookTitle, String text,
+		long id, String uid, String versionUid,
+		long bookId, String bookTitle, String text,
 		Date creationDate, Date modificationDate, Date accessDate,
 		String modelId,
 		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
@@ -157,10 +166,13 @@ mainLoop:
 		super(start_paragraphIndex, start_elementIndex, start_charIndex);
 
 		myId = id;
-		myBookId = bookId;
-		myBookTitle = bookTitle;
+		Uid = verifiedUUID(uid);
+		myVersionUid = verifiedUUID(versionUid);
+
+		BookId = bookId;
+		BookTitle = bookTitle;
 		myText = text;
-		myCreationDate = creationDate;
+		CreationDate = creationDate;
 		myModificationDate = modificationDate;
 		ModelId = modelId;
 		IsVisible = isVisible;
@@ -174,14 +186,16 @@ mainLoop:
 		myStyleId = styleId;
 	}
 
+	// creates new bookmark
 	public Bookmark(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
 		super(start);
 
 		myId = -1;
-		myBookId = book.getId();
-		myBookTitle = book.getTitle();
+		Uid = newUUID();
+		BookId = book.getId();
+		BookTitle = book.getTitle();
 		myText = text;
-		myCreationDate = new Date();
+		CreationDate = new Date();
 		ModelId = modelId;
 		IsVisible = isVisible;
 		myEnd = new ZLTextFixedPosition(end);
@@ -232,8 +246,13 @@ mainLoop:
 		return myId;
 	}
 
-	public long getBookId() {
-		return myBookId;
+	public String getVersionUid() {
+		return myVersionUid;
+	}
+
+	private void onModification() {
+		myVersionUid = newUUID();
+		myModificationDate = new Date();
 	}
 
 	public int getStyleId() {
@@ -243,7 +262,7 @@ mainLoop:
 	public void setStyleId(int styleId) {
 		if (styleId != myStyleId) {
 			myStyleId = styleId;
-			myModificationDate = new Date();
+			onModification();
 		}
 	}
 
@@ -254,18 +273,14 @@ mainLoop:
 	public void setText(String text) {
 		if (!text.equals(myText)) {
 			myText = text;
-			myModificationDate = new Date();
+			onModification();
 		}
-	}
-
-	public String getBookTitle() {
-		return myBookTitle;
 	}
 
 	public Date getDate(DateType type) {
 		switch (type) {
 			case Creation:
-				return myCreationDate;
+				return CreationDate;
 			case Modification:
 				return myModificationDate;
 			case Access:
@@ -275,7 +290,7 @@ mainLoop:
 			{
 				Date latest = myModificationDate;
 				if (latest == null) {
-					latest = myCreationDate;
+					latest = CreationDate;
 				}
 				if (myAccessDate != null && latest.compareTo(myAccessDate) < 0) {
 					return myAccessDate;
@@ -353,5 +368,16 @@ mainLoop:
 		void append(CharSequence data) {
 			Builder.append(data);
 		}
+	}
+
+	private static String newUUID() {
+		return UUID.randomUUID().toString();
+	}
+
+	private static String verifiedUUID(String uid) {
+		if (uid == null || uid.length() == 36) {
+			return uid;
+		}
+		throw new RuntimeException("INVALID UUID: " + uid);
 	}
 }

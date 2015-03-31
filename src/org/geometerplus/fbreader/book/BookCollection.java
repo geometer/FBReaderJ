@@ -714,7 +714,7 @@ public class BookCollection extends AbstractBookCollection {
 		if (bookmark != null) {
 			bookmark.setId(myDatabase.saveBookmark(bookmark));
 			if (bookmark.IsVisible) {
-				final Book book = getBookById(bookmark.getBookId());
+				final Book book = getBookById(bookmark.BookId);
 				if (book != null) {
 					book.HasBookmark = true;
 					fireBookEvent(BookEvent.BookmarksUpdated, book);
@@ -727,9 +727,9 @@ public class BookCollection extends AbstractBookCollection {
 		if (bookmark != null && bookmark.getId() != -1) {
 			myDatabase.deleteBookmark(bookmark);
 			if (bookmark.IsVisible) {
-				final Book book = getBookById(bookmark.getBookId());
+				final Book book = getBookById(bookmark.BookId);
 				if (book != null) {
-					book.HasBookmark = myDatabase.hasVisibleBookmark(bookmark.getBookId());
+					book.HasBookmark = myDatabase.hasVisibleBookmark(bookmark.BookId);
 					fireBookEvent(BookEvent.BookmarksUpdated, book);
 				}
 			}
