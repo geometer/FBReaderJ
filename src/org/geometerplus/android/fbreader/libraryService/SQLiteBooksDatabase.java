@@ -853,7 +853,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected List<Bookmark> loadBookmarks(BookmarkQuery query) {
 		final LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		final StringBuilder sql = new StringBuilder("SELECT")
-			.append(" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,")
+			.append(" bm.bookmark_id,bm.uid,bm.version_uid,")
+			.append("bm.book_id,b.title,bm.bookmark_text,")
 			.append("bm.creation_time,bm.modification_time,bm.access_time,")
 			.append("bm.model_id,bm.paragraph,bm.word,bm.char,")
 			.append("bm.end_paragraph,bm.end_word,bm.end_character,")
@@ -872,21 +873,23 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
 				cursor.getLong(0),
-				cursor.getLong(1),
+				cursor.getString(1),
 				cursor.getString(2),
-				cursor.getString(3),
-				SQLiteUtil.getDate(cursor, 4),
-				SQLiteUtil.getDate(cursor, 5),
+				cursor.getLong(3),
+				cursor.getString(4),
+				cursor.getString(5),
 				SQLiteUtil.getDate(cursor, 6),
-				cursor.getString(7),
-				(int)cursor.getLong(8),
-				(int)cursor.getLong(9),
+				SQLiteUtil.getDate(cursor, 7),
+				SQLiteUtil.getDate(cursor, 8),
+				cursor.getString(9),
 				(int)cursor.getLong(10),
 				(int)cursor.getLong(11),
-				cursor.isNull(12) ? -1 : (int)cursor.getLong(12),
-				cursor.isNull(13) ? -1 : (int)cursor.getLong(13),
+				(int)cursor.getLong(12),
+				(int)cursor.getLong(13),
+				cursor.isNull(14) ? -1 : (int)cursor.getLong(14),
+				cursor.isNull(15) ? -1 : (int)cursor.getLong(15),
 				query.Visible,
-				(int)cursor.getLong(14)
+				(int)cursor.getLong(16)
 			));
 		}
 		cursor.close();
@@ -924,61 +927,74 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.execute();
 	}
 
+	// this is workaround for working with old format plugins;
+	// it should never go via the third way with new versions
+	private String uid(Bookmark bookmark) {
+		if (bookmark.Uid != null) {
+			return bookmark.Uid;
+		}
+		if (bookmark.getId() == -1) {
+			return UUID.randomUUID().toString();
+		}
+
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT uid FROM Bookmarks WHERE bookmark_id = " + bookmark.getId(), null
+		);
+		try {
+			if (cursor.moveToNext()) {
+				return cursor.getString(0);
+			}
+		} finally {
+			cursor.close();
+		}
+
+		return UUID.randomUUID().toString();
+	}
+
 	@Override
 	protected long saveBookmark(Bookmark bookmark) {
-		SQLiteStatement statement;
-		if (bookmark.getId() == -1) {
-			statement = get(
-				"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-			);
-		} else {
-			statement = get(
-				"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time = ?, modification_time = ?,access_time = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ?, style_id = ? WHERE bookmark_id = ?"
-			);
-		}
+		SQLiteStatement statement = get(
+			"INSERT OR REPLACE INTO Bookmarks (uid,version_uid,book_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+		);
 
-		statement.bindLong(1, bookmark.getBookId());
-		statement.bindString(2, bookmark.getText());
-		SQLiteUtil.bindDate(statement, 3, bookmark.getDate(Bookmark.DateType.Creation));
-		SQLiteUtil.bindDate(statement, 4, bookmark.getDate(Bookmark.DateType.Modification));
-		SQLiteUtil.bindDate(statement, 5, bookmark.getDate(Bookmark.DateType.Access));
-		SQLiteUtil.bindString(statement, 6, bookmark.ModelId);
-		statement.bindLong(7, bookmark.ParagraphIndex);
-		statement.bindLong(8, bookmark.ElementIndex);
-		statement.bindLong(9, bookmark.CharIndex);
+		int fieldCount = 0;
+		SQLiteUtil.bindString(statement, ++fieldCount, uid(bookmark));
+		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getVersionUid());
+		statement.bindLong(++fieldCount, bookmark.BookId);
+		statement.bindString(++fieldCount, bookmark.getText());
+		SQLiteUtil.bindDate(statement, ++fieldCount, bookmark.getDate(Bookmark.DateType.Creation));
+		SQLiteUtil.bindDate(statement, ++fieldCount, bookmark.getDate(Bookmark.DateType.Modification));
+		SQLiteUtil.bindDate(statement, ++fieldCount, bookmark.getDate(Bookmark.DateType.Access));
+		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.ModelId);
+		statement.bindLong(++fieldCount, bookmark.ParagraphIndex);
+		statement.bindLong(++fieldCount, bookmark.ElementIndex);
+		statement.bindLong(++fieldCount, bookmark.CharIndex);
 		final ZLTextPosition end = bookmark.getEnd();
 		if (end != null) {
-			statement.bindLong(10, end.getParagraphIndex());
-			statement.bindLong(11, end.getElementIndex());
-			statement.bindLong(12, end.getCharIndex());
+			statement.bindLong(++fieldCount, end.getParagraphIndex());
+			statement.bindLong(++fieldCount, end.getElementIndex());
+			statement.bindLong(++fieldCount, end.getCharIndex());
 		} else {
-			statement.bindLong(10, bookmark.getLength());
-			statement.bindNull(11);
-			statement.bindNull(12);
+			statement.bindLong(++fieldCount, bookmark.getLength());
+			statement.bindNull(++fieldCount);
+			statement.bindNull(++fieldCount);
 		}
-		statement.bindLong(13, bookmark.IsVisible ? 1 : 0);
-		statement.bindLong(14, bookmark.getStyleId());
+		statement.bindLong(++fieldCount, bookmark.IsVisible ? 1 : 0);
+		statement.bindLong(++fieldCount, bookmark.getStyleId());
 
-		if (bookmark.getId() == -1) {
-			return statement.executeInsert();
-		} else {
-			final long id = bookmark.getId();
-			statement.bindLong(15, id);
-			statement.execute();
-			return id;
-		}
+		return statement.executeInsert();
 	}
 
 	@Override
 	protected void deleteBookmark(Bookmark bookmark) {
-		final SQLiteStatement statement = get("DELETE FROM Bookmarks WHERE bookmark_id=?");
-		statement.bindLong(1, bookmark.getId());
+		final SQLiteStatement statement = get("DELETE FROM Bookmarks WHERE uid=?");
+		statement.bindString(1, uid(bookmark));
 		statement.execute();
 	}
 
 	protected ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
 		ZLTextFixedPosition.WithTimestamp position = null;
-		Cursor cursor = myDatabase.rawQuery(
+		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT paragraph,word,char,timestamp FROM BookState WHERE book_id = " + bookId, null
 		);
 		if (cursor.moveToNext()) {
@@ -1604,10 +1620,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private void updateTables33() {
+		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN uid TEXT(36)");
+		final Cursor cursor = myDatabase.rawQuery("SELECT bookmark_id FROM Bookmarks", null);
+		final SQLiteStatement statement = get("UPDATE Bookmarks SET uid=? WHERE bookmark_id=?");
+		while (cursor.moveToNext()) {
+			statement.bindString(1, UUID.randomUUID().toString());
+			statement.bindLong(2, cursor.getLong(0));
+			statement.execute();
+		}
+		cursor.close();
+
 		myDatabase.execSQL("ALTER TABLE Bookmarks RENAME TO Bookmarks_Obsolete");
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS Bookmarks(" +
 				"bookmark_id INTEGER PRIMARY KEY," +
+				"uid TEXT(36) NOT NULL UNIQUE," +
+				"version_uid TEXT(36)," +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"visible INTEGER DEFAULT 1," +
 				"style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1," +
@@ -1623,7 +1651,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"end_word INTEGER NOT NULL," +
 				"end_character INTEGER NOT NULL)"
 		);
-		final String fields = "bookmark_id,book_id,visible,style_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character";
+		final String fields = "bookmark_id,uid,book_id,visible,style_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character";
 		myDatabase.execSQL("INSERT INTO Bookmarks (" + fields + ") SELECT " + fields + " FROM Bookmarks_Obsolete");
 		myDatabase.execSQL("DROP TABLE IF EXISTS Bookmarks_Obsolete");
 	}
