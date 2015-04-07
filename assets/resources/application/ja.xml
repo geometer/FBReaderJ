@@ -331,6 +331,9 @@
 	<node name="Preferences">
 		<node name="sync" value="シンクロ">
 			<node name="summary" value="ブックネットワークの設定"/>
+			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
+				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			</node>
 			<node name="enable" value="シンクロを有効化">
 				<node name="summaryOn" value="ライブラリを FBReader ブックネットワークサーバとシンクロする"/>
 				<node name="summaryOnWithAccount" value="ライブラリを %s としてシンクロする"/>

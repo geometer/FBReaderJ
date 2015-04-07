@@ -116,14 +116,16 @@ mainLoop:
 	}
 
 	private long myId;
-	private final long myBookId;
-	private final String myBookTitle;
+	public final String Uid;
+	private String myVersionUid;
+
+	public final long BookId;
+	public final String BookTitle;
 	private String myText;
-	private final Date myCreationDate;
+
+	public final Date CreationDate;
 	private Date myModificationDate;
 	private Date myAccessDate;
-	private int myAccessCount;
-	private Date myLatestDate;
 	private ZLTextFixedPosition myEnd;
 	private int myLength;
 	private int myStyleId;
@@ -131,17 +133,17 @@ mainLoop:
 	public final String ModelId;
 	public final boolean IsVisible;
 
+	// used for migration only
 	private Bookmark(long bookId, Bookmark original) {
 		super(original);
 		myId = -1;
-		myBookId = bookId;
-		myBookTitle = original.myBookTitle;
+		Uid = newUUID();
+		BookId = bookId;
+		BookTitle = original.BookTitle;
 		myText = original.myText;
-		myCreationDate = original.myCreationDate;
+		CreationDate = original.CreationDate;
 		myModificationDate = original.myModificationDate;
 		myAccessDate = original.myAccessDate;
-		myAccessCount = original.myAccessCount;
-		myLatestDate = original.myLatestDate;
 		myEnd = original.myEnd;
 		myLength = original.myLength;
 		myStyleId = original.myStyleId;
@@ -149,9 +151,12 @@ mainLoop:
 		IsVisible = original.IsVisible;
 	}
 
+	// create java object for existing bookmark
+	// uid parameter can be null when comes from old format plugin!
 	Bookmark(
-		long id, long bookId, String bookTitle, String text,
-		Date creationDate, Date modificationDate, Date accessDate, int accessCount,
+		long id, String uid, String versionUid,
+		long bookId, String bookTitle, String text,
+		Date creationDate, Date modificationDate, Date accessDate,
 		String modelId,
 		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
 		int end_paragraphIndex, int end_elementIndex, int end_charIndex,
@@ -161,19 +166,14 @@ mainLoop:
 		super(start_paragraphIndex, start_elementIndex, start_charIndex);
 
 		myId = id;
-		myBookId = bookId;
-		myBookTitle = bookTitle;
+		Uid = verifiedUUID(uid);
+		myVersionUid = verifiedUUID(versionUid);
+
+		BookId = bookId;
+		BookTitle = bookTitle;
 		myText = text;
-		myCreationDate = creationDate;
+		CreationDate = creationDate;
 		myModificationDate = modificationDate;
-		myLatestDate = (modificationDate != null) ? modificationDate : creationDate;
-		if (accessDate != null) {
-			myAccessDate = accessDate;
-			if (myLatestDate.compareTo(accessDate) < 0) {
-				myLatestDate = accessDate;
-			}
-		}
-		myAccessCount = accessCount;
 		ModelId = modelId;
 		IsVisible = isVisible;
 
@@ -186,14 +186,16 @@ mainLoop:
 		myStyleId = styleId;
 	}
 
+	// creates new bookmark
 	public Bookmark(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
 		super(start);
 
 		myId = -1;
-		myBookId = book.getId();
-		myBookTitle = book.getTitle();
+		Uid = newUUID();
+		BookId = book.getId();
+		BookTitle = book.getTitle();
 		myText = text;
-		myCreationDate = new Date();
+		CreationDate = new Date();
 		ModelId = modelId;
 		IsVisible = isVisible;
 		myEnd = new ZLTextFixedPosition(end);
@@ -244,8 +246,13 @@ mainLoop:
 		return myId;
 	}
 
-	public long getBookId() {
-		return myBookId;
+	public String getVersionUid() {
+		return myVersionUid;
+	}
+
+	private void onModification() {
+		myVersionUid = newUUID();
+		myModificationDate = new Date();
 	}
 
 	public int getStyleId() {
@@ -253,33 +260,45 @@ mainLoop:
 	}
 
 	public void setStyleId(int styleId) {
-		myStyleId = styleId;
+		if (styleId != myStyleId) {
+			myStyleId = styleId;
+			onModification();
+		}
 	}
 
 	public String getText() {
 		return myText;
 	}
 
-	public String getBookTitle() {
-		return myBookTitle;
+	public void setText(String text) {
+		if (!text.equals(myText)) {
+			myText = text;
+			onModification();
+		}
 	}
 
 	public Date getDate(DateType type) {
 		switch (type) {
 			case Creation:
-				return myCreationDate;
+				return CreationDate;
 			case Modification:
 				return myModificationDate;
 			case Access:
 				return myAccessDate;
 			default:
 			case Latest:
-				return myLatestDate;
+			{
+				Date latest = myModificationDate;
+				if (latest == null) {
+					latest = CreationDate;
+				}
+				if (myAccessDate != null && latest.compareTo(myAccessDate) < 0) {
+					return myAccessDate;
+				} else {
+					return latest;
+				}
+			}
 		}
-	}
-
-	public int getAccessCount() {
-		return myAccessCount;
 	}
 
 	public ZLTextPosition getEnd() {
@@ -290,28 +309,16 @@ mainLoop:
 		return myLength;
 	}
 
-	public void setText(String text) {
-		if (!text.equals(myText)) {
-			myText = text;
-			myModificationDate = new Date();
-			myLatestDate = myModificationDate;
-		}
-	}
-
 	public void markAsAccessed() {
 		myAccessDate = new Date();
-		++myAccessCount;
-		myLatestDate = myAccessDate;
 	}
 
 	public static class ByTimeComparator implements Comparator<Bookmark> {
 		public int compare(Bookmark bm0, Bookmark bm1) {
 			final Date date0 = bm0.getDate(DateType.Latest);
 			final Date date1 = bm1.getDate(DateType.Latest);
-			if (date0 == null) {
-				return date1 == null ? 0 : -1;
-			}
-			return date1 == null ? 1 : date1.compareTo(date0);
+			// yes, reverse order
+			return date1.compareTo(date0);
 		}
 	}
 
@@ -361,5 +368,16 @@ mainLoop:
 		void append(CharSequence data) {
 			Builder.append(data);
 		}
+	}
+
+	private static String newUUID() {
+		return UUID.randomUUID().toString();
+	}
+
+	private static String verifiedUUID(String uid) {
+		if (uid == null || uid.length() == 36) {
+			return uid;
+		}
+		throw new RuntimeException("INVALID UUID: " + uid);
 	}
 }

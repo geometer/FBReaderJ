@@ -270,20 +270,21 @@ class XMLSerializer extends AbstractSerializer {
 		appendTag(
 			buffer, "bookmark", false,
 			"id", String.valueOf(bookmark.getId()),
+			"uid", bookmark.Uid,
+			"versionUid", bookmark.getVersionUid(),
 			"visible", String.valueOf(bookmark.IsVisible)
 		);
 		appendTag(
 			buffer, "book", true,
-			"id", String.valueOf(bookmark.getBookId()),
-			"title", bookmark.getBookTitle()
+			"id", String.valueOf(bookmark.BookId),
+			"title", bookmark.BookTitle
 		);
 		appendTagWithContent(buffer, "text", bookmark.getText());
 		appendTag(
 			buffer, "history", true,
 			"date-creation", formatDate(bookmark.getDate(Bookmark.DateType.Creation)),
 			"date-modification", formatDate(bookmark.getDate(Bookmark.DateType.Modification)),
-			"date-access", formatDate(bookmark.getDate(Bookmark.DateType.Access)),
-			"access-count", String.valueOf(bookmark.getAccessCount())
+			"date-access", formatDate(bookmark.getDate(Bookmark.DateType.Access))
 		);
 		appendTag(
 			buffer, "start", true,
@@ -899,13 +900,14 @@ class XMLSerializer extends AbstractSerializer {
 		private Bookmark myBookmark;
 
 		private long myId = -1;
+		private String myUid;
+		private String myVersionUid;
 		private long myBookId;
 		private String myBookTitle;
 		private final StringBuilder myText = new StringBuilder();
 		private Date myCreationDate;
 		private Date myModificationDate;
 		private Date myAccessDate;
-		private int myAccessCount;
 		private String myModelId;
 		private int myStartParagraphIndex;
 		private int myStartElementIndex;
@@ -925,13 +927,14 @@ class XMLSerializer extends AbstractSerializer {
 			myBookmark = null;
 
 			myId = -1;
+			myUid = null;
+			myVersionUid = null;
 			myBookId = -1;
 			myBookTitle = null;
 			clear(myText);
 			myCreationDate = null;
 			myModificationDate = null;
 			myAccessDate = null;
-			myAccessCount = 0;
 			myModelId = null;
 			myStartParagraphIndex = 0;
 			myStartElementIndex = 0;
@@ -951,8 +954,9 @@ class XMLSerializer extends AbstractSerializer {
 				return;
 			}
 			myBookmark = new Bookmark(
-				myId, myBookId, myBookTitle, myText.toString(),
-				myCreationDate, myModificationDate, myAccessDate, myAccessCount,
+				myId, myUid, myVersionUid,
+				myBookId, myBookTitle, myText.toString(),
+				myCreationDate, myModificationDate, myAccessDate,
 				myModelId,
 				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
 				myEndParagraphIndex, myEndElementIndex, myEndCharIndex,
@@ -969,6 +973,8 @@ class XMLSerializer extends AbstractSerializer {
 						throw new SAXException("Unexpected tag " + localName);
 					}
 					myId = parseLong(attributes.getValue("id"));
+					myUid = attributes.getValue("uid");
+					myVersionUid = attributes.getValue("versionUid");
 					myIsVisible = parseBoolean(attributes.getValue("visible"));
 					myState = State.READ_BOOKMARK;
 					break;
@@ -982,7 +988,6 @@ class XMLSerializer extends AbstractSerializer {
 						myCreationDate = parseDate(attributes.getValue("date-creation"));
 						myModificationDate = parseDateSafe(attributes.getValue("date-modification"));
 						myAccessDate = parseDateSafe(attributes.getValue("date-access"));
-						myAccessCount = parseIntSafe(attributes.getValue("access-count"), 0);
 					} else if ("start".equals(localName)) {
 						myModelId = attributes.getValue("model");
 						myStartParagraphIndex = parseInt(attributes.getValue("paragraph"));

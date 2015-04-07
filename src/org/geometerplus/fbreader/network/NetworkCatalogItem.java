@@ -112,22 +112,19 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 				return ZLBoolean3.B3_FALSE;
 			case ALWAYS:
 				return ZLBoolean3.B3_TRUE;
+			case HAS_BOOKS:
+				if (Link.getBasketItem() != null && Link.getBasketItem().bookIds().size() > 0) {
+					return ZLBoolean3.B3_TRUE;
+				}
+				// go through!
 			case SIGNED_IN:
 				if (mgr == null) {
 					return ZLBoolean3.B3_FALSE;
 				}
 				try {
-					return mgr.isAuthorised(false) ?
-							ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
+					return mgr.isAuthorised(false) ?  ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
 				} catch (ZLNetworkException e) {
 					return ZLBoolean3.B3_UNDEFINED;
-				}
-			case HAS_BOOKS:
-				if ((Link.getBasketItem() != null && Link.getBasketItem().bookIds().size() > 0) ||
-					(mgr != null && mgr.purchasedBooks().size() > 0)) {
-					return ZLBoolean3.B3_TRUE;
-				} else {
-					return ZLBoolean3.B3_FALSE;
 				}
 		}
 	}
