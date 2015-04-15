@@ -81,7 +81,11 @@ public final class MimeType {
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_PDF = get("application/pdf");
 	// ???
-	//public static final MimeType APP_XPDF = get("application/x-pdf");
+	public static final MimeType APP_XPDF = get("application/x-pdf");
+	// ???
+	public static final MimeType TEXT_PDF = get("text/pdf");
+	// ???
+	public static final MimeType APP_VND_PDF = get("application/vnd.pdf");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_RTF = get("application/rtf");
 	// unofficial, used by flibusta catalog
@@ -165,7 +169,7 @@ public final class MimeType {
 	public static final List<MimeType> TYPES_HTML
 		 = Arrays.asList(TEXT_HTML, APP_HTML, APP_HTMLHTM);
 	public static final List<MimeType> TYPES_PDF
-		 = Arrays.asList(APP_PDF);
+		 = Arrays.asList(APP_PDF, APP_XPDF, TEXT_PDF, APP_VND_PDF);
 	public static final List<MimeType> TYPES_DJVU
 		 = Arrays.asList(IMAGE_VND_DJVU, IMAGE_XDJVU, APP_DJVU);
 	public static final List<MimeType> TYPES_COMIC_BOOK
