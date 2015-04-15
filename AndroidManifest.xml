@@ -93,6 +93,9 @@
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
 				<data android:pathPattern=".*\\.pdf"/>
+				<data android:pathPattern=".*\\.djvu"/>
+				<data android:pathPattern=".*\\.cbr"/>
+				<data android:pathPattern=".*\\.cbz"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -106,6 +109,9 @@
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
 				<data android:pathPattern=".*\\.pdf"/>
+				<data android:pathPattern=".*\\.djvu"/>
+				<data android:pathPattern=".*\\.cbr"/>
+				<data android:pathPattern=".*\\.cbz"/>
 			</intent-filter>
 			<!--intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -232,6 +238,10 @@
 				<data android:pathPattern=".*\\.prc"/>
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
+				<data android:pathPattern=".*\\.pdf"/>
+				<data android:pathPattern=".*\\.djvu"/>
+				<data android:pathPattern=".*\\.cbr"/>
+				<data android:pathPattern=".*\\.cbz"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -342,6 +352,5 @@
 		<activity android:name="org.geometerplus.android.util.FolderListDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.util.EditTagsDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.util.EditAuthorsDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
-		<activity android:name="org.geometerplus.android.util.EditSeriesDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 	</application>
 </manifest>

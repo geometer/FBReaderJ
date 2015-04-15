@@ -93,6 +93,9 @@
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
 				<data android:pathPattern=".*\\.pdf"/>
+				<data android:pathPattern=".*\\.djvu"/>
+				<data android:pathPattern=".*\\.cbr"/>
+				<data android:pathPattern=".*\\.cbz"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -106,6 +109,9 @@
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
 				<data android:pathPattern=".*\\.pdf"/>
+				<data android:pathPattern=".*\\.djvu"/>
+				<data android:pathPattern=".*\\.cbr"/>
+				<data android:pathPattern=".*\\.cbz"/>
 			</intent-filter>
 			<!--intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -232,6 +238,10 @@
 				<data android:pathPattern=".*\\.prc"/>
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
+				<data android:pathPattern=".*\\.pdf"/>
+				<data android:pathPattern=".*\\.djvu"/>
+				<data android:pathPattern=".*\\.cbr"/>
+				<data android:pathPattern=".*\\.cbz"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
