@@ -123,6 +123,8 @@
 				<data android:mimeType="application/x-mobipocket-ebook"/>
 				<data android:mimeType="application/x-fictionbook+xml"/>
 				<data android:mimeType="application/x-fictionbook"/>
+				<data android:mimeType="application/pdf"/>
+				<data android:mimeType="application/x-pdf"/>
 				<data android:mimeType="text/plain"/>
 				<data android:mimeType="application/pdf"/>
 			</intent-filter>
@@ -241,6 +243,8 @@
 				<data android:mimeType="application/x-mobipocket-ebook"/>
 				<data android:mimeType="application/x-fictionbook+xml"/>
 				<data android:mimeType="application/x-fictionbook"/>
+				<data android:mimeType="application/pdf"/>
+				<data android:mimeType="application/x-pdf"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
