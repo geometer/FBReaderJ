@@ -41,6 +41,8 @@ public class SyncOptions {
 		new ZLBooleanOption("Sync", "ChangeCurrentBook", true);
 	public final ZLEnumOption<Condition> Bookmarks =
 		new ZLEnumOption<Condition>("Sync", "Bookmarks", Condition.always);
+	public final ZLEnumOption<Condition> CustomShelves =
+		new ZLEnumOption<Condition>("Sync", "CustomShelves", Condition.always);
 	public final ZLEnumOption<Condition> Metainfo =
 		new ZLEnumOption<Condition>("Sync", "Metainfo", Condition.always);
 }
