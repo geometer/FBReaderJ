@@ -79,7 +79,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		FBReaderIntents.putBookExtra(intent, book);
 		FBReaderIntents.putBookmarkExtra(intent, bookmark);
-		NotificationUtil.drop(context, book);
 		context.startActivity(intent);
 	}
 
@@ -158,6 +157,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 				UIUtil.showErrorMessage(this, "fileNotFound", file.getPath());
 				myBook = null;
+			} else {
+				NotificationUtil.drop(this, myBook);
 			}
 		}
 		Config.Instance().runOnConnect(new Runnable() {
