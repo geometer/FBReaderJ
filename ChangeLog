@@ -8,6 +8,7 @@
 ===== 2.4 beta 0 (Apr ??, 2015) =====
 * Updated Dutch localisation (by Frank Fesevur)
 * Updated German localisation (by Matthias Dill)
+* Drops download notification on book opening
 
 ===== 2.3.3 (Mar 27, 2015) =====
 * Improved bookshelf and the book network integration
