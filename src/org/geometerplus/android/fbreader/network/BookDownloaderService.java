@@ -40,7 +40,7 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.NotificationIds;
+import org.geometerplus.android.fbreader.NotificationUtil;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
@@ -93,9 +93,8 @@ public class BookDownloaderService extends Service {
 
 	@Override
 	public void onDestroy() {
-		final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		for (int notificationId : myOngoingNotifications) {
-			notificationManager.cancel(notificationId);
+			NotificationUtil.drop(this, notificationId);
 		}
 		myOngoingNotifications.clear();
 		super.onDestroy();
@@ -114,9 +113,7 @@ public class BookDownloaderService extends Service {
 		intent.setData(null);
 
 		if (intent.getBooleanExtra(Key.FROM_SYNC, false)) {
-			final NotificationManager notificationManager =
-				(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-			notificationManager.cancel(NotificationIds.MISSING_BOOK_ID);
+			NotificationUtil.drop(this, NotificationUtil.MISSING_BOOK_ID);
 		}
 
 		final int notifications = intent.getIntExtra(Key.SHOW_NOTIFICATIONS, 0);
@@ -257,7 +254,7 @@ public class BookDownloaderService extends Service {
 		myDownloadingURLs.add(urlString);
 		sendDownloaderCallback();
 
-		final int notificationId = NotificationIds.getDownloadId(urlString);
+		final int notificationId = NotificationUtil.getDownloadId(file.getPath());
 		final Notification progressNotification = createDownloadProgressNotification(title);
 
 		final NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
@@ -284,8 +281,7 @@ public class BookDownloaderService extends Service {
 		final Handler downloadFinishHandler = new Handler() {
 			public void handleMessage(Message message) {
 				myDownloadingURLs.remove(urlString);
-				final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-				notificationManager.cancel(notificationId);
+				NotificationUtil.drop(BookDownloaderService.this, notificationId);
 				myOngoingNotifications.remove(Integer.valueOf(notificationId));
 				notificationManager.notify(
 					notificationId,
