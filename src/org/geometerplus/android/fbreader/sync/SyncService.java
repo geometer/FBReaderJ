@@ -287,6 +287,8 @@ public class SyncService extends Service implements IBookCollection.Listener {
 					public void run() {
 						try {
 							syncPositions();
+							syncLabels();
+							syncBookmarks();
 						} finally {
 							ourQuickSynchronizationThread = null;
 						}
@@ -452,6 +454,114 @@ public class SyncService extends Service implements IBookCollection.Listener {
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
+	}
+
+	private void syncLabels() {
+	}
+
+	static final class BookmarkInfo {
+		final String Uid;
+		final String VersionUid;
+		final long ModificationTimestamp;
+
+		BookmarkInfo(Map<String,Object> data) {
+			Uid = (String)data.get("uid");
+			VersionUid = (String)data.get("version_uid");
+			ModificationTimestamp = (Long)data.get("modification_timestamp");
+		}
+
+		@Override
+		public String toString() {
+			return Uid + " (" + VersionUid + "); " + ModificationTimestamp;
+		}
+	}
+
+	private void syncBookmarks() {
+
+		try {
+			final Map<String,Object> data = new HashMap<String,Object>();
+			final int pageSize = 100;
+			data.put("page_size", pageSize);
+			final Map<String,Object> responseMap = new HashMap<String,Object>();
+
+			final Map<String,BookmarkInfo> actualInfos = new HashMap<String,BookmarkInfo>();
+			final Set<String> deletedUids = new HashSet<String>();
+
+			for (int pageNo = 0; ; ++pageNo) {
+				data.put("page_no", pageNo);
+				data.put("timestamp", System.currentTimeMillis());
+				mySyncPositionsContext.perform(new JsonRequest2(
+					SyncOptions.BASE_URL + "sync/bookmarks.lite.paged", data
+				) {
+					@Override
+					public void processResponse(Object response) {
+						System.err.println("BMK RESPONSE = " + response);
+						responseMap.putAll((Map<String,Object>)response);
+					}
+				});
+				deletedUids.addAll((List<String>)responseMap.get("deleted"));
+				if ((Long)responseMap.get("count") <= (pageNo + 1L) * pageSize) {
+					break;
+				}
+			}
+
+			System.err.println("BMK DELETED = " + deletedUids);
+
+			final List<Bookmark> toSendToServer = new LinkedList<Bookmark>();
+			final List<Bookmark> toDelete = new LinkedList<Bookmark>();
+			final List<Bookmark> toUpdateOnServer = new LinkedList<Bookmark>();
+			final List<Bookmark> toUpdateOnClient = new LinkedList<Bookmark>();
+			final List<String> toGetFromServer = new LinkedList<String>();
+
+			for (BookmarkQuery q = new BookmarkQuery(20); ; q = q.next()) {
+				final List<Bookmark> bmks = myCollection.bookmarks(q);
+				if (bmks.isEmpty()) {
+					break;
+				}
+				for (Bookmark b : bmks) {
+					final BookmarkInfo info = actualInfos.remove(b.Uid);
+					if (info != null) {
+						if (info.VersionUid == null) {
+							if (b.getVersionUid() != null) {
+								toUpdateOnServer.add(b);
+							}
+						} else {
+							if (b.getVersionUid() == null) {
+								toUpdateOnClient.add(b);
+							} else if (!info.VersionUid.equals(b.getVersionUid())) {
+								final long ts = b.getDate(Bookmark.DateType.Modification).getTime();
+								if (info.ModificationTimestamp <= ts) {
+									toUpdateOnServer.add(b);
+								} else {
+									toUpdateOnClient.add(b);
+								}
+							}
+						}
+					} else if (deletedUids.contains(b.Uid)) {
+						toDelete.add(b);
+					} else {
+						toSendToServer.add(b);
+					}
+				}
+			}
+			toGetFromServer.addAll(actualInfos.keySet());
+
+			System.err.println("BMK TO SEND TO SERVER = " + ids(toSendToServer));
+			System.err.println("BMK TO DELETE = " + ids(toDelete));
+			System.err.println("BMK TO UPDATE ON SERVER = " + ids(toUpdateOnServer));
+			System.err.println("BMK TO UPDATE ON CLIENT = " + ids(toUpdateOnClient));
+			System.err.println("BMK TO GET FROM SERVER = " + toGetFromServer);
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+	}
+
+	private static List<String> ids(List<Bookmark> bmks) {
+		final List<String> uids = new ArrayList<String>(bmks.size());
+		for (Bookmark b : bmks) {
+			uids.add(b.Uid);
+		}
+		return uids;
 	}
 
 	@Override
