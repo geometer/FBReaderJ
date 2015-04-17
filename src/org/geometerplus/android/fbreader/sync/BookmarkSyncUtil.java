@@ -157,21 +157,30 @@ class BookmarkSyncUtil {
 				public void processResponse(Object response) {
 					for (Map<String,Object> info : (List<Map<String,Object>>)response) {
 						final Bookmark bookmark = bookmarkFromData(info, booksByHash);
-						System.err.println("BMK TO BE INSERTED: " + bookmark);
-						collection.saveBookmark(bookmark);
+						if (bookmark != null) {
+							collection.saveBookmark(bookmark);
+						}
 					}
 				}
 			});
 
 			// Step 3c: getting updated bookmarks from the server,
 			//    updating objects on the client side
+			final Map<String,Bookmark> bookmarksMap = new HashMap<String,Bookmark>();
+			for (Bookmark b : toUpdateOnClient) {
+				bookmarksMap.put(b.Uid, b);
+			}
 			context.perform(new JsonRequest2(
 				SyncOptions.BASE_URL + "sync/bookmarks", ids(toUpdateOnClient)
 			) {
 				@Override
 				public void processResponse(Object response) {
-					// TODO: update bookmarks
-					System.err.println("BMK TO BE UPDATED: " + response);
+					for (Map<String,Object> info : (List<Map<String,Object>>)response) {
+						final Bookmark bookmark = bookmarkToUpdate(info, bookmarksMap);
+						if (bookmark != null) {
+							collection.saveBookmark(bookmark);
+						}
+					}
 				}
 			});
 
@@ -363,14 +372,10 @@ class BookmarkSyncUtil {
 		return (int)(long)(Long)data.get(key);
 	}
 
-	private static Bookmark bookmarkFromData(Map<String,Object> data, BooksByHash booksByHash) {
-		final Book book = booksByHash.getBook((String)data.get("book_hash"));
-		if (book == null) {
-			return null;
-		}
+	private static Bookmark bookmarkFromData(Map<String,Object> data, long bookId, String bookTitle) {
 		return new Bookmark(
 			-1, (String)data.get("uid"), (String)data.get("version_uid"),
-			book.getId(), book.getTitle(),
+			bookId, bookTitle,
 			(String)data.get("text"),
 			getDate(data, "creation_timestamp"),
 			getDate(data, "modification_timestamp"),
@@ -381,5 +386,21 @@ class BookmarkSyncUtil {
 			true,
 			getInt(data, "style_id")
 		);
+	}
+
+	private static Bookmark bookmarkFromData(Map<String,Object> data, BooksByHash booksByHash) {
+		final Book book = booksByHash.getBook((String)data.get("book_hash"));
+		if (book == null) {
+			return null;
+		}
+		return bookmarkFromData(data, book.getId(), book.getTitle());
+	}
+
+	private static Bookmark bookmarkToUpdate(Map<String,Object> data, Map<String,Bookmark> bookmarksMap) {
+		final Bookmark oldBookmark = bookmarksMap.get((String)data.get("uid"));
+		if (oldBookmark == null) {
+			return null;
+		}
+		return bookmarkFromData(data, oldBookmark.BookId, oldBookmark.BookTitle);
 	}
 }
