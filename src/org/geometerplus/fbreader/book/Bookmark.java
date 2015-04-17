@@ -153,7 +153,7 @@ mainLoop:
 
 	// create java object for existing bookmark
 	// uid parameter can be null when comes from old format plugin!
-	Bookmark(
+	public Bookmark(
 		long id, String uid, String versionUid,
 		long bookId, String bookTitle, String text,
 		Date creationDate, Date modificationDate, Date accessDate,
