@@ -483,6 +483,23 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized List<String> deletedBookmarkUids() {
+		return listCall(new ListCallable<String>() {
+			public List<String> call() throws RemoteException {
+				return myInterface.deletedBookmarkUids();
+			}
+		});
+	}
+
+	public void purgeBookmarks(List<String> uids) {
+		if (myInterface != null) {
+			try {
+				myInterface.purgeBookmarks(uids);
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
 	public synchronized HighlightingStyle getHighlightingStyle(int styleId) {
 		if (myInterface == null) {
 			return null;
