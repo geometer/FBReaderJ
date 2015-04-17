@@ -639,12 +639,24 @@ public class SyncService extends Service implements IBookCollection.Listener {
 				myCollection.deleteBookmark(b);
 			}
 
-			// TODO: get full data from server (with CSRF token!) and update
-			for (Bookmark b : toUpdateOnClient) {
-			}
-			// TODO: get full data from server (with CSRF token!) and insert
-			for (String b : toGetFromServer) {
-			}
+			mySyncBookmarksContext.perform(new JsonRequest2(
+				SyncOptions.BASE_URL + "sync/bookmarks", toGetFromServer
+			) {
+				@Override
+				public void processResponse(Object response) {
+					// TODO: insert bookmarks
+					System.err.println("BMK TO BE INSERTED: " + response);
+				}
+			});
+			mySyncBookmarksContext.perform(new JsonRequest2(
+				SyncOptions.BASE_URL + "sync/bookmarks", ids(toUpdateOnClient)
+			) {
+				@Override
+				public void processResponse(Object response) {
+					// TODO: update bookmarks
+					System.err.println("BMK TO BE UPDATED: " + response);
+				}
+			});
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
