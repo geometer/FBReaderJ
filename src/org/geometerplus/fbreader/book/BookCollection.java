@@ -736,6 +736,14 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	public List<String> deletedBookmarkUids() {
+		return myDatabase.deletedBookmarkUids();
+	}
+
+	public void purgeBookmarks(List<String> uids) {
+		myDatabase.purgeBookmarks(uids);
+	}
+
 	public ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
 		return myDatabase.getStoredPosition(bookId);
 	}
