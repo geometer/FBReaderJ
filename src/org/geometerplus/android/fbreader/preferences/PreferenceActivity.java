@@ -233,7 +233,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		syncPreferences.add(syncScreen.addOption(syncOptions.Positions, "positions", "values"));
 		syncPreferences.add(syncScreen.addOption(syncOptions.ChangeCurrentBook, "changeCurrentBook"));
 		//syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo", "values"));
-		//syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks", "values"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks", "values"));
 		syncPreferences.run();
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
