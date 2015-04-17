@@ -127,6 +127,15 @@ class BookmarkSyncUtil {
 				toDeleteOnServer.retainAll(deletedOnClientUids);
 			}
 
+			// collecting book hashes & removing bookmarks with unknown book hash
+			final BooksByHash booksByHash = new BooksByHash(collection);
+			for (ListIterator<String> iter = toGetFromServer.listIterator(); iter.hasNext(); ) {
+				final Info info = actualServerInfos.get(iter.next());
+				if (booksByHash.getBook(info.BookHashes) == null) {
+					iter.remove();
+				}
+			}
+
 			System.err.println("BMK TO SEND TO SERVER = " + ids(toSendToServer));
 			System.err.println("BMK TO DELETE ON SERVER = " + toDeleteOnServer);
 			System.err.println("BMK TO DELETE ON CLIENT = " + ids(toDeleteOnClient));
@@ -146,8 +155,11 @@ class BookmarkSyncUtil {
 			) {
 				@Override
 				public void processResponse(Object response) {
-					// TODO: insert bookmarks
-					System.err.println("BMK TO BE INSERTED: " + response);
+					for (Map<String,Object> info : (List<Map<String,Object>>)response) {
+						final Bookmark bookmark = bookmarkFromData(info, booksByHash);
+						System.err.println("BMK TO BE INSERTED: " + bookmark);
+						collection.saveBookmark(bookmark);
+					}
 				}
 			});
 
@@ -216,14 +228,59 @@ class BookmarkSyncUtil {
 		}
 	}
 
+	private static final class BooksByHash extends HashMap<String,Book> {
+		private final IBookCollection myCollection;
+
+		BooksByHash(IBookCollection collection) {
+			myCollection = collection;
+		}
+
+		Book getBook(List<String> hashes) {
+			Book book = null;
+			for (String h : hashes) {
+				book = get(h);
+				if (book != null) {
+					break;
+				}
+			}
+			if (book == null) {
+				for (String h : hashes) {
+					book = myCollection.getBookByHash(h);
+					if (book != null) {
+						break;
+					}
+				}
+			}
+			if (book != null) {
+				for (String h : hashes) {
+					put(h, book);
+				}
+			}
+			return book;
+		}
+
+		Book getBook(String hash) {
+			Book book = get(hash);
+			if (book == null) {
+				book = myCollection.getBookByHash(hash);
+				if (book != null) {
+					put(hash, book);
+				}
+			}
+			return book;
+		}
+	}
+
 	private static final class Info {
 		final String Uid;
 		final String VersionUid;
+		final List<String> BookHashes;
 		final long ModificationTimestamp;
 
 		Info(Map<String,Object> data) {
 			Uid = (String)data.get("uid");
 			VersionUid = (String)data.get("version_uid");
+			BookHashes = (List<String>)data.get("book_hashes");
 			final Long timestamp = (Long)data.get("modification_timestamp");
 			ModificationTimestamp = timestamp != null ? timestamp : 0L;
 		}
@@ -295,5 +352,34 @@ class BookmarkSyncUtil {
 			uids.add(b.Uid);
 		}
 		return uids;
+	}
+
+	private static Date getDate(Map<String,Object> data, String key) {
+		final Long timestamp = (Long)data.get(key);
+		return timestamp != null ? new Date(timestamp) : null;
+	}
+
+	private static int getInt(Map<String,Object> data, String key) {
+		return (int)(long)(Long)data.get(key);
+	}
+
+	private static Bookmark bookmarkFromData(Map<String,Object> data, BooksByHash booksByHash) {
+		final Book book = booksByHash.getBook((String)data.get("book_hash"));
+		if (book == null) {
+			return null;
+		}
+		return new Bookmark(
+			-1, (String)data.get("uid"), (String)data.get("version_uid"),
+			book.getId(), book.getTitle(),
+			(String)data.get("text"),
+			getDate(data, "creation_timestamp"),
+			getDate(data, "modification_timestamp"),
+			getDate(data, "access_timestamp"),
+			(String)data.get("model_id"),
+			getInt(data, "para_start"), getInt(data, "elmt_start"), getInt(data, "char_start"),
+			getInt(data, "para_end"), getInt(data, "elmt_end"), getInt(data, "char_end"),
+			true,
+			getInt(data, "style_id")
+		);
 	}
 }
