@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 34;
+		final int currentVersion = 35;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -151,6 +151,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables32();
 			case 33:
 				updateTables33();
+			case 34:
+				updateTables34();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -987,9 +989,33 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	@Override
 	protected void deleteBookmark(Bookmark bookmark) {
-		final SQLiteStatement statement = get("DELETE FROM Bookmarks WHERE uid=?");
-		statement.bindString(1, uid(bookmark));
+		final String uuid = uid(bookmark);
+		SQLiteStatement statement = get("DELETE FROM Bookmarks WHERE uid=?");
+		statement.bindString(1, uuid);
 		statement.execute();
+		statement = get("INSERT OR IGNORE INTO DeletedBookmarkIds (uid) VALUES (?)");
+		statement.bindString(1, uuid);
+		statement.execute();
+	}
+
+	@Override
+	protected List<String> deletedBookmarkUids() {
+		final Cursor cursor = myDatabase.rawQuery("SELECT uid FROM DeletedBookmarkIds", null);
+		final LinkedList<String> uids = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			uids.add(cursor.getString(0));
+		}
+		cursor.close();
+		return uids;
+	}
+
+	@Override
+	protected void purgeBookmarks(List<String> uids) {
+		final SQLiteStatement statement = get("DELETE FROM DeletedBookmarkIds WHERE uid=?");
+		for (String u : uids) {
+			statement.bindString(1, u);
+			statement.execute();
+		}
 	}
 
 	protected ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
@@ -1654,6 +1680,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final String fields = "bookmark_id,uid,book_id,visible,style_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character";
 		myDatabase.execSQL("INSERT INTO Bookmarks (" + fields + ") SELECT " + fields + " FROM Bookmarks_Obsolete");
 		myDatabase.execSQL("DROP TABLE IF EXISTS Bookmarks_Obsolete");
+	}
+
+	private void updateTables34() {
+		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS DeletedBookmarkIds(uid TEXT(36) PRIMARY KEY)");
 	}
 
 	private SQLiteStatement get(String sql) {

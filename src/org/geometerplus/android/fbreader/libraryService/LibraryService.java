@@ -402,6 +402,14 @@ public class LibraryService extends Service {
 			myCollection.deleteBookmark(SerializerUtil.deserializeBookmark(serialized));
 		}
 
+		public List<String> deletedBookmarkUids() {
+			return myCollection.deletedBookmarkUids();
+		}
+
+		public void purgeBookmarks(List<String> uids) {
+			myCollection.purgeBookmarks(uids);
+		}
+
 		public String getHighlightingStyle(int styleId) {
 			return SerializerUtil.serialize(myCollection.getHighlightingStyle(styleId));
 		}
