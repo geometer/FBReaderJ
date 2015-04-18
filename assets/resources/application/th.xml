@@ -264,7 +264,6 @@
 		<node name="openInDictionary" value="เปิดในพจนานุกรม"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
 		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
-		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="ล้างข้อมูล"/>
 	</node>
 	<node name="sharing">
@@ -849,7 +848,7 @@
 			<node name="editUrl" value="แก้ไข URL"/>
 			<node name="tryAgain" value="ลองใหม่อีกครั้ง"/>
 			<node name="openBook" value="อ่าน"/>
-			<node name="editInfo" value="แก้ไข"/>
+			<node name="edit" value="แก้ไข"/>
 			<node name="reloadInfo" value="โหลดใหม่"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="เติมเงิน"/>

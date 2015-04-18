@@ -266,7 +266,6 @@
 		<node name="openInDictionary" value="Open in dictionar"/>
 		<node name="quoteFrom" value="Citat de la %s"/>
 		<node name="textInBuffer" value="Copiat în clipboard:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bookmark creat:&#10;%s"/>
 		<node name="clearSelection" value="Sterge"/>
 	</node>
 	<node name="sharing">
@@ -851,7 +850,7 @@
 			<node name="editUrl" value="Editati URL-ul"/>
 			<node name="tryAgain" value="Încercati din nou"/>
 			<node name="openBook" value="Citeste"/>
-			<node name="editInfo" value="Editeaza"/>
+			<node name="edit" value="Editeaza"/>
 			<node name="reloadInfo" value="Reîncarca"/>
 			<node name="shareBook" value="Impartaseste"/>
 			<node name="topup" value="Incarca"/>

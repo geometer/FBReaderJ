@@ -273,7 +273,6 @@
 		<node name="openInDictionary" value="بازکردن در پوشه"/>
 		<node name="quoteFrom" value="نقل قول از %s"/>
 		<node name="textInBuffer" value="به کلیپ بورد کپی شد: %s"/>
-		<node name="bookmarkCreated" value="آدرس ایجاد شد:%s"/>
 		<node name="clearSelection" value="پاک کردن"/>
 	</node>
 	<node name="sharing">
@@ -858,7 +857,7 @@
 			<node name="editUrl" value="ويرايش URL"/>
 			<node name="tryAgain" value="تلاش مجدد"/>
 			<node name="openBook" value="خواندن"/>
-			<node name="editInfo" value="ويرايش"/>
+			<node name="edit" value="ويرايش"/>
 			<node name="reloadInfo" value="بارگذاري مجدد"/>
 			<node name="shareBook" value="اشتراك گذاري"/>
 			<node name="topup" value="آپ بالا"/>

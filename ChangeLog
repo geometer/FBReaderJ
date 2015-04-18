@@ -5,7 +5,11 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.4 beta 0 (Apr ??, 2015) =====
+===== 2.4 beta 1 (Apr 19, 2015) =====
+* New bookmarks creation interface (uses SuperToasts library)
+
+===== 2.4 beta 0 (Apr 17, 2015) =====
+* Bookmarks synchronisation
 * Updated Dutch localisation (by Frank Fesevur)
 * Updated German localisation (by Matthias Dill)
 * Drops download notification on book opening
