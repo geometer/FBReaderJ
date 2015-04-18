@@ -274,7 +274,6 @@
 		<node name="openInDictionary" value="Openen in woordenboek"/>
 		<node name="quoteFrom" value="Quote van %s"/>
 		<node name="textInBuffer" value="Gekopieerd naar het klembord:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bladwijzer gemaakt:&#10;%s"/>
 		<node name="clearSelection" value="Wissen"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +858,7 @@
 			<node name="editUrl" value="URL bewerken"/>
 			<node name="tryAgain" value="Probeer opnieuw"/>
 			<node name="openBook" value="Lezen"/>
-			<node name="editInfo" value="Bewerken"/>
+			<node name="edit" value="Bewerken"/>
 			<node name="reloadInfo" value="Vernieuwen"/>
 			<node name="shareBook" value="Delen"/>
 			<node name="topup" value="Opwaarderen"/>

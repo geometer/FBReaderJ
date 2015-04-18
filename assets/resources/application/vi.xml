@@ -264,7 +264,6 @@
 		<node name="openInDictionary" value="Mở trong Từ điển"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
 		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
-		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="Xóa"/>
 	</node>
 	<node name="sharing">
@@ -849,7 +848,7 @@
 			<node name="editUrl" value="Sửa URL"/>
 			<node name="tryAgain" value="Thử lại"/>
 			<node name="openBook" value="Đọc"/>
-			<node name="editInfo" value="Sửa"/>
+			<node name="edit" value="Sửa"/>
 			<node name="reloadInfo" value="Tải lại"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Tái đầy tài khoản "/>

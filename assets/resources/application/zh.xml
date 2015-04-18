@@ -264,7 +264,6 @@
 		<node name="openInDictionary" value="打开字典"/>
 		<node name="quoteFrom" value="从%s中引用"/>
 		<node name="textInBuffer" value="复制到剪贴板:&#10;%s"/>
-		<node name="bookmarkCreated" value="创建书签:&#10;%s"/>
 		<node name="clearSelection" value="清除"/>
 	</node>
 	<node name="sharing">
@@ -849,7 +848,7 @@
 			<node name="editUrl" value="编辑 URL"/>
 			<node name="tryAgain" value="再次尝试"/>
 			<node name="openBook" value="阅读"/>
-			<node name="editInfo" value="编辑"/>
+			<node name="edit" value="编辑"/>
 			<node name="reloadInfo" value="重新加载"/>
 			<node name="shareBook" value="共享"/>
 			<node name="topup" value="重新输入账号"/>
