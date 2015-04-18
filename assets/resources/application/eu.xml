@@ -274,7 +274,6 @@
 		<node name="openInDictionary" value="Ireki hiztegian"/>
 		<node name="quoteFrom" value="Honen zita: %s"/>
 		<node name="textInBuffer" value="&#10;%s paperontzira kopiatuta"/>
-		<node name="bookmarkCreated" value="Sortutako laster-marka:&#10;%s"/>
 		<node name="clearSelection" value="Garbitu"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +858,7 @@
 			<node name="editUrl" value="URL-a aldatu"/>
 			<node name="tryAgain" value="Saiatu berriro"/>
 			<node name="openBook" value="Irakurri"/>
-			<node name="editInfo" value="Aldatu"/>
+			<node name="edit" value="Aldatu"/>
 			<node name="reloadInfo" value="Birkargatu"/>
 			<node name="shareBook" value="Partekatu"/>
 			<node name="topup" value="Bete kontua"/>

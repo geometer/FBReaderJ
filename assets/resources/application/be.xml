@@ -274,7 +274,6 @@
 		<node name="openInDictionary" value="Адчыніць у слоўніку"/>
 		<node name="quoteFrom" value="Цытата з %s"/>
 		<node name="textInBuffer" value="Скапіявана ў кішэню:&#10;%s"/>
-		<node name="bookmarkCreated" value="Закладка створаная:&#10;%s"/>
 		<node name="clearSelection" value="Ачысьціць"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +858,7 @@
 			<node name="editUrl" value="Рэдагаваць адрас"/>
 			<node name="tryAgain" value="Паспрабаваць зноў"/>
 			<node name="openBook" value="Чытаць"/>
-			<node name="editInfo" value="Рэдагаваць"/>
+			<node name="edit" value="Рэдагаваць"/>
 			<node name="reloadInfo" value="Перазаладаваць"/>
 			<node name="shareBook" value="Абагуліць"/>
 			<node name="topup" value="Папоўніць"/>
