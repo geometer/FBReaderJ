@@ -264,7 +264,6 @@
 		<node name="openInDictionary" value="Abrir no dicionario"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
 		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
-		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="Limpar"/>
 	</node>
 	<node name="sharing">
@@ -849,7 +848,7 @@
 			<node name="editUrl" value="Editar URL"/>
 			<node name="tryAgain" value="Tentar de novo"/>
 			<node name="openBook" value="Ler"/>
-			<node name="editInfo" value="Editar"/>
+			<node name="edit" value="Editar"/>
 			<node name="reloadInfo" value="Recargar"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Comletar"/>

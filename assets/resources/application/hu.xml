@@ -264,7 +264,6 @@
 		<node name="openInDictionary" value="Megnyitás szótárban"/>
 		<node name="quoteFrom" value="Idézet innen: %s"/>
 		<node name="textInBuffer" value="Vágólapra másolva:&#10;%s"/>
-		<node name="bookmarkCreated" value="Könyvjelző létrehozva:&#10;%s"/>
 		<node name="clearSelection" value="Kijelölés eltávolítása"/>
 	</node>
 	<node name="sharing">
@@ -849,7 +848,7 @@
 			<node name="editUrl" value="URL szerkesztése"/>
 			<node name="tryAgain" value="Próbálja újra"/>
 			<node name="openBook" value="Olvasás"/>
-			<node name="editInfo" value="Szerkesztés"/>
+			<node name="edit" value="Szerkesztés"/>
 			<node name="reloadInfo" value="Újratöltés"/>
 			<node name="shareBook" value="Megosztás"/>
 			<node name="topup" value="Számla feltöltése"/>

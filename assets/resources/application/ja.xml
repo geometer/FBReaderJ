@@ -274,7 +274,6 @@
 		<node name="openInDictionary" value="辞書で開く"/>
 		<node name="quoteFrom" value="引用元: %s"/>
 		<node name="textInBuffer" value="クリップボードにコピーしました:&#10;%s"/>
-		<node name="bookmarkCreated" value="しおりを作成しました:&#10;%s"/>
 		<node name="clearSelection" value="解除"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +858,7 @@
 			<node name="editUrl" value="URL 編集"/>
 			<node name="tryAgain" value="もう一度"/>
 			<node name="openBook" value="読む"/>
-			<node name="editInfo" value="編集"/>
+			<node name="edit" value="編集"/>
 			<node name="reloadInfo" value="再読み込み"/>
 			<node name="shareBook" value="共有"/>
 			<node name="topup" value="チャージ"/>
