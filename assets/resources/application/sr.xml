@@ -274,7 +274,6 @@
 		<node name="openInDictionary" value="Отвори у речнику"/>
 		<node name="quoteFrom" value="Цитирај из „%s“"/>
 		<node name="textInBuffer" value="Умножено:&#10;%s"/>
-		<node name="bookmarkCreated" value="Обележивач је направљен:&#10;%s"/>
 		<node name="clearSelection" value="Очисти"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +858,7 @@
 			<node name="editUrl" value="Уреди адресу"/>
 			<node name="tryAgain" value="Пробај опет"/>
 			<node name="openBook" value="Прочитај"/>
-			<node name="editInfo" value="Уреди"/>
+			<node name="edit" value="Уреди"/>
 			<node name="reloadInfo" value="Поново учитај"/>
 			<node name="shareBook" value="Дели"/>
 			<node name="topup" value="Попуни"/>

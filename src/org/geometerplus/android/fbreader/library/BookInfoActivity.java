@@ -310,7 +310,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		addMenuItem(menu, OPEN_BOOK, "openBook", true);
-		addMenuItem(menu, EDIT_INFO, "editInfo", true);
+		addMenuItem(menu, EDIT_INFO, "edit", true);
 		addMenuItem(menu, SHARE_BOOK, "shareBook", false);
 		addMenuItem(menu, RELOAD_INFO, "reloadInfo", false);
 		if (myBook.labels().contains(Book.FAVORITE_LABEL)) {
