@@ -108,7 +108,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 				}
 			}
 		});
-		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
+		setupButton(R.id.book_info_button_edit, "edit", new View.OnClickListener() {
 			public void onClick(View view) {
 				final Intent intent =
 					new Intent(getApplicationContext(), EditBookInfoActivity.class);

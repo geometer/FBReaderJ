@@ -264,7 +264,6 @@
 		<node name="openInDictionary" value="查詢字典"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
 		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
-		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="清空"/>
 	</node>
 	<node name="sharing">
@@ -849,7 +848,7 @@
 			<node name="editUrl" value="編輯 URL"/>
 			<node name="tryAgain" value="重試"/>
 			<node name="openBook" value="閱讀"/>
-			<node name="editInfo" value="編輯"/>
+			<node name="edit" value="編輯"/>
 			<node name="reloadInfo" value="重新整理"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="升級賬戶"/>

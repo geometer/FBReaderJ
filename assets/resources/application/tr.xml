@@ -274,7 +274,6 @@
 		<node name="openInDictionary" value="Sözlükte bul"/>
 		<node name="quoteFrom" value="%s den alıntı yap"/>
 		<node name="textInBuffer" value="Panoya kopyalanan:&#10;%s"/>
-		<node name="bookmarkCreated" value="Yer imi oluşturuldu:&#10;%s"/>
 		<node name="clearSelection" value="Sil"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +858,7 @@
 			<node name="editUrl" value="URL\'yi düzenle"/>
 			<node name="tryAgain" value="Tekrar dene"/>
 			<node name="openBook" value="Oku"/>
-			<node name="editInfo" value="Düzenle"/>
+			<node name="edit" value="Düzenle"/>
 			<node name="reloadInfo" value="Yenile"/>
 			<node name="shareBook" value="Paylaş"/>
 			<node name="topup" value="Kontör"/>

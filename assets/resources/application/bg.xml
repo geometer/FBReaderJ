@@ -280,7 +280,6 @@
 		<node name="openInDictionary" value="Отвори в речника"/>
 		<node name="quoteFrom" value="Цитат от %s"/>
 		<node name="textInBuffer" value="Текст в буфера:&#10;%s"/>
-		<node name="bookmarkCreated" value="Отбелязване на:&#10;%s"/>
 		<node name="clearSelection" value="Премахни"/>
 	</node>
 	<node name="sharing">
@@ -865,7 +864,7 @@
 			<node name="editUrl" value="Редактирай URL"/>
 			<node name="tryAgain" value="Повтори"/>
 			<node name="openBook" value="Чети"/>
-			<node name="editInfo" value="Редактирай"/>
+			<node name="edit" value="Редактирай"/>
 			<node name="reloadInfo" value="Обнови"/>
 			<node name="shareBook" value="Сподели"/>
 			<node name="topup" value="Зареждане на сметка"/>

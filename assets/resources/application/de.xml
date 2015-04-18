@@ -279,7 +279,6 @@
 		<node name="openInDictionary" value="Im Wörterbuch nachschlagen"/>
 		<node name="quoteFrom" value="Zitat aus '%s'"/>
 		<node name="textInBuffer" value="In die Zwischenablage kopiert:&#10;%s"/>
-		<node name="bookmarkCreated" value="Lesezeichen erstellt:&#10;%s"/>
 		<node name="clearSelection" value="Auswahl aufheben"/>
 	</node>
 	<node name="sharing">
@@ -864,7 +863,7 @@
 			<node name="editUrl" value="URL bearbeiten"/>
 			<node name="tryAgain" value="Erneut versuchen"/>
 			<node name="openBook" value="Lesen"/>
-			<node name="editInfo" value="Bearbeiten"/>
+			<node name="edit" value="Bearbeiten"/>
 			<node name="reloadInfo" value="Aktualisieren"/>
 			<node name="shareBook" value="Teilen"/>
 			<node name="topup" value="Konto aufladen"/>

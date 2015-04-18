@@ -264,7 +264,6 @@
 		<node name="openInDictionary" value="Αναξήτηση στο λεξικό"/>
 		<node name="quoteFrom" value="Απόσπασμα από '%s'"/>
 		<node name="textInBuffer" value="Αντιγράφηκε στο clipboard:&#10;%s"/>
-		<node name="bookmarkCreated" value="Δημιουργήθηκε ο σελιδοδείκτης:&#10;%s"/>
 		<node name="clearSelection" value="Κατάργηση επιλογής"/>
 	</node>
 	<node name="sharing">
@@ -857,7 +856,7 @@
 			<node name="editUrl" value="επεξεργασία URL"/>
 			<node name="tryAgain" value="Δοκιμάστε ξανά"/>
 			<node name="openBook" value="Ανάγνωση"/>
-			<node name="editInfo" value="Επεξεργασία"/>
+			<node name="edit" value="Επεξεργασία"/>
 			<node name="reloadInfo" value="Ενημέρωση"/>
 			<node name="shareBook" value="Μοιρασέ το"/>
 			<node name="topup" value="Μεταβίβασε λεφτά στον λογιαρισμό"/>

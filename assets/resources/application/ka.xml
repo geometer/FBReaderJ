@@ -279,7 +279,6 @@
 		<node name="openInDictionary" value="ლექსიკონში ნახვა"/>
 		<node name="quoteFrom" value="ციტატა %sდან"/>
 		<node name="textInBuffer" value="ტექსტი გაცვლის ბუფერში:&#10;%s"/>
-		<node name="bookmarkCreated" value="შექმნილია სანიშნი:&#10;%s"/>
 		<node name="clearSelection" value="ნიშნულის მოხსნა"/>
 	</node>
 	<node name="sharing">
@@ -864,7 +863,7 @@
 			<node name="editUrl" value="URL-ის შეცვლა"/>
 			<node name="tryAgain" value="გამეორება"/>
 			<node name="openBook" value="კითხვა"/>
-			<node name="editInfo" value="შეცვლა"/>
+			<node name="edit" value="შეცვლა"/>
 			<node name="reloadInfo" value="განახლება"/>
 			<node name="shareBook" value="გაზიარება"/>
 			<node name="topup" value="ანგარიშის შევსება"/>
