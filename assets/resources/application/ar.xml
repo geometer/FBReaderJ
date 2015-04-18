@@ -272,7 +272,6 @@
 		<node name="openInDictionary" value="فتح في القاموس"/>
 		<node name="quoteFrom" value="اقتباس من %s"/>
 		<node name="textInBuffer" value="تم نسخ: %s"/>
-		<node name="bookmarkCreated" value="تم حفظ العلامة المرجعية: %s"/>
 		<node name="clearSelection" value="مسح"/>
 	</node>
 	<node name="sharing">
@@ -857,7 +856,7 @@
 			<node name="editUrl" value="تعديل الرابط"/>
 			<node name="tryAgain" value="إعادة المحاولة"/>
 			<node name="openBook" value="قراءة"/>
-			<node name="editInfo" value="تعديل"/>
+			<node name="edit" value="تعديل"/>
 			<node name="reloadInfo" value="إعادة التحميل"/>
 			<node name="shareBook" value="مشاركة"/>
 			<node name="topup" value="Top up" toBeTranslated="true"/>

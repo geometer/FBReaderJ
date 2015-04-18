@@ -279,7 +279,6 @@
 		<node name="openInDictionary" value="Посмотреть в словаре"/>
 		<node name="quoteFrom" value="Цитата из %s"/>
 		<node name="textInBuffer" value="Текст в буфере обмена:&#10;%s"/>
-		<node name="bookmarkCreated" value="Создана закладка:&#10;%s"/>
 		<node name="clearSelection" value="Убрать пометку"/>
 	</node>
 	<node name="sharing">
@@ -864,7 +863,7 @@
 			<node name="editUrl" value="Изменить URL"/>
 			<node name="tryAgain" value="Повторить"/>
 			<node name="openBook" value="Читать"/>
-			<node name="editInfo" value="Изменить"/>
+			<node name="edit" value="Изменить"/>
 			<node name="reloadInfo" value="Обновить"/>
 			<node name="shareBook" value="Поделиться"/>
 			<node name="topup" value="Пополнить счёт"/>

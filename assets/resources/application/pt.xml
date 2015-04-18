@@ -278,7 +278,6 @@
 		<node name="openInDictionary" value="Abrir no dicionário"/>
 		<node name="quoteFrom" value="Citação de %s"/>
 		<node name="textInBuffer" value="Copiado na área de trabalho:&#10;%s"/>
-		<node name="bookmarkCreated" value="Marcador criado:&#10;%s"/>
 		<node name="clearSelection" value="Limpar"/>
 	</node>
 	<node name="sharing" value="Partilha">
@@ -863,7 +862,7 @@
 			<node name="editUrl" value="Editar URL"/>
 			<node name="tryAgain" value="Tentar novamente"/>
 			<node name="openBook" value="Ler"/>
-			<node name="editInfo" value="Editar"/>
+			<node name="edit" value="Editar"/>
 			<node name="reloadInfo" value="Recarregar"/>
 			<node name="shareBook" value="Compartilhar"/>
 			<node name="topup" value="Completar"/>

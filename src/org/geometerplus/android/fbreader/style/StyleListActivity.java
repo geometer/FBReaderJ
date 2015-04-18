@@ -43,10 +43,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.ViewUtil;
 
 public class StyleListActivity extends ListActivity implements IBookCollection.Listener {
-	public static final String EXISTING_BOOKMARK_KEY = "existing.bookmark";
-
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
-	private boolean myExistingBookmark;
 	private Bookmark myBookmark;
 
 	@Override
@@ -60,7 +57,6 @@ public class StyleListActivity extends ListActivity implements IBookCollection.L
 		super.onStart();
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				myExistingBookmark = getIntent().getBooleanExtra(EXISTING_BOOKMARK_KEY, false);
 				myBookmark = FBReaderIntents.getBookmarkExtra(getIntent());
 				if (myBookmark == null) {
 					finish();
@@ -110,7 +106,7 @@ public class StyleListActivity extends ListActivity implements IBookCollection.L
 		}
 
 		public final synchronized int getCount() {
-			return myExistingBookmark ? myStyles.size() + 1 : myStyles.size();
+			return myStyles.size() + 1;
 		}
 
 		public final synchronized HighlightingStyle getItem(int position) {

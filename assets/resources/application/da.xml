@@ -273,7 +273,6 @@
 		<node name="openInDictionary" value="Åbn i ordbog"/>
 		<node name="quoteFrom" value="Citat fra %s"/>
 		<node name="textInBuffer" value="Kopieret til udklipsholder:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bogmærke oprettet:&#10;%s"/>
 		<node name="clearSelection" value="Slet"/>
 	</node>
 	<node name="sharing">
@@ -858,7 +857,7 @@
 			<node name="editUrl" value="Rediger URL"/>
 			<node name="tryAgain" value="Prøv igen"/>
 			<node name="openBook" value="Læs"/>
-			<node name="editInfo" value="Rediger"/>
+			<node name="edit" value="Rediger"/>
 			<node name="reloadInfo" value="Genindlæs"/>
 			<node name="shareBook" value="Dele"/>
 			<node name="topup" value="Tank op"/>
