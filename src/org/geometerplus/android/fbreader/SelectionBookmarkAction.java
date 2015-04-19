@@ -33,7 +33,7 @@ import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
-import org.geometerplus.android.fbreader.bookmark.StyleListActivity;
+import org.geometerplus.android.fbreader.bookmark.EditBookmarkActivity;
 
 public class SelectionBookmarkAction extends FBAndroidAction {
 	SelectionBookmarkAction(FBReader baseApplication, FBReaderApp fbreader) {
@@ -61,7 +61,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 			@Override
 			public void onClick(View view, Parcelable token) {
 				final Intent intent =
-					new Intent(BaseActivity.getApplicationContext(), StyleListActivity.class);
+					new Intent(BaseActivity.getApplicationContext(), EditBookmarkActivity.class);
 				FBReaderIntents.putBookmarkExtra(intent, bookmark);
 				OrientationUtil.startActivity(BaseActivity, intent);
 			}
