@@ -247,6 +247,13 @@
 			<node name="search" value="Bilatu"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Ezabatu laster-marka"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Ireki liburutegia"/>
 		<node name="networkLibrary" value="Ireki sareko liburutegia"/>
@@ -259,7 +266,6 @@
 	<node name="style" value="%s estiloa"/>
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="Aldatu estiloa…"/>
-		<node name="deleteBookmark" value="Ezabatu laster-marka"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="Estiloaren izena"/>

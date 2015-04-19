@@ -252,6 +252,13 @@
 			<node name="search" value="ძებნა"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="სანიშნის წაშლა"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="ბიბლიოთეკის გახსნა"/>
 		<node name="networkLibrary" value="ქსელური ბიბლიოთეკის გახსნა"/>
@@ -264,7 +271,6 @@
 	<node name="style" value="Style %s" toBeTranslated="true"/>
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="სანიშნის წაშლა"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
