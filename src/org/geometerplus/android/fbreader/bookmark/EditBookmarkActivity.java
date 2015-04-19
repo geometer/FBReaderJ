@@ -52,7 +52,7 @@ class SimpleContainer extends ViewGroup {
 	}
 }
 
-public class BookmarkEditActivity extends Activity {
+public class EditBookmarkActivity extends Activity {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
