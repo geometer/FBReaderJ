@@ -224,19 +224,14 @@ public class EditBookmarkActivity extends Activity implements IBookCollection.Li
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.style_item, parent, false);
 			final HighlightingStyle style = getItem(position);
 
+			final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.style_item_checkbox);
 			final AmbilWarnaPrefWidgetView colorView =
 				(AmbilWarnaPrefWidgetView)ViewUtil.findView(view, R.id.style_item_color);
 			final TextView titleView = ViewUtil.findTextView(view, R.id.style_item_title);
 			final Button button = (Button)ViewUtil.findView(view, R.id.style_item_edit_button);
 
-			final ZLResource resource = ZLResource.resource("highlightingStyleMenu");
+			checkBox.setChecked(style.Id == myBookmark.getStyleId());
 
-			String name = style.getName();
-			if (name == null || "".equals(name)) {
-				name = resource
-					.getResource("style").getValue()
-					.replace("%s", String.valueOf(style.Id));
-			}
 			final ZLColor color = style.getBackgroundColor();
 			final int rgb = color != null ? ZLAndroidColorUtil.rgb(color) : -1;
 
@@ -248,10 +243,10 @@ public class EditBookmarkActivity extends Activity implements IBookCollection.Li
 				colorView.showCross(true);
 				colorView.setBackgroundColor(0);
 			}
-			titleView.setText(name);
+			titleView.setText(style.getName());
 
 			button.setVisibility(View.VISIBLE);
-			button.setText(resource.getResource("editStyle").getValue());
+			button.setText(myResource.getResource("editStyle").getValue());
 			button.setOnClickListener(new Button.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -273,6 +268,7 @@ public class EditBookmarkActivity extends Activity implements IBookCollection.Li
 					myCollection.saveBookmark(myBookmark);
 				}
 			});
+			notifyDataSetChanged();
 		}
 	}
 }
