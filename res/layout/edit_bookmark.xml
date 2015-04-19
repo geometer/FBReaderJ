@@ -3,7 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/edit_bookmark_tabhost"
 	android:layout_width="500dp"
-	android:layout_height="400dp"
+	android:layout_height="350dp"
 >
 	<LinearLayout
 		android:orientation="vertical"
@@ -39,10 +39,10 @@
 					android:gravity="left|top"
 				/>
 				<Button
-					android:id="@+id/edit_bookmark_ok_button"
+					android:id="@+id/edit_bookmark_save_text_button"
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content"
-					android:text="save"
+					android:layout_gravity="center_horizontal"
 					android:singleLine="true"
 				/>
 			</LinearLayout>
@@ -61,7 +61,6 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_centerInParent="true"
-					android:text="Delete the bookmark"
 				/>
 			</RelativeLayout>
 		</FrameLayout>
