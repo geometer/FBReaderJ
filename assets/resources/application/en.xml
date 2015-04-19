@@ -247,6 +247,13 @@
 			<node name="search" value="Search"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text"/>
+		<node name="style" value="Style"/>
+		<node name="delete" value="Delete"/>
+		<node name="deleteBookmark" value="Delete the bookmark"/>
+		<node name="saveText" value="Save text"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open library"/>
 		<node name="networkLibrary" value="Open network library"/>
@@ -259,7 +266,6 @@
 	<node name="style" value="Style %s"/>
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="Edit style…"/>
-		<node name="deleteBookmark" value="Delete bookmark"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name"/>
