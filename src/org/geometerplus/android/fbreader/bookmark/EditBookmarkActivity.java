@@ -35,6 +35,7 @@ import android.widget.*;
 
 import yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView;
 
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -91,6 +92,17 @@ public class EditBookmarkActivity extends Activity implements IBookCollection.Li
 		addTab(tabHost, "text", R.id.edit_bookmark_content_text);
 		addTab(tabHost, "style", R.id.edit_bookmark_content_style);
 		addTab(tabHost, "delete", R.id.edit_bookmark_content_delete);
+
+		final ZLStringOption currentTabOption =
+			new ZLStringOption("LookNFeel", "EditBookmark", "text");
+		tabHost.setCurrentTabByTag(currentTabOption.getValue());
+		tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+			public void onTabChanged(String tag) {
+				if (!"delete".equals(tag)) {
+					currentTabOption.setValue(tag);
+				}
+			}
+		});
 
 		final EditText editor = (EditText)findViewById(R.id.edit_bookmark_text);
 		editor.setText(myBookmark.getText());
