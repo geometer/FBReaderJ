@@ -252,6 +252,13 @@
 			<node name="search" value="Поиск"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Текст"/>
+		<node name="style" value="Стиль"/>
+		<node name="delete" value="Стереть"/>
+		<node name="deleteBookmark" value="Стереть закладку"/>
+		<node name="saveText" value="Сохранить текст"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Открыть библиотеку"/>
 		<node name="networkLibrary" value="Открыть сетевую библиотеку"/>
@@ -264,7 +271,6 @@
 	<node name="style" value="Стиль №%s"/>
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="Изменить…"/>
-		<node name="deleteBookmark" value="Стереть закладку"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="Название стиля"/>

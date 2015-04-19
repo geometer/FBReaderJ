@@ -247,6 +247,13 @@
 			<node name="search" value="Zoeken"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open bibliotheek"/>
 		<node name="networkLibrary" value="Open netwerkbibliotheek"/>
@@ -259,7 +266,6 @@
 	<node name="style" value="Stijl %s"/>
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="Stijl aanpassen…"/>
-		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="Stijlnaam"/>

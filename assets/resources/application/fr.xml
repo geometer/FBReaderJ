@@ -240,6 +240,13 @@
 			<node name="search" value="Rechercher"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Supprimer le marque-page"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Bibliothèque"/>
 		<node name="networkLibrary" value="Bibliothèque réseau"/>
@@ -252,7 +259,6 @@
 	<node name="style" value="Style %s"/>
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="Éditer style..."/>
-		<node name="deleteBookmark" value="Supprimer le marque-page"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="Nom du style"/>

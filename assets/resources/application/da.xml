@@ -246,6 +246,13 @@
 			<node name="search" value="Søg"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Slet Bogmærke"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Åbn bibliotek"/>
 		<node name="networkLibrary" value="Åbn netværksbibliotek"/>
@@ -258,7 +265,6 @@
 	<node name="style" value="Stil %s"/>
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="Slet Bogmærke"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>

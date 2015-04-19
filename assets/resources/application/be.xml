@@ -247,6 +247,13 @@
 			<node name="search" value="Пошук"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Выдаліць закладку"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Адчыніць бібліятэку"/>
 		<node name="networkLibrary" value="Адчыніць сеткавую бібліятэку"/>
@@ -259,7 +266,6 @@
 	<node name="style" value="Стыль «%s»"/>
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="Рэдагаваць стыль…"/>
-		<node name="deleteBookmark" value="Выдаліць закладку"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="Назва стылю"/>
