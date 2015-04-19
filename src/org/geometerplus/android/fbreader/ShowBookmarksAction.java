@@ -25,6 +25,7 @@ import android.content.Intent;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.android.fbreader.bookmark.BookmarksActivity;
 import org.geometerplus.android.util.PackageUtil;
 
 class ShowBookmarksAction extends FBAndroidAction {
