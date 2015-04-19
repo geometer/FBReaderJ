@@ -864,6 +864,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	static void ensureFullscreen(View view) {
+		if (view == null) {
+			return;
+		}
+
 		final ZLAndroidLibrary zlibrary = getZLibrary();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
 				&& zlibrary.EnableFullscreenModeOption.getValue()) {
