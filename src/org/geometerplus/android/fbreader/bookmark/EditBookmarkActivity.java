@@ -26,6 +26,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.*;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.*;
 import android.widget.*;
 
@@ -44,9 +48,17 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.ViewUtil;
 
 public class EditBookmarkActivity extends Activity implements IBookCollection.Listener {
+	private final ZLResource myResource = ZLResource.resource("editBookmark");
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private Bookmark myBookmark;
 	private StyleListAdapter myStylesAdapter;
+
+	private void addTab(TabHost host, String id, int content) {
+		final TabHost.TabSpec spec = host.newTabSpec(id);
+		spec.setIndicator(myResource.getResource(id).getValue());
+		spec.setContent(content);
+        host.addTab(spec);
+	}
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -60,30 +72,64 @@ public class EditBookmarkActivity extends Activity implements IBookCollection.Li
 			return;
 		}
 
+		final DisplayMetrics dm = getResources().getDisplayMetrics();
+		final int width = Math.min(
+			(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 500, dm),
+			dm.widthPixels * 9 / 10
+		);
+		final int height = Math.min(
+			(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, dm),
+			dm.heightPixels * 9 / 10
+		);
+
         final TabHost tabHost = (TabHost)findViewById(R.id.edit_bookmark_tabhost);
+		tabHost.setLayoutParams(new FrameLayout.LayoutParams(
+			new ViewGroup.LayoutParams(width, height)
+		));
 		tabHost.setup();
 
-		final TabHost.TabSpec textSpec = tabHost.newTabSpec("text");
-		textSpec.setIndicator("Text");
-		textSpec.setContent(R.id.edit_bookmark_content_text);
-        tabHost.addTab(textSpec);
-
-		final TabHost.TabSpec styleSpec = tabHost.newTabSpec("style");
-		styleSpec.setIndicator("Style");
-		styleSpec.setContent(R.id.edit_bookmark_content_style);
-        tabHost.addTab(styleSpec);
-
-		final TabHost.TabSpec deleteSpec = tabHost.newTabSpec("delete");
-		deleteSpec.setIndicator("Delete");
-		deleteSpec.setContent(R.id.edit_bookmark_content_delete);
-        tabHost.addTab(deleteSpec);
+		addTab(tabHost, "text", R.id.edit_bookmark_content_text);
+		addTab(tabHost, "style", R.id.edit_bookmark_content_style);
+		addTab(tabHost, "delete", R.id.edit_bookmark_content_delete);
 
 		final EditText editor = (EditText)findViewById(R.id.edit_bookmark_text);
 		editor.setText(myBookmark.getText());
 		final int len = editor.getText().length();
 		editor.setSelection(len, len);
 
+		final Button saveTextButton = (Button)findViewById(R.id.edit_bookmark_save_text_button);
+		saveTextButton.setEnabled(false);
+		saveTextButton.setText(myResource.getResource("saveText").getValue());
+		saveTextButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				myCollection.bindToService(EditBookmarkActivity.this, new Runnable() {
+					public void run() {
+						myBookmark.setText(editor.getText().toString());
+						myCollection.saveBookmark(myBookmark);
+						saveTextButton.setEnabled(false);
+					}
+				});
+			}
+		});
+		editor.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence sequence, int start, int before, int count) {
+				final String originalText = myBookmark.getText();
+				saveTextButton.setEnabled(!originalText.equals(editor.getText().toString()));
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+
 		final Button deleteButton = (Button)findViewById(R.id.edit_bookmark_delete_button);
+		deleteButton.setText(myResource.getResource("deleteBookmark").getValue());
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
