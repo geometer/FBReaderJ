@@ -253,6 +253,7 @@
 		<node name="delete" value="Delete" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Выдаліць закладку"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Рэдагаваць стыль…"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Адчыніць бібліятэку"/>
@@ -264,9 +265,6 @@
 		<node name="close" value="Зачыніць FBReader"/>
 	</node>
 	<node name="style" value="Стыль «%s»"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Рэдагаваць стыль…"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Назва стылю"/>
 		<node name="invisible" value="Нябачны">
