@@ -262,6 +262,7 @@
 		<node name="delete" value="Delete" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Odstranit záložku"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Upravit styl…"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Otevřít knihovnu"/>
@@ -273,9 +274,6 @@
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
 	<node name="style" value="Styl %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Upravit styl…"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Název stylu"/>
 		<node name="invisible" value="Skrytý">

@@ -258,6 +258,7 @@
 		<node name="delete" value="Delete" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Borrar marcador"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Abrir biblioteca"/>
@@ -269,9 +270,6 @@
 		<node name="close" value="Cerrar FBReader"/>
 	</node>
 	<node name="style" value="Estilo %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">

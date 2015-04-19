@@ -252,6 +252,7 @@
 		<node name="delete" value="Delete" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="حذف آدرس"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="تغییر سبک…"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="بازکردن کتابخانه"/>
@@ -263,9 +264,6 @@
 		<node name="close" value="بستن اف بی ریدر"/>
 	</node>
 	<node name="style" value="سبک %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="تغییر سبک…"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="نام سبک"/>
 		<node name="invisible" value="مخفی">

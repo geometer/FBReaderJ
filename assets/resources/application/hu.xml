@@ -243,6 +243,7 @@
 		<node name="delete" value="Delete" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Könyvjelző törlése"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Stílus szerkesztése…"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Könyvtár megnyitása"/>
@@ -254,9 +255,6 @@
 		<node name="close" value="FBReader bezárása"/>
 	</node>
 	<node name="style" value="Stílus %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Stílus szerkesztése…"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Stílus neve"/>
 		<node name="invisible" value="Láthatatlan">

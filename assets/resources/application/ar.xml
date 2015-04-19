@@ -251,6 +251,7 @@
 		<node name="delete" value="Delete" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="حذف العلامة المرجعية"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="تعديل الستايل…"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="فتح المكتبة"/>
@@ -262,9 +263,6 @@
 		<node name="close" value="اغلاق البرنامج"/>
 	</node>
 	<node name="style" value="الستايل %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="تعديل الستايل…"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="اسم الستايل"/>
 		<node name="invisible" value="غير مرئي">

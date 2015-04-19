@@ -253,6 +253,7 @@
 		<node name="delete" value="Delete"/>
 		<node name="deleteBookmark" value="Delete the bookmark"/>
 		<node name="saveText" value="Save text"/>
+		<node name="editStyle" value="Edit style…"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open library"/>
@@ -264,9 +265,6 @@
 		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="style" value="Style %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name"/>
 		<node name="invisible" value="Invisible">

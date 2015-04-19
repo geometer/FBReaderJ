@@ -259,6 +259,7 @@
 		<node name="delete" value="Delete" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Премахни отбелязването"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Редактирай стил…"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Отвори библиотеката"/>
@@ -270,9 +271,6 @@
 		<node name="close" value="Затвори FBReader"/>
 	</node>
 	<node name="style" value="Стил %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Редактирай стил…"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Име на стил"/>
 		<node name="invisible" value="Невидим">
