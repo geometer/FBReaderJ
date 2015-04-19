@@ -229,7 +229,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				gotoBookmark(bookmark);
 				return true;
 			case EDIT_ITEM_ID:
-				final Intent intent = new Intent(this, BookmarkEditActivity.class);
+				final Intent intent = new Intent(this, EditBookmarkActivity.class);
 				OrientationUtil.startActivityForResult(this, intent, 1);
 				// TODO: implement
 				return true;
