@@ -266,7 +266,6 @@
 	<node name="style" value="Style %s" toBeTranslated="true"/>
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="Yer imini sil"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
