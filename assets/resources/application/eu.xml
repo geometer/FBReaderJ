@@ -253,6 +253,7 @@
 		<node name="delete" value="Delete" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Ezabatu laster-marka"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Aldatu estiloa…"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Ireki liburutegia"/>
@@ -264,9 +265,6 @@
 		<node name="close" value="Itxi FBReader"/>
 	</node>
 	<node name="style" value="%s estiloa"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Aldatu estiloa…"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Estiloaren izena"/>
 		<node name="invisible" value="Ikusezin">

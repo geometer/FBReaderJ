@@ -245,6 +245,7 @@
 		<node name="delete" value="Delete" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Sterge marcaj"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Editeaza stilul…"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Deschide libraria"/>
@@ -256,9 +257,6 @@
 		<node name="close" value="Inchide Aplicatia"/>
 	</node>
 	<node name="style" value="Stilul %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Editeaza stilul…"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Numele stilului"/>
 		<node name="invisible" value="Invizibil">
