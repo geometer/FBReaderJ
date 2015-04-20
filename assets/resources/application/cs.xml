@@ -257,11 +257,11 @@
 		</node>
 	</node>
 	<node name="editBookmark">
-		<node name="text" value="Text" toBeTranslated="true"/>
-		<node name="style" value="Style" toBeTranslated="true"/>
-		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="text" value="Text"/>
+		<node name="style" value="Styl"/>
+		<node name="delete" value="Odstranit"/>
 		<node name="deleteBookmark" value="Odstranit záložku"/>
-		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="saveText" value="Uložit text"/>
 		<node name="editStyle" value="Upravit styl…"/>
 	</node>
 	<node name="cancelMenu">
@@ -343,8 +343,8 @@
 	<node name="Preferences">
 		<node name="sync" value="Synchronizace">
 			<node name="summary" value="Nastavení síťové knihovny"/>
-			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
-				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			<node name="site" value="Přečtěte si více o synchronizaci">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="Povolit synchronizaci">
 				<node name="summaryOn" value="Synchronizovat mou knihovnu se serverem síťové knihovny FBReaderu"/>
