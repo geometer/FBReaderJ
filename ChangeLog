@@ -4,9 +4,11 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.4 beta 2 (Apr 22, 2015) =====
+* Footnotes toasts (uses SuperToasts library)
+
 ===== 2.4 beta 1 (Apr 19, 2015) =====
 * New bookmarks creation interface (uses SuperToasts library)
-* Footnotes toasts (uses SuperToasts library)
 
 ===== 2.4 beta 0 (Apr 17, 2015) =====
 * Bookmarks synchronisation
