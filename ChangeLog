@@ -6,6 +6,7 @@
 
 ===== 2.4 beta 1 (Apr 19, 2015) =====
 * New bookmarks creation interface (uses SuperToasts library)
+* Footnotes toasts (uses SuperToasts library)
 
 ===== 2.4 beta 0 (Apr 17, 2015) =====
 * Bookmarks synchronisation
