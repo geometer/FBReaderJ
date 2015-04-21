@@ -260,6 +260,9 @@
 		<node name="saveText" value="Сохранить текст"/>
 		<node name="editStyle" value="Изменить…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="Дальше"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Открыть библиотеку"/>
 		<node name="networkLibrary" value="Открыть сетевую библиотеку"/>
@@ -416,6 +419,11 @@
 			<node name="twoColumnView" value="Текст в две колонки">
 				<node name="summaryOn" value="Показывать текст в две колонки, когда экран горизонтален"/>
 				<node name="summaryOff" value="Всегда показывать текст в одну колонку"/>
+			</node>
+			<node name="showFootnoteToast" value="Показывать текст по ссылке в окошке">
+				<node name="never" value="Никогда"/>
+				<node name="footnotesOnly" value="Только для сносок"/>
+				<node name="allInternalLinks" value="Для всех ссылок внутри книги"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
 				<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>

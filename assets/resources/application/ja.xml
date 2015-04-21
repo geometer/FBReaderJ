@@ -255,6 +255,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="書式を編集"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="ライブラリを開く"/>
 		<node name="networkLibrary" value="ネットワークライブラリを開く"/>
@@ -411,6 +414,11 @@
 			<node name="twoColumnView" value="二段組み">
 				<node name="summaryOn" value="本体がヨコ持ちのとき本文を二段組みで表示"/>
 				<node name="summaryOff" value="いつでも本文を一段で表示"/>
+			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="画面の明るさ調節">
 				<node name="summaryOn" value="画面の左端を上下になぞって調節"/>
