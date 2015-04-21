@@ -23,6 +23,8 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.text.view.*;
+import org.geometerplus.zlibrary.text.util.AutoTextSnippet;
+import org.geometerplus.zlibrary.text.util.TextSnippet;
 
 public final class Bookmark extends ZLTextFixedPosition {
 	public enum DateType {
@@ -33,86 +35,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	}
 
 	public static Bookmark createBookmark(Book book, String modelId, ZLTextWordCursor startCursor, int maxWords, boolean isVisible) {
-		final ZLTextWordCursor cursor = new ZLTextWordCursor(startCursor);
-
-		final Buffer buffer = new Buffer(cursor);
-		final Buffer sentenceBuffer = new Buffer(cursor);
-		final Buffer phraseBuffer = new Buffer(cursor);
-
-		int wordCounter = 0;
-		int sentenceCounter = 0;
-		int storedWordCounter = 0;
-		boolean lineIsNonEmpty = false;
-		boolean appendLineBreak = false;
-mainLoop:
-		while (wordCounter < maxWords && sentenceCounter < 3) {
-			while (cursor.isEndOfParagraph()) {
-				if (!cursor.nextParagraph()) {
-					break mainLoop;
-				}
-				if (!buffer.isEmpty() && cursor.getParagraphCursor().isEndOfSection()) {
-					break mainLoop;
-				}
-				if (!phraseBuffer.isEmpty()) {
-					sentenceBuffer.append(phraseBuffer);
-				}
-				if (!sentenceBuffer.isEmpty()) {
-					if (appendLineBreak) {
-						buffer.append("\n");
-					}
-					buffer.append(sentenceBuffer);
-					++sentenceCounter;
-					storedWordCounter = wordCounter;
-				}
-				lineIsNonEmpty = false;
-				if (!buffer.isEmpty()) {
-					appendLineBreak = true;
-				}
-			}
-			final ZLTextElement element = cursor.getElement();
-			if (element instanceof ZLTextWord) {
-				final ZLTextWord word = (ZLTextWord)element;
-				if (lineIsNonEmpty) {
-					phraseBuffer.append(" ");
-				}
-				phraseBuffer.Builder.append(word.Data, word.Offset, word.Length);
-				phraseBuffer.Cursor.setCursor(cursor);
-				phraseBuffer.Cursor.setCharIndex(word.Length);
-				++wordCounter;
-				lineIsNonEmpty = true;
-				switch (word.Data[word.Offset + word.Length - 1]) {
-					case ',':
-					case ':':
-					case ';':
-					case ')':
-						sentenceBuffer.append(phraseBuffer);
-						break;
-					case '.':
-					case '!':
-					case '?':
-						++sentenceCounter;
-						if (appendLineBreak) {
-							buffer.append("\n");
-							appendLineBreak = false;
-						}
-						sentenceBuffer.append(phraseBuffer);
-						buffer.append(sentenceBuffer);
-						storedWordCounter = wordCounter;
-						break;
-				}
-			}
-			cursor.nextWord();
-		}
-		if (storedWordCounter < 4) {
-			if (sentenceBuffer.isEmpty()) {
-				sentenceBuffer.append(phraseBuffer);
-			}
-			if (appendLineBreak) {
-				buffer.append("\n");
-			}
-			buffer.append(sentenceBuffer);
-		}
-		return new Bookmark(book, modelId, startCursor, buffer.Cursor, buffer.Builder.toString(), isVisible);
+		return new Bookmark(book, modelId, new AutoTextSnippet(startCursor, maxWords), isVisible);
 	}
 
 	private long myId;
@@ -187,18 +110,18 @@ mainLoop:
 	}
 
 	// creates new bookmark
-	public Bookmark(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
-		super(start);
+	public Bookmark(Book book, String modelId, TextSnippet snippet, boolean isVisible) {
+		super(snippet.getStart());
 
 		myId = -1;
 		Uid = newUUID();
 		BookId = book.getId();
 		BookTitle = book.getTitle();
-		myText = text;
+		myText = snippet.getText();
 		CreationDate = new Date();
 		ModelId = modelId;
 		IsVisible = isVisible;
-		myEnd = new ZLTextFixedPosition(end);
+		myEnd = new ZLTextFixedPosition(snippet.getEnd());
 		myStyleId = 1;
 	}
 
@@ -345,29 +268,6 @@ mainLoop:
 			ElementIndex == other.ElementIndex &&
 			CharIndex == other.CharIndex &&
 			MiscUtil.equals(myText, other.myText);
-	}
-
-	private static class Buffer {
-		final StringBuilder Builder = new StringBuilder();
-		final ZLTextWordCursor Cursor;
-
-		Buffer(ZLTextWordCursor cursor) {
-			Cursor = new ZLTextWordCursor(cursor);
-		}
-
-		boolean isEmpty() {
-			return Builder.length() == 0;
-		}
-
-		void append(Buffer buffer) {
-			Builder.append(buffer.Builder);
-			Cursor.setCursor(buffer.Cursor);
-			buffer.Builder.delete(0, buffer.Builder.length());
-		}
-
-		void append(CharSequence data) {
-			Builder.append(data);
-		}
 	}
 
 	private static String newUUID() {

@@ -253,6 +253,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="تعديل الستايل…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="فتح المكتبة"/>
 		<node name="networkLibrary" value="فتح المكتبة على الشبكة"/>
@@ -409,6 +412,11 @@
 			<node name="twoColumnView" value="عرض الصفحة في خانتين">
 				<node name="summaryOn" value="عرض النص في خانتين عندما يكون وضع الجهاز أفقي"/>
 				<node name="summaryOff" value="عرض النص دائما في خانة واحدة"/>
+			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="تغيير شدة إضاءة الشاشة">
 				<node name="summaryOn" value="عند تحريك الأصبع فوق/أعلى على الجانب الأيسر للشاشة"/>

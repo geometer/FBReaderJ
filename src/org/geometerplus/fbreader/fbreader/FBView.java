@@ -29,6 +29,8 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
+import org.geometerplus.zlibrary.text.util.FixedTextSnippet;
+import org.geometerplus.zlibrary.text.util.TextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
@@ -79,7 +81,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion hyperlinkRegion = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
+		final ZLTextRegion hyperlinkRegion = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.HyperlinkFilter);
 		if (hyperlinkRegion != null) {
 			selectRegion(hyperlinkRegion);
 			myReader.getViewWidget().reset();
@@ -103,7 +105,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextHighlighting highlighting = findHighlighting(x, y, MAX_SELECTION_DISTANCE);
+		final ZLTextHighlighting highlighting = findHighlighting(x, y, maxSelectionDistance());
 		if (highlighting instanceof BookmarkHighlighting) {
 			myReader.runAction(
 				ActionCode.SELECTION_BOOKMARK,
@@ -141,7 +143,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, MAX_SELECTION_DISTANCE);
+		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, maxSelectionDistance());
 		if (cursor != ZLTextSelectionCursor.None) {
 			myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
 			moveSelectionCursorTo(cursor, x, y);
@@ -238,7 +240,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
+		final ZLTextRegion region = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.AnyRegionFilter);
 		if (region != null) {
 			final ZLTextRegion.Soul soul = region.getSoul();
 			boolean doSelectRegion = false;
@@ -294,7 +296,7 @@ public final class FBView extends ZLTextView {
 				soul instanceof ZLTextWordRegionSoul) {
 				if (myReader.MiscOptions.WordTappingAction.getValue() !=
 					MiscOptions.WordTappingActionEnum.doNothing) {
-					region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
+					region = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.AnyRegionFilter);
 					if (region != null) {
 						soul = region.getSoul();
 						if (soul instanceof ZLTextHyperlinkRegionSoul
@@ -449,6 +451,7 @@ public final class FBView extends ZLTextView {
 			case FBHyperlinkType.NONE:
 				return profile.RegularTextOption.getValue();
 			case FBHyperlinkType.INTERNAL:
+			case FBHyperlinkType.FOOTNOTE:
 				return myReader.Collection.isHyperlinkVisited(myReader.getCurrentBook(), hyperlink.Id)
 					? profile.VisitedHyperlinkTextOption.getValue()
 					: profile.HyperlinkTextOption.getValue();
@@ -747,12 +750,14 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
-	public String getSelectedText() {
+	public TextSnippet getSelectedSnippet() {
+		final ZLTextPosition start = getSelectionStartPosition();
+		final ZLTextPosition end = getSelectionEndPosition();
 		final TextBuildTraverser traverser = new TextBuildTraverser(this);
 		if (!isSelectionEmpty()) {
-			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
+			traverser.traverse(start, end);
 		}
-		return traverser.getText();
+		return new FixedTextSnippet(start, end, traverser.getText());
 	}
 
 	public int getCountOfSelectedWords() {

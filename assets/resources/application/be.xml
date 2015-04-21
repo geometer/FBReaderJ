@@ -255,6 +255,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="Рэдагаваць стыль…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Адчыніць бібліятэку"/>
 		<node name="networkLibrary" value="Адчыніць сеткавую бібліятэку"/>
@@ -411,6 +414,11 @@
 			<node name="twoColumnView" value="Выгляд двума слупкамі">
 				<node name="summaryOn" value="Паказваць тэкст двума слупкамі, калі прылада ў гарызантальным стане"/>
 				<node name="summaryOff" value="Заўсёды паказваць тэкст адным слупком"/>
+			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Рэгуляваньне яркасьці экрану">
 				<node name="summaryOn" value="Перасоўваньнем пальца ўверх-уніз па левым баку экрану"/>
