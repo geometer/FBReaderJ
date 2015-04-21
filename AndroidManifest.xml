@@ -165,7 +165,12 @@
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.bookmark.EditBookmarkActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="org.geometerplus.android.fbreader.bookmark.EditBookmarkActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
+			<intent-filter>
+				<action android:name="android.fbreader.action.EDIT_BOOKMARK"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.bookmark.EditStyleActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.EDIT_STYLES"/>
