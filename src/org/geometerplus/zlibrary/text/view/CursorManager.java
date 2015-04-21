@@ -24,35 +24,26 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 
-class ZLTextParagraphCursorCache {
-	private final static class Key {
-		private final ZLTextModel myModel;
-		private final int myIndex;
+final class CursorManager {
+	private final ZLTextModel myModel;
+	final ExtensionElementManager ExtensionManager;
 
-		public Key(ZLTextModel model, int index) {
-			myModel = model;
-			myIndex = index;
-		}
-
-		public boolean equals(Object o) {
-			Key k = (Key)o;
-			return (myModel == k.myModel) && (myIndex == k.myIndex);
-		}
-
-		public int hashCode() {
-			return myModel.hashCode() + myIndex;
-		}
+	CursorManager(ZLTextModel model, ExtensionElementManager extManager) {
+		myModel = model;
+		ExtensionManager = extManager;
 	}
 
-	private final HashMap<Key,WeakReference<ZLTextParagraphCursor>> myMap = new HashMap<Key,WeakReference<ZLTextParagraphCursor>>();
+	private final HashMap<Integer,WeakReference<ZLTextParagraphCursor>> myMap =
+		new HashMap<Integer,WeakReference<ZLTextParagraphCursor>>();
 
-	void put(ZLTextModel model, int index, ZLTextParagraphCursor cursor) {
-		myMap.put(new Key(model, index), new WeakReference<ZLTextParagraphCursor>(cursor));
-	}
-
-	ZLTextParagraphCursor get(ZLTextModel model, int index) {
-		WeakReference<ZLTextParagraphCursor> ref = myMap.get(new Key(model, index));
-		return ref != null ? ref.get() : null;
+	ZLTextParagraphCursor cursor(int index) {
+		final WeakReference<ZLTextParagraphCursor> ref = myMap.get(index);
+		ZLTextParagraphCursor result = ref != null ? ref.get() : null;
+		if (result == null) {
+			result = new ZLTextParagraphCursor(this, myModel, index);
+			myMap.put(index, new WeakReference<ZLTextParagraphCursor>(result));
+		}
+		return result;
 	}
 
 	void clear() {
