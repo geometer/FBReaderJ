@@ -261,6 +261,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="Редактирай стил…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Отвори библиотеката"/>
 		<node name="networkLibrary" value="Отвори мрежовата библиотека"/>

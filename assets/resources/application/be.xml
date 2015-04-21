@@ -255,6 +255,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="Рэдагаваць стыль…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Адчыніць бібліятэку"/>
 		<node name="networkLibrary" value="Адчыніць сеткавую бібліятэку"/>

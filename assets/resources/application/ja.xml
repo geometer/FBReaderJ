@@ -255,6 +255,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="書式を編集"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="ライブラリを開く"/>
 		<node name="networkLibrary" value="ネットワークライブラリを開く"/>

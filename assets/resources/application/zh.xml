@@ -245,6 +245,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="编辑样式…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="打开书库"/>
 		<node name="networkLibrary" value="打开网络书库"/>
