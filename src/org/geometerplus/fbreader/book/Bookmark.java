@@ -23,8 +23,8 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.text.view.*;
+import org.geometerplus.zlibrary.text.util.AutoTextSnippet;
 import org.geometerplus.zlibrary.text.util.TextSnippet;
-import org.geometerplus.zlibrary.text.util.TextSnippetImpl;
 
 public final class Bookmark extends ZLTextFixedPosition {
 	public enum DateType {
@@ -35,7 +35,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	}
 
 	public static Bookmark createBookmark(Book book, String modelId, ZLTextWordCursor startCursor, int maxWords, boolean isVisible) {
-		return new Bookmark(book, modelId, new TextSnippetImpl(startCursor, maxWords), isVisible);
+		return new Bookmark(book, modelId, new AutoTextSnippet(startCursor, maxWords), isVisible);
 	}
 
 	private long myId;

@@ -30,6 +30,8 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.text.util.AutoTextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -70,16 +72,18 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 				case FBHyperlinkType.INTERNAL:
 					Reader.Collection.markHyperlinkAsVisited(Reader.getCurrentBook(), hyperlink.Id);
 					{
-						final FBReaderApp.FootnoteData data = Reader.getFootnoteData(hyperlink.Id);
-						if (data != null) {
-							final SuperActivityToast toast =
-								new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
-							toast.setText(data.Text);
-							toast.setDuration(SuperToast.Duration.LONG);
+						final AutoTextSnippet snippet = Reader.getFootnoteData(hyperlink.Id);
+						if (snippet == null) {
+							break;
+						}
+						final SuperActivityToast toast;
+						if (snippet.IsEndOfText) {
+							toast = new SuperActivityToast(BaseActivity, SuperToast.Type.STANDARD);
+						} else {
+							toast = new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
 							toast.setButtonIcon(
 								android.R.drawable.ic_menu_more,
-								"More"
-								//ZLResource.resource("dialog").getResource("button").getResource("edit").getValue()
+								ZLResource.resource("footnoteToast").getResource("more").getValue()
 							);
 							toast.setOnClickWrapper(new OnClickWrapper("ftnt", new SuperToast.OnClickListener() {
 								@Override
@@ -87,8 +91,10 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 									Reader.tryOpenFootnote(hyperlink.Id);
 								}
 							}));
-							toast.show();
 						}
+						toast.setText(snippet.getText());
+						toast.setDuration(SuperToast.Duration.LONG);
+						toast.show();
 					}
 					break;
 			}

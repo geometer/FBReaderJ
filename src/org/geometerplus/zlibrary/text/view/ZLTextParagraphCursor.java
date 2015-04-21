@@ -210,6 +210,10 @@ public final class ZLTextParagraphCursor {
 	public final ZLTextModel Model;
 	private final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
 
+	public ZLTextParagraphCursor(ZLTextModel model, int index) {
+		this(new CursorManager(model, null), model, index);
+	}
+
 	ZLTextParagraphCursor(CursorManager cManager, ZLTextModel model, int index) {
 		CursorManager = cManager;
 		Model = model;

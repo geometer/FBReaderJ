@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
+import org.geometerplus.zlibrary.text.util.AutoTextSnippet;
 import org.geometerplus.zlibrary.text.util.EmptyTextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 
@@ -211,17 +212,7 @@ public final class FBReaderApp extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
-	public static class FootnoteData {
-		public final String Text;
-		public final boolean IsFull;
-
-		private FootnoteData(String text, boolean isFull) {
-			Text = text;
-			IsFull = isFull;
-		}
-	}
-
-	public FootnoteData getFootnoteData(String id) {
+	public AutoTextSnippet getFootnoteData(String id) {
 		if (Model == null) {
 			return null;
 		}
@@ -229,7 +220,18 @@ public final class FBReaderApp extends ZLApplication {
 		if (label == null) {
 			return null;
 		}
-		return new FootnoteData("Here will be the footnote text", false);
+		final ZLTextModel model;
+		if (label.ModelId != null) {
+			model = Model.getFootnoteModel(label.ModelId);
+		} else {
+			model = Model.getTextModel();
+		}
+		if (model == null) {
+			return null;
+		}
+		final ZLTextWordCursor cursor =
+			new ZLTextWordCursor(new ZLTextParagraphCursor(model, label.ParagraphIndex));
+		return new AutoTextSnippet(cursor, 20);
 	}
 
 	public void tryOpenFootnote(String id) {

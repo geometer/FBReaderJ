@@ -23,18 +23,14 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.text.view.*;
 
-public class TextSnippetImpl implements TextSnippet {
+public final class AutoTextSnippet implements TextSnippet {
 	private final ZLTextPosition myStart;
 	private final ZLTextPosition myEnd;
 	private final String myText;
 
-	public TextSnippetImpl(ZLTextPosition start, ZLTextPosition end, String text) {
-		myStart = start;
-		myEnd = end;
-		myText = text;
-	}
+	public final boolean IsEndOfText;
 
-	public TextSnippetImpl(ZLTextWordCursor start, int maxWords) {
+	public AutoTextSnippet(ZLTextWordCursor start, int maxWords) {
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(start);
 
 		final Buffer buffer = new Buffer(cursor);
@@ -118,6 +114,7 @@ mainLoop:
 		myStart = new ZLTextFixedPosition(start);
 		myEnd = buffer.Cursor;
 		myText = buffer.Builder.toString();
+		IsEndOfText = cursor.isEndOfText() && sentenceBuffer.isEmpty() && phraseBuffer.isEmpty();
 	}
 
 	private static class Buffer {
