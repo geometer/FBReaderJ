@@ -22,6 +22,12 @@ package org.geometerplus.android.fbreader;
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
+import android.os.Parcelable;
+import android.view.View;
+
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.text.view.*;
@@ -63,7 +69,27 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					break;
 				case FBHyperlinkType.INTERNAL:
 					Reader.Collection.markHyperlinkAsVisited(Reader.getCurrentBook(), hyperlink.Id);
-					Reader.tryOpenFootnote(hyperlink.Id);
+					{
+						final FBReaderApp.FootnoteData data = Reader.getFootnoteData(hyperlink.Id);
+						if (data != null) {
+							final SuperActivityToast toast =
+								new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
+							toast.setText(data.Text);
+							toast.setDuration(SuperToast.Duration.LONG);
+							toast.setButtonIcon(
+								android.R.drawable.ic_menu_more,
+								"More"
+								//ZLResource.resource("dialog").getResource("button").getResource("edit").getValue()
+							);
+							toast.setOnClickWrapper(new OnClickWrapper("ftnt", new SuperToast.OnClickListener() {
+								@Override
+								public void onClick(View view, Parcelable token) {
+									Reader.tryOpenFootnote(hyperlink.Id);
+								}
+							}));
+							toast.show();
+						}
+					}
 					break;
 			}
 		} else if (soul instanceof ZLTextImageRegionSoul) {

@@ -82,7 +82,7 @@ class ZLTextSelection extends ZLTextHighlighting {
 		clear();
 
 		final ZLTextRegion region = myView.findRegion(
-			x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter
+			x, y, myView.maxSelectionDistance(), ZLTextRegion.AnyRegionFilter
 		);
 		if (region == null) {
 			return false;
@@ -137,7 +137,7 @@ class ZLTextSelection extends ZLTextHighlighting {
 			myScroller.setXY(x, y);
 		}
 
-		ZLTextRegion region = myView.findRegion(x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
+		ZLTextRegion region = myView.findRegion(x, y, myView.maxSelectionDistance(), ZLTextRegion.AnyRegionFilter);
 		if (region == null && myScroller != null) {
 			region = myView.findRegion(x, y, ZLTextRegion.AnyRegionFilter);
 		}
