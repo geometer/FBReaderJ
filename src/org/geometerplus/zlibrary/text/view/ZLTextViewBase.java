@@ -43,6 +43,14 @@ abstract class ZLTextViewBase extends ZLView {
 		super(application);
 	}
 
+	private int myMaxSelectionDistance = 0;
+	protected final int maxSelectionDistance() {
+		if (myMaxSelectionDistance == 0) {
+			myMaxSelectionDistance = ZLibrary.Instance().getDisplayDPI() / 20;
+		}
+		return myMaxSelectionDistance;
+	}
+
 	protected void resetMetrics() {
 		myMetrics = null;
 	}

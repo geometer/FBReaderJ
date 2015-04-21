@@ -261,6 +261,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="Редактирай стил…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Отвори библиотеката"/>
 		<node name="networkLibrary" value="Отвори мрежовата библиотека"/>
@@ -417,6 +420,11 @@
 			<node name="twoColumnView" value="Изглед в две колони">
 				<node name="summaryOn" value="Показвай текста в две колони когато устройството е хоризонтално"/>
 				<node name="summaryOff" value="Винаги показвай текста в една колона"/>
+			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Настройка на яркостта на екрана">
 				<node name="summaryOn" value="С приплъзване нагоре/надолу по левия край на екрана"/>

@@ -28,6 +28,8 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
+import org.geometerplus.zlibrary.text.util.AutoTextSnippet;
+import org.geometerplus.zlibrary.text.util.EmptyTextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
@@ -210,11 +212,38 @@ public final class FBReaderApp extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
+	public AutoTextSnippet getFootnoteData(String id) {
+		if (Model == null) {
+			return null;
+		}
+		final BookModel.Label label = Model.getLabel(id);
+		if (label == null) {
+			return null;
+		}
+		final ZLTextModel model;
+		if (label.ModelId != null) {
+			model = Model.getFootnoteModel(label.ModelId);
+		} else {
+			model = Model.getTextModel();
+		}
+		if (model == null) {
+			return null;
+		}
+		final ZLTextWordCursor cursor =
+			new ZLTextWordCursor(new ZLTextParagraphCursor(model, label.ParagraphIndex));
+		final AutoTextSnippet longSnippet = new AutoTextSnippet(cursor, 24);
+		if (longSnippet.IsEndOfText) {
+			return longSnippet;
+		} else {
+			return new AutoTextSnippet(cursor, 20);
+		}
+	}
+
 	public void tryOpenFootnote(String id) {
 		if (Model != null) {
 			myJumpEndPosition = null;
 			myJumpTimeStamp = null;
-			BookModel.Label label = Model.getLabel(id);
+			final BookModel.Label label = Model.getLabel(id);
 			if (label != null) {
 				if (label.ModelId == null) {
 					if (getTextView() == BookTextView) {
@@ -242,14 +271,11 @@ public final class FBReaderApp extends ZLApplication {
 
 	public Bookmark addSelectionBookmark() {
 		final FBView fbView = getTextView();
-		final String text = fbView.getSelectedText();
 
 		final Bookmark bookmark = new Bookmark(
 			Model.Book,
 			fbView.getModel().getId(),
-			fbView.getSelectionStartPosition(),
-			fbView.getSelectionEndPosition(),
-			text,
+			fbView.getSelectedSnippet(),
 			true
 		);
 		Collection.saveBookmark(bookmark);
@@ -320,7 +346,7 @@ public final class FBReaderApp extends ZLApplication {
 				if (pos == null) {
 					pos = new ZLTextFixedPosition(0, 0, 0);
 				}
-				bm = new Bookmark(book, "", pos, pos, "", false);
+				bm = new Bookmark(book, "", new EmptyTextSnippet(pos), false);
 			}
 			myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, book, bm);
 			return;
