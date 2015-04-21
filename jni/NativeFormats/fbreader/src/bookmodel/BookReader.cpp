@@ -156,9 +156,12 @@ void BookReader::addHyperlinkControl(FBTextKind kind, const std::string &label) 
 	std::string type;
 	switch (myHyperlinkKind) {
 		case INTERNAL_HYPERLINK:
-		case FOOTNOTE:
 			myHyperlinkType = HYPERLINK_INTERNAL;
 			type = "internal";
+			break;
+		case FOOTNOTE:
+			myHyperlinkType = HYPERLINK_FOOTNOTE;
+			type = "footnote";
 			break;
 		case EXTERNAL_HYPERLINK:
 			myHyperlinkType = HYPERLINK_EXTERNAL;

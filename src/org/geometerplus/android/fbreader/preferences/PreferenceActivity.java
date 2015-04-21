@@ -292,6 +292,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		 */
 		appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
+		appearanceScreen.addOption(miscOptions.ShowFootnoteToast, "showFootnoteToast");
 
 		if (DeviceType.Instance().isEInk()) {
 			final EInkOptions einkOptions = new EInkOptions();

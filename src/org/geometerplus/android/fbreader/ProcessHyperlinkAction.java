@@ -70,12 +70,28 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					openInBrowser(hyperlink.Id);
 					break;
 				case FBHyperlinkType.INTERNAL:
+				case FBHyperlinkType.FOOTNOTE:
+				{
+					final AutoTextSnippet snippet = Reader.getFootnoteData(hyperlink.Id);
+					if (snippet == null) {
+						break;
+					}
+
 					Reader.Collection.markHyperlinkAsVisited(Reader.getCurrentBook(), hyperlink.Id);
-					{
-						final AutoTextSnippet snippet = Reader.getFootnoteData(hyperlink.Id);
-						if (snippet == null) {
+					final boolean showToast;
+					switch (Reader.MiscOptions.ShowFootnoteToast.getValue()) {
+						default:
+						case never:
+							showToast = false;
 							break;
-						}
+						case footnotesOnly:
+							showToast = hyperlink.Type == FBHyperlinkType.FOOTNOTE;
+							break;
+						case allInternalLinks:
+							showToast = true;
+							break;
+					}
+					if (showToast) {
 						final SuperActivityToast toast;
 						if (snippet.IsEndOfText) {
 							toast = new SuperActivityToast(BaseActivity, SuperToast.Type.STANDARD);
@@ -95,8 +111,11 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 						toast.setText(snippet.getText());
 						toast.setDuration(SuperToast.Duration.LONG);
 						toast.show();
+					} else {
+						Reader.tryOpenFootnote(hyperlink.Id);
 					}
 					break;
+				}
 			}
 		} else if (soul instanceof ZLTextImageRegionSoul) {
 			Reader.getTextView().hideSelectedRegionBorder();

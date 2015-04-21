@@ -231,7 +231,12 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		final ZLTextWordCursor cursor =
 			new ZLTextWordCursor(new ZLTextParagraphCursor(model, label.ParagraphIndex));
-		return new AutoTextSnippet(cursor, 20);
+		final AutoTextSnippet longSnippet = new AutoTextSnippet(cursor, 24);
+		if (longSnippet.IsEndOfText) {
+			return longSnippet;
+		} else {
+			return new AutoTextSnippet(cursor, 20);
+		}
 	}
 
 	public void tryOpenFootnote(String id) {
