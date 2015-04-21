@@ -266,6 +266,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			viewOptions.TwoColumnView,
 			appearanceScreen.Resource.getResource("twoColumnView")
 		));
+		appearanceScreen.addOption(miscOptions.ShowFootnoteToast, "showFootnoteToast");
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			miscOptions.AllowScreenBrightnessAdjustment,
