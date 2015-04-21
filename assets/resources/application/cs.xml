@@ -264,6 +264,9 @@
 		<node name="saveText" value="Uložit text"/>
 		<node name="editStyle" value="Upravit styl…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Otevřít knihovnu"/>
 		<node name="networkLibrary" value="Otevřít síťovou knihovnu"/>
@@ -420,6 +423,11 @@
 			<node name="twoColumnView" value="Dvousloupcové zobrazení">
 				<node name="summaryOn" value="Zobrazit text ve dvou sloupcích, pokud je zařízení drženo vodorovně"/>
 				<node name="summaryOff" value="Vždy zobrazovat text v jednom sloupci"/>
+			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu displeje">
 				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje displeje"/>

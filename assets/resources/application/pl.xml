@@ -245,6 +245,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
@@ -401,6 +404,11 @@
 			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
 				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
 				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Dostosowywanie jasności">
 				<node name="summaryOn" value="Przesuwając palcem w górę/dół wzdłuż lewej krawędzi ekranu"/>

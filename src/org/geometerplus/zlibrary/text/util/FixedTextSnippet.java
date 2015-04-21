@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,30 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.zlibrary.text.util;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.FBView;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-public class SelectionTranslateAction extends FBAndroidAction {
-	SelectionTranslateAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader);
+public final class FixedTextSnippet implements TextSnippet {
+	private final ZLTextPosition myStart;
+	private final ZLTextPosition myEnd;
+	private final String myText;
+
+	public FixedTextSnippet(ZLTextPosition start, ZLTextPosition end, String text) {
+		myStart = start;
+		myEnd = end;
+		myText = text;
 	}
 
-	@Override
-	protected void run(Object ... params) {
-		final FBView fbview = Reader.getTextView();
-		DictionaryUtil.openTextInDictionary(
-			BaseActivity,
-			fbview.getSelectedSnippet().getText(),
-			fbview.getCountOfSelectedWords() == 1,
-			fbview.getSelectionStartY(),
-			fbview.getSelectionEndY()
-		);
-		fbview.clearSelection();
+	public ZLTextPosition getStart() {
+		return myStart;
+	}
+
+	public ZLTextPosition getEnd() {
+		return myEnd;
+	}
+
+	public String getText() {
+		return myText;
 	}
 }

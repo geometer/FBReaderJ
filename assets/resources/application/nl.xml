@@ -255,6 +255,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="Stijl aanpassen…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open bibliotheek"/>
 		<node name="networkLibrary" value="Open netwerkbibliotheek"/>
@@ -411,6 +414,11 @@
 			<node name="twoColumnView" value="Twee kolommen">
 				<node name="summaryOn" value="Toon tekst in twee kolommen als apparaat horizontaal wordt gehouden"/>
 				<node name="summaryOff" value="Toon tekst altijd in één kolom"/>
+			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
 				<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>

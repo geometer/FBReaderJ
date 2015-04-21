@@ -245,6 +245,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="编辑样式…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="打开书库"/>
 		<node name="networkLibrary" value="打开网络书库"/>
@@ -401,6 +404,11 @@
 			<node name="twoColumnView" value="双列试图">
 				<node name="summaryOn" value="水平方向手持设备时使用双列显示文字"/>
 				<node name="summaryOff" value="始终将文字一列显示"/>
+			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="屏幕亮度调整">
 				<node name="summaryOn" value="通过在屏幕左侧上下滑动手指来调整"/>

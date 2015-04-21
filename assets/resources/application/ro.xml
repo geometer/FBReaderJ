@@ -247,6 +247,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="Editeaza stilul…"/>
 	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Deschide libraria"/>
 		<node name="networkLibrary" value="Deschide libraria din retea"/>
@@ -403,6 +406,11 @@
 			<node name="twoColumnView" value="Afiseaza pe doua coloane">
 				<node name="summaryOn" value="Afiseaza pe doua coloane doar cand dispozitivul este pe orizontala"/>
 				<node name="summaryOff" value="Afiseaza intotdeauna pe o coloana"/>
+			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Reglarea luminozitatii ecranului">
 				<node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul partii stângi a ecranului"/>
