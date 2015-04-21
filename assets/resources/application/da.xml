@@ -414,6 +414,11 @@
 				<node name="summaryOn" value="Vis tekst i to kolonner, når enheden holdes vandret"/>
 				<node name="summaryOff" value="Vis altid tekst i en kolonne"/>
 			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Justering af skærmens lysstyrke">
 				<node name="summaryOn" value="Ved at trække fingeren op/ned langs venstre side af skærmen"/>
 				<node name="summaryOff" value="Deaktiveret"/>

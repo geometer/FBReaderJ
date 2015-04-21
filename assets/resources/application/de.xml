@@ -420,6 +420,11 @@
 				<node name="summaryOn" value="Zeige Text in zwei Spalten wenn das Gerät horizontal gehalten wird"/>
 				<node name="summaryOff" value="Text immer in einer Spalte anzeigen"/>
 			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Helligkeitsanpassung">
 				<node name="summaryOn" value="Mit dem Finger durch hoch/runter-schieben am linken Bildschirmrand"/>
 				<node name="summaryOff" value="Abgeschaltet"/>

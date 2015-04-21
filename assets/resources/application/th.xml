@@ -405,6 +405,11 @@
 				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
 				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="การปรับความสว่างหน้าจอ">
 				<node name="summaryOn" value="ลากนิ้วขึ้นลงด้านซ้ายของหน้าจอ"/>
 				<node name="summaryOff" value="ปิดการใช้งาน"/>

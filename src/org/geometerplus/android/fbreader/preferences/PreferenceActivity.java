@@ -265,6 +265,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			viewOptions.TwoColumnView,
 			appearanceScreen.Resource.getResource("twoColumnView")
 		));
+		appearanceScreen.addOption(miscOptions.ShowFootnoteToast, "showFootnoteToast");
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			miscOptions.AllowScreenBrightnessAdjustment,
@@ -292,7 +293,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		 */
 		appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
-		appearanceScreen.addOption(miscOptions.ShowFootnoteToast, "showFootnoteToast");
 
 		if (DeviceType.Instance().isEInk()) {
 			final EInkOptions einkOptions = new EInkOptions();

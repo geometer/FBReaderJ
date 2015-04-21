@@ -408,6 +408,11 @@
 				<node name="summaryOn" value="Afficher le contenu sur deux colonnes en mode paysage"/>
 				<node name="summaryOff" value="N'afficher le contenu que dans une seule colonne"/>
 			</node>
+			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
 				<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
 				<node name="summaryOff" value="Contrôle désactivé"/>
