@@ -246,6 +246,14 @@
 			<node name="search" value="جستجو"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="حذف آدرس"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="تغییر سبک…"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="بازکردن کتابخانه"/>
 		<node name="networkLibrary" value="بازکردن کتابخانه شبکه"/>
@@ -256,10 +264,6 @@
 		<node name="close" value="بستن اف بی ریدر"/>
 	</node>
 	<node name="style" value="سبک %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="تغییر سبک…"/>
-		<node name="deleteBookmark" value="حذف آدرس"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="نام سبک"/>
 		<node name="invisible" value="مخفی">
@@ -273,7 +277,6 @@
 		<node name="openInDictionary" value="بازکردن در پوشه"/>
 		<node name="quoteFrom" value="نقل قول از %s"/>
 		<node name="textInBuffer" value="به کلیپ بورد کپی شد: %s"/>
-		<node name="bookmarkCreated" value="آدرس ایجاد شد:%s"/>
 		<node name="clearSelection" value="پاک کردن"/>
 	</node>
 	<node name="sharing">
@@ -858,7 +861,7 @@
 			<node name="editUrl" value="ويرايش URL"/>
 			<node name="tryAgain" value="تلاش مجدد"/>
 			<node name="openBook" value="خواندن"/>
-			<node name="editInfo" value="ويرايش"/>
+			<node name="edit" value="ويرايش"/>
 			<node name="reloadInfo" value="بارگذاري مجدد"/>
 			<node name="shareBook" value="اشتراك گذاري"/>
 			<node name="topup" value="آپ بالا"/>

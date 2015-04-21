@@ -107,6 +107,6 @@ class AppNotifier implements FBReaderApp.Notifier {
 		} else {
 			builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, new Intent(), 0));
 		}
-		notificationManager.notify(NotificationIds.MISSING_BOOK_ID, builder.build());
+		notificationManager.notify(NotificationUtil.MISSING_BOOK_ID, builder.build());
 	}
 }

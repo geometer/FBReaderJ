@@ -247,6 +247,14 @@
 			<node name="search" value="Претражи"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Обриши обележивач"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Отвори библиотеку"/>
 		<node name="networkLibrary" value="Отвори мрежну библиотеку"/>
@@ -257,10 +265,6 @@
 		<node name="close" value="Затвори FBReader"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="Обриши обележивач"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
@@ -274,7 +278,6 @@
 		<node name="openInDictionary" value="Отвори у речнику"/>
 		<node name="quoteFrom" value="Цитирај из „%s“"/>
 		<node name="textInBuffer" value="Умножено:&#10;%s"/>
-		<node name="bookmarkCreated" value="Обележивач је направљен:&#10;%s"/>
 		<node name="clearSelection" value="Очисти"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +862,7 @@
 			<node name="editUrl" value="Уреди адресу"/>
 			<node name="tryAgain" value="Пробај опет"/>
 			<node name="openBook" value="Прочитај"/>
-			<node name="editInfo" value="Уреди"/>
+			<node name="edit" value="Уреди"/>
 			<node name="reloadInfo" value="Поново учитај"/>
 			<node name="shareBook" value="Дели"/>
 			<node name="topup" value="Попуни"/>

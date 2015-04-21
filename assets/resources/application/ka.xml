@@ -252,6 +252,14 @@
 			<node name="search" value="ძებნა"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="სანიშნის წაშლა"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="ბიბლიოთეკის გახსნა"/>
 		<node name="networkLibrary" value="ქსელური ბიბლიოთეკის გახსნა"/>
@@ -262,10 +270,6 @@
 		<node name="close" value="FBReader დახურვა"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="სანიშნის წაშლა"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
@@ -279,7 +283,6 @@
 		<node name="openInDictionary" value="ლექსიკონში ნახვა"/>
 		<node name="quoteFrom" value="ციტატა %sდან"/>
 		<node name="textInBuffer" value="ტექსტი გაცვლის ბუფერში:&#10;%s"/>
-		<node name="bookmarkCreated" value="შექმნილია სანიშნი:&#10;%s"/>
 		<node name="clearSelection" value="ნიშნულის მოხსნა"/>
 	</node>
 	<node name="sharing">
@@ -864,7 +867,7 @@
 			<node name="editUrl" value="URL-ის შეცვლა"/>
 			<node name="tryAgain" value="გამეორება"/>
 			<node name="openBook" value="კითხვა"/>
-			<node name="editInfo" value="შეცვლა"/>
+			<node name="edit" value="შეცვლა"/>
 			<node name="reloadInfo" value="განახლება"/>
 			<node name="shareBook" value="გაზიარება"/>
 			<node name="topup" value="ანგარიშის შევსება"/>

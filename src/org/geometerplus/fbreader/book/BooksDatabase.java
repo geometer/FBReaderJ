@@ -128,6 +128,8 @@ public abstract class BooksDatabase {
 	protected abstract List<Bookmark> loadBookmarks(BookmarkQuery query);
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
+	protected abstract List<String> deletedBookmarkUids();
+	protected abstract void purgeBookmarks(List<String> uids);
 
 	protected HighlightingStyle createStyle(int id, String name, int bgColor, int fgColor) {
 		return new HighlightingStyle(

@@ -1,37 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<TabHost
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
+	android:id="@+id/edit_bookmark_tabhost"
+	android:layout_width="500dp"
+	android:layout_height="350dp"
 >
-	<EditText
-		android:id="@+id/bookmark_text_editor"
-		android:layout_width="200dip"
-		android:layout_height="100dip"
-		android:layout_marginLeft="5dip"
-		android:layout_marginRight="5dip"
-		android:layout_marginTop="5dip"
-		android:layout_marginBottom="5dip"
-		android:singleLine="false"
-		android:gravity="left|top"
-	/>
 	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
 	>
-		<Button
-			android:layout_width="0dip"
-			android:layout_height="fill_parent"
-			android:layout_weight="1"
-			android:text="ok"
+		<TabWidget
+			android:id="@android:id/tabs"
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
 		/>
-		<Button
-			android:layout_width="0dip"
-			android:layout_height="fill_parent"
-			android:layout_weight="1"
-			android:text="cancel"
-		/>
+		<FrameLayout
+			android:id="@android:id/tabcontent"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+		>
+			<LinearLayout
+				android:id="@+id/edit_bookmark_content_text"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+			>
+				<EditText
+					android:id="@+id/edit_bookmark_text"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="5dip"
+					android:layout_marginRight="5dip"
+					android:layout_marginTop="5dip"
+					android:layout_marginBottom="5dip"
+					android:singleLine="false"
+					android:gravity="left|top"
+				/>
+				<Button
+					android:id="@+id/edit_bookmark_save_text_button"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:singleLine="true"
+				/>
+			</LinearLayout>
+			<ListView
+				android:id="@+id/edit_bookmark_content_style"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+			/>
+			<RelativeLayout
+				android:id="@+id/edit_bookmark_content_delete"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+			>
+				<Button
+					android:id="@+id/edit_bookmark_delete_button"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerInParent="true"
+				/>
+			</RelativeLayout>
+		</FrameLayout>
 	</LinearLayout>
-</LinearLayout>
+</TabHost>

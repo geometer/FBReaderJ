@@ -252,6 +252,14 @@
 			<node name="search" value="Suchen"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Lesezeichen löschen"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Stil bearbeiten…"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Bibliothek öffnen"/>
 		<node name="networkLibrary" value="Netzwerk-Bibliothek öffnen"/>
@@ -262,10 +270,6 @@
 		<node name="close" value="FBReader schließen"/>
 	</node>
 	<node name="style" value="Stil %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Stil bearbeiten…"/>
-		<node name="deleteBookmark" value="Lesezeichen löschen"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Stilname"/>
 		<node name="invisible" value="Unsichtbar">
@@ -279,7 +283,6 @@
 		<node name="openInDictionary" value="Im Wörterbuch nachschlagen"/>
 		<node name="quoteFrom" value="Zitat aus '%s'"/>
 		<node name="textInBuffer" value="In die Zwischenablage kopiert:&#10;%s"/>
-		<node name="bookmarkCreated" value="Lesezeichen erstellt:&#10;%s"/>
 		<node name="clearSelection" value="Auswahl aufheben"/>
 	</node>
 	<node name="sharing">
@@ -864,7 +867,7 @@
 			<node name="editUrl" value="URL bearbeiten"/>
 			<node name="tryAgain" value="Erneut versuchen"/>
 			<node name="openBook" value="Lesen"/>
-			<node name="editInfo" value="Bearbeiten"/>
+			<node name="edit" value="Bearbeiten"/>
 			<node name="reloadInfo" value="Aktualisieren"/>
 			<node name="shareBook" value="Teilen"/>
 			<node name="topup" value="Konto aufladen"/>

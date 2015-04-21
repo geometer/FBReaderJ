@@ -252,6 +252,14 @@
 			<node name="search" value="Buscar"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Borrar marcador"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Abrir biblioteca"/>
 		<node name="networkLibrary" value="Abrir biblioteca en red"/>
@@ -262,10 +270,6 @@
 		<node name="close" value="Cerrar FBReader"/>
 	</node>
 	<node name="style" value="Estilo %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="Borrar marcador"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
@@ -279,7 +283,6 @@
 		<node name="openInDictionary" value="Abrir en diccionario"/>
 		<node name="quoteFrom" value="Cita de %s"/>
 		<node name="textInBuffer" value="Copiado al portapapeles:&#10;%s"/>
-		<node name="bookmarkCreated" value="Marcador creado:&#10;%s"/>
 		<node name="clearSelection" value="Limpiar"/>
 	</node>
 	<node name="sharing">
@@ -864,7 +867,7 @@
 			<node name="editUrl" value="Editar URL"/>
 			<node name="tryAgain" value="Intentar de nuevo"/>
 			<node name="openBook" value="Leer"/>
-			<node name="editInfo" value="Editar"/>
+			<node name="edit" value="Editar"/>
 			<node name="reloadInfo" value="Recargar"/>
 			<node name="shareBook" value="Compartir"/>
 			<node name="topup" value="Redondear"/>

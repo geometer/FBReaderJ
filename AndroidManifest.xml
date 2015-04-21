@@ -2,8 +2,8 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
-		android:versionCode="2035010"
-		android:versionName="2.4 beta 0"
+		android:versionCode="2035110"
+		android:versionName="2.4 beta 1"
 		android:installLocation="auto"
 >
 	<uses-sdk
@@ -92,6 +92,10 @@
 				<data android:pathPattern=".*\\.prc"/>
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
+				<data android:pathPattern=".*\\.pdf"/>
+				<data android:pathPattern=".*\\.djvu"/>
+				<data android:pathPattern=".*\\.cbr"/>
+				<data android:pathPattern=".*\\.cbz"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -104,6 +108,10 @@
 				<data android:pathPattern=".*\\.prc"/>
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
+				<data android:pathPattern=".*\\.pdf"/>
+				<data android:pathPattern=".*\\.djvu"/>
+				<data android:pathPattern=".*\\.cbr"/>
+				<data android:pathPattern=".*\\.cbz"/>
 			</intent-filter>
 			<!--intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -121,6 +129,8 @@
 				<data android:mimeType="application/x-mobipocket-ebook"/>
 				<data android:mimeType="application/x-fictionbook+xml"/>
 				<data android:mimeType="application/x-fictionbook"/>
+				<data android:mimeType="application/pdf"/>
+				<data android:mimeType="application/x-pdf"/>
 				<data android:mimeType="text/plain"/>
 			</intent-filter>
 			<intent-filter>
@@ -143,13 +153,25 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.PluginListActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
-		<activity android:name="org.geometerplus.android.fbreader.style.StyleListActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
-		<activity android:name="org.geometerplus.android.fbreader.style.EditStyleActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
+
+		<activity android:name="org.geometerplus.android.fbreader.bookmark.BookmarksActivity" android:launchMode="singleTask" android:process=":bookmarks" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH"/>
+			</intent-filter>
+			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+			<intent-filter>
+				<action android:name="android.fbreader.action.BOOKMARKS"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.bookmark.EditBookmarkActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="org.geometerplus.android.fbreader.bookmark.EditStyleActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.EDIT_STYLES"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+
 		<activity android:name="org.geometerplus.android.fbreader.image.ImageViewActivity" android:process=":imageView" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<service android:name="org.geometerplus.android.fbreader.libraryService.LibraryService" android:launchMode="singleTask" android:process=":libraryService">
 			<intent-filter>
@@ -189,17 +211,6 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize"/>
-		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:launchMode="singleTask" android:process=":bookmarks" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
-			<intent-filter>
-				<action android:name="android.intent.action.SEARCH"/>
-			</intent-filter>
-			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
-			<intent-filter>
-				<action android:name="android.fbreader.action.BOOKMARKS"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.BookmarkEditActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":preferences">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -227,6 +238,10 @@
 				<data android:pathPattern=".*\\.prc"/>
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
+				<data android:pathPattern=".*\\.pdf"/>
+				<data android:pathPattern=".*\\.djvu"/>
+				<data android:pathPattern=".*\\.cbr"/>
+				<data android:pathPattern=".*\\.cbz"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -238,6 +253,8 @@
 				<data android:mimeType="application/x-mobipocket-ebook"/>
 				<data android:mimeType="application/x-fictionbook+xml"/>
 				<data android:mimeType="application/x-fictionbook"/>
+				<data android:mimeType="application/pdf"/>
+				<data android:mimeType="application/x-pdf"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>

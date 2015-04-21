@@ -155,6 +155,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 				UIUtil.showErrorMessage(this, "fileNotFound", file.getPath());
 				myBook = null;
+			} else {
+				NotificationUtil.drop(this, myBook);
 			}
 		}
 		Config.Instance().runOnConnect(new Runnable() {

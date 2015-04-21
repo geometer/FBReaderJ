@@ -238,6 +238,14 @@
 			<node name="search" value="Cerca"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Cancella segnalibro"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
@@ -248,10 +256,6 @@
 		<node name="close" value="Chiudi FBReader"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="Cancella segnalibro"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
@@ -265,7 +269,6 @@
 		<node name="openInDictionary" value="Apri nel Dizionario"/>
 		<node name="quoteFrom" value="Citazione da %s"/>
 		<node name="textInBuffer" value="Copiato negli appunti:&#10;%s"/>
-		<node name="bookmarkCreated" value="Segnalibro creato:&#10;%s"/>
 		<node name="clearSelection" value="Cancella"/>
 	</node>
 	<node name="sharing">
@@ -850,7 +853,7 @@
 			<node name="editUrl" value="Modifica URL"/>
 			<node name="tryAgain" value="Riprova"/>
 			<node name="openBook" value="Leggi"/>
-			<node name="editInfo" value="Modifica"/>
+			<node name="edit" value="Modifica"/>
 			<node name="reloadInfo" value="Ricarica"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Ricarica account"/>

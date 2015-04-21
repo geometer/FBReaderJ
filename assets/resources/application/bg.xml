@@ -253,6 +253,14 @@
 			<node name="search" value="Търси"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Премахни отбелязването"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Редактирай стил…"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Отвори библиотеката"/>
 		<node name="networkLibrary" value="Отвори мрежовата библиотека"/>
@@ -263,10 +271,6 @@
 		<node name="close" value="Затвори FBReader"/>
 	</node>
 	<node name="style" value="Стил %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Редактирай стил…"/>
-		<node name="deleteBookmark" value="Премахни отбелязването"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Име на стил"/>
 		<node name="invisible" value="Невидим">
@@ -280,7 +284,6 @@
 		<node name="openInDictionary" value="Отвори в речника"/>
 		<node name="quoteFrom" value="Цитат от %s"/>
 		<node name="textInBuffer" value="Текст в буфера:&#10;%s"/>
-		<node name="bookmarkCreated" value="Отбелязване на:&#10;%s"/>
 		<node name="clearSelection" value="Премахни"/>
 	</node>
 	<node name="sharing">
@@ -865,7 +868,7 @@
 			<node name="editUrl" value="Редактирай URL"/>
 			<node name="tryAgain" value="Повтори"/>
 			<node name="openBook" value="Чети"/>
-			<node name="editInfo" value="Редактирай"/>
+			<node name="edit" value="Редактирай"/>
 			<node name="reloadInfo" value="Обнови"/>
 			<node name="shareBook" value="Сподели"/>
 			<node name="topup" value="Зареждане на сметка"/>

@@ -245,6 +245,14 @@
 			<node name="search" value="بحث"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="حذف العلامة المرجعية"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="تعديل الستايل…"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="فتح المكتبة"/>
 		<node name="networkLibrary" value="فتح المكتبة على الشبكة"/>
@@ -255,10 +263,6 @@
 		<node name="close" value="اغلاق البرنامج"/>
 	</node>
 	<node name="style" value="الستايل %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="تعديل الستايل…"/>
-		<node name="deleteBookmark" value="حذف العلامة المرجعية"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="اسم الستايل"/>
 		<node name="invisible" value="غير مرئي">
@@ -272,7 +276,6 @@
 		<node name="openInDictionary" value="فتح في القاموس"/>
 		<node name="quoteFrom" value="اقتباس من %s"/>
 		<node name="textInBuffer" value="تم نسخ: %s"/>
-		<node name="bookmarkCreated" value="تم حفظ العلامة المرجعية: %s"/>
 		<node name="clearSelection" value="مسح"/>
 	</node>
 	<node name="sharing">
@@ -857,7 +860,7 @@
 			<node name="editUrl" value="تعديل الرابط"/>
 			<node name="tryAgain" value="إعادة المحاولة"/>
 			<node name="openBook" value="قراءة"/>
-			<node name="editInfo" value="تعديل"/>
+			<node name="edit" value="تعديل"/>
 			<node name="reloadInfo" value="إعادة التحميل"/>
 			<node name="shareBook" value="مشاركة"/>
 			<node name="topup" value="Top up" toBeTranslated="true"/>

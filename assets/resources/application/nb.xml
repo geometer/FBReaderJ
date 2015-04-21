@@ -247,6 +247,14 @@
 			<node name="search" value="Søk"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Slett bokmerke"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Åpne bibliotek"/>
 		<node name="networkLibrary" value="Åpne nettverksbibliotek"/>
@@ -257,10 +265,6 @@
 		<node name="close" value="Lukk FBReader"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="Slett bokmerke"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
@@ -274,7 +278,6 @@
 		<node name="openInDictionary" value="Åpne i ordbok"/>
 		<node name="quoteFrom" value="Sitér fra %s"/>
 		<node name="textInBuffer" value="Kopiert til utklippstavle:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bokmerke laget:&#10;%s"/>
 		<node name="clearSelection" value="Tøm"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +862,7 @@
 			<node name="editUrl" value="Endre URL"/>
 			<node name="tryAgain" value="Prøv igjen"/>
 			<node name="openBook" value="Les"/>
-			<node name="editInfo" value="Endre"/>
+			<node name="edit" value="Endre"/>
 			<node name="reloadInfo" value="Oppfrisk"/>
 			<node name="shareBook" value="Del"/>
 			<node name="topup" value="Fyll opp"/>

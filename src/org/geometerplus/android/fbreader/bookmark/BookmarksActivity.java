@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.android.fbreader.bookmark;
 
 import java.util.*;
 
@@ -35,6 +35,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.*;
 
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.*;
@@ -229,7 +231,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				gotoBookmark(bookmark);
 				return true;
 			case EDIT_ITEM_ID:
-				final Intent intent = new Intent(this, BookmarkEditActivity.class);
+				final Intent intent = new Intent(this, EditBookmarkActivity.class);
 				OrientationUtil.startActivityForResult(this, intent, 1);
 				// TODO: implement
 				return true;

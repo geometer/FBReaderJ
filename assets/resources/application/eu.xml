@@ -247,6 +247,14 @@
 			<node name="search" value="Bilatu"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Ezabatu laster-marka"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Aldatu estiloa…"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Ireki liburutegia"/>
 		<node name="networkLibrary" value="Ireki sareko liburutegia"/>
@@ -257,10 +265,6 @@
 		<node name="close" value="Itxi FBReader"/>
 	</node>
 	<node name="style" value="%s estiloa"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Aldatu estiloa…"/>
-		<node name="deleteBookmark" value="Ezabatu laster-marka"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Estiloaren izena"/>
 		<node name="invisible" value="Ikusezin">
@@ -274,7 +278,6 @@
 		<node name="openInDictionary" value="Ireki hiztegian"/>
 		<node name="quoteFrom" value="Honen zita: %s"/>
 		<node name="textInBuffer" value="&#10;%s paperontzira kopiatuta"/>
-		<node name="bookmarkCreated" value="Sortutako laster-marka:&#10;%s"/>
 		<node name="clearSelection" value="Garbitu"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +862,7 @@
 			<node name="editUrl" value="URL-a aldatu"/>
 			<node name="tryAgain" value="Saiatu berriro"/>
 			<node name="openBook" value="Irakurri"/>
-			<node name="editInfo" value="Aldatu"/>
+			<node name="edit" value="Aldatu"/>
 			<node name="reloadInfo" value="Birkargatu"/>
 			<node name="shareBook" value="Partekatu"/>
 			<node name="topup" value="Bete kontua"/>

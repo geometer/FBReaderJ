@@ -237,6 +237,14 @@
 			<node name="search" value="Αναζήτηση"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Διαγραφή σελιδοδείκτη"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Άνοιγμα βιβλιοθήκης"/>
 		<node name="networkLibrary" value="Άνοιγμα δικτυακής βιβλιοθήκης"/>
@@ -247,10 +255,6 @@
 		<node name="close" value="Τερματισμός FBReader"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="Διαγραφή σελιδοδείκτη"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
@@ -264,7 +268,6 @@
 		<node name="openInDictionary" value="Αναξήτηση στο λεξικό"/>
 		<node name="quoteFrom" value="Απόσπασμα από '%s'"/>
 		<node name="textInBuffer" value="Αντιγράφηκε στο clipboard:&#10;%s"/>
-		<node name="bookmarkCreated" value="Δημιουργήθηκε ο σελιδοδείκτης:&#10;%s"/>
 		<node name="clearSelection" value="Κατάργηση επιλογής"/>
 	</node>
 	<node name="sharing">
@@ -857,7 +860,7 @@
 			<node name="editUrl" value="επεξεργασία URL"/>
 			<node name="tryAgain" value="Δοκιμάστε ξανά"/>
 			<node name="openBook" value="Ανάγνωση"/>
-			<node name="editInfo" value="Επεξεργασία"/>
+			<node name="edit" value="Επεξεργασία"/>
 			<node name="reloadInfo" value="Ενημέρωση"/>
 			<node name="shareBook" value="Μοιρασέ το"/>
 			<node name="topup" value="Μεταβίβασε λεφτά στον λογιαρισμό"/>

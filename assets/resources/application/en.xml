@@ -247,6 +247,14 @@
 			<node name="search" value="Search"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text"/>
+		<node name="style" value="Style"/>
+		<node name="delete" value="Delete"/>
+		<node name="deleteBookmark" value="Delete the bookmark"/>
+		<node name="saveText" value="Save text"/>
+		<node name="editStyle" value="Edit style…"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open library"/>
 		<node name="networkLibrary" value="Open network library"/>
@@ -257,10 +265,6 @@
 		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="style" value="Style %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…"/>
-		<node name="deleteBookmark" value="Delete bookmark"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name"/>
 		<node name="invisible" value="Invisible">
@@ -274,7 +278,6 @@
 		<node name="openInDictionary" value="Open in dictionary"/>
 		<node name="quoteFrom" value="Quote from %s"/>
 		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bookmark created:&#10;%s"/>
 		<node name="clearSelection" value="Clear"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +862,7 @@
 			<node name="editUrl" value="Edit URL"/>
 			<node name="tryAgain" value="Try again"/>
 			<node name="openBook" value="Read"/>
-			<node name="editInfo" value="Edit"/>
+			<node name="edit" value="Edit"/>
 			<node name="reloadInfo" value="Reload"/>
 			<node name="shareBook" value="Share"/>
 			<node name="topup" value="Top up"/>

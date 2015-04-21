@@ -256,6 +256,14 @@
 			<node name="search" value="Hledat"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text"/>
+		<node name="style" value="Styl"/>
+		<node name="delete" value="Odstranit"/>
+		<node name="deleteBookmark" value="Odstranit záložku"/>
+		<node name="saveText" value="Uložit text"/>
+		<node name="editStyle" value="Upravit styl…"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Otevřít knihovnu"/>
 		<node name="networkLibrary" value="Otevřít síťovou knihovnu"/>
@@ -266,10 +274,6 @@
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
 	<node name="style" value="Styl %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Upravit styl…"/>
-		<node name="deleteBookmark" value="Odstranit záložku"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Název stylu"/>
 		<node name="invisible" value="Skrytý">
@@ -283,7 +287,6 @@
 		<node name="openInDictionary" value="Otevřít ve slovníku"/>
 		<node name="quoteFrom" value="Citovat z %s"/>
 		<node name="textInBuffer" value="Zkopírováno do schránky:&#10;%s"/>
-		<node name="bookmarkCreated" value="Vytvořena záložka:&#10;%s"/>
 		<node name="clearSelection" value="Vymazat"/>
 	</node>
 	<node name="sharing">
@@ -340,8 +343,8 @@
 	<node name="Preferences">
 		<node name="sync" value="Synchronizace">
 			<node name="summary" value="Nastavení síťové knihovny"/>
-			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
-				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			<node name="site" value="Přečtěte si více o synchronizaci">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="Povolit synchronizaci">
 				<node name="summaryOn" value="Synchronizovat mou knihovnu se serverem síťové knihovny FBReaderu"/>
@@ -868,7 +871,7 @@
 			<node name="editUrl" value="Upravit adresu"/>
 			<node name="tryAgain" value="Zkusit znovu"/>
 			<node name="openBook" value="Číst"/>
-			<node name="editInfo" value="Upravit"/>
+			<node name="edit" value="Upravit"/>
 			<node name="reloadInfo" value="Znovu načíst"/>
 			<node name="shareBook" value="Sdílet"/>
 			<node name="topup" value="Doplnit účet"/>

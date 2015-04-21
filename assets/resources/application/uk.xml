@@ -237,6 +237,14 @@
 			<node name="search" value="Пошук"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Стерти закладку"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Відкрити бібліотеку"/>
 		<node name="networkLibrary" value="Відкрити мережеву бібліотеку"/>
@@ -247,10 +255,6 @@
 		<node name="close" value="Закрити FBReader"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="Стерти закладку"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
@@ -264,7 +268,6 @@
 		<node name="openInDictionary" value="Подивитись в словнику"/>
 		<node name="quoteFrom" value="Цитата з %s"/>
 		<node name="textInBuffer" value="Копіювати в буфер:&#10;%s"/>
-		<node name="bookmarkCreated" value="Закладку створено:&#10;%s"/>
 		<node name="clearSelection" value="Прибрати позначку"/>
 	</node>
 	<node name="sharing">
@@ -849,7 +852,7 @@
 			<node name="editUrl" value="Змінити URL"/>
 			<node name="tryAgain" value="Повторити"/>
 			<node name="openBook" value="Читати"/>
-			<node name="editInfo" value="Редагувати"/>
+			<node name="edit" value="Редагувати"/>
 			<node name="reloadInfo" value="Перезавантажити"/>
 			<node name="shareBook" value="Поділитись"/>
 			<node name="topup" value="Поповнити рахунок"/>

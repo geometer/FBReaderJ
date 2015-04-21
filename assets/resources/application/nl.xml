@@ -247,6 +247,14 @@
 			<node name="search" value="Zoeken"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Stijl aanpassen…"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open bibliotheek"/>
 		<node name="networkLibrary" value="Open netwerkbibliotheek"/>
@@ -257,10 +265,6 @@
 		<node name="close" value="FBReader afsluiten"/>
 	</node>
 	<node name="style" value="Stijl %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Stijl aanpassen…"/>
-		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Stijlnaam"/>
 		<node name="invisible" value="Onzichtbaar">
@@ -274,7 +278,6 @@
 		<node name="openInDictionary" value="Openen in woordenboek"/>
 		<node name="quoteFrom" value="Quote van %s"/>
 		<node name="textInBuffer" value="Gekopieerd naar het klembord:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bladwijzer gemaakt:&#10;%s"/>
 		<node name="clearSelection" value="Wissen"/>
 	</node>
 	<node name="sharing">
@@ -859,7 +862,7 @@
 			<node name="editUrl" value="URL bewerken"/>
 			<node name="tryAgain" value="Probeer opnieuw"/>
 			<node name="openBook" value="Lezen"/>
-			<node name="editInfo" value="Bewerken"/>
+			<node name="edit" value="Bewerken"/>
 			<node name="reloadInfo" value="Vernieuwen"/>
 			<node name="shareBook" value="Delen"/>
 			<node name="topup" value="Opwaarderen"/>

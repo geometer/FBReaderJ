@@ -239,6 +239,14 @@
 			<node name="search" value="Cautare"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Sterge marcaj"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Editeaza stilul…"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Deschide libraria"/>
 		<node name="networkLibrary" value="Deschide libraria din retea"/>
@@ -249,10 +257,6 @@
 		<node name="close" value="Inchide Aplicatia"/>
 	</node>
 	<node name="style" value="Stilul %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Editeaza stilul…"/>
-		<node name="deleteBookmark" value="Sterge marcaj"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Numele stilului"/>
 		<node name="invisible" value="Invizibil">
@@ -266,7 +270,6 @@
 		<node name="openInDictionary" value="Open in dictionar"/>
 		<node name="quoteFrom" value="Citat de la %s"/>
 		<node name="textInBuffer" value="Copiat în clipboard:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bookmark creat:&#10;%s"/>
 		<node name="clearSelection" value="Sterge"/>
 	</node>
 	<node name="sharing">
@@ -851,7 +854,7 @@
 			<node name="editUrl" value="Editati URL-ul"/>
 			<node name="tryAgain" value="Încercati din nou"/>
 			<node name="openBook" value="Citeste"/>
-			<node name="editInfo" value="Editeaza"/>
+			<node name="edit" value="Editeaza"/>
 			<node name="reloadInfo" value="Reîncarca"/>
 			<node name="shareBook" value="Impartaseste"/>
 			<node name="topup" value="Incarca"/>

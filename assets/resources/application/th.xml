@@ -237,6 +237,14 @@
 			<node name="search" value="ค้นหา"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="ลบบุ๊คมาร์ค"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
@@ -247,10 +255,6 @@
 		<node name="close" value="ปิด FBReader"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="ลบบุ๊คมาร์ค"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
@@ -264,7 +268,6 @@
 		<node name="openInDictionary" value="เปิดในพจนานุกรม"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
 		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
-		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="ล้างข้อมูล"/>
 	</node>
 	<node name="sharing">
@@ -849,7 +852,7 @@
 			<node name="editUrl" value="แก้ไข URL"/>
 			<node name="tryAgain" value="ลองใหม่อีกครั้ง"/>
 			<node name="openBook" value="อ่าน"/>
-			<node name="editInfo" value="แก้ไข"/>
+			<node name="edit" value="แก้ไข"/>
 			<node name="reloadInfo" value="โหลดใหม่"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="เติมเงิน"/>

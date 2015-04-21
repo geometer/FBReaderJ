@@ -252,6 +252,14 @@
 			<node name="search" value="Որոնել"/>
 		</node>
 	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Ջնջել էջանիշը"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="Փոխել ոճը..."/>
+	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Բացել գրադարանը"/>
 		<node name="networkLibrary" value="Բացել ցանցային գրադարանը"/>
@@ -262,10 +270,6 @@
 		<node name="close" value="Փակել FBReader-ը"/>
 	</node>
 	<node name="style" value="Ոճ %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Փոխել ոճը..."/>
-		<node name="deleteBookmark" value="Ջնջել էջանիշը"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Ոճի անունը"/>
 		<node name="invisible" value="Անտեսանելի">
@@ -279,7 +283,6 @@
 		<node name="openInDictionary" value="Նայել բառարանում"/>
 		<node name="quoteFrom" value="Մեջբերում %s-ից"/>
 		<node name="textInBuffer" value="Պատճենվեց սեղմատախտակում՝ &#10;%s"/>
-		<node name="bookmarkCreated" value="Ստեղծվեց էջանիշ՝ &#10;%s"/>
 		<node name="clearSelection" value="Հեռացնել նշումը"/>
 	</node>
 	<node name="sharing">
@@ -864,7 +867,7 @@
 			<node name="editUrl" value="Փոխել URL-ը"/>
 			<node name="tryAgain" value="Կրկնել"/>
 			<node name="openBook" value="Կարդալ"/>
-			<node name="editInfo" value="Փոխել"/>
+			<node name="edit" value="Փոխել"/>
 			<node name="reloadInfo" value="Թարմացնել"/>
 			<node name="shareBook" value="Տարածել"/>
 			<node name="topup" value="Հավելել հաշիվը"/>
