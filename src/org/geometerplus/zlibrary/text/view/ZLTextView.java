@@ -35,8 +35,6 @@ import org.geometerplus.zlibrary.text.hyphenation.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 public abstract class ZLTextView extends ZLTextViewBase {
-	public static final int MAX_SELECTION_DISTANCE = 10;
-
 	public interface ScrollingMode {
 		int NO_OVERLAPPING = 0;
 		int KEEP_LINES = 1;
@@ -67,14 +65,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private final Set<ZLTextHighlighting> myHighlightings =
 		Collections.synchronizedSet(new TreeSet<ZLTextHighlighting>());
 
-	private final ZLTextParagraphCursorCache myCursorCache = new ZLTextParagraphCursorCache();
+	private CursorManager myCursorManager;
 
 	public ZLTextView(ZLApplication application) {
 		super(application);
 	}
 
 	public synchronized void setModel(ZLTextModel model) {
-		myCursorCache.clear();
+		myCursorManager = model != null ? new CursorManager(model, getExtensionManager()) : null;
 
 		mySelection.clear();
 		myHighlightings.clear();
@@ -86,7 +84,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
 			if (paragraphsNumber > 0) {
-				myCurrentPage.moveStartCursor(cursor(0));
+				myCurrentPage.moveStartCursor(myCursorManager.cursor(0));
 			}
 		}
 		Application.getViewWidget().reset();
@@ -1702,7 +1700,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	protected synchronized void rebuildPaintInfo() {
 		myPreviousPage.reset();
 		myNextPage.reset();
-		myCursorCache.clear();
+		if (myCursorManager != null) {
+			myCursorManager.clear();
+		}
 
 		if (myCurrentPage.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
 			myCurrentPage.LineInfos.clear();
@@ -1965,12 +1965,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	ZLTextParagraphCursor cursor(int index) {
-		ZLTextParagraphCursor result = myCursorCache.get(myModel, index);
-		if (result == null) {
-			result = new ZLTextParagraphCursor(this, myModel, index);
-			myCursorCache.put(myModel, index, result);
-		}
-		return result;
+		return myCursorManager.cursor(index);
 	}
 
 	protected abstract ExtensionElementManager getExtensionManager();

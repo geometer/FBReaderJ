@@ -29,8 +29,8 @@ import org.geometerplus.zlibrary.text.model.*;
 
 public final class ZLTextParagraphCursor {
 	private static final class Processor {
-		private final ZLTextView myView;
 		private final ZLTextParagraph myParagraph;
+		private final ExtensionElementManager myExtManager;
 		private final LineBreaker myLineBreaker;
 		private final ArrayList<ZLTextElement> myElements;
 		private int myOffset;
@@ -38,8 +38,8 @@ public final class ZLTextParagraphCursor {
 		private int myLastMark;
 		private final List<ZLTextMark> myMarks;
 
-		private Processor(ZLTextView view, ZLTextParagraph paragraph, LineBreaker lineBreaker, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
-			myView = view;
+		private Processor(ZLTextParagraph paragraph, ExtensionElementManager extManager, LineBreaker lineBreaker, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
+			myExtManager = extManager;
 			myParagraph = paragraph;
 			myLineBreaker = lineBreaker;
 			myElements = elements;
@@ -109,7 +109,9 @@ public final class ZLTextParagraphCursor {
 						elements.add(new ZLTextVideoElement(it.getVideoEntry().sources()));
 						break;
 					case ZLTextParagraph.Entry.EXTENSION:
-						elements.addAll(myView.getExtensionManager().getElements(it.getExtensionEntry()));
+						if (myExtManager != null) {
+							elements.addAll(myExtManager.getElements(it.getExtensionEntry()));
+						}
 						break;
 					case ZLTextParagraph.Entry.STYLE_CSS:
 					case ZLTextParagraph.Entry.STYLE_OTHER:
@@ -204,12 +206,16 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public final int Index;
-	final ZLTextView View;
+	final CursorManager CursorManager;
 	public final ZLTextModel Model;
 	private final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
 
-	ZLTextParagraphCursor(ZLTextView view, ZLTextModel model, int index) {
-		View = view;
+	public ZLTextParagraphCursor(ZLTextModel model, int index) {
+		this(new CursorManager(model, null), model, index);
+	}
+
+	ZLTextParagraphCursor(CursorManager cManager, ZLTextModel model, int index) {
+		CursorManager = cManager;
 		Model = model;
 		Index = Math.min(index, model.getParagraphsNumber() - 1);
 		fill();
@@ -220,7 +226,7 @@ public final class ZLTextParagraphCursor {
 		ZLTextParagraph	paragraph = Model.getParagraph(Index);
 		switch (paragraph.getKind()) {
 			case ZLTextParagraph.Kind.TEXT_PARAGRAPH:
-				new Processor(View, paragraph, new LineBreaker(Model.getLanguage()), Model.getMarks(), Index, myElements).fill();
+				new Processor(paragraph, CursorManager.ExtensionManager, new LineBreaker(Model.getLanguage()), Model.getMarks(), Index, myElements).fill();
 				break;
 			case ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH:
 				myElements.add(new ZLTextWord(SPACE_ARRAY, 0, 1, 0));
@@ -259,11 +265,11 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public ZLTextParagraphCursor previous() {
-		return isFirst() ? null : View.cursor(Index - 1);
+		return isFirst() ? null : CursorManager.cursor(Index - 1);
 	}
 
 	public ZLTextParagraphCursor next() {
-		return isLast() ? null : View.cursor(Index + 1);
+		return isLast() ? null : CursorManager.cursor(Index + 1);
 	}
 
 	ZLTextElement getElement(int index) {

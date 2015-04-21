@@ -22,8 +22,16 @@ package org.geometerplus.android.fbreader;
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
+import android.os.Parcelable;
+import android.view.View;
+
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.text.util.AutoTextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -62,9 +70,52 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					openInBrowser(hyperlink.Id);
 					break;
 				case FBHyperlinkType.INTERNAL:
+				case FBHyperlinkType.FOOTNOTE:
+				{
+					final AutoTextSnippet snippet = Reader.getFootnoteData(hyperlink.Id);
+					if (snippet == null) {
+						break;
+					}
+
 					Reader.Collection.markHyperlinkAsVisited(Reader.getCurrentBook(), hyperlink.Id);
-					Reader.tryOpenFootnote(hyperlink.Id);
+					final boolean showToast;
+					switch (Reader.MiscOptions.ShowFootnoteToast.getValue()) {
+						default:
+						case never:
+							showToast = false;
+							break;
+						case footnotesOnly:
+							showToast = hyperlink.Type == FBHyperlinkType.FOOTNOTE;
+							break;
+						case allInternalLinks:
+							showToast = true;
+							break;
+					}
+					if (showToast) {
+						final SuperActivityToast toast;
+						if (snippet.IsEndOfText) {
+							toast = new SuperActivityToast(BaseActivity, SuperToast.Type.STANDARD);
+						} else {
+							toast = new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
+							toast.setButtonIcon(
+								android.R.drawable.ic_menu_more,
+								ZLResource.resource("footnoteToast").getResource("more").getValue()
+							);
+							toast.setOnClickWrapper(new OnClickWrapper("ftnt", new SuperToast.OnClickListener() {
+								@Override
+								public void onClick(View view, Parcelable token) {
+									Reader.tryOpenFootnote(hyperlink.Id);
+								}
+							}));
+						}
+						toast.setText(snippet.getText());
+						toast.setDuration(SuperToast.Duration.LONG);
+						toast.show();
+					} else {
+						Reader.tryOpenFootnote(hyperlink.Id);
+					}
 					break;
+				}
 			}
 		} else if (soul instanceof ZLTextImageRegionSoul) {
 			Reader.getTextView().hideSelectedRegionBorder();
