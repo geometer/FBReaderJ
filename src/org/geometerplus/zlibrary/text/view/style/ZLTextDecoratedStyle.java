@@ -43,6 +43,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	private int mySpaceBefore;
 	private int mySpaceAfter;
 	private int myVerticalAlign;
+	private Boolean myIsVerticallyAligned;
 	private int myLeftMargin;
 	private int myRightMargin;
 	private int myLeftPadding;
@@ -161,6 +162,15 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		return myVerticalAlign;
 	}
 	protected abstract int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize);
+
+	@Override
+	public boolean isVerticallyAligned() {
+		if (myIsVerticallyAligned == null) {
+			myIsVerticallyAligned = Parent.isVerticallyAligned() || isVerticallyAlignedInternal();
+		}
+		return myIsVerticallyAligned;
+	}
+	protected abstract boolean isVerticallyAlignedInternal();
 
 	@Override
 	public final int getLeftMargin(ZLTextMetrics metrics) {

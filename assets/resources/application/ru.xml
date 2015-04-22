@@ -423,6 +423,7 @@
 			<node name="showFootnoteToast" value="Показывать текст по ссылке в окошке">
 				<node name="never" value="Никогда"/>
 				<node name="footnotesOnly" value="Только для сносок"/>
+				<node name="footnotesAndSuperscripts" value="Для сносок и «поднятых» ссылок"/>
 				<node name="allInternalLinks" value="Для всех ссылок внутри книги"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">

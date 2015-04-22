@@ -4,9 +4,10 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.4 beta 3 (Apr ??, 2015) =====
+===== 2.4 beta 3 (Apr 22, 2015) =====
 * Fixed long-tap finger selection (word under finger is selected, not a word in the line above)
 * Uses 'epub:type' attribute for detecting footnotes
+* Automatic footnotes detector
 
 ===== 2.4 beta 2 (Apr 22, 2015) =====
 * Footnotes toasts (uses SuperToasts library)

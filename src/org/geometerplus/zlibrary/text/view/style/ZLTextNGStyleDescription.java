@@ -88,6 +88,11 @@ public class ZLTextNGStyleDescription {
 		);
 	}
 
+	boolean hasNonZeroVerticalAlign() {
+		final ZLTextStyleEntry.Length length = parseLength(VerticalAlignOption.getValue());
+		return length != null && length.Size != 0;
+	}
+
 	int getLeftMargin(ZLTextMetrics metrics, int base, int fontSize) {
 		final ZLTextStyleEntry.Length length = parseLength(MarginLeftOption.getValue());
 		if (length == null) {

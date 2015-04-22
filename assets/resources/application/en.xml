@@ -418,6 +418,7 @@
 			<node name="showFootnoteToast" value="Show linked text in a window">
 				<node name="never" value="Never"/>
 				<node name="footnotesOnly" value="For footnotes only"/>
+				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links"/>
 				<node name="allInternalLinks" value="For all internal links"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
