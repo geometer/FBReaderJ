@@ -34,7 +34,7 @@ public class MiscOptions {
 	public final ZLEnumOption<WordTappingActionEnum> WordTappingAction;
 
 	public static enum FootnoteToastEnum {
-		never, footnotesOnly, allInternalLinks
+		never, footnotesOnly, footnotesAndSuperscripts, allInternalLinks
 	}
 	public final ZLEnumOption<FootnoteToastEnum> ShowFootnoteToast;
 
@@ -53,6 +53,6 @@ public class MiscOptions {
 			new ZLEnumOption<WordTappingActionEnum>("Options", "WordTappingAction", WordTappingActionEnum.startSelecting);
 
 		ShowFootnoteToast =
-			new ZLEnumOption<FootnoteToastEnum>("Options", "ShowFootnoteToast", FootnoteToastEnum.footnotesOnly);
+			new ZLEnumOption<FootnoteToastEnum>("Options", "ShowFootnoteToast", FootnoteToastEnum.footnotesAndSuperscripts);
 	}
 }
