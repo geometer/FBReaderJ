@@ -115,6 +115,13 @@ public:
 	void doAtEnd(XHTMLReader &reader);
 };
 
+class XHTMLTagSectionAction : public XHTMLGlobalTagAction {
+
+public:
+	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
+	void doAtEnd(XHTMLReader &reader);
+};
+
 class XHTMLTagVideoAction : public XHTMLTagAction {
 
 private:
@@ -334,6 +341,13 @@ void XHTMLTagBodyAction::doAtEnd(XHTMLReader &reader) {
 	}
 }
 
+void XHTMLTagSectionAction::doAtStart(XHTMLReader &reader, const char**) {
+}
+
+void XHTMLTagSectionAction::doAtEnd(XHTMLReader &reader) {
+	bookReader(reader).insertEndOfSectionParagraph();
+}
+
 XHTMLTagListAction::XHTMLTagListAction(int startIndex) : myStartIndex(startIndex) {
 }
 
@@ -486,9 +500,20 @@ void XHTMLTagControlAction::doAtEnd(XHTMLReader &reader) {
 void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
 	const char *href = reader.attributeValue(xmlattributes, "href");
 	if (href != 0 && href[0] != '\0') {
-		const FBTextKind hyperlinkType = MiscUtil::referenceType(href);
+		FBTextKind hyperlinkType = MiscUtil::referenceType(href);
 		std::string link = MiscUtil::decodeHtmlURL(href);
 		if (hyperlinkType == INTERNAL_HYPERLINK) {
+			static const std::string NOTEREF = "noteref";
+			const char *epubType = reader.attributeValue(xmlattributes, "epub:type");
+			if (epubType == 0) {
+				// popular ePub mistake: ':' in attribute name coverted to ascii code
+				static const ZLXMLReader::IgnoreCaseNamePredicate epubTypePredicate("epubu0003atype");
+				epubType = reader.attributeValue(xmlattributes, epubTypePredicate);
+			}
+			if (epubType != 0 && NOTEREF == epubType) {
+				hyperlinkType = FOOTNOTE;
+			}
+
 			if (link[0] == '#') {
 				link = reader.myReferenceAlias + link;
 			} else {
@@ -583,6 +608,8 @@ void XHTMLReader::fillTagTable() {
 		//addAction("title", new XHTMLTagAction());
 		//addAction("meta", new XHTMLTagAction());
 		//addAction("script", new XHTMLTagAction());
+
+		addAction("aside", new XHTMLTagSectionAction());
 
 		//addAction("font", new XHTMLTagAction());
 		addAction("style", new XHTMLTagStyleAction());
