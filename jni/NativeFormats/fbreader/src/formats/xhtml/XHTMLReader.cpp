@@ -115,6 +115,13 @@ public:
 	void doAtEnd(XHTMLReader &reader);
 };
 
+class XHTMLTagSectionAction : public XHTMLGlobalTagAction {
+
+public:
+	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
+	void doAtEnd(XHTMLReader &reader);
+};
+
 class XHTMLTagVideoAction : public XHTMLTagAction {
 
 private:
@@ -334,6 +341,13 @@ void XHTMLTagBodyAction::doAtEnd(XHTMLReader &reader) {
 	}
 }
 
+void XHTMLTagSectionAction::doAtStart(XHTMLReader &reader, const char**) {
+}
+
+void XHTMLTagSectionAction::doAtEnd(XHTMLReader &reader) {
+	bookReader(reader).insertEndOfSectionParagraph();
+}
+
 XHTMLTagListAction::XHTMLTagListAction(int startIndex) : myStartIndex(startIndex) {
 }
 
@@ -493,7 +507,8 @@ void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlatt
 			const char *epubType = reader.attributeValue(xmlattributes, "epub:type");
 			if (epubType == 0) {
 				// popular ePub mistake: ':' in attribute name coverted to ascii code
-				epubType = reader.attributeValue(xmlattributes, "epubu0003atype");
+				static const ZLXMLReader::IgnoreCaseNamePredicate epubTypePredicate("epubu0003atype");
+				epubType = reader.attributeValue(xmlattributes, epubTypePredicate);
 			}
 			if (epubType != 0 && NOTEREF == epubType) {
 				hyperlinkType = FOOTNOTE;
@@ -593,6 +608,8 @@ void XHTMLReader::fillTagTable() {
 		//addAction("title", new XHTMLTagAction());
 		//addAction("meta", new XHTMLTagAction());
 		//addAction("script", new XHTMLTagAction());
+
+		addAction("aside", new XHTMLTagSectionAction());
 
 		//addAction("font", new XHTMLTagAction());
 		addAction("style", new XHTMLTagStyleAction());
