@@ -486,9 +486,19 @@ void XHTMLTagControlAction::doAtEnd(XHTMLReader &reader) {
 void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
 	const char *href = reader.attributeValue(xmlattributes, "href");
 	if (href != 0 && href[0] != '\0') {
-		const FBTextKind hyperlinkType = MiscUtil::referenceType(href);
+		FBTextKind hyperlinkType = MiscUtil::referenceType(href);
 		std::string link = MiscUtil::decodeHtmlURL(href);
 		if (hyperlinkType == INTERNAL_HYPERLINK) {
+			static const std::string NOTEREF = "noteref";
+			const char *epubType = reader.attributeValue(xmlattributes, "epub:type");
+			if (epubType == 0) {
+				// popular ePub mistake: ':' in attribute name coverted to ascii code
+				epubType = reader.attributeValue(xmlattributes, "epubu0003atype");
+			}
+			if (epubType != 0 && NOTEREF == epubType) {
+				hyperlinkType = FOOTNOTE;
+			}
+
 			if (link[0] == '#') {
 				link = reader.myReferenceAlias + link;
 			} else {
