@@ -196,6 +196,21 @@ bool ZLXMLReader::SimpleNamePredicate::accepts(const ZLXMLReader&, const std::st
 	return myName == name;
 }
 
+ZLXMLReader::IgnoreCaseNamePredicate::IgnoreCaseNamePredicate(const std::string &lowerCaseName) : myLowerCaseName(lowerCaseName) {
+}
+
+bool ZLXMLReader::IgnoreCaseNamePredicate::accepts(const ZLXMLReader &reader, const char *name) const {
+	std::string lc = name;
+	ZLStringUtil::asciiToLowerInline(lc);
+	return myLowerCaseName == lc;
+}
+
+bool ZLXMLReader::IgnoreCaseNamePredicate::accepts(const ZLXMLReader&, const std::string &name) const {
+	std::string lc = name;
+	ZLStringUtil::asciiToLowerInline(lc);
+	return myLowerCaseName == lc;
+}
+
 ZLXMLReader::FullNamePredicate::FullNamePredicate(const std::string &ns, const std::string &name) : myNamespaceName(ns), myName(name) {
 }
 
