@@ -53,6 +53,6 @@ public class MiscOptions {
 			new ZLEnumOption<WordTappingActionEnum>("Options", "WordTappingAction", WordTappingActionEnum.startSelecting);
 
 		ShowFootnoteToast =
-			new ZLEnumOption<FootnoteToastEnum>("Options", "ShowFootnoteToast", FootnoteToastEnum.allInternalLinks);
+			new ZLEnumOption<FootnoteToastEnum>("Options", "ShowFootnoteToast", FootnoteToastEnum.footnotesOnly);
 	}
 }
