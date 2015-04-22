@@ -53,6 +53,17 @@ public:
 		const std::string myName;
 	};
 
+	class IgnoreCaseNamePredicate : public NamePredicate {
+
+	public:
+		IgnoreCaseNamePredicate(const std::string &lowerCaseName);
+		bool accepts(const ZLXMLReader &reader, const char *name) const;
+		bool accepts(const ZLXMLReader &reader, const std::string &name) const;
+
+	private:
+		const std::string myLowerCaseName;
+	};
+
 	class FullNamePredicate : public NamePredicate {
 
 	public:
