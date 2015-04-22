@@ -106,18 +106,5 @@ public class OpenCatalogAction extends Action {
 
 		tree.startItemsLoader(myNetworkContext, true, resumeNotLoad);
 		doOpenTree(tree);
-//		processExtraData(tree.Item.extraData(), new Runnable() {
-//			public void run() {
-//				doOpenTree(tree);
-//			}
-//		});
-	}
-
-	private void processExtraData(Map<String,String> extraData, final Runnable postRunnable) {
-		if (extraData != null && !extraData.isEmpty()) {
-			PackageUtil.runInstallPluginDialog(myActivity, extraData, postRunnable);
-		} else {
-			postRunnable.run();
-		}
 	}
 }
