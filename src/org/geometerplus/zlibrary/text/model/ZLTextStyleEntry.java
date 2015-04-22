@@ -131,6 +131,10 @@ public abstract class ZLTextStyleEntry {
 		return compute(myLengths[featureId], metrics, fontSize, featureId);
 	}
 
+	public final boolean hasNonZeroLength(int featureId) {
+		return myLengths[featureId].Size != 0;
+	}
+
 	public static int compute(Length length, ZLTextMetrics metrics, int fontSize, int featureId) {
 		switch (length.Unit) {
 			default:
