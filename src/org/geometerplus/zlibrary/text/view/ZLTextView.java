@@ -329,7 +329,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected void moveSelectionCursorTo(ZLTextSelectionCursor cursor, int x, int y) {
-		y -= ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2;
+		y -= getTextStyleCollection().getBaseStyle().getFontSize() / 2;
 		mySelection.setCursorInMovement(cursor, x, y);
 		mySelection.expandTo(myCurrentPage, x, y);
 		Application.getViewWidget().reset();
@@ -1875,7 +1875,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected boolean initSelection(int x, int y) {
-		y -= ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2;
+		y -= getTextStyleCollection().getBaseStyle().getFontSize() / 2;
 		if (!mySelection.start(x, y)) {
 			return false;
 		}

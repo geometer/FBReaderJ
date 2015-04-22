@@ -66,6 +66,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 				OrientationUtil.startActivity(BaseActivity, intent);
 			}
 		}));
+		SuperActivityToast.cancelAllSuperActivityToasts();
 		toast.show();
 	}
 }

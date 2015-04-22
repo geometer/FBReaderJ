@@ -110,6 +110,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 						}
 						toast.setText(snippet.getText());
 						toast.setDuration(SuperToast.Duration.LONG);
+						SuperActivityToast.cancelAllSuperActivityToasts();
 						toast.show();
 					} else {
 						Reader.tryOpenFootnote(hyperlink.Id);
