@@ -55,6 +55,7 @@ public abstract class ZLTextStyle {
 	public abstract int getFirstLineIndent(ZLTextMetrics metrics);
 	public abstract int getLineSpacePercent();
 	public abstract int getVerticalAlign(ZLTextMetrics metrics);
+	public abstract boolean isVerticallyAligned();
 	public abstract int getSpaceBefore(ZLTextMetrics metrics);
 	public abstract int getSpaceAfter(ZLTextMetrics metrics);
 	public abstract byte getAlignment();

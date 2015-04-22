@@ -87,6 +87,11 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 						case footnotesOnly:
 							showToast = hyperlink.Type == FBHyperlinkType.FOOTNOTE;
 							break;
+						case footnotesAndSuperscripts:
+							showToast =
+								hyperlink.Type == FBHyperlinkType.FOOTNOTE ||
+								region.isVerticallyAligned();
+							break;
 						case allInternalLinks:
 							showToast = true;
 							break;

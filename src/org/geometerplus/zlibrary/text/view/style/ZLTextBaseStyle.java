@@ -146,6 +146,11 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	}
 
 	@Override
+	public boolean isVerticallyAligned() {
+		return false;
+	}
+
+	@Override
 	public int getSpaceBefore(ZLTextMetrics metrics) {
 		return 0;
 	}

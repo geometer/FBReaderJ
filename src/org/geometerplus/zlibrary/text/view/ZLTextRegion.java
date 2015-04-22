@@ -258,4 +258,13 @@ public final class ZLTextRegion {
 	boolean isExactlyOver(ZLTextRegion other) {
 		return other == null || other.isExactlyUnder(this);
 	}
+
+	public boolean isVerticallyAligned() {
+		for (ZLTextElementArea area : textAreas()) {
+			if (!area.Style.isVerticallyAligned()) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

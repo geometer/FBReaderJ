@@ -260,6 +260,23 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		}
 	}
 	@Override
+	protected boolean isVerticallyAlignedInternal() {
+		if (myEntry.isFeatureSupported(LENGTH_VERTICAL_ALIGN)) {
+			return myEntry.hasNonZeroLength(LENGTH_VERTICAL_ALIGN);
+		} else if (myEntry.isFeatureSupported(NON_LENGTH_VERTICAL_ALIGN)) {
+			switch (myEntry.getVerticalAlignCode()) {
+				default:
+					return false;
+				case 0: // sub
+				case 1: // super
+					return true;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	@Override
 	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
 			return Parent.getSpaceBefore(metrics);
