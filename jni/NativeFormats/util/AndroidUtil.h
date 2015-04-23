@@ -80,7 +80,6 @@ public:
 	static JavaClass Class_FileEncryptionInfo;
 	static JavaClass Class_ZLFileImage;
 	static JavaClass Class_ZLTextModel;
-	static JavaClass Class_CachedCharStorageException;
 	static JavaClass Class_NativeFormatPlugin;
 	static JavaClass Class_PluginCollection;
 	static JavaClass Class_Encoding;
