@@ -22,6 +22,4 @@ package org.geometerplus.zlibrary.text.model;
 public interface CharStorage {
 	int size();
 	char[] block(int index);
-	char[] createNewBlock(int minimumLength);
-	void freezeLastBlock();
 }
