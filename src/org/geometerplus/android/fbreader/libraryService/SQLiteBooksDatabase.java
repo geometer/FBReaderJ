@@ -1686,6 +1686,12 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS DeletedBookmarkIds(uid TEXT(36) PRIMARY KEY)");
 	}
 
+	/*
+	private void updateTables35() {
+		myDatabase.execSQL("ALTER TABLE Labels ADD COLUMN uid TEXT(36)");
+	}
+	*/
+
 	private SQLiteStatement get(String sql) {
 		SQLiteStatement statement = myStatements.get(sql);
 		if (statement == null) {

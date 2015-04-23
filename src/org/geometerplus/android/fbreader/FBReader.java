@@ -33,6 +33,8 @@ import android.widget.TextView;
 
 import com.yotadevices.fbreader.FBReaderYotaService;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -91,6 +93,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private RelativeLayout myRootView;
 	private ZLAndroidWidget myMainView;
+
+	private SuperActivityToast myToast;
 
 	private volatile boolean myShowStatusBarFlag;
 	private volatile boolean myShowActionBarFlag;
@@ -315,6 +319,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.DISPLAY_BOOK_POPUP, new DisplayBookPopupAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.OPEN_VIDEO, new OpenVideoAction(this, myFBReaderApp));
+		myFBReaderApp.addAction(ActionCode.HIDE_TOAST, new HideToastAction(this, myFBReaderApp));
 
 		myFBReaderApp.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.OPEN_START_SCREEN, new StartScreenAction(this, myFBReaderApp));
@@ -1181,4 +1186,23 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myFBReaderApp.useSyncInfo(myResumeTimestamp + 10 * 1000 > System.currentTimeMillis(), myNotifier);
 		}
 	};
+
+	boolean isToastShown() {
+		final SuperActivityToast toast = myToast;
+		return toast != null && toast.isShowing();
+	}
+
+	void hideToast() {
+		final SuperActivityToast toast = myToast;
+		if (toast != null && toast.isShowing()) {
+			toast.dismiss();
+			myToast = null;
+		}
+	}
+
+	void showToast(SuperActivityToast toast) {
+		hideToast();
+		myToast = toast;
+		toast.show();
+	}
 }

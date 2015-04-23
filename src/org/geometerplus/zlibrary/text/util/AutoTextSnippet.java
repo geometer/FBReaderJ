@@ -114,7 +114,10 @@ mainLoop:
 		myStart = new ZLTextFixedPosition(start);
 		myEnd = buffer.Cursor;
 		myText = buffer.Builder.toString();
-		IsEndOfText = cursor.isEndOfText() && sentenceBuffer.isEmpty() && phraseBuffer.isEmpty();
+		IsEndOfText =
+			(cursor.isEndOfText() || cursor.getParagraphCursor().isEndOfSection()) &&
+			sentenceBuffer.isEmpty() &&
+			phraseBuffer.isEmpty();
 	}
 
 	private static class Buffer {
