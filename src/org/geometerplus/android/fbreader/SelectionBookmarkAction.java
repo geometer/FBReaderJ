@@ -52,7 +52,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 		final SuperActivityToast toast =
 			new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
 		toast.setText(bookmark.getText());
-		toast.setDuration(SuperToast.Duration.LONG);
+		toast.setDuration(SuperToast.Duration.EXTRA_LONG);
 		toast.setButtonIcon(
 			android.R.drawable.ic_menu_edit,
 			ZLResource.resource("dialog").getResource("button").getResource("edit").getValue()
@@ -66,7 +66,6 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 				OrientationUtil.startActivity(BaseActivity, intent);
 			}
 		}));
-		SuperActivityToast.cancelAllSuperActivityToasts();
-		toast.show();
+		BaseActivity.showToast(toast);
 	}
 }
