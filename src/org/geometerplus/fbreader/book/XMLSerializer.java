@@ -280,6 +280,7 @@ class XMLSerializer extends AbstractSerializer {
 			"title", bookmark.BookTitle
 		);
 		appendTagWithContent(buffer, "text", bookmark.getText());
+		appendTagWithContent(buffer, "original-text", bookmark.getOriginalText());
 		appendTag(
 			buffer, "history", true,
 			"date-creation", formatDate(bookmark.getDate(Bookmark.DateType.Creation)),
@@ -893,7 +894,8 @@ class XMLSerializer extends AbstractSerializer {
 		private static enum State {
 			READ_NOTHING,
 			READ_BOOKMARK,
-			READ_TEXT
+			READ_TEXT,
+			READ_ORIGINAL_TEXT
 		}
 
 		private State myState = State.READ_NOTHING;
@@ -905,6 +907,7 @@ class XMLSerializer extends AbstractSerializer {
 		private long myBookId;
 		private String myBookTitle;
 		private final StringBuilder myText = new StringBuilder();
+		private StringBuilder myOriginalText;
 		private Date myCreationDate;
 		private Date myModificationDate;
 		private Date myAccessDate;
@@ -932,6 +935,7 @@ class XMLSerializer extends AbstractSerializer {
 			myBookId = -1;
 			myBookTitle = null;
 			clear(myText);
+			myOriginalText = null;
 			myCreationDate = null;
 			myModificationDate = null;
 			myAccessDate = null;
@@ -956,6 +960,7 @@ class XMLSerializer extends AbstractSerializer {
 			myBookmark = new Bookmark(
 				myId, myUid, myVersionUid,
 				myBookId, myBookTitle, myText.toString(),
+				myOriginalText != null ? myOriginalText.toString() : null,
 				myCreationDate, myModificationDate, myAccessDate,
 				myModelId,
 				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
@@ -984,6 +989,9 @@ class XMLSerializer extends AbstractSerializer {
 						myBookTitle = attributes.getValue("title");
 					} else if ("text".equals(localName)) {
 						myState = State.READ_TEXT;
+					} else if ("original-text".equals(localName)) {
+						myState = State.READ_ORIGINAL_TEXT;
+						myOriginalText = new StringBuilder();
 					} else if ("history".equals(localName)) {
 						myCreationDate = parseDate(attributes.getValue("date-creation"));
 						myModificationDate = parseDateSafe(attributes.getValue("date-modification"));
@@ -1011,6 +1019,7 @@ class XMLSerializer extends AbstractSerializer {
 					}
 					break;
 				case READ_TEXT:
+				case READ_ORIGINAL_TEXT:
 					throw new SAXException("Unexpected tag " + localName);
 			}
 		}
@@ -1026,14 +1035,20 @@ class XMLSerializer extends AbstractSerializer {
 					}
 					break;
 				case READ_TEXT:
+				case READ_ORIGINAL_TEXT:
 					myState = State.READ_BOOKMARK;
 			}
 		}
 
 		@Override
 		public void characters(char[] ch, int start, int length) {
-			if (myState == State.READ_TEXT) {
-				myText.append(ch, start, length);
+			switch (myState) {
+				case READ_TEXT:
+					myText.append(ch, start, length);
+					break;
+				case READ_ORIGINAL_TEXT:
+					myOriginalText.append(ch, start, length);
+					break;
 			}
 		}
 	}
