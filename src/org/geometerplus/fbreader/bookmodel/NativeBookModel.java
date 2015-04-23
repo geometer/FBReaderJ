@@ -31,7 +31,7 @@ public class NativeBookModel extends BookModelImpl {
 	}
 
 	public void initInternalHyperlinks(String directoryName, String fileExtension, int blocksNumber) {
-		myInternalHyperlinks = new CachedCharStorageRO(directoryName, fileExtension, blocksNumber);
+		myInternalHyperlinks = new CachedCharStorage(directoryName, fileExtension, blocksNumber);
 	}
 
 	private TOCTree myCurrentTree = TOCTree;
@@ -55,7 +55,7 @@ public class NativeBookModel extends BookModelImpl {
 		int[] paragraphLenghts, int[] textSizes, byte[] paragraphKinds,
 		String directoryName, String fileExtension, int blocksNumber
 	) {
-		return new ZLTextNativeModel(
+		return new ZLTextPlainModel(
 			id, language, paragraphsNumber,
 			entryIndices, entryOffsets,
 			paragraphLenghts, textSizes, paragraphKinds,
