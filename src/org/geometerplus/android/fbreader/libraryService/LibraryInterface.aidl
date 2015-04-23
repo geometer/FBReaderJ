@@ -79,4 +79,7 @@ interface LibraryInterface {
 
 	List<String> deletedBookmarkUids();
 	void purgeBookmarks(in List<String> uids);
+
+	int getDefaultHighlightingStyleId();
+	void setDefaultHighlightingStyleId(in int styleId);
 }
