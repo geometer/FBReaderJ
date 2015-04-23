@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 35;
+		final int currentVersion = 36;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -153,6 +153,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables33();
 			case 34:
 				updateTables34();
+			case 35:
+				updateTables35();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -856,7 +858,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		final StringBuilder sql = new StringBuilder("SELECT")
 			.append(" bm.bookmark_id,bm.uid,bm.version_uid,")
-			.append("bm.book_id,b.title,bm.bookmark_text,")
+			.append("bm.book_id,b.title,bm.bookmark_text,bm.original_text,")
 			.append("bm.creation_time,bm.modification_time,bm.access_time,")
 			.append("bm.model_id,bm.paragraph,bm.word,bm.char,")
 			.append("bm.end_paragraph,bm.end_word,bm.end_character,")
@@ -880,18 +882,19 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				cursor.getLong(3),
 				cursor.getString(4),
 				cursor.getString(5),
-				SQLiteUtil.getDate(cursor, 6),
+				cursor.isNull(6) ? null : cursor.getString(6),
 				SQLiteUtil.getDate(cursor, 7),
 				SQLiteUtil.getDate(cursor, 8),
-				cursor.getString(9),
-				(int)cursor.getLong(10),
+				SQLiteUtil.getDate(cursor, 9),
+				cursor.getString(10),
 				(int)cursor.getLong(11),
 				(int)cursor.getLong(12),
 				(int)cursor.getLong(13),
-				cursor.isNull(14) ? -1 : (int)cursor.getLong(14),
+				(int)cursor.getLong(14),
 				cursor.isNull(15) ? -1 : (int)cursor.getLong(15),
+				cursor.isNull(16) ? -1 : (int)cursor.getLong(16),
 				query.Visible,
-				(int)cursor.getLong(16)
+				(int)cursor.getLong(17)
 			));
 		}
 		cursor.close();
@@ -956,7 +959,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected long saveBookmark(Bookmark bookmark) {
 		SQLiteStatement statement = get(
-			"INSERT OR REPLACE INTO Bookmarks (uid,version_uid,book_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+			"INSERT OR REPLACE INTO Bookmarks (uid,version_uid,book_id,bookmark_text,original_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 		);
 
 		int fieldCount = 0;
@@ -964,6 +967,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getVersionUid());
 		statement.bindLong(++fieldCount, bookmark.BookId);
 		statement.bindString(++fieldCount, bookmark.getText());
+		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getOriginalText());
 		SQLiteUtil.bindDate(statement, ++fieldCount, bookmark.getDate(Bookmark.DateType.Creation));
 		SQLiteUtil.bindDate(statement, ++fieldCount, bookmark.getDate(Bookmark.DateType.Modification));
 		SQLiteUtil.bindDate(statement, ++fieldCount, bookmark.getDate(Bookmark.DateType.Access));
@@ -1686,11 +1690,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS DeletedBookmarkIds(uid TEXT(36) PRIMARY KEY)");
 	}
 
-	/*
 	private void updateTables35() {
-		myDatabase.execSQL("ALTER TABLE Labels ADD COLUMN uid TEXT(36)");
+		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN original_text TEXT DEFAULT NULL");
 	}
-	*/
 
 	private SQLiteStatement get(String sql) {
 		SQLiteStatement statement = myStatements.get(sql);
