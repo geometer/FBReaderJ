@@ -17,43 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+package org.geometerplus.zlibrary.text.view;
 
-import java.util.*;
+import android.support.v4.util.LruCache;
 
-final class SimpleCharStorage implements CharStorage {
-	private final int myBlockSize;
-	private final ArrayList<char[]> myArray = new ArrayList<char[]>(1024);
+import org.geometerplus.zlibrary.text.model.ZLTextModel;
 
-	SimpleCharStorage(int blockSize) {
-		myBlockSize = blockSize;
+final class CursorManager extends LruCache<Integer,ZLTextParagraphCursor> {
+	private final ZLTextModel myModel;
+	final ExtensionElementManager ExtensionManager;
+
+	CursorManager(ZLTextModel model, ExtensionElementManager extManager) {
+		super(200); // max 200 cursors in the cache
+		myModel = model;
+		ExtensionManager = extManager;
 	}
 
-	public int size() {
-		return myArray.size();
-	}
-
-	public char[] block(int index) {
-		if (index < 0 || index >= myArray.size()) {
-			return null;
-		}
-		return myArray.get(index);
-	}
-
-	public char[] createNewBlock(int minimumLength) {
-		int blockSize = myBlockSize;
-		if (minimumLength > blockSize) {
-			blockSize = minimumLength;
-		}
-		char[] block = new char[blockSize];
-		myArray.add(block);
-		return block;
-	}
-
-	public void freezeLastBlock() {
-	}
-
-	public void clear() {
-		myArray.clear();
+	@Override
+	protected ZLTextParagraphCursor create(Integer index) {
+		return new ZLTextParagraphCursor(this, myModel, index);
 	}
 }

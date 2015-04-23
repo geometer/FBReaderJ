@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+package org.geometerplus.zlibrary.text.util;
 
-public interface ZLTextWritableModel extends ZLTextModel {
-	void createParagraph(byte kind);
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-	void addText(char[] text);
-	void addText(char[] text, int offset, int length);
-	void addImage(String id, short vOffset, boolean isCover);
-	void addControl(byte textKind, boolean isStart);
-	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
-	void addStyleEntry(ZLTextStyleEntry entry);
-	void addFixedHSpace(short length);
-	void addBidiReset();
-
-	void stopReading();
+public interface TextSnippet {
+	ZLTextPosition getStart();
+	ZLTextPosition getEnd();
+	String getText();
 }

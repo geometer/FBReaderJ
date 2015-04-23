@@ -137,6 +137,10 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 		return myDescription.getVerticalAlign(metrics, Parent.getVerticalAlign(metrics), fontSize);
 	}
 	@Override
+	protected boolean isVerticallyAlignedInternal() {
+		return myDescription.hasNonZeroVerticalAlign();
+	}
+	@Override
 	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
 		return myDescription.getSpaceBefore(metrics, Parent.getSpaceBefore(metrics), fontSize);
 	}

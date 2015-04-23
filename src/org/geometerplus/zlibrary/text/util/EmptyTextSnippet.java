@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+package org.geometerplus.zlibrary.text.util;
 
-public interface CharStorage {
-	int size();
-	char[] block(int index);
-	char[] createNewBlock(int minimumLength);
-	void freezeLastBlock();
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
+public class EmptyTextSnippet implements TextSnippet {
+	private final ZLTextPosition myPosition;
+
+	public EmptyTextSnippet(ZLTextPosition position) {
+		myPosition = new ZLTextFixedPosition(position);
+	}
+
+	public ZLTextPosition getStart() {
+		return myPosition;
+	}
+
+	public ZLTextPosition getEnd() {
+		return myPosition;
+	}
+
+	public String getText() {
+		return "";
+	}
 }

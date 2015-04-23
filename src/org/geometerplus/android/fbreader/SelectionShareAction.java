@@ -32,7 +32,7 @@ public class SelectionShareAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final String text = Reader.getTextView().getSelectedText();
+		final String text = Reader.getTextView().getSelectedSnippet().getText();
 		final String title = Reader.getCurrentBook().getTitle();
 		Reader.getTextView().clearSelection();
 

@@ -17,21 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+package org.geometerplus.android.fbreader;
 
-import java.lang.ref.WeakReference;
-import java.util.Collections;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-public final class CachedCharStorageRO extends CachedCharStorageBase {
-	public CachedCharStorageRO(String directoryName, String fileExtension, int blocksNumber) {
-		super(directoryName, fileExtension);
-		myArray.addAll(Collections.nCopies(blocksNumber, new WeakReference<char[]>(null)));
+public class HideToastAction extends FBAndroidAction {
+	HideToastAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader);
 	}
 
-	public char[] createNewBlock(int minimumLength) {
-		throw new UnsupportedOperationException("CachedCharStorageRO is a read-only storage.");
+	@Override
+	public boolean isEnabled() {
+		return BaseActivity.isToastShown();
 	}
 
-	public void freezeLastBlock() {
+	@Override
+	protected void run(Object ... params) {
+		BaseActivity.hideToast();
 	}
 }

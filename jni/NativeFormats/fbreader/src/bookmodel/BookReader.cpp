@@ -156,9 +156,12 @@ void BookReader::addHyperlinkControl(FBTextKind kind, const std::string &label) 
 	std::string type;
 	switch (myHyperlinkKind) {
 		case INTERNAL_HYPERLINK:
-		case FOOTNOTE:
 			myHyperlinkType = HYPERLINK_INTERNAL;
 			type = "internal";
+			break;
+		case FOOTNOTE:
+			myHyperlinkType = HYPERLINK_FOOTNOTE;
+			type = "footnote";
 			break;
 		case EXTERNAL_HYPERLINK:
 			myHyperlinkType = HYPERLINK_EXTERNAL;
@@ -232,7 +235,7 @@ void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image
 
 	jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
 	JString javaId(env, id);
-	AndroidUtil::Method_NativeBookModel_addImage->call(myModel.myJavaModel, javaId.j(), javaImage);
+	AndroidUtil::Method_BookModel_addImage->call(myModel.myJavaModel, javaId.j(), javaImage);
 
 	env->DeleteLocalRef(javaImage);
 }
