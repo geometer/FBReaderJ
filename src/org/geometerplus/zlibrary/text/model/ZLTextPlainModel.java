@@ -25,20 +25,20 @@ import org.geometerplus.zlibrary.core.fonts.FontManager;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.*;
 
-public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
+public final class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	private final String myId;
 	private final String myLanguage;
 
-	protected int[] myStartEntryIndices;
-	protected int[] myStartEntryOffsets;
-	protected int[] myParagraphLengths;
-	protected int[] myTextSizes;
-	protected byte[] myParagraphKinds;
+	private int[] myStartEntryIndices;
+	private int[] myStartEntryOffsets;
+	private int[] myParagraphLengths;
+	private int[] myTextSizes;
+	private byte[] myParagraphKinds;
 
-	protected int myParagraphsNumber;
+	private int myParagraphsNumber;
 
-	protected final CharStorage myStorage;
-	protected final Map<String,ZLImage> myImageMap;
+	private final CachedCharStorage myStorage;
+	private final Map<String,ZLImage> myImageMap;
 
 	private ArrayList<ZLTextMark> myMarks;
 
@@ -298,26 +298,30 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		}
 	}
 
-	protected ZLTextPlainModel(
+	public ZLTextPlainModel(
 		String id,
 		String language,
+		int paragraphsNumber,
 		int[] entryIndices,
 		int[] entryOffsets,
-		int[] paragraphLenghts,
+		int[] paragraphLengths,
 		int[] textSizes,
 		byte[] paragraphKinds,
-		CharStorage storage,
+		String directoryName,
+		String fileExtension,
+		int blocksNumber,
 		Map<String,ZLImage> imageMap,
 		FontManager fontManager
 	) {
 		myId = id;
 		myLanguage = language;
+		myParagraphsNumber = paragraphsNumber;
 		myStartEntryIndices = entryIndices;
 		myStartEntryOffsets = entryOffsets;
-		myParagraphLengths = paragraphLenghts;
+		myParagraphLengths = paragraphLengths;
 		myTextSizes = textSizes;
 		myParagraphKinds = paragraphKinds;
-		myStorage = storage;
+		myStorage = new CachedCharStorage(directoryName, fileExtension, blocksNumber);
 		myImageMap = imageMap;
 		myFontManager = fontManager;
 	}

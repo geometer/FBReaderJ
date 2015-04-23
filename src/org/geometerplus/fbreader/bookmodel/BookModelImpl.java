@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.fbreader.book.Book;
 
 abstract class BookModelImpl extends BookModel {
-	protected CharStorage myInternalHyperlinks;
+	protected CachedCharStorage myInternalHyperlinks;
 	protected final HashMap<String,ZLImage> myImageMap = new HashMap<String,ZLImage>();
 	protected final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
