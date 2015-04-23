@@ -114,6 +114,11 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		if (myReader.isActionEnabled(ActionCode.HIDE_TOAST)) {
+			myReader.runAction(ActionCode.HIDE_TOAST);
+			return true;
+		}
+
 		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, getContextWidth(), getContextHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
