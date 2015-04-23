@@ -321,6 +321,7 @@ class BookmarkSyncUtil {
 			bmk.put("version_uid", bookmark.getVersionUid());
 			bmk.put("style_id", bookmark.getStyleId());
 			bmk.put("text", bookmark.getText());
+			bmk.put("original_text", bookmark.getOriginalText());
 			bmk.put("model_id", bookmark.ModelId);
 			bmk.put("para_start", bookmark.getParagraphIndex());
 			bmk.put("elmt_start", bookmark.getElementIndex());
@@ -390,6 +391,7 @@ class BookmarkSyncUtil {
 			-1, (String)data.get("uid"), (String)data.get("version_uid"),
 			bookId, bookTitle,
 			(String)data.get("text"),
+			(String)data.get("original_text"),
 			getDate(data, "creation_timestamp"),
 			getDate(data, "modification_timestamp"),
 			getDate(data, "access_timestamp"),
