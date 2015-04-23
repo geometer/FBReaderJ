@@ -101,6 +101,8 @@ public interface IBookCollection {
 	HighlightingStyle getHighlightingStyle(int styleId);
 	List<HighlightingStyle> highlightingStyles();
 	void saveHighlightingStyle(HighlightingStyle style);
+	int getDefaultHighlightingStyleId();
+	void setDefaultHighlightingStyleId(int styleId);
 
 	public class FormatDescriptor {
 		public String Id;

@@ -529,6 +529,27 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public int getDefaultHighlightingStyleId() {
+		if (myInterface == null) {
+			return 1;
+		}
+		try {
+			return myInterface.getDefaultHighlightingStyleId();
+		} catch (RemoteException e) {
+			return 1;
+		}
+	}
+
+	public void setDefaultHighlightingStyleId(int styleId) {
+		if (myInterface != null) {
+			try {
+				myInterface.setDefaultHighlightingStyleId(styleId);
+			} catch (RemoteException e) {
+				// ignore
+			}
+		}
+	}
+
 	public synchronized void rescan(String path) {
 		if (myInterface != null) {
 			try {
