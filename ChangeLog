@@ -4,6 +4,9 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.4 beta 4 (Apr ??, 2015) =====
+* Uses last style id to create new bookmarks
+
 ===== 2.4 beta 3 (Apr 22, 2015) =====
 * Fixed long-tap finger selection (word under finger is selected, not a word in the line above)
 * Uses 'epub:type' attribute for detecting footnotes

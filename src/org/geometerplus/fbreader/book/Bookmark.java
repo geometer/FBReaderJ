@@ -34,8 +34,8 @@ public final class Bookmark extends ZLTextFixedPosition {
 		Latest
 	}
 
-	public static Bookmark createBookmark(Book book, String modelId, ZLTextWordCursor startCursor, int maxWords, boolean isVisible) {
-		return new Bookmark(book, modelId, new AutoTextSnippet(startCursor, maxWords), isVisible);
+	public static Bookmark createBookmark(IBookCollection collection, Book book, String modelId, ZLTextWordCursor startCursor, int maxWords, boolean visible) {
+		return new Bookmark(collection, book, modelId, new AutoTextSnippet(startCursor, maxWords), visible);
 	}
 
 	private long myId;
@@ -110,7 +110,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	}
 
 	// creates new bookmark
-	public Bookmark(Book book, String modelId, TextSnippet snippet, boolean isVisible) {
+	public Bookmark(IBookCollection collection, Book book, String modelId, TextSnippet snippet, boolean visible) {
 		super(snippet.getStart());
 
 		myId = -1;
@@ -120,9 +120,9 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myText = snippet.getText();
 		CreationDate = new Date();
 		ModelId = modelId;
-		IsVisible = isVisible;
+		IsVisible = visible;
 		myEnd = new ZLTextFixedPosition(snippet.getEnd());
-		myStyleId = 1;
+		myStyleId = collection.getDefaultHighlightingStyleId();
 	}
 
 	public void findEnd(ZLTextView view) {
