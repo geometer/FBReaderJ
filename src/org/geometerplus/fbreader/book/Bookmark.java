@@ -45,6 +45,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	public final long BookId;
 	public final String BookTitle;
 	private String myText;
+	private String myOriginalText;
 
 	public final Date CreationDate;
 	private Date myModificationDate;
@@ -64,6 +65,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 		BookId = bookId;
 		BookTitle = original.BookTitle;
 		myText = original.myText;
+		myOriginalText = original.myOriginalText;
 		CreationDate = original.CreationDate;
 		myModificationDate = original.myModificationDate;
 		myAccessDate = original.myAccessDate;
@@ -78,7 +80,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	// uid parameter can be null when comes from old format plugin!
 	public Bookmark(
 		long id, String uid, String versionUid,
-		long bookId, String bookTitle, String text,
+		long bookId, String bookTitle, String text, String originalText,
 		Date creationDate, Date modificationDate, Date accessDate,
 		String modelId,
 		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
@@ -95,6 +97,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 		BookId = bookId;
 		BookTitle = bookTitle;
 		myText = text;
+		myOriginalText = originalText;
 		CreationDate = creationDate;
 		myModificationDate = modificationDate;
 		ModelId = modelId;
@@ -118,6 +121,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 		BookId = book.getId();
 		BookTitle = book.getTitle();
 		myText = snippet.getText();
+		myOriginalText = null;
 		CreationDate = new Date();
 		ModelId = modelId;
 		IsVisible = visible;
@@ -193,8 +197,17 @@ mainLoop:
 		return myText;
 	}
 
+	public String getOriginalText() {
+		return myOriginalText;
+	}
+
 	public void setText(String text) {
 		if (!text.equals(myText)) {
+			if (myOriginalText == null) {
+				myOriginalText = myText;
+			} else if (myOriginalText.equals(text)) {
+				myOriginalText = null;
+			}
 			myText = text;
 			onModification();
 		}
