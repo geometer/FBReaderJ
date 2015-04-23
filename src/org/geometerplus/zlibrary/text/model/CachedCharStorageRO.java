@@ -20,18 +20,58 @@
 package org.geometerplus.zlibrary.text.model;
 
 import java.lang.ref.WeakReference;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Collections;
 
-public final class CachedCharStorageRO extends CachedCharStorageBase {
+public final class CachedCharStorageRO implements CharStorage {
+	protected final ArrayList<WeakReference<char[]>> myArray =
+		new ArrayList<WeakReference<char[]>>();
+
+	private final String myDirectoryName;
+	private final String myFileExtension;
+
 	public CachedCharStorageRO(String directoryName, String fileExtension, int blocksNumber) {
-		super(directoryName, fileExtension);
+		myDirectoryName = directoryName + '/';
+		myFileExtension = '.' + fileExtension;
 		myArray.addAll(Collections.nCopies(blocksNumber, new WeakReference<char[]>(null)));
 	}
 
-	public char[] createNewBlock(int minimumLength) {
-		throw new UnsupportedOperationException("CachedCharStorageRO is a read-only storage.");
+	protected String fileName(int index) {
+		return myDirectoryName + index + myFileExtension;
 	}
 
-	public void freezeLastBlock() {
+	public int size() {
+		return myArray.size();
+	}
+
+	public char[] block(int index) {
+		if (index < 0 || index >= myArray.size()) {
+			return null;
+		}
+		char[] block = myArray.get(index).get();
+		if (block == null) {
+			try {
+				File file = new File(fileName(index));
+				int size = (int)file.length();
+				if (size < 0) {
+					throw new CachedCharStorageException("Error during reading " + fileName(index));
+				}
+				block = new char[size / 2];
+				InputStreamReader reader =
+					new InputStreamReader(
+						new FileInputStream(file),
+						"UTF-16LE"
+					);
+				if (reader.read(block) != block.length) {
+					throw new CachedCharStorageException("Error during reading " + fileName(index));
+				}
+				reader.close();
+			} catch (IOException e) {
+				throw new CachedCharStorageException("Error during reading " + fileName(index));
+			}
+			myArray.set(index, new WeakReference<char[]>(block));
+		}
+		return block;
 	}
 }
