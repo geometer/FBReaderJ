@@ -422,6 +422,14 @@ public class LibraryService extends Service {
 			myCollection.saveHighlightingStyle(SerializerUtil.deserializeStyle(style));
 		}
 
+		public int getDefaultHighlightingStyleId() {
+			return myCollection.getDefaultHighlightingStyleId();
+		}
+
+		public void setDefaultHighlightingStyleId(int styleId) {
+			myCollection.setDefaultHighlightingStyleId(styleId);
+		}
+
 		public void rescan(String path) {
 			myCollection.rescan(path);
 		}

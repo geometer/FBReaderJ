@@ -265,6 +265,7 @@ public class EditBookmarkActivity extends Activity implements IBookCollection.Li
 			myCollection.bindToService(EditBookmarkActivity.this, new Runnable() {
 				public void run() {
 					myBookmark.setStyleId(style.Id);
+					myCollection.setDefaultHighlightingStyleId(style.Id);
 					myCollection.saveBookmark(myBookmark);
 				}
 			});
