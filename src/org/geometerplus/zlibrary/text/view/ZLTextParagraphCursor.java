@@ -265,11 +265,11 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public ZLTextParagraphCursor previous() {
-		return isFirst() ? null : CursorManager.cursor(Index - 1);
+		return isFirst() ? null : CursorManager.get(Index - 1);
 	}
 
 	public ZLTextParagraphCursor next() {
-		return isLast() ? null : CursorManager.cursor(Index + 1);
+		return isLast() ? null : CursorManager.get(Index + 1);
 	}
 
 	ZLTextElement getElement(int index) {

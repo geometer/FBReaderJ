@@ -19,34 +19,22 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.lang.ref.WeakReference;
-import java.util.*;
+import android.support.v4.util.LruCache;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 
-final class CursorManager {
+final class CursorManager extends LruCache<Integer,ZLTextParagraphCursor> {
 	private final ZLTextModel myModel;
 	final ExtensionElementManager ExtensionManager;
 
 	CursorManager(ZLTextModel model, ExtensionElementManager extManager) {
+		super(200); // max 200 cursors in the cache
 		myModel = model;
 		ExtensionManager = extManager;
 	}
 
-	private final HashMap<Integer,WeakReference<ZLTextParagraphCursor>> myMap =
-		new HashMap<Integer,WeakReference<ZLTextParagraphCursor>>();
-
-	ZLTextParagraphCursor cursor(int index) {
-		final WeakReference<ZLTextParagraphCursor> ref = myMap.get(index);
-		ZLTextParagraphCursor result = ref != null ? ref.get() : null;
-		if (result == null) {
-			result = new ZLTextParagraphCursor(this, myModel, index);
-			myMap.put(index, new WeakReference<ZLTextParagraphCursor>(result));
-		}
-		return result;
-	}
-
-	void clear() {
-		myMap.clear();
+	@Override
+	protected ZLTextParagraphCursor create(Integer index) {
+		return new ZLTextParagraphCursor(this, myModel, index);
 	}
 }
