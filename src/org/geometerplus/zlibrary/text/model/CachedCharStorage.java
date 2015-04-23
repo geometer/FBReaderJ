@@ -24,20 +24,20 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public final class CachedCharStorageRO implements CharStorage {
+public final class CachedCharStorage {
 	protected final ArrayList<WeakReference<char[]>> myArray =
 		new ArrayList<WeakReference<char[]>>();
 
 	private final String myDirectoryName;
 	private final String myFileExtension;
 
-	public CachedCharStorageRO(String directoryName, String fileExtension, int blocksNumber) {
+	public CachedCharStorage(String directoryName, String fileExtension, int blocksNumber) {
 		myDirectoryName = directoryName + '/';
 		myFileExtension = '.' + fileExtension;
 		myArray.addAll(Collections.nCopies(blocksNumber, new WeakReference<char[]>(null)));
 	}
 
-	protected String fileName(int index) {
+	private String fileName(int index) {
 		return myDirectoryName + index + myFileExtension;
 	}
 
