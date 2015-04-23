@@ -83,7 +83,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
 			if (paragraphsNumber > 0) {
-				myCurrentPage.moveStartCursor(myCursorManager.cursor(0));
+				myCurrentPage.moveStartCursor(myCursorManager.get(0));
 			}
 		}
 		Application.getViewWidget().reset();
@@ -1588,7 +1588,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myPreviousPage.reset();
 		myNextPage.reset();
 		if (myCursorManager != null) {
-			myCursorManager.clear();
+			myCursorManager.evictAll();
 		}
 
 		if (myCurrentPage.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
@@ -1852,7 +1852,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	ZLTextParagraphCursor cursor(int index) {
-		return myCursorManager.cursor(index);
+		return myCursorManager.get(index);
 	}
 
 	protected abstract ExtensionElementManager getExtensionManager();
