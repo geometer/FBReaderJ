@@ -780,9 +780,9 @@ public class BookCollection extends AbstractBookCollection {
 		return new ArrayList<HighlightingStyle>(myStyles.values());
 	}
 
-	public void saveHighlightingStyle(HighlightingStyle style) {
-		myStyles.put(style.Id, style);
+	public synchronized void saveHighlightingStyle(HighlightingStyle style) {
 		myDatabase.saveStyle(style);
+		myStyles.clear();
 		fireBookEvent(BookEvent.BookmarkStyleChanged, null);
 	}
 
