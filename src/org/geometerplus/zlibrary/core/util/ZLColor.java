@@ -55,7 +55,7 @@ public final class ZLColor {
 		}
 
 		ZLColor color = (ZLColor)o;
-		return (color.Red == Red) && (color.Green == Green) && (color.Blue == Blue);
+		return color.Red == Red && color.Green == Green && color.Blue == Blue;
 	}
 
 	@Override
