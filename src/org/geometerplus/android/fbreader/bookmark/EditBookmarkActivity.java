@@ -232,17 +232,9 @@ public class EditBookmarkActivity extends Activity implements IBookCollection.Li
 
 			checkBox.setChecked(style.Id == myBookmark.getStyleId());
 
-			final ZLColor color = style.getBackgroundColor();
-			final int rgb = color != null ? ZLAndroidColorUtil.rgb(color) : -1;
-
 			colorView.setVisibility(View.VISIBLE);
-			if (rgb != -1) {
-				colorView.showCross(false);
-				colorView.setBackgroundColor(rgb);
-			} else {
-				colorView.showCross(true);
-				colorView.setBackgroundColor(0);
-			}
+			BookmarksUtil.setupColorView(colorView, style);
+
 			titleView.setText(style.getName());
 
 			button.setVisibility(View.VISIBLE);
