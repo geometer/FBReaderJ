@@ -1,6 +1,8 @@
 <resources>
   <style name="FBReader.Activity" parent="android:Theme">
-	</style>
+  </style>
+  <style name="FBReader.Activity.NoActionBar" parent="android:Theme">
+  </style>
   <style name="FBReader.Dialog" parent="android:Theme.Dialog">
 	</style>
 	<color name="transparent">#00000000</color>
