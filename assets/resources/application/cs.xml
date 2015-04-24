@@ -424,7 +424,7 @@
 				<node name="summaryOn" value="Zobrazit text ve dvou sloupcích, pokud je zařízení drženo vodorovně"/>
 				<node name="summaryOff" value="Vždy zobrazovat text v jednom sloupci"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
