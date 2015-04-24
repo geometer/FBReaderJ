@@ -407,7 +407,7 @@
 				<node name="summaryOn" value="Afiseaza pe doua coloane doar cand dispozitivul este pe orizontala"/>
 				<node name="summaryOff" value="Afiseaza intotdeauna pe o coloana"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
