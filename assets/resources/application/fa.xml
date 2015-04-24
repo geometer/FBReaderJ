@@ -414,7 +414,7 @@
 				<node name="summaryOn" value="هنگامی که دستگاه افقی نگه داشته شده متن را دوستونه نشان بده"/>
 				<node name="summaryOff" value="هميشه متن در يك ستون نشان داده شود"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>

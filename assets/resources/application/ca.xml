@@ -421,7 +421,7 @@
 				<node name="summaryOn" value="Mostra el text en dues columnes quan el dispositiu estigui en mode horitzontal"/>
 				<node name="summaryOff" value="Mostra sempre el text en una columna"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>

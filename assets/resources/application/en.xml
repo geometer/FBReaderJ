@@ -415,7 +415,7 @@
 				<node name="summaryOn" value="Display text in two columns when device is held horizontally"/>
 				<node name="summaryOff" value="Always display text in one column"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window">
+			<node name="showFootnoteToast" value="Show linked text in a popup">
 				<node name="never" value="Never"/>
 				<node name="footnotesOnly" value="For footnotes only"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links"/>
