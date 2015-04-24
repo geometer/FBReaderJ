@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 36;
+		final int currentVersion = 37;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -155,6 +155,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables34();
 			case 35:
 				updateTables35();
+			case 36:
+				updateTables36();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -904,14 +906,15 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected List<HighlightingStyle> loadStyles() {
 		final LinkedList<HighlightingStyle> list = new LinkedList<HighlightingStyle>();
-		final String sql = "SELECT style_id,name,bg_color,fg_color FROM HighlightingStyle";
+		final String sql = "SELECT style_id,timestamp,name,bg_color,fg_color FROM HighlightingStyle";
 		final Cursor cursor = myDatabase.rawQuery(sql, null);
 		while (cursor.moveToNext()) {
 			list.add(createStyle(
 				(int)cursor.getLong(0),
-				cursor.getString(1),
-				(int)cursor.getLong(2),
-				(int)cursor.getLong(3)
+				cursor.getLong(1),
+				cursor.getString(2),
+				(int)cursor.getLong(3),
+				(int)cursor.getLong(4)
 			));
 		}
 		cursor.close();
@@ -920,7 +923,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected void saveStyle(HighlightingStyle style) {
 		final SQLiteStatement statement = get(
-			"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color,fg_color) VALUES (?,?,?,?)"
+			"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color,fg_color,timestamp) VALUES (?,?,?,?,?)"
 		);
 		statement.bindLong(1, style.Id);
 		final String name = style.getName();
@@ -929,6 +932,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
 		final ZLColor fgColor = style.getForegroundColor();
 		statement.bindLong(4, fgColor != null ? fgColor.intValue() : -1);
+		statement.bindLong(5, System.currentTimeMillis());
 		statement.execute();
 	}
 
@@ -1692,6 +1696,38 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables35() {
 		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN original_text TEXT DEFAULT NULL");
+	}
+
+	private int styleBg(int styleId) {
+		switch (styleId) {
+			case 1:
+				return 0x888a85;
+			case 2:
+				return 0xf57900;
+			case 3:
+				return 0x729fcf;
+			default:
+				return 0;
+		}
+	}
+
+	private void updateTables36() {
+		myDatabase.execSQL("ALTER TABLE HighlightingStyle ADD COLUMN timestamp INTEGER DEFAULT 0");
+
+		final String sql = "SELECT style_id,name,bg_color FROM HighlightingStyle";
+		final Cursor cursor = myDatabase.rawQuery(sql, null);
+		final SQLiteStatement statement =
+			get("UPDATE HighlightingStyle SET timestamp=? WHERE style_id=?");
+		while (cursor.moveToNext()) {
+			final int styleId = (int)cursor.getLong(0);
+			if ((!cursor.isNull(1) && !"".equals(cursor.getString(1))) ||
+					styleBg(styleId) != (int)cursor.getLong(2)) {
+				statement.bindLong(1, System.currentTimeMillis());
+				statement.bindLong(2, styleId);
+				statement.execute();
+			}
+		}
+		cursor.close();
 	}
 
 	private SQLiteStatement get(String sql) {
