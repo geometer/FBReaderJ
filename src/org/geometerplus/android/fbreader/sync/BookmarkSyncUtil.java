@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.sync;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.JsonRequest2;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
@@ -62,6 +63,8 @@ class BookmarkSyncUtil {
 				}
 			}
 
+			final long serverStyleTimestamp = (Long)responseMap.get("style_timestamp");
+			System.err.println("BMK STYLE TIMESTAMP = " + serverStyleTimestamp);
 			System.err.println("BMK ACTUAL = " + actualServerInfos);
 			System.err.println("BMK DELETED = " + deletedOnServerUids);
 
@@ -221,12 +224,35 @@ class BookmarkSyncUtil {
 			for (String uid : toDeleteOnServer) {
 				requests.add(new DeleteRequest(uid));
 			}
-			if (!requests.isEmpty()) {
-				final Map<String,Object> dataForSending = new HashMap<String,Object>();
-				dataForSending.put("requests", requests);
-				dataForSending.put("timestamp", System.currentTimeMillis());
+
+			final List<Map<String,Object>> stylesToSend = new ArrayList<Map<String,Object>>();
+			for (HighlightingStyle style : collection.highlightingStyles()) {
+				if (style.LastUpdateTimestamp <= serverStyleTimestamp) {
+					continue;
+				}
+				final Map<String,Object> styleMap = new HashMap<String,Object>();
+				styleMap.put("style_id", style.Id);
+				styleMap.put("timestamp", style.LastUpdateTimestamp);
+				styleMap.put("name", style.getName());
+				final ZLColor bg = style.getBackgroundColor();
+				if (bg != null) {
+					styleMap.put("bg_color", bg.intValue());
+				}
+				final ZLColor fg = style.getForegroundColor();
+				if (fg != null) {
+					styleMap.put("fg_color", fg.intValue());
+				}
+				stylesToSend.add(styleMap);
+			}
+
+			if (!requests.isEmpty() || !stylesToSend.isEmpty()) {
+				final Map<String,Object> allDataToSend = new HashMap<String,Object>();
+				allDataToSend.put("requests", requests);
+				allDataToSend.put("timestamp", System.currentTimeMillis());
+				allDataToSend.put("styles", stylesToSend);
+				System.err.println("BMK SENDING: " + allDataToSend);
 				final JsonRequest2 serverUpdateRequest = new JsonRequest2(
-					SyncOptions.BASE_URL + "sync/update.bookmarks", dataForSending
+					SyncOptions.BASE_URL + "sync/update.bookmarks", allDataToSend
 				) {
 					@Override
 					public void processResponse(Object response) {

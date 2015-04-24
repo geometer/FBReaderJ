@@ -131,9 +131,9 @@ public abstract class BooksDatabase {
 	protected abstract List<String> deletedBookmarkUids();
 	protected abstract void purgeBookmarks(List<String> uids);
 
-	protected HighlightingStyle createStyle(int id, String name, int bgColor, int fgColor) {
+	protected HighlightingStyle createStyle(int id, long timestamp, String name, int bgColor, int fgColor) {
 		return new HighlightingStyle(
-			id, name,
+			id, timestamp, name,
 			bgColor != -1 ? new ZLColor(bgColor) : null,
 			fgColor != -1 ? new ZLColor(fgColor) : null
 		);
