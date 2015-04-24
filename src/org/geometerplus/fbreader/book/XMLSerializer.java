@@ -336,6 +336,7 @@ class XMLSerializer extends AbstractSerializer {
 		final ZLColor fgColor = style.getForegroundColor();
 		appendTag(buffer, "style", true,
 			"id", String.valueOf(style.Id),
+			"timestamp", String.valueOf(style.LastUpdateTimestamp),
 			"name", style.getName(),
 			"bg-color", bgColor != null ? String.valueOf(bgColor.intValue()) : "-1",
 			"fg-color", fgColor != null ? String.valueOf(fgColor.intValue()) : "-1"
@@ -1069,11 +1070,12 @@ class XMLSerializer extends AbstractSerializer {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if ("style".equals(localName)) {
 				final int id = parseIntSafe(attributes.getValue("id"), -1);
+				final long timestamp = parseLongSafe(attributes.getValue("timestamp"), 0L);
 				if (id != -1) {
 					final int bg = parseIntSafe(attributes.getValue("bg-color"), -1);
 					final int fg = parseIntSafe(attributes.getValue("fg-color"), -1);
 					myStyle = new HighlightingStyle(
-						id, attributes.getValue("name"),
+						id, timestamp, attributes.getValue("name"),
 						bg != -1 ? new ZLColor(bg) : null,
 						fg != -1 ? new ZLColor(fg) : null
 					);
