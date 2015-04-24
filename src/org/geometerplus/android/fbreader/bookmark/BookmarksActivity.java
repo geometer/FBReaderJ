@@ -41,10 +41,12 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.*;
 
-public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
+public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemClickListener {
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
+
+	private TabHost myTabHost;
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile Book myBook;
@@ -60,9 +62,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
 	private ListView createTab(String tag, int id) {
-		final TabHost host = getTabHost();
 		final String label = myResource.getResource(tag).getValue();
-		host.addTab(host.newTabSpec(tag).setIndicator(label).setContent(id));
+		myTabHost.addTab(myTabHost.newTabSpec(tag).setIndicator(label).setContent(id));
 		return (ListView)findViewById(id);
 	}
 
@@ -72,6 +73,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		setContentView(R.layout.bookmarks);
 
 		final ActionBar bar = getActionBar();
 		if (bar != null) {
@@ -82,8 +84,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 		manager.setOnCancelListener(null);
 
-		final TabHost host = getTabHost();
-		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
+        myTabHost = (TabHost)findViewById(R.id.bookmarks_tabhost);
+		myTabHost.setup();
 
 		myBook = FBReaderIntents.getBookExtra(getIntent());
 	}
@@ -211,7 +213,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			mySearchResultsAdapter.clear();
 		}
 		mySearchResultsAdapter.addAll(results);
-		getTabHost().setCurrentTabByTag("found");
+		myTabHost.setCurrentTabByTag("found");
 	}
 
 	@Override
@@ -227,7 +229,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final ListView view = (ListView)getTabHost().getCurrentView();
+		final ListView view = (ListView)myTabHost.getCurrentView();
 		final Bookmark bookmark = ((BookmarksAdapter)view.getAdapter()).getItem(position);
 		switch (item.getItemId()) {
 			case OPEN_ITEM_ID:
