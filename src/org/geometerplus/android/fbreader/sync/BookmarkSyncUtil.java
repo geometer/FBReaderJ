@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.sync;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.JsonRequest2;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.fbreader.book.*;
@@ -32,6 +33,9 @@ class BookmarkSyncUtil {
 		try {
 			final Map<String,Info> actualServerInfos = new HashMap<String,Info>();
 			final Set<String> deletedOnServerUids = new HashSet<String>();
+			final Map<Integer,Map<String,Object>> serverStyles =
+				new HashMap<Integer,Map<String,Object>>();
+
 			JsonRequest2 infoRequest = null;
 
 			// Step 0: loading bookmarks info lists (actual & deleted bookmark ids)
@@ -62,11 +66,9 @@ class BookmarkSyncUtil {
 					break;
 				}
 			}
-
-			final long serverStyleTimestamp = (Long)responseMap.get("style_timestamp");
-			System.err.println("BMK STYLE TIMESTAMP = " + serverStyleTimestamp);
-			System.err.println("BMK ACTUAL = " + actualServerInfos);
-			System.err.println("BMK DELETED = " + deletedOnServerUids);
+			for (Map<String,Object> info : (List<Map<String,Object>>)responseMap.get("styles")) {
+				serverStyles.put((int)(long)(Long)info.get("style_id"), info);
+			}
 
 			// Step 1: purge deleted bookmarks info already synced with server
 			final Set<String> deletedOnClientUids = new HashSet<String>(
@@ -80,7 +82,7 @@ class BookmarkSyncUtil {
 				}
 			}
 
-			// Step 2: prepare lists of bookmarks to create/delete/update on server/client
+			// Step 2a: prepare lists of bookmarks to create/delete/update on server/client
 			//    (total 6 lists)
 			final List<Bookmark> toSendToServer = new LinkedList<Bookmark>();
 			final List<Bookmark> toDeleteOnClient = new LinkedList<Bookmark>();
@@ -139,12 +141,67 @@ class BookmarkSyncUtil {
 				}
 			}
 
-			System.err.println("BMK TO SEND TO SERVER = " + ids(toSendToServer));
-			System.err.println("BMK TO DELETE ON SERVER = " + toDeleteOnServer);
-			System.err.println("BMK TO DELETE ON CLIENT = " + ids(toDeleteOnClient));
-			System.err.println("BMK TO UPDATE ON SERVER = " + ids(toUpdateOnServer));
-			System.err.println("BMK TO UPDATE ON CLIENT = " + ids(toUpdateOnClient));
-			System.err.println("BMK TO GET FROM SERVER = " + toGetFromServer);
+			// Step 2b: update styles on client,
+			//	 prepare lists of styles to create/update on server
+			final List<Map<String,Object>> stylesToSend = new ArrayList<Map<String,Object>>();
+			for (HighlightingStyle style : collection.highlightingStyles()) {
+				final Map<String,Object> serverInfo = serverStyles.get(style.Id);
+				boolean doSend = false;
+				if (serverInfo == null) {
+					doSend = true;
+				} else {
+					boolean doUpdate = false;
+
+					final String clientName = style.getName();
+					final String serverName = (String)serverInfo.get("name");
+					if (!clientName.equals(serverName)) {
+						doUpdate = true;
+					}
+
+					final ZLColor clientBg = style.getBackgroundColor();
+					final Long serverBgCode = (Long)serverInfo.get("bg_color");
+					final ZLColor serverBg = serverBgCode != null
+						? new ZLColor((int)(long)serverBgCode) : null;
+					if (!MiscUtil.equals(clientBg, serverBg)) {
+						doUpdate = true;
+					}
+
+					final ZLColor clientFg = style.getForegroundColor();
+					final Long serverFgCode = (Long)serverInfo.get("fg_color");
+					final ZLColor serverFg = serverFgCode != null
+						? new ZLColor((int)(long)serverFgCode) : null;
+					if (!MiscUtil.equals(clientFg, serverFg)) {
+						doUpdate = true;
+					}
+
+					if (doUpdate) {
+						if (style.LastUpdateTimestamp < (Long)serverInfo.get("timestamp")) {
+							style.setName(serverName);
+							style.setBackgroundColor(serverBg);
+							style.setForegroundColor(serverFg);
+							collection.saveHighlightingStyle(style);
+						} else {
+							doSend = true;
+						}
+					}
+				}
+
+				if (doSend) {
+					final Map<String,Object> styleMap = new HashMap<String,Object>();
+					styleMap.put("style_id", style.Id);
+					styleMap.put("timestamp", style.LastUpdateTimestamp);
+					styleMap.put("name", style.getName());
+					final ZLColor bg = style.getBackgroundColor();
+					if (bg != null) {
+						styleMap.put("bg_color", bg.intValue());
+					}
+					final ZLColor fg = style.getForegroundColor();
+					if (fg != null) {
+						styleMap.put("fg_color", fg.intValue());
+					}
+					stylesToSend.add(styleMap);
+				}
+			}
 
 			// Step 3a: deleting obsolete bookmarks on client
 			for (Bookmark b : toDeleteOnClient) {
@@ -223,26 +280,6 @@ class BookmarkSyncUtil {
 			}
 			for (String uid : toDeleteOnServer) {
 				requests.add(new DeleteRequest(uid));
-			}
-
-			final List<Map<String,Object>> stylesToSend = new ArrayList<Map<String,Object>>();
-			for (HighlightingStyle style : collection.highlightingStyles()) {
-				if (style.LastUpdateTimestamp <= serverStyleTimestamp) {
-					continue;
-				}
-				final Map<String,Object> styleMap = new HashMap<String,Object>();
-				styleMap.put("style_id", style.Id);
-				styleMap.put("timestamp", style.LastUpdateTimestamp);
-				styleMap.put("name", style.getName());
-				final ZLColor bg = style.getBackgroundColor();
-				if (bg != null) {
-					styleMap.put("bg_color", bg.intValue());
-				}
-				final ZLColor fg = style.getForegroundColor();
-				if (fg != null) {
-					styleMap.put("fg_color", fg.intValue());
-				}
-				stylesToSend.add(styleMap);
 			}
 
 			if (!requests.isEmpty() || !stylesToSend.isEmpty()) {
