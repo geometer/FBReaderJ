@@ -27,6 +27,8 @@ import android.view.*;
 import android.widget.*;
 import android.content.*;
 
+import yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView;
+
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -47,6 +49,9 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 	private static final int DELETE_ITEM_ID = 2;
 
 	private TabHost myTabHost;
+
+	private final Map<Integer,HighlightingStyle> myStyles =
+		new HashMap<Integer,HighlightingStyle>();
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile Book myBook;
@@ -89,6 +94,10 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 
 	private class Initializer implements Runnable {
 		public void run() {
+			for (HighlightingStyle style : myCollection.highlightingStyles()) {
+				myStyles.put(style.Id, style);
+			}
+
 			if (myBook != null) {
 				for (BookmarkQuery query = new BookmarkQuery(myBook, 20); ; query = query.next()) {
 					final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
@@ -352,6 +361,8 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item, parent, false);
 			final ImageView imageView = ViewUtil.findImageView(view, R.id.bookmark_item_icon);
+			final AmbilWarnaPrefWidgetView colorView =
+				(AmbilWarnaPrefWidgetView)ViewUtil.findView(view, R.id.bookmark_item_color);
 			final TextView textView = ViewUtil.findTextView(view, R.id.bookmark_item_text);
 			final TextView bookTitleView = ViewUtil.findTextView(view, R.id.bookmark_item_booktitle);
 
@@ -359,10 +370,13 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 			if (bookmark == null) {
 				imageView.setVisibility(View.VISIBLE);
 				imageView.setImageResource(R.drawable.ic_list_plus);
+				colorView.setVisibility(View.GONE);
 				textView.setText(myResource.getResource("new").getValue());
 				bookTitleView.setVisibility(View.GONE);
 			} else {
 				imageView.setVisibility(View.GONE);
+				colorView.setVisibility(View.VISIBLE);
+				BookmarksUtil.setupColorView(colorView, myStyles.get(bookmark.getStyleId()));
 				textView.setText(bookmark.getText());
 				if (myShowAddBookmarkItem) {
 					bookTitleView.setVisibility(View.GONE);
