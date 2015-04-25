@@ -229,14 +229,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Questo libro"/>
 		<node name="allBooks" value="Tutti i libri"/>
-		<node name="found" value="Trovato"/>
 		<node name="new" value="Nuovo segnalibro"/>
-		<node name="open" value="Apri"/>
-		<node name="edit" value="Modifica segnalibro"/>
-		<node name="delete" value="Cancella segnalibro"/>
-		<node name="menu">
-			<node name="search" value="Cerca"/>
-		</node>
+		<node name="openBook" value="Apri"/>
+		<node name="editBookmark" value="Modifica segnalibro"/>
+		<node name="deleteBookmark" value="Cancella segnalibro"/>
+		<node name="search" value="Cerca"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

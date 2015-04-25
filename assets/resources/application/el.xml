@@ -228,14 +228,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Αυτό το βιβλίο"/>
 		<node name="allBooks" value="Όλα τα βιβλία"/>
-		<node name="found" value="Βρέθηκε(αν)"/>
 		<node name="new" value="Νέος σελιδοδείκτης"/>
-		<node name="open" value="Πήγαινε στον σελιδοδείκτη"/>
-		<node name="edit" value="Επεξεργασία σελιδοδείκτη"/>
-		<node name="delete" value="Διαγραφή σελιδοδείκτη"/>
-		<node name="menu">
-			<node name="search" value="Αναζήτηση"/>
-		</node>
+		<node name="openBook" value="Πήγαινε στον σελιδοδείκτη"/>
+		<node name="editBookmark" value="Επεξεργασία σελιδοδείκτη"/>
+		<node name="deleteBookmark" value="Διαγραφή σελιδοδείκτη"/>
+		<node name="search" value="Αναζήτηση"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

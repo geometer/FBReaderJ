@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="この本"/>
 		<node name="allBooks" value="すべての本"/>
-		<node name="found" value="検索結果"/>
 		<node name="new" value="しおりを作成"/>
-		<node name="open" value="開く"/>
-		<node name="edit" value="しおりを編集"/>
-		<node name="delete" value="しおりを削除"/>
-		<node name="menu">
-			<node name="search" value="検索"/>
-		</node>
+		<node name="openBook" value="開く"/>
+		<node name="editBookmark" value="しおりを編集"/>
+		<node name="deleteBookmark" value="しおりを削除"/>
+		<node name="search" value="検索"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

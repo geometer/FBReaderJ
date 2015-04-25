@@ -3,7 +3,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:minHeight="?android:attr/listPreferredItemHeight"
-	android:paddingLeft="5dip"
+	android:paddingLeft="5dp"
 	android:orientation="horizontal"
 >
 	<ImageView
@@ -13,18 +13,19 @@
 		android:singleLine="true"
 	/>
 	<RelativeLayout
-		android:layout_width="wrap_content"
+		android:id="@+id/bookmark_item_color_container"
+		android:layout_width="37dp"
 		android:layout_height="fill_parent"
-		android:paddingTop="12dp"
-		android:paddingBottom="12dp"
-		android:paddingLeft="5dp"
-		android:paddingRight="8dp"
 	>
 		<yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView
 			android:id="@+id/bookmark_item_color"
+			android:layout_marginTop="12dp"
+			android:layout_marginBottom="12dp"
+			android:layout_marginLeft="5dp"
+			android:layout_marginRight="8dp"
 			android:layout_width="24dp"
 			android:layout_height="24dp"
-			android:layout_gravity="center_vertical"
+			android:layout_centerInParent="true"
 			android:focusable="false"
 			android:clickable="false"
 		/>
@@ -33,10 +34,10 @@
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
 		android:minHeight="?android:attr/listPreferredItemHeight"
-		android:paddingLeft="5dip"
+		android:paddingLeft="5dp"
 		android:paddingRight="8dp"
-		android:layout_marginTop="5dip"
-		android:layout_marginBottom="5dip"
+		android:layout_marginTop="5dp"
+		android:layout_marginBottom="5dp"
 		android:orientation="vertical"
 		android:gravity="center_vertical|left"
 	>
@@ -53,7 +54,7 @@
 			android:id="@+id/bookmark_item_booktitle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="7dip"
+			android:layout_marginTop="7dp"
 			android:layout_below="@id/bookmark_item_text"
 			android:singleLine="true"
 			android:textAppearance="?android:attr/textAppearanceSmall"
