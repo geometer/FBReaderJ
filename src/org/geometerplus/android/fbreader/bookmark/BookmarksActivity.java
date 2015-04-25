@@ -79,7 +79,6 @@ public class BookmarksActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.bookmarks);
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
