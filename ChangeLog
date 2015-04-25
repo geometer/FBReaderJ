@@ -1,10 +1,11 @@
-===== 2.4 (Apr ??, 2015) =====
+===== 2.5 (Apr ??, 2015) =====
 * (planned) Tablet-oriented preferences dialog
 * (planned) Sync: single book upload
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.4 beta 4 (Apr ??, 2015) =====
+===== 2.4 (Apr ??, 2015) =====
+* Updated bookmarks list view
 * Uses last style id to create new bookmarks
 
 ===== 2.4 beta 3 (Apr 22, 2015) =====
