@@ -236,14 +236,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="هذا الكتاب"/>
 		<node name="allBooks" value="كل الكتب"/>
-		<node name="found" value="Found"/>
 		<node name="new" value="علامة مرجعية جديدة"/>
-		<node name="open" value="فتح"/>
-		<node name="edit" value="تعديل العلامة المرجعية"/>
-		<node name="delete" value="حذف العلامة المرجعية"/>
-		<node name="menu">
-			<node name="search" value="بحث"/>
-		</node>
+		<node name="openBook" value="فتح"/>
+		<node name="editBookmark" value="تعديل العلامة المرجعية"/>
+		<node name="deleteBookmark" value="حذف العلامة المرجعية"/>
+		<node name="search" value="بحث"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

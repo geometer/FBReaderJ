@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="This book"/>
 		<node name="allBooks" value="All books"/>
-		<node name="found" value="Found"/>
 		<node name="new" value="New bookmark"/>
-		<node name="open" value="Open"/>
-		<node name="edit" value="Edit bookmark"/>
-		<node name="delete" value="Delete bookmark"/>
-		<node name="menu">
-			<node name="search" value="Search"/>
-		</node>
+		<node name="openBook" value="Open"/>
+		<node name="editBookmark" value="Edit bookmark"/>
+		<node name="deleteBookmark" value="Delete bookmark"/>
+		<node name="search" value="Search"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text"/>

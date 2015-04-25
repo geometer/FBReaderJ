@@ -237,14 +237,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="این کتاب"/>
 		<node name="allBooks" value="همه کتابها"/>
-		<node name="found" value="پیدا شد"/>
 		<node name="new" value="آدرس جدید"/>
-		<node name="open" value="بازکردن"/>
-		<node name="edit" value="ویرایش آدرس"/>
-		<node name="delete" value="حذف آدرس"/>
-		<node name="menu">
-			<node name="search" value="جستجو"/>
-		</node>
+		<node name="openBook" value="بازکردن"/>
+		<node name="editBookmark" value="ویرایش آدرس"/>
+		<node name="deleteBookmark" value="حذف آدرس"/>
+		<node name="search" value="جستجو"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
