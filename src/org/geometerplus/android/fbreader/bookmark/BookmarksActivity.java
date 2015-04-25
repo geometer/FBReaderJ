@@ -43,7 +43,7 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.*;
 
-public class BookmarksActivity extends Activity {
+public class BookmarksActivity extends Activity implements IBookCollection.Listener {
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
@@ -145,6 +145,7 @@ public class BookmarksActivity extends Activity {
 					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_this_book), myBookmark != null);
 				myAllBooksAdapter =
 					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_all_books), false);
+				myCollection.addListener(BookmarksActivity.this);
 
 				new Thread(new Initializer()).start();
 			}
@@ -387,5 +388,25 @@ public class BookmarksActivity extends Activity {
 				myShowAddBookmarkItem = false;
 			}
 		}
+	}
+
+	// method from IBookCollection.Listener
+	public void onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			default:
+				break;
+			case BookmarkStyleChanged:
+			case BookmarksUpdated:
+				myAllBooksAdapter.notifyDataSetChanged();
+				myThisBookAdapter.notifyDataSetChanged();
+				if (mySearchResultsAdapter != mySearchResultsAdapter) {
+					mySearchResultsAdapter.notifyDataSetChanged();
+				}
+				break;
+		}
+	}
+
+	// method from IBookCollection.Listener
+	public void onBuildEvent(IBookCollection.Status status) {
 	}
 }
