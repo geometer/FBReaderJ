@@ -244,14 +244,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Тази книга"/>
 		<node name="allBooks" value="Всички книги"/>
-		<node name="found" value="Намерено"/>
 		<node name="new" value="Ново отбелязване"/>
-		<node name="open" value="Отвори"/>
-		<node name="edit" value="Редактирай отбелязването"/>
-		<node name="delete" value="Премахни отбелязването"/>
-		<node name="menu">
-			<node name="search" value="Търси"/>
-		</node>
+		<node name="openBook" value="Отвори"/>
+		<node name="editBookmark" value="Редактирай отбелязването"/>
+		<node name="deleteBookmark" value="Премахни отбелязването"/>
+		<node name="search" value="Търси"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

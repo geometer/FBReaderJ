@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Dit boek"/>
 		<node name="allBooks" value="Alle boeken"/>
-		<node name="found" value="Gevonden"/>
 		<node name="new" value="Nieuwe bladwijzer"/>
-		<node name="open" value="Openen"/>
-		<node name="edit" value="Bladwijzer bewerken"/>
-		<node name="delete" value="Bladwijzer verwijderen"/>
-		<node name="menu">
-			<node name="search" value="Zoeken"/>
-		</node>
+		<node name="openBook" value="Openen"/>
+		<node name="editBookmark" value="Bladwijzer bewerken"/>
+		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
+		<node name="search" value="Zoeken"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

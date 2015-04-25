@@ -22,20 +22,26 @@
 			android:layout_height="match_parent"
 		>
 			<ListView
-				android:id="@+id/this_book"
+				android:id="@+id/bookmarks_this_book"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 			/>
 			<ListView
-				android:id="@+id/all_books"
+				android:id="@+id/bookmarks_all_books"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 			/>
-			<ListView
-				android:id="@+id/search_results"
+			<FrameLayout
+				android:id="@+id/bookmarks_search"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-			/>
+			>
+				<ListView
+					android:id="@+id/bookmarks_search_results"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+				/>
+			</FrameLayout>
 		</FrameLayout>
 	</LinearLayout>
 </TabHost>

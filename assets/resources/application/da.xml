@@ -237,14 +237,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Denne bog"/>
 		<node name="allBooks" value="Alle bøger"/>
-		<node name="found" value="Fundet"/>
 		<node name="new" value="Nyt bogmærke"/>
-		<node name="open" value="Åbn"/>
-		<node name="edit" value="Rediger bogmærke"/>
-		<node name="delete" value="Slet Bogmærke"/>
-		<node name="menu">
-			<node name="search" value="Søg"/>
-		</node>
+		<node name="openBook" value="Åbn"/>
+		<node name="editBookmark" value="Rediger bogmærke"/>
+		<node name="deleteBookmark" value="Slet Bogmærke"/>
+		<node name="search" value="Søg"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

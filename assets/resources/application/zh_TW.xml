@@ -228,14 +228,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="本書"/>
 		<node name="allBooks" value="所有書藉"/>
-		<node name="found" value="搜尋結果"/>
 		<node name="new" value="新增書籤"/>
-		<node name="open" value="開啟書籤"/>
-		<node name="edit" value="編輯書籤"/>
-		<node name="delete" value="刪除書籤"/>
-		<node name="menu">
-			<node name="search" value="搜尋"/>
-		</node>
+		<node name="openBook" value="開啟書籤"/>
+		<node name="editBookmark" value="編輯書籤"/>
+		<node name="deleteBookmark" value="刪除書籤"/>
+		<node name="search" value="搜尋"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

@@ -243,14 +243,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Эта книга"/>
 		<node name="allBooks" value="Все книги"/>
-		<node name="found" value="Найдено"/>
 		<node name="new" value="Добавить закладку"/>
-		<node name="open" value="Открыть"/>
-		<node name="edit" value="Поправить закладку"/>
-		<node name="delete" value="Стереть закладку"/>
-		<node name="menu">
-			<node name="search" value="Поиск"/>
-		</node>
+		<node name="openBook" value="Открыть"/>
+		<node name="editBookmark" value="Поправить закладку"/>
+		<node name="deleteBookmark" value="Стереть закладку"/>
+		<node name="search" value="Поиск"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Текст"/>

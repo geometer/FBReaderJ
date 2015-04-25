@@ -228,14 +228,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Quyển này"/>
 		<node name="allBooks" value="Tất cả sách"/>
-		<node name="found" value="Tìm thấy"/>
 		<node name="new" value="Đánh dấu mới"/>
-		<node name="open" value="Mở"/>
-		<node name="edit" value="Sửa đánh dấu"/>
-		<node name="delete" value="Xoa đánh dấu"/>
-		<node name="menu">
-			<node name="search" value="Tìm"/>
-		</node>
+		<node name="openBook" value="Mở"/>
+		<node name="editBookmark" value="Sửa đánh dấu"/>
+		<node name="deleteBookmark" value="Xoa đánh dấu"/>
+		<node name="search" value="Tìm"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

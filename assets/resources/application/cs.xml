@@ -247,14 +247,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Tato kniha"/>
 		<node name="allBooks" value="Všechny knihy"/>
-		<node name="found" value="Nalezené"/>
 		<node name="new" value="Nová záložka"/>
-		<node name="open" value="Otevřít"/>
-		<node name="edit" value="Upravit záložku"/>
-		<node name="delete" value="Odstranit záložku"/>
-		<node name="menu">
-			<node name="search" value="Hledat"/>
-		</node>
+		<node name="openBook" value="Otevřít"/>
+		<node name="editBookmark" value="Upravit záložku"/>
+		<node name="deleteBookmark" value="Odstranit záložku"/>
+		<node name="search" value="Hledat"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text"/>
