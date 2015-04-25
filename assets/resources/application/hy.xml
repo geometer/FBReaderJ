@@ -243,14 +243,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Այս գիրքը"/>
 		<node name="allBooks" value="Բոլոր գրքերը"/>
-		<node name="found" value="Գտնվեց"/>
 		<node name="new" value="Ավելացնել էջանիշ"/>
-		<node name="open" value="Բացել"/>
-		<node name="edit" value="Ուղղել էջանիշը"/>
-		<node name="delete" value="Ջնջել էջանիշը"/>
-		<node name="menu">
-			<node name="search" value="Որոնել"/>
-		</node>
+		<node name="openBook" value="Բացել"/>
+		<node name="editBookmark" value="Ուղղել էջանիշը"/>
+		<node name="deleteBookmark" value="Ջնջել էջանիշը"/>
+		<node name="search" value="Որոնել"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

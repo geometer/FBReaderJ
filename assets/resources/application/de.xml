@@ -243,14 +243,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Dieses Buch"/>
 		<node name="allBooks" value="Alle Bücher"/>
-		<node name="found" value="Gefunden"/>
 		<node name="new" value="Neues Lesezeichen"/>
-		<node name="open" value="Zu dem Lesezeichen gehen"/>
-		<node name="edit" value="Lesezeichen bearbeiten"/>
-		<node name="delete" value="Lesezeichen löschen"/>
-		<node name="menu">
-			<node name="search" value="Suchen"/>
-		</node>
+		<node name="openBook" value="Zu dem Lesezeichen gehen"/>
+		<node name="editBookmark" value="Lesezeichen bearbeiten"/>
+		<node name="deleteBookmark" value="Lesezeichen löschen"/>
+		<node name="search" value="Suchen"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
