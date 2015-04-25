@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 37;
+		final int currentVersion = 38;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -157,6 +157,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables35();
 			case 36:
 				updateTables36();
+			case 37:
+				updateTables37();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -1681,9 +1683,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"paragraph INTEGER NOT NULL," +
 				"word INTEGER NOT NULL," +
 				"char INTEGER NOT NULL," +
-				"end_paragraph INTEGER NOT NULL," +
-				"end_word INTEGER NOT NULL," +
-				"end_character INTEGER NOT NULL)"
+				"end_paragraph INTEGER," +
+				"end_word INTEGER," +
+				"end_character INTEGER)"
 		);
 		final String fields = "bookmark_id,uid,book_id,visible,style_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character";
 		myDatabase.execSQL("INSERT INTO Bookmarks (" + fields + ") SELECT " + fields + " FROM Bookmarks_Obsolete");
@@ -1728,6 +1730,33 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			}
 		}
 		cursor.close();
+	}
+
+	private void updateTables37() {
+		myDatabase.execSQL("ALTER TABLE Bookmarks RENAME TO Bookmarks_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS Bookmarks(" +
+				"bookmark_id INTEGER PRIMARY KEY," +
+				"uid TEXT(36) NOT NULL UNIQUE," +
+				"version_uid TEXT(36)," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"visible INTEGER DEFAULT 1," +
+				"style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1," +
+				"bookmark_text TEXT NOT NULL," +
+				"creation_time INTEGER NOT NULL," +
+				"modification_time INTEGER," +
+				"access_time INTEGER," +
+				"model_id TEXT," +
+				"paragraph INTEGER NOT NULL," +
+				"word INTEGER NOT NULL," +
+				"char INTEGER NOT NULL," +
+				"end_paragraph INTEGER," +
+				"end_word INTEGER," +
+				"end_character INTEGER)"
+		);
+		final String fields = "bookmark_id,uid,version_uid,book_id,visible,style_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character";
+		myDatabase.execSQL("INSERT INTO Bookmarks (" + fields + ") SELECT " + fields + " FROM Bookmarks_Obsolete");
+		myDatabase.execSQL("DROP TABLE IF EXISTS Bookmarks_Obsolete");
 	}
 
 	private SQLiteStatement get(String sql) {
