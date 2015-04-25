@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Bu kitap"/>
 		<node name="allBooks" value="Tüm kitaplar"/>
-		<node name="found" value="Bulunan"/>
 		<node name="new" value="Yeni yer imi"/>
-		<node name="open" value="Aç"/>
-		<node name="edit" value="Yer imini düzenle"/>
-		<node name="delete" value="Yer imini sil"/>
-		<node name="menu">
-			<node name="search" value="Ara"/>
-		</node>
+		<node name="openBook" value="Aç"/>
+		<node name="editBookmark" value="Yer imini düzenle"/>
+		<node name="deleteBookmark" value="Yer imini sil"/>
+		<node name="search" value="Ara"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

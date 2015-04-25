@@ -230,14 +230,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Aceasta carte"/>
 		<node name="allBooks" value="Toate cartile"/>
-		<node name="found" value="S-au gasit"/>
 		<node name="new" value="Marcaj nou"/>
-		<node name="open" value="Deschis"/>
-		<node name="edit" value="Editeaza marcaj"/>
-		<node name="delete" value="Sterge marcaj"/>
-		<node name="menu">
-			<node name="search" value="Cautare"/>
-		</node>
+		<node name="openBook" value="Deschis"/>
+		<node name="editBookmark" value="Editeaza marcaj"/>
+		<node name="deleteBookmark" value="Sterge marcaj"/>
+		<node name="search" value="Cautare"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

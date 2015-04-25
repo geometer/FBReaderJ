@@ -43,7 +43,7 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.*;
 
-public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemClickListener {
+public class BookmarksActivity extends Activity {
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
@@ -66,10 +66,9 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 	private final ZLStringOption myBookmarkSearchPatternOption =
 		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
-	private ListView createTab(String tag, int id) {
+	private void createTab(String tag, int id) {
 		final String label = myResource.getResource(tag).getValue();
 		myTabHost.addTab(myTabHost.newTabSpec(tag).setIndicator(label).setContent(id));
-		return (ListView)findViewById(id);
 	}
 
 	@Override
@@ -80,7 +79,6 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.bookmarks);
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
@@ -89,7 +87,23 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
         myTabHost = (TabHost)findViewById(R.id.bookmarks_tabhost);
 		myTabHost.setup();
 
+		createTab("thisBook", R.id.bookmarks_this_book);
+		createTab("allBooks", R.id.bookmarks_all_books);
+		createTab("search", R.id.bookmarks_search);
+
+		myTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+			public void onTabChanged(String tabId) {
+				if ("search".equals(tabId)) {
+					findViewById(R.id.bookmarks_search_results).setVisibility(View.GONE);
+					onSearchRequested();
+				}
+			}
+		});
+
 		myBook = FBReaderIntents.getBookExtra(getIntent());
+		if (myBook == null) {
+			finish();
+		}
 	}
 
 	private class Initializer implements Runnable {
@@ -98,15 +112,13 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 				myStyles.put(style.Id, style);
 			}
 
-			if (myBook != null) {
-				for (BookmarkQuery query = new BookmarkQuery(myBook, 20); ; query = query.next()) {
-					final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
-					if (thisBookBookmarks.isEmpty()) {
-						break;
-					}
-					myThisBookAdapter.addAll(thisBookBookmarks);
-					myAllBooksAdapter.addAll(thisBookBookmarks);
+			for (BookmarkQuery query = new BookmarkQuery(myBook, 20); ; query = query.next()) {
+				final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
+				if (thisBookBookmarks.isEmpty()) {
+					break;
 				}
+				myThisBookAdapter.addAll(thisBookBookmarks);
+				myAllBooksAdapter.addAll(thisBookBookmarks);
 			}
 			for (BookmarkQuery query = new BookmarkQuery(20); ; query = query.next()) {
 				final List<Bookmark> allBookmarks = myCollection.bookmarks(query);
@@ -139,17 +151,10 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 					return;
 				}
 
-				if (myBook != null) {
-					myThisBookAdapter = new BookmarksAdapter(
-						createTab("thisBook", R.id.this_book), true
-					);
-				} else {
-					findViewById(R.id.this_book).setVisibility(View.GONE);
-				}
-				myAllBooksAdapter = new BookmarksAdapter(
-					createTab("allBooks", R.id.all_books), false
-				);
-				findViewById(R.id.search_results).setVisibility(View.GONE);
+				myThisBookAdapter =
+					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_this_book), true);
+				myAllBooksAdapter =
+					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_all_books), false);
 
 				new Thread(new Initializer()).start();
 			}
@@ -176,7 +181,14 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 			}
 		}
 		if (!bookmarks.isEmpty()) {
-			showSearchResultsTab(bookmarks);
+			final ListView resultsView = (ListView)findViewById(R.id.bookmarks_search_results);
+			resultsView.setVisibility(View.VISIBLE);
+			if (mySearchResultsAdapter == null) {
+				mySearchResultsAdapter = new BookmarksAdapter(resultsView, false);
+			} else {
+				mySearchResultsAdapter.clear();
+			}
+			mySearchResultsAdapter.addAll(bookmarks);
 		} else {
 			UIUtil.showErrorMessage(this, "bookmarkNotFound");
 		}
@@ -189,18 +201,6 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		final MenuItem item = menu.add(
-			0, 1, Menu.NONE,
-			myResource.getResource("menu").getResource("search").getValue()
-		);
-		item.setOnMenuItemClickListener(this);
-		item.setIcon(R.drawable.ic_menu_search);
-		return true;
-	}
-
-	@Override
 	public boolean onSearchRequested() {
 		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
@@ -208,28 +208,6 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 			SearchDialogUtil.showDialog(this, BookmarksActivity.class, myBookmarkSearchPatternOption.getValue(), null);
 		}
 		return true;
-	}
-
-	void showSearchResultsTab(LinkedList<Bookmark> results) {
-		if (mySearchResultsAdapter == null) {
-			mySearchResultsAdapter = new BookmarksAdapter(
-				createTab("found", R.id.search_results), false
-			);
-		} else {
-			mySearchResultsAdapter.clear();
-		}
-		mySearchResultsAdapter.addAll(results);
-		myTabHost.setCurrentTabByTag("found");
-	}
-
-	@Override
-	public boolean onMenuItemClick(MenuItem item) {
-		switch (item.getItemId()) {
-			case 1:
-				return onSearchRequested();
-			default:
-				return true;
-		}
 	}
 
 	@Override
@@ -243,8 +221,9 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 				return true;
 			case EDIT_ITEM_ID:
 				final Intent intent = new Intent(this, EditBookmarkActivity.class);
-				OrientationUtil.startActivityForResult(this, intent, 1);
-				// TODO: implement
+				FBReaderIntents.putBookmarkExtra(intent, bookmark);
+				OrientationUtil.startActivity(this, intent);
+				// TODO: implement IBookCollection listener
 				return true;
 			case DELETE_ITEM_ID:
 				myCollection.deleteBookmark(bookmark);
@@ -285,6 +264,7 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 		private final List<Bookmark> myBookmarks =
 			Collections.synchronizedList(new LinkedList<Bookmark>());
+		// TODO: change to false on new bookmark creation
 		private final boolean myShowAddBookmarkItem;
 
 		BookmarksAdapter(ListView listView, boolean showAddBookmarkItem) {
@@ -349,10 +329,9 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			if (getItem(position) != null) {
-				menu.setHeaderTitle(getItem(position).getText());
-				menu.add(0, OPEN_ITEM_ID, 0, myResource.getResource("open").getValue());
-				//menu.add(0, EDIT_ITEM_ID, 0, myResource.getResource("edit").getValue());
-				menu.add(0, DELETE_ITEM_ID, 0, myResource.getResource("delete").getValue());
+				menu.add(0, OPEN_ITEM_ID, 0, myResource.getResource("openBook").getValue());
+				menu.add(0, EDIT_ITEM_ID, 0, myResource.getResource("editBookmark").getValue());
+				menu.add(0, DELETE_ITEM_ID, 0, myResource.getResource("deleteBookmark").getValue());
 			}
 		}
 
@@ -361,6 +340,7 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item, parent, false);
 			final ImageView imageView = ViewUtil.findImageView(view, R.id.bookmark_item_icon);
+			final View colorContainer = ViewUtil.findView(view, R.id.bookmark_item_color_container);
 			final AmbilWarnaPrefWidgetView colorView =
 				(AmbilWarnaPrefWidgetView)ViewUtil.findView(view, R.id.bookmark_item_color);
 			final TextView textView = ViewUtil.findTextView(view, R.id.bookmark_item_text);
@@ -370,12 +350,12 @@ public class BookmarksActivity extends Activity implements MenuItem.OnMenuItemCl
 			if (bookmark == null) {
 				imageView.setVisibility(View.VISIBLE);
 				imageView.setImageResource(R.drawable.ic_list_plus);
-				colorView.setVisibility(View.GONE);
+				colorContainer.setVisibility(View.GONE);
 				textView.setText(myResource.getResource("new").getValue());
 				bookTitleView.setVisibility(View.GONE);
 			} else {
 				imageView.setVisibility(View.GONE);
-				colorView.setVisibility(View.VISIBLE);
+				colorContainer.setVisibility(View.VISIBLE);
 				BookmarksUtil.setupColorView(colorView, myStyles.get(bookmark.getStyleId()));
 				textView.setText(bookmark.getText());
 				if (myShowAddBookmarkItem) {

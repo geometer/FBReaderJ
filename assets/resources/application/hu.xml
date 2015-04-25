@@ -228,14 +228,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ez a könyv"/>
 		<node name="allBooks" value="Minden könyv"/>
-		<node name="found" value="Találat"/>
 		<node name="new" value="Új könyvjelző"/>
-		<node name="open" value="Megnyitás"/>
-		<node name="edit" value="Könyvjelző szerkesztése"/>
-		<node name="delete" value="Könyvelző törlése"/>
-		<node name="menu">
-			<node name="search" value="Keresés"/>
-		</node>
+		<node name="openBook" value="Megnyitás"/>
+		<node name="editBookmark" value="Könyvjelző szerkesztése"/>
+		<node name="deleteBookmark" value="Könyvelző törlése"/>
+		<node name="search" value="Keresés"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

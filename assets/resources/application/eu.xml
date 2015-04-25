@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Liburu hau"/>
 		<node name="allBooks" value="Liburu guztiak"/>
-		<node name="found" value="Aurkituta"/>
 		<node name="new" value="Laster-marka berria"/>
-		<node name="open" value="Ireki"/>
-		<node name="edit" value="Aldatu laster-marka"/>
-		<node name="delete" value="Ezabatu laster-marka"/>
-		<node name="menu">
-			<node name="search" value="Bilatu"/>
-		</node>
+		<node name="openBook" value="Ireki"/>
+		<node name="editBookmark" value="Aldatu laster-marka"/>
+		<node name="deleteBookmark" value="Ezabatu laster-marka"/>
+		<node name="search" value="Bilatu"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
