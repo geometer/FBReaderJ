@@ -228,14 +228,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="本书"/>
 		<node name="allBooks" value="所有图书"/>
-		<node name="found" value="搜索结果"/>
 		<node name="new" value="添加书签"/>
-		<node name="open" value="打开书签"/>
-		<node name="edit" value="编辑书签"/>
-		<node name="delete" value="删除书签"/>
-		<node name="menu">
-			<node name="search" value="搜索"/>
-		</node>
+		<node name="openBook" value="打开书签"/>
+		<node name="editBookmark" value="编辑书签"/>
+		<node name="deleteBookmark" value="删除书签"/>
+		<node name="search" value="搜索"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

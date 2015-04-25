@@ -228,14 +228,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="หนังสือเล่มนี้"/>
 		<node name="allBooks" value="หนังสือทั้งหมด"/>
-		<node name="found" value="ค้นพบ"/>
 		<node name="new" value="สร้างบุ๊คมาร์คใหม่"/>
-		<node name="open" value="เปิดบุ๊คมาร์ค"/>
-		<node name="edit" value="แก้ไขบุ๊คมาร์ค"/>
-		<node name="delete" value="ลบบุ๊คมาร์ค"/>
-		<node name="menu">
-			<node name="search" value="ค้นหา"/>
-		</node>
+		<node name="openBook" value="เปิดบุ๊คมาร์ค"/>
+		<node name="editBookmark" value="แก้ไขบุ๊คมาร์ค"/>
+		<node name="deleteBookmark" value="ลบบุ๊คมาร์ค"/>
+		<node name="search" value="ค้นหา"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

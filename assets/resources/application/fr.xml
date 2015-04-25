@@ -231,14 +231,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ce livre"/>
 		<node name="allBooks" value="Tous les livres"/>
-		<node name="found" value="Trouvé"/>
 		<node name="new" value="Nouveau marque-page"/>
-		<node name="open" value="Ouvrir"/>
-		<node name="edit" value="Modifier le marque-page"/>
-		<node name="delete" value="Supprimer le marque-page"/>
-		<node name="menu">
-			<node name="search" value="Rechercher"/>
-		</node>
+		<node name="openBook" value="Ouvrir"/>
+		<node name="editBookmark" value="Modifier le marque-page"/>
+		<node name="deleteBookmark" value="Supprimer le marque-page"/>
+		<node name="search" value="Rechercher"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
