@@ -328,7 +328,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected void moveSelectionCursorTo(ZLTextSelectionCursor cursor, int x, int y) {
-		y -= getTextStyleCollection().getBaseStyle().getFontSize() / 2;
+		y -= ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2;
 		mySelection.setCursorInMovement(cursor, x, y);
 		mySelection.expandTo(myCurrentPage, x, y);
 		Application.getViewWidget().reset();
