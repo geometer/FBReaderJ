@@ -43,7 +43,7 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.*;
 
-public class BookmarksActivity extends Activity {
+public class BookmarksActivity extends Activity implements IBookCollection.Listener {
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
@@ -55,6 +55,7 @@ public class BookmarksActivity extends Activity {
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile Book myBook;
+	private volatile Bookmark myBookmark;
 
 	private final Comparator<Bookmark> myComparator = new Bookmark.ByTimeComparator();
 
@@ -76,7 +77,6 @@ public class BookmarksActivity extends Activity {
 		super.onCreate(bundle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.bookmarks);
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -104,6 +104,7 @@ public class BookmarksActivity extends Activity {
 		if (myBook == null) {
 			finish();
 		}
+		myBookmark = FBReaderIntents.getBookmarkExtra(getIntent());
 	}
 
 	private class Initializer implements Runnable {
@@ -127,23 +128,12 @@ public class BookmarksActivity extends Activity {
 				}
 				myAllBooksAdapter.addAll(allBookmarks);
 			}
-			runOnUiThread(new Runnable() {
-				public void run() {
-					setProgressBarIndeterminateVisibility(false);
-				}
-			});
 		}
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-
-		runOnUiThread(new Runnable() {
-			public void run() {
-				setProgressBarIndeterminateVisibility(true);
-			}
-		});
 
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
@@ -152,9 +142,10 @@ public class BookmarksActivity extends Activity {
 				}
 
 				myThisBookAdapter =
-					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_this_book), true);
+					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_this_book), myBookmark != null);
 				myAllBooksAdapter =
 					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_all_books), false);
+				myCollection.addListener(BookmarksActivity.this);
 
 				new Thread(new Initializer()).start();
 			}
@@ -241,15 +232,6 @@ public class BookmarksActivity extends Activity {
 		return super.onContextItemSelected(item);
 	}
 
-	private void addBookmark() {
-		final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(getIntent());
-		if (bookmark != null) {
-			myCollection.saveBookmark(bookmark);
-			myThisBookAdapter.add(bookmark);
-			myAllBooksAdapter.add(bookmark);
-		}
-	}
-
 	private void gotoBookmark(Bookmark bookmark) {
 		bookmark.markAsAccessed();
 		myCollection.saveBookmark(bookmark);
@@ -262,10 +244,9 @@ public class BookmarksActivity extends Activity {
 	}
 
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
-		private final List<Bookmark> myBookmarks =
+		private final List<Bookmark> myBookmarksList =
 			Collections.synchronizedList(new LinkedList<Bookmark>());
-		// TODO: change to false on new bookmark creation
-		private final boolean myShowAddBookmarkItem;
+		private volatile boolean myShowAddBookmarkItem;
 
 		BookmarksAdapter(ListView listView, boolean showAddBookmarkItem) {
 			myShowAddBookmarkItem = showAddBookmarkItem;
@@ -275,17 +256,17 @@ public class BookmarksActivity extends Activity {
 		}
 
 		public List<Bookmark> bookmarks() {
-			return Collections.unmodifiableList(myBookmarks);
+			return Collections.unmodifiableList(myBookmarksList);
 		}
 
 		public void addAll(final List<Bookmark> bookmarks) {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					synchronized (myBookmarks) {
+					synchronized (myBookmarksList) {
 						for (Bookmark b : bookmarks) {
-							final int position = Collections.binarySearch(myBookmarks, b, myComparator);
+							final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
 							if (position < 0) {
-								myBookmarks.add(- position - 1, b);
+								myBookmarksList.add(- position - 1, b);
 							}
 						}
 					}
@@ -297,10 +278,10 @@ public class BookmarksActivity extends Activity {
 		public void add(final Bookmark b) {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					synchronized (myBookmarks) {
-						final int position = Collections.binarySearch(myBookmarks, b, myComparator);
+					synchronized (myBookmarksList) {
+						final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
 						if (position < 0) {
-							myBookmarks.add(- position - 1, b);
+							myBookmarksList.add(- position - 1, b);
 						}
 					}
 					notifyDataSetChanged();
@@ -311,7 +292,7 @@ public class BookmarksActivity extends Activity {
 		public void remove(final Bookmark b) {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					myBookmarks.remove(b);
+					myBookmarksList.remove(b);
 					notifyDataSetChanged();
 				}
 			});
@@ -320,7 +301,7 @@ public class BookmarksActivity extends Activity {
 		public void clear() {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					myBookmarks.clear();
+					myBookmarksList.clear();
 					notifyDataSetChanged();
 				}
 			});
@@ -388,21 +369,44 @@ public class BookmarksActivity extends Activity {
 			if (myShowAddBookmarkItem) {
 				--position;
 			}
-			return (position >= 0) ? myBookmarks.get(position) : null;
+			return (position >= 0) ? myBookmarksList.get(position) : null;
 		}
 
 		@Override
 		public final int getCount() {
-			return myShowAddBookmarkItem ? myBookmarks.size() + 1 : myBookmarks.size();
+			return myShowAddBookmarkItem ? myBookmarksList.size() + 1 : myBookmarksList.size();
 		}
 
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Bookmark bookmark = getItem(position);
 			if (bookmark != null) {
 				gotoBookmark(bookmark);
-			} else {
-				addBookmark();
+			} else if (myShowAddBookmarkItem) {
+				myCollection.saveBookmark(myBookmark);
+				myThisBookAdapter.add(myBookmark);
+				myAllBooksAdapter.add(myBookmark);
+				myShowAddBookmarkItem = false;
 			}
 		}
+	}
+
+	// method from IBookCollection.Listener
+	public void onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			default:
+				break;
+			case BookmarkStyleChanged:
+			case BookmarksUpdated:
+				myAllBooksAdapter.notifyDataSetChanged();
+				myThisBookAdapter.notifyDataSetChanged();
+				if (mySearchResultsAdapter != mySearchResultsAdapter) {
+					mySearchResultsAdapter.notifyDataSetChanged();
+				}
+				break;
+		}
+	}
+
+	// method from IBookCollection.Listener
+	public void onBuildEvent(IBookCollection.Status status) {
 	}
 }
