@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ова књига"/>
 		<node name="allBooks" value="Све књиге"/>
-		<node name="found" value="Пронађено"/>
 		<node name="new" value="Нови обележивач"/>
-		<node name="open" value="Отвори"/>
-		<node name="edit" value="Уреди обележивач"/>
-		<node name="delete" value="Обриши обележивач"/>
-		<node name="menu">
-			<node name="search" value="Претражи"/>
-		</node>
+		<node name="openBook" value="Отвори"/>
+		<node name="editBookmark" value="Уреди обележивач"/>
+		<node name="deleteBookmark" value="Обриши обележивач"/>
+		<node name="search" value="Претражи"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>

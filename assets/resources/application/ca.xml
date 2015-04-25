@@ -244,14 +244,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Aquest llibre"/>
 		<node name="allBooks" value="Tots els llibres"/>
-		<node name="found" value="Trobats"/>
 		<node name="new" value="Nou punt de llibre"/>
-		<node name="open" value="Obre"/>
-		<node name="edit" value="Edita punt de llibre"/>
-		<node name="delete" value="Esborra punt de llibre"/>
-		<node name="menu">
-			<node name="search" value="Cerca"/>
-		</node>
+		<node name="openBook" value="Obre"/>
+		<node name="editBookmark" value="Edita punt de llibre"/>
+		<node name="deleteBookmark" value="Esborra punt de llibre"/>
+		<node name="search" value="Cerca"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
