@@ -22,7 +22,7 @@
 			<node name="invalidURL" value="不正な URL"/>
 			<node name="hostCantBeReached" value="ホスト %s に到達できません"/>
 			<node name="connectionRefused" value="接続が %s に拒否されました"/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="ネットワークが利用できません"/>
 		</node>
 	</node>
 	<node name="color">
