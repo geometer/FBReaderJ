@@ -23,8 +23,8 @@
 		<node name="favorites" value="お気に入り">
 			<node name="summary" value="自分で選んだ本"/>
 		</node>
-		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
-			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+		<node name="bookshelfView" value="本棚ビュー">
+			<node name="summary" value="現代的な (マテリアルデザインの) ライブラリ表示"/>
 		</node>
 		<node name="found" value="検索結果">
 			<node name="summary" value="検索した文字: %s"/>
@@ -119,8 +119,8 @@
 		<node name="stopSearching" value="検索中止"/>
 		<node name="signIn" value="サインイン"/>
 		<node name="signOut" value="サインアウト (%s)"/>
-		<node name="signUp" value="Sign up" toBeTranslated="true"/>
-		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		<node name="signUp" value="登録"/>
+		<node name="quickBuy" value="即時購入"/>
 		<node name="topup" value="アカウントにチャージ (現在: %s)"/>
 		<node name="topupTitle" value="アカウントにチャージ"/>
 		<node name="topupViaBrowser" value="ブラウザで開く"/>
@@ -245,15 +245,15 @@
 		<node name="search" value="検索"/>
 	</node>
 	<node name="editBookmark">
-		<node name="text" value="Text" toBeTranslated="true"/>
-		<node name="style" value="Style" toBeTranslated="true"/>
-		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="text" value="メモ"/>
+		<node name="style" value="書式"/>
+		<node name="delete" value="削除"/>
 		<node name="deleteBookmark" value="しおりを削除"/>
-		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="saveText" value="メモを保存"/>
 		<node name="editStyle" value="書式を編集"/>
 	</node>
 	<node name="footnoteToast">
-		<node name="more" value="More" toBeTranslated="true"/>
+		<node name="more" value="続き"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="ライブラリを開く"/>
@@ -284,7 +284,7 @@
 		<node name="sharedFrom" value="共有元: &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
-		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
+		<node name="openStartScreen" value="スタート画面"/>
 		<node name="preferences" value="設定"/>
 		<node name="bookInfo" value="本の情報"/>
 		<node name="library" value="ライブラリ"/>
@@ -334,8 +334,8 @@
 	<node name="Preferences">
 		<node name="sync" value="シンクロ">
 			<node name="summary" value="ブックネットワークの設定"/>
-			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
-				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			<node name="site" value="シンクロについて詳しく読む">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="シンクロを有効化">
 				<node name="summaryOn" value="ライブラリを FBReader ブックネットワークサーバとシンクロする"/>
@@ -412,11 +412,11 @@
 				<node name="summaryOn" value="本体がヨコ持ちのとき本文を二段組みで表示"/>
 				<node name="summaryOff" value="いつでも本文を一段で表示"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
-				<node name="never" value="Never" toBeTranslated="true"/>
-				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
-				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
-				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			<node name="showFootnoteToast" value="リンク先の文章をポップアップで表示">
+				<node name="never" value="しない"/>
+				<node name="footnotesOnly" value="脚注のみ"/>
+				<node name="footnotesAndSuperscripts" value="脚注と上付きリンクのみ"/>
+				<node name="allInternalLinks" value="内部リンクすべて"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="画面の明るさ調節">
 				<node name="summaryOn" value="画面の左端を上下になぞって調節"/>
@@ -658,16 +658,16 @@
 				<node name="tileHorizontally" value="画面高さに合わせてからヨコに敷きつめる"/>
 			</node>
 			<node name="selectionBackground" value="選択範囲の背景"/>
-			<node name="selectionForeground" value="選択文字"/>
+			<node name="selectionForeground" value="選択範囲の文字"/>
 			<node name="text" value="標準の文字"/>
 			<node name="hyperlink" value="リンク文字"/>
 			<node name="hyperlinkVisited" value="リンク文字 (訪問済み)"/>
 			<node name="highlightingForeground" value="検索結果の文字"/>
 			<node name="highlightingBackground" value="検索結果の背景"/>
-			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
-			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
-			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
-			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
+			<node name="footerOldStyle" value="フッタ (旧式)"/>
+			<node name="footerBackground" value="フッタ背景"/>
+			<node name="footerForeground" value="フッタ文字"/>
+			<node name="footerForegroundUnread" value="フッタ未読線"/>
 		</node>
 		<node name="margins" value="マージン">
 			<node name="summary" value="本文の余白"/>
@@ -684,13 +684,13 @@
 				<node name="show" value="タテ向きのスライダー"/>
 				<node name="showAsProgress" value="タテ向きの進度メータ"/>
 				<node name="showAsFooter" value="ヨコ向きのフッタ"/>
-				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
+				<node name="showAsFooterOldStyle" value="ヨコ向きのフッタ (旧式)"/>
 			</node>
 			<node name="footerHeight" value="フッタ幅"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="フッタ (旧式) の色"/>
+			<node name="footerBackgroundColor" value="フッタの背景色"/>
+			<node name="footerForegroundColor" value="フッタの文字色"/>
+			<node name="footerForegroundUnreadColor" value="フッタの未読色"/>
 			<node name="tocMarks" value="目次マークを表示">
 				<node name="summaryOn" value="フッタのバーに目次項目の印を表示する"/>
 				<node name="summaryOff" value="フッタのバーに目次項目の印を表示しない"/>
@@ -732,7 +732,7 @@
 				<node name="none" value="ページめくりのアニメーションなし"/>
 				<node name="curl" value="巻き上げ"/>
 				<node name="slide" value="重ねてスライド"/>
-				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
+				<node name="slideOldStyle" value="重ねてスライド (旧式)"/>
 				<node name="shift" value="並べてスライド"/>
 			</node>
 			<node name="animationSpeed" value="アニメーション速度">
@@ -905,24 +905,24 @@
 			<node name="message" value="ファイルがすでに存在します。再ダウンロードしますか?"/>
 		</node>
 		<node name="litresUserRegistration">
-			<node name="title" value="Register User" toBeTranslated="true"/>
-			<node name="login" value="Username" toBeTranslated="true"/>
-			<node name="password" value="Password" toBeTranslated="true"/>
-			<node name="confirmPassword" value="Password&#10;confirmation" toBeTranslated="true"/>
-			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="title" value="ユーザ登録"/>
+			<node name="login" value="ユーザ名"/>
+			<node name="password" value="パスワード"/>
+			<node name="confirmPassword" value="パスワード&#10;再入力"/>
+			<node name="email" value="メールアドレス"/>
 		</node>
 		<node name="litresAutoSignIn">
-			<node name="title" value="Signing in" toBeTranslated="true"/>
-			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="title" value="サインイン"/>
+			<node name="email" value="メールアドレス"/>
 			<node name="actions">
-				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
-				<node name="recover" value="Recover account information" toBeTranslated="true"/>
-				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
-				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+				<node name="title" value="このメールアドレスではサインインできません&#10;%s"/>
+				<node name="recover" value="アカウント情報を忘れた"/>
+				<node name="signIn" value="手動でサインインする"/>
+				<node name="anotherEmail" value="別のメールアドレスを選ぶ"/>
 			</node>
-			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
-			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
-			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+			<node name="signedIn" value="現在 %s でサインインしています。"/>
+			<node name="registrationSuccessful" value="LitRes アカウントを作成しました。詳細は %s に送信されます。"/>
+			<node name="passwordSent" value="アカウント情報が %s に送信されます。メールボックスをご確認ください。"/>
 		</node>
 		<node name="waitMessage">
 			<node name="tryConnect" value="接続しようとしています。しばらくお待ちください…"/>
@@ -943,9 +943,9 @@
 			<node name="updatingAccountInformation" value="アカウント情報を更新中です。しばらくお待ちください…"/>
 			<node name="initDRMEngine" value="DRM エンジンを起動中です。しばらくお待ちください…"/>
 			<node name="acquireLicense" value="ライセンスを取得中です。しばらくお待ちください…"/>
-			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
-			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
-			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
+			<node name="registerUser" value="新しいアカウントを登録中です。しばらくお待ちください…"/>
+			<node name="autoSignIn" value="サインインしています。しばらくお待ちください…"/>
+			<node name="recoverPassword" value="パスワードを復元中です。しばらくお待ちください…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="サーバ内部エラー"/>
@@ -959,14 +959,14 @@
 			<node name="notAnOPDS" value="これは OPDS カタログではありません"/>
 			<node name="noRequiredInformation" value="カタログ中に、必要な情報が欠けています"/>
 			<node name="cacheDirectoryError" value="キャッシュディレクトリを作成できません"/>
-			<node name="usernameAlreadyInUse" value="Username already in use" toBeTranslated="true"/>
-			<node name="usernameNotSpecified" value="Username should be non-empty" toBeTranslated="true"/>
-			<node name="passwordNotSpecified" value="Password should be non-empty" toBeTranslated="true"/>
-			<node name="passwordsDoNotMatch" value="The entered passwords do not match" toBeTranslated="true"/>
-			<node name="emailNotSpecified" value="Email address is empty" toBeTranslated="true"/>
-			<node name="emailAlreadyInUse" value="Email address already in use" toBeTranslated="true"/>
-			<node name="invalidEMail" value="Invalid email address" toBeTranslated="true"/>
-			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" toBeTranslated="true"/>
+			<node name="usernameAlreadyInUse" value="ユーザ名が既に使われています"/>
+			<node name="usernameNotSpecified" value="ユーザ名は空にできません"/>
+			<node name="passwordNotSpecified" value="パスワードは空にできません"/>
+			<node name="passwordsDoNotMatch" value="入力されたパスワードが一致していません"/>
+			<node name="emailNotSpecified" value="メールアドレスが空です"/>
+			<node name="emailAlreadyInUse" value="メールアドレスが既に使われています"/>
+			<node name="invalidEMail" value="不正なメールアドレスです"/>
+			<node name="tooManyRegistrations" value="お使いの IP からの登録が多すぎます;&#10;数分後に再度お試しください"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="認証"/>
@@ -1070,7 +1070,7 @@
 		<node name="emptyNetworkSearchResults" value="申し訳ありませんが、本が見当たりません"/>
 		<node name="videoServiceNotWorking" value="申し訳ありませんが、ビデオサービスが利用できません"/>
 		<node name="videoPlayerNotFound" value="このデバイスにはビデオプレイヤがインストールされていないようです"/>
-		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
+		<node name="bookIsMissingTitle" value="タイトルなし"/>
 		<node name="bookIsMissing" value="申し訳ありませんが、本体内に '%s' という本が見当たりません"/>
 		<node name="downloadFailed" value="ダウンロード失敗"/>
 	</node>
@@ -1125,8 +1125,8 @@
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="DjVu 形式の本を読む"/>
 		</node>
-		<node name="cbr" value="Comic Books" toBeTranslated="true">
-			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
+		<node name="cbr" value="ComicBooks">
+			<node name="summary" value="CBR, CBZ 形式のマンガを読む"/>
 		</node>
 	</node>
 	<node name="drm">
