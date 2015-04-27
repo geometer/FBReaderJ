@@ -264,8 +264,19 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final ListView view = (ListView)myTabHost.getCurrentView();
-		final Bookmark bookmark = ((BookmarksAdapter)view.getAdapter()).getItem(position);
+		final String tag = myTabHost.getCurrentTabTag();
+		final BookmarksAdapter adapter;
+		if ("thisBook".equals(tag)) {
+			adapter = myThisBookAdapter;
+		} else if ("allBooks".equals(tag)) {
+			adapter = myAllBooksAdapter;
+		} else if ("search".equals(tag)) {
+			adapter = mySearchResultsAdapter;
+		} else {
+			throw new RuntimeException("Unknown tab tag: " + tag);
+		}
+
+		final Bookmark bookmark = adapter.getItem(position);
 		switch (item.getItemId()) {
 			case OPEN_ITEM_ID:
 				gotoBookmark(bookmark);
@@ -294,6 +305,7 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 	}
 
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
+		private final ListView myListView;
 		private final List<Bookmark> myBookmarksList =
 			Collections.synchronizedList(new LinkedList<Bookmark>());
 		private volatile boolean myShowAddBookmarkItem;
@@ -303,40 +315,41 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			listView.setAdapter(this);
 			listView.setOnItemClickListener(this);
 			listView.setOnCreateContextMenuListener(this);
+			myListView = listView;
 		}
 
 		public List<Bookmark> bookmarks() {
 			return Collections.unmodifiableList(myBookmarksList);
 		}
 
-		public void addAll(final List<Bookmark> bookmarks) {
+		private void resetView() {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					synchronized (myBookmarksList) {
-						for (Bookmark b : bookmarks) {
-							final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
-							if (position < 0) {
-								myBookmarksList.add(- position - 1, b);
-							}
-						}
-					}
 					notifyDataSetChanged();
 				}
 			});
 		}
 
-		public void add(final Bookmark b) {
-			runOnUiThread(new Runnable() {
-				public void run() {
-					synchronized (myBookmarksList) {
-						final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
-						if (position < 0) {
-							myBookmarksList.add(- position - 1, b);
-						}
+		public void addAll(final List<Bookmark> bookmarks) {
+			synchronized (myBookmarksList) {
+				for (Bookmark b : bookmarks) {
+					final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
+					if (position < 0) {
+						myBookmarksList.add(- position - 1, b);
 					}
-					notifyDataSetChanged();
 				}
-			});
+			}
+			resetView();
+		}
+
+		public void add(final Bookmark b) {
+			synchronized (myBookmarksList) {
+				final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
+				if (position < 0) {
+					myBookmarksList.add(- position - 1, b);
+				}
+			}
+			resetView();
 		}
 
 		private boolean areEqualsForView(Bookmark b0, Bookmark b1) {
@@ -350,53 +363,31 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			if (old != null && areEqualsForView(old, b)) {
 				return;
 			}
-
-			runOnUiThread(new Runnable() {
-				public void run() {
-					synchronized (myBookmarksList) {
-						if (old != null) {
-							myBookmarksList.remove(old);
-						}
-						final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
-						if (position < 0) {
-							myBookmarksList.add(- position - 1, b);
-						}
-					}
-					notifyDataSetChanged();
+			synchronized (myBookmarksList) {
+				if (old != null) {
+					myBookmarksList.remove(old);
 				}
-			});
+				final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
+				if (position < 0) {
+					myBookmarksList.add(- position - 1, b);
+				}
+			}
+			resetView();
 		}
 
 		public void removeAll(final Collection<Bookmark> bookmarks) {
 			if (bookmarks.isEmpty()) {
 				return;
 			}
-			runOnUiThread(new Runnable() {
-				public void run() {
-					synchronized (myBookmarksList) {
-						myBookmarksList.removeAll(bookmarks);
-					}
-					notifyDataSetChanged();
-				}
-			});
-		}
-
-		public void remove(final Bookmark b) {
-			runOnUiThread(new Runnable() {
-				public void run() {
-					myBookmarksList.remove(b);
-					notifyDataSetChanged();
-				}
-			});
+			synchronized (myBookmarksList) {
+				myBookmarksList.removeAll(bookmarks);
+			}
+			resetView();
 		}
 
 		public void clear() {
-			runOnUiThread(new Runnable() {
-				public void run() {
-					myBookmarksList.clear();
-					notifyDataSetChanged();
-				}
-			});
+			myBookmarksList.clear();
+			resetView();
 		}
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -453,7 +444,8 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 
 		@Override
 		public final long getItemId(int position) {
-			return position;
+			final Bookmark item = getItem(position);
+			return item != null ? item.getId() : -1;
 		}
 
 		@Override
@@ -461,7 +453,7 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			if (myShowAddBookmarkItem) {
 				--position;
 			}
-			return (position >= 0) ? myBookmarksList.get(position) : null;
+			return position >= 0 ? myBookmarksList.get(position) : null;
 		}
 
 		@Override
@@ -489,10 +481,10 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 				break;
 			case BookmarkStyleChanged:
 				updateStyles();
-				myAllBooksAdapter.notifyDataSetChanged();
-				myThisBookAdapter.notifyDataSetChanged();
+				myAllBooksAdapter.resetView();
+				myThisBookAdapter.resetView();
 				if (mySearchResultsAdapter != null) {
-					mySearchResultsAdapter.notifyDataSetChanged();
+					mySearchResultsAdapter.resetView();
 				}
 				break;
 			case BookmarksUpdated:

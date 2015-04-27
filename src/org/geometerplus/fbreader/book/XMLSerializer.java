@@ -283,6 +283,10 @@ class XMLSerializer extends AbstractSerializer {
 		appendTagWithContent(buffer, "original-text", bookmark.getOriginalText());
 		appendTag(
 			buffer, "history", true,
+			"ts-creation", timestampByDate(bookmark.getDate(Bookmark.DateType.Creation)),
+			"ts-modification", timestampByDate(bookmark.getDate(Bookmark.DateType.Modification)),
+			"ts-access", timestampByDate(bookmark.getDate(Bookmark.DateType.Access)),
+			// obsolete, old format plugins compatibility
 			"date-creation", formatDate(bookmark.getDate(Bookmark.DateType.Creation)),
 			"date-modification", formatDate(bookmark.getDate(Bookmark.DateType.Modification)),
 			"date-access", formatDate(bookmark.getDate(Bookmark.DateType.Access))
@@ -357,6 +361,16 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 
+	private static String timestampByDate(Date date) {
+		return date != null ? String.valueOf(date.getTime()) : null;
+	}
+	private static Date dateByTimestamp(String str) throws SAXException {
+		try {
+			return str != null ? new Date(Long.valueOf(str)) : null;
+		} catch (Exception e) {
+			throw new SAXException("XML parsing error", e);
+		}
+	}
 	private static DateFormat ourDateFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, Locale.ENGLISH);
 	private static String formatDate(Date date) {
 		return date != null ? ourDateFormatter.format(date) : null;
@@ -994,9 +1008,16 @@ class XMLSerializer extends AbstractSerializer {
 						myState = State.READ_ORIGINAL_TEXT;
 						myOriginalText = new StringBuilder();
 					} else if ("history".equals(localName)) {
-						myCreationDate = parseDate(attributes.getValue("date-creation"));
-						myModificationDate = parseDateSafe(attributes.getValue("date-modification"));
-						myAccessDate = parseDateSafe(attributes.getValue("date-access"));
+						if (attributes.getValue("ts-creation") != null) {
+							myCreationDate = dateByTimestamp(attributes.getValue("ts-creation"));
+							myModificationDate = dateByTimestamp(attributes.getValue("ts-modification"));
+							myAccessDate = dateByTimestamp(attributes.getValue("ts-access"));
+						} else {
+							// obsolete, old format plugins compatibility
+							myCreationDate = parseDate(attributes.getValue("date-creation"));
+							myModificationDate = parseDateSafe(attributes.getValue("date-modification"));
+							myAccessDate = parseDateSafe(attributes.getValue("date-access"));
+						}
 					} else if ("start".equals(localName)) {
 						myModelId = attributes.getValue("model");
 						myStartParagraphIndex = parseInt(attributes.getValue("paragraph"));
