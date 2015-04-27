@@ -106,7 +106,7 @@ public abstract class BooksDatabase {
 	protected Bookmark createBookmark(
 		long id, String uid, String versionUid,
 		long bookId, String bookTitle, String text, String originalText,
-		Date creationDate, Date modificationDate, Date accessDate,
+		long creationTimestamp, Long modificationTimestamp, Long accessTimestamp,
 		String modelId,
 		int start_paragraphIndex, int start_wordIndex, int start_charIndex,
 		int end_paragraphIndex, int end_wordIndex, int end_charIndex,
@@ -116,7 +116,7 @@ public abstract class BooksDatabase {
 		return new Bookmark(
 			id, uid, versionUid,
 			bookId, bookTitle, text, originalText,
-			creationDate, modificationDate, accessDate,
+			creationTimestamp, modificationTimestamp, accessTimestamp,
 			modelId,
 			start_paragraphIndex, start_wordIndex, start_charIndex,
 			end_paragraphIndex, end_wordIndex, end_charIndex,
