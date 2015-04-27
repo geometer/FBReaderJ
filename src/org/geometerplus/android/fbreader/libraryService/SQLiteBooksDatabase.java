@@ -889,9 +889,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				cursor.getString(4),
 				cursor.getString(5),
 				cursor.isNull(6) ? null : cursor.getString(6),
-				SQLiteUtil.getDate(cursor, 7),
-				SQLiteUtil.getDate(cursor, 8),
-				SQLiteUtil.getDate(cursor, 9),
+				cursor.getLong(7),
+				cursor.getLong(8),
+				cursor.getLong(9),
 				cursor.getString(10),
 				(int)cursor.getLong(11),
 				(int)cursor.getLong(12),
@@ -985,9 +985,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.bindLong(++fieldCount, bookmark.BookId);
 		statement.bindString(++fieldCount, bookmark.getText());
 		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getOriginalText());
-		SQLiteUtil.bindDate(statement, ++fieldCount, bookmark.getDate(Bookmark.DateType.Creation));
-		SQLiteUtil.bindDate(statement, ++fieldCount, bookmark.getDate(Bookmark.DateType.Modification));
-		SQLiteUtil.bindDate(statement, ++fieldCount, bookmark.getDate(Bookmark.DateType.Access));
+		SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Creation));
+		SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Modification));
+		SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Access));
 		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.ModelId);
 		statement.bindLong(++fieldCount, bookmark.ParagraphIndex);
 		statement.bindLong(++fieldCount, bookmark.ElementIndex);
