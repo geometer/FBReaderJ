@@ -48,7 +48,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
 	public final ZLBooleanOption OldShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBarOld", true);
 	public final ZLBooleanOption ShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBar", false);
-	public final ZLIntegerOption ScreenHintStageOption = new ZLIntegerOption("LookNFeel", "ScreenHintStage", 3);
 	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
 	{
