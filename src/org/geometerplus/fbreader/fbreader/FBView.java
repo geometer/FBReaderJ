@@ -76,9 +76,23 @@ public final class FBView extends ZLTextView {
 		return myZoneMap;
 	}
 
+	private boolean onFingerSingleTapLastResort(int x, int y) {
+		myReader.runAction(getZoneMap().getActionByCoordinates(
+			x, y, getContextWidth(), getContextHeight(),
+			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
+		), x, y);
+
+		return true;
+	}
+
+	@Override
 	public boolean onFingerSingleTap(int x, int y) {
 		if (super.onFingerSingleTap(x, y)) {
 			return true;
+		}
+
+		if (ZLibrary.Instance().ScreenHintStageOption.getValue() < 3) {
+			return onFingerSingleTapLastResort(x, y);
 		}
 
 		final ZLTextRegion hyperlinkRegion = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.HyperlinkFilter);
@@ -119,12 +133,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		myReader.runAction(getZoneMap().getActionByCoordinates(
-			x, y, getContextWidth(), getContextHeight(),
-			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
-		), x, y);
-
-		return true;
+		return onFingerSingleTapLastResort(x, y);
 	}
 
 	@Override
