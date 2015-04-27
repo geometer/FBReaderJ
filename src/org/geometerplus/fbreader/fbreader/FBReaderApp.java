@@ -231,11 +231,11 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		final ZLTextWordCursor cursor =
 			new ZLTextWordCursor(new ZLTextParagraphCursor(model, label.ParagraphIndex));
-		final AutoTextSnippet longSnippet = new AutoTextSnippet(cursor, 24);
+		final AutoTextSnippet longSnippet = new AutoTextSnippet(cursor, 140);
 		if (longSnippet.IsEndOfText) {
 			return longSnippet;
 		} else {
-			return new AutoTextSnippet(cursor, 20);
+			return new AutoTextSnippet(cursor, 100);
 		}
 	}
 
@@ -640,12 +640,11 @@ public final class FBReaderApp extends ZLApplication {
 				return;
 			}
 
-			updateInvisibleBookmarksList(Bookmark.createBookmark(
+			updateInvisibleBookmarksList(new Bookmark(
 				Collection,
 				book,
 				textView.getModel().getId(),
-				cursor,
-				6,
+				new AutoTextSnippet(cursor, 30),
 				false
 			));
 		}
@@ -653,11 +652,11 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void addInvisibleBookmark() {
 		if (Model.Book != null && getTextView() == BookTextView) {
-			updateInvisibleBookmarksList(createBookmark(6, false));
+			updateInvisibleBookmarksList(createBookmark(30, false));
 		}
 	}
 
-	public Bookmark createBookmark(int maxLength, boolean visible) {
+	public Bookmark createBookmark(int maxChars, boolean visible) {
 		final FBView view = getTextView();
 		final ZLTextWordCursor cursor = view.getStartCursor();
 
@@ -665,12 +664,11 @@ public final class FBReaderApp extends ZLApplication {
 			return null;
 		}
 
-		return Bookmark.createBookmark(
+		return new Bookmark(
 			Collection,
 			Model.Book,
 			view.getModel().getId(),
-			cursor,
-			maxLength,
+			new AutoTextSnippet(cursor, maxChars),
 			visible
 		);
 	}
