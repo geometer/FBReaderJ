@@ -182,7 +182,7 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 					final String pattern;
 					if (mySearchResultsAdapter != null) {
 						for (Bookmark b : mySearchResultsAdapter.bookmarks()) {
-							allBooksBookmarks.put(b.Uid, b);
+							foundBookmarks.put(b.Uid, b);
 						}
 						pattern = myBookmarkSearchPatternOption.getValue().toLowerCase();
 					} else {
@@ -356,7 +356,7 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			return
 				b0.getStyleId() == b1.getStyleId() &&
 				b0.getText().equals(b1.getText()) &&
-				b0.getDate(Bookmark.DateType.Latest).equals(b1.getDate(Bookmark.DateType.Latest));
+				b0.getTimestamp(Bookmark.DateType.Latest).equals(b1.getTimestamp(Bookmark.DateType.Latest));
 		}
 
 		public void replace(final Bookmark old, final Bookmark b) {
