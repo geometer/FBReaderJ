@@ -966,9 +966,18 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	@Override
 	protected long saveBookmark(Bookmark bookmark) {
-		SQLiteStatement statement = get(
-			"INSERT OR REPLACE INTO Bookmarks (uid,version_uid,book_id,bookmark_text,original_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-		);
+		final SQLiteStatement statement;
+		final long bookmarkId = bookmark.getId();
+
+		if (bookmarkId == -1) {
+			statement = get(
+				"INSERT INTO Bookmarks (uid,version_uid,book_id,bookmark_text,original_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+			);
+		} else {
+			statement = get(
+				"UPDATE Bookmarks SET uid=?,version_uid=?,book_id=?,bookmark_text=?,original_text=?,creation_time=?,modification_time=?,access_time=?,model_id=?,paragraph=?,word=?,char=?,end_paragraph=?,end_word=?,end_character=?,visible=?,style_id=? WHERE bookmark_id=?"
+			);
+		}
 
 		int fieldCount = 0;
 		SQLiteUtil.bindString(statement, ++fieldCount, uid(bookmark));
@@ -996,7 +1005,13 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.bindLong(++fieldCount, bookmark.IsVisible ? 1 : 0);
 		statement.bindLong(++fieldCount, bookmark.getStyleId());
 
-		return statement.executeInsert();
+		if (bookmarkId == -1) {
+			return statement.executeInsert();
+		} else {
+			statement.bindLong(++fieldCount, bookmarkId);
+			statement.execute();
+			return bookmarkId;
+		}
 	}
 
 	@Override
