@@ -51,7 +51,7 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 	private TabHost myTabHost;
 
 	private final Map<Integer,HighlightingStyle> myStyles =
-		new HashMap<Integer,HighlightingStyle>();
+		Collections.synchronizedMap(new HashMap<Integer,HighlightingStyle>());
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile Book myBook;
@@ -107,30 +107,6 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 		myBookmark = FBReaderIntents.getBookmarkExtra(getIntent());
 	}
 
-	private class Initializer implements Runnable {
-		public void run() {
-			for (HighlightingStyle style : myCollection.highlightingStyles()) {
-				myStyles.put(style.Id, style);
-			}
-
-			for (BookmarkQuery query = new BookmarkQuery(myBook, 20); ; query = query.next()) {
-				final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
-				if (thisBookBookmarks.isEmpty()) {
-					break;
-				}
-				myThisBookAdapter.addAll(thisBookBookmarks);
-				myAllBooksAdapter.addAll(thisBookBookmarks);
-			}
-			for (BookmarkQuery query = new BookmarkQuery(20); ; query = query.next()) {
-				final List<Bookmark> allBookmarks = myCollection.bookmarks(query);
-				if (allBookmarks.isEmpty()) {
-					break;
-				}
-				myAllBooksAdapter.addAll(allBookmarks);
-			}
-		}
-	}
-
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -147,11 +123,95 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_all_books), false);
 				myCollection.addListener(BookmarksActivity.this);
 
-				new Thread(new Initializer()).start();
+				updateStyles();
+				loadBookmarks();
 			}
 		});
 
 		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	private void updateStyles() {
+		synchronized (myStyles) {
+			myStyles.clear();
+			for (HighlightingStyle style : myCollection.highlightingStyles()) {
+				myStyles.put(style.Id, style);
+			}
+		}
+	}
+
+	private final Object myBookmarksLock = new Object();
+
+	private void loadBookmarks() {
+		new Thread(new Runnable() {
+			public void run() {
+				synchronized (myBookmarksLock) {
+					for (BookmarkQuery query = new BookmarkQuery(myBook, 50); ; query = query.next()) {
+						final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
+						if (thisBookBookmarks.isEmpty()) {
+							break;
+						}
+						myThisBookAdapter.addAll(thisBookBookmarks);
+						myAllBooksAdapter.addAll(thisBookBookmarks);
+					}
+					for (BookmarkQuery query = new BookmarkQuery(50); ; query = query.next()) {
+						final List<Bookmark> allBookmarks = myCollection.bookmarks(query);
+						if (allBookmarks.isEmpty()) {
+							break;
+						}
+						myAllBooksAdapter.addAll(allBookmarks);
+					}
+				}
+			}
+		}).start();
+	}
+
+	private void updateBookmarks() {
+		new Thread(new Runnable() {
+			public void run() {
+				synchronized (myBookmarksLock) {
+					final Map<String,Bookmark> thisBookBookmarks = new HashMap<String,Bookmark>();
+					for (Bookmark b : myThisBookAdapter.bookmarks()) {
+						thisBookBookmarks.put(b.Uid, b);
+					}
+					final Map<String,Bookmark> allBooksBookmarks = new HashMap<String,Bookmark>();
+					for (Bookmark b : myAllBooksAdapter.bookmarks()) {
+						allBooksBookmarks.put(b.Uid, b);
+					}
+					final Map<String,Bookmark> foundBookmarks = new HashMap<String,Bookmark>();
+					final String pattern;
+					if (mySearchResultsAdapter != null) {
+						for (Bookmark b : mySearchResultsAdapter.bookmarks()) {
+							allBooksBookmarks.put(b.Uid, b);
+						}
+						pattern = myBookmarkSearchPatternOption.getValue().toLowerCase();
+					} else {
+						pattern = null;
+					}
+
+					for (BookmarkQuery query = new BookmarkQuery(50); ; query = query.next()) {
+						final List<Bookmark> loaded = myCollection.bookmarks(query);
+						if (loaded.isEmpty()) {
+							break;
+						}
+						for (Bookmark b : loaded) {
+							myAllBooksAdapter.replace(allBooksBookmarks.remove(b.Uid), b);
+							if (b.BookId == myBook.getId()) {
+								myThisBookAdapter.replace(thisBookBookmarks.remove(b.Uid), b);
+							}
+							if (pattern != null && MiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
+								mySearchResultsAdapter.replace(foundBookmarks.remove(b.Uid), b);
+							}
+						}
+					}
+					myAllBooksAdapter.removeAll(allBooksBookmarks.values());
+					myThisBookAdapter.removeAll(thisBookBookmarks.values());
+					if (mySearchResultsAdapter != null) {
+						mySearchResultsAdapter.removeAll(foundBookmarks.values());
+					}
+				}
+			}
+		}).start();
 	}
 
 	@Override
@@ -214,19 +274,9 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 				final Intent intent = new Intent(this, EditBookmarkActivity.class);
 				FBReaderIntents.putBookmarkExtra(intent, bookmark);
 				OrientationUtil.startActivity(this, intent);
-				// TODO: implement IBookCollection listener
 				return true;
 			case DELETE_ITEM_ID:
 				myCollection.deleteBookmark(bookmark);
-				if (myThisBookAdapter != null) {
-					myThisBookAdapter.remove(bookmark);
-				}
-				if (myAllBooksAdapter != null) {
-					myAllBooksAdapter.remove(bookmark);
-				}
-				if (mySearchResultsAdapter != null) {
-					mySearchResultsAdapter.remove(bookmark);
-				}
 				return true;
 		}
 		return super.onContextItemSelected(item);
@@ -283,6 +333,48 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 						if (position < 0) {
 							myBookmarksList.add(- position - 1, b);
 						}
+					}
+					notifyDataSetChanged();
+				}
+			});
+		}
+
+		private boolean areEqualsForView(Bookmark b0, Bookmark b1) {
+			return
+				b0.getStyleId() == b1.getStyleId() &&
+				b0.getText().equals(b1.getText()) &&
+				b0.getDate(Bookmark.DateType.Latest).equals(b1.getDate(Bookmark.DateType.Latest));
+		}
+
+		public void replace(final Bookmark old, final Bookmark b) {
+			if (old != null && areEqualsForView(old, b)) {
+				return;
+			}
+
+			runOnUiThread(new Runnable() {
+				public void run() {
+					synchronized (myBookmarksList) {
+						if (old != null) {
+							myBookmarksList.remove(old);
+						}
+						final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
+						if (position < 0) {
+							myBookmarksList.add(- position - 1, b);
+						}
+					}
+					notifyDataSetChanged();
+				}
+			});
+		}
+
+		public void removeAll(final Collection<Bookmark> bookmarks) {
+			if (bookmarks.isEmpty()) {
+				return;
+			}
+			runOnUiThread(new Runnable() {
+				public void run() {
+					synchronized (myBookmarksList) {
+						myBookmarksList.removeAll(bookmarks);
 					}
 					notifyDataSetChanged();
 				}
@@ -396,12 +488,15 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			default:
 				break;
 			case BookmarkStyleChanged:
-			case BookmarksUpdated:
+				updateStyles();
 				myAllBooksAdapter.notifyDataSetChanged();
 				myThisBookAdapter.notifyDataSetChanged();
-				if (mySearchResultsAdapter != mySearchResultsAdapter) {
+				if (mySearchResultsAdapter != null) {
 					mySearchResultsAdapter.notifyDataSetChanged();
 				}
+				break;
+			case BookmarksUpdated:
+				updateBookmarks();
 				break;
 		}
 	}
