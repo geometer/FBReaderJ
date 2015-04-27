@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Vietnamese FBReaderJ resources, by Phạm Văn Hùng_Firestork -->
+<!-- Updated by Khánh Nguyễn Quốc, 27 Apr 2015 -->
 <resources>
 	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Tác giả chưa biết"/>
