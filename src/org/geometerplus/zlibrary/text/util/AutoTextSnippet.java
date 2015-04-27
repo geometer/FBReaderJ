@@ -30,7 +30,8 @@ public final class AutoTextSnippet implements TextSnippet {
 
 	public final boolean IsEndOfText;
 
-	public AutoTextSnippet(ZLTextWordCursor start, int maxWords) {
+	public AutoTextSnippet(ZLTextWordCursor start, int maxChars) {
+		System.err.println("AutoTextSnippet " + maxChars);
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(start);
 
 		final Buffer buffer = new Buffer(cursor);
@@ -43,7 +44,7 @@ public final class AutoTextSnippet implements TextSnippet {
 		boolean lineIsNonEmpty = false;
 		boolean appendLineBreak = false;
 mainLoop:
-		while (wordCounter < maxWords && sentenceCounter < 3) {
+		while (buffer.Builder.length() + sentenceBuffer.Builder.length() + phraseBuffer.Builder.length() < maxChars && sentenceCounter < maxChars / 20) {
 			while (cursor.isEndOfParagraph()) {
 				if (!cursor.nextParagraph()) {
 					break mainLoop;
@@ -101,7 +102,17 @@ mainLoop:
 			}
 			cursor.nextWord();
 		}
-		if (storedWordCounter < 4) {
+
+		IsEndOfText =
+			cursor.isEndOfText() || cursor.getParagraphCursor().isEndOfSection();
+
+		if (IsEndOfText) {
+			sentenceBuffer.append(phraseBuffer);
+			if (appendLineBreak) {
+				buffer.append("\n");
+			}
+			buffer.append(sentenceBuffer);
+		} else if (storedWordCounter < 4 || sentenceCounter < maxChars / 30) {
 			if (sentenceBuffer.isEmpty()) {
 				sentenceBuffer.append(phraseBuffer);
 			}
@@ -114,10 +125,6 @@ mainLoop:
 		myStart = new ZLTextFixedPosition(start);
 		myEnd = buffer.Cursor;
 		myText = buffer.Builder.toString();
-		IsEndOfText =
-			(cursor.isEndOfText() || cursor.getParagraphCursor().isEndOfSection()) &&
-			sentenceBuffer.isEmpty() &&
-			phraseBuffer.isEmpty();
 	}
 
 	private static class Buffer {
