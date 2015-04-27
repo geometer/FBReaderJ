@@ -722,8 +722,8 @@
 			<node name="summary" value="Jak posouvat text"/>
 			<node name="fingerScrolling" value="Posouvání dotykem displeje">
 				<node name="byTap" value="Posouvat stránky klepnutím prstem"/>
-				<node name="byFlick" value="Posouvat stránky rychlým pohybem prstem"/>
-				<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstem"/>
+				<node name="byFlick" value="Posouvat stránky rychlým pohybem prstu"/>
+				<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstu"/>
 			</node>
 			<node name="enableDoubleTapDetection" value="Rozpoznání poklepání">
 				<node name="summaryOn" value="Poklepání spustí navigaci nebo menu"/>
@@ -883,7 +883,7 @@
 			<node name="topup" value="Doplnit účet"/>
 			<node name="pay" value="Zaplatit"/>
 			<node name="refresh" value="Aktualizovat"/>
-			<node name="authorise" value="Authorisovat"/>
+			<node name="authorise" value="Autorizovat"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Odeslat zprávu"/>
@@ -959,7 +959,7 @@
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
-			<node name="purchaseNotEnoughMoney" value="Nemáte dost poněz"/>
+			<node name="purchaseNotEnoughMoney" value="Nemáte dost peněz"/>
 			<node name="purchaseMissingBook" value="Chybějící kniha"/>
 			<node name="purchaseAlreadyPurchased" value="Již zakoupena"/>
 			<node name="bookNotPurchased" value="Kniha nebyla zakoupena"/>
