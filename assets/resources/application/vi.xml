@@ -29,19 +29,19 @@
 		<node name="found" value="Tìm thấy">
 			<node name="summary" value="Kết quả tìm kiếm khoảng: %s"/>
 		</node>
-		<node name="sync" value="Synchronisation" toBeTranslated="true">
-			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
-			<node name="sync-success" value="Synchronised" toBeTranslated="true">
-				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+		<node name="sync" value="Đồng bộ">
+			<node name="summary" value="Tình trạng đồng bộ"/>
+			<node name="sync-success" value="Đã đồng bộ">
+				<node name="summary" value="Sách đã tải lên máy chủ"/>
 			</node>
-			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
-				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			<node name="sync-failure" value="Đồng bộ thất bại">
+				<node name="summary" value="Sách không tải lên được máy chủ vì gặp lỗi"/>
 			</node>
-			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
-				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			<node name="sync-deleted" value="Đã xóa khỏi máy chủ">
+				<node name="summary" value="Sách không còn truy cập được trên máy chủ nữa"/>
 			</node>
-			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
-				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			<node name="sync-tosync" value="Chưa đồng bộ">
+				<node name="summary" value="Sách sẽ tải lên máy chủ"/>
 			</node>
 		</node>
 		<node name="fileTree" value="Cây Tập tin">
@@ -278,7 +278,7 @@
 		<node name="preferences" value="Cài đặt"/>
 		<node name="bookInfo" value="Thông tin sách"/>
 		<node name="library" value="Thư viện"/>
-		<node name="toc" value="ML"/>
+		<node name="toc" value="Mục lục"/>
 		<node name="day" value="Ngày"/>
 		<node name="night" value="Đêm"/>
 		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
@@ -295,22 +295,22 @@
 			<node name="undo" value="Quay Lại"/>
 			<node name="redo" value="Đi Tiếp"/>
 		</node>
-		<node name="shareBook" value="Share book" toBeTranslated="true"/>
+		<node name="shareBook" value="Chia sẻ sách"/>
 		<node name="search" value="Tìm"/>
-		<node name="rotate" value="Quay màn hình"/>
-		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
-		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
-		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
-		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
-		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
-		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+		<node name="rotate" value="Xoay màn hình"/>
+		<node name="screenOrientation" value="Hướng màn hình"/>
+		<node name="screenOrientationSystem" value="Theo hệ thống"/>
+		<node name="screenOrientationSensor" value="Xoay tự động"/>
+		<node name="screenOrientationPortrait" value="Dọc"/>
+		<node name="screenOrientationLandscape" value="Ngang"/>
+		<node name="screenOrientationReversePortrait" value="Dọc: lộn đầu"/>
+		<node name="screenOrientationReverseLandscape" value="Ngang: lộn đầu"/>
 		<node name="increaseFont" value="Phóng to"/>
 		<node name="decreaseFont" value="Thu nhỏ"/>
 		<node name="toggleFullscreen" value="Toàn Màn hình "/>
 		<node name="bookmarks" value="Đánh dấu"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
-		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="plugins" value="Cài phần bổ sung"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Tên tập tin"/>
@@ -322,57 +322,57 @@
 		<node name="series" value="Bộ sách"/>
 	</node>
 	<node name="Preferences">
-		<node name="sync" value="Synchronisation" toBeTranslated="true">
-			<node name="summary" value="Book network settings" toBeTranslated="true"/>
-			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
-				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+		<node name="sync" value="Đồng bộ">
+			<node name="summary" value="Thông số mạng cho kho sách"/>
+			<node name="site" value="Đọc thêm về đồng bộ sách">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
-			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
-				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
-				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
-				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			<node name="enable" value="Bật chế độ đồng bộ">
+				<node name="summaryOn" value="Đồng bộ thư viện lên máy chủ của FBReader"/>
+				<node name="summaryOnWithAccount" value="Đồng bộ thư viện thành %s"/>
+				<node name="summaryOff" value="Không đồng bộ thư viện lên máy chủ của FBReader"/>
 			</node>
 			<node name="values">
-				<node name="always" value="Always" toBeTranslated="true"/>
-				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
-				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="always" value="Mọi lúc"/>
+				<node name="viaWifi" value="Chỉ khi kết nối qua Wi-Fi"/>
+				<node name="never" value="Không"/>
 			</node>
-			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
-			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
-			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
-			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
-			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
-			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
-				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			<node name="uploadAllBooks" value="Tải toàn bộ sách lên máy chủ"/>
+			<node name="downloadAllBooks" value="Tải toàn bộ sách từ máy chủ về"/>
+			<node name="downloadCurrentBook" value="Tải sách hiện tại từ máy chủ về"/>
+			<node name="positions" value="Đồng bộ vị trí đọc trong sách"/>
+			<node name="bookmarks" value="Đồng bộ dánh dấu trang sách"/>
+			<node name="metainfo" value="Đồng bộ thông tin sách (tựa, thể loại, v.v.)"/>
+			<node name="changeCurrentBook" value="Thay đổi sách đang đọc">
+				<node name="summaryOn" value="Mở cùng cuốn sách trên mọi thiết bị"/>
+				<node name="summaryOff" value="Chỉ đồng bộ tiến độ đọc sách, không đổi sách"/>
 			</node>
 		</node>
 		<node name="directories" value="Thư mục">
-			<node name="summary" value="Các thư mục để tìm kiếm tập tin"/>
-			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
+			<node name="summary" value="Các thư mục tìm kiếm, lưu trữ"/>
+			<node name="bookPath" value="Nơi tìm sách">
 				<node name="chooserTitle" value="Thư mục sách"/>
 			</node>
-			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true">
+			<node name="downloadDir" value="Nơi chứa sách tải về">
 				<node name="chooserTitle" value="Thư mục sách"/>
 			</node>
-			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
-				<node name="chooserTitle" value="Thư mục phông"/>
+			<node name="fontPath" value="Nơi tìm font">
+				<node name="chooserTitle" value="Thư mục font"/>
 			</node>
-			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
-				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+			<node name="tempDir" value="Nơi chứa các tệp tin tạm thời">
+				<node name="chooserTitle" value="Thư mục tệp tin tạm"/>
 			</node>
 		</node>
 		<node name="appearance" value="Giao diện">
 			<node name="summary" value="Xoay, thanh trạng thái"/>
-			<node name="language" value="Interface language" toBeTranslated="true"/>
-			<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
-				<node name="system" value="System" toBeTranslated="true"/>
-				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
-				<node name="portrait" value="Portrait" toBeTranslated="true"/>
-				<node name="landscape" value="Landscape" toBeTranslated="true"/>
-				<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-				<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+			<node name="language" value="Ngôn ngữ hiển thị"/>
+			<node name="screenOrientation" value="Hướng màn hình">
+				<node name="system" value="Theo hệ thống"/>
+				<node name="sensor" value="Xoay tự động"/>
+				<node name="portrait" value="Dọc"/>
+				<node name="landscape" value="Ngang"/>
+				<node name="reversePortrait" value="Dọc: ngược"/>
+				<node name="reverseLandscape" value="Ngang: ngược"/>
 			</node>
 			<node name="autoOrientation" value="Tự xoay">
 				<node name="summaryOn" value="Màn hình sẽ xoay khi bạn quay thiết bị"/>
@@ -380,51 +380,51 @@
 			</node>
 			<node name="showStatusBar" value="Hiện thanh trạng thái">
 				<node name="summaryOn" value="Hiện thanh trạng thái khi đọc"/>
-				<node name="summaryOff" value=" Ẩn thanh trạng thía khi đọc"/>
+				<node name="summaryOff" value=" Ẩn thanh trạng thái khi đọc"/>
 			</node>
-			<node name="showActionBar" value="Show action bar" toBeTranslated="true">
-				<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
-				<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
+			<node name="showActionBar" value="Hiển thị trình đơn">
+				<node name="summaryOn" value="Hiển thị trình đơn khi đang đọc"/>
+				<node name="summaryOff" value="Dấu trình đơn khi đang đọc"/>
 			</node>
-			<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
-				<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+			<node name="showStatusBarWhenMenuIsActive" value="Hiện thanh trạng thái cùng trình đơn">
+				<node name="summaryOn" value="Hiện thanh trạng thái cùng trình đơn"/>
+				<node name="summaryOff" value="Không hiện thanh trạng thái cùng trình đơn"/>
 			</node>
-			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
-				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
-				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			<node name="fullscreenMode" value="Choán hết màn hình">
+				<node name="summaryOn" value="Ẩn thanh điều hướng"/>
+				<node name="summaryOff" value="Hiện thanh điều hướng"/>
 			</node>
-			<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
-				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+			<node name="disableButtonLights" value="Tắt đèn nút bấm khi đọc">
+				<node name="summaryOn" value="Tắt đèn nút (một số máy không có)"/>
+				<node name="summaryOff" value="Không tắt đèn nút bấm"/>
 			</node>
-			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
-				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
-				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			<node name="twoColumnView" value="Chế độ hai cột">
+				<node name="summaryOn" value="Hiển thị văn bản thành hai cột khi máy nằm ngang"/>
+				<node name="summaryOff" value="Luôn hiển thị thành hai cột"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
-				<node name="never" value="Never" toBeTranslated="true"/>
-				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
-				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
-				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			<node name="showFootnoteToast" value="Xem nội dung liên kết ở cửa sổ con">
+				<node name="never" value="Không"/>
+				<node name="footnotesOnly" value="Chỉ với chú thích"/>
+				<node name="footnotesAndSuperscripts" value="Chỉ chú thích và đường dẫn dùng thẻ sup"/>
+				<node name="allInternalLinks" value="Tất cả các liên kết nội bộ"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
-				<node name="summaryOn" value="Bằng việc rê ngón tay lên/xuống dọc cạnh trái màn hình"/>
+				<node name="summaryOn" value="Vuốt ngón tay theo lề trái màn hình"/>
 				<node name="summaryOff" value="Tắt"/>
 			</node>
-			<node name="dontTurnScreenOff" value="Không cho màn hình tắt">
+			<node name="dontTurnScreenOff" value="Ngăn màn hình tắt">
 				<node name="0" value="Luôn luôn"/>
-				<node name="25" value="Khi thời lượng pin lớn hơn 25%%"/>
-				<node name="50" value="Khi thời lượng pin lớn hơn 50%%"/>
-				<node name="100" value="Không bao giờ"/>
+				<node name="25" value="Khi pin nhiều hơn 25%%"/>
+				<node name="50" value="Khi pin nhiều hơn 50%%"/>
+				<node name="100" value="Màn hình tắt tự động"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Ngăn màn hình tắt trong khi sạc">
 				<node name="summaryOn" value="Ngăn màn hình tắt nếu máy đang sạc"/>
 				<node name="summaryOff" value="Tắt màn hình ngay cả khi máy đang sạc"/>
 			</node>
 		</node>
-		<node name="text" value="Văn bản">
-			<node name="summary" value="Phông, tách chữ, v..v."/>
+		<node name="text" value="Cấu hình chữ">
+			<node name="summary" value="Kiểu chữ, tách chữ, v..v."/>
 			<node name="fontProperties" value="Font properties" toBeTranslated="true">
 				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
 				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
@@ -448,11 +448,11 @@
 					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
 				</node>
 			</node>
-			<node name="font" value="Họ phông">
+			<node name="font" value="Họ font">
 				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
-			<node name="fontSize" value="Cỡ phông"/>
-			<node name="fontStyle" value="Kiểu phông">
+			<node name="fontSize" value="Cỡ"/>
+			<node name="fontStyle" value="Kiểu">
 				<node name="regular" value="Thường"/>
 				<node name="bold" value="Đậm"/>
 				<node name="italic" value="Nghiêng"/>
@@ -468,16 +468,16 @@
 				<node name="normal" value="thường"/>
 				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
-			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
-				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
-				<node name="none" value="no decorations" toBeTranslated="true"/>
-				<node name="underline" value="underlined" toBeTranslated="true"/>
-				<node name="line-through" value="striked through" toBeTranslated="true"/>
+			<node name="textDecoration" value="Trang trí chữ">
+				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
+				<node name="none" value="không trang trí"/>
+				<node name="underline" value="gạch dưới"/>
+				<node name="line-through" value="gạch cắt ngang"/>
 			</node>
 			<node name="lineSpacing" value="Cách dòng">
 				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
-			<node name="alignment" value="Thẳng hàng">
+			<node name="alignment" value="Canh lề">
 				<node name="left" value="Trái"/>
 				<node name="right" value="Phải"/>
 				<node name="center" value="Giữa"/>
@@ -499,7 +499,7 @@
 			<node name="leftIndent" value="Lùi Trái"/>
 			<node name="rightIndent" value="Lùi Phải"/>
 			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
-			<node name="more" value="Thêm kiểu">
+			<node name="more" value="Kiểu chữ khác">
 				<node name="summary" value="Các thiết lập riêng cho tiêu đề, đề từ,v..v."/>
 				<node name="Regular Paragraph" value="Đoạn văn Thường">
 					<node name="summary" value=""/>
@@ -605,30 +605,30 @@
 				</node>
 			</node>
 		</node>
-		<node name="css" value="CSS" toBeTranslated="true">
-			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
-			<node name="fontFamily" value="Font family" toBeTranslated="true">
-				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+		<node name="css" value="CSS">
+			<node name="summary" value="Sử dụng thông số trong CSS"/>
+			<node name="fontFamily" value="Họ font chữ">
+				<node name="summaryOn" value="Sử dụng họ font chữ nêu trong CSS"/>
+				<node name="summaryOff" value="Không dùng họ font chữ nêu trong CSS"/>
 			</node>
-			<node name="fontSize" value="Font size" toBeTranslated="true">
-				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Cỡ chữ">
+				<node name="summaryOn" value="Sử dụng cỡ chữ nêu trong CSS"/>
+				<node name="summaryOff" value="Không dùng cỡ chữ nêu trong CSS"/>
 			</node>
-			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
-				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			<node name="textAlignment" value="Canh lề">
+				<node name="summaryOn" value="Sử dụng cách canh lề nêu trong CSS"/>
+				<node name="summaryOff" value="Không dùng cách canh lề nêu trong CSS"/>
 			</node>
-			<node name="margins" value="Margins" toBeTranslated="true">
-				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			<node name="margins" value="Chiều rộng lề">
+				<node name="summaryOn" value="Sử dụng chiều rộng lề nêu trong CSS"/>
+				<node name="summaryOff" value="Không dùng chiều rộng lề nêu trong CSS"/>
 			</node>
 		</node>
-		<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
-			<node name="summary" value="Color settings"/>
+		<node name="colors" value="Màu chữ và nền">
+			<node name="summary" value="Thông số màu"/>
 			<node name="background" value="Nền">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="solidColor" value="Màu trơn…"/>
 					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
 					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
 				</node>
@@ -659,13 +659,13 @@
 			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
 			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
 		</node>
-		<node name="margins" value="Canh lề">
-			<node name="summary" value="Text margins"/>
-			<node name="left" value="Lề Trái"/>
-			<node name="right" value="Lề Phải"/>
-			<node name="top" value="Lề Trên"/>
-			<node name="bottom" value="Lề Dưới"/>
-			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
+		<node name="margins" value="Chiều rộng lề">
+			<node name="summary" value="Lề trang sách"/>
+			<node name="left" value="Lề trái"/>
+			<node name="right" value="Lề phải"/>
+			<node name="top" value="Lề trên"/>
+			<node name="bottom" value="Lề dưới"/>
+			<node name="spaceBetweenColumns" value="Khoảng cách giữa các cột"/>
 		</node>
 		<node name="scrollBar" value="Thanh cuộn">
 			<node name="summary" value="Thiết lập thanh cuộn &amp; cuối trang"/>
@@ -673,7 +673,7 @@
 				<node name="hide" value="Dấu"/>
 				<node name="show" value="Thanh trượt dọc"/>
 				<node name="showAsProgress" value="Thanh quá trình dọc"/>
-				<node name="showAsFooter" value="Dòng cuois trang ngang"/>
+				<node name="showAsFooter" value="Dòng cuối trang ngang"/>
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Chiều cao của cuối trang"/>
@@ -689,15 +689,15 @@
 				<node name="summaryOn" value="Hiện số trang ở dòng cuối"/>
 				<node name="summaryOff" value="Đừng hiện số trang ở dòng cuối"/>
 			</node>
-			<node name="showBattery" value="Hiện thời lượng pin">
-				<node name="summaryOn" value="Hiện thời lượng pin ở dòng cuối"/>
-				<node name="summaryOff" value="Đừng hiện thời lượng pin ở dòng cuối"/>
+			<node name="showBattery" value="Hiện lượng pin">
+				<node name="summaryOn" value="Hiện lượng pin ở dòng cuối"/>
+				<node name="summaryOff" value="Đừng hiện lượng pin ở dòng cuối"/>
 			</node>
 			<node name="showClock" value="Hiện đồng hồ">
 				<node name="summaryOn" value="Hiện đồng hồ ở dòng cuối"/>
 				<node name="summaryOff" value="Đừng hiện đồng hồ ở dòng cuối"/>
 			</node>
-			<node name="font" value="Họ phông"/>
+			<node name="font" value="Họ font"/>
 		</node>
 		<node name="scrolling" value="Cuộn">
 			<node name="summary" value="Cách để cuộn văn bản"/>
@@ -762,80 +762,80 @@
 				<node name="summaryOff" value="Phím điều hướng chỉ tác động lên siêu liên kết"/>
 			</node>
 		</node>
-		<node name="images" value="Images" toBeTranslated="true">
-			<node name="summary" value="Image displaying options" toBeTranslated="true"/>
-			<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
-			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-				<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
-				<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
+		<node name="images" value="Ảnh trong sách">
+			<node name="summary" value="Các thông số hiển thị ảnh"/>
+			<node name="backgroundColor" value="Màu nền chế độ xem ảnh"/>
+			<node name="tappingAction" value="Bấm giữ ảnh">
+				<node name="doNothing" value="Bấm giữ không có tác dụng gì"/>
+				<node name="selectImage" value="Bấm giữ để chọn ảnh"/>
+				<node name="openImageView" value="Bấm giữ bật chế độ xem ảnh"/>
 			</node>
-			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
-				<node name="none" value="None" toBeTranslated="true"/>
-				<node name="covers" value="Covers only" toBeTranslated="true"/>
-				<node name="all" value="All" toBeTranslated="true"/>
+			<node name="fitImagesToScreen" value="Ảnh choán màn hình">
+				<node name="none" value="Không"/>
+				<node name="covers" value="Chỉ với ảnh bìa"/>
+				<node name="all" value="Tất cả ảnh"/>
 			</node>
-			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
-				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
-				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
-			</node>
-		</node>
-		<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
-			<node name="summary" value="Back button action list" toBeTranslated="true"/>
-			<node name="library" value="Library" toBeTranslated="true">
-				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
-			</node>
-			<node name="networkLibrary" value="Network library" toBeTranslated="true">
-				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
-			</node>
-			<node name="previousBook" value="Previous book" toBeTranslated="true">
-				<node name="summaryOn" value="Show 'return to previous book' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'return to previous book' item" toBeTranslated="true"/>
-			</node>
-			<node name="positions" value="Last 3 positions" toBeTranslated="true">
-				<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
-			</node>
-			<node name="backKeyAction" value="Back key action" toBeTranslated="true">
-				<node name="exit" value="Close FBReader" toBeTranslated="true"/>
-				<node name="goBack" value="Navigate back" toBeTranslated="true"/>
-				<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
-			</node>
-			<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
-				<node name="exit" value="Close FBReader" toBeTranslated="true"/>
-				<node name="goBack" value="Navigate back" toBeTranslated="true"/>
-				<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
-				<node name="none" value="No action" toBeTranslated="true"/>
+			<node name="matchBackground" value="Điều chỉnh mật độ nền">
+				<node name="summaryOn" value="Điều chỉnh màu ảnh theo nền"/>
+				<node name="summaryOff" value="Không điều chỉnh ảnh"/>
 			</node>
 		</node>
-		<node name="tips" value="Tips" toBeTranslated="true">
-			<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
-			<node name="showTips" value="Show tips" toBeTranslated="true">
-				<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
-				<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
+		<node name="cancelMenu" value="Danh mục lệnh Hủy">
+			<node name="summary" value="Các lệnh trong Lệnh Hủy"/>
+			<node name="library" value="Giá sách">
+				<node name="summaryOn" value="Hiện mục 'Giá sách'"/>
+				<node name="summaryOff" value="Không hiện mục 'Giá sách'"/>
+			</node>
+			<node name="networkLibrary" value="Kho sách mạng">
+				<node name="summaryOn" value="Hiện mục 'Kho sách mạng'"/>
+				<node name="summaryOff" value="Không hiện 'Kho sách mạng'"/>
+			</node>
+			<node name="previousBook" value="Sách đọc lần trước">
+				<node name="summaryOn" value="Hiện mục 'Chuyển sang sách đọc lần trước'"/>
+				<node name="summaryOff" value="Không hiện mục 'Chuyển sang sách đọc lần trước'"/>
+			</node>
+			<node name="positions" value="3 vị trí mới nhất">
+				<node name="summaryOn" value="Hiện 3 vị trí mới dừng gần nhất trong sách"/>
+				<node name="summaryOff" value="Không hiện 3 vị trí mới dừng gần nhất trong sách"/>
+			</node>
+			<node name="backKeyAction" value="Lệnh khi bấm Trở lại">
+				<node name="exit" value="Đóng FBReader"/>
+				<node name="goBack" value="Trở lại"/>
+				<node name="cancelMenu" value="Hiện 'Lệnh Hủy'"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Lệnh khi bấm giữ Trở lại">
+				<node name="exit" value="Đóng FBReader"/>
+				<node name="goBack" value="Trở lại"/>
+				<node name="cancelMenu" value="Hiện 'Lệnh Hủy'"/>
+				<node name="none" value="Không làm gì"/>
 			</node>
 		</node>
-		<node name="about" value="About FBReader" toBeTranslated="true">
-			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
-			<node name="version" value="Version" toBeTranslated="true"/>
-			<node name="site" value="Visit our website" toBeTranslated="true">
+		<node name="tips" value="Mẹo nhỏ">
+			<node name="summary" value="Cấu hình về các mẹo nhỏ hàng ngày"/>
+			<node name="showTips" value="Hiện mẹo nhỏ">
+				<node name="summaryOn" value="Hiện hàng ngày"/>
+				<node name="summaryOff" value="Không cho hiện"/>
+			</node>
+		</node>
+		<node name="about" value="Giới thiệu FBReader">
+			<node name="summary" value="Phiên bản, Liên hệ"/>
+			<node name="version" value="Phiên bản"/>
+			<node name="site" value="Ghé thăm website">
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
-			<node name="email" value="Send us an e-mail" toBeTranslated="true">
-				<node name="url" value="mailto:contact@fbreader.org" toBeTranslated="true"/>
+			<node name="email" value="Gửi thư điện tử">
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
-			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+			<node name="googleplus" value="Tham gia FBReader trên Google+">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Follow us at Twitter" toBeTranslated="true">
+			<node name="twitter" value="Theo dõi thông báo trên Twitter">
 				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader on Facebook" toBeTranslated="true">
+			<node name="facebook" value="FBReader trên Facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
-			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
+			<node name="thirdParty" value="Thư viện của bên thứ ba"/>
 		</node>
 		<node name="eink" value="E-ink screen" toBeTranslated="true">
 			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
@@ -865,13 +865,13 @@
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 			<node name="authorise" value="Authorise" toBeTranslated="true"/>
-			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
+			<node name="resetPosition" value="Về vị trí cũ"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
-			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="sendReport" value="Gửi phản hồi"/>
 			<node name="addToFavorites" value="Thêm vào yêu thích"/>
 			<node name="removeFromFavorites" value="Xóa khỏi yêu thích"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+			<node name="markAsRead" value="Đánh dấu đã đọc"/>
+			<node name="markAsUnread" value="Đánh dấu chưa đọc"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Cài phần bổ trợ"/>
@@ -879,18 +879,18 @@
 			<node name="dontAskAgain" value="Đừng hỏi lại"/>
 		</node>
 		<node name="backgroundAuthentication">
-			<node name="message" value="Authentication required" toBeTranslated="true"/>
+			<node name="message" value="Cần có thông tin đăng nhập"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Cài từ điển"/>
 			<node name="message" value="Bạn có muốn cài %s?"/>
 		</node>
 		<node name="deleteBookBox">
-			<node name="message" value="Sách sẽ bị xóa và không thể hoàn tác. Bạn chắc chứ?"/>
+			<node name="message" value="Sách sẽ bị xóa vĩnh viễn. Bạn chắc chứ?"/>
 		</node>
 		<node name="deleteMultipleBookBox">
-			<node name="title" value="Delete books" toBeTranslated="true"/>
-			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+			<node name="title" value="Xóa sách"/>
+			<node name="message" value="%s sách sẽ bị xóa vĩnh viễn. Bạn chắc chứ?"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Tập tin đã tồn tại. Tải lại?"/>
@@ -972,9 +972,9 @@
 			<node name="catalogTitle" value="Tiêu đề"/>
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Tóm tắt"/>
-			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog"/>
-			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/"/>
-			<node name="catalogSummaryExample" value="E.g.: Public domain books"/>
+			<node name="catalogTitleExample" value="VD: Project Gutenberg catalog"/>
+			<node name="catalogUrlExample" value="VD: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="VD: Public domain books"/>
 			<node name="titleIsEmpty" value="Tiêu đề không nên để trống"/>
 			<node name="urlIsEmpty" value="URL không nên để trống"/>
 			<node name="invalidUrl" value="URL sai"/>
@@ -1058,11 +1058,11 @@
 		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Danh mục rỗng"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="Không tìm thấy sách, rất tiếc." toBeTranslated="true"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
-		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
-		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
+		<node name="bookIsMissingTitle" value="Sách bị mất"/>
+		<node name="bookIsMissing" value="Sách '%s' không có trên thiết bị này, rất tiếc."/>
 		<node name="downloadFailed" value="Tải về thất bại"/>
 	</node>
 	<node name="external">
@@ -1128,8 +1128,8 @@
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
-		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+		<node name="positiveLength" value="VD: 20px, 10pt, 0.8em, 1ex, 120%%"/>
+		<node name="length" value="VD: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
+		<node name="percent" value="VD: 125%%"/>
 	</node>
 </resources>
