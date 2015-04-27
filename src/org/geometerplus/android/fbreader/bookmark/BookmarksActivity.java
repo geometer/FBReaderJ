@@ -166,48 +166,49 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 		}).start();
 	}
 
-	private void updateBookmarks() {
+	private void updateBookmarks(final Book book) {
 		new Thread(new Runnable() {
 			public void run() {
 				synchronized (myBookmarksLock) {
-					final Map<String,Bookmark> thisBookBookmarks = new HashMap<String,Bookmark>();
-					for (Bookmark b : myThisBookAdapter.bookmarks()) {
-						thisBookBookmarks.put(b.Uid, b);
-					}
-					final Map<String,Bookmark> allBooksBookmarks = new HashMap<String,Bookmark>();
-					for (Bookmark b : myAllBooksAdapter.bookmarks()) {
-						allBooksBookmarks.put(b.Uid, b);
-					}
-					final Map<String,Bookmark> foundBookmarks = new HashMap<String,Bookmark>();
-					final String pattern;
-					if (mySearchResultsAdapter != null) {
-						for (Bookmark b : mySearchResultsAdapter.bookmarks()) {
-							foundBookmarks.put(b.Uid, b);
-						}
-						pattern = myBookmarkSearchPatternOption.getValue().toLowerCase();
-					} else {
-						pattern = null;
-					}
+					final boolean flagThisBookTab = book.getId() == myBook.getId();
+					final boolean flagSearchTab = mySearchResultsAdapter != null;
 
-					for (BookmarkQuery query = new BookmarkQuery(50); ; query = query.next()) {
+					final Map<String,Bookmark> oldBookmarks = new HashMap<String,Bookmark>();
+					if (flagThisBookTab) {
+						for (Bookmark b : myThisBookAdapter.bookmarks()) {
+							oldBookmarks.put(b.Uid, b);
+						}
+					} else {
+						for (Bookmark b : myAllBooksAdapter.bookmarks()) {
+							if (b.BookId == book.getId()) {
+								oldBookmarks.put(b.Uid, b);
+							}
+						}
+					}
+					final String pattern = myBookmarkSearchPatternOption.getValue().toLowerCase();
+
+					for (BookmarkQuery query = new BookmarkQuery(book, 50); ; query = query.next()) {
 						final List<Bookmark> loaded = myCollection.bookmarks(query);
 						if (loaded.isEmpty()) {
 							break;
 						}
 						for (Bookmark b : loaded) {
-							myAllBooksAdapter.replace(allBooksBookmarks.remove(b.Uid), b);
-							if (b.BookId == myBook.getId()) {
-								myThisBookAdapter.replace(thisBookBookmarks.remove(b.Uid), b);
+							final Bookmark old = oldBookmarks.remove(b.Uid);
+							myAllBooksAdapter.replace(old, b);
+							if (flagThisBookTab) {
+								myThisBookAdapter.replace(old, b);
 							}
-							if (pattern != null && MiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
-								mySearchResultsAdapter.replace(foundBookmarks.remove(b.Uid), b);
+							if (flagSearchTab && MiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
+								mySearchResultsAdapter.replace(old, b);
 							}
 						}
 					}
-					myAllBooksAdapter.removeAll(allBooksBookmarks.values());
-					myThisBookAdapter.removeAll(thisBookBookmarks.values());
-					if (mySearchResultsAdapter != null) {
-						mySearchResultsAdapter.removeAll(foundBookmarks.values());
+					myAllBooksAdapter.removeAll(oldBookmarks.values());
+					if (flagThisBookTab) {
+						myThisBookAdapter.removeAll(oldBookmarks.values());
+					}
+					if (flagSearchTab) {
+						mySearchResultsAdapter.removeAll(oldBookmarks.values());
 					}
 				}
 			}
@@ -466,10 +467,8 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			if (bookmark != null) {
 				gotoBookmark(bookmark);
 			} else if (myShowAddBookmarkItem) {
-				myCollection.saveBookmark(myBookmark);
-				myThisBookAdapter.add(myBookmark);
-				myAllBooksAdapter.add(myBookmark);
 				myShowAddBookmarkItem = false;
+				myCollection.saveBookmark(myBookmark);
 			}
 		}
 	}
@@ -488,7 +487,7 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 				}
 				break;
 			case BookmarksUpdated:
-				updateBookmarks();
+				updateBookmarks(book);
 				break;
 		}
 	}
