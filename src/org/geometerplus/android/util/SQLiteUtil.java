@@ -33,6 +33,14 @@ public abstract class SQLiteUtil {
 		}
 	}
 
+	public static void bindLong(SQLiteStatement statement, int index, Long value) {
+		if (value != null) {
+			statement.bindLong(index, value);
+		} else {
+			statement.bindNull(index);
+		}
+	}
+
 	public static void bindDate(SQLiteStatement statement, int index, Date value) {
 		if (value != null) {
 			statement.bindLong(index, value.getTime());

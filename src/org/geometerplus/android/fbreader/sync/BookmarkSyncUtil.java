@@ -107,7 +107,7 @@ class BookmarkSyncUtil {
 							if (b.getVersionUid() == null) {
 								toUpdateOnClient.add(b);
 							} else if (!info.VersionUid.equals(b.getVersionUid())) {
-								final long ts = b.getDate(Bookmark.DateType.Modification).getTime();
+								final long ts = b.getTimestamp(Bookmark.DateType.Modification);
 								if (info.ModificationTimestamp <= ts) {
 									toUpdateOnServer.add(b);
 								} else {
@@ -392,15 +392,9 @@ class BookmarkSyncUtil {
 			bmk.put("para_end", bookmark.getEnd().getParagraphIndex());
 			bmk.put("elmt_end", bookmark.getEnd().getElementIndex());
 			bmk.put("char_end", bookmark.getEnd().getCharIndex());
-			bmk.put("creation_timestamp", bookmark.getDate(Bookmark.DateType.Creation).getTime());
-			final Date accessDate = bookmark.getDate(Bookmark.DateType.Access);
-			if (accessDate != null) {
-				bmk.put("access_timestamp", accessDate.getTime());
-			}
-			final Date modificationDate = bookmark.getDate(Bookmark.DateType.Modification);
-			if (modificationDate != null) {
-				bmk.put("modification_timestamp", modificationDate.getTime());
-			}
+			bmk.put("creation_timestamp", bookmark.getTimestamp(Bookmark.DateType.Creation));
+			bmk.put("modification_timestamp", bookmark.getTimestamp(Bookmark.DateType.Modification));
+			bmk.put("access_timestamp", bookmark.getTimestamp(Bookmark.DateType.Access));
 
 			put("bookmark", bmk);
 		}
@@ -433,11 +427,6 @@ class BookmarkSyncUtil {
 		return uids;
 	}
 
-	private static Date getDate(Map<String,Object> data, String key) {
-		final Long timestamp = (Long)data.get(key);
-		return timestamp != null ? new Date(timestamp) : null;
-	}
-
 	private static int getInt(Map<String,Object> data, String key) {
 		return (int)(long)(Long)data.get(key);
 	}
@@ -455,9 +444,9 @@ class BookmarkSyncUtil {
 			bookId, bookTitle,
 			(String)data.get("text"),
 			(String)data.get("original_text"),
-			getDate(data, "creation_timestamp"),
-			getDate(data, "modification_timestamp"),
-			getDate(data, "access_timestamp"),
+			(Long)data.get("creation_timestamp"),
+			(Long)data.get("modification_timestamp"),
+			(Long)data.get("access_timestamp"),
 			(String)data.get("model_id"),
 			getInt(data, "para_start"), getInt(data, "elmt_start"), getInt(data, "char_start"),
 			getInt(data, "para_end"), getInt(data, "elmt_end"), getInt(data, "char_end"),
