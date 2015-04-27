@@ -95,6 +95,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myOriginalText = originalText;
 		CreationDate = creationDate;
 		myModificationDate = modificationDate;
+		myAccessDate = accessDate;
 		ModelId = modelId;
 		IsVisible = isVisible;
 
@@ -242,6 +243,7 @@ mainLoop:
 
 	public void markAsAccessed() {
 		myAccessDate = new Date();
+		onModification();
 	}
 
 	public static class ByTimeComparator implements Comparator<Bookmark> {
