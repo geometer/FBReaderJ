@@ -283,13 +283,13 @@ class XMLSerializer extends AbstractSerializer {
 		appendTagWithContent(buffer, "original-text", bookmark.getOriginalText());
 		appendTag(
 			buffer, "history", true,
-			"ts-creation", timestampByDate(bookmark.getDate(Bookmark.DateType.Creation)),
-			"ts-modification", timestampByDate(bookmark.getDate(Bookmark.DateType.Modification)),
-			"ts-access", timestampByDate(bookmark.getDate(Bookmark.DateType.Access)),
+			"ts-creation", timestampByDate(bookmark.getTimestamp(Bookmark.DateType.Creation)),
+			"ts-modification", timestampByDate(bookmark.getTimestamp(Bookmark.DateType.Modification)),
+			"ts-access", timestampByDate(bookmark.getTimestamp(Bookmark.DateType.Access)),
 			// obsolete, old format plugins compatibility
-			"date-creation", formatDate(bookmark.getDate(Bookmark.DateType.Creation)),
-			"date-modification", formatDate(bookmark.getDate(Bookmark.DateType.Modification)),
-			"date-access", formatDate(bookmark.getDate(Bookmark.DateType.Access))
+			"date-creation", formatDate(bookmark.getTimestamp(Bookmark.DateType.Creation)),
+			"date-modification", formatDate(bookmark.getTimestamp(Bookmark.DateType.Modification)),
+			"date-access", formatDate(bookmark.getTimestamp(Bookmark.DateType.Access))
 		);
 		appendTag(
 			buffer, "start", true,
@@ -361,8 +361,8 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 
-	private static String timestampByDate(Date date) {
-		return date != null ? String.valueOf(date.getTime()) : null;
+	private static String timestampByDate(Long date) {
+		return date != null ? String.valueOf(date) : null;
 	}
 	private static Date dateByTimestamp(String str) throws SAXException {
 		try {
@@ -372,19 +372,19 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 	private static DateFormat ourDateFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, Locale.ENGLISH);
-	private static String formatDate(Date date) {
-		return date != null ? ourDateFormatter.format(date) : null;
+	private static String formatDate(Long timestamp) {
+		return timestamp != null ? ourDateFormatter.format(new Date(timestamp)) : null;
 	}
-	private static Date parseDate(String str) throws SAXException {
+	private static long parseDate(String str) throws SAXException {
 		try {
-			return str != null ? ourDateFormatter.parse(str) : null;
+			return str != null ? ourDateFormatter.parse(str).getTime() : null;
 		} catch (Exception e) {
 			throw new SAXException("XML parsing error", e);
 		}
 	}
-	private static Date parseDateSafe(String str) throws SAXException {
+	private static Long parseDateSafe(String str) throws SAXException {
 		try {
-			return str != null ? ourDateFormatter.parse(str) : null;
+			return str != null ? ourDateFormatter.parse(str).getTime() : null;
 		} catch (Exception e) {
 			return null;
 		}
@@ -417,6 +417,13 @@ class XMLSerializer extends AbstractSerializer {
 			return Long.parseLong(str);
 		} catch (Exception e) {
 			return defaultValue;
+		}
+	}
+	private static Long parseLongObjectSafe(String str) {
+		try {
+			return Long.parseLong(str);
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
@@ -923,9 +930,9 @@ class XMLSerializer extends AbstractSerializer {
 		private String myBookTitle;
 		private final StringBuilder myText = new StringBuilder();
 		private StringBuilder myOriginalText;
-		private Date myCreationDate;
-		private Date myModificationDate;
-		private Date myAccessDate;
+		private Long myCreationTimestamp;
+		private Long myModificationTimestamp;
+		private Long myAccessTimestamp;
 		private String myModelId;
 		private int myStartParagraphIndex;
 		private int myStartElementIndex;
@@ -951,9 +958,9 @@ class XMLSerializer extends AbstractSerializer {
 			myBookTitle = null;
 			clear(myText);
 			myOriginalText = null;
-			myCreationDate = null;
-			myModificationDate = null;
-			myAccessDate = null;
+			myCreationTimestamp = null;
+			myModificationTimestamp = null;
+			myAccessTimestamp = null;
 			myModelId = null;
 			myStartParagraphIndex = 0;
 			myStartElementIndex = 0;
@@ -976,7 +983,7 @@ class XMLSerializer extends AbstractSerializer {
 				myId, myUid, myVersionUid,
 				myBookId, myBookTitle, myText.toString(),
 				myOriginalText != null ? myOriginalText.toString() : null,
-				myCreationDate, myModificationDate, myAccessDate,
+				myCreationTimestamp, myModificationTimestamp, myAccessTimestamp,
 				myModelId,
 				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
 				myEndParagraphIndex, myEndElementIndex, myEndCharIndex,
@@ -1009,14 +1016,14 @@ class XMLSerializer extends AbstractSerializer {
 						myOriginalText = new StringBuilder();
 					} else if ("history".equals(localName)) {
 						if (attributes.getValue("ts-creation") != null) {
-							myCreationDate = dateByTimestamp(attributes.getValue("ts-creation"));
-							myModificationDate = dateByTimestamp(attributes.getValue("ts-modification"));
-							myAccessDate = dateByTimestamp(attributes.getValue("ts-access"));
+							myCreationTimestamp = parseLong(attributes.getValue("ts-creation"));
+							myModificationTimestamp = parseLongObjectSafe(attributes.getValue("ts-modification"));
+							myAccessTimestamp = parseLongObjectSafe(attributes.getValue("ts-access"));
 						} else {
 							// obsolete, old format plugins compatibility
-							myCreationDate = parseDate(attributes.getValue("date-creation"));
-							myModificationDate = parseDateSafe(attributes.getValue("date-modification"));
-							myAccessDate = parseDateSafe(attributes.getValue("date-access"));
+							myCreationTimestamp = parseDate(attributes.getValue("date-creation"));
+							myModificationTimestamp = parseDateSafe(attributes.getValue("date-modification"));
+							myAccessTimestamp = parseDateSafe(attributes.getValue("date-access"));
 						}
 					} else if ("start".equals(localName)) {
 						myModelId = attributes.getValue("model");

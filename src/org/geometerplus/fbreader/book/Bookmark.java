@@ -42,9 +42,9 @@ public final class Bookmark extends ZLTextFixedPosition {
 	private String myText;
 	private String myOriginalText;
 
-	public final Date CreationDate;
-	private Date myModificationDate;
-	private Date myAccessDate;
+	public final long CreationTimestamp;
+	private Long myModificationTimestamp;
+	private Long myAccessTimestamp;
 	private ZLTextFixedPosition myEnd;
 	private int myLength;
 	private int myStyleId;
@@ -61,9 +61,9 @@ public final class Bookmark extends ZLTextFixedPosition {
 		BookTitle = original.BookTitle;
 		myText = original.myText;
 		myOriginalText = original.myOriginalText;
-		CreationDate = original.CreationDate;
-		myModificationDate = original.myModificationDate;
-		myAccessDate = original.myAccessDate;
+		CreationTimestamp = original.CreationTimestamp;
+		myModificationTimestamp = original.myModificationTimestamp;
+		myAccessTimestamp = original.myAccessTimestamp;
 		myEnd = original.myEnd;
 		myLength = original.myLength;
 		myStyleId = original.myStyleId;
@@ -76,7 +76,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	public Bookmark(
 		long id, String uid, String versionUid,
 		long bookId, String bookTitle, String text, String originalText,
-		Date creationDate, Date modificationDate, Date accessDate,
+		long creationTimestamp, Long modificationTimestamp, Long accessTimestamp,
 		String modelId,
 		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
 		int end_paragraphIndex, int end_elementIndex, int end_charIndex,
@@ -93,9 +93,9 @@ public final class Bookmark extends ZLTextFixedPosition {
 		BookTitle = bookTitle;
 		myText = text;
 		myOriginalText = originalText;
-		CreationDate = creationDate;
-		myModificationDate = modificationDate;
-		myAccessDate = accessDate;
+		CreationTimestamp = creationTimestamp;
+		myModificationTimestamp = modificationTimestamp;
+		myAccessTimestamp = accessTimestamp;
 		ModelId = modelId;
 		IsVisible = isVisible;
 
@@ -118,7 +118,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 		BookTitle = book.getTitle();
 		myText = snippet.getText();
 		myOriginalText = null;
-		CreationDate = new Date();
+		CreationTimestamp = System.currentTimeMillis();
 		ModelId = modelId;
 		IsVisible = visible;
 		myEnd = new ZLTextFixedPosition(snippet.getEnd());
@@ -175,7 +175,7 @@ mainLoop:
 
 	private void onModification() {
 		myVersionUid = newUUID();
-		myModificationDate = new Date();
+		myModificationTimestamp = System.currentTimeMillis();
 	}
 
 	public int getStyleId() {
@@ -209,23 +209,23 @@ mainLoop:
 		}
 	}
 
-	public Date getDate(DateType type) {
+	public Long getTimestamp(DateType type) {
 		switch (type) {
 			case Creation:
-				return CreationDate;
+				return CreationTimestamp;
 			case Modification:
-				return myModificationDate;
+				return myModificationTimestamp;
 			case Access:
-				return myAccessDate;
+				return myAccessTimestamp;
 			default:
 			case Latest:
 			{
-				Date latest = myModificationDate;
+				Long latest = myModificationTimestamp;
 				if (latest == null) {
-					latest = CreationDate;
+					latest = CreationTimestamp;
 				}
-				if (myAccessDate != null && latest.compareTo(myAccessDate) < 0) {
-					return myAccessDate;
+				if (myAccessTimestamp != null && latest < myAccessTimestamp) {
+					return myAccessTimestamp;
 				} else {
 					return latest;
 				}
@@ -242,16 +242,16 @@ mainLoop:
 	}
 
 	public void markAsAccessed() {
-		myAccessDate = new Date();
-		onModification();
+		myVersionUid = newUUID();
+		myAccessTimestamp = System.currentTimeMillis();
 	}
 
 	public static class ByTimeComparator implements Comparator<Bookmark> {
 		public int compare(Bookmark bm0, Bookmark bm1) {
-			final Date date0 = bm0.getDate(DateType.Latest);
-			final Date date1 = bm1.getDate(DateType.Latest);
-			// yes, reverse order
-			return date1.compareTo(date0);
+			final Long ts0 = bm0.getTimestamp(DateType.Latest);
+			final Long ts1 = bm1.getTimestamp(DateType.Latest);
+			// yes, reverse order; yes, latest ts is not null
+			return ts1.compareTo(ts0);
 		}
 	}
 
