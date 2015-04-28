@@ -4,8 +4,10 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.4.3 (Apr ??, 2015) =====
-* Updated Japanese localisation (by Tamotsu Takahashi)
+===== 2.4.3 (Apr 28, 2015) =====
+* Improved bookmarks list view
+* Better communication with format plugins
+* Fully updated Japanese localisation (by Tamotsu Takahashi)
 * Updated Vietnamese localisation (by Khánh Nguyễn Quốc)
 
 ===== 2.4.1,2.4.2 (Apr 25, 2015) =====
