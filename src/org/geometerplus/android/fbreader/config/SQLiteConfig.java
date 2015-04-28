@@ -43,7 +43,7 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 		myDatabase = service.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
 		switch (myDatabase.getVersion()) {
 			case 0:
-				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
+				myDatabase.execSQL("CREATE TABLE IF NOT EXISTS config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
 				break;
 			case 1:
 				myDatabase.beginTransaction();
