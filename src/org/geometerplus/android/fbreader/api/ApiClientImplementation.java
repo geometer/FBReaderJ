@@ -86,6 +86,10 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		myInterface = null;
 	}
 
+	public synchronized boolean isConnected() {
+		return myInterface != null;
+	}
+
 	private synchronized void checkConnection() throws ApiException {
 		if (myInterface == null) {
 			throw new ApiException("Not connected to FBReader");
