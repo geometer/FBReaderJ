@@ -1497,10 +1497,13 @@ public class FileChooserActivity extends Activity {
                 }
                 break;
             case DirectoriesOnly:
-                if(((File)getLocation()).canWrite()){
+			{
+                final File file = (File)getLocation();
+                if (file != null && file.canWrite()) {
                     returnPath = getLocation().getAbsolutePath();
                 }
                 break;
+			}
             case FilesAndDirectories:
                 if(files == null || files.isEmpty()){
                     returnPath = getLocation().getAbsolutePath();
