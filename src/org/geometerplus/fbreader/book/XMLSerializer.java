@@ -1098,8 +1098,8 @@ class XMLSerializer extends AbstractSerializer {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if ("style".equals(localName)) {
 				final int id = parseIntSafe(attributes.getValue("id"), -1);
-				final long timestamp = parseLongSafe(attributes.getValue("timestamp"), 0L);
 				if (id != -1) {
+					final long timestamp = parseLongSafe(attributes.getValue("timestamp"), 0L);
 					final int bg = parseIntSafe(attributes.getValue("bg-color"), -1);
 					final int fg = parseIntSafe(attributes.getValue("fg-color"), -1);
 					myStyle = new HighlightingStyle(
