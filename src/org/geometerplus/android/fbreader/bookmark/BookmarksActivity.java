@@ -306,7 +306,6 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 	}
 
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
-		private final ListView myListView;
 		private final List<Bookmark> myBookmarksList =
 			Collections.synchronizedList(new LinkedList<Bookmark>());
 		private volatile boolean myShowAddBookmarkItem;
@@ -316,41 +315,26 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			listView.setAdapter(this);
 			listView.setOnItemClickListener(this);
 			listView.setOnCreateContextMenuListener(this);
-			myListView = listView;
 		}
 
 		public List<Bookmark> bookmarks() {
 			return Collections.unmodifiableList(myBookmarksList);
 		}
 
-		private void resetView() {
+		public void addAll(final List<Bookmark> bookmarks) {
 			runOnUiThread(new Runnable() {
 				public void run() {
+					synchronized (myBookmarksList) {
+						for (Bookmark b : bookmarks) {
+							final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
+							if (position < 0) {
+								myBookmarksList.add(- position - 1, b);
+							}
+						}
+					}
 					notifyDataSetChanged();
 				}
 			});
-		}
-
-		public void addAll(final List<Bookmark> bookmarks) {
-			synchronized (myBookmarksList) {
-				for (Bookmark b : bookmarks) {
-					final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
-					if (position < 0) {
-						myBookmarksList.add(- position - 1, b);
-					}
-				}
-			}
-			resetView();
-		}
-
-		public void add(final Bookmark b) {
-			synchronized (myBookmarksList) {
-				final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
-				if (position < 0) {
-					myBookmarksList.add(- position - 1, b);
-				}
-			}
-			resetView();
 		}
 
 		private boolean areEqualsForView(Bookmark b0, Bookmark b1) {
@@ -364,31 +348,41 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			if (old != null && areEqualsForView(old, b)) {
 				return;
 			}
-			synchronized (myBookmarksList) {
-				if (old != null) {
-					myBookmarksList.remove(old);
+			runOnUiThread(new Runnable() {
+				public void run() {
+					synchronized (myBookmarksList) {
+						if (old != null) {
+							myBookmarksList.remove(old);
+						}
+						final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
+						if (position < 0) {
+							myBookmarksList.add(- position - 1, b);
+						}
+					}
+					notifyDataSetChanged();
 				}
-				final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
-				if (position < 0) {
-					myBookmarksList.add(- position - 1, b);
-				}
-			}
-			resetView();
+			});
 		}
 
 		public void removeAll(final Collection<Bookmark> bookmarks) {
 			if (bookmarks.isEmpty()) {
 				return;
 			}
-			synchronized (myBookmarksList) {
-				myBookmarksList.removeAll(bookmarks);
-			}
-			resetView();
+			runOnUiThread(new Runnable() {
+				public void run() {
+					myBookmarksList.removeAll(bookmarks);
+					notifyDataSetChanged();
+				}
+			});
 		}
 
 		public void clear() {
-			myBookmarksList.clear();
-			resetView();
+			runOnUiThread(new Runnable() {
+				public void run() {
+					myBookmarksList.clear();
+					notifyDataSetChanged();
+				}
+			});
 		}
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -479,12 +473,16 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			default:
 				break;
 			case BookmarkStyleChanged:
-				updateStyles();
-				myAllBooksAdapter.resetView();
-				myThisBookAdapter.resetView();
-				if (mySearchResultsAdapter != null) {
-					mySearchResultsAdapter.resetView();
-				}
+				runOnUiThread(new Runnable() {
+					public void run() {
+						updateStyles();
+						myAllBooksAdapter.notifyDataSetChanged();
+						myThisBookAdapter.notifyDataSetChanged();
+						if (mySearchResultsAdapter != null) {
+							mySearchResultsAdapter.notifyDataSetChanged();
+						}
+					}
+				});
 				break;
 			case BookmarksUpdated:
 				updateBookmarks(book);
