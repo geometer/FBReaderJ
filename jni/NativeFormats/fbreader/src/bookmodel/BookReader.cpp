@@ -271,6 +271,10 @@ void BookReader::insertEndOfSectionParagraph() {
 	insertEndParagraph(ZLTextParagraph::END_OF_SECTION_PARAGRAPH);
 }
 
+void BookReader::insertPseudoEndOfSectionParagraph() {
+	insertEndParagraph(ZLTextParagraph::PSEUDO_END_OF_SECTION_PARAGRAPH);
+}
+
 void BookReader::insertEndOfTextParagraph() {
 	insertEndParagraph(ZLTextParagraph::END_OF_TEXT_PARAGRAPH);
 }
