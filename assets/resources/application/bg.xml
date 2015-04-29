@@ -767,10 +767,10 @@
 			<node name="targetLanguage" value="Преведи на">
 				<node name="any" value="всички езици"/>
 			</node>
-			<node name="tappingAction" value="Действие при продължителен натиск по екрана">
+			<node name="longTapAction" value="Действие при продължителен натиск по екрана">
 				<node name="doNothing" value="Не се извършва действие"/>
 				<node name="selectSingleWord" value="Селектиране на една дума"/>
-				<node name="startSelecting" value="Започване на селекция"/>
+				<node name="initSelection" value="Започване на селекция"/>
 				<node name="openDictionary" value="Селектиране на една дума, а при отместване – стартиране на речника"/>
 			</node>
 			<node name="navigateOverAllWords" value="Придвижване по всички думи">
@@ -781,7 +781,7 @@
 		<node name="images" value="Изображения">
 			<node name="summary" value="Настройки на изображенията"/>
 			<node name="backgroundColor" value="Цвят на фона при преглед на цял екран"/>
-			<node name="tappingAction" value="Действие при продължителен натиск по екрана">
+			<node name="longTapAction" value="Действие при продължителен натиск по екрана">
 				<node name="doNothing" value="Не се извършва действие"/>
 				<node name="selectImage" value="Селектиране на изображението"/>
 				<node name="openImageView" value="Включване на преглед на цял екран"/>

@@ -753,10 +753,10 @@
 			<node name="targetLanguage" value="Tradu in">
 				<node name="any" value="toate limbile"/>
 			</node>
-			<node name="tappingAction" value="Atingere lunga pentru actiune">
+			<node name="longTapAction" value="Atingere lunga pentru actiune">
 				<node name="doNothing" value="Apasând lung nu face nimic"/>
 				<node name="selectSingleWord" value="Apasând lung selecteaza un singur cuvânt"/>
-				<node name="startSelecting" value="Apasând lung initiaza selectarea"/>
+				<node name="initSelection" value="Apasând lung initiaza selectarea"/>
 				<node name="openDictionary" value="Apasând lung selecteaza un singur cuvânt, la ridicarea degetului se deschide dictionarul"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigati peste toate cuvintele">
@@ -767,7 +767,7 @@
 		<node name="images" value="Imagini">
 			<node name="summary" value="Setari afisare imagine"/>
 			<node name="backgroundColor" value="Culoare de fundal pentru a vizualizare imagini"/>
-			<node name="tappingAction" value="Actiune la apasare lunga">
+			<node name="longTapAction" value="Actiune la apasare lunga">
 				<node name="doNothing" value="Apasând lung nu face nimic"/>
 				<node name="selectImage" value="Apasând lung selecteaza imaginea"/>
 				<node name="openImageView" value="Apasând lung se vizualizeaza imaginea"/>

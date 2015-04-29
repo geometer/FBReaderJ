@@ -759,10 +759,10 @@
 			<node name="targetLanguage" value="Μετάφραση σε" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Ενέργεια σε παρατεταμένο άγγιγμα">
+			<node name="longTapAction" value="Ενέργεια σε παρατεταμένο άγγιγμα">
 				<node name="doNothing" value="Παρατεταμένο άγγιγμα δεν προκαλεί τίποτα."/>
 				<node name="selectSingleWord" value="Παρατεταμένα άγγιγμα επιλέγει μία λέξη."/>
-				<node name="startSelecting" value="Παρατεταμένο άγγιγμα ξεκινάει την λειτουργία επιλογής κειμένου."/>
+				<node name="initSelection" value="Παρατεταμένο άγγιγμα ξεκινάει την λειτουργία επιλογής κειμένου."/>
 				<node name="openDictionary" value="Παρατεταμένα άγγιγμα επιλέγει μία λέξη και ανοίγει το λεξικό."/>
 			</node>
 			<node name="navigateOverAllWords" value="΄Πλοήγηση σε όλες τις λέξεις">
@@ -773,7 +773,7 @@
 		<node name="images" value="Εικόνες">
 			<node name="summary" value="Ρυθμίσεις για την προβολή εικόνων."/>
 			<node name="backgroundColor" value="Χρώμα φόντου εικόνων"/>
-			<node name="tappingAction" value="Ενέργειες σε παρατεταμένο άγγιγμα">
+			<node name="longTapAction" value="Ενέργειες σε παρατεταμένο άγγιγμα">
 				<node name="doNothing" value="Παρατεταμένο άγγιγμα δεν προκαλεί τίποτα."/>
 				<node name="selectImage" value="Παρατεταμένο άγγιγμα επιλέγει την εικόνα."/>
 				<node name="openImageView" value="Παρατεταμένο άγγιγμα ανοίγει την προβολή εικόνων."/>
