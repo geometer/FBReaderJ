@@ -256,6 +256,16 @@ public final class ZLTextParagraphCursor {
 		return Index + 1 >= Model.getParagraphsNumber();
 	}
 
+	public boolean isLikeEndOfSection() {
+		switch (Model.getParagraph(Index).getKind()) {
+			case ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH:
+			case ZLTextParagraph.Kind.PSEUDO_END_OF_SECTION_PARAGRAPH:
+				return true;
+			default:
+				return false;
+		}
+	}
+
 	public boolean isEndOfSection() {
 		return Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH;
 	}

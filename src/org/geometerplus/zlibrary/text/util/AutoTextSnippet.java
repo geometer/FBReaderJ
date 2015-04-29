@@ -49,7 +49,7 @@ mainLoop:
 				if (!cursor.nextParagraph()) {
 					break mainLoop;
 				}
-				if (!buffer.isEmpty() && cursor.getParagraphCursor().isEndOfSection()) {
+				if (!buffer.isEmpty() && cursor.getParagraphCursor().isLikeEndOfSection()) {
 					break mainLoop;
 				}
 				if (!phraseBuffer.isEmpty()) {
@@ -104,7 +104,7 @@ mainLoop:
 		}
 
 		IsEndOfText =
-			cursor.isEndOfText() || cursor.getParagraphCursor().isEndOfSection();
+			cursor.isEndOfText() || cursor.getParagraphCursor().isLikeEndOfSection();
 
 		if (IsEndOfText) {
 			sentenceBuffer.append(phraseBuffer);
