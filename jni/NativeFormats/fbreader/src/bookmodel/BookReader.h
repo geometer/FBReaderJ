@@ -51,6 +51,7 @@ public:
 	void unsetTextModel();
 
 	void insertEndOfSectionParagraph();
+	void insertPseudoEndOfSectionParagraph();
 	void insertEndOfTextParagraph();
 	void insertEncryptedSectionParagraph();
 
