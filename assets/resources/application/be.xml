@@ -761,10 +761,10 @@
 			<node name="targetLanguage" value="Перакласьці на">
 				<node name="any" value="усе мовы"/>
 			</node>
-			<node name="tappingAction" value="Дзеяньне доўгага дотыку">
+			<node name="longTapAction" value="Дзеяньне доўгага дотыку">
 				<node name="doNothing" value="Доўгі дотык нічога ня робіць"/>
 				<node name="selectSingleWord" value="Доўгі дотык вылучае адно слова"/>
-				<node name="startSelecting" value="Доўгі дотык пачынае вылучэньне"/>
+				<node name="initSelection" value="Доўгі дотык пачынае вылучэньне"/>
 				<node name="openDictionary" value="Доўгі дотык вылучае адно слова, адпусканьне адчыняе слоўнік"/>
 			</node>
 			<node name="navigateOverAllWords" value="Ісьці па ўсіх словах">
@@ -775,7 +775,7 @@
 		<node name="images" value="Выявы">
 			<node name="summary" value="Налады адлюстраваньня выяваў"/>
 			<node name="backgroundColor" value="Колер фону для прагляду выявы"/>
-			<node name="tappingAction" value="Дзеяньне доўгага дотыку">
+			<node name="longTapAction" value="Дзеяньне доўгага дотыку">
 				<node name="doNothing" value="Доўгі дотык нічога ня робіць"/>
 				<node name="selectImage" value="Доўгі дотык вылучае выяву"/>
 				<node name="openImageView" value="Доўгі дотык адчыняе прагляд выявы"/>

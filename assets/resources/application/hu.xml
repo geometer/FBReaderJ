@@ -751,10 +751,10 @@
 			<node name="targetLanguage" value="Fordítás:">
 				<node name="any" value="minden nyelv"/>
 			</node>
-			<node name="tappingAction" value="Hosszú érintés">
+			<node name="longTapAction" value="Hosszú érintés">
 				<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
 				<node name="selectSingleWord" value="A hosszú érintés kijelöli a szót"/>
-				<node name="startSelecting" value="A hosszú érintés elindítja a kijelölést"/>
+				<node name="initSelection" value="A hosszú érintés elindítja a kijelölést"/>
 				<node name="openDictionary" value="A hosszú érintés kijelöli a szót, a felengedés megnyitja a szótárt"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigáció szavanként">
@@ -765,7 +765,7 @@
 		<node name="images" value="Képek">
 			<node name="summary" value="Képmegjelenítési beállítások"/>
 			<node name="backgroundColor" value="Képnéző háttérszíne"/>
-			<node name="tappingAction" value="Művelet hosszú érintésre">
+			<node name="longTapAction" value="Művelet hosszú érintésre">
 				<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
 				<node name="selectImage" value="A hosszú érintés kijelöli a képet"/>
 				<node name="openImageView" value="A hosszú érintés megnyitja a képnézőt"/>

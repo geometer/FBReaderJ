@@ -766,10 +766,10 @@
 			<node name="targetLanguage" value="Übersetzen in">
 				<node name="any" value="Alle Sprachen"/>
 			</node>
-			<node name="tappingAction" value="Aktion beim langen Antippen">
+			<node name="longTapAction" value="Aktion beim langen Antippen">
 				<node name="doNothing" value="Langes Antippen bewirkt nichts"/>
 				<node name="selectSingleWord" value="Langes Antippen selektiert ein einzelnes Wort"/>
-				<node name="startSelecting" value="Langes Antippen initiiert den Markierungsmodus"/>
+				<node name="initSelection" value="Langes Antippen initiiert den Markierungsmodus"/>
 				<node name="openDictionary" value="Langes Antippen selektiert ein einzelnes Wort, Loslassen öffnet das Wörterbuch"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigiere über alle Wörter">
@@ -780,7 +780,7 @@
 		<node name="images" value="Bilder">
 			<node name="summary" value="Einstellung für die Anzeige von Bildern"/>
 			<node name="backgroundColor" value="Hintergrundfarbe für Bilder"/>
-			<node name="tappingAction" value="Aktion bei langem Antippen">
+			<node name="longTapAction" value="Aktion bei langem Antippen">
 				<node name="doNothing" value="Langes Antippen bewirkt nichts"/>
 				<node name="selectImage" value="Langes Antippen selektiert das Bild"/>
 				<node name="openImageView" value="Langes Antippen öffnet die Bildanzeige"/>

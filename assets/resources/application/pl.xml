@@ -751,10 +751,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Akcja po przytrzymaniu palcem">
+			<node name="longTapAction" value="Akcja po przytrzymaniu palcem">
 				<node name="doNothing" value="Przytrzymanie nie wywołuje akcji"/>
 				<node name="selectSingleWord" value="Przytrzymanie zaznacza jedno słowo"/>
-				<node name="startSelecting" value="Przytrzymanie rozpoczyna zaznaczanie"/>
+				<node name="initSelection" value="Przytrzymanie rozpoczyna zaznaczanie"/>
 				<node name="openDictionary" value="Przytrzymanie zaznacza jedno słowo, puszczenie otwiera słownik"/>
 			</node>
 			<node name="navigateOverAllWords" value="Przechodź pomiędzy wszystkimi słowami">
@@ -765,7 +765,7 @@
 		<node name="images" value="Obrazy">
 			<node name="summary" value="Opcje wyświetlania obrazów"/>
 			<node name="backgroundColor" value="Kolor tła dla wyświetlanych obrazów"/>
-			<node name="tappingAction" value="Akcja przy przytrzymaniu">
+			<node name="longTapAction" value="Akcja przy przytrzymaniu">
 				<node name="doNothing" value="Przytrzymanie nie wywołuje akcji"/>
 				<node name="selectImage" value="Przytrzymanie zaznacza obraz"/>
 				<node name="openImageView" value="Przytrzymanie otwiera podgląd obrazu"/>

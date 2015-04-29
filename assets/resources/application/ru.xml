@@ -766,10 +766,10 @@
 			<node name="targetLanguage" value="Переводить на">
 				<node name="any" value="все языки"/>
 			</node>
-			<node name="tappingAction" value="Действие при долгом нажатии на экран">
+			<node name="longTapAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Ничего не делать"/>
 				<node name="selectSingleWord" value="Выделять одно слово"/>
-				<node name="startSelecting" value="Начинать процесс пометки"/>
+				<node name="initSelection" value="Начинать процесс пометки"/>
 				<node name="openDictionary" value="Выделять одно слово, а при отпускании – запускать словарь"/>
 			</node>
 			<node name="navigateOverAllWords" value="Перемещаться по всем словам">
@@ -780,7 +780,7 @@
 		<node name="images" value="Картинки">
 			<node name="summary" value="Настройки отображения картинок"/>
 			<node name="backgroundColor" value="Цвет фона при полноэкранном просмотре"/>
-			<node name="tappingAction" value="Действие при долгом нажатии на экран">
+			<node name="longTapAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Не делать ничего"/>
 				<node name="selectImage" value="Выделять картинку"/>
 				<node name="openImageView" value="Запускать полноэкранный просмотр"/>

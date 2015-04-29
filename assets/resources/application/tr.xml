@@ -761,10 +761,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Uzun dokunma eylemi">
+			<node name="longTapAction" value="Uzun dokunma eylemi">
 				<node name="doNothing" value="Uzun dokunma eylemsiz"/>
 				<node name="selectSingleWord" value="Uzun dokunma bir kelime seçsin"/>
-				<node name="startSelecting" value="Uzun dokunma metin seçimine geçirsin"/>
+				<node name="initSelection" value="Uzun dokunma metin seçimine geçirsin"/>
 				<node name="openDictionary" value="Uzun dokunma tek kelime seçsin, bırakınca sözlük açılsın"/>
 			</node>
 			<node name="navigateOverAllWords" value="Tüm kelimeler üzerinde gezinme">
@@ -775,7 +775,7 @@
 		<node name="images" value="Resimler">
 			<node name="summary" value="Resim gösterimi seçenekleri"/>
 			<node name="backgroundColor" value="Resim görünümü için arka plan rengi"/>
-			<node name="tappingAction" value="Uzun dokunma eylemi">
+			<node name="longTapAction" value="Uzun dokunma eylemi">
 				<node name="doNothing" value="Uzun dokunma eylemsiz"/>
 				<node name="selectImage" value="Uzun dokunma resmi seçsin"/>
 				<node name="openImageView" value="Uzun dokunma resmi açsın"/>

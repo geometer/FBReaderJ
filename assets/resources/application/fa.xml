@@ -760,10 +760,10 @@
 			<node name="targetLanguage" value="ترجمه به">
 				<node name="any" value="همه زبان ها"/>
 			</node>
-			<node name="tappingAction" value="اقدام ضربه طولاني">
+			<node name="longTapAction" value="اقدام ضربه طولاني">
 				<node name="doNothing" value="ضربه طولاني اقدامي نمي كند"/>
 				<node name="selectSingleWord" value="ضربه طولاني كلمه منفردي را انتخاب مي كند"/>
-				<node name="startSelecting" value="ضربه طولاني شروع به انتخاب مي كند"/>
+				<node name="initSelection" value="ضربه طولاني شروع به انتخاب مي كند"/>
 				<node name="openDictionary" value="ضربه طولاني كلمه منفردي را انتخاب مي كند، ديكشنري را باز مي كند"/>
 			</node>
 			<node name="navigateOverAllWords" value="هدايت تمامي كلمات">
@@ -774,7 +774,7 @@
 		<node name="images" value="تصاوير">
 			<node name="summary" value="گزينه هاي نمايش تصوير"/>
 			<node name="backgroundColor" value="رنگ زمينه براي مشاهده تصوير"/>
-			<node name="tappingAction" value="اقدام ضربه طولاني">
+			<node name="longTapAction" value="اقدام ضربه طولاني">
 				<node name="doNothing" value="ضربه طولاني اقدامي نمي كند"/>
 				<node name="selectImage" value="ضربه طولاني تصوير را انتخاب مي كند"/>
 				<node name="openImageView" value="ضربه طولاني نمايش تصوير را باز مي كند"/>

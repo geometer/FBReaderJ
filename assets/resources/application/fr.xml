@@ -754,10 +754,10 @@
 			<node name="targetLanguage" value="Traduire vers">
 				<node name="any" value="Toutes les langues"/>
 			</node>
-			<node name="tappingAction" value="Configuration de l'appui long">
+			<node name="longTapAction" value="Configuration de l'appui long">
 				<node name="doNothing" value="Un appui long ne fait rien"/>
 				<node name="selectSingleWord" value="Un appui long selectionne le mot"/>
-				<node name="startSelecting" value="Un appui long indique un début de sélection"/>
+				<node name="initSelection" value="Un appui long indique un début de sélection"/>
 				<node name="openDictionary" value="Un appui long selectionne le mot, relâcher ouvre le dictionnaire"/>
 			</node>
 			<node name="navigateOverAllWords" value="Parcourir l'ensemble des mots">
@@ -768,7 +768,7 @@
 		<node name="images" value="Images">
 			<node name="summary" value="Options d'affichage des images"/>
 			<node name="backgroundColor" value="Couleur de fond de l'image"/>
-			<node name="tappingAction" value="Action de l'appui long">
+			<node name="longTapAction" value="Action de l'appui long">
 				<node name="doNothing" value="Un appui long ne fait rien"/>
 				<node name="selectImage" value="Un appui long selectionne l'image"/>
 				<node name="openImageView" value="Un appui long affiche l'image seule"/>
