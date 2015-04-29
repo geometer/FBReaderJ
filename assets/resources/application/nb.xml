@@ -761,10 +761,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Handling ved langvarig trykk">
+			<node name="longTapAction" value="Handling ved langvarig trykk">
 				<node name="doNothing" value="Langvarig trykk gjør ingenting"/>
 				<node name="selectSingleWord" value="Langvarig trykk velger enkeltord"/>
-				<node name="startSelecting" value="Langvarig trykk starter velging"/>
+				<node name="initSelection" value="Langvarig trykk starter velging"/>
 				<node name="openDictionary" value="Langvarig trykk velger enkeltord, slipp trykk for å åpne ordbok"/>
 			</node>
 			<node name="navigateOverAllWords" value="Naviger over alle ord">
@@ -775,7 +775,7 @@
 		<node name="images" value="Bilder">
 			<node name="summary" value="Valg for bildevisning"/>
 			<node name="backgroundColor" value="Bakgrunnsfarge ved bildevisning"/>
-			<node name="tappingAction" value="Handling ved langvarig trykk">
+			<node name="longTapAction" value="Handling ved langvarig trykk">
 				<node name="doNothing" value="Langvarig trykk gjør ingenting"/>
 				<node name="selectImage" value="Langvarig trykk velger bildet"/>
 				<node name="openImageView" value="Langvarig trykk åpner bildevisning"/>

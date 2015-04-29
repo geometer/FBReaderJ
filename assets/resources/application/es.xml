@@ -766,10 +766,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Acción de toque prolongado">
+			<node name="longTapAction" value="Acción de toque prolongado">
 				<node name="doNothing" value="Toque prolongado no hace nada"/>
 				<node name="selectSingleWord" value="Toque prolongado selecciona una palabra"/>
-				<node name="startSelecting" value="Toque prolongado inicia selección"/>
+				<node name="initSelection" value="Toque prolongado inicia selección"/>
 				<node name="openDictionary" value="Toque prolongado selecciona una palabra, al soltar abre diccionario"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar por todas las palabras">
@@ -780,7 +780,7 @@
 		<node name="images" value="Imágenes">
 			<node name="summary" value="Opciones de visualización de imágenes"/>
 			<node name="backgroundColor" value="Color de fondo para vista de imagen"/>
-			<node name="tappingAction" value="Acción de toque prolongado">
+			<node name="longTapAction" value="Acción de toque prolongado">
 				<node name="doNothing" value="Toque prolongado no hace nada"/>
 				<node name="selectImage" value="Toque prolongado selecciona la imagen"/>
 				<node name="openImageView" value="Toque prolongado abre vista de imagen"/>

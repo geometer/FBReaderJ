@@ -761,10 +761,10 @@
 			<node name="targetLanguage" value="何語に翻訳">
 				<node name="any" value="すべての言語"/>
 			</node>
-			<node name="tappingAction" value="長押し動作">
+			<node name="longTapAction" value="長押し動作">
 				<node name="doNothing" value="長押しで何もしない"/>
 				<node name="selectSingleWord" value="長押しで単語ひとつ選択"/>
-				<node name="startSelecting" value="長押しで選択開始"/>
+				<node name="initSelection" value="長押しで選択開始"/>
 				<node name="openDictionary" value="長押しで単語ひとつ選択、離した瞬間に辞書"/>
 			</node>
 			<node name="navigateOverAllWords" value="すべての単語に移動">
@@ -775,7 +775,7 @@
 		<node name="images" value="画像">
 			<node name="summary" value="画像表示の設定"/>
 			<node name="backgroundColor" value="画像閲覧時の背景色"/>
-			<node name="tappingAction" value="長押し動作">
+			<node name="longTapAction" value="長押し動作">
 				<node name="doNothing" value="長押しで何もしない"/>
 				<node name="selectImage" value="長押しで画像を選択"/>
 				<node name="openImageView" value="長押しで画像閲覧"/>
