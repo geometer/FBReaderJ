@@ -122,6 +122,13 @@ public:
 	void doAtEnd(XHTMLReader &reader);
 };
 
+class XHTMLTagPseudoSectionAction : public XHTMLGlobalTagAction {
+
+public:
+	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
+	void doAtEnd(XHTMLReader &reader);
+};
+
 class XHTMLTagVideoAction : public XHTMLTagAction {
 
 private:
@@ -346,6 +353,13 @@ void XHTMLTagSectionAction::doAtStart(XHTMLReader &reader, const char**) {
 
 void XHTMLTagSectionAction::doAtEnd(XHTMLReader &reader) {
 	bookReader(reader).insertEndOfSectionParagraph();
+}
+
+void XHTMLTagPseudoSectionAction::doAtStart(XHTMLReader &reader, const char**) {
+}
+
+void XHTMLTagPseudoSectionAction::doAtEnd(XHTMLReader &reader) {
+	bookReader(reader).insertPseudoEndOfSectionParagraph();
 }
 
 XHTMLTagListAction::XHTMLTagListAction(int startIndex) : myStartIndex(startIndex) {
@@ -609,7 +623,7 @@ void XHTMLReader::fillTagTable() {
 		//addAction("meta", new XHTMLTagAction());
 		//addAction("script", new XHTMLTagAction());
 
-		addAction("aside", new XHTMLTagSectionAction());
+		addAction("aside", new XHTMLTagPseudoSectionAction());
 
 		//addAction("font", new XHTMLTagAction());
 		addAction("style", new XHTMLTagStyleAction());
