@@ -751,10 +751,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Дія при довгому натисканні">
+			<node name="longTapAction" value="Дія при довгому натисканні">
 				<node name="doNothing" value="Довге натискання нічого не робить"/>
 				<node name="selectSingleWord" value="Довге натискання вибирає слово"/>
-				<node name="startSelecting" value="Довге натискання починає виділення"/>
+				<node name="initSelection" value="Довге натискання починає виділення"/>
 				<node name="openDictionary" value="Довге натискання вибирає слово, відпускання відкриває словник"/>
 			</node>
 			<node name="navigateOverAllWords" value="Перехід по всім словам">
@@ -765,7 +765,7 @@
 		<node name="images" value="Зображення">
 			<node name="summary" value="Параметри перегляду зображень"/>
 			<node name="backgroundColor" value="Фоновий колір для перегляду зображень"/>
-			<node name="tappingAction" value="Дія при довгому натисканні">
+			<node name="longTapAction" value="Дія при довгому натисканні">
 				<node name="doNothing" value="Довге натискання нічого не робить"/>
 				<node name="selectImage" value="Довге натискання виділяє зображення"/>
 				<node name="openImageView" value="Довге натискання відкриває перегляд зображення"/>
