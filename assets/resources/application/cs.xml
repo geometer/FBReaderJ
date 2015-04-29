@@ -770,10 +770,10 @@
 			<node name="targetLanguage" value="Přeložit do">
 				<node name="any" value="všechny jazyky"/>
 			</node>
-			<node name="tappingAction" value="Dlouhé klepnutí">
+			<node name="longTapAction" value="Dlouhé klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
-				<node name="startSelecting" value="Dlouhé klepnutí spustí vybírání"/>
+				<node name="initSelection" value="Dlouhé klepnutí spustí vybírání"/>
 				<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigovat přes všechna slova">
@@ -784,7 +784,7 @@
 		<node name="images" value="Obrázky">
 			<node name="summary" value="Možnosti zobrazení obrázku"/>
 			<node name="backgroundColor" value="Barva pozadí pro zobrazení obrázku"/>
-			<node name="tappingAction" value="Akce dlouhého klepnutí">
+			<node name="longTapAction" value="Akce dlouhého klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
 				<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
