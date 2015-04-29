@@ -761,10 +761,10 @@
 			<node name="targetLanguage" value="Vertalen naar">
 				<node name="any" value="alle talen"/>
 			</node>
-			<node name="tappingAction" value="Lang aantikken">
+			<node name="longTapAction" value="Lang aantikken">
 				<node name="doNothing" value="Lang aantikken doet niets"/>
 				<node name="selectSingleWord" value="Lang aantikken selecteert enkel woord"/>
-				<node name="startSelecting" value="Lang aantikken begint selecteermogelijkheid"/>
+				<node name="initSelection" value="Lang aantikken begint selecteermogelijkheid"/>
 				<node name="openDictionary" value="Lang aantikken selecteert het woord, loslaten opent woordenboek"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigeer over alle woorden">
@@ -775,7 +775,7 @@
 		<node name="images" value="Afbeeldingen">
 			<node name="summary" value="Tonen afbeeldingen opties"/>
 			<node name="backgroundColor" value="Achtergrondkleur bij bekijken afbeelding"/>
-			<node name="tappingAction" value="Lang aantikken">
+			<node name="longTapAction" value="Lang aantikken">
 				<node name="doNothing" value="Lang aantikken doet niets"/>
 				<node name="selectImage" value="Lang aantikken selecteert de afbeelding"/>
 				<node name="openImageView" value="Lang aantikken opent de afbeelding"/>

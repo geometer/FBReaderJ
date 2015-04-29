@@ -767,10 +767,10 @@
 			<node name="targetLanguage" value="Traduir a">
 				<node name="any" value="tots els idiomes"/>
 			</node>
-			<node name="tappingAction" value="Acció de toc llarg">
+			<node name="longTapAction" value="Acció de toc llarg">
 				<node name="doNothing" value="El toc llarg no fa res"/>
 				<node name="selectSingleWord" value="El toc llarg selecciona una paraula"/>
-				<node name="startSelecting" value="El toc llarg inicia la selecció"/>
+				<node name="initSelection" value="El toc llarg inicia la selecció"/>
 				<node name="openDictionary" value="El toc llarg selecciona una paraula, en deixar anar obre el diccionari"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar per totes les paraules">
@@ -781,7 +781,7 @@
 		<node name="images" value="Imatges">
 			<node name="summary" value="Opcions de visualització d'imatges"/>
 			<node name="backgroundColor" value="Color de fons per a vista d'imatge"/>
-			<node name="tappingAction" value="Acció de toc llarg">
+			<node name="longTapAction" value="Acció de toc llarg">
 				<node name="doNothing" value="El toc llarg no fa res"/>
 				<node name="selectImage" value="El toc llarg selecciona la imatge"/>
 				<node name="openImageView" value="El toc llarg obre la vista de la imatge"/>

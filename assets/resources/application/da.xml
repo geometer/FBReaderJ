@@ -760,10 +760,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Handling for langt tryk">
+			<node name="longTapAction" value="Handling for langt tryk">
 				<node name="doNothing" value="Langt tast har ingen virkning"/>
 				<node name="selectSingleWord" value="Et langt tryk vælger et enkelt ord"/>
-				<node name="startSelecting" value="Et langt tryk starter valg"/>
+				<node name="initSelection" value="Et langt tryk starter valg"/>
 				<node name="openDictionary" value="Et langt tryk vælger et enkelt ord, slip åbner ordbogen"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigere over alle ord">
@@ -774,7 +774,7 @@
 		<node name="images" value="Billeder">
 			<node name="summary" value="Billedvisningsindstillinger"/>
 			<node name="backgroundColor" value="Baggrundsfarve for billedvisning"/>
-			<node name="tappingAction" value="Handling for langt tryk">
+			<node name="longTapAction" value="Handling for langt tryk">
 				<node name="doNothing" value="Langt tast har ingen virkning"/>
 				<node name="selectImage" value="Et langt tryk vælger billedet"/>
 				<node name="openImageView" value="Et langt tryk åbner billedvisning"/>

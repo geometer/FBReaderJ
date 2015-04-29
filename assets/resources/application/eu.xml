@@ -761,10 +761,10 @@
 			<node name="targetLanguage" value="Itzuli honetara">
 				<node name="any" value="hizkuntza guztiak"/>
 			</node>
-			<node name="tappingAction" value="Kolpetxo luzatuaren  ekintzak">
+			<node name="longTapAction" value="Kolpetxo luzatuaren  ekintzak">
 				<node name="doNothing" value="Kolpetxo luzatuak ez du ezer egiten"/>
 				<node name="selectSingleWord" value="Kolpetxo luzatuak hitz soila hautatzen du"/>
-				<node name="startSelecting" value="Kolpetxo luzatuak hautaketa hasten du"/>
+				<node name="initSelection" value="Kolpetxo luzatuak hautaketa hasten du"/>
 				<node name="openDictionary" value="Kolpetxo luzatuak hitz soila hautatzen du, askatzerakoan hiztegia zabaltzen du"/>
 			</node>
 			<node name="navigateOverAllWords" value="Nabigatu hitzen artean">
@@ -775,7 +775,7 @@
 		<node name="images" value="Irudiak">
 			<node name="summary" value="Irudiak bistaratzeko aukerak"/>
 			<node name="backgroundColor" value="Irudiaren atzeko planoaren kolorea"/>
-			<node name="tappingAction" value="Kolpetxo luzatuaren  ekintzak">
+			<node name="longTapAction" value="Kolpetxo luzatuaren  ekintzak">
 				<node name="doNothing" value="Kolpetxo luzatuak ez du ezer egiten"/>
 				<node name="selectImage" value="Kolpetxo luzatuak irudia hautatzen du"/>
 				<node name="openImageView" value="Kolpetxo luzatuak irudia bistaratzen du"/>
