@@ -751,10 +751,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Acción de pulsación longa">
+			<node name="longTapAction" value="Acción de pulsación longa">
 				<node name="doNothing" value="Pulsación longa non fai nada"/>
 				<node name="selectSingleWord" value="Pulsación longa selecciona a palabra"/>
-				<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
+				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
 				<node name="openDictionary" value="Pulsación longa selecciona a palabra, e a seguir abre o dicionario"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar por todas as palabras">
@@ -765,10 +765,10 @@
 		<node name="images" value="Images" toBeTranslated="true">
 			<node name="summary" value="Image displaying options" toBeTranslated="true"/>
 			<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
-			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-				<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
-				<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
+			<node name="longTapAction" value="Long tap action" toBeTranslated="true">
+				<node name="doNothing" value="Long tap does nothing" toBeTranslated="true"/>
+				<node name="selectImage" value="Long tap selects the image" toBeTranslated="true"/>
+				<node name="openImageView" value="Long tap opens image view" toBeTranslated="true"/>
 			</node>
 			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
 				<node name="none" value="None" toBeTranslated="true"/>

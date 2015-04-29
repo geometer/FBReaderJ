@@ -752,10 +752,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Nhấn giữ">
+			<node name="longTapAction" value="Nhấn giữ">
 				<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
 				<node name="selectSingleWord" value="Chọn từ khi nhấn giữ"/>
-				<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
+				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
 				<node name="openDictionary" value="Chọn từ và mở từ điển khi nhấn giữ"/>
 			</node>
 			<node name="navigateOverAllWords" value="Điều hướng mọi từ">
@@ -766,7 +766,7 @@
 		<node name="images" value="Ảnh trong sách">
 			<node name="summary" value="Các thông số hiển thị ảnh"/>
 			<node name="backgroundColor" value="Màu nền chế độ xem ảnh"/>
-			<node name="tappingAction" value="Bấm giữ ảnh">
+			<node name="longTapAction" value="Bấm giữ ảnh">
 				<node name="doNothing" value="Bấm giữ không có tác dụng gì"/>
 				<node name="selectImage" value="Bấm giữ để chọn ảnh"/>
 				<node name="openImageView" value="Bấm giữ bật chế độ xem ảnh"/>
