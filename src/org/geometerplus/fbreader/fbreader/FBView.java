@@ -160,7 +160,7 @@ public final class FBView extends ZLTextView {
 		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, maxSelectionDistance());
 		if (cursor != ZLTextSelectionCursor.None) {
 			myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
-			moveSelectionCursorTo(cursor, x, y);
+			moveSelectionCursorTo(cursor, x, y, true);
 			return true;
 		}
 
@@ -200,7 +200,7 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
 		if (cursor != ZLTextSelectionCursor.None) {
-			moveSelectionCursorTo(cursor, x, y);
+			moveSelectionCursorTo(cursor, x, y, true);
 			return true;
 		}
 
@@ -265,7 +265,7 @@ public final class FBView extends ZLTextView {
 						initSelection(x, y);
 						final ZLTextSelectionCursor cursor = findSelectionCursor(x, y);
 						if (cursor != ZLTextSelectionCursor.None) {
-							moveSelectionCursorTo(cursor, x, y);
+							moveSelectionCursorTo(cursor, x, y, false);
 						}
 						return true;
 					case selectSingleWord:
@@ -299,7 +299,7 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
 		if (cursor != ZLTextSelectionCursor.None) {
-			moveSelectionCursorTo(cursor, x, y);
+			moveSelectionCursorTo(cursor, x, y, true);
 			return true;
 		}
 
