@@ -28,8 +28,6 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.util.AutoTextSnippet;
-import org.geometerplus.zlibrary.text.util.EmptyTextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
@@ -38,6 +36,8 @@ import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.network.sync.SyncData;
+import org.geometerplus.fbreader.util.AutoTextSnippet;
+import org.geometerplus.fbreader.util.EmptyTextSnippet;
 
 public final class FBReaderApp extends ZLApplication {
 	public interface ExternalFileOpener {
