@@ -29,8 +29,6 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.util.FixedTextSnippet;
-import org.geometerplus.zlibrary.text.util.TextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
@@ -38,6 +36,8 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.util.FixedTextSnippet;
+import org.geometerplus.fbreader.util.TextSnippet;
 
 public final class FBView extends ZLTextView {
 	private final FBReaderApp myReader;

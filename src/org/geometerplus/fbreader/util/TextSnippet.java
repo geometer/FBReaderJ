@@ -17,27 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.util;
+package org.geometerplus.fbreader.util;
 
-import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-public class EmptyTextSnippet implements TextSnippet {
-	private final ZLTextPosition myPosition;
-
-	public EmptyTextSnippet(ZLTextPosition position) {
-		myPosition = new ZLTextFixedPosition(position);
-	}
-
-	public ZLTextPosition getStart() {
-		return myPosition;
-	}
-
-	public ZLTextPosition getEnd() {
-		return myPosition;
-	}
-
-	public String getText() {
-		return "";
-	}
+public interface TextSnippet {
+	ZLTextPosition getStart();
+	ZLTextPosition getEnd();
+	String getText();
 }
