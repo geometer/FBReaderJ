@@ -23,7 +23,8 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.text.view.*;
-import org.geometerplus.zlibrary.text.util.TextSnippet;
+
+import org.geometerplus.fbreader.util.TextSnippet;
 
 public final class Bookmark extends ZLTextFixedPosition {
 	public enum DateType {
