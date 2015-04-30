@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
@@ -26,10 +27,15 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+
+import org.geometerplus.fbreader.fbreader.options.EInkOptions;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.util.eink.EInkUtil;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
@@ -70,6 +76,12 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
+	private int myFullRefreshCounter = 0;
+
+	public void prepareFullRefresh() {
+		myFullRefreshCounter = 0;
+	}
+
 	@Override
 	protected void onDraw(final Canvas canvas) {
 		final Context context = getContext();
@@ -77,6 +89,16 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			((FBReader)context).createWakeLock();
 		} else {
 			System.err.println("A surprise: view's context is not an FBReader");
+		}
+		final ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
+		final EInkOptions einkOptions = new EInkOptions();
+		if (lib.isEInk() && einkOptions.EnableFastRefresh.getValue()) {
+			if (myFullRefreshCounter > 0) {
+				EInkUtil.prepareSingleFullRefresh((Activity)context);
+				myFullRefreshCounter--;
+			} else {
+				myFullRefreshCounter = einkOptions.UpdateInterval.getValue();
+			}
 		}
 		super.onDraw(canvas);
 

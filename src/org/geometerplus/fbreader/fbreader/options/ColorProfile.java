@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.fbreader.options;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
@@ -129,8 +130,9 @@ public class ColorProfile {
 			FooterNGForegroundUnreadOption =
 				createOption(name, "FooterNGForegroundUnreadOption", 119, 119, 119);
 		} else {
+			ZLibrary lib = ZLibrary.Instance();
 			WallpaperOption =
-				new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/sepia.jpg");
+				new ZLStringOption("Colors", name + ":Wallpaper", lib.isEInk() ? "" : "wallpapers/sepia.jpg");
 			FillModeOption =
 				new ZLEnumOption<ZLPaintContext.FillMode>("Colors", name + ":FillMode", ZLPaintContext.FillMode.tile);
 			BackgroundOption =

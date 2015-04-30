@@ -61,6 +61,11 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 
+	@Override
+	public boolean isEInk() {
+		return DeviceType.Instance().isEInk();
+	}
+
 	private FBReader myActivity;
 	private final Application myApplication;
 
