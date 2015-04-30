@@ -17,11 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.util;
+package org.geometerplus.fbreader.util;
 
 import java.util.*;
 
 import org.geometerplus.zlibrary.text.view.*;
+import org.geometerplus.fbreader.bookmodel.FBTextKind;
 
 public final class AutoTextSnippet implements TextSnippet {
 	private final ZLTextPosition myStart;
@@ -98,6 +99,18 @@ mainLoop:
 						buffer.append(sentenceBuffer);
 						storedWordCounter = wordCounter;
 						break;
+				}
+			} else if (element instanceof ZLTextControlElement) {
+				final ZLTextControlElement control = (ZLTextControlElement)element;
+				if (control.IsStart) {
+					switch (control.Kind) {
+						case FBTextKind.H1:
+						case FBTextKind.H2:
+							if (!buffer.isEmpty()) {
+								break mainLoop;
+							}
+							break;
+					}
 				}
 			}
 			cursor.nextWord();
