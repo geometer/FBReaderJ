@@ -107,8 +107,8 @@ class BookmarkSyncUtil {
 							if (b.getVersionUid() == null) {
 								toUpdateOnClient.add(b);
 							} else if (!info.VersionUid.equals(b.getVersionUid())) {
-								final long ts = b.getTimestamp(Bookmark.DateType.Modification);
-								if (info.ModificationTimestamp <= ts) {
+								final long ts = b.getTimestamp(Bookmark.DateType.Latest);
+								if (info.Timestamp <= ts) {
 									toUpdateOnServer.add(b);
 								} else {
 									toUpdateOnClient.add(b);
@@ -353,19 +353,27 @@ class BookmarkSyncUtil {
 		final String Uid;
 		final String VersionUid;
 		final List<String> BookHashes;
-		final long ModificationTimestamp;
+		final long Timestamp;
 
 		Info(Map<String,Object> data) {
 			Uid = (String)data.get("uid");
 			VersionUid = (String)data.get("version_uid");
 			BookHashes = (List<String>)data.get("book_hashes");
-			final Long timestamp = (Long)data.get("modification_timestamp");
-			ModificationTimestamp = timestamp != null ? timestamp : 0L;
+			long timestamp = 0L;
+			final Long aTimestamp = (Long)data.get("access_timestamp");
+			if (aTimestamp != null) {
+				timestamp = aTimestamp;
+			}
+			final Long mTimestamp = (Long)data.get("modification_timestamp");
+			if (mTimestamp != null && mTimestamp > timestamp) {
+				timestamp = mTimestamp;
+			}
+			Timestamp = timestamp;
 		}
 
 		@Override
 		public String toString() {
-			return Uid + " (" + VersionUid + "); " + ModificationTimestamp;
+			return Uid + " (" + VersionUid + "); " + Timestamp;
 		}
 	}
 
