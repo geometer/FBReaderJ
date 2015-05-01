@@ -100,7 +100,7 @@ public abstract class DictionaryUtil {
 
 			intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 			final String key = get("dataKey");
 			if (key != null) {
