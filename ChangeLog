@@ -5,6 +5,7 @@
 * (planned) CSS selectors priority
 
 ===== 2.4.5 (May ??, 2015) =====
+* Fixed possible error in bookmarks synchronisation
 * Fixed <aside> tag behaviour: do not insert end-of-section
 
 ===== 2.4.3,2.4.4 (Apr 28, 2015) =====
