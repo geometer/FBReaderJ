@@ -97,8 +97,10 @@ class BookmarkSyncUtil {
 					break;
 				}
 				for (Bookmark b : bmks) {
+					System.err.println("BMK = " + b.getText());
 					final Info info = actualServerInfos.remove(b.Uid);
 					if (info != null) {
+						System.err.println("INFO = " + info);
 						if (info.VersionUid == null) {
 							if (b.getVersionUid() != null) {
 								toUpdateOnServer.add(b);
@@ -108,6 +110,7 @@ class BookmarkSyncUtil {
 								toUpdateOnClient.add(b);
 							} else if (!info.VersionUid.equals(b.getVersionUid())) {
 								final long ts = b.getTimestamp(Bookmark.DateType.Latest);
+								System.err.println("COMPARE: " + ts + " VS " + info.Timestamp);
 								if (info.Timestamp <= ts) {
 									toUpdateOnServer.add(b);
 								} else {
@@ -217,7 +220,7 @@ class BookmarkSyncUtil {
 					@Override
 					public void processResponse(Object response) {
 						for (Map<String,Object> info : (List<Map<String,Object>>)response) {
-							final Bookmark bookmark = bookmarkFromData(info, booksByHash);
+							final Bookmark bookmark = newBookmarkFromData(info, booksByHash);
 							if (bookmark != null) {
 								collection.saveBookmark(bookmark);
 							}
@@ -446,9 +449,9 @@ class BookmarkSyncUtil {
 		return requestData;
 	}
 
-	private static Bookmark bookmarkFromData(Map<String,Object> data, long bookId, String bookTitle) {
+	private static Bookmark bookmarkFromData(long id, Map<String,Object> data, long bookId, String bookTitle) {
 		return new Bookmark(
-			-1, (String)data.get("uid"), (String)data.get("version_uid"),
+			id, (String)data.get("uid"), (String)data.get("version_uid"),
 			bookId, bookTitle,
 			(String)data.get("text"),
 			(String)data.get("original_text"),
@@ -463,12 +466,12 @@ class BookmarkSyncUtil {
 		);
 	}
 
-	private static Bookmark bookmarkFromData(Map<String,Object> data, BooksByHash booksByHash) {
+	private static Bookmark newBookmarkFromData(Map<String,Object> data, BooksByHash booksByHash) {
 		final Book book = booksByHash.getBook((String)data.get("book_hash"));
 		if (book == null) {
 			return null;
 		}
-		return bookmarkFromData(data, book.getId(), book.getTitle());
+		return bookmarkFromData(-1, data, book.getId(), book.getTitle());
 	}
 
 	private static Bookmark bookmarkToUpdate(Map<String,Object> data, Map<String,Bookmark> bookmarksMap) {
@@ -476,6 +479,6 @@ class BookmarkSyncUtil {
 		if (oldBookmark == null) {
 			return null;
 		}
-		return bookmarkFromData(data, oldBookmark.BookId, oldBookmark.BookTitle);
+		return bookmarkFromData(oldBookmark.getId(), data, oldBookmark.BookId, oldBookmark.BookTitle);
 	}
 }
