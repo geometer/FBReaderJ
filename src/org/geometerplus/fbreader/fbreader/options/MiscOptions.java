@@ -37,6 +37,16 @@ public class MiscOptions {
 		never, footnotesOnly, footnotesAndSuperscripts, allInternalLinks
 	}
 	public final ZLEnumOption<FootnoteToastEnum> ShowFootnoteToast;
+	public static enum DurationEnum {
+		duration1(1000), duration3(3000), duration5(5000), duration10(10000), duration20(20000), duration300(300000);
+
+		public final int Value;
+
+		DurationEnum(int value) {
+			Value = value;
+		}
+	}
+	public final ZLEnumOption<DurationEnum> FootnoteToastDuration;
 
 	public MiscOptions() {
 		AllowScreenBrightnessAdjustment =
@@ -54,5 +64,7 @@ public class MiscOptions {
 
 		ShowFootnoteToast =
 			new ZLEnumOption<FootnoteToastEnum>("Options", "ShowFootnoteToast", FootnoteToastEnum.footnotesAndSuperscripts);
+		FootnoteToastDuration =
+			new ZLEnumOption<DurationEnum>("Options", "FootnoteToastDuration", DurationEnum.duration5);
 	}
 }

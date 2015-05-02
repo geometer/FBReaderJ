@@ -427,6 +427,14 @@
 				<node name="footnotesAndSuperscripts" value="Pro poznámky pod čarou a odkazy horních indexů"/>
 				<node name="allInternalLinks" value="Pro všechny vnitřní odkazy"/>
 			</node>
+			<node name="footnoteToastDuration" value="Show linked text popup for" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu displeje">
 				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje displeje"/>
 				<node name="summaryOff" value="Zakázáno"/>
