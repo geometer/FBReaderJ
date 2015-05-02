@@ -418,7 +418,9 @@ public class SuperToast {
      * @param duration {@link com.github.johnpersano.supertoasts.SuperToast.Duration}
      */
     public void setDuration(int duration) {
-
+		// geometer: we do not limit popup duration
+		this.mDuration = duration;
+/*
         if(duration > Duration.EXTRA_LONG) {
 
             Log.e(TAG, TAG + ERROR_DURATIONTOOLONG);
@@ -430,7 +432,7 @@ public class SuperToast {
             this.mDuration = duration;
 
         }
-
+*/
     }
 
     /**

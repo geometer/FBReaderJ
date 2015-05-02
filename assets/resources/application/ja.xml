@@ -418,6 +418,14 @@
 				<node name="footnotesAndSuperscripts" value="脚注と上付きリンクのみ"/>
 				<node name="allInternalLinks" value="内部リンクすべて"/>
 			</node>
+			<node name="footnoteToastDuration" value="Show linked text popup for" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="画面の明るさ調節">
 				<node name="summaryOn" value="画面の左端を上下になぞって調節"/>
 				<node name="summaryOff" value="無効"/>
