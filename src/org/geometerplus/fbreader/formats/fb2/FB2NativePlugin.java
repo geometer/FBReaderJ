@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats.fb2;
 
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
@@ -27,12 +29,40 @@ import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 
 public class FB2NativePlugin extends NativeFormatPlugin {
 	public FB2NativePlugin() {
 		super("fb2");
+	}
+
+	@Override
+	public void readModel(BookModel model) throws BookReadingException {
+		super.readModel(model);
+		model.setLabelResolver(new BookModel.LabelResolver() {
+			public List<String> getCandidates(String id) {
+				final List<String> candidates = new ArrayList<String>();
+				try {
+					final String c = URLDecoder.decode(id, "utf-8");
+					if (c != null && !c.equals(id)) {
+						candidates.add(c);
+					}
+				} catch (Exception e) {
+					// ignore
+				}
+				try {
+					final String c = URLDecoder.decode(id, "windows-1251");
+					if (c != null && !c.equals(id)) {
+						candidates.add(c);
+					}
+				} catch (Exception e) {
+					// ignore
+				}
+				return candidates;
+			}
+		});
 	}
 
 	@Override
