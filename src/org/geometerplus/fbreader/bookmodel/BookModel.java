@@ -167,7 +167,7 @@ public final class BookModel {
 					break;
 				}
 				final int idLength = (int)block[offset + labelLength];
-				if ((labelLength != len) || !id.equals(new String(block, offset, labelLength))) {
+				if (labelLength != len || !id.equals(new String(block, offset, labelLength))) {
 					offset += labelLength + idLength + 3;
 					continue;
 				}
