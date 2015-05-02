@@ -423,6 +423,14 @@
 				<node name="footnotesAndSuperscripts" value="Для сносок и «поднятых» ссылок"/>
 				<node name="allInternalLinks" value="Для всех ссылок внутри книги"/>
 			</node>
+			<node name="footnoteToastDuration" value="Показывать окошко с текстом ссылки на">
+				<node name="duration1" value="1 секунду"/>
+				<node name="duration3" value="3 секунды"/>
+				<node name="duration5" value="5 секунд"/>
+				<node name="duration10" value="10 секунд"/>
+				<node name="duration20" value="20 секунд"/>
+				<node name="duration300" value="5 минут"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
 				<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
 				<node name="summaryOff" value="Выключена"/>

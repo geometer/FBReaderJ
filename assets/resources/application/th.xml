@@ -408,6 +408,14 @@
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
+			<node name="footnoteToastDuration" value="Show linked text popup for" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="การปรับความสว่างหน้าจอ">
 				<node name="summaryOn" value="ลากนิ้วขึ้นลงด้านซ้ายของหน้าจอ"/>
 				<node name="summaryOff" value="ปิดการใช้งาน"/>
