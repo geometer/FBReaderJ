@@ -423,7 +423,7 @@
 				<node name="footnotesAndSuperscripts" value="Для сносок и «поднятых» ссылок"/>
 				<node name="allInternalLinks" value="Для всех ссылок внутри книги"/>
 			</node>
-			<node name="footnoteToastDuration" value="Показывать окошко с текстом ссылки на">
+			<node name="footnoteToastDuration" value="Как долго показывать окошко с текстом ссылки">
 				<node name="duration1" value="1 секунду"/>
 				<node name="duration3" value="3 секунды"/>
 				<node name="duration5" value="5 секунд"/>
