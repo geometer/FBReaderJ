@@ -418,7 +418,7 @@
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links"/>
 				<node name="allInternalLinks" value="For all internal links"/>
 			</node>
-			<node name="footnoteToastDuration" value="Show linked text popup for">
+			<node name="footnoteToastDuration" value="How long to show link popup">
 				<node name="duration1" value="1 second"/>
 				<node name="duration3" value="3 seconds"/>
 				<node name="duration5" value="5 seconds"/>

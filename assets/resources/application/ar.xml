@@ -416,7 +416,7 @@
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
-			<node name="footnoteToastDuration" value="Show linked text popup for" toBeTranslated="true">
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
 				<node name="duration1" value="1 second" toBeTranslated="true"/>
 				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
 				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
