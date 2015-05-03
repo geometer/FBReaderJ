@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -26,7 +27,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-final class TextSearchPopup extends ButtonsPopupPanel {
+final class TextSearchPopup extends PopupPanel implements View.OnClickListener {
 	final static String ID = "TextSearchPopup";
 
 	TextSearchPopup(FBReaderApp fbReader) {
@@ -45,15 +46,50 @@ final class TextSearchPopup extends ButtonsPopupPanel {
 	}
 
 	@Override
-	public void createControlPanel(FBReader activity, RelativeLayout root) {
-		if (myWindow != null && activity == myWindow.getActivity()) {
+	public synchronized void createControlPanel(FBReader activity, RelativeLayout root) {
+		if (myWindow != null && activity == myWindow.getContext()) {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Bottom);
+		activity.getLayoutInflater().inflate(R.layout.search_panel, root);
+		myWindow = (SimplePopupWindow)root.findViewById(R.id.search_panel);
 
-		addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
-		addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
-		addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);
+		setupButton(R.id.search_panel_previous);
+		setupButton(R.id.search_panel_next);
+		setupButton(R.id.search_panel_close);
+	}
+
+	private void setupButton(int buttonId) {
+		myWindow.findViewById(buttonId).setOnClickListener(this);
+	}
+
+	@Override
+	protected synchronized void update() {
+		if (myWindow == null) {
+			return;
+		}
+
+		myWindow.findViewById(R.id.search_panel_previous).setEnabled(
+			Application.isActionEnabled(ActionCode.FIND_PREVIOUS)
+		);
+		myWindow.findViewById(R.id.search_panel_next).setEnabled(
+			Application.isActionEnabled(ActionCode.FIND_NEXT)
+		);
+	}
+
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.search_panel_previous:
+				Application.runAction(ActionCode.FIND_PREVIOUS);
+				break;
+			case R.id.search_panel_next:
+				Application.runAction(ActionCode.FIND_NEXT);
+				break;
+			case R.id.search_panel_close:
+				Application.runAction(ActionCode.CLEAR_FIND_RESULTS);
+				storePosition();
+				StartPosition = null;
+				Application.hideActivePopup();
+		}
 	}
 }
