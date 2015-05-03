@@ -477,6 +477,7 @@ class XMLSerializer extends AbstractSerializer {
 			final char ch = data.charAt(i);
 			switch (ch) {
 				case '\u0009':
+				case '\n':
 					buffer.append(ch);
 					break;
 				default:
