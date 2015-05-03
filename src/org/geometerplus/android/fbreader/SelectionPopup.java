@@ -26,7 +26,7 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.R;
 
-class SelectionPopup extends ButtonsPopupPanel {
+class SelectionPopup extends PopupPanel implements View.OnClickListener {
 	final static String ID = "SelectionPopup";
 
 	SelectionPopup(FBReaderApp fbReader) {
@@ -40,17 +40,22 @@ class SelectionPopup extends ButtonsPopupPanel {
 
 	@Override
 	public void createControlPanel(FBReader activity, RelativeLayout root) {
-		if (myWindow != null && activity == myWindow.getActivity()) {
+		if (myWindow != null && activity == myWindow.getContext()) {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Floating);
+		activity.getLayoutInflater().inflate(R.layout.selection_panel, root);
+		myWindow = (SimplePopupWindow)root.findViewById(R.id.selection_panel);
 
-		addButton(ActionCode.SELECTION_COPY_TO_CLIPBOARD, true, R.drawable.selection_copy);
-		addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);
-		addButton(ActionCode.SELECTION_TRANSLATE, true, R.drawable.selection_translate);
-		addButton(ActionCode.SELECTION_BOOKMARK, true, R.drawable.selection_bookmark);
-		addButton(ActionCode.SELECTION_CLEAR, true, R.drawable.selection_close);
+		setupButton(R.id.selection_panel_copy);
+		setupButton(R.id.selection_panel_share);
+		setupButton(R.id.selection_panel_translate);
+		setupButton(R.id.selection_panel_bookmark);
+		setupButton(R.id.selection_panel_close);
+	}
+
+	private void setupButton(int buttonId) {
+		myWindow.findViewById(buttonId).setOnClickListener(this);
 	}
 
 	public void move(int selectionStartY, int selectionEndY) {
@@ -78,5 +83,30 @@ class SelectionPopup extends ButtonsPopupPanel {
 
 		layoutParams.addRule(verticalPosition);
 		myWindow.setLayoutParams(layoutParams);
+	}
+
+	@Override
+	protected void update() {
+	}
+
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.selection_panel_copy:
+				Application.runAction(ActionCode.SELECTION_COPY_TO_CLIPBOARD);
+				break;
+			case R.id.selection_panel_share:
+				Application.runAction(ActionCode.SELECTION_SHARE);
+				break;
+			case R.id.selection_panel_translate:
+				Application.runAction(ActionCode.SELECTION_TRANSLATE);
+				break;
+			case R.id.selection_panel_bookmark:
+				Application.runAction(ActionCode.SELECTION_BOOKMARK);
+				break;
+			case R.id.selection_panel_close:
+				Application.runAction(ActionCode.SELECTION_CLEAR);
+				break;
+		}
+		Application.hideActivePopup();
 	}
 }
