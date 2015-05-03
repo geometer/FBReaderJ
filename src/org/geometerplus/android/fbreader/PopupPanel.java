@@ -32,7 +32,7 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 abstract class PopupPanel extends ZLApplication.PopupPanel {
 	public ZLTextWordCursor StartPosition;
 
-	protected volatile PopupWindow myWindow;
+	protected volatile SimplePopupWindow myWindow;
 	private volatile FBReader myActivity;
 	private volatile RelativeLayout myRoot;
 
@@ -62,8 +62,8 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 	}
 
 	private final void removeWindow(Activity activity) {
-		if (myWindow != null && activity == myWindow.getActivity()) {
-			ViewGroup root = (ViewGroup)myWindow.getParent();
+		if (myWindow != null && activity == myWindow.getContext()) {
+			final ViewGroup root = (ViewGroup)myWindow.getParent();
 			myWindow.hide();
 			root.removeView(myWindow);
 			myWindow = null;
