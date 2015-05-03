@@ -1065,7 +1065,7 @@
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
 		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually"/>
-		<node name="textNotFound" value="No matching text found"/>
+		<node name="textNotFound" value="Matching text not found"/>
 		<node name="bookNotFound" value="There are no suitable books in the library, sorry"/>
 		<node name="bookmarkNotFound" value="There are no suitable bookmarks, sorry"/>
 		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>
