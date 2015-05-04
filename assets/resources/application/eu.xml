@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Liburu hau"/>
 		<node name="allBooks" value="Liburu guztiak"/>
-		<node name="found" value="Aurkituta"/>
 		<node name="new" value="Laster-marka berria"/>
-		<node name="open" value="Ireki"/>
-		<node name="edit" value="Aldatu laster-marka"/>
-		<node name="delete" value="Ezabatu laster-marka"/>
-		<node name="menu">
-			<node name="search" value="Bilatu"/>
-		</node>
+		<node name="openBook" value="Ireki"/>
+		<node name="editBookmark" value="Aldatu laster-marka"/>
+		<node name="deleteBookmark" value="Ezabatu laster-marka"/>
+		<node name="search" value="Bilatu"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -415,11 +412,19 @@
 				<node name="summaryOn" value="Testua zutabe bitan aurkeztu gailua horizontalean eusterakoan"/>
 				<node name="summaryOff" value="Testua beti zutabe bakarrean aurkeztu"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Pantailaren distira doitu">
 				<node name="summaryOn" value="Hatza pantailaren ezkerraldean gora/behera arrastatu"/>
@@ -764,10 +769,10 @@
 			<node name="targetLanguage" value="Itzuli honetara">
 				<node name="any" value="hizkuntza guztiak"/>
 			</node>
-			<node name="tappingAction" value="Kolpetxo luzatuaren  ekintzak">
+			<node name="longTapAction" value="Kolpetxo luzatuaren  ekintzak">
 				<node name="doNothing" value="Kolpetxo luzatuak ez du ezer egiten"/>
 				<node name="selectSingleWord" value="Kolpetxo luzatuak hitz soila hautatzen du"/>
-				<node name="startSelecting" value="Kolpetxo luzatuak hautaketa hasten du"/>
+				<node name="initSelection" value="Kolpetxo luzatuak hautaketa hasten du"/>
 				<node name="openDictionary" value="Kolpetxo luzatuak hitz soila hautatzen du, askatzerakoan hiztegia zabaltzen du"/>
 			</node>
 			<node name="navigateOverAllWords" value="Nabigatu hitzen artean">
@@ -778,7 +783,7 @@
 		<node name="images" value="Irudiak">
 			<node name="summary" value="Irudiak bistaratzeko aukerak"/>
 			<node name="backgroundColor" value="Irudiaren atzeko planoaren kolorea"/>
-			<node name="tappingAction" value="Kolpetxo luzatuaren  ekintzak">
+			<node name="longTapAction" value="Kolpetxo luzatuaren  ekintzak">
 				<node name="doNothing" value="Kolpetxo luzatuak ez du ezer egiten"/>
 				<node name="selectImage" value="Kolpetxo luzatuak irudia hautatzen du"/>
 				<node name="openImageView" value="Kolpetxo luzatuak irudia bistaratzen du"/>

@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Bu kitap"/>
 		<node name="allBooks" value="Tüm kitaplar"/>
-		<node name="found" value="Bulunan"/>
 		<node name="new" value="Yeni yer imi"/>
-		<node name="open" value="Aç"/>
-		<node name="edit" value="Yer imini düzenle"/>
-		<node name="delete" value="Yer imini sil"/>
-		<node name="menu">
-			<node name="search" value="Ara"/>
-		</node>
+		<node name="openBook" value="Aç"/>
+		<node name="editBookmark" value="Yer imini düzenle"/>
+		<node name="deleteBookmark" value="Yer imini sil"/>
+		<node name="search" value="Ara"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -415,11 +412,19 @@
 				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
 				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Ekran parlaklığı ayarı">
 				<node name="summaryOn" value="Parmağınızı ekranın sol yanında yukarı aşağı sürükleyerek parlaklığı ayarlayın"/>
@@ -764,10 +769,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Uzun dokunma eylemi">
+			<node name="longTapAction" value="Uzun dokunma eylemi">
 				<node name="doNothing" value="Uzun dokunma eylemsiz"/>
 				<node name="selectSingleWord" value="Uzun dokunma bir kelime seçsin"/>
-				<node name="startSelecting" value="Uzun dokunma metin seçimine geçirsin"/>
+				<node name="initSelection" value="Uzun dokunma metin seçimine geçirsin"/>
 				<node name="openDictionary" value="Uzun dokunma tek kelime seçsin, bırakınca sözlük açılsın"/>
 			</node>
 			<node name="navigateOverAllWords" value="Tüm kelimeler üzerinde gezinme">
@@ -778,7 +783,7 @@
 		<node name="images" value="Resimler">
 			<node name="summary" value="Resim gösterimi seçenekleri"/>
 			<node name="backgroundColor" value="Resim görünümü için arka plan rengi"/>
-			<node name="tappingAction" value="Uzun dokunma eylemi">
+			<node name="longTapAction" value="Uzun dokunma eylemi">
 				<node name="doNothing" value="Uzun dokunma eylemsiz"/>
 				<node name="selectImage" value="Uzun dokunma resmi seçsin"/>
 				<node name="openImageView" value="Uzun dokunma resmi açsın"/>

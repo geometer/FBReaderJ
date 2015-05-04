@@ -243,14 +243,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Dieses Buch"/>
 		<node name="allBooks" value="Alle Bücher"/>
-		<node name="found" value="Gefunden"/>
 		<node name="new" value="Neues Lesezeichen"/>
-		<node name="open" value="Zu dem Lesezeichen gehen"/>
-		<node name="edit" value="Lesezeichen bearbeiten"/>
-		<node name="delete" value="Lesezeichen löschen"/>
-		<node name="menu">
-			<node name="search" value="Suchen"/>
-		</node>
+		<node name="openBook" value="Zu dem Lesezeichen gehen"/>
+		<node name="editBookmark" value="Lesezeichen bearbeiten"/>
+		<node name="deleteBookmark" value="Lesezeichen löschen"/>
+		<node name="search" value="Suchen"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -420,11 +417,19 @@
 				<node name="summaryOn" value="Zeige Text in zwei Spalten wenn das Gerät horizontal gehalten wird"/>
 				<node name="summaryOff" value="Text immer in einer Spalte anzeigen"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Helligkeitsanpassung">
 				<node name="summaryOn" value="Mit dem Finger durch hoch/runter-schieben am linken Bildschirmrand"/>
@@ -769,10 +774,10 @@
 			<node name="targetLanguage" value="Übersetzen in">
 				<node name="any" value="Alle Sprachen"/>
 			</node>
-			<node name="tappingAction" value="Aktion beim langen Antippen">
+			<node name="longTapAction" value="Aktion beim langen Antippen">
 				<node name="doNothing" value="Langes Antippen bewirkt nichts"/>
 				<node name="selectSingleWord" value="Langes Antippen selektiert ein einzelnes Wort"/>
-				<node name="startSelecting" value="Langes Antippen initiiert den Markierungsmodus"/>
+				<node name="initSelection" value="Langes Antippen initiiert den Markierungsmodus"/>
 				<node name="openDictionary" value="Langes Antippen selektiert ein einzelnes Wort, Loslassen öffnet das Wörterbuch"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigiere über alle Wörter">
@@ -783,7 +788,7 @@
 		<node name="images" value="Bilder">
 			<node name="summary" value="Einstellung für die Anzeige von Bildern"/>
 			<node name="backgroundColor" value="Hintergrundfarbe für Bilder"/>
-			<node name="tappingAction" value="Aktion bei langem Antippen">
+			<node name="longTapAction" value="Aktion bei langem Antippen">
 				<node name="doNothing" value="Langes Antippen bewirkt nichts"/>
 				<node name="selectImage" value="Langes Antippen selektiert das Bild"/>
 				<node name="openImageView" value="Langes Antippen öffnet die Bildanzeige"/>

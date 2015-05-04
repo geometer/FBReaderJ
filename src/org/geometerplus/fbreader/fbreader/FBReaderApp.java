@@ -28,8 +28,6 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.util.AutoTextSnippet;
-import org.geometerplus.zlibrary.text.util.EmptyTextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
@@ -38,6 +36,8 @@ import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.network.sync.SyncData;
+import org.geometerplus.fbreader.util.AutoTextSnippet;
+import org.geometerplus.fbreader.util.EmptyTextSnippet;
 
 public final class FBReaderApp extends ZLApplication {
 	public interface ExternalFileOpener {
@@ -231,11 +231,11 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		final ZLTextWordCursor cursor =
 			new ZLTextWordCursor(new ZLTextParagraphCursor(model, label.ParagraphIndex));
-		final AutoTextSnippet longSnippet = new AutoTextSnippet(cursor, 24);
+		final AutoTextSnippet longSnippet = new AutoTextSnippet(cursor, 140);
 		if (longSnippet.IsEndOfText) {
 			return longSnippet;
 		} else {
-			return new AutoTextSnippet(cursor, 20);
+			return new AutoTextSnippet(cursor, 100);
 		}
 	}
 
@@ -273,6 +273,7 @@ public final class FBReaderApp extends ZLApplication {
 		final FBView fbView = getTextView();
 
 		final Bookmark bookmark = new Bookmark(
+			Collection,
 			Model.Book,
 			fbView.getModel().getId(),
 			fbView.getSelectedSnippet(),
@@ -346,7 +347,7 @@ public final class FBReaderApp extends ZLApplication {
 				if (pos == null) {
 					pos = new ZLTextFixedPosition(0, 0, 0);
 				}
-				bm = new Bookmark(book, "", new EmptyTextSnippet(pos), false);
+				bm = new Bookmark(Collection, book, "", new EmptyTextSnippet(pos), false);
 			}
 			myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, book, bm);
 			return;
@@ -639,11 +640,11 @@ public final class FBReaderApp extends ZLApplication {
 				return;
 			}
 
-			updateInvisibleBookmarksList(Bookmark.createBookmark(
+			updateInvisibleBookmarksList(new Bookmark(
+				Collection,
 				book,
 				textView.getModel().getId(),
-				cursor,
-				6,
+				new AutoTextSnippet(cursor, 30),
 				false
 			));
 		}
@@ -651,11 +652,11 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void addInvisibleBookmark() {
 		if (Model.Book != null && getTextView() == BookTextView) {
-			updateInvisibleBookmarksList(createBookmark(6, false));
+			updateInvisibleBookmarksList(createBookmark(30, false));
 		}
 	}
 
-	public Bookmark createBookmark(int maxLength, boolean visible) {
+	public Bookmark createBookmark(int maxChars, boolean visible) {
 		final FBView view = getTextView();
 		final ZLTextWordCursor cursor = view.getStartCursor();
 
@@ -663,11 +664,11 @@ public final class FBReaderApp extends ZLApplication {
 			return null;
 		}
 
-		return Bookmark.createBookmark(
+		return new Bookmark(
+			Collection,
 			Model.Book,
 			view.getModel().getId(),
-			cursor,
-			maxLength,
+			new AutoTextSnippet(cursor, maxChars),
 			visible
 		);
 	}

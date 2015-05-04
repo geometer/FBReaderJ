@@ -244,14 +244,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Тази книга"/>
 		<node name="allBooks" value="Всички книги"/>
-		<node name="found" value="Намерено"/>
 		<node name="new" value="Ново отбелязване"/>
-		<node name="open" value="Отвори"/>
-		<node name="edit" value="Редактирай отбелязването"/>
-		<node name="delete" value="Премахни отбелязването"/>
-		<node name="menu">
-			<node name="search" value="Търси"/>
-		</node>
+		<node name="openBook" value="Отвори"/>
+		<node name="editBookmark" value="Редактирай отбелязването"/>
+		<node name="deleteBookmark" value="Премахни отбелязването"/>
+		<node name="search" value="Търси"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -421,11 +418,19 @@
 				<node name="summaryOn" value="Показвай текста в две колони когато устройството е хоризонтално"/>
 				<node name="summaryOff" value="Винаги показвай текста в една колона"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Настройка на яркостта на екрана">
 				<node name="summaryOn" value="С приплъзване нагоре/надолу по левия край на екрана"/>
@@ -770,10 +775,10 @@
 			<node name="targetLanguage" value="Преведи на">
 				<node name="any" value="всички езици"/>
 			</node>
-			<node name="tappingAction" value="Действие при продължителен натиск по екрана">
+			<node name="longTapAction" value="Действие при продължителен натиск по екрана">
 				<node name="doNothing" value="Не се извършва действие"/>
 				<node name="selectSingleWord" value="Селектиране на една дума"/>
-				<node name="startSelecting" value="Започване на селекция"/>
+				<node name="initSelection" value="Започване на селекция"/>
 				<node name="openDictionary" value="Селектиране на една дума, а при отместване – стартиране на речника"/>
 			</node>
 			<node name="navigateOverAllWords" value="Придвижване по всички думи">
@@ -784,7 +789,7 @@
 		<node name="images" value="Изображения">
 			<node name="summary" value="Настройки на изображенията"/>
 			<node name="backgroundColor" value="Цвят на фона при преглед на цял екран"/>
-			<node name="tappingAction" value="Действие при продължителен натиск по екрана">
+			<node name="longTapAction" value="Действие при продължителен натиск по екрана">
 				<node name="doNothing" value="Не се извършва действие"/>
 				<node name="selectImage" value="Селектиране на изображението"/>
 				<node name="openImageView" value="Включване на преглед на цял екран"/>

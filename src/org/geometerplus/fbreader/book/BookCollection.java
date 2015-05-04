@@ -780,10 +780,23 @@ public class BookCollection extends AbstractBookCollection {
 		return new ArrayList<HighlightingStyle>(myStyles.values());
 	}
 
-	public void saveHighlightingStyle(HighlightingStyle style) {
-		myStyles.put(style.Id, style);
+	public synchronized void saveHighlightingStyle(HighlightingStyle style) {
 		myDatabase.saveStyle(style);
+		myStyles.clear();
 		fireBookEvent(BookEvent.BookmarkStyleChanged, null);
+	}
+
+	private final static String DEFAULT_STYLE_ID_KEY = "defaultStyle";
+	public int getDefaultHighlightingStyleId() {
+		try {
+			return Integer.parseInt(myDatabase.getOptionValue(DEFAULT_STYLE_ID_KEY));
+		} catch (Throwable t) {
+			return 1;
+		}
+	}
+
+	public void setDefaultHighlightingStyleId(int styleId) {
+		myDatabase.setOptionValue(DEFAULT_STYLE_ID_KEY, String.valueOf(styleId));
 	}
 
 	public String getHash(Book book, boolean force) {

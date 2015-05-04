@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ова књига"/>
 		<node name="allBooks" value="Све књиге"/>
-		<node name="found" value="Пронађено"/>
 		<node name="new" value="Нови обележивач"/>
-		<node name="open" value="Отвори"/>
-		<node name="edit" value="Уреди обележивач"/>
-		<node name="delete" value="Обриши обележивач"/>
-		<node name="menu">
-			<node name="search" value="Претражи"/>
-		</node>
+		<node name="openBook" value="Отвори"/>
+		<node name="editBookmark" value="Уреди обележивач"/>
+		<node name="deleteBookmark" value="Обриши обележивач"/>
+		<node name="search" value="Претражи"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -415,11 +412,19 @@
 				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
 				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Прилагоди осветљење екрана">
 				<node name="summaryOn" value="Превлачењем прста нагоре/надоле дуж леве стране екрана."/>
@@ -764,10 +769,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Дуго тапкање">
+			<node name="longTapAction" value="Дуго тапкање">
 				<node name="doNothing" value="Дуго тапкање не ради ништа"/>
 				<node name="selectSingleWord" value="Дуго тапкање одабира једну реч"/>
-				<node name="startSelecting" value="Дуго тапкање започиње одабирање"/>
+				<node name="initSelection" value="Дуго тапкање започиње одабирање"/>
 				<node name="openDictionary" value="Дуго тапкање одабира реч, а отпуштање отвара речник"/>
 			</node>
 			<node name="navigateOverAllWords" value="Крећи се кроз све речи">
@@ -778,7 +783,7 @@
 		<node name="images" value="Слике">
 			<node name="summary" value="Подешавања око приказивања слика."/>
 			<node name="backgroundColor" value="Боја позадине за приказ слика"/>
-			<node name="tappingAction" value="Дуго тапкање">
+			<node name="longTapAction" value="Дуго тапкање">
 				<node name="doNothing" value="Дуго тапкање не ради ништа"/>
 				<node name="selectImage" value="Дуго тапкање одабира слику"/>
 				<node name="openImageView" value="Дуго тапкање отвара слику"/>

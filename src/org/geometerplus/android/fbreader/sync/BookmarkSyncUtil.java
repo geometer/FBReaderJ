@@ -22,6 +22,8 @@ package org.geometerplus.android.fbreader.sync;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.JsonRequest2;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
@@ -31,6 +33,9 @@ class BookmarkSyncUtil {
 		try {
 			final Map<String,Info> actualServerInfos = new HashMap<String,Info>();
 			final Set<String> deletedOnServerUids = new HashSet<String>();
+			final Map<Integer,Map<String,Object>> serverStyles =
+				new HashMap<Integer,Map<String,Object>>();
+
 			JsonRequest2 infoRequest = null;
 
 			// Step 0: loading bookmarks info lists (actual & deleted bookmark ids)
@@ -61,9 +66,9 @@ class BookmarkSyncUtil {
 					break;
 				}
 			}
-
-			System.err.println("BMK ACTUAL = " + actualServerInfos);
-			System.err.println("BMK DELETED = " + deletedOnServerUids);
+			for (Map<String,Object> info : (List<Map<String,Object>>)responseMap.get("styles")) {
+				serverStyles.put((int)(long)(Long)info.get("style_id"), info);
+			}
 
 			// Step 1: purge deleted bookmarks info already synced with server
 			final Set<String> deletedOnClientUids = new HashSet<String>(
@@ -77,7 +82,7 @@ class BookmarkSyncUtil {
 				}
 			}
 
-			// Step 2: prepare lists of bookmarks to create/delete/update on server/client
+			// Step 2a: prepare lists of bookmarks to create/delete/update on server/client
 			//    (total 6 lists)
 			final List<Bookmark> toSendToServer = new LinkedList<Bookmark>();
 			final List<Bookmark> toDeleteOnClient = new LinkedList<Bookmark>();
@@ -92,8 +97,10 @@ class BookmarkSyncUtil {
 					break;
 				}
 				for (Bookmark b : bmks) {
+					System.err.println("BMK = " + b.getText());
 					final Info info = actualServerInfos.remove(b.Uid);
 					if (info != null) {
+						System.err.println("INFO = " + info);
 						if (info.VersionUid == null) {
 							if (b.getVersionUid() != null) {
 								toUpdateOnServer.add(b);
@@ -102,8 +109,9 @@ class BookmarkSyncUtil {
 							if (b.getVersionUid() == null) {
 								toUpdateOnClient.add(b);
 							} else if (!info.VersionUid.equals(b.getVersionUid())) {
-								final long ts = b.getDate(Bookmark.DateType.Modification).getTime();
-								if (info.ModificationTimestamp <= ts) {
+								final long ts = b.getTimestamp(Bookmark.DateType.Latest);
+								System.err.println("COMPARE: " + ts + " VS " + info.Timestamp);
+								if (info.Timestamp <= ts) {
 									toUpdateOnServer.add(b);
 								} else {
 									toUpdateOnClient.add(b);
@@ -136,12 +144,67 @@ class BookmarkSyncUtil {
 				}
 			}
 
-			System.err.println("BMK TO SEND TO SERVER = " + ids(toSendToServer));
-			System.err.println("BMK TO DELETE ON SERVER = " + toDeleteOnServer);
-			System.err.println("BMK TO DELETE ON CLIENT = " + ids(toDeleteOnClient));
-			System.err.println("BMK TO UPDATE ON SERVER = " + ids(toUpdateOnServer));
-			System.err.println("BMK TO UPDATE ON CLIENT = " + ids(toUpdateOnClient));
-			System.err.println("BMK TO GET FROM SERVER = " + toGetFromServer);
+			// Step 2b: update styles on client,
+			//	 prepare lists of styles to create/update on server
+			final List<Map<String,Object>> stylesToSend = new ArrayList<Map<String,Object>>();
+			for (HighlightingStyle style : collection.highlightingStyles()) {
+				final Map<String,Object> serverInfo = serverStyles.get(style.Id);
+				boolean doSend = false;
+				if (serverInfo == null) {
+					doSend = true;
+				} else {
+					boolean doUpdate = false;
+
+					final String clientName = style.getName();
+					final String serverName = (String)serverInfo.get("name");
+					if (!clientName.equals(serverName)) {
+						doUpdate = true;
+					}
+
+					final ZLColor clientBg = style.getBackgroundColor();
+					final Long serverBgCode = (Long)serverInfo.get("bg_color");
+					final ZLColor serverBg = serverBgCode != null
+						? new ZLColor((int)(long)serverBgCode) : null;
+					if (!MiscUtil.equals(clientBg, serverBg)) {
+						doUpdate = true;
+					}
+
+					final ZLColor clientFg = style.getForegroundColor();
+					final Long serverFgCode = (Long)serverInfo.get("fg_color");
+					final ZLColor serverFg = serverFgCode != null
+						? new ZLColor((int)(long)serverFgCode) : null;
+					if (!MiscUtil.equals(clientFg, serverFg)) {
+						doUpdate = true;
+					}
+
+					if (doUpdate) {
+						if (style.LastUpdateTimestamp < (Long)serverInfo.get("timestamp")) {
+							style.setName(serverName);
+							style.setBackgroundColor(serverBg);
+							style.setForegroundColor(serverFg);
+							collection.saveHighlightingStyle(style);
+						} else {
+							doSend = true;
+						}
+					}
+				}
+
+				if (doSend) {
+					final Map<String,Object> styleMap = new HashMap<String,Object>();
+					styleMap.put("style_id", style.Id);
+					styleMap.put("timestamp", style.LastUpdateTimestamp);
+					styleMap.put("name", style.getName());
+					final ZLColor bg = style.getBackgroundColor();
+					if (bg != null) {
+						styleMap.put("bg_color", bg.intValue());
+					}
+					final ZLColor fg = style.getForegroundColor();
+					if (fg != null) {
+						styleMap.put("fg_color", fg.intValue());
+					}
+					stylesToSend.add(styleMap);
+				}
+			}
 
 			// Step 3a: deleting obsolete bookmarks on client
 			for (Bookmark b : toDeleteOnClient) {
@@ -157,7 +220,7 @@ class BookmarkSyncUtil {
 					@Override
 					public void processResponse(Object response) {
 						for (Map<String,Object> info : (List<Map<String,Object>>)response) {
-							final Bookmark bookmark = bookmarkFromData(info, booksByHash);
+							final Bookmark bookmark = newBookmarkFromData(info, booksByHash);
 							if (bookmark != null) {
 								collection.saveBookmark(bookmark);
 							}
@@ -221,12 +284,15 @@ class BookmarkSyncUtil {
 			for (String uid : toDeleteOnServer) {
 				requests.add(new DeleteRequest(uid));
 			}
-			if (!requests.isEmpty()) {
-				final Map<String,Object> dataForSending = new HashMap<String,Object>();
-				dataForSending.put("requests", requests);
-				dataForSending.put("timestamp", System.currentTimeMillis());
+
+			if (!requests.isEmpty() || !stylesToSend.isEmpty()) {
+				final Map<String,Object> allDataToSend = new HashMap<String,Object>();
+				allDataToSend.put("requests", requests);
+				allDataToSend.put("timestamp", System.currentTimeMillis());
+				allDataToSend.put("styles", stylesToSend);
+				System.err.println("BMK SENDING: " + allDataToSend);
 				final JsonRequest2 serverUpdateRequest = new JsonRequest2(
-					SyncOptions.BASE_URL + "sync/update.bookmarks", dataForSending
+					SyncOptions.BASE_URL + "sync/update.bookmarks", allDataToSend
 				) {
 					@Override
 					public void processResponse(Object response) {
@@ -290,19 +356,27 @@ class BookmarkSyncUtil {
 		final String Uid;
 		final String VersionUid;
 		final List<String> BookHashes;
-		final long ModificationTimestamp;
+		final long Timestamp;
 
 		Info(Map<String,Object> data) {
 			Uid = (String)data.get("uid");
 			VersionUid = (String)data.get("version_uid");
 			BookHashes = (List<String>)data.get("book_hashes");
-			final Long timestamp = (Long)data.get("modification_timestamp");
-			ModificationTimestamp = timestamp != null ? timestamp : 0L;
+			long timestamp = 0L;
+			final Long aTimestamp = (Long)data.get("access_timestamp");
+			if (aTimestamp != null) {
+				timestamp = aTimestamp;
+			}
+			final Long mTimestamp = (Long)data.get("modification_timestamp");
+			if (mTimestamp != null && mTimestamp > timestamp) {
+				timestamp = mTimestamp;
+			}
+			Timestamp = timestamp;
 		}
 
 		@Override
 		public String toString() {
-			return Uid + " (" + VersionUid + "); " + ModificationTimestamp;
+			return Uid + " (" + VersionUid + "); " + Timestamp;
 		}
 	}
 
@@ -321,6 +395,7 @@ class BookmarkSyncUtil {
 			bmk.put("version_uid", bookmark.getVersionUid());
 			bmk.put("style_id", bookmark.getStyleId());
 			bmk.put("text", bookmark.getText());
+			bmk.put("original_text", bookmark.getOriginalText());
 			bmk.put("model_id", bookmark.ModelId);
 			bmk.put("para_start", bookmark.getParagraphIndex());
 			bmk.put("elmt_start", bookmark.getElementIndex());
@@ -328,15 +403,9 @@ class BookmarkSyncUtil {
 			bmk.put("para_end", bookmark.getEnd().getParagraphIndex());
 			bmk.put("elmt_end", bookmark.getEnd().getElementIndex());
 			bmk.put("char_end", bookmark.getEnd().getCharIndex());
-			bmk.put("creation_timestamp", bookmark.getDate(Bookmark.DateType.Creation).getTime());
-			final Date accessDate = bookmark.getDate(Bookmark.DateType.Access);
-			if (accessDate != null) {
-				bmk.put("access_timestamp", accessDate.getTime());
-			}
-			final Date modificationDate = bookmark.getDate(Bookmark.DateType.Modification);
-			if (modificationDate != null) {
-				bmk.put("modification_timestamp", modificationDate.getTime());
-			}
+			bmk.put("creation_timestamp", bookmark.getTimestamp(Bookmark.DateType.Creation));
+			bmk.put("modification_timestamp", bookmark.getTimestamp(Bookmark.DateType.Modification));
+			bmk.put("access_timestamp", bookmark.getTimestamp(Bookmark.DateType.Access));
 
 			put("bookmark", bmk);
 		}
@@ -369,11 +438,6 @@ class BookmarkSyncUtil {
 		return uids;
 	}
 
-	private static Date getDate(Map<String,Object> data, String key) {
-		final Long timestamp = (Long)data.get(key);
-		return timestamp != null ? new Date(timestamp) : null;
-	}
-
 	private static int getInt(Map<String,Object> data, String key) {
 		return (int)(long)(Long)data.get(key);
 	}
@@ -385,14 +449,15 @@ class BookmarkSyncUtil {
 		return requestData;
 	}
 
-	private static Bookmark bookmarkFromData(Map<String,Object> data, long bookId, String bookTitle) {
+	private static Bookmark bookmarkFromData(long id, Map<String,Object> data, long bookId, String bookTitle) {
 		return new Bookmark(
-			-1, (String)data.get("uid"), (String)data.get("version_uid"),
+			id, (String)data.get("uid"), (String)data.get("version_uid"),
 			bookId, bookTitle,
 			(String)data.get("text"),
-			getDate(data, "creation_timestamp"),
-			getDate(data, "modification_timestamp"),
-			getDate(data, "access_timestamp"),
+			(String)data.get("original_text"),
+			(Long)data.get("creation_timestamp"),
+			(Long)data.get("modification_timestamp"),
+			(Long)data.get("access_timestamp"),
 			(String)data.get("model_id"),
 			getInt(data, "para_start"), getInt(data, "elmt_start"), getInt(data, "char_start"),
 			getInt(data, "para_end"), getInt(data, "elmt_end"), getInt(data, "char_end"),
@@ -401,12 +466,12 @@ class BookmarkSyncUtil {
 		);
 	}
 
-	private static Bookmark bookmarkFromData(Map<String,Object> data, BooksByHash booksByHash) {
+	private static Bookmark newBookmarkFromData(Map<String,Object> data, BooksByHash booksByHash) {
 		final Book book = booksByHash.getBook((String)data.get("book_hash"));
 		if (book == null) {
 			return null;
 		}
-		return bookmarkFromData(data, book.getId(), book.getTitle());
+		return bookmarkFromData(-1, data, book.getId(), book.getTitle());
 	}
 
 	private static Bookmark bookmarkToUpdate(Map<String,Object> data, Map<String,Bookmark> bookmarksMap) {
@@ -414,6 +479,6 @@ class BookmarkSyncUtil {
 		if (oldBookmark == null) {
 			return null;
 		}
-		return bookmarkFromData(data, oldBookmark.BookId, oldBookmark.BookTitle);
+		return bookmarkFromData(oldBookmark.getId(), data, oldBookmark.BookId, oldBookmark.BookTitle);
 	}
 }

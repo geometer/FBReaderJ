@@ -247,14 +247,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Tato kniha"/>
 		<node name="allBooks" value="Všechny knihy"/>
-		<node name="found" value="Nalezené"/>
 		<node name="new" value="Nová záložka"/>
-		<node name="open" value="Otevřít"/>
-		<node name="edit" value="Upravit záložku"/>
-		<node name="delete" value="Odstranit záložku"/>
-		<node name="menu">
-			<node name="search" value="Hledat"/>
-		</node>
+		<node name="openBook" value="Otevřít"/>
+		<node name="editBookmark" value="Upravit záložku"/>
+		<node name="deleteBookmark" value="Odstranit záložku"/>
+		<node name="search" value="Hledat"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text"/>
@@ -265,7 +262,7 @@
 		<node name="editStyle" value="Upravit styl…"/>
 	</node>
 	<node name="footnoteToast">
-		<node name="more" value="More" toBeTranslated="true"/>
+		<node name="more" value="Více"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Otevřít knihovnu"/>
@@ -424,11 +421,19 @@
 				<node name="summaryOn" value="Zobrazit text ve dvou sloupcích, pokud je zařízení drženo vodorovně"/>
 				<node name="summaryOff" value="Vždy zobrazovat text v jednom sloupci"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
-				<node name="never" value="Never" toBeTranslated="true"/>
-				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
-				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
-				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			<node name="showFootnoteToast" value="Zobrazit propojený text v překryvném okně">
+				<node name="never" value="Nikdy"/>
+				<node name="footnotesOnly" value="Pouze pro poznámky pod čarou"/>
+				<node name="footnotesAndSuperscripts" value="Pro poznámky pod čarou a odkazy horních indexů"/>
+				<node name="allInternalLinks" value="Pro všechny vnitřní odkazy"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu displeje">
 				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje displeje"/>
@@ -725,8 +730,8 @@
 			<node name="summary" value="Jak posouvat text"/>
 			<node name="fingerScrolling" value="Posouvání dotykem displeje">
 				<node name="byTap" value="Posouvat stránky klepnutím prstem"/>
-				<node name="byFlick" value="Posouvat stránky rychlým pohybem prstem"/>
-				<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstem"/>
+				<node name="byFlick" value="Posouvat stránky rychlým pohybem prstu"/>
+				<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstu"/>
 			</node>
 			<node name="enableDoubleTapDetection" value="Rozpoznání poklepání">
 				<node name="summaryOn" value="Poklepání spustí navigaci nebo menu"/>
@@ -773,10 +778,10 @@
 			<node name="targetLanguage" value="Přeložit do">
 				<node name="any" value="všechny jazyky"/>
 			</node>
-			<node name="tappingAction" value="Dlouhé klepnutí">
+			<node name="longTapAction" value="Dlouhé klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
-				<node name="startSelecting" value="Dlouhé klepnutí spustí vybírání"/>
+				<node name="initSelection" value="Dlouhé klepnutí spustí vybírání"/>
 				<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigovat přes všechna slova">
@@ -787,7 +792,7 @@
 		<node name="images" value="Obrázky">
 			<node name="summary" value="Možnosti zobrazení obrázku"/>
 			<node name="backgroundColor" value="Barva pozadí pro zobrazení obrázku"/>
-			<node name="tappingAction" value="Akce dlouhého klepnutí">
+			<node name="longTapAction" value="Akce dlouhého klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
 				<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
@@ -886,7 +891,7 @@
 			<node name="topup" value="Doplnit účet"/>
 			<node name="pay" value="Zaplatit"/>
 			<node name="refresh" value="Aktualizovat"/>
-			<node name="authorise" value="Authorisovat"/>
+			<node name="authorise" value="Autorizovat"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
 			<node name="sendReport" value="Odeslat zprávu"/>
 			<node name="addToFavorites" value="Přidat do oblíbených"/>
@@ -961,7 +966,7 @@
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
-			<node name="purchaseNotEnoughMoney" value="Nemáte dost poněz"/>
+			<node name="purchaseNotEnoughMoney" value="Nemáte dost peněz"/>
 			<node name="purchaseMissingBook" value="Chybějící kniha"/>
 			<node name="purchaseAlreadyPurchased" value="Již zakoupena"/>
 			<node name="bookNotPurchased" value="Kniha nebyla zakoupena"/>

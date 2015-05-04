@@ -31,12 +31,12 @@ import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.text.util.AutoTextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.util.AutoTextSnippet;
 
 import org.geometerplus.android.fbreader.network.*;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
@@ -114,7 +114,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 							}));
 						}
 						toast.setText(snippet.getText());
-						toast.setDuration(SuperToast.Duration.EXTRA_LONG);
+						toast.setDuration(Reader.MiscOptions.FootnoteToastDuration.getValue().Value);
 						BaseActivity.showToast(toast);
 					} else {
 						Reader.tryOpenFootnote(hyperlink.Id);

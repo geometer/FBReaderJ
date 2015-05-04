@@ -105,8 +105,8 @@ public abstract class BooksDatabase {
 
 	protected Bookmark createBookmark(
 		long id, String uid, String versionUid,
-		long bookId, String bookTitle, String text,
-		Date creationDate, Date modificationDate, Date accessDate,
+		long bookId, String bookTitle, String text, String originalText,
+		long creationTimestamp, Long modificationTimestamp, Long accessTimestamp,
 		String modelId,
 		int start_paragraphIndex, int start_wordIndex, int start_charIndex,
 		int end_paragraphIndex, int end_wordIndex, int end_charIndex,
@@ -115,8 +115,8 @@ public abstract class BooksDatabase {
 	) {
 		return new Bookmark(
 			id, uid, versionUid,
-			bookId, bookTitle, text,
-			creationDate, modificationDate, accessDate,
+			bookId, bookTitle, text, originalText,
+			creationTimestamp, modificationTimestamp, accessTimestamp,
 			modelId,
 			start_paragraphIndex, start_wordIndex, start_charIndex,
 			end_paragraphIndex, end_wordIndex, end_charIndex,
@@ -131,9 +131,9 @@ public abstract class BooksDatabase {
 	protected abstract List<String> deletedBookmarkUids();
 	protected abstract void purgeBookmarks(List<String> uids);
 
-	protected HighlightingStyle createStyle(int id, String name, int bgColor, int fgColor) {
+	protected HighlightingStyle createStyle(int id, long timestamp, String name, int bgColor, int fgColor) {
 		return new HighlightingStyle(
-			id, name,
+			id, timestamp, name,
 			bgColor != -1 ? new ZLColor(bgColor) : null,
 			fgColor != -1 ? new ZLColor(fgColor) : null
 		);

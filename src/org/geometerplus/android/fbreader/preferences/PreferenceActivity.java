@@ -266,6 +266,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			appearanceScreen.Resource.getResource("twoColumnView")
 		));
 		appearanceScreen.addOption(miscOptions.ShowFootnoteToast, "showFootnoteToast");
+		appearanceScreen.addOption(miscOptions.FootnoteToastDuration, "footnoteToastDuration");
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			miscOptions.AllowScreenBrightnessAdjustment,
@@ -698,7 +699,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					miscOptions.NavigateAllWords,
 					dictionaryScreen.Resource.getResource("navigateOverAllWords")
 				));
-				dictionaryScreen.addOption(miscOptions.WordTappingAction, "tappingAction");
+				dictionaryScreen.addOption(miscOptions.WordTappingAction, "longTapAction");
 				dictionaryScreen.addPreference(targetLanguagePreference);
 				targetLanguagePreference.setEnabled(
 					DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
@@ -707,7 +708,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		});
 
 		final Screen imagesScreen = createPreferenceScreen("images");
-		imagesScreen.addOption(imageOptions.TapAction, "tappingAction");
+		imagesScreen.addOption(imageOptions.TapAction, "longTapAction");
 		imagesScreen.addOption(imageOptions.FitToScreen, "fitImagesToScreen");
 		imagesScreen.addOption(imageOptions.ImageViewBackground, "backgroundColor");
 		imagesScreen.addOption(imageOptions.MatchBackground, "matchBackground");

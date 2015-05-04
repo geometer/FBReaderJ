@@ -244,14 +244,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Aquest llibre"/>
 		<node name="allBooks" value="Tots els llibres"/>
-		<node name="found" value="Trobats"/>
 		<node name="new" value="Nou punt de llibre"/>
-		<node name="open" value="Obre"/>
-		<node name="edit" value="Edita punt de llibre"/>
-		<node name="delete" value="Esborra punt de llibre"/>
-		<node name="menu">
-			<node name="search" value="Cerca"/>
-		</node>
+		<node name="openBook" value="Obre"/>
+		<node name="editBookmark" value="Edita punt de llibre"/>
+		<node name="deleteBookmark" value="Esborra punt de llibre"/>
+		<node name="search" value="Cerca"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -421,11 +418,19 @@
 				<node name="summaryOn" value="Mostra el text en dues columnes quan el dispositiu estigui en mode horitzontal"/>
 				<node name="summaryOff" value="Mostra sempre el text en una columna"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Canviar la lluminositat de la pantalla">
 				<node name="summaryOn" value="En arrossegar el dit verticalment a la vora esquerra de la pantalla"/>
@@ -770,10 +775,10 @@
 			<node name="targetLanguage" value="Traduir a">
 				<node name="any" value="tots els idiomes"/>
 			</node>
-			<node name="tappingAction" value="Acció de toc llarg">
+			<node name="longTapAction" value="Acció de toc llarg">
 				<node name="doNothing" value="El toc llarg no fa res"/>
 				<node name="selectSingleWord" value="El toc llarg selecciona una paraula"/>
-				<node name="startSelecting" value="El toc llarg inicia la selecció"/>
+				<node name="initSelection" value="El toc llarg inicia la selecció"/>
 				<node name="openDictionary" value="El toc llarg selecciona una paraula, en deixar anar obre el diccionari"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar per totes les paraules">
@@ -784,7 +789,7 @@
 		<node name="images" value="Imatges">
 			<node name="summary" value="Opcions de visualització d'imatges"/>
 			<node name="backgroundColor" value="Color de fons per a vista d'imatge"/>
-			<node name="tappingAction" value="Acció de toc llarg">
+			<node name="longTapAction" value="Acció de toc llarg">
 				<node name="doNothing" value="El toc llarg no fa res"/>
 				<node name="selectImage" value="El toc llarg selecciona la imatge"/>
 				<node name="openImageView" value="El toc llarg obre la vista de la imatge"/>

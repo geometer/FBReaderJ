@@ -27,6 +27,8 @@ import android.view.*;
 import android.widget.*;
 import android.content.*;
 
+import yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView;
+
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -41,13 +43,19 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.*;
 
-public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
+public class BookmarksActivity extends Activity implements IBookCollection.Listener {
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
 
+	private TabHost myTabHost;
+
+	private final Map<Integer,HighlightingStyle> myStyles =
+		Collections.synchronizedMap(new HashMap<Integer,HighlightingStyle>());
+
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile Book myBook;
+	private volatile Bookmark myBookmark;
 
 	private final Comparator<Bookmark> myComparator = new Bookmark.ByTimeComparator();
 
@@ -59,11 +67,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private final ZLStringOption myBookmarkSearchPatternOption =
 		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
-	private ListView createTab(String tag, int id) {
-		final TabHost host = getTabHost();
+	private void createTab(String tag, int id) {
 		final String label = myResource.getResource(tag).getValue();
-		host.addTab(host.newTabSpec(tag).setIndicator(label).setContent(id));
-		return (ListView)findViewById(id);
+		myTabHost.addTab(myTabHost.newTabSpec(tag).setIndicator(label).setContent(id));
 	}
 
 	@Override
@@ -71,56 +77,39 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		super.onCreate(bundle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		setContentView(R.layout.bookmarks);
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 		manager.setOnCancelListener(null);
 
-		final TabHost host = getTabHost();
-		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
+        myTabHost = (TabHost)findViewById(R.id.bookmarks_tabhost);
+		myTabHost.setup();
+
+		createTab("thisBook", R.id.bookmarks_this_book);
+		createTab("allBooks", R.id.bookmarks_all_books);
+		createTab("search", R.id.bookmarks_search);
+
+		myTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+			public void onTabChanged(String tabId) {
+				if ("search".equals(tabId)) {
+					findViewById(R.id.bookmarks_search_results).setVisibility(View.GONE);
+					onSearchRequested();
+				}
+			}
+		});
 
 		myBook = FBReaderIntents.getBookExtra(getIntent());
-	}
-
-	private class Initializer implements Runnable {
-		public void run() {
-			if (myBook != null) {
-				for (BookmarkQuery query = new BookmarkQuery(myBook, 20); ; query = query.next()) {
-					final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
-					if (thisBookBookmarks.isEmpty()) {
-						break;
-					}
-					myThisBookAdapter.addAll(thisBookBookmarks);
-					myAllBooksAdapter.addAll(thisBookBookmarks);
-				}
-			}
-			for (BookmarkQuery query = new BookmarkQuery(20); ; query = query.next()) {
-				final List<Bookmark> allBookmarks = myCollection.bookmarks(query);
-				if (allBookmarks.isEmpty()) {
-					break;
-				}
-				myAllBooksAdapter.addAll(allBookmarks);
-			}
-			runOnUiThread(new Runnable() {
-				public void run() {
-					setProgressBarIndeterminateVisibility(false);
-				}
-			});
+		if (myBook == null) {
+			finish();
 		}
+		myBookmark = FBReaderIntents.getBookmarkExtra(getIntent());
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-
-		runOnUiThread(new Runnable() {
-			public void run() {
-				setProgressBarIndeterminateVisibility(true);
-			}
-		});
 
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
@@ -128,23 +117,102 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 					return;
 				}
 
-				if (myBook != null) {
-					myThisBookAdapter = new BookmarksAdapter(
-						createTab("thisBook", R.id.this_book), true
-					);
-				} else {
-					findViewById(R.id.this_book).setVisibility(View.GONE);
-				}
-				myAllBooksAdapter = new BookmarksAdapter(
-					createTab("allBooks", R.id.all_books), false
-				);
-				findViewById(R.id.search_results).setVisibility(View.GONE);
+				myThisBookAdapter =
+					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_this_book), myBookmark != null);
+				myAllBooksAdapter =
+					new BookmarksAdapter((ListView)findViewById(R.id.bookmarks_all_books), false);
+				myCollection.addListener(BookmarksActivity.this);
 
-				new Thread(new Initializer()).start();
+				updateStyles();
+				loadBookmarks();
 			}
 		});
 
 		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	private void updateStyles() {
+		synchronized (myStyles) {
+			myStyles.clear();
+			for (HighlightingStyle style : myCollection.highlightingStyles()) {
+				myStyles.put(style.Id, style);
+			}
+		}
+	}
+
+	private final Object myBookmarksLock = new Object();
+
+	private void loadBookmarks() {
+		new Thread(new Runnable() {
+			public void run() {
+				synchronized (myBookmarksLock) {
+					for (BookmarkQuery query = new BookmarkQuery(myBook, 50); ; query = query.next()) {
+						final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
+						if (thisBookBookmarks.isEmpty()) {
+							break;
+						}
+						myThisBookAdapter.addAll(thisBookBookmarks);
+						myAllBooksAdapter.addAll(thisBookBookmarks);
+					}
+					for (BookmarkQuery query = new BookmarkQuery(50); ; query = query.next()) {
+						final List<Bookmark> allBookmarks = myCollection.bookmarks(query);
+						if (allBookmarks.isEmpty()) {
+							break;
+						}
+						myAllBooksAdapter.addAll(allBookmarks);
+					}
+				}
+			}
+		}).start();
+	}
+
+	private void updateBookmarks(final Book book) {
+		new Thread(new Runnable() {
+			public void run() {
+				synchronized (myBookmarksLock) {
+					final boolean flagThisBookTab = book.getId() == myBook.getId();
+					final boolean flagSearchTab = mySearchResultsAdapter != null;
+
+					final Map<String,Bookmark> oldBookmarks = new HashMap<String,Bookmark>();
+					if (flagThisBookTab) {
+						for (Bookmark b : myThisBookAdapter.bookmarks()) {
+							oldBookmarks.put(b.Uid, b);
+						}
+					} else {
+						for (Bookmark b : myAllBooksAdapter.bookmarks()) {
+							if (b.BookId == book.getId()) {
+								oldBookmarks.put(b.Uid, b);
+							}
+						}
+					}
+					final String pattern = myBookmarkSearchPatternOption.getValue().toLowerCase();
+
+					for (BookmarkQuery query = new BookmarkQuery(book, 50); ; query = query.next()) {
+						final List<Bookmark> loaded = myCollection.bookmarks(query);
+						if (loaded.isEmpty()) {
+							break;
+						}
+						for (Bookmark b : loaded) {
+							final Bookmark old = oldBookmarks.remove(b.Uid);
+							myAllBooksAdapter.replace(old, b);
+							if (flagThisBookTab) {
+								myThisBookAdapter.replace(old, b);
+							}
+							if (flagSearchTab && MiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
+								mySearchResultsAdapter.replace(old, b);
+							}
+						}
+					}
+					myAllBooksAdapter.removeAll(oldBookmarks.values());
+					if (flagThisBookTab) {
+						myThisBookAdapter.removeAll(oldBookmarks.values());
+					}
+					if (flagSearchTab) {
+						mySearchResultsAdapter.removeAll(oldBookmarks.values());
+					}
+				}
+			}
+		}).start();
 	}
 
 	@Override
@@ -165,7 +233,14 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			}
 		}
 		if (!bookmarks.isEmpty()) {
-			showSearchResultsTab(bookmarks);
+			final ListView resultsView = (ListView)findViewById(R.id.bookmarks_search_results);
+			resultsView.setVisibility(View.VISIBLE);
+			if (mySearchResultsAdapter == null) {
+				mySearchResultsAdapter = new BookmarksAdapter(resultsView, false);
+			} else {
+				mySearchResultsAdapter.clear();
+			}
+			mySearchResultsAdapter.addAll(bookmarks);
 		} else {
 			UIUtil.showErrorMessage(this, "bookmarkNotFound");
 		}
@@ -178,18 +253,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		final MenuItem item = menu.add(
-			0, 1, Menu.NONE,
-			myResource.getResource("menu").getResource("search").getValue()
-		);
-		item.setOnMenuItemClickListener(this);
-		item.setIcon(R.drawable.ic_menu_search);
-		return true;
-	}
-
-	@Override
 	public boolean onSearchRequested() {
 		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
@@ -199,65 +262,36 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		return true;
 	}
 
-	void showSearchResultsTab(LinkedList<Bookmark> results) {
-		if (mySearchResultsAdapter == null) {
-			mySearchResultsAdapter = new BookmarksAdapter(
-				createTab("found", R.id.search_results), false
-			);
-		} else {
-			mySearchResultsAdapter.clear();
-		}
-		mySearchResultsAdapter.addAll(results);
-		getTabHost().setCurrentTabByTag("found");
-	}
-
-	@Override
-	public boolean onMenuItemClick(MenuItem item) {
-		switch (item.getItemId()) {
-			case 1:
-				return onSearchRequested();
-			default:
-				return true;
-		}
-	}
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final ListView view = (ListView)getTabHost().getCurrentView();
-		final Bookmark bookmark = ((BookmarksAdapter)view.getAdapter()).getItem(position);
+		final String tag = myTabHost.getCurrentTabTag();
+		final BookmarksAdapter adapter;
+		if ("thisBook".equals(tag)) {
+			adapter = myThisBookAdapter;
+		} else if ("allBooks".equals(tag)) {
+			adapter = myAllBooksAdapter;
+		} else if ("search".equals(tag)) {
+			adapter = mySearchResultsAdapter;
+		} else {
+			throw new RuntimeException("Unknown tab tag: " + tag);
+		}
+
+		final Bookmark bookmark = adapter.getItem(position);
 		switch (item.getItemId()) {
 			case OPEN_ITEM_ID:
 				gotoBookmark(bookmark);
 				return true;
 			case EDIT_ITEM_ID:
 				final Intent intent = new Intent(this, EditBookmarkActivity.class);
-				OrientationUtil.startActivityForResult(this, intent, 1);
-				// TODO: implement
+				FBReaderIntents.putBookmarkExtra(intent, bookmark);
+				OrientationUtil.startActivity(this, intent);
 				return true;
 			case DELETE_ITEM_ID:
 				myCollection.deleteBookmark(bookmark);
-				if (myThisBookAdapter != null) {
-					myThisBookAdapter.remove(bookmark);
-				}
-				if (myAllBooksAdapter != null) {
-					myAllBooksAdapter.remove(bookmark);
-				}
-				if (mySearchResultsAdapter != null) {
-					mySearchResultsAdapter.remove(bookmark);
-				}
 				return true;
 		}
 		return super.onContextItemSelected(item);
-	}
-
-	private void addBookmark() {
-		final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(getIntent());
-		if (bookmark != null) {
-			myCollection.saveBookmark(bookmark);
-			myThisBookAdapter.add(bookmark);
-			myAllBooksAdapter.add(bookmark);
-		}
 	}
 
 	private void gotoBookmark(Bookmark bookmark) {
@@ -272,9 +306,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
-		private final List<Bookmark> myBookmarks =
+		private final List<Bookmark> myBookmarksList =
 			Collections.synchronizedList(new LinkedList<Bookmark>());
-		private final boolean myShowAddBookmarkItem;
+		private volatile boolean myShowAddBookmarkItem;
 
 		BookmarksAdapter(ListView listView, boolean showAddBookmarkItem) {
 			myShowAddBookmarkItem = showAddBookmarkItem;
@@ -284,17 +318,17 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		}
 
 		public List<Bookmark> bookmarks() {
-			return Collections.unmodifiableList(myBookmarks);
+			return Collections.unmodifiableList(myBookmarksList);
 		}
 
 		public void addAll(final List<Bookmark> bookmarks) {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					synchronized (myBookmarks) {
+					synchronized (myBookmarksList) {
 						for (Bookmark b : bookmarks) {
-							final int position = Collections.binarySearch(myBookmarks, b, myComparator);
+							final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
 							if (position < 0) {
-								myBookmarks.add(- position - 1, b);
+								myBookmarksList.add(- position - 1, b);
 							}
 						}
 					}
@@ -303,13 +337,26 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			});
 		}
 
-		public void add(final Bookmark b) {
+		private boolean areEqualsForView(Bookmark b0, Bookmark b1) {
+			return
+				b0.getStyleId() == b1.getStyleId() &&
+				b0.getText().equals(b1.getText()) &&
+				b0.getTimestamp(Bookmark.DateType.Latest).equals(b1.getTimestamp(Bookmark.DateType.Latest));
+		}
+
+		public void replace(final Bookmark old, final Bookmark b) {
+			if (old != null && areEqualsForView(old, b)) {
+				return;
+			}
 			runOnUiThread(new Runnable() {
 				public void run() {
-					synchronized (myBookmarks) {
-						final int position = Collections.binarySearch(myBookmarks, b, myComparator);
+					synchronized (myBookmarksList) {
+						if (old != null) {
+							myBookmarksList.remove(old);
+						}
+						final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
 						if (position < 0) {
-							myBookmarks.add(- position - 1, b);
+							myBookmarksList.add(- position - 1, b);
 						}
 					}
 					notifyDataSetChanged();
@@ -317,10 +364,13 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			});
 		}
 
-		public void remove(final Bookmark b) {
+		public void removeAll(final Collection<Bookmark> bookmarks) {
+			if (bookmarks.isEmpty()) {
+				return;
+			}
 			runOnUiThread(new Runnable() {
 				public void run() {
-					myBookmarks.remove(b);
+					myBookmarksList.removeAll(bookmarks);
 					notifyDataSetChanged();
 				}
 			});
@@ -329,7 +379,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		public void clear() {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					myBookmarks.clear();
+					myBookmarksList.clear();
 					notifyDataSetChanged();
 				}
 			});
@@ -338,10 +388,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			if (getItem(position) != null) {
-				menu.setHeaderTitle(getItem(position).getText());
-				menu.add(0, OPEN_ITEM_ID, 0, myResource.getResource("open").getValue());
-				//menu.add(0, EDIT_ITEM_ID, 0, myResource.getResource("edit").getValue());
-				menu.add(0, DELETE_ITEM_ID, 0, myResource.getResource("delete").getValue());
+				menu.add(0, OPEN_ITEM_ID, 0, myResource.getResource("openBook").getValue());
+				menu.add(0, EDIT_ITEM_ID, 0, myResource.getResource("editBookmark").getValue());
+				menu.add(0, DELETE_ITEM_ID, 0, myResource.getResource("deleteBookmark").getValue());
 			}
 		}
 
@@ -350,6 +399,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item, parent, false);
 			final ImageView imageView = ViewUtil.findImageView(view, R.id.bookmark_item_icon);
+			final View colorContainer = ViewUtil.findView(view, R.id.bookmark_item_color_container);
+			final AmbilWarnaPrefWidgetView colorView =
+				(AmbilWarnaPrefWidgetView)ViewUtil.findView(view, R.id.bookmark_item_color);
 			final TextView textView = ViewUtil.findTextView(view, R.id.bookmark_item_text);
 			final TextView bookTitleView = ViewUtil.findTextView(view, R.id.bookmark_item_booktitle);
 
@@ -357,10 +409,13 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			if (bookmark == null) {
 				imageView.setVisibility(View.VISIBLE);
 				imageView.setImageResource(R.drawable.ic_list_plus);
+				colorContainer.setVisibility(View.GONE);
 				textView.setText(myResource.getResource("new").getValue());
 				bookTitleView.setVisibility(View.GONE);
 			} else {
 				imageView.setVisibility(View.GONE);
+				colorContainer.setVisibility(View.VISIBLE);
+				BookmarksUtil.setupColorView(colorView, myStyles.get(bookmark.getStyleId()));
 				textView.setText(bookmark.getText());
 				if (myShowAddBookmarkItem) {
 					bookTitleView.setVisibility(View.GONE);
@@ -384,7 +439,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		@Override
 		public final long getItemId(int position) {
-			return position;
+			final Bookmark item = getItem(position);
+			return item != null ? item.getId() : -1;
 		}
 
 		@Override
@@ -392,21 +448,49 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			if (myShowAddBookmarkItem) {
 				--position;
 			}
-			return (position >= 0) ? myBookmarks.get(position) : null;
+			return position >= 0 ? myBookmarksList.get(position) : null;
 		}
 
 		@Override
 		public final int getCount() {
-			return myShowAddBookmarkItem ? myBookmarks.size() + 1 : myBookmarks.size();
+			return myShowAddBookmarkItem ? myBookmarksList.size() + 1 : myBookmarksList.size();
 		}
 
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Bookmark bookmark = getItem(position);
 			if (bookmark != null) {
 				gotoBookmark(bookmark);
-			} else {
-				addBookmark();
+			} else if (myShowAddBookmarkItem) {
+				myShowAddBookmarkItem = false;
+				myCollection.saveBookmark(myBookmark);
 			}
 		}
+	}
+
+	// method from IBookCollection.Listener
+	public void onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			default:
+				break;
+			case BookmarkStyleChanged:
+				runOnUiThread(new Runnable() {
+					public void run() {
+						updateStyles();
+						myAllBooksAdapter.notifyDataSetChanged();
+						myThisBookAdapter.notifyDataSetChanged();
+						if (mySearchResultsAdapter != null) {
+							mySearchResultsAdapter.notifyDataSetChanged();
+						}
+					}
+				});
+				break;
+			case BookmarksUpdated:
+				updateBookmarks(book);
+				break;
+		}
+	}
+
+	// method from IBookCollection.Listener
+	public void onBuildEvent(IBookCollection.Status status) {
 	}
 }

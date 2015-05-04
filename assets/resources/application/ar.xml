@@ -236,14 +236,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="هذا الكتاب"/>
 		<node name="allBooks" value="كل الكتب"/>
-		<node name="found" value="Found"/>
 		<node name="new" value="علامة مرجعية جديدة"/>
-		<node name="open" value="فتح"/>
-		<node name="edit" value="تعديل العلامة المرجعية"/>
-		<node name="delete" value="حذف العلامة المرجعية"/>
-		<node name="menu">
-			<node name="search" value="بحث"/>
-		</node>
+		<node name="openBook" value="فتح"/>
+		<node name="editBookmark" value="تعديل العلامة المرجعية"/>
+		<node name="deleteBookmark" value="حذف العلامة المرجعية"/>
+		<node name="search" value="بحث"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -413,11 +410,19 @@
 				<node name="summaryOn" value="عرض النص في خانتين عندما يكون وضع الجهاز أفقي"/>
 				<node name="summaryOff" value="عرض النص دائما في خانة واحدة"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="تغيير شدة إضاءة الشاشة">
 				<node name="summaryOn" value="عند تحريك الأصبع فوق/أعلى على الجانب الأيسر للشاشة"/>
@@ -762,11 +767,11 @@
 			<node name="targetLanguage" value="ترجمة الى">
 				<node name="any" value="كل اللغات"/>
 			</node>
-			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-				<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
-				<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
-				<node name="openDictionary" value="Long tapping selects single word, release opens dictionary" toBeTranslated="true"/>
+			<node name="longTapAction" value="Long tap action" toBeTranslated="true">
+				<node name="doNothing" value="Long tap does nothing" toBeTranslated="true"/>
+				<node name="selectSingleWord" value="Long tap selects single word" toBeTranslated="true"/>
+				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
+				<node name="openDictionary" value="Long tap selects single word, release opens dictionary" toBeTranslated="true"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
 				<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
@@ -776,7 +781,7 @@
 		<node name="images" value="الصور">
 			<node name="summary" value="خيارات عرض الصور"/>
 			<node name="backgroundColor" value="خلفية الصور المعروضة"/>
-			<node name="tappingAction" value="الضغط المستمر على الصور">
+			<node name="longTapAction" value="الضغط المستمر على الصور">
 				<node name="doNothing" value="الضغط المستمر لا يفعل شيئا"/>
 				<node name="selectImage" value="الضغط المستمر يختار الصورة"/>
 				<node name="openImageView" value="الضغط المستمر يفتح عارض الصور"/>

@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="This book"/>
 		<node name="allBooks" value="All books"/>
-		<node name="found" value="Found"/>
 		<node name="new" value="New bookmark"/>
-		<node name="open" value="Open"/>
-		<node name="edit" value="Edit bookmark"/>
-		<node name="delete" value="Delete bookmark"/>
-		<node name="menu">
-			<node name="search" value="Search"/>
-		</node>
+		<node name="openBook" value="Open"/>
+		<node name="editBookmark" value="Edit bookmark"/>
+		<node name="deleteBookmark" value="Delete bookmark"/>
+		<node name="search" value="Search"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text"/>
@@ -415,11 +412,19 @@
 				<node name="summaryOn" value="Display text in two columns when device is held horizontally"/>
 				<node name="summaryOff" value="Always display text in one column"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window">
+			<node name="showFootnoteToast" value="Show linked text in a popup">
 				<node name="never" value="Never"/>
 				<node name="footnotesOnly" value="For footnotes only"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links"/>
 				<node name="allInternalLinks" value="For all internal links"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup">
+				<node name="duration1" value="1 second"/>
+				<node name="duration3" value="3 seconds"/>
+				<node name="duration5" value="5 seconds"/>
+				<node name="duration10" value="10 seconds"/>
+				<node name="duration20" value="20 seconds"/>
+				<node name="duration300" value="5 minutes"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
 				<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
@@ -764,11 +769,11 @@
 			<node name="targetLanguage" value="Translate to">
 				<node name="any" value="all languages"/>
 			</node>
-			<node name="tappingAction" value="Long tapping action">
-				<node name="doNothing" value="Long tapping does nothing"/>
-				<node name="selectSingleWord" value="Long tapping selects single word"/>
-				<node name="startSelecting" value="Long tapping initiates selecting"/>
-				<node name="openDictionary" value="Long tapping selects single word, release opens dictionary"/>
+			<node name="longTapAction" value="Long tap action">
+				<node name="doNothing" value="Long tap does nothing"/>
+				<node name="selectSingleWord" value="Long tap selects single word"/>
+				<node name="initSelection" value="Long tap initiates selection"/>
+				<node name="openDictionary" value="Long tap selects single word, release opens dictionary"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigate over all words">
 				<node name="summaryOn" value="Key navigation visits all words"/>
@@ -778,10 +783,10 @@
 		<node name="images" value="Images">
 			<node name="summary" value="Image displaying options"/>
 			<node name="backgroundColor" value="Background colour for image view"/>
-			<node name="tappingAction" value="Long tapping action">
-				<node name="doNothing" value="Long tapping does nothing"/>
-				<node name="selectImage" value="Long tapping selects the image"/>
-				<node name="openImageView" value="Long tapping opens image view"/>
+			<node name="longTapAction" value="Long tap action">
+				<node name="doNothing" value="Long tap does nothing"/>
+				<node name="selectImage" value="Long tap selects the image"/>
+				<node name="openImageView" value="Long tap opens image view"/>
 			</node>
 			<node name="fitImagesToScreen" value="Fit images to screen">
 				<node name="none" value="None"/>
@@ -1060,7 +1065,7 @@
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
 		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually"/>
-		<node name="textNotFound" value="There is no suitable text in the book, sorry"/>
+		<node name="textNotFound" value="Matching text not found"/>
 		<node name="bookNotFound" value="There are no suitable books in the library, sorry"/>
 		<node name="bookmarkNotFound" value="There are no suitable bookmarks, sorry"/>
 		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>

@@ -230,14 +230,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Aceasta carte"/>
 		<node name="allBooks" value="Toate cartile"/>
-		<node name="found" value="S-au gasit"/>
 		<node name="new" value="Marcaj nou"/>
-		<node name="open" value="Deschis"/>
-		<node name="edit" value="Editeaza marcaj"/>
-		<node name="delete" value="Sterge marcaj"/>
-		<node name="menu">
-			<node name="search" value="Cautare"/>
-		</node>
+		<node name="openBook" value="Deschis"/>
+		<node name="editBookmark" value="Editeaza marcaj"/>
+		<node name="deleteBookmark" value="Sterge marcaj"/>
+		<node name="search" value="Cautare"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -407,11 +404,19 @@
 				<node name="summaryOn" value="Afiseaza pe doua coloane doar cand dispozitivul este pe orizontala"/>
 				<node name="summaryOff" value="Afiseaza intotdeauna pe o coloana"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Reglarea luminozitatii ecranului">
 				<node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul partii stângi a ecranului"/>
@@ -756,10 +761,10 @@
 			<node name="targetLanguage" value="Tradu in">
 				<node name="any" value="toate limbile"/>
 			</node>
-			<node name="tappingAction" value="Atingere lunga pentru actiune">
+			<node name="longTapAction" value="Atingere lunga pentru actiune">
 				<node name="doNothing" value="Apasând lung nu face nimic"/>
 				<node name="selectSingleWord" value="Apasând lung selecteaza un singur cuvânt"/>
-				<node name="startSelecting" value="Apasând lung initiaza selectarea"/>
+				<node name="initSelection" value="Apasând lung initiaza selectarea"/>
 				<node name="openDictionary" value="Apasând lung selecteaza un singur cuvânt, la ridicarea degetului se deschide dictionarul"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigati peste toate cuvintele">
@@ -770,7 +775,7 @@
 		<node name="images" value="Imagini">
 			<node name="summary" value="Setari afisare imagine"/>
 			<node name="backgroundColor" value="Culoare de fundal pentru a vizualizare imagini"/>
-			<node name="tappingAction" value="Actiune la apasare lunga">
+			<node name="longTapAction" value="Actiune la apasare lunga">
 				<node name="doNothing" value="Apasând lung nu face nimic"/>
 				<node name="selectImage" value="Apasând lung selecteaza imaginea"/>
 				<node name="openImageView" value="Apasând lung se vizualizeaza imaginea"/>

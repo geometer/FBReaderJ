@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Гэтая кніга"/>
 		<node name="allBooks" value="Усе кнігі"/>
-		<node name="found" value="Знойдзена"/>
 		<node name="new" value="Новая закладка"/>
-		<node name="open" value="Адчыніць"/>
-		<node name="edit" value="Рэдагаваць закладку"/>
-		<node name="delete" value="Выдаліць закладку"/>
-		<node name="menu">
-			<node name="search" value="Пошук"/>
-		</node>
+		<node name="openBook" value="Адчыніць"/>
+		<node name="editBookmark" value="Рэдагаваць закладку"/>
+		<node name="deleteBookmark" value="Выдаліць закладку"/>
+		<node name="search" value="Пошук"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -415,11 +412,19 @@
 				<node name="summaryOn" value="Паказваць тэкст двума слупкамі, калі прылада ў гарызантальным стане"/>
 				<node name="summaryOff" value="Заўсёды паказваць тэкст адным слупком"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Рэгуляваньне яркасьці экрану">
 				<node name="summaryOn" value="Перасоўваньнем пальца ўверх-уніз па левым баку экрану"/>
@@ -764,10 +769,10 @@
 			<node name="targetLanguage" value="Перакласьці на">
 				<node name="any" value="усе мовы"/>
 			</node>
-			<node name="tappingAction" value="Дзеяньне доўгага дотыку">
+			<node name="longTapAction" value="Дзеяньне доўгага дотыку">
 				<node name="doNothing" value="Доўгі дотык нічога ня робіць"/>
 				<node name="selectSingleWord" value="Доўгі дотык вылучае адно слова"/>
-				<node name="startSelecting" value="Доўгі дотык пачынае вылучэньне"/>
+				<node name="initSelection" value="Доўгі дотык пачынае вылучэньне"/>
 				<node name="openDictionary" value="Доўгі дотык вылучае адно слова, адпусканьне адчыняе слоўнік"/>
 			</node>
 			<node name="navigateOverAllWords" value="Ісьці па ўсіх словах">
@@ -778,7 +783,7 @@
 		<node name="images" value="Выявы">
 			<node name="summary" value="Налады адлюстраваньня выяваў"/>
 			<node name="backgroundColor" value="Колер фону для прагляду выявы"/>
-			<node name="tappingAction" value="Дзеяньне доўгага дотыку">
+			<node name="longTapAction" value="Дзеяньне доўгага дотыку">
 				<node name="doNothing" value="Доўгі дотык нічога ня робіць"/>
 				<node name="selectImage" value="Доўгі дотык вылучае выяву"/>
 				<node name="openImageView" value="Доўгі дотык адчыняе прагляд выявы"/>

@@ -237,14 +237,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Denne bog"/>
 		<node name="allBooks" value="Alle bøger"/>
-		<node name="found" value="Fundet"/>
 		<node name="new" value="Nyt bogmærke"/>
-		<node name="open" value="Åbn"/>
-		<node name="edit" value="Rediger bogmærke"/>
-		<node name="delete" value="Slet Bogmærke"/>
-		<node name="menu">
-			<node name="search" value="Søg"/>
-		</node>
+		<node name="openBook" value="Åbn"/>
+		<node name="editBookmark" value="Rediger bogmærke"/>
+		<node name="deleteBookmark" value="Slet Bogmærke"/>
+		<node name="search" value="Søg"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -414,11 +411,19 @@
 				<node name="summaryOn" value="Vis tekst i to kolonner, når enheden holdes vandret"/>
 				<node name="summaryOff" value="Vis altid tekst i en kolonne"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Justering af skærmens lysstyrke">
 				<node name="summaryOn" value="Ved at trække fingeren op/ned langs venstre side af skærmen"/>
@@ -763,10 +768,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Handling for langt tryk">
+			<node name="longTapAction" value="Handling for langt tryk">
 				<node name="doNothing" value="Langt tast har ingen virkning"/>
 				<node name="selectSingleWord" value="Et langt tryk vælger et enkelt ord"/>
-				<node name="startSelecting" value="Et langt tryk starter valg"/>
+				<node name="initSelection" value="Et langt tryk starter valg"/>
 				<node name="openDictionary" value="Et langt tryk vælger et enkelt ord, slip åbner ordbogen"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigere over alle ord">
@@ -777,7 +782,7 @@
 		<node name="images" value="Billeder">
 			<node name="summary" value="Billedvisningsindstillinger"/>
 			<node name="backgroundColor" value="Baggrundsfarve for billedvisning"/>
-			<node name="tappingAction" value="Handling for langt tryk">
+			<node name="longTapAction" value="Handling for langt tryk">
 				<node name="doNothing" value="Langt tast har ingen virkning"/>
 				<node name="selectImage" value="Et langt tryk vælger billedet"/>
 				<node name="openImageView" value="Et langt tryk åbner billedvisning"/>

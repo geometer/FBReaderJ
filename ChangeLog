@@ -1,8 +1,31 @@
-===== 2.4 (Apr ??, 2015) =====
+===== 2.5 (May ??, 2015) =====
 * (planned) Tablet-oriented preferences dialog
 * (planned) Sync: single book upload
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
+
+===== 2.4.6 (May ??, 2015) =====
+* New icons in selection & search menus
+* Footnote toast duration setting
+
+===== 2.4.5 (May 01, 2015) =====
+* Fixed possible error in bookmarks synchronisation
+* Fixed <aside> tag behaviour: do not insert end-of-section
+
+===== 2.4.3,2.4.4 (Apr 28, 2015) =====
+* Improved bookmarks list view
+* Better communication with format plugins
+* Fully updated Japanese localisation (by Tamotsu Takahashi)
+* Updated Vietnamese localisation (by Khánh Nguyễn Quốc)
+
+===== 2.4.1,2.4.2 (Apr 25, 2015) =====
+* Fixed selection slider behaviour
+* Updated Czech localisation (by Marek Pavelka)
+* Fixed possible crash on DB update
+
+===== 2.4 (Apr 25, 2015) =====
+* Updated bookmarks list view
+* Uses last style id to create new bookmarks
 
 ===== 2.4 beta 3 (Apr 22, 2015) =====
 * Fixed long-tap finger selection (word under finger is selected, not a word in the line above)

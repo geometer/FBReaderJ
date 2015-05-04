@@ -228,14 +228,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ez a könyv"/>
 		<node name="allBooks" value="Minden könyv"/>
-		<node name="found" value="Találat"/>
 		<node name="new" value="Új könyvjelző"/>
-		<node name="open" value="Megnyitás"/>
-		<node name="edit" value="Könyvjelző szerkesztése"/>
-		<node name="delete" value="Könyvelző törlése"/>
-		<node name="menu">
-			<node name="search" value="Keresés"/>
-		</node>
+		<node name="openBook" value="Megnyitás"/>
+		<node name="editBookmark" value="Könyvjelző szerkesztése"/>
+		<node name="deleteBookmark" value="Könyvelző törlése"/>
+		<node name="search" value="Keresés"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -405,11 +402,19 @@
 				<node name="summaryOn" value="A szöveg két hasábban jelenik meg, ha az eszközt vízszintesen tartják"/>
 				<node name="summaryOff" value="Megjelenítés mindig egy hasában"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Fényerő beállítása">
 				<node name="summaryOn" value="Felfelé/lefelé csúsztatás a képernyő bal oldalán"/>
@@ -754,10 +759,10 @@
 			<node name="targetLanguage" value="Fordítás:">
 				<node name="any" value="minden nyelv"/>
 			</node>
-			<node name="tappingAction" value="Hosszú érintés">
+			<node name="longTapAction" value="Hosszú érintés">
 				<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
 				<node name="selectSingleWord" value="A hosszú érintés kijelöli a szót"/>
-				<node name="startSelecting" value="A hosszú érintés elindítja a kijelölést"/>
+				<node name="initSelection" value="A hosszú érintés elindítja a kijelölést"/>
 				<node name="openDictionary" value="A hosszú érintés kijelöli a szót, a felengedés megnyitja a szótárt"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigáció szavanként">
@@ -768,7 +773,7 @@
 		<node name="images" value="Képek">
 			<node name="summary" value="Képmegjelenítési beállítások"/>
 			<node name="backgroundColor" value="Képnéző háttérszíne"/>
-			<node name="tappingAction" value="Művelet hosszú érintésre">
+			<node name="longTapAction" value="Művelet hosszú érintésre">
 				<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
 				<node name="selectImage" value="A hosszú érintés kijelöli a képet"/>
 				<node name="openImageView" value="A hosszú érintés megnyitja a képnézőt"/>

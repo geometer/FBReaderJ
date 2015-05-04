@@ -228,14 +228,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="หนังสือเล่มนี้"/>
 		<node name="allBooks" value="หนังสือทั้งหมด"/>
-		<node name="found" value="ค้นพบ"/>
 		<node name="new" value="สร้างบุ๊คมาร์คใหม่"/>
-		<node name="open" value="เปิดบุ๊คมาร์ค"/>
-		<node name="edit" value="แก้ไขบุ๊คมาร์ค"/>
-		<node name="delete" value="ลบบุ๊คมาร์ค"/>
-		<node name="menu">
-			<node name="search" value="ค้นหา"/>
-		</node>
+		<node name="openBook" value="เปิดบุ๊คมาร์ค"/>
+		<node name="editBookmark" value="แก้ไขบุ๊คมาร์ค"/>
+		<node name="deleteBookmark" value="ลบบุ๊คมาร์ค"/>
+		<node name="search" value="ค้นหา"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -405,11 +402,19 @@
 				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
 				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="การปรับความสว่างหน้าจอ">
 				<node name="summaryOn" value="ลากนิ้วขึ้นลงด้านซ้ายของหน้าจอ"/>
@@ -754,10 +759,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="การทำงานเมื่อกดค้างที่หน้าจอ">
+			<node name="longTapAction" value="การทำงานเมื่อกดค้างที่หน้าจอ">
 				<node name="doNothing" value="ไม่มีอะไรเกิดขึ้น"/>
 				<node name="selectSingleWord" value="เลือกคำเมื่อกดค้างที่หน้าจอ"/>
-				<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
+				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
 				<node name="openDictionary" value="เลือกคำเมื่อกดค้างที่หน้าจอและไปยังพจนานุกรมเมื่อปล่อย"/>
 			</node>
 			<node name="navigateOverAllWords" value="ตัวเลือกคำสามารถเลือกได้ทุกคำ">
@@ -768,10 +773,10 @@
 		<node name="images" value="Images" toBeTranslated="true">
 			<node name="summary" value="Image displaying options" toBeTranslated="true"/>
 			<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
-			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-				<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
-				<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
+			<node name="longTapAction" value="Long tap action" toBeTranslated="true">
+				<node name="doNothing" value="Long tap does nothing" toBeTranslated="true"/>
+				<node name="selectImage" value="Long tap selects the image" toBeTranslated="true"/>
+				<node name="openImageView" value="Long tap opens image view" toBeTranslated="true"/>
 			</node>
 			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
 				<node name="none" value="None" toBeTranslated="true"/>

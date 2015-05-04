@@ -243,14 +243,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Эта книга"/>
 		<node name="allBooks" value="Все книги"/>
-		<node name="found" value="Найдено"/>
 		<node name="new" value="Добавить закладку"/>
-		<node name="open" value="Открыть"/>
-		<node name="edit" value="Поправить закладку"/>
-		<node name="delete" value="Стереть закладку"/>
-		<node name="menu">
-			<node name="search" value="Поиск"/>
-		</node>
+		<node name="openBook" value="Открыть"/>
+		<node name="editBookmark" value="Поправить закладку"/>
+		<node name="deleteBookmark" value="Стереть закладку"/>
+		<node name="search" value="Поиск"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Текст"/>
@@ -425,6 +422,14 @@
 				<node name="footnotesOnly" value="Только для сносок"/>
 				<node name="footnotesAndSuperscripts" value="Для сносок и «поднятых» ссылок"/>
 				<node name="allInternalLinks" value="Для всех ссылок внутри книги"/>
+			</node>
+			<node name="footnoteToastDuration" value="Как долго показывать окошко с текстом ссылки">
+				<node name="duration1" value="1 секунду"/>
+				<node name="duration3" value="3 секунды"/>
+				<node name="duration5" value="5 секунд"/>
+				<node name="duration10" value="10 секунд"/>
+				<node name="duration20" value="20 секунд"/>
+				<node name="duration300" value="5 минут"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
 				<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
@@ -769,10 +774,10 @@
 			<node name="targetLanguage" value="Переводить на">
 				<node name="any" value="все языки"/>
 			</node>
-			<node name="tappingAction" value="Действие при долгом нажатии на экран">
+			<node name="longTapAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Ничего не делать"/>
 				<node name="selectSingleWord" value="Выделять одно слово"/>
-				<node name="startSelecting" value="Начинать процесс пометки"/>
+				<node name="initSelection" value="Начинать процесс пометки"/>
 				<node name="openDictionary" value="Выделять одно слово, а при отпускании – запускать словарь"/>
 			</node>
 			<node name="navigateOverAllWords" value="Перемещаться по всем словам">
@@ -783,7 +788,7 @@
 		<node name="images" value="Картинки">
 			<node name="summary" value="Настройки отображения картинок"/>
 			<node name="backgroundColor" value="Цвет фона при полноэкранном просмотре"/>
-			<node name="tappingAction" value="Действие при долгом нажатии на экран">
+			<node name="longTapAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Не делать ничего"/>
 				<node name="selectImage" value="Выделять картинку"/>
 				<node name="openImageView" value="Запускать полноэкранный просмотр"/>

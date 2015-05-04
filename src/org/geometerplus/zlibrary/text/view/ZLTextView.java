@@ -178,7 +178,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public synchronized int search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
-		if (text.length() == 0) {
+		if (myModel == null || text.length() == 0) {
 			return 0;
 		}
 		int startIndex = 0;
@@ -327,8 +327,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	protected void moveSelectionCursorTo(ZLTextSelectionCursor cursor, int x, int y) {
-		y -= getTextStyleCollection().getBaseStyle().getFontSize() / 2;
+	protected void moveSelectionCursorTo(ZLTextSelectionCursor cursor, int x, int y, boolean inMovement) {
+		if (inMovement) {
+			y -= ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2;
+		} else {
+			y -= getTextStyleCollection().getBaseStyle().getFontSize() / 2;
+		}
 		mySelection.setCursorInMovement(cursor, x, y);
 		mySelection.expandTo(myCurrentPage, x, y);
 		Application.getViewWidget().reset();

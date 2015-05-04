@@ -243,14 +243,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Este libro"/>
 		<node name="allBooks" value="Todos los libros"/>
-		<node name="found" value="Encontrados"/>
 		<node name="new" value="Nuevo marcador"/>
-		<node name="open" value="Abrir"/>
-		<node name="edit" value="Editar marcador"/>
-		<node name="delete" value="Borrar marcador"/>
-		<node name="menu">
-			<node name="search" value="Buscar"/>
-		</node>
+		<node name="openBook" value="Abrir"/>
+		<node name="editBookmark" value="Editar marcador"/>
+		<node name="deleteBookmark" value="Borrar marcador"/>
+		<node name="search" value="Buscar"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -420,11 +417,19 @@
 				<node name="summaryOn" value="Mostrar el texto en dos columnas cuando el dispositivo se sostiene horizontalmente"/>
 				<node name="summaryOff" value="Mostrar siempre el texto en una sola columna"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Ajuste de brillo de la pantalla">
 				<node name="summaryOn" value="Al arrastrar el dedo arriba/abajo en el borde izquierdo de la pantalla"/>
@@ -769,10 +774,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Acción de toque prolongado">
+			<node name="longTapAction" value="Acción de toque prolongado">
 				<node name="doNothing" value="Toque prolongado no hace nada"/>
 				<node name="selectSingleWord" value="Toque prolongado selecciona una palabra"/>
-				<node name="startSelecting" value="Toque prolongado inicia selección"/>
+				<node name="initSelection" value="Toque prolongado inicia selección"/>
 				<node name="openDictionary" value="Toque prolongado selecciona una palabra, al soltar abre diccionario"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar por todas las palabras">
@@ -783,7 +788,7 @@
 		<node name="images" value="Imágenes">
 			<node name="summary" value="Opciones de visualización de imágenes"/>
 			<node name="backgroundColor" value="Color de fondo para vista de imagen"/>
-			<node name="tappingAction" value="Acción de toque prolongado">
+			<node name="longTapAction" value="Acción de toque prolongado">
 				<node name="doNothing" value="Toque prolongado no hace nada"/>
 				<node name="selectImage" value="Toque prolongado selecciona la imagen"/>
 				<node name="openImageView" value="Toque prolongado abre vista de imagen"/>

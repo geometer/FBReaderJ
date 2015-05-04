@@ -238,14 +238,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Denne boken"/>
 		<node name="allBooks" value="Alle bøker"/>
-		<node name="found" value="Funnet"/>
 		<node name="new" value="Nytt bokmerke"/>
-		<node name="open" value="Åpne"/>
-		<node name="edit" value="Endre bokmerke"/>
-		<node name="delete" value="Slett bokmerke"/>
-		<node name="menu">
-			<node name="search" value="Søk"/>
-		</node>
+		<node name="openBook" value="Åpne"/>
+		<node name="editBookmark" value="Endre bokmerke"/>
+		<node name="deleteBookmark" value="Slett bokmerke"/>
+		<node name="search" value="Søk"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -415,11 +412,19 @@
 				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
 				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Juster skjermens lysstyrke">
 				<node name="summaryOn" value="Ved å dra fingeren opp/ned langs venstre side av skjermen"/>
@@ -764,10 +769,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Handling ved langvarig trykk">
+			<node name="longTapAction" value="Handling ved langvarig trykk">
 				<node name="doNothing" value="Langvarig trykk gjør ingenting"/>
 				<node name="selectSingleWord" value="Langvarig trykk velger enkeltord"/>
-				<node name="startSelecting" value="Langvarig trykk starter velging"/>
+				<node name="initSelection" value="Langvarig trykk starter velging"/>
 				<node name="openDictionary" value="Langvarig trykk velger enkeltord, slipp trykk for å åpne ordbok"/>
 			</node>
 			<node name="navigateOverAllWords" value="Naviger over alle ord">
@@ -778,7 +783,7 @@
 		<node name="images" value="Bilder">
 			<node name="summary" value="Valg for bildevisning"/>
 			<node name="backgroundColor" value="Bakgrunnsfarge ved bildevisning"/>
-			<node name="tappingAction" value="Handling ved langvarig trykk">
+			<node name="longTapAction" value="Handling ved langvarig trykk">
 				<node name="doNothing" value="Langvarig trykk gjør ingenting"/>
 				<node name="selectImage" value="Langvarig trykk velger bildet"/>
 				<node name="openImageView" value="Langvarig trykk åpner bildevisning"/>

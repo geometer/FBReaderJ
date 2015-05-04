@@ -19,21 +19,21 @@
 
 package org.geometerplus.fbreader.book;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 public class HighlightingStyle {
 	public final int Id;
+	public final long LastUpdateTimestamp;
 
 	private String myName;
 	private ZLColor myBackgroundColor;
 	private ZLColor myForegroundColor;
 
-	HighlightingStyle(int id, String name, ZLColor bgColor, ZLColor fgColor) {
+	HighlightingStyle(int id, long timestamp, String name, ZLColor bgColor, ZLColor fgColor) {
 		Id = id;
+		LastUpdateTimestamp = timestamp;
+
 		myName = name;
 		myBackgroundColor = bgColor;
 		myForegroundColor = fgColor;

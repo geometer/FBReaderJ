@@ -229,14 +229,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Questo libro"/>
 		<node name="allBooks" value="Tutti i libri"/>
-		<node name="found" value="Trovato"/>
 		<node name="new" value="Nuovo segnalibro"/>
-		<node name="open" value="Apri"/>
-		<node name="edit" value="Modifica segnalibro"/>
-		<node name="delete" value="Cancella segnalibro"/>
-		<node name="menu">
-			<node name="search" value="Cerca"/>
-		</node>
+		<node name="openBook" value="Apri"/>
+		<node name="editBookmark" value="Modifica segnalibro"/>
+		<node name="deleteBookmark" value="Cancella segnalibro"/>
+		<node name="search" value="Cerca"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -406,11 +403,19 @@
 				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
 				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Regolazione della luminosità dello schermo">
 				<node name="summaryOn" value="Trascinando il dito su / giù lungo il lato sinistro dello schermo"/>
@@ -755,10 +760,10 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="tappingAction" value="Evento Tocco lungo">
+			<node name="longTapAction" value="Evento Tocco lungo">
 				<node name="doNothing" value="Tocco lungo non fa nulla"/>
 				<node name="selectSingleWord" value="Tocco lungo seleziona singola parole"/>
-				<node name="startSelecting" value="Tocco lungo inizia selezione"/>
+				<node name="initSelection" value="Tocco lungo inizia selezione"/>
 				<node name="openDictionary" value="Tocco lungo seleziona la parola, il rilascio apre dizionario"/>
 			</node>
 			<node name="navigateOverAllWords" value="Naviga su tutte le parole">
@@ -769,7 +774,7 @@
 		<node name="images" value="Immagini">
 			<node name="summary" value="Opzioni di visualizzazione immagine"/>
 			<node name="backgroundColor" value="Colore di sfondo per visualizzare l'immagine"/>
-			<node name="tappingAction" value="Evento Tocco lungo">
+			<node name="longTapAction" value="Evento Tocco lungo">
 				<node name="doNothing" value="Tocco lungo non fa nulla"/>
 				<node name="selectImage" value="Tocco lungo seleziona l'immagine"/>
 				<node name="openImageView" value="Tocco lungo apre visualizzazione immagine"/>

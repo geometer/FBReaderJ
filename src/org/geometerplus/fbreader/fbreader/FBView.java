@@ -29,8 +29,6 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.util.FixedTextSnippet;
-import org.geometerplus.zlibrary.text.util.TextSnippet;
 import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
@@ -38,6 +36,8 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.util.FixedTextSnippet;
+import org.geometerplus.fbreader.util.TextSnippet;
 
 public final class FBView extends ZLTextView {
 	private final FBReaderApp myReader;
@@ -76,6 +76,16 @@ public final class FBView extends ZLTextView {
 		return myZoneMap;
 	}
 
+	private boolean onFingerSingleTapLastResort(int x, int y) {
+		myReader.runAction(getZoneMap().getActionByCoordinates(
+			x, y, getContextWidth(), getContextHeight(),
+			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
+		), x, y);
+
+		return true;
+	}
+
+	@Override
 	public boolean onFingerSingleTap(int x, int y) {
 		if (super.onFingerSingleTap(x, y)) {
 			return true;
@@ -119,12 +129,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		myReader.runAction(getZoneMap().getActionByCoordinates(
-			x, y, getContextWidth(), getContextHeight(),
-			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
-		), x, y);
-
-		return true;
+		return onFingerSingleTapLastResort(x, y);
 	}
 
 	@Override
@@ -151,7 +156,7 @@ public final class FBView extends ZLTextView {
 		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, maxSelectionDistance());
 		if (cursor != ZLTextSelectionCursor.None) {
 			myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
-			moveSelectionCursorTo(cursor, x, y);
+			moveSelectionCursorTo(cursor, x, y, true);
 			return true;
 		}
 
@@ -191,7 +196,7 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
 		if (cursor != ZLTextSelectionCursor.None) {
-			moveSelectionCursorTo(cursor, x, y);
+			moveSelectionCursorTo(cursor, x, y, true);
 			return true;
 		}
 
@@ -256,7 +261,7 @@ public final class FBView extends ZLTextView {
 						initSelection(x, y);
 						final ZLTextSelectionCursor cursor = findSelectionCursor(x, y);
 						if (cursor != ZLTextSelectionCursor.None) {
-							moveSelectionCursorTo(cursor, x, y);
+							moveSelectionCursorTo(cursor, x, y, false);
 						}
 						return true;
 					case selectSingleWord:
@@ -290,7 +295,7 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
 		if (cursor != ZLTextSelectionCursor.None) {
-			moveSelectionCursorTo(cursor, x, y);
+			moveSelectionCursorTo(cursor, x, y, true);
 			return true;
 		}
 

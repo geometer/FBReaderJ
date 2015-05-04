@@ -237,14 +237,11 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="این کتاب"/>
 		<node name="allBooks" value="همه کتابها"/>
-		<node name="found" value="پیدا شد"/>
 		<node name="new" value="آدرس جدید"/>
-		<node name="open" value="بازکردن"/>
-		<node name="edit" value="ویرایش آدرس"/>
-		<node name="delete" value="حذف آدرس"/>
-		<node name="menu">
-			<node name="search" value="جستجو"/>
-		</node>
+		<node name="openBook" value="بازکردن"/>
+		<node name="editBookmark" value="ویرایش آدرس"/>
+		<node name="deleteBookmark" value="حذف آدرس"/>
+		<node name="search" value="جستجو"/>
 	</node>
 	<node name="editBookmark">
 		<node name="text" value="Text" toBeTranslated="true"/>
@@ -414,11 +411,19 @@
 				<node name="summaryOn" value="هنگامی که دستگاه افقی نگه داشته شده متن را دوستونه نشان بده"/>
 				<node name="summaryOff" value="هميشه متن در يك ستون نشان داده شود"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a window" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
 				<node name="never" value="Never" toBeTranslated="true"/>
 				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="تنظيم روشنايي صفحه نمايش ">
 				<node name="summaryOn" value="كشيدن انگشت به بالا/پائين گوشه چپ صفحه نمايش "/>
@@ -763,10 +768,10 @@
 			<node name="targetLanguage" value="ترجمه به">
 				<node name="any" value="همه زبان ها"/>
 			</node>
-			<node name="tappingAction" value="اقدام ضربه طولاني">
+			<node name="longTapAction" value="اقدام ضربه طولاني">
 				<node name="doNothing" value="ضربه طولاني اقدامي نمي كند"/>
 				<node name="selectSingleWord" value="ضربه طولاني كلمه منفردي را انتخاب مي كند"/>
-				<node name="startSelecting" value="ضربه طولاني شروع به انتخاب مي كند"/>
+				<node name="initSelection" value="ضربه طولاني شروع به انتخاب مي كند"/>
 				<node name="openDictionary" value="ضربه طولاني كلمه منفردي را انتخاب مي كند، ديكشنري را باز مي كند"/>
 			</node>
 			<node name="navigateOverAllWords" value="هدايت تمامي كلمات">
@@ -777,7 +782,7 @@
 		<node name="images" value="تصاوير">
 			<node name="summary" value="گزينه هاي نمايش تصوير"/>
 			<node name="backgroundColor" value="رنگ زمينه براي مشاهده تصوير"/>
-			<node name="tappingAction" value="اقدام ضربه طولاني">
+			<node name="longTapAction" value="اقدام ضربه طولاني">
 				<node name="doNothing" value="ضربه طولاني اقدامي نمي كند"/>
 				<node name="selectImage" value="ضربه طولاني تصوير را انتخاب مي كند"/>
 				<node name="openImageView" value="ضربه طولاني نمايش تصوير را باز مي كند"/>
