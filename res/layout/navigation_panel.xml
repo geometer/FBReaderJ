@@ -8,7 +8,6 @@
 	android:layout_centerHorizontal="true"
 	android:visibility="gone"
 	android:focusable="false"
-	android:gravity="bottom"
 	android:paddingLeft="24dip"
 	android:paddingRight="24dip"
 	android:background="@color/primary"
