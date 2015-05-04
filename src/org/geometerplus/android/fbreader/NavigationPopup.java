@@ -19,15 +19,18 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -58,7 +61,7 @@ final class NavigationPopup {
 
 	public void update() {
 		if (myWindow != null) {
-			setupNavigation();
+			myWindow.hide();
 		}
 	}
 
@@ -81,12 +84,11 @@ final class NavigationPopup {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Location.BottomFlat);
+		activity.getLayoutInflater().inflate(R.layout.navigation_panel, root);
+		myWindow = (NavigationWindow)root.findViewById(R.id.navigation_panel);
 
-		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myWindow, false);
-
-		final SeekBar slider = (SeekBar)layout.findViewById(R.id.navigation_slider);
-		final TextView text = (TextView)layout.findViewById(R.id.navigation_text);
+		final SeekBar slider = (SeekBar)myWindow.findViewById(R.id.navigation_slider);
+		final TextView text = (TextView)myWindow.findViewById(R.id.navigation_text);
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
@@ -202,5 +204,14 @@ final class NavigationPopup {
 			builder.append(tocElement.getText());
 		}
 		return builder.toString();
+	}
+
+	final void removeWindow(Activity activity) {
+		if (myWindow != null && activity == myWindow.getContext()) {
+			final ViewGroup root = (ViewGroup)myWindow.getParent();
+			myWindow.hide();
+			root.removeView(myWindow);
+			myWindow = null;
+		}
 	}
 }

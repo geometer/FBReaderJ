@@ -32,7 +32,7 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 abstract class PopupPanel extends ZLApplication.PopupPanel {
 	public ZLTextWordCursor StartPosition;
 
-	protected volatile PopupWindow myWindow;
+	protected volatile SimplePopupWindow myWindow;
 	private volatile FBReader myActivity;
 	private volatile RelativeLayout myRoot;
 
@@ -62,8 +62,8 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 	}
 
 	private final void removeWindow(Activity activity) {
-		if (myWindow != null && activity == myWindow.getActivity()) {
-			ViewGroup root = (ViewGroup)myWindow.getParent();
+		if (myWindow != null && activity == myWindow.getContext()) {
+			final ViewGroup root = (ViewGroup)myWindow.getParent();
 			myWindow.hide();
 			root.removeView(myWindow);
 			myWindow = null;
@@ -72,14 +72,20 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 
 	public static void removeAllWindows(ZLApplication application, Activity activity) {
 		for (ZLApplication.PopupPanel popup : application.popupPanels()) {
-			((PopupPanel)popup).removeWindow(activity);
+			if (popup instanceof PopupPanel) {
+				((PopupPanel)popup).removeWindow(activity);
+			} else if (popup instanceof NavigationPopup) {
+				((NavigationPopup)popup).removeWindow(activity);
+			}
 		}
 	}
 
 	public static void restoreVisibilities(ZLApplication application) {
-		final PopupPanel popup = (PopupPanel)application.getActivePopup();
-		if (popup != null) {
-			popup.show_();
+		final ZLApplication.PopupPanel popup = application.getActivePopup();
+		if (popup instanceof PopupPanel) {
+			((PopupPanel)popup).show_();
+		} else if (popup instanceof NavigationPopup) {
+			((NavigationPopup)popup).show_();
 		}
 	}
 
