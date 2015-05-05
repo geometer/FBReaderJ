@@ -4,7 +4,8 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.4.6 (May ??, 2015) =====
+===== 2.4.6 (May 05, 2015) =====
+* Dictan dictionary integration
 * New icons in selection & search menus
 * Footnote toast duration setting
 * Fixed sync authorisation on non-Google devices
