@@ -33,7 +33,7 @@
 			android:id="@+id/search_panel_close"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:src="@drawable/popup_close"
+			android:src="@drawable/popup_close_large"
 			android:layout_marginLeft="8dp"
 			android:layout_marginRight="8dp"
 		/>
