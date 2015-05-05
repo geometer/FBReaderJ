@@ -7,6 +7,7 @@
 ===== 2.4.6 (May ??, 2015) =====
 * New icons in selection & search menus
 * Footnote toast duration setting
+* Fixed sync authorisation on non-Google devices
 
 ===== 2.4.5 (May 01, 2015) =====
 * Fixed possible error in bookmarks synchronisation
