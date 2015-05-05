@@ -26,12 +26,19 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.OnClickWrapper;
+import com.github.johnpersano.supertoasts.util.OnDismissWrapper;
+
 import android.app.*;
 import android.content.*;
 import android.net.Uri;
 import android.os.Looper;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.util.Xml;
+import android.view.View;
 
 import com.abbyy.mobile.lingvo.api.MinicardContract;
 import com.paragon.dictionary.fbreader.OpenDictionaryFlyout;
@@ -55,6 +62,8 @@ public abstract class DictionaryUtil {
 	private static int FLAG_INSTALLED_ONLY = 1;
 	private static int FLAG_SHOW_AS_DICTIONARY = 2;
 	private static int FLAG_SHOW_AS_TRANSLATOR = 4;
+
+	private static final int MAX_LENGTH_FOR_TOAST = 180;
 
 	private static ZLStringOption ourSingleWordTranslatorOption;
 	private static ZLStringOption ourMultiWordTranslatorOption;
@@ -98,10 +107,6 @@ public abstract class DictionaryUtil {
 				intent.addCategory(category);
 			}
 
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
 			final String key = get("dataKey");
 			if (key != null) {
 				return intent.putExtra(key, text);
@@ -110,7 +115,7 @@ public abstract class DictionaryUtil {
 			}
 		}
 
-		abstract void open(String text, Activity context, PopupFrameMetric frameMetrics);
+		abstract void open(String text, ZLTextRegion.Soul soulToSelect, FBReader fbreader, PopupFrameMetric frameMetrics);
 	}
 
 	private static class PlainPackageInfo extends PackageInfo {
@@ -119,7 +124,7 @@ public abstract class DictionaryUtil {
 		}
 
 		@Override
-		void open(String text, Activity context, PopupFrameMetric frameMetrics) {
+		void open(String text, ZLTextRegion.Soul soulToSelect, FBReader fbreader, PopupFrameMetric frameMetrics) {
 			final Intent intent = getDictionaryIntent(text);
 			try {
 				if ("ABBYY Lingvo".equals(Id)) {
@@ -138,10 +143,35 @@ public abstract class DictionaryUtil {
 					final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 					intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
 				}
-				context.startActivity(intent);
-				context.overridePendingTransition(0, 0);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				fbreader.startActivity(intent);
+				fbreader.overridePendingTransition(0, 0);
 			} catch (ActivityNotFoundException e) {
-				installDictionaryIfNotInstalled(context, this);
+				installDictionaryIfNotInstalled(fbreader, this);
+			}
+		}
+	}
+
+	private static class DictanPackageInfo extends PackageInfo {
+		DictanPackageInfo(String id, String title, boolean supportsTargetLanguageSetting) {
+			super(id, title, supportsTargetLanguageSetting);
+		}
+
+		@Override
+		void open(String text, ZLTextRegion.Soul soulToSelect, FBReader fbreader, PopupFrameMetric frameMetrics) {
+			final Intent intent = getDictionaryIntent(text);
+			try {
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				intent.putExtra("article.mode", 20);
+				intent.putExtra("article.text.size.max", MAX_LENGTH_FOR_TOAST);
+				fbreader.startActivityForResult(intent, FBReader.REQUEST_DICTIONARY);
+				fbreader.overridePendingTransition(0, 0);
+				fbreader.outlineRegion(soulToSelect);
+			} catch (ActivityNotFoundException e) {
+				fbreader.hideOutline();
+				installDictionaryIfNotInstalled(fbreader, this);
 			}
 		}
 	}
@@ -161,8 +191,8 @@ public abstract class DictionaryUtil {
 		}
 
 		@Override
-		void open(String text, Activity context, PopupFrameMetric frameMetrics) {
-			Flyout.showTranslation(context, text, frameMetrics);
+		void open(String text, ZLTextRegion.Soul soulToSelect, FBReader fbreader, PopupFrameMetric frameMetrics) {
+			Flyout.showTranslation(fbreader, text, frameMetrics);
 		}
 	}
 
@@ -187,11 +217,20 @@ public abstract class DictionaryUtil {
 			if (!"always".equals(attributes.getValue("list"))) {
 				flags |= FLAG_INSTALLED_ONLY;
 			}
-			final PackageInfo info = new PlainPackageInfo(
-				id,
-				title != null ? title : id,
-				"true".equals(attributes.getValue("supportsTargetLanguage"))
-			);
+			final PackageInfo info;
+			if ("dictan".equals(id)) {
+				info = new DictanPackageInfo(
+					id,
+					title != null ? title : id,
+					false
+				);
+			} else {
+				info = new PlainPackageInfo(
+					id,
+					title != null ? title : id,
+					"true".equals(attributes.getValue("supportsTargetLanguage"))
+				);
+			}
 			for (int i = attributes.getLength() - 1; i >= 0; --i) {
 				info.put(attributes.getLocalName(i), attributes.getValue(i));
 			}
@@ -375,10 +414,7 @@ public abstract class DictionaryUtil {
 		return ourMultiWordTranslatorOption;
 	}
 
-	public static PackageInfo getCurrentDictionaryInfo(boolean singleWord) {
-		final ZLStringOption option = singleWord
-			? singleWordTranslatorOption() : multiWordTranslatorOption();
-		final String id = option.getValue();
+	private static PackageInfo getInfo(String id) {
 		synchronized (ourInfos) {
 			for (PackageInfo info : ourInfos.keySet()) {
 				if (info.Id.equals(id)) {
@@ -387,6 +423,12 @@ public abstract class DictionaryUtil {
 			}
 		}
 		return firstInfo();
+	}
+
+	public static PackageInfo getCurrentDictionaryInfo(boolean singleWord) {
+		final ZLStringOption option = singleWord
+			? singleWordTranslatorOption() : multiWordTranslatorOption();
+		return getInfo(option.getValue());
 	}
 
 	public static class PopupFrameMetric {
@@ -407,7 +449,7 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	public static void openTextInDictionary(final Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
+	public static void openTextInDictionary(final FBReader fbreader, String text, boolean singleWord, int selectionTop, int selectionBottom, final ZLTextRegion.Soul soulToSelect) {
 		final String textToTranslate;
 		if (singleWord) {
 			int start = 0;
@@ -423,21 +465,21 @@ public abstract class DictionaryUtil {
 		}
 
 		final DisplayMetrics metrics = new DisplayMetrics();
-		activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		fbreader.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		final PopupFrameMetric frameMetrics =
 			new PopupFrameMetric(metrics, selectionTop, selectionBottom);
 
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
-		activity.runOnUiThread(new Runnable() {
+		fbreader.runOnUiThread(new Runnable() {
 			public void run() {
-				info.open(textToTranslate, activity, frameMetrics);
+				info.open(textToTranslate, soulToSelect, fbreader, frameMetrics);
 			}
 		});
 	}
 
-	public static void openWordInDictionary(Activity activity, ZLTextWord word, ZLTextRegion region) {
+	public static void openWordInDictionary(FBReader fbreader, ZLTextWord word, ZLTextRegion region) {
 		openTextInDictionary(
-			activity, word.toString(), true, region.getTop(), region.getBottom()
+			fbreader, word.toString(), true, region.getTop(), region.getBottom(), region.getSoul()
 		);
 	}
 
@@ -468,6 +510,113 @@ public abstract class DictionaryUtil {
 	private static void installDictionary(Activity activity, PackageInfo dictionaryInfo) {
 		if (!PackageUtil.installFromMarket(activity, dictionaryInfo.get("package"))) {
 			UIUtil.showErrorMessage(activity, "cannotRunAndroidMarket", dictionaryInfo.Title);
+		}
+	}
+
+	static void onActivityResult(final FBReader fbreader, int resultCode, final Intent data) {
+		if (data == null) {
+			fbreader.hideOutline();
+			return;
+		}
+
+		final int errorCode = data.getIntExtra("error.code", -1);
+		if (resultCode != Activity.RESULT_OK || errorCode != -1) {
+			showDictanError(fbreader, errorCode, data);
+			return;
+		}
+
+		String text = data.getStringExtra("article.text");
+		if (text == null) {
+			showDictanError(fbreader, -1, data);
+			return;
+		}
+		final int index = text.indexOf("\000");
+		if (index >= 0) {
+			text = text.substring(0, index);
+		}
+
+		final SuperActivityToast toast;
+		if (text.length() == MAX_LENGTH_FOR_TOAST) {
+			text = trimArticle(text);
+			toast = new SuperActivityToast(fbreader, SuperToast.Type.BUTTON);
+			toast.setButtonIcon(
+				android.R.drawable.ic_menu_more,
+				ZLResource.resource("footnoteToast").getResource("more").getValue()
+			);
+			toast.setOnClickWrapper(new OnClickWrapper("dict", new SuperToast.OnClickListener() {
+				@Override
+				public void onClick(View view, Parcelable token) {
+					final String word = data.getStringExtra("article.word");
+					final PackageInfo info = getInfo("dictan");
+					final Intent intent = info.getDictionaryIntent(word);
+					try {
+						intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+						intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+						fbreader.startActivity(intent);
+						fbreader.overridePendingTransition(0, 0);
+					} catch (ActivityNotFoundException e) {
+						// ignore
+					}
+				}
+			}));
+		} else {
+			toast = new SuperActivityToast(fbreader, SuperToast.Type.STANDARD);
+		}
+		toast.setText(text);
+		toast.setDuration(20000);
+		toast.setOnDismissWrapper(new OnDismissWrapper("ftnt", new SuperToast.OnDismissListener() {
+			@Override
+			public void onDismiss(View view) {
+				fbreader.hideOutline();
+			}
+		}));
+		fbreader.showToast(toast);
+	}
+
+	private static void showDictanError(final FBReader fbreader, int code, Intent data) {
+		final ZLResource resource = ZLResource.resource("dictanErrors");
+		String message;
+		switch (code) {
+			default:
+				message = data.getStringExtra("error.message");
+				if (message == null) {
+					message = resource.getResource("unknown").getValue();
+				}
+				break;
+			case 100:
+			{
+				final String word = data.getStringExtra("article.word");
+				message = resource.getResource("noArticle").getValue().replaceAll("%s", word);
+				break;
+			}
+			case 130:
+				message = resource.getResource("cannotOpenDictionary").getValue();
+				break;
+			case 131:
+				message = resource.getResource("noDictionarySelected").getValue();
+				break;
+		}
+
+		final SuperActivityToast toast = new SuperActivityToast(fbreader, SuperToast.Type.STANDARD);
+		toast.setText("Dictan: " + message);
+		toast.setDuration(5000);
+		toast.setOnDismissWrapper(new OnDismissWrapper("ftnt", new SuperToast.OnDismissListener() {
+			@Override
+			public void onDismiss(View view) {
+				fbreader.hideOutline();
+			}
+		}));
+		fbreader.showToast(toast);
+	}
+
+	private static String trimArticle(String text) {
+		final int len = text.length();
+		final int eolIndex = text.lastIndexOf("\n");
+		final int spaceIndex = text.lastIndexOf(" ");
+		if (spaceIndex < eolIndex || eolIndex >= len * 2 / 3) {
+			return text.substring(0, eolIndex);
+		} else {
+			return text.substring(0, spaceIndex);
 		}
 	}
 }
