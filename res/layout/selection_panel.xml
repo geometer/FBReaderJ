@@ -22,24 +22,14 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
-			android:paddingTop="8dp"
-			android:paddingBottom="8dp"
+			android:paddingTop="12dp"
+			android:paddingBottom="12dp"
 		>
 			<ImageView
-				android:id="@+id/selection_panel_copy"
+				android:id="@+id/selection_panel_bookmark"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:src="@drawable/popup_copy"
-				android:layout_marginTop="6dp"
-				android:layout_marginLeft="8dp"
-				android:layout_marginRight="8dp"
-			/>
-			<ImageView
-				android:id="@+id/selection_panel_share"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:src="@drawable/popup_share"
-				android:layout_marginTop="6dp"
+				android:src="@drawable/popup_bookmark"
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp"
 			/>
@@ -48,26 +38,32 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:src="@drawable/popup_translate"
-				android:layout_marginTop="6dp"
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp"
 			/>
 			<ImageView
-				android:id="@+id/selection_panel_bookmark"
+				android:id="@+id/selection_panel_share"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:src="@drawable/popup_bookmark"
-				android:layout_marginTop="6dp"
+				android:src="@drawable/popup_share"
 				android:layout_marginLeft="8dp"
-				android:layout_marginRight="4dp"
+				android:layout_marginRight="8dp"
+			/>
+			<ImageView
+				android:id="@+id/selection_panel_copy"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/popup_copy"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp"
 			/>
 			<ImageView
 				android:id="@+id/selection_panel_close"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:src="@drawable/popup_close"
-				android:layout_marginLeft="4dp"
-				android:layout_marginRight="4dp"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp"
 			/>
 		</LinearLayout>
 	</FrameLayout>
