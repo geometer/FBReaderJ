@@ -57,8 +57,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private final HashMap<ZLTextLineInfo,ZLTextLineInfo> myLineInfoCache = new HashMap<ZLTextLineInfo,ZLTextLineInfo>();
 
-	private ZLTextRegion.Soul mySelectedRegionSoul;
-	private boolean myHighlightSelectedRegion = true;
+	private ZLTextRegion.Soul myOutlinedRegionSoul;
+	private boolean myShowOutline = true;
 
 	private final ZLTextSelection mySelection = new ZLTextSelection(this);
 	private final Set<ZLTextHighlighting> myHighlightings =
@@ -543,9 +543,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 		}
 
-		final ZLTextRegion selectedElementRegion = getSelectedRegion(page);
-		if (selectedElementRegion != null && myHighlightSelectedRegion) {
-			selectedElementRegion.draw(context);
+		final ZLTextRegion outlinedElementRegion = getOutlinedRegion(page);
+		if (outlinedElementRegion != null && myShowOutline) {
+			outlinedElementRegion.draw(context);
 		}
 
 		drawSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Left));
@@ -1721,18 +1721,34 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myCurrentPage.TextElementMap.binarySearch(x, y);
 	}
 
-	public void hideSelectedRegionBorder() {
-		myHighlightSelectedRegion = false;
+	public final void outlineRegion(ZLTextRegion region) {
+		outlineRegion(region != null ? region.getSoul() : null);
+	}
+
+	public final void outlineRegion(ZLTextRegion.Soul soul) {
+		myShowOutline = true;
+		myOutlinedRegionSoul = soul;
+	}
+
+	public void hideOutline() {
+		myShowOutline = false;
 		Application.getViewWidget().reset();
 	}
 
-	private ZLTextRegion getSelectedRegion(ZLTextPage page) {
-		return page.TextElementMap.getRegion(mySelectedRegionSoul);
+	private ZLTextRegion getOutlinedRegion(ZLTextPage page) {
+		return page.TextElementMap.getRegion(myOutlinedRegionSoul);
 	}
 
-	public ZLTextRegion getSelectedRegion() {
-		return getSelectedRegion(myCurrentPage);
+	public ZLTextRegion getOutlinedRegion() {
+		return getOutlinedRegion(myCurrentPage);
 	}
+
+/*
+	public void resetRegionPointer() {
+		myOutlinedRegionSoul = null;
+		myShowOutline = true;
+	}
+*/
 
 	protected ZLTextHighlighting findHighlighting(int x, int y, int maxDistance) {
 		final ZLTextRegion region = findRegion(x, y, maxDistance, ZLTextRegion.AnyRegionFilter);
@@ -1757,14 +1773,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myCurrentPage.TextElementMap.findRegion(x, y, maxDistance, filter);
 	}
 
-	public void selectRegion(ZLTextRegion region) {
-		final ZLTextRegion.Soul soul = region != null ? region.getSoul() : null;
-		if (soul == null || !soul.equals(mySelectedRegionSoul)) {
-			myHighlightSelectedRegion = true;
-		}
-		mySelectedRegionSoul = soul;
-	}
-
 	protected boolean initSelection(int x, int y) {
 		y -= getTextStyleCollection().getBaseStyle().getFontSize() / 2;
 		if (!mySelection.start(x, y)) {
@@ -1780,6 +1788,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			Application.getViewWidget().reset();
 			Application.getViewWidget().repaint();
 		}
+	}
+
+	public ZLTextRegion.Soul getSelectionSoul() {
+		return mySelection.getSoul();
 	}
 
 	public int getSelectionStartY() {
@@ -1828,13 +1840,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return mySelection.isEmpty();
 	}
 
-	public void resetRegionPointer() {
-		mySelectedRegionSoul = null;
-		myHighlightSelectedRegion = true;
-	}
-
 	public ZLTextRegion nextRegion(Direction direction, ZLTextRegion.Filter filter) {
-		return myCurrentPage.TextElementMap.nextRegion(getSelectedRegion(), direction, filter);
+		return myCurrentPage.TextElementMap.nextRegion(getOutlinedRegion(), direction, filter);
 	}
 
 	@Override
