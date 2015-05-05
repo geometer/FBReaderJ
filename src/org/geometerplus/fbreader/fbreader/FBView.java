@@ -93,7 +93,7 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextRegion hyperlinkRegion = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.HyperlinkFilter);
 		if (hyperlinkRegion != null) {
-			selectRegion(hyperlinkRegion);
+			outlineRegion(hyperlinkRegion);
 			myReader.getViewWidget().reset();
 			myReader.getViewWidget().repaint();
 			myReader.runAction(ActionCode.PROCESS_HYPERLINK);
@@ -108,7 +108,7 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextRegion videoRegion = findRegion(x, y, 0, ZLTextRegion.VideoFilter);
 		if (videoRegion != null) {
-			selectRegion(videoRegion);
+			outlineRegion(videoRegion);
 			myReader.getViewWidget().reset();
 			myReader.getViewWidget().repaint();
 			myReader.runAction(ActionCode.OPEN_VIDEO, (ZLTextVideoRegionSoul)videoRegion.getSoul());
@@ -139,9 +139,12 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public boolean onFingerDoubleTap(int x, int y) {
+		myReader.runAction(ActionCode.HIDE_TOAST);
+
 		if (super.onFingerDoubleTap(x, y)) {
 			return true;
 		}
+
 		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, getContextWidth(), getContextHeight(), TapZoneMap.Tap.doubleTap
 		), x, y);
@@ -149,6 +152,8 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerPress(int x, int y) {
+		myReader.runAction(ActionCode.HIDE_TOAST);
+
 		if (super.onFingerPress(x, y)) {
 			return true;
 		}
@@ -246,6 +251,8 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerLongPress(int x, int y) {
+		myReader.runAction(ActionCode.HIDE_TOAST);
+
 		if (super.onFingerLongPress(x, y)) {
 			return true;
 		}
@@ -278,7 +285,7 @@ public final class FBView extends ZLTextView {
 			}
 
 			if (doSelectRegion) {
-				selectRegion(region);
+				outlineRegion(region);
 				myReader.getViewWidget().reset();
 				myReader.getViewWidget().repaint();
 				return true;
@@ -299,7 +306,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		ZLTextRegion region = getSelectedRegion();
+		ZLTextRegion region = getOutlinedRegion();
 		if (region != null) {
 			ZLTextRegion.Soul soul = region.getSoul();
 			if (soul instanceof ZLTextHyperlinkRegionSoul ||
@@ -311,7 +318,7 @@ public final class FBView extends ZLTextView {
 						soul = region.getSoul();
 						if (soul instanceof ZLTextHyperlinkRegionSoul
 							 || soul instanceof ZLTextWordRegionSoul) {
-							selectRegion(region);
+							outlineRegion(region);
 							myReader.getViewWidget().reset();
 							myReader.getViewWidget().repaint();
 						}
@@ -333,7 +340,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion region = getSelectedRegion();
+		final ZLTextRegion region = getOutlinedRegion();
 		if (region != null) {
 			final ZLTextRegion.Soul soul = region.getSoul();
 
