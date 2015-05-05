@@ -18,6 +18,16 @@
 		list="always"
 	/>
 	<dictionary
+		id="dictan"
+		title="Dictan"
+		package="info.softex.dictan"
+		category="info.softex.dictan.EXTERNAL_DISPATCHER"
+		action="android.intent.action.VIEW"
+		dataKey="article.word"
+		role="dictionary"
+		list="always"
+	/>
+	<dictionary
 		id="Fora Dictionary"
 		package="com.ngc.fora"
 		class=".ForaDictionary"
@@ -42,15 +52,6 @@
 		role="dictionary"
 		supportsTargetLanguage="true"
 	/>
-	<!--dictionary
-		id="dictan"
-		title="Dictan"
-		package="info.softex.dictan"
-		category="info.softex.dictan.EXTERNAL_DISPATCHER"
-		action="android.intent.action.VIEW"
-		dataKey="article.word"
-		role="dictionary"
-	/-->
 	<dictionary
 		id="Lingo Quiz Lite"
 		package="mnm.lite.lingoquiz"

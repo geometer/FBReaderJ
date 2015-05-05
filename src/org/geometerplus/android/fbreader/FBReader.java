@@ -42,6 +42,7 @@ import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
+import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -73,6 +74,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	public static final int REQUEST_PREFERENCES = 1;
 	public static final int REQUEST_CANCEL_MENU = 2;
+	public static final int REQUEST_DICTIONARY = 3;
 
 	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
@@ -709,6 +711,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			case REQUEST_CANCEL_MENU:
 				runCancelAction(data);
 				break;
+			case REQUEST_DICTIONARY:
+				DictionaryUtil.onActivityResult(this, resultCode, data);
+				break;
 		}
 	}
 
@@ -1071,5 +1076,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		hideToast();
 		myToast = toast;
 		toast.show();
+	}
+
+	public void outlineRegion(ZLTextRegion.Soul soul) {
+		myFBReaderApp.getTextView().outlineRegion(soul);
+		myFBReaderApp.getViewWidget().repaint();
+	}
+
+	public void hideOutline() {
+		myFBReaderApp.getTextView().hideOutline();
+		myFBReaderApp.getViewWidget().repaint();
 	}
 }

@@ -42,9 +42,12 @@ class ZLTextSelection extends ZLTextHighlighting {
 
 	private Scroller myScroller;
 
-
 	ZLTextSelection(ZLTextView view) {
 		myView = view;
+	}
+
+	ZLTextRegion.Soul getSoul() {
+		return myLeftMostRegionSoul != null && myLeftMostRegionSoul.equals(myRightMostRegionSoul) ? myLeftMostRegionSoul : null;
 	}
 
 	@Override
