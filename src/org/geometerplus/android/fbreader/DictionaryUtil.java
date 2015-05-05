@@ -92,7 +92,7 @@ public abstract class DictionaryUtil {
 					));
 				}
 			}
-			
+
 			final String category = get("category");
 			if (category != null) {
 				intent.addCategory(category);
