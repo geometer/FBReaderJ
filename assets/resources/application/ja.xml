@@ -772,7 +772,7 @@
 			<node name="longTapAction" value="長押し動作">
 				<node name="doNothing" value="長押しで何もしない"/>
 				<node name="selectSingleWord" value="長押しで単語ひとつ選択"/>
-				<node name="initSelection" value="長押しで選択開始"/>
+				<node name="startSelecting" value="長押しで選択開始"/>
 				<node name="openDictionary" value="長押しで単語ひとつ選択、離した瞬間に辞書"/>
 			</node>
 			<node name="navigateOverAllWords" value="すべての単語に移動">

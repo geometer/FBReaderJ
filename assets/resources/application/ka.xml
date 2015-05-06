@@ -777,7 +777,7 @@
 			<node name="longTapAction" value="ეკრანზე ხანგრძლივი დაჭერის ქმედება">
 				<node name="doNothing" value="არაფრის გაკეთება"/>
 				<node name="selectSingleWord" value="ერთი სიტყვის გამოყოფა"/>
-				<node name="initSelection" value="მონიშვნის პროცესის დაწყება"/>
+				<node name="startSelecting" value="მონიშვნის პროცესის დაწყება"/>
 				<node name="openDictionary" value="ერთი სიტყვის გამოყოფა, ხოლო თითის აშვებისას - ლექსიკონის ჩართვა"/>
 			</node>
 			<node name="navigateOverAllWords" value="ყველა სიტყვაზე გადაადგილება">

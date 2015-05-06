@@ -772,7 +772,7 @@
 			<node name="longTapAction" value="Дзеяньне доўгага дотыку">
 				<node name="doNothing" value="Доўгі дотык нічога ня робіць"/>
 				<node name="selectSingleWord" value="Доўгі дотык вылучае адно слова"/>
-				<node name="initSelection" value="Доўгі дотык пачынае вылучэньне"/>
+				<node name="startSelecting" value="Доўгі дотык пачынае вылучэньне"/>
 				<node name="openDictionary" value="Доўгі дотык вылучае адно слова, адпусканьне адчыняе слоўнік"/>
 			</node>
 			<node name="navigateOverAllWords" value="Ісьці па ўсіх словах">

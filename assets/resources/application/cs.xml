@@ -781,7 +781,7 @@
 			<node name="longTapAction" value="Dlouhé klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
-				<node name="initSelection" value="Dlouhé klepnutí spustí vybírání"/>
+				<node name="startSelecting" value="Dlouhé klepnutí spustí vybírání"/>
 				<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigovat přes všechna slova">

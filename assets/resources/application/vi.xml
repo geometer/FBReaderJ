@@ -763,7 +763,7 @@
 			<node name="longTapAction" value="Nhấn giữ">
 				<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
 				<node name="selectSingleWord" value="Chọn từ khi nhấn giữ"/>
-				<node name="initSelection" value="Long tap initiates selecting" toBeTranslated="true"/>
+				<node name="startSelecting" value="Long tap initiates selecting" toBeTranslated="true"/>
 				<node name="openDictionary" value="Chọn từ và mở từ điển khi nhấn giữ"/>
 			</node>
 			<node name="navigateOverAllWords" value="Điều hướng mọi từ">

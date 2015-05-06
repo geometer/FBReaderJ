@@ -777,7 +777,7 @@
 			<node name="longTapAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Ничего не делать"/>
 				<node name="selectSingleWord" value="Выделять одно слово"/>
-				<node name="initSelection" value="Начинать процесс пометки"/>
+				<node name="startSelecting" value="Начинать процесс пометки"/>
 				<node name="openDictionary" value="Выделять одно слово, а при отпускании – запускать словарь"/>
 			</node>
 			<node name="navigateOverAllWords" value="Перемещаться по всем словам">

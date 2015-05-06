@@ -776,7 +776,7 @@
 			<node name="longTapAction" value="Ação de tocar o dedo de forma contínua">
 				<node name="doNothing" value="Desativar a forma contínua"/>
 				<node name="selectSingleWord" value="A forma contínua seleciona uma palavra única"/>
-				<node name="initSelection" value="A forma contínua inicia a seleção"/>
+				<node name="startSelecting" value="A forma contínua inicia a seleção"/>
 				<node name="openDictionary" value="A forma contínua seleciona uma única palavra, se soltar, abre o dicionário"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegue por todas as palavras">
