@@ -764,8 +764,8 @@
 		</node>
 		<node name="dictionary" value="Dictionary">
 			<node name="summary" value="Dictionary settings"/>
-			<node name="dictionary" value="Dictionary"/>
-			<node name="translator" value="Translator"/>
+			<node name="dictionary" value="Look up single word in"/>
+			<node name="translator" value="Translate phrases via"/>
 			<node name="targetLanguage" value="Translate to">
 				<node name="any" value="all languages"/>
 			</node>

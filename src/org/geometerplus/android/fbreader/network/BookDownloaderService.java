@@ -22,10 +22,10 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 import java.io.*;
 
-import android.os.*;
 import android.app.*;
-import android.net.Uri;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.*;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -185,7 +185,7 @@ public class BookDownloaderService extends Service {
 		Toast.makeText(
 			getApplicationContext(),
 			text,
-			Toast.LENGTH_SHORT
+			Toast.LENGTH_LONG
 		).show();
 	}
 
