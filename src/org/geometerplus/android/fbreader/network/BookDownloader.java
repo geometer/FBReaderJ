@@ -65,7 +65,7 @@ public class BookDownloader extends Activity {
 
 		if (!intent.hasExtra(BookDownloaderService.Key.SHOW_NOTIFICATIONS)) {
 			intent.putExtra(BookDownloaderService.Key.SHOW_NOTIFICATIONS,
-				BookDownloaderService.Notifications.ALREADY_DOWNLOADING);
+				BookDownloaderService.Notifications.ALREADY_IN_PROGRESS);
 		}
 		if ("epub".equals(uri.getScheme())) {
 			uri = uri.buildUpon().scheme("http").build();

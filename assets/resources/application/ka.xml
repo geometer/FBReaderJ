@@ -226,11 +226,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="წიგნი გადმოწერილია"/>
-		<node name="tickerError" value="წიგნის გადმოწერა ვერ მოხერხდა"/>
-		<node name="contentSuccess" value="გადმოწერა დასრულებულია"/>
-		<node name="contentError" value="ვერ მოხერხდა გადმოწერა"/>
-		<node name="downloadingStarted" value="წიგნის გადმოწერა დაწყებულია"/>
+		<node name="downloadCompleteTicker" value="წიგნი გადმოწერილია"/>
+		<node name="downloadFailedTicker" value="წიგნის გადმოწერა ვერ მოხერხდა"/>
+		<node name="downloadComplete" value="გადმოწერა დასრულებულია"/>
+		<node name="downloadFailed" value="ვერ მოხერხდა გადმოწერა"/>
+		<node name="downloadStarted" value="წიგნის გადმოწერა დაწყებულია"/>
 		<node name="alreadyDownloading" value="წიგნი უკვე იტვირთება"/>
 		<node name="cannotCreateDirectory" value="შეუძლებელია კატალოგის %s შექმნა"/>
 		<node name="cannotCreateFile" value="შეუძლებელია ფაილის %s შექმნა"/>

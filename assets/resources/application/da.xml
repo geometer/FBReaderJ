@@ -220,11 +220,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Bogen er blevet overført"/>
-		<node name="tickerError" value="Overførselsfejl for bog"/>
-		<node name="contentSuccess" value="Overførslen er færdig"/>
-		<node name="contentError" value="Overførsel mislykkedes"/>
-		<node name="downloadingStarted" value="Overførsel af bog er begyndt"/>
+		<node name="downloadCompleteTicker" value="Bogen er blevet overført"/>
+		<node name="downloadFailedTicker" value="Overførselsfejl for bog"/>
+		<node name="downloadComplete" value="Overførslen er færdig"/>
+		<node name="downloadFailed" value="Overførsel mislykkedes"/>
+		<node name="downloadStarted" value="Overførsel af bog er begyndt"/>
 		<node name="alreadyDownloading" value="Bogen overføres allerede"/>
 		<node name="cannotCreateDirectory" value="Kan ikke oprette biblioteket %s"/>
 		<node name="cannotCreateFile" value="Kan ikke oprette filen %s"/>

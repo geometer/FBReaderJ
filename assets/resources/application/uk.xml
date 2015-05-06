@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Книга завантажена"/>
-		<node name="tickerError" value="Книгу завантажити не вдалось"/>
-		<node name="contentSuccess" value="Завантаження завершене"/>
-		<node name="contentError" value="Не вдалось завантажити"/>
-		<node name="downloadingStarted" value="Завантаження книги почалось"/>
+		<node name="downloadCompleteTicker" value="Книга завантажена"/>
+		<node name="downloadFailedTicker" value="Книгу завантажити не вдалось"/>
+		<node name="downloadComplete" value="Завантаження завершене"/>
+		<node name="downloadFailed" value="Не вдалось завантажити"/>
+		<node name="downloadStarted" value="Завантаження книги почалось"/>
 		<node name="alreadyDownloading" value="Книга вже завантажується"/>
 		<node name="cannotCreateDirectory" value="Неможливо створити теку %s"/>
 		<node name="cannotCreateFile" value="Неможливо створити файл %s"/>

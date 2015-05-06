@@ -226,11 +226,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Գիրքը բեռնվեց"/>
-		<node name="tickerError" value="Չհաջողվեց բեռնել գիրքը"/>
-		<node name="contentSuccess" value="Բեռնումն ավարտվեց"/>
-		<node name="contentError" value="Բեռնումը ձախողվեց"/>
-		<node name="downloadingStarted" value="Գրքի բեռնումը սկսված է"/>
+		<node name="downloadCompleteTicker" value="Գիրքը բեռնվեց"/>
+		<node name="downloadFailedTicker" value="Չհաջողվեց բեռնել գիրքը"/>
+		<node name="downloadComplete" value="Բեռնումն ավարտվեց"/>
+		<node name="downloadFailed" value="Բեռնումը ձախողվեց"/>
+		<node name="downloadStarted" value="Գրքի բեռնումը սկսված է"/>
 		<node name="alreadyDownloading" value="Գիրքն արդեն բեռնվում է"/>
 		<node name="cannotCreateDirectory" value="Հնարավոր չէ ստեղծել %s գրացուցակը"/>
 		<node name="cannotCreateFile" value="Հնարավոր չէ ստեղծել %s նիշքը"/>

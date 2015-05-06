@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Књига је преузета."/>
-		<node name="tickerError" value="Грешка при преузимању књиге."/>
-		<node name="contentSuccess" value="Преузимање је завршено."/>
-		<node name="contentError" value="Преузимање није завршено."/>
-		<node name="downloadingStarted" value="Преузимање књиге је започето."/>
+		<node name="downloadCompleteTicker" value="Књига је преузета."/>
+		<node name="downloadFailedTicker" value="Грешка при преузимању књиге."/>
+		<node name="downloadComplete" value="Преузимање је завршено."/>
+		<node name="downloadFailed" value="Преузимање није завршено."/>
+		<node name="downloadStarted" value="Преузимање књиге је започето."/>
 		<node name="alreadyDownloading" value="Књига се већ преузима."/>
 		<node name="cannotCreateDirectory" value="Не могу да направим фасциклу „%s“."/>
 		<node name="cannotCreateFile" value="Не могу да направим датотеку „%s“."/>

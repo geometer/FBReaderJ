@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Kitap indirildi"/>
-		<node name="tickerError" value="İndirme hatası"/>
-		<node name="contentSuccess" value="İndirme tamamlandı"/>
-		<node name="contentError" value="İndirme başarısız"/>
-		<node name="downloadingStarted" value="İndirme işlemi başlatıldı"/>
+		<node name="downloadCompleteTicker" value="Kitap indirildi"/>
+		<node name="downloadFailedTicker" value="İndirme hatası"/>
+		<node name="downloadComplete" value="İndirme tamamlandı"/>
+		<node name="downloadFailed" value="İndirme başarısız"/>
+		<node name="downloadStarted" value="İndirme işlemi başlatıldı"/>
 		<node name="alreadyDownloading" value="Bu kitap zaten indiriliyor"/>
 		<node name="cannotCreateDirectory" value="%s dizini oluşturulamadı"/>
 		<node name="cannotCreateFile" value="%s dosyası oluşturulamadı"/>

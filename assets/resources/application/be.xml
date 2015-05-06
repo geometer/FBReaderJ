@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Кніга зладаваная"/>
-		<node name="tickerError" value="Памылка зладаваньня кнігі"/>
-		<node name="contentSuccess" value="Зладаваньне скончанае"/>
-		<node name="contentError" value="Зладаваньне няўдалае"/>
-		<node name="downloadingStarted" value="Зладаваньне кнігі пачатае"/>
+		<node name="downloadCompleteTicker" value="Кніга зладаваная"/>
+		<node name="downloadFailedTicker" value="Памылка зладаваньня кнігі"/>
+		<node name="downloadComplete" value="Зладаваньне скончанае"/>
+		<node name="downloadFailed" value="Зладаваньне няўдалае"/>
+		<node name="downloadStarted" value="Зладаваньне кнігі пачатае"/>
 		<node name="alreadyDownloading" value="Кніга ўжо зладоўваецца"/>
 		<node name="cannotCreateDirectory" value="Немагчыма стварыць тэчку «%s»"/>
 		<node name="cannotCreateFile" value="Немагчыма стварыць файл «%s»"/>
