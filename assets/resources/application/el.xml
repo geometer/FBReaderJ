@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Η λήψη του βιβλίου ολοκληρώθηκε."/>
-		<node name="tickerError" value="Σφάλμα κατά την λήψη του βιβλίου."/>
-		<node name="contentSuccess" value="Η λήψη ολοκληρώθηκε."/>
-		<node name="contentError" value="Η λήψη απέτυχε."/>
-		<node name="downloadingStarted" value="Η λήψη του βιβλίου ξεκίνησε."/>
+		<node name="downloadCompleteTicker" value="Η λήψη του βιβλίου ολοκληρώθηκε."/>
+		<node name="downloadFailedTicker" value="Σφάλμα κατά την λήψη του βιβλίου."/>
+		<node name="downloadComplete" value="Η λήψη ολοκληρώθηκε."/>
+		<node name="downloadFailed" value="Η λήψη απέτυχε."/>
+		<node name="downloadStarted" value="Η λήψη του βιβλίου ξεκίνησε."/>
 		<node name="alreadyDownloading" value="Η λήψη του βιβλίου έχει ήδη ξεκινήσει."/>
 		<node name="cannotCreateDirectory" value="Το ευρετήριο %s δεν μπορεί να δημιουργηθεί."/>
 		<node name="cannotCreateFile" value="Το αρχείο %s δεν μπορεί να δημιουργηθεί."/>

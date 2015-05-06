@@ -227,11 +227,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Книгата е свалена"/>
-		<node name="tickerError" value="Грешка при свалянето на книгата"/>
-		<node name="contentSuccess" value="Свалянето завърши"/>
-		<node name="contentError" value="Грешка при свалянето"/>
-		<node name="downloadingStarted" value="Свалянето на книгата започна"/>
+		<node name="downloadCompleteTicker" value="Книгата е свалена"/>
+		<node name="downloadFailedTicker" value="Грешка при свалянето на книгата"/>
+		<node name="downloadComplete" value="Свалянето завърши"/>
+		<node name="downloadFailed" value="Грешка при свалянето"/>
+		<node name="downloadStarted" value="Свалянето на книгата започна"/>
 		<node name="alreadyDownloading" value="Книгата вече се сваля"/>
 		<node name="cannotCreateDirectory" value="Невъзможно създаване на каталога %s"/>
 		<node name="cannotCreateFile" value="Невъзможно създаване на файла %s"/>

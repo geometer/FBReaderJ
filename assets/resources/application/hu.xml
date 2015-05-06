@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Könyv letöltve"/>
-		<node name="tickerError" value="Hiba a könyv letöltése közben"/>
-		<node name="contentSuccess" value="Letöltés kész"/>
-		<node name="contentError" value="Letöltés sikertelen"/>
-		<node name="downloadingStarted" value="Könyv letöltése elindítva"/>
+		<node name="downloadCompleteTicker" value="Könyv letöltve"/>
+		<node name="downloadFailedTicker" value="Hiba a könyv letöltése közben"/>
+		<node name="downloadComplete" value="Letöltés kész"/>
+		<node name="downloadFailed" value="Letöltés sikertelen"/>
+		<node name="downloadStarted" value="Könyv letöltése elindítva"/>
 		<node name="alreadyDownloading" value="A könyv már letöltés alatt"/>
 		<node name="cannotCreateDirectory" value="%s mappa létrehozása sikertelen"/>
 		<node name="cannotCreateFile" value="%s fájl létrehozása sikertelen"/>

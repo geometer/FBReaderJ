@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="หนังสือที่ถูกดาวน์โหลดแล้ว"/>
-		<node name="tickerError" value="หนังสือที่ดาวน์โหลดผิดพลาด"/>
-		<node name="contentSuccess" value="ดาวน์โหลดเรียบร้อย"/>
-		<node name="contentError" value="ดาวน์โหลดล้มเหลว"/>
-		<node name="downloadingStarted" value="เริ่มต้นดาวน์โหลดหนังสือ"/>
+		<node name="downloadCompleteTicker" value="หนังสือที่ถูกดาวน์โหลดแล้ว"/>
+		<node name="downloadFailedTicker" value="หนังสือที่ดาวน์โหลดผิดพลาด"/>
+		<node name="downloadComplete" value="ดาวน์โหลดเรียบร้อย"/>
+		<node name="downloadFailed" value="ดาวน์โหลดล้มเหลว"/>
+		<node name="downloadStarted" value="เริ่มต้นดาวน์โหลดหนังสือ"/>
 		<node name="alreadyDownloading" value="เสร็จสิ้นการดาวน์โหลดหนังสือ"/>
 		<node name="cannotCreateDirectory" value="ไม่สามารถสร้างไดเรตทอรี %s"/>
 		<node name="cannotCreateFile" value="ไม่สามารถสร้างไฟล์ %s"/>

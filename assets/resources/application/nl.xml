@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Boek is gedownload"/>
-		<node name="tickerError" value="Fout bij downloaden boek"/>
-		<node name="contentSuccess" value="Klaar met downloaden"/>
-		<node name="contentError" value="Download mislukt"/>
-		<node name="downloadingStarted" value="Downloaden van boek is begonnen"/>
+		<node name="downloadCompleteTicker" value="Boek is gedownload"/>
+		<node name="downloadFailedTicker" value="Fout bij downloaden boek"/>
+		<node name="downloadComplete" value="Klaar met downloaden"/>
+		<node name="downloadFailed" value="Download mislukt"/>
+		<node name="downloadStarted" value="Downloaden van boek is begonnen"/>
 		<node name="alreadyDownloading" value="Boek wordt al gedownload"/>
 		<node name="cannotCreateDirectory" value="Aanmaken map %s mislukt"/>
 		<node name="cannotCreateFile" value="Aanmaken bestand %s mislukt"/>
