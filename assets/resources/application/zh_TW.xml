@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="下載成功"/>
-		<node name="tickerError" value="下載錯誤"/>
-		<node name="contentSuccess" value="下載完成"/>
-		<node name="contentError" value="下載失敗"/>
-		<node name="downloadingStarted" value="開始下載"/>
+		<node name="downloadCompleteTicker" value="下載成功"/>
+		<node name="downloadFailedTicker" value="下載錯誤"/>
+		<node name="downloadComplete" value="下載完成"/>
+		<node name="downloadFailed" value="下載失敗"/>
+		<node name="downloadStarted" value="開始下載"/>
 		<node name="alreadyDownloading" value="已在下載"/>
 		<node name="cannotCreateDirectory" value="新增資料夾 %s 失敗"/>
 		<node name="cannotCreateFile" value="新增檔案 %s 失敗"/>

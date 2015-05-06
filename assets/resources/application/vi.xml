@@ -212,11 +212,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Sách đã được tải về"/>
-		<node name="tickerError" value="Lỗi tải sách về"/>
-		<node name="contentSuccess" value="Tải về hoàn tất"/>
-		<node name="contentError" value="Tải về thất bại"/>
-		<node name="downloadingStarted" value="Việc tải sách đang bắt đầu"/>
+		<node name="downloadCompleteTicker" value="Sách đã được tải về"/>
+		<node name="downloadFailedTicker" value="Lỗi tải sách về"/>
+		<node name="downloadComplete" value="Tải về hoàn tất"/>
+		<node name="downloadFailed" value="Tải về thất bại"/>
+		<node name="downloadStarted" value="Việc tải sách đang bắt đầu"/>
 		<node name="alreadyDownloading" value="Sách đang được tải về"/>
 		<node name="cannotCreateDirectory" value="Unable to create directory %s" toBeTranslated="true"/>
 		<node name="cannotCreateFile" value="Unable to create file %s" toBeTranslated="true"/>

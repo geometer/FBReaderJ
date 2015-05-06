@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Boken er lastet ned"/>
-		<node name="tickerError" value="Feil ved nedlasting av bok"/>
-		<node name="contentSuccess" value="Nedlasting ferdig"/>
-		<node name="contentError" value="Nedlasting mislyktes"/>
-		<node name="downloadingStarted" value="Nedlasting av bok har begynt"/>
+		<node name="downloadCompleteTicker" value="Boken er lastet ned"/>
+		<node name="downloadFailedTicker" value="Feil ved nedlasting av bok"/>
+		<node name="downloadComplete" value="Nedlasting ferdig"/>
+		<node name="downloadFailed" value="Nedlasting mislyktes"/>
+		<node name="downloadStarted" value="Nedlasting av bok har begynt"/>
 		<node name="alreadyDownloading" value="Boken lastes allerede ned"/>
 		<node name="cannotCreateDirectory" value="Kan ikke lage katalogen %s"/>
 		<node name="cannotCreateFile" value="Kan ikke lage filen %s"/>

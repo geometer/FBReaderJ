@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="ダウンロードしてあります"/>
-		<node name="tickerError" value="ダウンロードエラー"/>
-		<node name="contentSuccess" value="ダウンロード完了"/>
-		<node name="contentError" value="ダウンロード失敗"/>
-		<node name="downloadingStarted" value="ダウンロードが開始しました"/>
+		<node name="downloadCompleteTicker" value="ダウンロードしてあります"/>
+		<node name="downloadFailedTicker" value="ダウンロードエラー"/>
+		<node name="downloadComplete" value="ダウンロード完了"/>
+		<node name="downloadFailed" value="ダウンロード失敗"/>
+		<node name="downloadStarted" value="ダウンロードが開始しました"/>
 		<node name="alreadyDownloading" value="すでにダウンロード中です"/>
 		<node name="cannotCreateDirectory" value="ディレクトリ %s を作成できません"/>
 		<node name="cannotCreateFile" value="ファイル %s を作成できません"/>
@@ -418,13 +418,13 @@
 				<node name="footnotesAndSuperscripts" value="脚注と上付きリンクのみ"/>
 				<node name="allInternalLinks" value="内部リンクすべて"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
-				<node name="duration1" value="1 second" toBeTranslated="true"/>
-				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
-				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
-				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
-				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
-				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="ポップアップを表示する時間">
+				<node name="duration1" value="1 秒"/>
+				<node name="duration3" value="3 秒"/>
+				<node name="duration5" value="5 秒"/>
+				<node name="duration10" value="10 秒"/>
+				<node name="duration20" value="20 秒"/>
+				<node name="duration300" value="5 分"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="画面の明るさ調節">
 				<node name="summaryOn" value="画面の左端を上下になぞって調節"/>
@@ -1150,9 +1150,9 @@
 		<node name="percent" value="例: 125%%"/>
 	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="unknown error" toBeTranslated="true"/>
-		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
-		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
-		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
+		<node name="unknown" value="不明なエラー"/>
+		<node name="noArticle" value="記事がありません: “%s”"/>
+		<node name="cannotOpenDictionary" value="辞書を開くことができません"/>
+		<node name="noDictionarySelected" value="辞書が選択されていません; Dictan で設定を直してください"/>
 	</node>
 </resources>
