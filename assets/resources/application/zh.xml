@@ -754,8 +754,8 @@
 		</node>
 		<node name="dictionary" value="字典设定">
 			<node name="summary" value="设置字典及其对应操作"/>
-			<node name="dictionary" value="字典"/>
-			<node name="translator" value="译者"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="翻译为">
 				<node name="any" value="所有语言"/>
 			</node>

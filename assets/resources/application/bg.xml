@@ -770,8 +770,8 @@
 		</node>
 		<node name="dictionary" value="Речник">
 			<node name="summary" value="Настройки на речника"/>
-			<node name="dictionary" value="Речник"/>
-			<node name="translator" value="Преводач"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Преведи на">
 				<node name="any" value="всички езици"/>
 			</node>

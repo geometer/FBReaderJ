@@ -757,8 +757,8 @@
 		</node>
 		<node name="dictionary" value="Dictionnaire">
 			<node name="summary" value="Paramètres du dictionnaire"/>
-			<node name="dictionary" value="Dictionnaire"/>
-			<node name="translator" value="Traducteur"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Traduire vers">
 				<node name="any" value="Toutes les langues"/>
 			</node>
