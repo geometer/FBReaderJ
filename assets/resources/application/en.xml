@@ -772,7 +772,7 @@
 			<node name="longTapAction" value="Long tap action">
 				<node name="doNothing" value="Long tap does nothing"/>
 				<node name="selectSingleWord" value="Long tap selects single word"/>
-				<node name="initSelection" value="Long tap initiates selection"/>
+				<node name="startSelecting" value="Long tap initiates selection"/>
 				<node name="openDictionary" value="Long tap selects single word, release opens dictionary"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigate over all words">

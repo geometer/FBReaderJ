@@ -762,7 +762,7 @@
 			<node name="longTapAction" value="Acción de pulsación longa">
 				<node name="doNothing" value="Pulsación longa non fai nada"/>
 				<node name="selectSingleWord" value="Pulsación longa selecciona a palabra"/>
-				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
+				<node name="startSelecting" value="Long tap initiates selection" toBeTranslated="true"/>
 				<node name="openDictionary" value="Pulsación longa selecciona a palabra, e a seguir abre o dicionario"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar por todas as palabras">

@@ -762,7 +762,7 @@
 			<node name="longTapAction" value="Akcja po przytrzymaniu palcem">
 				<node name="doNothing" value="Przytrzymanie nie wywołuje akcji"/>
 				<node name="selectSingleWord" value="Przytrzymanie zaznacza jedno słowo"/>
-				<node name="initSelection" value="Przytrzymanie rozpoczyna zaznaczanie"/>
+				<node name="startSelecting" value="Przytrzymanie rozpoczyna zaznaczanie"/>
 				<node name="openDictionary" value="Przytrzymanie zaznacza jedno słowo, puszczenie otwiera słownik"/>
 			</node>
 			<node name="navigateOverAllWords" value="Przechodź pomiędzy wszystkimi słowami">

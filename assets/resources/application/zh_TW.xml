@@ -762,7 +762,7 @@
 			<node name="longTapAction" value="長按動作">
 				<node name="doNothing" value="長按不做任何動作"/>
 				<node name="selectSingleWord" value="長按選字"/>
-				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
+				<node name="startSelecting" value="Long tap initiates selection" toBeTranslated="true"/>
 				<node name="openDictionary" value="長按選字，放開後查詢詞義"/>
 			</node>
 			<node name="navigateOverAllWords" value="導航鍵訪問語句設定">

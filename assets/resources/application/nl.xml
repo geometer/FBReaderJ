@@ -772,7 +772,7 @@
 			<node name="longTapAction" value="Lang aantikken">
 				<node name="doNothing" value="Lang aantikken doet niets"/>
 				<node name="selectSingleWord" value="Lang aantikken selecteert enkel woord"/>
-				<node name="initSelection" value="Lang aantikken begint selecteermogelijkheid"/>
+				<node name="startSelecting" value="Lang aantikken begint selecteermogelijkheid"/>
 				<node name="openDictionary" value="Lang aantikken selecteert het woord, loslaten opent woordenboek"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigeer over alle woorden">

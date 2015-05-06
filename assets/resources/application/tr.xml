@@ -772,7 +772,7 @@
 			<node name="longTapAction" value="Uzun dokunma eylemi">
 				<node name="doNothing" value="Uzun dokunma eylemsiz"/>
 				<node name="selectSingleWord" value="Uzun dokunma bir kelime seçsin"/>
-				<node name="initSelection" value="Uzun dokunma metin seçimine geçirsin"/>
+				<node name="startSelecting" value="Uzun dokunma metin seçimine geçirsin"/>
 				<node name="openDictionary" value="Uzun dokunma tek kelime seçsin, bırakınca sözlük açılsın"/>
 			</node>
 			<node name="navigateOverAllWords" value="Tüm kelimeler üzerinde gezinme">

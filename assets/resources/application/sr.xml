@@ -772,7 +772,7 @@
 			<node name="longTapAction" value="Дуго тапкање">
 				<node name="doNothing" value="Дуго тапкање не ради ништа"/>
 				<node name="selectSingleWord" value="Дуго тапкање одабира једну реч"/>
-				<node name="initSelection" value="Дуго тапкање започиње одабирање"/>
+				<node name="startSelecting" value="Дуго тапкање започиње одабирање"/>
 				<node name="openDictionary" value="Дуго тапкање одабира реч, а отпуштање отвара речник"/>
 			</node>
 			<node name="navigateOverAllWords" value="Крећи се кроз све речи">

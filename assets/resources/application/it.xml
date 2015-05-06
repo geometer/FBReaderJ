@@ -763,7 +763,7 @@
 			<node name="longTapAction" value="Evento Tocco lungo">
 				<node name="doNothing" value="Tocco lungo non fa nulla"/>
 				<node name="selectSingleWord" value="Tocco lungo seleziona singola parole"/>
-				<node name="initSelection" value="Tocco lungo inizia selezione"/>
+				<node name="startSelecting" value="Tocco lungo inizia selezione"/>
 				<node name="openDictionary" value="Tocco lungo seleziona la parola, il rilascio apre dizionario"/>
 			</node>
 			<node name="navigateOverAllWords" value="Naviga su tutte le parole">

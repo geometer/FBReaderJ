@@ -778,7 +778,7 @@
 			<node name="longTapAction" value="Acció de toc llarg">
 				<node name="doNothing" value="El toc llarg no fa res"/>
 				<node name="selectSingleWord" value="El toc llarg selecciona una paraula"/>
-				<node name="initSelection" value="El toc llarg inicia la selecció"/>
+				<node name="startSelecting" value="El toc llarg inicia la selecció"/>
 				<node name="openDictionary" value="El toc llarg selecciona una paraula, en deixar anar obre el diccionari"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar per totes les paraules">
