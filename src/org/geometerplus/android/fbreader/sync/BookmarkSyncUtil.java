@@ -52,7 +52,6 @@ class BookmarkSyncUtil {
 				) {
 					@Override
 					public void processResponse(Object response) {
-						System.err.println("BMK RESPONSE = " + response);
 						responseMap.putAll((Map<String,Object>)response);
 					}
 				};
@@ -97,10 +96,8 @@ class BookmarkSyncUtil {
 					break;
 				}
 				for (Bookmark b : bmks) {
-					System.err.println("BMK = " + b.getText());
 					final Info info = actualServerInfos.remove(b.Uid);
 					if (info != null) {
-						System.err.println("INFO = " + info);
 						if (info.VersionUid == null) {
 							if (b.getVersionUid() != null) {
 								toUpdateOnServer.add(b);
@@ -110,7 +107,6 @@ class BookmarkSyncUtil {
 								toUpdateOnClient.add(b);
 							} else if (!info.VersionUid.equals(b.getVersionUid())) {
 								final long ts = b.getTimestamp(Bookmark.DateType.Latest);
-								System.err.println("COMPARE: " + ts + " VS " + info.Timestamp);
 								if (info.Timestamp <= ts) {
 									toUpdateOnServer.add(b);
 								} else {
@@ -290,7 +286,6 @@ class BookmarkSyncUtil {
 				allDataToSend.put("requests", requests);
 				allDataToSend.put("timestamp", System.currentTimeMillis());
 				allDataToSend.put("styles", stylesToSend);
-				System.err.println("BMK SENDING: " + allDataToSend);
 				final JsonRequest2 serverUpdateRequest = new JsonRequest2(
 					SyncOptions.BASE_URL + "sync/update.bookmarks", allDataToSend
 				) {
