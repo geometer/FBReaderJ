@@ -777,7 +777,7 @@
 			<node name="longTapAction" value="Aktion beim langen Antippen">
 				<node name="doNothing" value="Langes Antippen bewirkt nichts"/>
 				<node name="selectSingleWord" value="Langes Antippen selektiert ein einzelnes Wort"/>
-				<node name="initSelection" value="Langes Antippen initiiert den Markierungsmodus"/>
+				<node name="startSelecting" value="Langes Antippen initiiert den Markierungsmodus"/>
 				<node name="openDictionary" value="Langes Antippen selektiert ein einzelnes Wort, Loslassen öffnet das Wörterbuch"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigiere über alle Wörter">

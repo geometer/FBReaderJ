@@ -772,7 +772,7 @@
 			<node name="longTapAction" value="Kolpetxo luzatuaren  ekintzak">
 				<node name="doNothing" value="Kolpetxo luzatuak ez du ezer egiten"/>
 				<node name="selectSingleWord" value="Kolpetxo luzatuak hitz soila hautatzen du"/>
-				<node name="initSelection" value="Kolpetxo luzatuak hautaketa hasten du"/>
+				<node name="startSelecting" value="Kolpetxo luzatuak hautaketa hasten du"/>
 				<node name="openDictionary" value="Kolpetxo luzatuak hitz soila hautatzen du, askatzerakoan hiztegia zabaltzen du"/>
 			</node>
 			<node name="navigateOverAllWords" value="Nabigatu hitzen artean">

@@ -771,7 +771,7 @@
 			<node name="longTapAction" value="Handling for langt tryk">
 				<node name="doNothing" value="Langt tast har ingen virkning"/>
 				<node name="selectSingleWord" value="Et langt tryk vælger et enkelt ord"/>
-				<node name="initSelection" value="Et langt tryk starter valg"/>
+				<node name="startSelecting" value="Et langt tryk starter valg"/>
 				<node name="openDictionary" value="Et langt tryk vælger et enkelt ord, slip åbner ordbogen"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigere over alle ord">

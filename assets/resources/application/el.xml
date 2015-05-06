@@ -770,7 +770,7 @@
 			<node name="longTapAction" value="Ενέργεια σε παρατεταμένο άγγιγμα">
 				<node name="doNothing" value="Παρατεταμένο άγγιγμα δεν προκαλεί τίποτα."/>
 				<node name="selectSingleWord" value="Παρατεταμένα άγγιγμα επιλέγει μία λέξη."/>
-				<node name="initSelection" value="Παρατεταμένο άγγιγμα ξεκινάει την λειτουργία επιλογής κειμένου."/>
+				<node name="startSelecting" value="Παρατεταμένο άγγιγμα ξεκινάει την λειτουργία επιλογής κειμένου."/>
 				<node name="openDictionary" value="Παρατεταμένα άγγιγμα επιλέγει μία λέξη και ανοίγει το λεξικό."/>
 			</node>
 			<node name="navigateOverAllWords" value="΄Πλοήγηση σε όλες τις λέξεις">
