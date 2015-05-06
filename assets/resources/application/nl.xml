@@ -764,8 +764,8 @@
 		</node>
 		<node name="dictionary" value="Woordenboek">
 			<node name="summary" value="Woordenboek instellingen"/>
-			<node name="dictionary" value="Woordenboek"/>
-			<node name="translator" value="Vertaler"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Vertalen naar">
 				<node name="any" value="alle talen"/>
 			</node>

@@ -768,8 +768,8 @@
 		</node>
 		<node name="dictionary" value="Dicionário">
 			<node name="summary" value="Configurações de dicionário"/>
-			<node name="dictionary" value="Dicionário"/>
-			<node name="translator" value="Tradutor"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Traduzir para">
 				<node name="any" value="todos os idiomas"/>
 			</node>

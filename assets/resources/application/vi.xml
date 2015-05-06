@@ -6,14 +6,14 @@
 		<node name="unknownAuthor" value="Tác giả chưa biết"/>
 		<node name="booksWithNoTags" value="Sách không từ khóa"/>
 		<node name="demo" value="xem thử"/>
-		<node name="byAuthor" value="Theo tác giả">
-			<node name="summary" value="Sách được xếp theo tác giả"/>
+		<node name="byAuthor" value="Tác giả">
+			<node name="summary" value="Xếp sách theo tác giả"/>
 		</node>
-		<node name="byTitle" value="By title" toBeTranslated="true">
-			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		<node name="byTitle" value="Tựa sách">
+			<node name="summary" value="Xếp sách theo tựa"/>
 		</node>
-		<node name="bySeries" value="By series" toBeTranslated="true">
-			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		<node name="bySeries" value="Bộ sách">
+			<node name="summary" value="Xếp sách theo bộ"/>
 		</node>
 		<node name="byTag" value="Theo từ khóa">
 			<node name="summary" value="Sách được xếp theo từ khóa "/>
@@ -24,7 +24,7 @@
 		<node name="favorites" value="Yêu thích">
 			<node name="summary" value="Sách của tôi"/>
 		</node>
-		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
+		<node name="bookshelfView" value="Xem kiểu Giá sách">
 			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="Tìm thấy">
@@ -58,40 +58,40 @@
 			<node name="summary" value="Thư mục sách FBReader"/>
 		</node>
 		<node name="localSearch" value="Tìm nội bộ"/>
-		<node name="rescan" value="Rescan" toBeTranslated="true"/>
+		<node name="rescan" value="Quét lại"/>
 		<node name="openBook" value="Mở sách"/>
-		<node name="showBookInfo" value="Book info"/>
-		<node name="shareBook" value="Share book" toBeTranslated="true"/>
+		<node name="showBookInfo" value="Thông tin sách"/>
+		<node name="shareBook" value="Chia sẻ sách"/>
 		<node name="deleteBook" value="Xóa sách"/>
 		<node name="addToFavorites" value="Thêm vào yêu thích"/>
-		<node name="removeFromFavorites" value="Xóa khỏi yêu thích"/>
-		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
-		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
-		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
-		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
-		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
+		<node name="removeFromFavorites" value="Xóa khỏi Yêu thích"/>
+		<node name="removeFromRecents" value="Xóa khỏi Gần đây"/>
+		<node name="markAsRead" value="Đánh dấu đã đọc"/>
+		<node name="markAsUnread" value="Đánh dấu chưa đọc"/>
+		<node name="deleteAll" value="Xóa tất cả"/>
+		<node name="uploadAgain" value="Tải lên lại"/>
+		<node name="tryAgain" value="Thử lại"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="sync" value="FBReader® book network" toBeTranslated="true">
 			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
 		</node>
-		<node name="byAuthor" value="Theo tác giả">
-			<node name="summary" value="Sách được xếp theo tác giả"/>
+		<node name="byAuthor" value="Tác giả">
+			<node name="summary" value="Xếp sách theo tác giả"/>
 		</node>
-		<node name="byTitle" value="By title" toBeTranslated="true">
-			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		<node name="byTitle" value="Tựa sách">
+			<node name="summary" value="Xếp sách theo tựa sách"/>
 		</node>
-		<node name="byDate" value="By date" toBeTranslated="true">
-			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		<node name="byDate" value="Ngày">
+			<node name="summary" value="Xếp sách theo ngày mua/nhập"/>
 		</node>
-		<node name="bySeries" value="By series" toBeTranslated="true">
-			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		<node name="bySeries" value="Bộ sách">
+			<node name="summary" value="Xếp sách theo bộ"/>
 		</node>
-		<node name="search" value="Tìm">
-			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+		<node name="search" value="Tìm kiếm">
+			<node name="summary" value="Tìm sách ở %s"/>
 			<node name="summaryAllCatalogs" value="Tìm sách trong danh mục"/>
-			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+			<node name="summaryInProgress" value="Vẫn đang tìm kiếm"/>
 		</node>
 		<node name="found" value="Tìm thấy">
 			<node name="summary" value="Kết quả tìm kiếm khoảng: %s"/>
@@ -100,7 +100,7 @@
 			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Mở danh mục"/>
-		<node name="networkSearch" value="Tìm"/>
+		<node name="networkSearch" value="Tìm kiếm"/>
 		<node name="showResults" value="Hiện kết quả"/>
 		<node name="showBooks" value="Show books"/>
 		<node name="download" value="Tải về"/>
@@ -110,8 +110,8 @@
 		<node name="deleteDemo" value="Xóa bản thử"/>
 		<node name="downloadDemo" value="Tải về bản thử"/>
 		<node name="buy" value="Mua (%s)"/>
-		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
-		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="addToBasket" value="Thêm vào giỏ"/>
+		<node name="removeFromBasket" value="Bỏ khỏi giỏ"/>
 		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
 		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
@@ -154,12 +154,12 @@
 		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
-			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
+			<node name="editUrl" value="Nhập URL thủ công" toBeTranslated="true"/>
 		</node>
-		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
-			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
-			<node name="enabled" value="Enabled" toBeTranslated="true"/>
-			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		<node name="manageCatalogs" value="Quản lý kho sách">
+			<node name="summary" value="Cấu hình danh mục kho sách"/>
+			<node name="enabled" value="Có dùng"/>
+			<node name="disabled" value="Không dùng"/>
 		</node>
 		<node name="menu">
 			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
@@ -181,7 +181,7 @@
 		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
 		<node name="confirm" value="Bạn có chắc muốn mua quyển&#10;“%s”&#10;?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
-		<node name="alreadyBought" value="Sách đã được mua"/>
+		<node name="alreadyBought" value="Sách đã mua"/>
 		<node name="notAuthorised" value="Authorisation required" toBeTranslated="true"/>
 		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
@@ -203,7 +203,7 @@
 		<node name="type" value="Loại:"/>
 		<node name="size" value="Cỡ:"/>
 		<node name="time" value="Lần sửa cuối:"/>
-		<node name="sizeInBytes" value="%s byte(s)"/>
+		<node name="sizeInBytes" value="%s byte"/>
 		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
@@ -212,14 +212,14 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="downloadCompleteTicker" value="Sách đã được tải về"/>
+		<node name="downloadCompleteTicker" value="Sách đã tải về"/>
 		<node name="downloadFailedTicker" value="Lỗi tải sách về"/>
 		<node name="downloadComplete" value="Tải về hoàn tất"/>
 		<node name="downloadFailed" value="Tải về thất bại"/>
 		<node name="downloadStarted" value="Việc tải sách đang bắt đầu"/>
 		<node name="alreadyDownloading" value="Sách đang được tải về"/>
 		<node name="cannotCreateDirectory" value="Unable to create directory %s" toBeTranslated="true"/>
-		<node name="cannotCreateFile" value="Unable to create file %s" toBeTranslated="true"/>
+		<node name="cannotCreateFile" value="Không tạo được file %s"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Mở rộng cây"/>
@@ -232,14 +232,14 @@
 		<node name="new" value="Đánh dấu mới"/>
 		<node name="openBook" value="Mở"/>
 		<node name="editBookmark" value="Sửa đánh dấu"/>
-		<node name="deleteBookmark" value="Xoa đánh dấu"/>
+		<node name="deleteBookmark" value="Xóa đánh dấu"/>
 		<node name="search" value="Tìm"/>
 	</node>
 	<node name="editBookmark">
-		<node name="text" value="Text" toBeTranslated="true"/>
-		<node name="style" value="Style" toBeTranslated="true"/>
-		<node name="delete" value="Delete" toBeTranslated="true"/>
-		<node name="deleteBookmark" value="Xoa đánh dấu"/>
+		<node name="text" value="Nội dung"/>
+		<node name="style" value="Màu sắc"/>
+		<node name="delete" value="Xóa"/>
+		<node name="deleteBookmark" value="Xóa đánh dấu"/>
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
 	</node>
@@ -247,28 +247,28 @@
 		<node name="more" value="More" toBeTranslated="true"/>
 	</node>
 	<node name="cancelMenu">
-		<node name="library" value="Open library" toBeTranslated="true"/>
-		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
-		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
-		<node name="returnTo" value="Return to …" toBeTranslated="true"/>
+		<node name="library" value="Mở thư viện trên máy"/>
+		<node name="networkLibrary" value="Mở kho sách trên mạng"/>
+		<node name="previousBook" value="Mở sách đọc lần trước"/>
+		<node name="returnTo" value="Trở lại …"/>
 		<node name="back" value="Back" toBeTranslated="true"/>
 		<node name="forward" value="Forward" toBeTranslated="true"/>
-		<node name="close" value="Close FBReader" toBeTranslated="true"/>
+		<node name="close" value="Đóng FBReader"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
 	<node name="editStyle">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
-			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
-			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOn" value="Không bôi màu"/>
+			<node name="summaryOff" value="Bôi màu đánh dấu"/>
 		</node>
-		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+		<node name="bgColor" value="Màu nền"/>
 	</node>
 	<node name="selection" value="Lựa chọn">
 		<node name="copyToClipboard" value="Chép vào Clipboard"/>
 		<node name="openInDictionary" value="Mở trong Từ điển"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
-		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Đã chép vào bộ nhớ tạm:&#10;%s"/>
 		<node name="clearSelection" value="Xóa"/>
 	</node>
 	<node name="sharing">
@@ -280,8 +280,8 @@
 		<node name="bookInfo" value="Thông tin sách"/>
 		<node name="library" value="Thư viện"/>
 		<node name="toc" value="Mục lục"/>
-		<node name="day" value="Ngày"/>
-		<node name="night" value="Đêm"/>
+		<node name="day" value="Sáng"/>
+		<node name="night" value="Tối"/>
 		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
 		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Thư viện mạng"/>
@@ -297,7 +297,7 @@
 			<node name="redo" value="Đi Tiếp"/>
 		</node>
 		<node name="shareBook" value="Chia sẻ sách"/>
-		<node name="search" value="Tìm"/>
+		<node name="search" value="Tìm kiếm"/>
 		<node name="rotate" value="Xoay màn hình"/>
 		<node name="screenOrientation" value="Hướng màn hình"/>
 		<node name="screenOrientationSystem" value="Theo hệ thống"/>
@@ -306,11 +306,11 @@
 		<node name="screenOrientationLandscape" value="Ngang"/>
 		<node name="screenOrientationReversePortrait" value="Dọc: lộn đầu"/>
 		<node name="screenOrientationReverseLandscape" value="Ngang: lộn đầu"/>
-		<node name="increaseFont" value="Phóng to"/>
-		<node name="decreaseFont" value="Thu nhỏ"/>
+		<node name="increaseFont" value="Chữ to hơn"/>
+		<node name="decreaseFont" value="Chữ nhỏ hơn"/>
 		<node name="toggleFullscreen" value="Toàn Màn hình "/>
 		<node name="bookmarks" value="Đánh dấu"/>
-		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="help" value="Trợ giúp"/>
 		<node name="plugins" value="Cài phần bổ sung"/>
 	</node>
 	<node name="BookInfo">
@@ -329,9 +329,9 @@
 				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="Bật chế độ đồng bộ">
-				<node name="summaryOn" value="Đồng bộ thư viện lên máy chủ của FBReader"/>
-				<node name="summaryOnWithAccount" value="Đồng bộ thư viện thành %s"/>
-				<node name="summaryOff" value="Không đồng bộ thư viện lên máy chủ của FBReader"/>
+				<node name="summaryOn" value="Đồng bộ sách lên thư viện đám mây"/>
+				<node name="summaryOnWithAccount" value="Đồng bộ thư viện bằng %s"/>
+				<node name="summaryOff" value="Không đồng bộ thư viện lên đám mây"/>
 			</node>
 			<node name="values">
 				<node name="always" value="Mọi lúc"/>
@@ -755,15 +755,15 @@
 		</node>
 		<node name="dictionary" value="Từ điển">
 			<node name="summary" value="Cài đặt từ điển"/>
-			<node name="dictionary" value="Từ điển"/>
-			<node name="translator" value="Translator" toBeTranslated="true"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
 			<node name="longTapAction" value="Nhấn giữ">
 				<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
 				<node name="selectSingleWord" value="Chọn từ khi nhấn giữ"/>
-				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
+				<node name="initSelection" value="Long tap initiates selecting" toBeTranslated="true"/>
 				<node name="openDictionary" value="Chọn từ và mở từ điển khi nhấn giữ"/>
 			</node>
 			<node name="navigateOverAllWords" value="Điều hướng mọi từ">
@@ -1067,7 +1067,7 @@
 		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Danh mục rỗng"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
-		<node name="emptyNetworkSearchResults" value="Không tìm thấy sách, rất tiếc." toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="Không tìm thấy sách, rất tiếc."/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 		<node name="bookIsMissingTitle" value="Sách bị mất"/>

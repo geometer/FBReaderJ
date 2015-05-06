@@ -770,8 +770,8 @@
 		</node>
 		<node name="dictionary" value="Diccionari">
 			<node name="summary" value="Preferències dels diccionaris"/>
-			<node name="dictionary" value="Diccionari"/>
-			<node name="translator" value="Traductor"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Traduir a">
 				<node name="any" value="tots els idiomes"/>
 			</node>

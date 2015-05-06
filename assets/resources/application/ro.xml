@@ -756,8 +756,8 @@
 		</node>
 		<node name="dictionary" value="Dictionar">
 			<node name="summary" value="Setari dictionar "/>
-			<node name="dictionary" value="Dictionar"/>
-			<node name="translator" value="Traducator"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Tradu in">
 				<node name="any" value="toate limbile"/>
 			</node>
