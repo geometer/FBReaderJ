@@ -777,7 +777,7 @@
 			<node name="longTapAction" value="Acción de toque prolongado">
 				<node name="doNothing" value="Toque prolongado no hace nada"/>
 				<node name="selectSingleWord" value="Toque prolongado selecciona una palabra"/>
-				<node name="initSelection" value="Toque prolongado inicia selección"/>
+				<node name="startSelecting" value="Toque prolongado inicia selección"/>
 				<node name="openDictionary" value="Toque prolongado selecciona una palabra, al soltar abre diccionario"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar por todas las palabras">

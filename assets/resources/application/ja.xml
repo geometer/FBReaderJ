@@ -764,15 +764,15 @@
 		</node>
 		<node name="dictionary" value="辞書">
 			<node name="summary" value="辞書まわりの設定"/>
-			<node name="dictionary" value="辞書"/>
-			<node name="translator" value="翻訳"/>
+			<node name="dictionary" value="単語を引くとき"/>
+			<node name="translator" value="文を翻訳するとき"/>
 			<node name="targetLanguage" value="何語に翻訳">
 				<node name="any" value="すべての言語"/>
 			</node>
 			<node name="longTapAction" value="長押し動作">
 				<node name="doNothing" value="長押しで何もしない"/>
 				<node name="selectSingleWord" value="長押しで単語ひとつ選択"/>
-				<node name="initSelection" value="長押しで選択開始"/>
+				<node name="startSelecting" value="長押しで選択開始"/>
 				<node name="openDictionary" value="長押しで単語ひとつ選択、離した瞬間に辞書"/>
 			</node>
 			<node name="navigateOverAllWords" value="すべての単語に移動">
