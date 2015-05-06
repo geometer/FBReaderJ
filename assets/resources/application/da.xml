@@ -763,8 +763,8 @@
 		</node>
 		<node name="dictionary" value="Ordbog">
 			<node name="summary" value="Ordbogsindstillinger"/>
-			<node name="dictionary" value="Ordbog"/>
-			<node name="translator" value="Oversætter"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
