@@ -762,7 +762,7 @@
 			<node name="longTapAction" value="Hosszú érintés">
 				<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
 				<node name="selectSingleWord" value="A hosszú érintés kijelöli a szót"/>
-				<node name="initSelection" value="A hosszú érintés elindítja a kijelölést"/>
+				<node name="startSelecting" value="A hosszú érintés elindítja a kijelölést"/>
 				<node name="openDictionary" value="A hosszú érintés kijelöli a szót, a felengedés megnyitja a szótárt"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigáció szavanként">

@@ -762,7 +762,7 @@
 			<node name="longTapAction" value="Дія при довгому натисканні">
 				<node name="doNothing" value="Довге натискання нічого не робить"/>
 				<node name="selectSingleWord" value="Довге натискання вибирає слово"/>
-				<node name="initSelection" value="Довге натискання починає виділення"/>
+				<node name="startSelecting" value="Довге натискання починає виділення"/>
 				<node name="openDictionary" value="Довге натискання вибирає слово, відпускання відкриває словник"/>
 			</node>
 			<node name="navigateOverAllWords" value="Перехід по всім словам">

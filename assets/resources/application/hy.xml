@@ -777,7 +777,7 @@
 			<node name="longTapAction" value="Գործողություններ՝ էկրանին երկար սեղմելիս">
 				<node name="doNothing" value="Ոչինչ չանել"/>
 				<node name="selectSingleWord" value="Նշել մեկ բառ"/>
-				<node name="initSelection" value="Սկսել նշումը"/>
+				<node name="startSelecting" value="Սկսել նշումը"/>
 				<node name="openDictionary" value="Նշել մեկ բառ և գործարկել բառարանը"/>
 			</node>
 			<node name="navigateOverAllWords" value="Նավարկել բոլոր բառերով">
