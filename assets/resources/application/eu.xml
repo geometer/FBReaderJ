@@ -764,8 +764,8 @@
 		</node>
 		<node name="dictionary" value="Hiztegia">
 			<node name="summary" value="Hiztegiaren ezarpenak"/>
-			<node name="dictionary" value="Hiztegia"/>
-			<node name="translator" value="Itzultzailea"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Itzuli honetara">
 				<node name="any" value="hizkuntza guztiak"/>
 			</node>
