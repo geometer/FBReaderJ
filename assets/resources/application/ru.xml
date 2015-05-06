@@ -769,8 +769,8 @@
 		</node>
 		<node name="dictionary" value="Словарь">
 			<node name="summary" value="Настройки словаря"/>
-			<node name="dictionary" value="Словарь"/>
-			<node name="translator" value="Переводчик"/>
+			<node name="dictionary" value="Искать отдельное слово в"/>
+			<node name="translator" value="Переводить фразы с помощью"/>
 			<node name="targetLanguage" value="Переводить на">
 				<node name="any" value="все языки"/>
 			</node>
