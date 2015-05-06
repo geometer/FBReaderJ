@@ -220,11 +220,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="کتاب دانلود شد"/>
-		<node name="tickerError" value="مشکل هنگام دانلود کتاب"/>
-		<node name="contentSuccess" value="دانلود کامل شد"/>
-		<node name="contentError" value="دانلود ناموفق"/>
-		<node name="downloadingStarted" value="دانلود کتاب آغاز شد"/>
+		<node name="downloadCompleteTicker" value="کتاب دانلود شد"/>
+		<node name="downloadFailedTicker" value="مشکل هنگام دانلود کتاب"/>
+		<node name="downloadComplete" value="دانلود کامل شد"/>
+		<node name="downloadFailed" value="دانلود ناموفق"/>
+		<node name="downloadStarted" value="دانلود کتاب آغاز شد"/>
 		<node name="alreadyDownloading" value="کتاب  دانلود شده است"/>
 		<node name="cannotCreateDirectory" value="قادر به ایجاد پوشه %s نیست"/>
 		<node name="cannotCreateFile" value="قادر به ایجاد فایل %s نیست"/>

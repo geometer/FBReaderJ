@@ -57,8 +57,8 @@ public class BookDownloaderService extends Service {
 	}
 
 	public interface Notifications {
-		int DOWNLOADING_STARTED = 0x0001;
-		int ALREADY_DOWNLOADING = 0x0002;
+		int DOWNLOAD_STARTED = 0x0001;
+		int ALREADY_IN_PROGRESS = 0x0002;
 
 		int ALL = 0x0003;
 	}
@@ -131,7 +131,7 @@ public class BookDownloaderService extends Service {
 		}
 
 		if (myDownloadingURLs.contains(url)) {
-			if ((notifications & Notifications.ALREADY_DOWNLOADING) != 0) {
+			if ((notifications & Notifications.ALREADY_IN_PROGRESS) != 0) {
 				showMessage("alreadyDownloading");
 			}
 			doStop();
@@ -176,26 +176,26 @@ public class BookDownloaderService extends Service {
 		if (title == null || title.length() == 0) {
 			title = fileFile.getName();
 		}
-		if ((notifications & Notifications.DOWNLOADING_STARTED) != 0) {
-			showMessage("downloadingStarted");
+		if ((notifications & Notifications.DOWNLOAD_STARTED) != 0) {
+			showMessage("downloadStarted");
 		}
 		startFileDownload(url, fileFile, title);
 	}
 
-	private void showMessage(String key) {
+	private void showMessageText(String text) {
 		Toast.makeText(
 			getApplicationContext(),
-			getResource().getResource(key).getValue(),
+			text,
 			Toast.LENGTH_SHORT
 		).show();
 	}
 
+	private void showMessage(String key) {
+		showMessageText(getResource().getResource(key).getValue());
+	}
+
 	private void showMessage(String key, String parameter) {
-		Toast.makeText(
-			getApplicationContext(),
-			getResource().getResource(key).getValue().replace("%s", parameter),
-			Toast.LENGTH_SHORT
-		).show();
+		showMessageText(getResource().getResource(key).getValue().replace("%s", parameter));
 	}
 
 	private Intent getFBReaderIntent(final File file) {
@@ -209,11 +209,11 @@ public class BookDownloaderService extends Service {
 	private Notification createDownloadFinishNotification(File file, String title, boolean success) {
 		final ZLResource resource = getResource();
 		final String tickerText = success ?
-			resource.getResource("tickerSuccess").getValue() :
-			resource.getResource("tickerError").getValue();
+			resource.getResource("downloadCompleteTicker").getValue() :
+			resource.getResource("downloadFailedTicker").getValue();
 		final String contentText = success ?
-			resource.getResource("contentSuccess").getValue() :
-			resource.getResource("contentError").getValue();
+			resource.getResource("downloadComplete").getValue() :
+			resource.getResource("downloadFailed").getValue();
 		final Notification notification = new Notification(
 			android.R.drawable.stat_sys_download_done,
 			tickerText,
@@ -257,38 +257,45 @@ public class BookDownloaderService extends Service {
 		final int notificationId = NotificationUtil.getDownloadId(file.getPath());
 		final Notification progressNotification = createDownloadProgressNotification(title);
 
-		final NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+		final NotificationManager notificationManager =
+			(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		myOngoingNotifications.add(Integer.valueOf(notificationId));
 		notificationManager.notify(notificationId, progressNotification);
 
-		final Handler progressHandler = new Handler() {
-			public void handleMessage(Message message) {
-				final int progress = message.what;
-				final RemoteViews contentView = (RemoteViews)progressNotification.contentView;
+		final int MESSAGE_PROGRESS = 0;
+		final int MESSAGE_FINISH = 1;
 
-				if (progress < 0) {
-					contentView.setTextViewText(R.id.download_notification_progress_text, "");
-					contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
-				} else {
-					contentView.setTextViewText(R.id.download_notification_progress_text, "" + progress + "%");
-					contentView.setProgressBar(R.id.download_notification_progress_bar, 100, progress, false);
+		final Handler handler = new Handler() {
+			public void handleMessage(Message message) {
+				switch (message.what) {
+					case MESSAGE_PROGRESS:
+					{
+						final int progress = message.arg1;
+						final RemoteViews contentView = (RemoteViews)progressNotification.contentView;
+						final boolean showPercent = progress >= 0;
+						contentView.setTextViewText(
+							R.id.download_notification_progress_text,
+							showPercent ? progress + "%" : ""
+						);
+						contentView.setProgressBar(
+							R.id.download_notification_progress_bar,
+							100, showPercent ? progress : 0, !showPercent
+						);
+						notificationManager.notify(notificationId, progressNotification);
+						break;
+					}
+					case MESSAGE_FINISH:
+						myDownloadingURLs.remove(urlString);
+						NotificationUtil.drop(BookDownloaderService.this, notificationId);
+						myOngoingNotifications.remove(Integer.valueOf(notificationId));
+						notificationManager.notify(
+							notificationId,
+							createDownloadFinishNotification(file, title, message.arg1 != 0)
+						);
+						sendDownloaderCallback();
+						doStop();
+						break;
 				}
-				final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-				notificationManager.notify(notificationId, progressNotification);
-			}
-		};
-
-		final Handler downloadFinishHandler = new Handler() {
-			public void handleMessage(Message message) {
-				myDownloadingURLs.remove(urlString);
-				NotificationUtil.drop(BookDownloaderService.this, notificationId);
-				myOngoingNotifications.remove(Integer.valueOf(notificationId));
-				notificationManager.notify(
-					notificationId,
-					createDownloadFinishNotification(file, title, message.what != 0)
-				);
-				sendDownloaderCallback();
-				doStop();
 			}
 		};
 
@@ -299,7 +306,7 @@ public class BookDownloaderService extends Service {
 				int downloadedPart = 0;
 				long progressTime = System.currentTimeMillis() + updateIntervalMillis;
 				if (length <= 0) {
-					progressHandler.sendEmptyMessage(-1);
+					handler.sendMessage(handler.obtainMessage(MESSAGE_PROGRESS, -1, 0, null));
 				}
 				final OutputStream outStream;
 				try {
@@ -319,17 +326,12 @@ public class BookDownloaderService extends Service {
 							final long currentTime = System.currentTimeMillis();
 							if (currentTime > progressTime) {
 								progressTime = currentTime + updateIntervalMillis;
-								progressHandler.sendEmptyMessage(downloadedPart * 100 / length);
+								handler.sendMessage(handler.obtainMessage(
+									MESSAGE_PROGRESS, downloadedPart * 100 / length, 0, null
+								));
 							}
-							/*if (downloadedPart * 100 / length > 95) {
-								throw new IOException("debug exception");
-							}*/
 						}
 						outStream.write(buffer, 0, size);
-						/*try {
-							Thread.currentThread().sleep(200);
-						} catch (InterruptedException ex) {
-						}*/
 					}
 					final BookCollectionShadow collection = new BookCollectionShadow();
 					collection.bindToService(BookDownloaderService.this, new Runnable() {
@@ -352,12 +354,19 @@ public class BookDownloaderService extends Service {
 					SQLiteCookieDatabase.init(BookDownloaderService.this);
 					myNetworkContext.perform(request);
 					success = true;
-				} catch (ZLNetworkException e) {
-					// TODO: show error message to User
+				} catch (final ZLNetworkException e) {
 					e.printStackTrace();
+					final String title = getResource().getResource("downloadFailed").getValue();
+					handler.post(new Runnable() {
+						public void run() {
+							showMessageText(title + ": " + e.getMessage());
+						}
+					});
 					file.delete();
 				} finally {
-					downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
+					handler.sendMessage(handler.obtainMessage(
+						MESSAGE_FINISH, success ? 1 : 0, 0, null
+					));
 				}
 			}
 		});
