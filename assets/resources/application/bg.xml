@@ -778,7 +778,7 @@
 			<node name="longTapAction" value="Действие при продължителен натиск по екрана">
 				<node name="doNothing" value="Не се извършва действие"/>
 				<node name="selectSingleWord" value="Селектиране на една дума"/>
-				<node name="initSelection" value="Започване на селекция"/>
+				<node name="startSelecting" value="Започване на селекция"/>
 				<node name="openDictionary" value="Селектиране на една дума, а при отместване – стартиране на речника"/>
 			</node>
 			<node name="navigateOverAllWords" value="Придвижване по всички думи">
