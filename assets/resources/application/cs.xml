@@ -230,11 +230,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Kniha byla stažena"/>
-		<node name="tickerError" value="Chyba stahování knihy"/>
-		<node name="contentSuccess" value="Stahování dokončeno"/>
-		<node name="contentError" value="Stahování selhalo"/>
-		<node name="downloadingStarted" value="Stahování knihy bylo zahájeno"/>
+		<node name="downloadCompleteTicker" value="Kniha byla stažena"/>
+		<node name="downloadFailedTicker" value="Chyba stahování knihy"/>
+		<node name="downloadComplete" value="Stahování dokončeno"/>
+		<node name="downloadFailed" value="Stahování selhalo"/>
+		<node name="downloadStarted" value="Stahování knihy bylo zahájeno"/>
 		<node name="alreadyDownloading" value="Kniha se již stahuje"/>
 		<node name="cannotCreateDirectory" value="Nelze vytvořit adresář %s"/>
 		<node name="cannotCreateFile" value="Nelze vytvořit soubor %s"/>

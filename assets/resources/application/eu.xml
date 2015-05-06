@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Liburua deskargatu da"/>
-		<node name="tickerError" value="Errorea liburua deskargatzerakoan"/>
-		<node name="contentSuccess" value="Deskarga osatua"/>
-		<node name="contentError" value="Huts egin du deskargak"/>
-		<node name="downloadingStarted" value="Liburua deskargatzen hasi da"/>
+		<node name="downloadCompleteTicker" value="Liburua deskargatu da"/>
+		<node name="downloadFailedTicker" value="Errorea liburua deskargatzerakoan"/>
+		<node name="downloadComplete" value="Deskarga osatua"/>
+		<node name="downloadFailed" value="Huts egin du deskargak"/>
+		<node name="downloadStarted" value="Liburua deskargatzen hasi da"/>
 		<node name="alreadyDownloading" value="Liburua deskargatzen ari da"/>
 		<node name="cannotCreateDirectory" value="Ezin izan da %s direktorioa sortu"/>
 		<node name="cannotCreateFile" value="Ezin izan da %s fitxategia sortu"/>

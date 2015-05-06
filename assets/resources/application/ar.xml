@@ -219,11 +219,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="تم تحميل الكتاب"/>
-		<node name="tickerError" value="خطأ في تحميل الكتاب"/>
-		<node name="contentSuccess" value="إنتهاء التحميل"/>
-		<node name="contentError" value="فشل التحميل"/>
-		<node name="downloadingStarted" value="تم البدأ في تحميل الكتاب"/>
+		<node name="downloadCompleteTicker" value="تم تحميل الكتاب"/>
+		<node name="downloadFailedTicker" value="خطأ في تحميل الكتاب"/>
+		<node name="downloadComplete" value="إنتهاء التحميل"/>
+		<node name="downloadFailed" value="فشل التحميل"/>
+		<node name="downloadStarted" value="تم البدأ في تحميل الكتاب"/>
 		<node name="alreadyDownloading" value="يتم تحميل الكتاب مسبقا"/>
 		<node name="cannotCreateDirectory" value="لا يمكن إنشاء المجلد %s"/>
 		<node name="cannotCreateFile" value="لا يمكن إنشاء الملف %s"/>

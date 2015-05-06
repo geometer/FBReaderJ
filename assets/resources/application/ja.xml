@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="ダウンロードしてあります"/>
-		<node name="tickerError" value="ダウンロードエラー"/>
-		<node name="contentSuccess" value="ダウンロード完了"/>
-		<node name="contentError" value="ダウンロード失敗"/>
-		<node name="downloadingStarted" value="ダウンロードが開始しました"/>
+		<node name="downloadCompleteTicker" value="ダウンロードしてあります"/>
+		<node name="downloadFailedTicker" value="ダウンロードエラー"/>
+		<node name="downloadComplete" value="ダウンロード完了"/>
+		<node name="downloadFailed" value="ダウンロード失敗"/>
+		<node name="downloadStarted" value="ダウンロードが開始しました"/>
 		<node name="alreadyDownloading" value="すでにダウンロード中です"/>
 		<node name="cannotCreateDirectory" value="ディレクトリ %s を作成できません"/>
 		<node name="cannotCreateFile" value="ファイル %s を作成できません"/>

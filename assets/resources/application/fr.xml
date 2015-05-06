@@ -214,11 +214,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Le livre a été téléchargé"/>
-		<node name="tickerError" value="Erreur de téléchargement du livre"/>
-		<node name="contentSuccess" value="Téléchargement terminé"/>
-		<node name="contentError" value="Téléchargement échoué"/>
-		<node name="downloadingStarted" value="Le téléchargement du livre a été démarré"/>
+		<node name="downloadCompleteTicker" value="Le livre a été téléchargé"/>
+		<node name="downloadFailedTicker" value="Erreur de téléchargement du livre"/>
+		<node name="downloadComplete" value="Téléchargement terminé"/>
+		<node name="downloadFailed" value="Téléchargement échoué"/>
+		<node name="downloadStarted" value="Le téléchargement du livre a été démarré"/>
 		<node name="alreadyDownloading" value="Le livre est déjà en cours de téléchargement"/>
 		<node name="cannotCreateDirectory" value="Impossible de créer le répertoire %s"/>
 		<node name="cannotCreateFile" value="Impossible de créer le fichier %s"/>
