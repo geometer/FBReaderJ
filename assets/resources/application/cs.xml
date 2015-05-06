@@ -773,8 +773,8 @@
 		</node>
 		<node name="dictionary" value="Slovník">
 			<node name="summary" value="Nastavení slovníku"/>
-			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
-			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
+			<node name="dictionary" value="Vyhledat jedno slovo v"/>
+			<node name="translator" value="Přeložit fráze pomocí"/>
 			<node name="targetLanguage" value="Přeložit do">
 				<node name="any" value="všechny jazyky"/>
 			</node>
