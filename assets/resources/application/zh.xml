@@ -762,7 +762,7 @@
 			<node name="longTapAction" value="长按动作设定">
 				<node name="doNothing" value="长按不做任何事"/>
 				<node name="selectSingleWord" value="长按选择词语"/>
-				<node name="initSelection" value="长按选择内容"/>
+				<node name="startSelecting" value="长按选择内容"/>
 				<node name="openDictionary" value="长按选择词语，放开后打开字典"/>
 			</node>
 			<node name="navigateOverAllWords" value="导航键访问词句设定">
