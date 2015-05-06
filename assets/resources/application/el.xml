@@ -762,8 +762,8 @@
 		</node>
 		<node name="dictionary" value="Λεξικό">
 			<node name="summary" value="Ρυθμίσεις λεξικού"/>
-			<node name="dictionary" value="Λεξικό"/>
-			<node name="translator" value="Μεταφραστής"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Μετάφραση σε" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
