@@ -185,7 +185,7 @@ public class BookDownloaderService extends Service {
 		Toast.makeText(
 			getApplicationContext(),
 			text,
-			Toast.LENGTH_SHORT
+			Toast.LENGTH_LONG
 		).show();
 	}
 
