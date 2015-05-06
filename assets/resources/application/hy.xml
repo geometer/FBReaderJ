@@ -769,8 +769,8 @@
 		</node>
 		<node name="dictionary" value="Բառարան">
 			<node name="summary" value="Բառարանի կարգավորումները"/>
-			<node name="dictionary" value="Բառարան"/>
-			<node name="translator" value="Թարգմանիչ"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Թարգմանել ...">
 				<node name="any" value="Բոլոր լեզուներով"/>
 			</node>

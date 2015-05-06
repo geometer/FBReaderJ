@@ -764,8 +764,8 @@
 		</node>
 		<node name="dictionary" value="Слоўнік">
 			<node name="summary" value="Налады слоўніку"/>
-			<node name="dictionary" value="Слоўнік"/>
-			<node name="translator" value="Перакладнік"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Перакласьці на">
 				<node name="any" value="усе мовы"/>
 			</node>

@@ -764,8 +764,8 @@
 		</node>
 		<node name="dictionary" value="Sözlük">
 			<node name="summary" value="Sözlük ayarları"/>
-			<node name="dictionary" value="Sözlük"/>
-			<node name="translator" value="Çevirmen"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>

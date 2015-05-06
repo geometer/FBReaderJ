@@ -769,8 +769,8 @@
 		</node>
 		<node name="dictionary" value="Diccionario">
 			<node name="summary" value="Ajustes del diccionario"/>
-			<node name="dictionary" value="Diccionario"/>
-			<node name="translator" value="Traductor"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
