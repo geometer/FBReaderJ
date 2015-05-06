@@ -221,12 +221,12 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Book has been downloaded"/>
-		<node name="tickerError" value="Book download error"/>
-		<node name="contentSuccess" value="Download complete"/>
-		<node name="contentError" value="Download failed"/>
-		<node name="downloadingStarted" value="Book downloading has been started"/>
-		<node name="alreadyDownloading" value="Book is already being downloaded"/>
+		<node name="downloadCompleteTicker" value="Book downloaded"/>
+		<node name="downloadFailedTicker" value="Book download error"/>
+		<node name="downloadComplete" value="Download complete"/>
+		<node name="downloadFailed" value="Download failed"/>
+		<node name="downloadStarted" value="Book download started"/>
+		<node name="alreadyDownloading" value="Book download is already in progress"/>
 		<node name="cannotCreateDirectory" value="Unable to create directory %s"/>
 		<node name="cannotCreateFile" value="Unable to create file %s"/>
 	</node>

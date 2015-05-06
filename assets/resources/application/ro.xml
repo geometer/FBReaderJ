@@ -213,11 +213,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Cartea a fost descarcata"/>
-		<node name="tickerError" value="Eroare descarcare carte"/>
-		<node name="contentSuccess" value="Descarcare completa"/>
-		<node name="contentError" value="Descarcare esuata"/>
-		<node name="downloadingStarted" value="Descarcarea cartii a inceput"/>
+		<node name="downloadCompleteTicker" value="Cartea a fost descarcata"/>
+		<node name="downloadFailedTicker" value="Eroare descarcare carte"/>
+		<node name="downloadComplete" value="Descarcare completa"/>
+		<node name="downloadFailed" value="Descarcare esuata"/>
+		<node name="downloadStarted" value="Descarcarea cartii a inceput"/>
 		<node name="alreadyDownloading" value="Cartea deja se descarcata"/>
 		<node name="cannotCreateDirectory" value="Nu se poate crea directorul %s"/>
 		<node name="cannotCreateFile" value="Nu se poate crea fisierul %s"/>
