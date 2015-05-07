@@ -1161,7 +1161,7 @@
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="neznámá chyba"/>
-		<node name="noArticle" value="nenalezen žádný článek pro “%s”""/>
+		<node name="noArticle" value="nenalezen žádný článek pro “%s”"/>
 		<node name="cannotOpenDictionary" value="nelze otevřít slovník"/>
 		<node name="noDictionarySelected" value="není vybrán slovník; opravte to v nastavení Dictan"/>
 	</node>
