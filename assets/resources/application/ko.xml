@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- English FBReaderJ resources, by FBReader.ORG Limited -->
+<resources>
+	<node name="library" value="FBReader 라이브러리">
+		<node name="unknownAuthor" value="알 수 없는 저자"/>
+		<node name="booksWithNoTags" value="태그 없는 책들"/>
+		<node name="demo" value="샘플"/>
+		<node name="byAuthor" value="저자 순서대로">
+			<node name="summary" value="저자 순서대로 정렬된 책들"/>
+		</node>
+		<node name="byTitle" value="제목 순서대로">
+			<node name="summary" value="제목 순서대로 정렬된 책들"/>
+		</node>
+		<node name="bySeries" value="시리즈 순서대로">
+			<node name="summary" value="시리즈 순서대로 정렬된 책들"/>
+		</node>
+		<node name="byTag" value="태그 순서대로">
+			<node name="summary" value="태그 순서대로 정렬된 책들"/>
+		</node>
+		<node name="recent" value="최근">
+			<node name="summary" value="최근에 열어본 책들"/>
+		</node>
+		<node name="favorites" value="즐겨찾기">
+			<node name="summary" value="내가 선택한 책들"/>
+		</node>
+		<node name="bookshelfView" value="책장 형식으로 보기">
+			<node name="summary" value="현대적인 (Material Design 형식) 라이브러리"/>
+		</node>
+		<node name="found" value="찾음">
+			<node name="summary" value="다음의 검색 결과: %s"/>
+		</node>
+		<node name="sync" value="동기화">
+			<node name="summary" value="동기화 상태 순서대로 정렬된 책들"/>
+			<node name="sync-success" value="동기화됨">
+				<node name="summary" value="서버에 책이 업로드됨"/>
+			</node>
+			<node name="sync-failure" value="동기화 실패">
+				<node name="summary" value="어떤 이유로 인해 책이 서버에 업르도되지 않음"/>
+			</node>
+			<node name="sync-deleted" value="서버에서 삭제됨">
+				<node name="summary" value="더이상 서버에서 책에 접근할 수 없음"/>
+			</node>
+			<node name="sync-tosync" value="아직 동기화되지 않음">
+				<node name="summary" value="책이 서버에 업로드될 예정임"/>
+			</node>
+		</node>
+		<node name="fileTree" value="파일 구조">
+			<node name="summary" value="파일 시스템을 탐색"/>
+		</node>
+		<node name="fileTreeRoot" value="기기">
+			<node name="summary" value="전체적인 파일 시스템"/>
+		</node>
+		<node name="fileTreeCard" value="메모리 카드">
+			<node name="summary" value="메모리 카드, 외부 저장소 혹은 내부 저장소에 있는 파일들"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader 라이브러리">
+			<node name="summary" value="FBReader 책 폴더"/>
+		</node>
+		<node name="localSearch" value="검색"/>
+		<node name="rescan" value="다시 스캔"/>
+		<node name="openBook" value="책 열기"/>
+		<node name="showBookInfo" value="책 정보"/>
+		<node name="shareBook" value="책 공유"/>
+		<node name="deleteBook" value="책 삭제"/>
+		<node name="addToFavorites" value="즐겨찾기에 추가"/>
+		<node name="removeFromFavorites" value="즐겨찾기에서 삭제"/>
+		<node name="removeFromRecents" value="최근 목록에서 삭제"/>
+		<node name="markAsRead" value="읽음으로 표시"/>
+		<node name="markAsUnread" value="읽지 않음으로 표시"/>
+		<node name="deleteAll" value="전부 삭제"/>
+		<node name="uploadAgain" value="다시 업로드"/>
+		<node name="tryAgain" value="다시 시도"/>
+	</node>
+	<node name="networkLibrary" value="FBReader 네트워크 라이브러리">
+		<node name="sync" value="FBReader 책 네트워크">
+			<node name="summary" value="나의 개인 카탈로그"/>
+		</node>
+		<node name="byAuthor" value="저자 순서대로">
+			<node name="summary" value="저자 순서대로 정렬된 책들"/>
+		</node>
+		<node name="byTitle" value="제목 순서대로">
+			<node name="summary" value="제목 순서대로 정렬된 책들"/>
+		</node>
+		<node name="byDate" value="날짜 순서대로">
+			<node name="summary" value="구매 날짜 순서대로 정렬된 책들"/>
+		</node>
+		<node name="bySeries" value="시리즈 순서대로">
+			<node name="summary" value="시리즈 순서대로 정렬된 책들"/>
+		</node>
+		<node name="search" value="검색">
+			<node name="summary" value="다음으로 책 검색 %s"/>
+			<node name="summaryAllCatalogs" value="모든 카탈로그에서 책 검색"/>
+			<node name="summaryInProgress" value="검색 진행중"/>
+		</node>
+		<node name="found" value="찾음">
+			<node name="summary" value="다음의 검색 결과: %s"/>
+		</node>
+		<node name="recent" value="최근 카탈로그">
+			<node name="summary" value="최근에 방문한 카탈로그들"/>
+		</node>
+		<node name="openCatalog" value="카탈로그 열기"/>
+		<node name="networkSearch" value="검색"/>
+		<node name="showResults" value="결과 보기"/>
+		<node name="showBooks" value="책 보기"/>
+		<node name="download" value="다운로드"/>
+		<node name="read" value="로컬 카피 읽기"/>
+		<node name="delete" value="로컬 카피 삭제"/>
+		<node name="readDemo" value="샘플 읽기"/>
+		<node name="deleteDemo" value="샘플 삭제"/>
+		<node name="downloadDemo" value="샘플 다운로드"/>
+		<node name="buy" value="구매 (%s)"/>
+		<node name="addToBasket" value="바구니에 담기"/>
+		<node name="removeFromBasket" value="바구니에서 삭제"/>
+		<node name="openBasket" value="바구니 열기"/>
+		<node name="clearBasket" value="바구니 비우기"/>
+		<node name="buyAllBooks" value="모든 책 구매"/>
+		<node name="openInBrowser" value="브라우저에서 열기"/>
+		<node name="stopLoading" value="불러오기 중지"/>
+		<node name="stopSearching" value="검색 중지"/>
+		<node name="signIn" value="로그인"/>
+		<node name="signOut" value="로그아웃 (%s)"/>
+		<node name="signUp" value="가입"/>
+		<node name="quickBuy" value="빠른 구매"/>
+		<node name="topup" value="계좌 충전 (현재: %s)"/>
+		<node name="topupTitle" value="계좌 충전"/>
+		<node name="topupViaBrowser" value="브라우저에서 페이지 열기"/>
+		<node name="authorisationMenuTitle" value="동작 선택"/>
+		<node name="topupSummary" value="현재: %s"/>
+		<node name="basket" value="바구니"/>
+		<node name="basketSummaryEmpty" value="책 없음"/>
+		<node name="basketSummaryCountOnly" value="%0 책들">
+			<node condition="value 1" value="%0 책"/>
+		</node>
+		<node name="basketSummary" value="%0 책들 (%1)">
+			<node condition="value 1" value="%0 책 (%1)"/>
+		</node>
+		<node name="alreadyDownloading" value="책을 다운로드중입니다"/>
+		<node name="alreadyDownloadingDemo" value="샘플을 다운로드중입니다"/>
+		<node name="stoppingCatalogLoading" value="불러오기 중지"/>
+		<node name="stoppingNetworkSearch" value="검색 중지"/>
+		<node name="editCustomCatalog" value="카탈로그 편집"/>
+		<node name="removeCustomCatalog" value="카탈로그 제거"/>
+		<node name="addCustomCatalog" value="카탈로그 추가"/>
+		<node name="addCustomCatalogSummary" value="임의의 OPDS 카탈로그를 수동으로 추가"/>
+		<node name="disableCatalog" value="카탈로그 해제"/>
+		<node name="confirmQuestions">
+			<node name="read" value="로컬 카피를 읽으시겠습니까?"/>
+			<node name="download" value="책을 다운로드 하시겠습니까?"/>
+			<node name="readDemo" value="샘플을 읽으시겠습니까?"/>
+			<node name="downloadDemo" value="샘플을 다운로드 하시겠습니까?"/>
+			<node name="buy" value="책을 구매하시겠습니까? (%s)"/>
+			<node name="openInBrowser" value="브라우저에서 링크를 여시겠습니까?"/>
+		</node>
+		<node name="downloadingCatalogs" value="카탈로그 다운로드중"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="네트워크상의 책들 검색중"/>
+		<!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="카탈로그 추가"/>
+			<node name="editUrl" value="수동으로 URL 입력"/>
+		</node>
+		<node name="manageCatalogs" value="카탈로그 관리">
+			<node name="summary" value="카탈로그 리스트를 설정합니다"/>
+			<node name="enabled" value="사용"/>
+			<node name="disabled" value="사용 안함"/>
+		</node>
+		<node name="menu">
+			<node name="openRoot" value="루트 카탈로그"/>
+			<node name="networkSearch" value="검색"/>
+			<node name="reload" value="다시 불러오기"/>
+			<node name="signIn" value="로그인"/>
+			<node name="signUp" value="가입"/>
+			<node name="signOut" value="로그아웃 (%s)"/>
+			<node name="topup" value="계좌 충전"/>
+			<node name="addCustomCatalog" value="카탈로그 추가"/>
+			<node name="refreshCatalogsList" value="카탈로그 새로고침"/>
+			<node name="manageCatalogs" value="카탈로그 관리"/>
+			<node name="clearBasket" value="바구니 비우기"/>
+			<node name="buyAllBooks" value="모든 책 구매"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="책 구매"/>
+		<node name="titleSeveralBooks" value="책 구매"/>
+		<node name="confirm" value="구매하시겠습니까?"/>
+		<node name="confirmSeveralBooks" value="%s 개 책을 구매하시겠습니까?"/>
+		<node name="alreadyBought" value="이미 구입한 책입니다"/>
+		<node name="notAuthorised" value="허가가 필요합니다"/>
+		<node name="noAccountInformation" value="계좌 상태를 불러올 수 없습니다"/>
+		<node name="unsufficientFunds" value="구입하려면 %0 이(가) 필요하지만 현재 %1 이(가) 있습니다"/>
+		<node name="zeroFunds" value="구입에는 %0 이(가) 소요됩니다"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="책 정보"/>
+		<node name="fileInfo" value="파일 정보"/>
+		<node name="description" value="설명"/>
+		<node name="noDescription" value="설명 없음"/>
+		<node name="annotation" value="주석"/>
+		<node name="title" value="제목:"/>
+		<node name="authors" value="저자:">
+			<node condition="value 1" value="저자:"/>
+		</node>
+		<node name="series" value="시리즈:"/>
+		<node name="indexInSeries" value="시리즈 색인:"/>
+		<node name="tags" value="태그:">
+			<node condition="value 1" value="태그:"/>
+		</node>
+		<node name="language" value="언어:"/>
+		<node name="name" value="이름:"/>
+		<node name="type" value="형식:"/>
+		<node name="size" value="크기:"/>
+		<node name="time" value="마지막 변경:"/>
+		<node name="sizeInBytes" value="%s 바이트">
+			<node condition="value 1" value="%s 바이트"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="catalog" value="카탈로그:"/>
+		<node name="extraLinks" value="관련 링크"/>
+		<node name="menu">
+			<node name="edit" value="편집"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="downloadCompleteTicker" value="책이 다운로드 되었습니다"/>
+		<node name="downloadFailedTicker" value="책 다운로드 오류"/>
+		<node name="downloadComplete" value="다운로드 완료"/>
+		<node name="downloadFailed" value="다운로드 실패"/>
+		<node name="downloadStarted" value="책 다운로드가 시작되었습니다"/>
+		<node name="alreadyDownloading" value="책이 이미 다운로드중입니다"/>
+		<node name="cannotCreateDirectory" value="%s 폴더를 만들 수 없습니다"/>
+		<node name="cannotCreateFile" value="%s 파일을 만들 수 없습니다"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="트리 펼치기"/>
+		<node name="collapseTree" value="트리 접기"/>
+		<node name="readText" value="책 텍스트 읽기"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="이 책"/>
+		<node name="allBooks" value="모든 책"/>
+		<node name="new" value="새 책갈피"/>
+		<node name="openBook" value="열기"/>
+		<node name="editBookmark" value="책갈피 편집"/>
+		<node name="deleteBookmark" value="책갈피 삭제"/>
+		<node name="search" value="검색"/>
+	</node>
+	<node name="editBookmark">
+		<node name="text" value="텍스트"/>
+		<node name="style" value="형식"/>
+		<node name="delete" value="삭제"/>
+		<node name="deleteBookmark" value="책갈피 삭제"/>
+		<node name="saveText" value="텍스트 저장"/>
+		<node name="editStyle" value="형식 편집"/>
+	</node>
+	<node name="footnoteToast">
+		<node name="more" value="더 많이"/>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="라이브러리 열기"/>
+		<node name="networkLibrary" value="네트워크 라이브러리 열기"/>
+		<node name="previousBook" value="이전 책 열기"/>
+		<node name="returnTo" value="돌아가기"/>
+		<node name="back" value="뒤로"/>
+		<node name="forward" value="앞으로"/>
+		<node name="close" value="FBReader 닫기"/>
+	</node>
+	<node name="style" value="%s 형식"/>
+	<node name="editStyle">
+		<node name="name" value="형식 이름"/>
+		<node name="invisible" value="보이지 않음">
+			<node name="summaryOn" value="책갈피 강조하지 않음"/>
+			<node name="summaryOff" value="책갈피 강조"/>
+		</node>
+		<node name="bgColor" value="배경 색상"/>
+	</node>
+	<node name="selection" value="선택">
+		<node name="copyToClipboard" value="클립보드로 복사"/>
+		<node name="openInDictionary" value="사전으로 열기"/>
+		<node name="quoteFrom" value="%s 에서 인용"/>
+		<node name="textInBuffer" value="클립보드로 복사됨:&#10;%s"/>
+		<node name="clearSelection" value="지우기"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="&lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; 로부터 공유됨"/>
+	</node>
+	<node name="menu">
+		<node name="openStartScreen" value="시작 화면"/>
+		<node name="preferences" value="설정"/>
+		<node name="bookInfo" value="책 정보"/>
+		<node name="library" value="라이브러리"/>
+		<node name="toc" value="TOC"/>
+		<node name="day" value="주간"/>
+		<node name="night" value="야간"/>
+		<node name="yotaSwitchToBackScreen" value="후면으로 전환"/>
+		<node name="yotaSwitchToFrontScreen" value="전면으로 전환"/>
+		<node name="networkLibrary" value="네트워크 라이브러리"/>
+		<node name="navigate" value="탐색">
+			<node name="toc" value="목차"/>
+			<node name="gotoHome" value="문서 처음으로 가기"/>
+			<node name="gotoPageNumber" value="페이지로 가기"/>
+			<node name="gotoSectionStart" value="텍스트 부분 처음으로 가기"/>
+			<node name="gotoSectionEnd" value="텍스트 부분 끝으로 가기"/>
+			<node name="nextTOCSection" value="다음 TOC 항목으로 가기"/>
+			<node name="previousTOCSection" value="이전 TOC 항목으로 가기"/>
+			<node name="undo" value="뒤로 가기"/>
+			<node name="redo" value="앞으로 가기"/>
+		</node>
+		<node name="shareBook" value="책 공유"/>
+		<node name="search" value="검색"/>
+		<node name="rotate" value="화면 회전"/>
+		<node name="screenOrientation" value="화면 방향"/>
+		<node name="screenOrientationSystem" value="시스템 설정"/>
+		<node name="screenOrientationSensor" value="기기 방향 센서"/>
+		<node name="screenOrientationPortrait" value="세로"/>
+		<node name="screenOrientationLandscape" value="가로"/>
+		<node name="screenOrientationReversePortrait" value="뒤집어진 세로"/>
+		<node name="screenOrientationReverseLandscape" value="뒤집어진 가로"/>
+		<node name="increaseFont" value="확대"/>
+		<node name="decreaseFont" value="축소"/>
+		<node name="toggleFullscreen" value="전체화면"/>
+		<node name="bookmarks" value="책갈피"/>
+		<node name="help" value="도움말"/>
+		<node name="plugins" value="플러그인 설치"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="파일명"/>
+		<node name="title" value="제목"/>
+		<node name="language" value="언어"/>
+		<node name="encoding" value="인코딩"/>
+		<node name="authors" value="저자"/>
+		<node name="tags" value="태그"/>
+		<node name="series" value="시리즈"/>
+	</node>
+	<node name="Preferences">
+		<node name="sync" value="동기화">
+			<node name="summary" value="책 네트워크 설정"/>
+			<node name="site" value="동기화에 대해 더 알아보기">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
+			</node>
+			<node name="enable" value="동기화 사용">
+				<node name="summaryOn" value="내 라이브러리를 FBReader 책 네트워크 서버와 동기화하기"/>
+				<node name="summaryOnWithAccount" value="%s(으)로 내 라이브러리 동기화"/>
+				<node name="summaryOff" value="내 라이브러리를 FBReader 책 네트워크 서버와 동기화하지 않기"/>
+			</node>
+			<node name="values">
+				<node name="always" value="항상"/>
+				<node name="viaWifi" value="기기가 Wi-Fi로 연결되어 있다면"/>
+				<node name="never" value="안함"/>
+			</node>
+			<node name="uploadAllBooks" value="모든 책을 서버에 업로드"/>
+			<node name="downloadAllBooks" value="모든 책을 서버로부터 다운로드"/>
+			<node name="downloadCurrentBook" value="현재 책을 서버로부터 다운로드"/>
+			<node name="positions" value="독서 위치 동기화"/>
+			<node name="bookmarks" value="책갈피 동기화"/>
+			<node name="metainfo" value="메타 정보 동기화 (제목, 태그 및 기타)"/>
+			<node name="changeCurrentBook" value="현재 책 변경">
+				<node name="summaryOn" value="모든 기기에서 같은 책 열기"/>
+				<node name="summaryOff" value="위치만 동기화하고, 자동적으로 책 변경하지 않음"/>
+			</node>
+		</node>
+		<node name="directories" value="폴더">
+			<node name="summary" value="파일을 찾을 폴더"/>
+			<node name="bookPath" value="책 찾을 장소">
+				<node name="chooserTitle" value="Books 폴더"/>
+			</node>
+			<node name="downloadDir" value="다운로드된 책 저장할 장소">
+				<node name="chooserTitle" value="Books 폴더"/>
+			</node>
+			<node name="fontPath" value="글꼴 찾을 장소">
+				<node name="chooserTitle" value="Fonts 폴더"/>
+			</node>
+			<node name="tempDir" value="임시 파일 저장할 장소">
+				<node name="chooserTitle" value="Temp files 폴더"/>
+			</node>
+		</node>
+		<node name="appearance" value="외관">
+			<node name="summary" value="화면 설정, 상태 표시줄, 버튼 불빛 등"/>
+			<node name="language" value="인터페이스 언어"/>
+			<node name="screenOrientation" value="화면 방향">
+				<node name="system" value="시스템 설정"/>
+				<node name="sensor" value="기기 방향 센서"/>
+				<node name="portrait" value="세로"/>
+				<node name="landscape" value="가로"/>
+				<node name="reversePortrait" value="뒤집어진 세로"/>
+				<node name="reverseLandscape" value="뒤집어진 가로"/>
+			</node>
+			<node name="autoOrientation" value="자동 회전">
+				<node name="summaryOn" value="사용자가 기기를 움직이면 화면이 회전됩니다"/>
+				<node name="summaryOff" value="사용자가 기기를 움직여도 화면이 회전되지 않습니다"/>
+			</node>
+			<node name="showStatusBar" value="상태 표시줄 표시">
+				<node name="summaryOn" value="독서 모드에서 상태 표시줄을 표시합니다"/>
+				<node name="summaryOff" value="독서 모드에서 상태 표시줄을 숨깁니다"/>
+			</node>
+			<node name="showActionBar" value="액션 바 표시">
+				<node name="summaryOn" value="독서 모드에서 액션 바를 표시합니다"/>
+				<node name="summaryOff" value="독서 모드에서 액션 바를 숨깁니다"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="메뉴 활성화시 상태 표시줄 표시">
+				<node name="summaryOn" value="메뉴가 활성화되면 상태 표시줄을 표시합니다"/>
+				<node name="summaryOff" value="메뉴가 활성화되도 상태 표시줄을 표시하지 않습니다"/>
+			</node>
+			<node name="fullscreenMode" value="전체화면 모드">
+				<node name="summaryOn" value="탐색 조종 숨김"/>
+				<node name="summaryOff" value="탐색 조종 표시"/>
+			</node>
+			<node name="disableButtonLights" value="독서중에 버튼 불빛 해제">
+				<node name="summaryOn" value="버튼 불빛을 해제합니다 (일부 기기에서는 작동 안함)"/>
+				<node name="summaryOff" value="버튼 불빛을 해제하지 않습니다"/>
+			</node>
+			<node name="twoColumnView" value="2중 세로단으로 보기">
+				<node name="summaryOn" value="기기가 가로 화면 상태일때 텍스트를 2개의 세로단으로 표시합니다"/>
+				<node name="summaryOff" value="텍스트를 항상 1개의 세로단으로 표시합니다"/>
+			</node>
+			<node name="showFootnoteToast" value="링크된 텍스트를 팝업으로 표시">
+				<node name="never" value="안함"/>
+				<node name="footnotesOnly" value="각주만"/>
+				<node name="footnotesAndSuperscripts" value="각주와 어깨 글자 링크"/>
+				<node name="allInternalLinks" value="내부의 모든 링크"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
+				<node name="duration1" value="1 second" toBeTranslated="true"/>
+				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="화면 밝기 조절">
+				<node name="summaryOn" value="화면의 왼쪽을 위아래로 손가락으로 끌어서 조절"/>
+				<node name="summaryOff" value="해제됨"/>
+			</node>
+			<node name="dontTurnScreenOff" value="화면 꺼짐 방지">
+				<node name="0" value="항상"/>
+				<node name="25" value="배터리 잔량이 25%% 이상일 경우"/>
+				<node name="50" value="배터리 잔량이 50%% 이상일 경우"/>
+				<node name="100" value="안함"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="충전중에 화면 꺼짐 방지">
+				<node name="summaryOn" value="기기가 충전중일때 화면 꺼짐을 방지합니다"/>
+				<node name="summaryOff" value="기기가 충전중이더라도 화면을 끄게 됩니다"/>
+			</node>
+		</node>
+		<node name="text" value="텍스트">
+			<node name="summary" value="글꼴, 하이픈화(hyphenation) 및 기타"/>
+			<node name="fontProperties" value="글꼴 속성">
+				<node name="summary" value="글꼴  다듬기 옵션"/>
+				<node name="antiAlias" value="안티앨리어싱(Antialiasing)">
+					<node name="summaryOn" value="안티앨리어싱을 사용합니다"/>
+					<node name="summaryOff" value="안티앨리어싱을 사용하지 않습니다"/>
+				</node>
+				<node name="deviceKerning" value="기기 커닝(kerning)">
+					<node name="summaryOn" value="기기 커닝을 사용합니다"/>
+					<node name="summaryOff" value="기기 커닝을 사용하지 않습니다"/>
+				</node>
+				<node name="dithering" value="디더링(Dithering)">
+					<node name="summaryOn" value="색상 디더링을 사용합니다"/>
+					<node name="summaryOff" value="색상 디더링을 사용하지 않습니다"/>
+				</node>
+				<node name="hinting" value="힌팅(Hinting)">
+					<node name="summaryOn" value="글꼴 힌팅을 사용합니다"/>
+					<node name="summaryOff" value="글꼴 힌팅을 사용하지 않습니다"/>
+				</node>
+				<node name="subpixel" value="서브픽셀(Subpixel) 다듬기">
+					<node name="summaryOn" value="서브픽셀 다듬기를 사용합니다"/>
+					<node name="summaryOff" value="서브픽셀 다듬기를 사용하지 않습니다"/>
+				</node>
+			</node>
+			<node name="font" value="글꼴 집합">
+				<node name="inherit" value="&lt;변화없음&gt;"/>
+			</node>
+			<node name="fontSize" value="글꼴 크기"/>
+			<node name="fontStyle" value="글꼴 형식">
+				<node name="regular" value="보통"/>
+				<node name="bold" value="굵게"/>
+				<node name="italic" value="이탤릭체"/>
+				<node name="boldItalic" value="굵은 이탤릭체"/>
+			</node>
+			<node name="bold" value="굵게">
+				<node name="bold" value="굵게"/>
+				<node name="normal" value="보통"/>
+				<node name="inherit" value="&lt;변화없음&gt;"/>
+			</node>
+			<node name="italic" value="이탤릭체">
+				<node name="italic" value="이탤릭체"/>
+				<node name="normal" value="보통"/>
+				<node name="inherit" value="&lt;변화없음&gt;"/>
+			</node>
+			<node name="textDecoration" value="텍스트 장식">
+				<node name="inherit" value="&lt;변화없음&gt;"/>
+				<node name="none" value="장식 없음"/>
+				<node name="underline" value="밑줄"/>
+				<node name="line-through" value="위에 줄긋기(StrikeThrough)"/>
+			</node>
+			<node name="lineSpacing" value="줄간격">
+				<node name="inherit" value="&lt;변화없음&gt;"/>
+			</node>
+			<node name="alignment" value="정렬">
+				<node name="left" value="왼쪽"/>
+				<node name="right" value="오른쪽"/>
+				<node name="center" value="가운데"/>
+				<node name="justify" value="좌우 균일 정렬"/>
+				<node name="inherit" value="&lt;변화없음&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="자동 하이픈화(hyphenation)">
+				<node name="summaryOn" value="자동으로 단어 하이픈화를 사용합니다"/>
+				<node name="summaryOff" value="자동으로 단어 하이픈화를 사용하지 않습니다"/>
+			</node>
+			<node name="allowHyphenations" value="하이픈화 허용">
+				<node name="auto" value="단어 하이픈화"/>
+				<node name="none" value="단어 하이픈화 사용하지 않음"/>
+				<node name="inherit" value="&lt;변화없음&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="첫줄 들여쓰기"/>
+			<node name="spaceBefore" value="단락 앞에 공간"/>
+			<node name="spaceAfter" value="단락 뒤에 공간"/>
+			<node name="leftIndent" value="왼쪽 들여쓰기"/>
+			<node name="rightIndent" value="오른쪽 들여쓰기"/>
+			<node name="verticalAlignment" value="세로 정렬"/>
+			<node name="more" value="더 많은 형식">
+				<node name="summary" value="제목, 명구(epigraph) 등을 별도로 설정"/>
+				<node name="Regular Paragraph" value="일반 단락">
+					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub 단락">
+					<node name="summary" value="&lt;p&gt; XHTML 태그 내용"/>
+				</node>
+				<node name="Title" value="제목">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="부문 제목">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="시 제목">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="부제">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="주석">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="명구">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="연(Stanza)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="절(Verse)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="미리 짜여진 텍스트">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="이미지">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="인용">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="저자">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="날짜">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="내부 하이퍼링크">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="각주">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="강조(emphasis)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Strong">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="첨자(Subscript)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="어깨 글자(Superscript)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="코드">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="위에 줄긋기(StrikeThrough)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="이탤릭체">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="굵게">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="정의(Definition)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="정의 설명">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="헤더 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="헤더 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="헤더 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="헤더 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="헤더 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="헤더 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="외부 하이퍼링크">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="CSS에 지정된 값 적용/무시"/>
+			<node name="fontFamily" value="글꼴 집합">
+				<node name="summaryOn" value="CSS에 정의된 글꼴 집합 사용"/>
+				<node name="summaryOff" value="CSS에 정의된 글꼴 집합 무시"/>
+			</node>
+			<node name="fontSize" value="글자 크기">
+				<node name="summaryOn" value="CSS에 정의된 글자 크기 사용"/>
+				<node name="summaryOff" value="CSS에 정의된 글자 크기 무시"/>
+			</node>
+			<node name="textAlignment" value="텍스트 정렬">
+				<node name="summaryOn" value="CSS에 정의된 텍스트 정렬 사용"/>
+				<node name="summaryOff" value="CSS에 정의된 텍스트 정렬 무시"/>
+			</node>
+			<node name="margins" value="여백">
+				<node name="summaryOn" value="CSS에 정의된 여백 사용"/>
+				<node name="summaryOff" value="CSS에 정의된 여백 무시"/>
+			</node>
+		</node>
+		<node name="colors" value="색상 &amp; 배경화면">
+			<node name="summary" value="색상 설정"/>
+			<node name="background" value="배경">
+				<node name="chooser">
+					<node name="solidColor" value="단색"/>
+					<node name="predefined" value="미리 지정한 텍스쳐"/>
+					<node name="selectFile" value="파일 선택"/>
+				</node>
+				<node name="solidColor" value="단색"/>
+				<node name="leather" value="가죽"/>
+				<node name="sepia" value="세피아"/>
+				<node name="wood" value="나무"/>
+				<node name="sand" value="모래"/>
+				<node name="hardpaper" value="두꺼운 도화지"/>
+			</node>
+			<node name="fillMode" value="채우기 모드">
+				<node name="tile" value="타일"/>
+				<node name="tileMirror" value="거꾸로 타일"/>
+				<node name="fullscreen" value="화면 전체"/>
+				<node name="stretch" value="늘여서 화면 채움"/>
+				<node name="tileVertically" value="가로로 늘임, 세로로 타일"/>
+				<node name="tileHorizontally" value="세로로 늘임, 가로로 타일"/>
+			</node>
+			<node name="selectionBackground" value="선택 영역 배경"/>
+			<node name="selectionForeground" value="선택된 텍스트"/>
+			<node name="text" value="일반 텍스트"/>
+			<node name="hyperlink" value="하이퍼링크 텍스트"/>
+			<node name="hyperlinkVisited" value="방문한 하이퍼링크 텍스트"/>
+			<node name="highlightingForeground" value="검색 결과"/>
+			<node name="highlightingBackground" value="검색 결과 배경"/>
+			<node name="footerOldStyle" value="꼬리말 (구식)"/>
+			<node name="footerBackground" value="꼬리말 배경"/>
+			<node name="footerForeground" value="꼬리말 텍스트"/>
+			<node name="footerForegroundUnread" value="꼬리말 선"/>
+		</node>
+		<node name="margins" value="여백">
+			<node name="summary" value="텍스트 여백"/>
+			<node name="left" value="왼쪽 여백"/>
+			<node name="right" value="오른쪽 여백"/>
+			<node name="top" value="상단 여백"/>
+			<node name="bottom" value="하단 여백"/>
+			<node name="spaceBetweenColumns" value="세로단 사이 여백"/>
+		</node>
+		<node name="scrollBar" value="진행 위치 표시기">
+			<node name="summary" value="스크롤바 &amp; 꼬리말 설정"/>
+			<node name="scrollbarType" value="스크롤바 형태">
+				<node name="hide" value="숨김"/>
+				<node name="show" value="세로 슬라이더"/>
+				<node name="showAsProgress" value="세로 진행 바"/>
+				<node name="showAsFooter" value="가로 꼬리말"/>
+				<node name="showAsFooterOldStyle" value="가로 꼬리말 (구식)"/>
+			</node>
+			<node name="footerHeight" value="꼬리말 높이"/>
+			<node name="footerOldStyleColor" value="꼬리말 (구식) 색상"/>
+			<node name="footerBackgroundColor" value="꼬리말 배경 색상"/>
+			<node name="footerForegroundColor" value="꼬리말 텍스트 색상"/>
+			<node name="footerForegroundUnreadColor" value="꼬리말 선 색상"/>
+			<node name="tocMarks" value="TOC 표시 보이기">
+				<node name="summaryOn" value="꼬리말 바에 TOC 표시 보이기"/>
+				<node name="summaryOff" value="꼬리말 바에 TOC 표시 보이지 않음"/>
+			</node>
+			<node name="showProgress" value="페이지 번호 표시">
+				<node name="summaryOn" value="꼬리말 바에 페이지 번호를 표시합니다"/>
+				<node name="summaryOff" value="꼬리말 바에 페이지 번호를 표시하지 않습니다"/>
+			</node>
+			<node name="showBattery" value="배터리 잔량 표시">
+				<node name="summaryOn" value="꼬리말 바에 배터리 잔량을 표시합니다"/>
+				<node name="summaryOff" value="꼬리말 바에 배터리 잔량을 표시하지 않습니다"/>
+			</node>
+			<node name="showClock" value="시계 표시">
+				<node name="summaryOn" value="꼬리말 바에 시계를 표시합니다"/>
+				<node name="summaryOff" value="꼬리말 바에 시계를 표시하지 않습니다"/>
+			</node>
+			<node name="font" value="글꼴 집합"/>
+		</node>
+		<node name="scrolling" value="페이지 넘기기">
+			<node name="summary" value="페이지를 넘기는 방식"/>
+			<node name="fingerScrolling" value="화면 터치로 페이지 넘김">
+				<node name="byTap" value="두드리기로 페이지 넘김"/>
+				<node name="byFlick" value="손가락을 튕겨서 페이지 넘김"/>
+				<node name="byTapAndFlick" value="두드리기 혹은 손가락을 튕겨서 페이지 넘김"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="두번 두드리기 감지">
+				<node name="summaryOn" value="두번 두드려 탐색 대화상자/메뉴를 실행합니다"/>
+				<node name="summaryOff" value="두번 두드리기를 무시합니다"/>
+			</node>
+			<node name="volumeKeys" value="볼륨 버튼으로 페이지 넘김">
+				<node name="summaryOn" value="페이지 넘김에 볼륨 버튼 사용합니다"/>
+				<node name="summaryOff" value="페이지 넘김에 볼륨 버튼을 사용하지 않습니다"/>
+			</node>
+			<node name="invertVolumeKeys" value="볼륨 버튼 방향 반전">
+				<node name="summaryOn" value="증가 (감소) 버튼이 이전 (다음) 페이지로 넘깁니다"/>
+				<node name="summaryOff" value="감소 (증가) 버튼이 다음 (이전) 페이지로 넘깁니다"/>
+			</node>
+			<node name="animation" value="애니메이션">
+				<node name="none" value="애니메이션 없이 페이지 넘김"/>
+				<node name="curl" value="말아 넘기는 애니메이션"/>
+				<node name="slide" value="슬라이드 애니메이션"/>
+				<node name="slideOldStyle" value="슬라이드 애니메이션 (구식)"/>
+				<node name="shift" value="변환 애니메이션"/>
+			</node>
+			<node name="animationSpeed" value="애니메이션 속도">
+				<node name="fast" value="빠름"/>
+				<node name="slow" value="느림"/>
+			</node>
+			<node name="horizontal" value="가로 스크롤링">
+				<node name="summaryOn" value="페이지를 가로로 스크롤합니다"/>
+				<node name="summaryOff" value="페이지를 세로로 스크롤합니다"/>
+			</node>
+		</node>
+		<node name="tapZones" value="두드리기 영역">
+			<node name="summary" value="손가락으로 두드릴때 동작"/>
+			<node name="tapZonesScheme" value="두드리기 영역 설정">
+				<node name="left_to_right" value="왼쪽에서 오른쪽으로 페이지 스크롤링"/>
+				<node name="right_to_left" value="오른쪽에서 왼쪽으로 페이지 스크롤링"/>
+				<node name="up" value="아래에서 위로 페이지 스크롤링"/>
+				<node name="down" value="위에서 아래로 페이지 스크롤링"/>
+				<node name="custom" value="임의"/>
+			</node>
+		</node>
+		<node name="dictionary" value="사전">
+			<node name="summary" value="사전 설정"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
+			<node name="targetLanguage" value="다음으로 번역">
+				<node name="any" value="모든 언어"/>
+			</node>
+			<node name="longTapAction" value="오래 두드리기 동작">
+				<node name="doNothing" value="오래 두드리면 아무것도 안함"/>
+				<node name="selectSingleWord" value="오래 두드리면 1개 단어 선택"/>
+				<node name="startSelecting" value="오래 두드리면 선택 영역 시작"/>
+				<node name="openDictionary" value="오래 두드리면 1개 단어 선택하고 사전 열기"/>
+			</node>
+			<node name="navigateOverAllWords" value="모든 단어에 걸쳐 탐색">
+				<node name="summaryOn" value="키를 눌러 탐색시 모든 단어를 거칩니다"/>
+				<node name="summaryOff" value="키를 눌러 탐색시 하이퍼링크만 거칩니다"/>
+			</node>
+		</node>
+		<node name="images" value="이미지">
+			<node name="summary" value="이미지 표시 옵션"/>
+			<node name="backgroundColor" value="이미지 보기에 사용할 배경 색상"/>
+			<node name="longTapAction" value="오래 두드리기 동작">
+				<node name="doNothing" value="오래 두드리면 아무것도 안함"/>
+				<node name="selectImage" value="오래 두드리면 이미지 선택"/>
+				<node name="openImageView" value="오래 두드리면 이미지 표시 열기"/>
+			</node>
+			<node name="fitImagesToScreen" value="이미지를 화면에 맞추기">
+				<node name="none" value="안함"/>
+				<node name="covers" value="표지만"/>
+				<node name="all" value="모두"/>
+			</node>
+			<node name="matchBackground" value="배경 강도(intensity) 일치시키기">
+				<node name="summaryOn" value="이미지 색상을 배경에 맞추어 조정합니다"/>
+				<node name="summaryOff" value="이미지 색상을 조정하지 않습니다"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="취소 메뉴">
+			<node name="summary" value="뒤로가기 버튼 동작 목록"/>
+			<node name="library" value="라이브러리">
+				<node name="summaryOn" value="'라이브러리 열기' 항목을 표시합니다"/>
+				<node name="summaryOff" value="'라이브러리 열기' 항목을 표시하지 않습니다"/>
+			</node>
+			<node name="networkLibrary" value="네트워크 라이브러리">
+				<node name="summaryOn" value="'네트워크 라이브러리 열기' 항목을 표시합니다"/>
+				<node name="summaryOff" value="'네트워크 라이브러리 열기' 항목을 표시하지 않습니다"/>
+			</node>
+			<node name="previousBook" value="이전 책">
+				<node name="summaryOn" value="'이전에 읽던 책으로 돌아가기' 항목을 표시합니다"/>
+				<node name="summaryOff" value="'이전에 읽던 책으로 돌아가기' 항목을 표시하지 않습니다"/>
+			</node>
+			<node name="positions" value="마지막 3개 위치">
+				<node name="summaryOn" value="책에 있는 마지막 3개 위치 항목을 표시합니다"/>
+				<node name="summaryOff" value="책에 있는 마지막 3개 위치 항목을 표시하지 않습니다"/>
+			</node>
+			<node name="backKeyAction" value="뒤로가기 키 동작">
+				<node name="exit" value="FBReader 닫기"/>
+				<node name="goBack" value="돌아가기"/>
+				<node name="cancelMenu" value="취소 메뉴 표시"/>
+			</node>
+			<node name="backKeyLongPressAction" value="뒤로가기 키 길게 누름 동작">
+				<node name="exit" value="FBReader 닫기"/>
+				<node name="goBack" value="돌아가기"/>
+				<node name="cancelMenu" value="취소 메뉴 표시"/>
+				<node name="none" value="동작 없음"/>
+			</node>
+		</node>
+		<node name="tips" value="유용한 팁">
+			<node name="summary" value="유용한 팁 설정"/>
+			<node name="showTips" value="유용한 팁 표시">
+				<node name="summaryOn" value="유용한 팁을 매일 표시합니다"/>
+				<node name="summaryOff" value="유용한 팁을 표시하지 않습니다"/>
+			</node>
+		</node>
+		<node name="about" value="FBReader에 대해서">
+			<node name="summary" value="버전 정보, 연락처"/>
+			<node name="version" value="버전"/>
+			<node name="site" value="웹사이트 방문">
+				<node name="url" value="http://fbreader.org/"/>
+			</node>
+			<node name="email" value="이메일 보내기">
+				<node name="url" value="mailto:contact@fbreader.org"/>
+			</node>
+			<node name="googleplus" value="FBReader Google+ 커뮤니티 참여">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
+			<node name="twitter" value="Twitter 팔로우">
+				<node name="url" value="https://twitter.com/fbreader"/>
+			</node>
+			<node name="facebook" value="FBReader 페이스북">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="제3자 라이브러리"/>
+		</node>
+		<node name="eink" value="전자잉크(E-ink) 화면">
+			<node name="summary" value="전자잉크 화면을 위한 별도의 옵션들"/>
+			<node name="enableFastRefresh" value="빠른 새로고침 모드">
+				<node name="summaryOn" value="빠르지만 깨끗하지 않은 화면 새로고침 사용"/>
+				<node name="summaryOff" value="깨끗하지만 빠르지 않은 화면 새로고침 사용"/>
+			</node>
+			<node name="interval" value="완전히 깨끗한 새로고침 사이에 사용할 빠른 새로고침 횟수"/>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="설치"/>
+			<node name="update" value="업데이트"/>
+			<node name="skip" value="건너뛰기"/>
+			<node name="buy" value="구매"/>
+			<node name="buyAndDownload" value="구매 및 다운로드"/>
+			<node name="download" value="다운로드"/>
+			<node name="continue" value="계속"/>
+			<node name="editUrl" value="URL 편집"/>
+			<node name="tryAgain" value="재시도"/>
+			<node name="openBook" value="읽기"/>
+			<node name="edit" value="편집"/>
+			<node name="reloadInfo" value="다시 불러오기"/>
+			<node name="shareBook" value="공유"/>
+			<node name="topup" value="충전"/>
+			<node name="pay" value="지불"/>
+			<node name="refresh" value="새로고침"/>
+			<node name="authorise" value="허가"/>
+			<node name="resetPosition" value="위치 초기화"/>
+			<node name="sendReport" value="보고서 보내기"/>
+			<node name="addToFavorites" value="즐겨찾기에 추가"/>
+			<node name="removeFromFavorites" value="즐겨찾기에서 제거"/>
+			<node name="markAsRead" value="읽음으로 표시"/>
+			<node name="markAsUnread" value="읽지 않음으로 표시"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="플러그인 설치"/>
+			<node name="updateTitle" value="플러그인 업데이트"/>
+			<node name="dontAskAgain" value="다시 묻지 않기"/>
+		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="인증이 필요합니다"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="사전 설치"/>
+			<node name="message" value="%s 을(를) 설치할까요?"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="책 파일이 제거되며 돌이킬 수 없습니다. 계속할까요?"/>
+		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="책 삭제"/>
+			<node name="message" value="%s 책 파일들이 제거되며 돌이킬 수 없습니다. 계속할까요?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="파일이 이미 존재합니다. 다시 다운로드할까요?"/>
+		</node>
+		<node name="litresUserRegistration">
+			<node name="title" value="사용자 등록"/>
+			<node name="login" value="사용자 이름"/>
+			<node name="password" value="암호"/>
+			<node name="confirmPassword" value="암호&#10;확인"/>
+			<node name="email" value="이메일"/>
+		</node>
+		<node name="litresAutoSignIn">
+			<node name="title" value="로그인중"/>
+			<node name="email" value="이메일"/>
+			<node name="actions">
+				<node name="title" value="&#10;%s 이메일로 로그인할 수 없습니다"/>
+				<node name="recover" value="계정 정보 복구"/>
+				<node name="signIn" value="수동으로 로그인"/>
+				<node name="anotherEmail" value="다른 이메일 선택"/>
+			</node>
+			<node name="signedIn" value="이미  %s 이메일 주소로 로그인하셨습니다."/>
+			<node name="registrationSuccessful" value="당신을 위해 LitRes 계정을 만들었습니다. 자세한 정보가 %s 로 전송되었습니다."/>
+			<node name="passwordSent" value="당신의 계정 정보가 %s 로 전송되었습니다. 메일을 확인하세요."/>
+		</node>
+		<node name="waitMessage">
+			<node name="tryConnect" value="접속 시도중입니다. 기다려 주세요."/>
+			<node name="downloadingBook" value="책 다운로드중"/>
+			<node name="search" value="검색중입니다. 기다려 주세요"/>
+			<node name="loadInfo" value="정보를 불러오고 있습니다. 기다려 주세요."/>
+			<node name="loadingBook" value="책을 열고 있습니다. 기다려 주세요."/>
+			<node name="loadingBookList" value="라이브러리를 열고 있습니다. 기다려 주세요."/>
+			<node name="creatingBooksDatabase" value="책 데이터베이스를 생성하고 있습니다. 기다려 주세요."/>
+			<node name="updatingBooksDatabase" value="책 데이터베이스를 업데이트하고 있습니다. 기다려 주세요."/>
+			<node name="loadingNetworkLibrary" value="라이브러리를 열고 있습니다. 기다려 주세요."/>
+			<node name="authentication" value="인증을 기다려 주세요."/>
+			<node name="signOut" value="로그아웃중. 기다려 주세요."/>
+			<node name="purchaseBook" value="책을 구매합니다. 기다려 주세요"/>
+			<node name="loadingCatalogInfo" value="카탈로그 정보를 불러오는 중입니다. 기다려 주세요."/>
+			<node name="loadingNetworkBookInfo" value="책 정보를 불러오는 중입니다. 기다려 주세요"/>
+			<node name="updatingCatalogsList" value="카탈로그 목록을 업데이트 중입니다. 기다려 주세요."/>
+			<node name="updatingAccountInformation" value="계정 정보를 업데이트 중입니다. 기다려 주세요."/>
+			<node name="initDRMEngine" value="DRM 엔진을 시작하고 있습니다. 기다려 주세요."/>
+			<node name="acquireLicense" value="라이센스를 얻고 있습니다. 기다려 주세요."/>
+			<node name="registerUser" value="새 계정을 등록하고 있습니다. 기다려 주세요."/>
+			<node name="autoSignIn" value="로그인 중입니다. 기다려 주세요."/>
+			<node name="recoverPassword" value="암호를 복구하고 있습니다. 기다려 주세요."/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="내부 서버 오류"/>
+			<node name="purchaseNotEnoughMoney" value="보유 금액이 충분하지 않음"/>
+			<node name="purchaseMissingBook" value="책을 찾을 수 없음"/>
+			<node name="purchaseAlreadyPurchased" value="이미 구매함"/>
+			<node name="bookNotPurchased" value="책이 구매되지 않음"/>
+			<node name="downloadLimitExceeded" value="다운로드 제한 초과"/>
+			<node name="noUserForEmail" value="지정한 이메일로 등록된&#10;사용자 없음"/>
+			<node name="unsupportedOperation" value="지원되지 않은 작업"/>
+			<node name="notAnOPDS" value="이것은 OPDS 카탈로그가 아닙니다"/>
+			<node name="noRequiredInformation" value="요구된 정보가 카탈로그에 지정되어 있지 않습니다"/>
+			<node name="cacheDirectoryError" value="캐시(cache) 폴더를 만들 수 없습니다"/>
+			<node name="usernameAlreadyInUse" value="사용자 이름이 이미 사용중입니다"/>
+			<node name="usernameNotSpecified" value="사용자 이름을 반드시 입력해야 합니다"/>
+			<node name="passwordNotSpecified" value="암호를 반드시 입력해야 합니다"/>
+			<node name="passwordsDoNotMatch" value="입력된 암호가 일치하지 않습니다"/>
+			<node name="emailNotSpecified" value="이메일 주소가 비어있습니다"/>
+			<node name="emailAlreadyInUse" value="이메일 주소가 이미 사용중입니다"/>
+			<node name="invalidEMail" value="잘못된 이메일 주소"/>
+			<node name="tooManyRegistrations" value="당신의 IP로부터 너무 많은 등록이 진행되고 있습니다;&#10;몇 분 후에 다시 시도하세요"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="인증"/>
+			<node name="unencryptedWarning" value="당신의 암호는 암호화되지 않은 상태로 전송됩니다"/>
+			<node name="login" value="사용자 이름"/>
+			<node name="password" value="암호"/>
+			<node name="loginIsEmpty" value="사용자 이름을 반드시 입력해야 합니다"/>
+			<node name="register" value="가입"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="FBReader: 임의의 카탈로그 추가"/>
+			<node name="catalogTitle" value="제목"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="요약"/>
+			<node name="catalogTitleExample" value="예시: 프로젝트 구텐베르크 카탈로그"/>
+			<node name="catalogUrlExample" value="예시: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="예시: 저작권 만료 도서"/>
+			<node name="titleIsEmpty" value="제목을 반드시 입력해야 합니다"/>
+			<node name="urlIsEmpty" value="URL을 반드시 입력해야 합니다"/>
+			<node name="invalidUrl" value="잘못된 URL"/>
+			<node name="titleAlreadyExists" value="지정된 제목이 이미 사용중입니다"/>
+			<node name="siteAlreadyExists" value="지정된 사이트가 이미 사용중입니다"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="언어 필터"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="오늘의 유용한 팁"/>
+			<node name="initializationText" value="FBReader의 유용한 팁을 읽고 싶으십니까? 새로운 팁들은 FBReader 웹사이트에서 다운로드할 수 있습니다. 예상되는 네트워크 사용량은 매주 1~2킬로바이트 입니다.&#10;&#10;팁을 활성화할까요?"/>
+			<node name="dontShowAgain" value="다시 표시하지 않음"/>
+			<node name="more" value="다음 팁"/>
+		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader는 기본적으로 전체화면 모드에서 작동합니다. 화면의 가운데를 누르시면 조작 영역이 나타납니다. 이 동작을 설정 메뉴의 외관 항목에서 설정할 수 있습니다."/>
+			<node name="message2" value="잘 하셨습니다! 이제 다시 화면의 가운데를 누르셔서 조작 영역과 안내문을 숨기세요. 독서 중에도 조작 영역을 나타나게 하려면 설정 메뉴의 외관 항목에서 액션 바 옵션을 선택하세요."/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="폴더 추가"/>
+			<node name="removeDialog" value="폴더 제거">
+				<node name="message" value="리스트에서 폴더를 제거할까요?"/>
+			</node>
+			<node name="duplicate" value="이미 목록에 있습니다"/>
+		</node>
+		<node name="editList">
+			<node name="edit" value="편집"/>
+			<node name="remove" value="제거"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="태그 추가"/>
+			<node name="removeDialog" value="태그 제거">
+				<node name="message" value="목록에서 태그를 제거할까요?"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="저자 추가"/>
+			<node name="removeDialog" value="저자 제거">
+				<node name="message" value="목록에서 저자를 제거할까요?"/>
+			</node>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="최상위"/>
+			<node name="newFolder" value="새 폴더"/>
+			<node name="folderNameHint" value="폴더 이름"/>
+			<node name="menu">
+				<node name="origin" value="원래"/>
+				<node name="reload" value="다시 불러오기"/>
+			</node>
+			<node name="sortBy" value="정렬">
+				<node name="name" value="이름"/>
+				<node name="size" value="크기"/>
+				<node name="date" value="날짜"/>
+			</node>
+			<node name="permissionDenied" value="퍼미션 거부됨"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="%s 파일에 사용할 플러그인이 설치되지 않았습니다. 지금 설치할까요?"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="'%s'를 읽는 도중 네이티브 코드 %s 오류"/>
+		<node name="errorReadingFile" value="'%s'를 읽는 도중 오류 발생"/>
+		<node name="errorReadingZip" value="'%s' 추출중 오류 발생"/>
+		<node name="pluginNotFound" value="'%s' 에 사용할 플러그인 없음"/>
+		<node name="unknownPluginType" value="알 수 없는 플러그인 형식: %s"/>
+		<node name="fileNotFound" value="파일이 발견되지 않음: %s"/>
+		<node name="unsupportedEncryptionMethod" value="%s 파일이 FBReader가 지원하지 않는 방법으로 암호화 되어 있습니다. 일부 페이지는 읽을 수 없습니다."/>
+		<node name="opfFileNotFound" value="%s에서 OPF 발견되지 않음"/>
+		<node name="unsupportedFileFormat" value="파일 포맷이 '%s'를 지원하지 않음"/>
+		<node name="errorParsingRtf" value="Rtf parsing 오류: %s"/>
+		<node name="cannotRunAndroidMarket" value="Google Play Store에 접속할 수 없습니다. %s 을(를) 수동으로 설치하세요."/>
+		<node name="textNotFound" value="이 책에는 적합한 텍스트가 없습니다"/>
+		<node name="bookNotFound" value="이 라이브러리에는 적합한 책이 없습니다"/>
+		<node name="bookmarkNotFound" value="적합한 책갈피가 없습니다"/>
+		<node name="cannotOpenBook" value="지금 이 책을 열 수 없습니다"/>
+		<node name="dictionaryIsNotInstalled" value="사전이 설치되지 않았습니다"/>
+		<node name="permissionDenied" value="퍼미션이 거부되었습니다"/>
+		<node name="noFavorites" value="즐겨찾기 목록이 비어있습니다"/>
+		<node name="noSeries" value="이 시리즈에는 책이 없습니다"/>
+		<node name="emptyCatalog" value="카탈로그가 비어있습니다"/>
+		<node name="emptyBasket" value="바구니가 비어있습니다"/>
+		<node name="emptyNetworkSearchResults" value="책이 발견되지 않았습니다"/>
+		<node name="videoServiceNotWorking" value="비디오 서비스를 사용할 수 없습니다"/>
+		<node name="videoPlayerNotFound" value="이 기기에는 설치된 비디오 플레이어가 없습니다"/>
+		<node name="bookIsMissingTitle" value="책을 찾을 수 없음"/>
+		<node name="bookIsMissing" value="'%s' 책이 기기에서 발견되지 않았습니다"/>
+		<node name="downloadFailed" value="다운로드 실패"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="브라우저"/>
+		<node name="defaultBrowser" value="기본 브라우저"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader 사안"/>
+			<node name="text" value="FBReader 캐시(cache) 폴더에 쓰기 작업을 할 수 없습니다. 아마 메모리 카드를 삽입하거나 꺼내는 것을 잊으신 것 같습니다. 이 문제를 해결하거나 다른 폴더를 선택하세요."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader 사안"/>
+			<node name="text" value="FBReader가 네이티브 라이브러리를 불러올 수 없습니다. 아마 제대로 설치되지 않은 것 같습니다. 이 문제가 계속되면 FBReader를 재설치하세요."/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader 사안"/>
+		</node>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="플러그인 설치">
+		<node name="noMorePlugins" value="지금은 새로운 플러그인이 없습니다"/>
+		<node name="litres" value="LitRes">
+			<node name="summary" value="러시아 서점"/>
+		</node>
+		<node name="tts_plus" value="TTS+">
+			<node name="summary" value="소리내어 읽기"/>
+		</node>
+		<node name="calibre_server_integration" value="Calibre 연결">
+			<node name="summary" value="로컬 네트워크에 있는 Calibre 서버에 접속"/>
+		</node>
+		<node name="local_opds_scanner" value="로컬 OPDS 스캐너">
+			<node name="summary" value="로컬 네트워크에 있는 책 찾기"/>
+		</node>
+		<node name="bookshelf" value="책장">
+			<node name="summary" value="썸네일 라이브러리 보기"/>
+		</node>
+		<node name="opds_server" value="OPDS 서버">
+			<node name="summary" value="기기로부터 책 제공"/>
+		</node>
+		<node name="widgets" value="위젯">
+			<node name="summary" value="홈 화면에 책 추가"/>
+		</node>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="PDF 형식의 책 읽기"/>
+		</node>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="DjVu 형식의 책 읽기"/>
+		</node>
+		<node name="cbr" value="만화책">
+			<node name="summary" value="만화책 읽기 (CBR, CBZ)"/>
+		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="암호화된 구역"/>
+	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="책을 읽으려면 기기를 뒤집으세요. 이 화면으로 텍스트를 되돌리려면 아래 버튼을 누르세요."/>
+		<node name="frontScreenButton" value="이 화면으로 전환"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="예시: 20px, 10pt, 0.8em, 1ex, 120%%"/>
+		<node name="length" value="예시: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
+		<node name="percent" value="예시: 125%%"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
+	</node>
+</resources>
