@@ -35,7 +35,8 @@ public class SelectionTranslateAction extends FBAndroidAction {
 			fbview.getSelectedSnippet().getText(),
 			fbview.getCountOfSelectedWords() == 1,
 			fbview.getSelectionStartY(),
-			fbview.getSelectionEndY()
+			fbview.getSelectionEndY(),
+			fbview.getSelectionSoul()
 		);
 		fbview.clearSelection();
 	}

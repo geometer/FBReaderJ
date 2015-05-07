@@ -226,11 +226,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Buch wurde herunter geladen"/>
-		<node name="tickerError" value="Fehler beim Herunterladen des Buches"/>
-		<node name="contentSuccess" value="Download abgeschlossen"/>
-		<node name="contentError" value="Download fehlgeschlagen"/>
-		<node name="downloadingStarted" value="Download des Buches wurde gestartet"/>
+		<node name="downloadCompleteTicker" value="Buch wurde herunter geladen"/>
+		<node name="downloadFailedTicker" value="Fehler beim Herunterladen des Buches"/>
+		<node name="downloadComplete" value="Download abgeschlossen"/>
+		<node name="downloadFailed" value="Download fehlgeschlagen"/>
+		<node name="downloadStarted" value="Download des Buches wurde gestartet"/>
 		<node name="alreadyDownloading" value="Das Buch wird schon geladen"/>
 		<node name="cannotCreateDirectory" value="Das Verzeichnis %s kann nicht erstellt werden"/>
 		<node name="cannotCreateFile" value="Die Datei %s kann nicht erstellt werden"/>
@@ -769,15 +769,15 @@
 		</node>
 		<node name="dictionary" value="Wörterbuch">
 			<node name="summary" value="Wörterbucheinstellungen"/>
-			<node name="dictionary" value="Wörterbuch"/>
-			<node name="translator" value="Übersetzer"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Übersetzen in">
 				<node name="any" value="Alle Sprachen"/>
 			</node>
 			<node name="longTapAction" value="Aktion beim langen Antippen">
 				<node name="doNothing" value="Langes Antippen bewirkt nichts"/>
 				<node name="selectSingleWord" value="Langes Antippen selektiert ein einzelnes Wort"/>
-				<node name="initSelection" value="Langes Antippen initiiert den Markierungsmodus"/>
+				<node name="startSelecting" value="Langes Antippen initiiert den Markierungsmodus"/>
 				<node name="openDictionary" value="Langes Antippen selektiert ein einzelnes Wort, Loslassen öffnet das Wörterbuch"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigiere über alle Wörter">
@@ -1153,5 +1153,11 @@
 		<node name="positiveLength" value="z.B.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="z.B.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="z.B.: 125%%"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

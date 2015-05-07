@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Ksiązka pobrana"/>
-		<node name="tickerError" value="Błąd pobierania książki"/>
-		<node name="contentSuccess" value="Pobieranie zakończone"/>
-		<node name="contentError" value="Pobieranie nieudane"/>
-		<node name="downloadingStarted" value="Rozpoczęto pobiernie książki"/>
+		<node name="downloadCompleteTicker" value="Ksiązka pobrana"/>
+		<node name="downloadFailedTicker" value="Błąd pobierania książki"/>
+		<node name="downloadComplete" value="Pobieranie zakończone"/>
+		<node name="downloadFailed" value="Pobieranie nieudane"/>
+		<node name="downloadStarted" value="Rozpoczęto pobiernie książki"/>
 		<node name="alreadyDownloading" value="Książka jest już pobierana"/>
 		<node name="cannotCreateDirectory" value="Nie udało się utworzyć katalogu %s"/>
 		<node name="cannotCreateFile" value="Nie udało się utworzyć pliku %s"/>
@@ -754,15 +754,15 @@
 		</node>
 		<node name="dictionary" value="Słownik">
 			<node name="summary" value="Ustawienia słownika"/>
-			<node name="dictionary" value="Słownik"/>
-			<node name="translator" value="Translator"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
 			<node name="longTapAction" value="Akcja po przytrzymaniu palcem">
 				<node name="doNothing" value="Przytrzymanie nie wywołuje akcji"/>
 				<node name="selectSingleWord" value="Przytrzymanie zaznacza jedno słowo"/>
-				<node name="initSelection" value="Przytrzymanie rozpoczyna zaznaczanie"/>
+				<node name="startSelecting" value="Przytrzymanie rozpoczyna zaznaczanie"/>
 				<node name="openDictionary" value="Przytrzymanie zaznacza jedno słowo, puszczenie otwiera słownik"/>
 			</node>
 			<node name="navigateOverAllWords" value="Przechodź pomiędzy wszystkimi słowami">
@@ -1138,5 +1138,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

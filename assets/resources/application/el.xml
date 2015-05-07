@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Η λήψη του βιβλίου ολοκληρώθηκε."/>
-		<node name="tickerError" value="Σφάλμα κατά την λήψη του βιβλίου."/>
-		<node name="contentSuccess" value="Η λήψη ολοκληρώθηκε."/>
-		<node name="contentError" value="Η λήψη απέτυχε."/>
-		<node name="downloadingStarted" value="Η λήψη του βιβλίου ξεκίνησε."/>
+		<node name="downloadCompleteTicker" value="Η λήψη του βιβλίου ολοκληρώθηκε."/>
+		<node name="downloadFailedTicker" value="Σφάλμα κατά την λήψη του βιβλίου."/>
+		<node name="downloadComplete" value="Η λήψη ολοκληρώθηκε."/>
+		<node name="downloadFailed" value="Η λήψη απέτυχε."/>
+		<node name="downloadStarted" value="Η λήψη του βιβλίου ξεκίνησε."/>
 		<node name="alreadyDownloading" value="Η λήψη του βιβλίου έχει ήδη ξεκινήσει."/>
 		<node name="cannotCreateDirectory" value="Το ευρετήριο %s δεν μπορεί να δημιουργηθεί."/>
 		<node name="cannotCreateFile" value="Το αρχείο %s δεν μπορεί να δημιουργηθεί."/>
@@ -762,15 +762,15 @@
 		</node>
 		<node name="dictionary" value="Λεξικό">
 			<node name="summary" value="Ρυθμίσεις λεξικού"/>
-			<node name="dictionary" value="Λεξικό"/>
-			<node name="translator" value="Μεταφραστής"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Μετάφραση σε" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
 			<node name="longTapAction" value="Ενέργεια σε παρατεταμένο άγγιγμα">
 				<node name="doNothing" value="Παρατεταμένο άγγιγμα δεν προκαλεί τίποτα."/>
 				<node name="selectSingleWord" value="Παρατεταμένα άγγιγμα επιλέγει μία λέξη."/>
-				<node name="initSelection" value="Παρατεταμένο άγγιγμα ξεκινάει την λειτουργία επιλογής κειμένου."/>
+				<node name="startSelecting" value="Παρατεταμένο άγγιγμα ξεκινάει την λειτουργία επιλογής κειμένου."/>
 				<node name="openDictionary" value="Παρατεταμένα άγγιγμα επιλέγει μία λέξη και ανοίγει το λεξικό."/>
 			</node>
 			<node name="navigateOverAllWords" value="΄Πλοήγηση σε όλες τις λέξεις">
@@ -1146,5 +1146,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

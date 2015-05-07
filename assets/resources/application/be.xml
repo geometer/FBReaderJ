@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Кніга зладаваная"/>
-		<node name="tickerError" value="Памылка зладаваньня кнігі"/>
-		<node name="contentSuccess" value="Зладаваньне скончанае"/>
-		<node name="contentError" value="Зладаваньне няўдалае"/>
-		<node name="downloadingStarted" value="Зладаваньне кнігі пачатае"/>
+		<node name="downloadCompleteTicker" value="Кніга зладаваная"/>
+		<node name="downloadFailedTicker" value="Памылка зладаваньня кнігі"/>
+		<node name="downloadComplete" value="Зладаваньне скончанае"/>
+		<node name="downloadFailed" value="Зладаваньне няўдалае"/>
+		<node name="downloadStarted" value="Зладаваньне кнігі пачатае"/>
 		<node name="alreadyDownloading" value="Кніга ўжо зладоўваецца"/>
 		<node name="cannotCreateDirectory" value="Немагчыма стварыць тэчку «%s»"/>
 		<node name="cannotCreateFile" value="Немагчыма стварыць файл «%s»"/>
@@ -764,15 +764,15 @@
 		</node>
 		<node name="dictionary" value="Слоўнік">
 			<node name="summary" value="Налады слоўніку"/>
-			<node name="dictionary" value="Слоўнік"/>
-			<node name="translator" value="Перакладнік"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Перакласьці на">
 				<node name="any" value="усе мовы"/>
 			</node>
 			<node name="longTapAction" value="Дзеяньне доўгага дотыку">
 				<node name="doNothing" value="Доўгі дотык нічога ня робіць"/>
 				<node name="selectSingleWord" value="Доўгі дотык вылучае адно слова"/>
-				<node name="initSelection" value="Доўгі дотык пачынае вылучэньне"/>
+				<node name="startSelecting" value="Доўгі дотык пачынае вылучэньне"/>
 				<node name="openDictionary" value="Доўгі дотык вылучае адно слова, адпусканьне адчыняе слоўнік"/>
 			</node>
 			<node name="navigateOverAllWords" value="Ісьці па ўсіх словах">
@@ -1148,5 +1148,11 @@
 		<node name="positiveLength" value="Узор: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="Узор: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="Узор: 125%%"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

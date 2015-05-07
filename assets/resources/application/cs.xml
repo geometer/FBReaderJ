@@ -230,11 +230,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Kniha byla stažena"/>
-		<node name="tickerError" value="Chyba stahování knihy"/>
-		<node name="contentSuccess" value="Stahování dokončeno"/>
-		<node name="contentError" value="Stahování selhalo"/>
-		<node name="downloadingStarted" value="Stahování knihy bylo zahájeno"/>
+		<node name="downloadCompleteTicker" value="Kniha byla stažena"/>
+		<node name="downloadFailedTicker" value="Chyba stahování knihy"/>
+		<node name="downloadComplete" value="Stahování dokončeno"/>
+		<node name="downloadFailed" value="Stahování selhalo"/>
+		<node name="downloadStarted" value="Stahování knihy bylo zahájeno"/>
 		<node name="alreadyDownloading" value="Kniha se již stahuje"/>
 		<node name="cannotCreateDirectory" value="Nelze vytvořit adresář %s"/>
 		<node name="cannotCreateFile" value="Nelze vytvořit soubor %s"/>
@@ -427,13 +427,13 @@
 				<node name="footnotesAndSuperscripts" value="Pro poznámky pod čarou a odkazy horních indexů"/>
 				<node name="allInternalLinks" value="Pro všechny vnitřní odkazy"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
-				<node name="duration1" value="1 second" toBeTranslated="true"/>
-				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
-				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
-				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
-				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
-				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="Jak dlouho zobrazovat překryvné okno odkazu">
+				<node name="duration1" value="1 sekundu"/>
+				<node name="duration3" value="3 sekundy"/>
+				<node name="duration5" value="5 sekund"/>
+				<node name="duration10" value="10 sekund"/>
+				<node name="duration20" value="20 sekund"/>
+				<node name="duration300" value="5 minut"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu displeje">
 				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje displeje"/>
@@ -773,15 +773,15 @@
 		</node>
 		<node name="dictionary" value="Slovník">
 			<node name="summary" value="Nastavení slovníku"/>
-			<node name="dictionary" value="Slovník"/>
-			<node name="translator" value="Překladač"/>
+			<node name="dictionary" value="Vyhledat jedno slovo v"/>
+			<node name="translator" value="Přeložit fráze pomocí"/>
 			<node name="targetLanguage" value="Přeložit do">
 				<node name="any" value="všechny jazyky"/>
 			</node>
 			<node name="longTapAction" value="Dlouhé klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
-				<node name="initSelection" value="Dlouhé klepnutí spustí vybírání"/>
+				<node name="startSelecting" value="Dlouhé klepnutí spustí vybírání"/>
 				<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigovat přes všechna slova">
@@ -1157,5 +1157,11 @@
 		<node name="positiveLength" value="Např.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="Např.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="Např.: 125%%"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="neznámá chyba"/>
+		<node name="noArticle" value="nenalezen žádný článek pro “%s”""/>
+		<node name="cannotOpenDictionary" value="nelze otevřít slovník"/>
+		<node name="noDictionarySelected" value="není vybrán slovník; opravte to v nastavení Dictan"/>
 	</node>
 </resources>

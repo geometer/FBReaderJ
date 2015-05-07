@@ -28,6 +28,7 @@ import android.view.View;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.OnClickWrapper;
+import com.github.johnpersano.supertoasts.util.OnDismissWrapper;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -50,19 +51,19 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 
 	@Override
 	public boolean isEnabled() {
-		return Reader.getTextView().getSelectedRegion() != null;
+		return Reader.getTextView().getOutlinedRegion() != null;
 	}
 
 	@Override
 	protected void run(Object ... params) {
-		final ZLTextRegion region = Reader.getTextView().getSelectedRegion();
+		final ZLTextRegion region = Reader.getTextView().getOutlinedRegion();
 		if (region == null) {
 			return;
 		}
 
 		final ZLTextRegion.Soul soul = region.getSoul();
 		if (soul instanceof ZLTextHyperlinkRegionSoul) {
-			Reader.getTextView().hideSelectedRegionBorder();
+			Reader.getTextView().hideOutline();
 			Reader.getViewWidget().repaint();
 			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegionSoul)soul).Hyperlink;
 			switch (hyperlink.Type) {
@@ -115,6 +116,14 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 						}
 						toast.setText(snippet.getText());
 						toast.setDuration(Reader.MiscOptions.FootnoteToastDuration.getValue().Value);
+						toast.setOnDismissWrapper(new OnDismissWrapper("ftnt", new SuperToast.OnDismissListener() {
+							@Override
+							public void onDismiss(View view) {
+								Reader.getTextView().hideOutline();
+								Reader.getViewWidget().repaint();
+							}
+						}));
+						Reader.getTextView().outlineRegion(region);
 						BaseActivity.showToast(toast);
 					} else {
 						Reader.tryOpenFootnote(hyperlink.Id);
@@ -123,7 +132,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 				}
 			}
 		} else if (soul instanceof ZLTextImageRegionSoul) {
-			Reader.getTextView().hideSelectedRegionBorder();
+			Reader.getTextView().hideOutline();
 			Reader.getViewWidget().repaint();
 			final String url = ((ZLTextImageRegionSoul)soul).ImageElement.URL;
 			if (url != null) {

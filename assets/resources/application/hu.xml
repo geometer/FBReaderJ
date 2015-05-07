@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Könyv letöltve"/>
-		<node name="tickerError" value="Hiba a könyv letöltése közben"/>
-		<node name="contentSuccess" value="Letöltés kész"/>
-		<node name="contentError" value="Letöltés sikertelen"/>
-		<node name="downloadingStarted" value="Könyv letöltése elindítva"/>
+		<node name="downloadCompleteTicker" value="Könyv letöltve"/>
+		<node name="downloadFailedTicker" value="Hiba a könyv letöltése közben"/>
+		<node name="downloadComplete" value="Letöltés kész"/>
+		<node name="downloadFailed" value="Letöltés sikertelen"/>
+		<node name="downloadStarted" value="Könyv letöltése elindítva"/>
 		<node name="alreadyDownloading" value="A könyv már letöltés alatt"/>
 		<node name="cannotCreateDirectory" value="%s mappa létrehozása sikertelen"/>
 		<node name="cannotCreateFile" value="%s fájl létrehozása sikertelen"/>
@@ -754,15 +754,15 @@
 		</node>
 		<node name="dictionary" value="Szótár">
 			<node name="summary" value="Szótár beállításai"/>
-			<node name="dictionary" value="Szótár"/>
-			<node name="translator" value="Fordító"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Fordítás:">
 				<node name="any" value="minden nyelv"/>
 			</node>
 			<node name="longTapAction" value="Hosszú érintés">
 				<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
 				<node name="selectSingleWord" value="A hosszú érintés kijelöli a szót"/>
-				<node name="initSelection" value="A hosszú érintés elindítja a kijelölést"/>
+				<node name="startSelecting" value="A hosszú érintés elindítja a kijelölést"/>
 				<node name="openDictionary" value="A hosszú érintés kijelöli a szót, a felengedés megnyitja a szótárt"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navigáció szavanként">
@@ -1138,5 +1138,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

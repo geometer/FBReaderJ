@@ -226,11 +226,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Книга скачана"/>
-		<node name="tickerError" value="Книгу скачать не удалось"/>
-		<node name="contentSuccess" value="Скачивание завершено"/>
-		<node name="contentError" value="Не удалось скачать"/>
-		<node name="downloadingStarted" value="Скачивание книги запущено"/>
+		<node name="downloadCompleteTicker" value="Книга скачана"/>
+		<node name="downloadFailedTicker" value="Книгу скачать не удалось"/>
+		<node name="downloadComplete" value="Скачивание завершено"/>
+		<node name="downloadFailed" value="Не удалось скачать"/>
+		<node name="downloadStarted" value="Скачивание книги запущено"/>
 		<node name="alreadyDownloading" value="Книга уже скачивается"/>
 		<node name="cannotCreateDirectory" value="Невозможно создать каталог %s"/>
 		<node name="cannotCreateFile" value="Невозможно создать файл %s"/>
@@ -769,15 +769,15 @@
 		</node>
 		<node name="dictionary" value="Словарь">
 			<node name="summary" value="Настройки словаря"/>
-			<node name="dictionary" value="Словарь"/>
-			<node name="translator" value="Переводчик"/>
+			<node name="dictionary" value="Искать отдельное слово в"/>
+			<node name="translator" value="Переводить фразы с помощью"/>
 			<node name="targetLanguage" value="Переводить на">
 				<node name="any" value="все языки"/>
 			</node>
 			<node name="longTapAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Ничего не делать"/>
 				<node name="selectSingleWord" value="Выделять одно слово"/>
-				<node name="initSelection" value="Начинать процесс пометки"/>
+				<node name="startSelecting" value="Начинать процесс пометки"/>
 				<node name="openDictionary" value="Выделять одно слово, а при отпускании – запускать словарь"/>
 			</node>
 			<node name="navigateOverAllWords" value="Перемещаться по всем словам">
@@ -1157,5 +1157,11 @@
 		<node name="positiveLength" value="Например: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="Например: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="Например: 125%%"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="неизвестная ошибка"/>
+		<node name="noArticle" value="нет статьи для «%s»"/>
+		<node name="cannotOpenDictionary" value="не удалось открыть словать"/>
+		<node name="noDictionarySelected" value="словарь не выбран; сделайте это в настроках Dictan"/>
 	</node>
 </resources>

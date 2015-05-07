@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Книга завантажена"/>
-		<node name="tickerError" value="Книгу завантажити не вдалось"/>
-		<node name="contentSuccess" value="Завантаження завершене"/>
-		<node name="contentError" value="Не вдалось завантажити"/>
-		<node name="downloadingStarted" value="Завантаження книги почалось"/>
+		<node name="downloadCompleteTicker" value="Книга завантажена"/>
+		<node name="downloadFailedTicker" value="Книгу завантажити не вдалось"/>
+		<node name="downloadComplete" value="Завантаження завершене"/>
+		<node name="downloadFailed" value="Не вдалось завантажити"/>
+		<node name="downloadStarted" value="Завантаження книги почалось"/>
 		<node name="alreadyDownloading" value="Книга вже завантажується"/>
 		<node name="cannotCreateDirectory" value="Неможливо створити теку %s"/>
 		<node name="cannotCreateFile" value="Неможливо створити файл %s"/>
@@ -754,15 +754,15 @@
 		</node>
 		<node name="dictionary" value="Словник">
 			<node name="summary" value="Налаштування словника"/>
-			<node name="dictionary" value="Словник"/>
-			<node name="translator" value="Перекладач"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
 			<node name="longTapAction" value="Дія при довгому натисканні">
 				<node name="doNothing" value="Довге натискання нічого не робить"/>
 				<node name="selectSingleWord" value="Довге натискання вибирає слово"/>
-				<node name="initSelection" value="Довге натискання починає виділення"/>
+				<node name="startSelecting" value="Довге натискання починає виділення"/>
 				<node name="openDictionary" value="Довге натискання вибирає слово, відпускання відкриває словник"/>
 			</node>
 			<node name="navigateOverAllWords" value="Перехід по всім словам">
@@ -1138,5 +1138,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

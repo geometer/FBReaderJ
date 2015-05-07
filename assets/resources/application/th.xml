@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="หนังสือที่ถูกดาวน์โหลดแล้ว"/>
-		<node name="tickerError" value="หนังสือที่ดาวน์โหลดผิดพลาด"/>
-		<node name="contentSuccess" value="ดาวน์โหลดเรียบร้อย"/>
-		<node name="contentError" value="ดาวน์โหลดล้มเหลว"/>
-		<node name="downloadingStarted" value="เริ่มต้นดาวน์โหลดหนังสือ"/>
+		<node name="downloadCompleteTicker" value="หนังสือที่ถูกดาวน์โหลดแล้ว"/>
+		<node name="downloadFailedTicker" value="หนังสือที่ดาวน์โหลดผิดพลาด"/>
+		<node name="downloadComplete" value="ดาวน์โหลดเรียบร้อย"/>
+		<node name="downloadFailed" value="ดาวน์โหลดล้มเหลว"/>
+		<node name="downloadStarted" value="เริ่มต้นดาวน์โหลดหนังสือ"/>
 		<node name="alreadyDownloading" value="เสร็จสิ้นการดาวน์โหลดหนังสือ"/>
 		<node name="cannotCreateDirectory" value="ไม่สามารถสร้างไดเรตทอรี %s"/>
 		<node name="cannotCreateFile" value="ไม่สามารถสร้างไฟล์ %s"/>
@@ -754,15 +754,15 @@
 		</node>
 		<node name="dictionary" value="พจนานุกรม">
 			<node name="summary" value="การตั้งค่าพจนานุกรม"/>
-			<node name="dictionary" value="พจนานุกรม"/>
-			<node name="translator" value="Translator" toBeTranslated="true"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
 			<node name="longTapAction" value="การทำงานเมื่อกดค้างที่หน้าจอ">
 				<node name="doNothing" value="ไม่มีอะไรเกิดขึ้น"/>
 				<node name="selectSingleWord" value="เลือกคำเมื่อกดค้างที่หน้าจอ"/>
-				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
+				<node name="startSelecting" value="Long tap initiates selection" toBeTranslated="true"/>
 				<node name="openDictionary" value="เลือกคำเมื่อกดค้างที่หน้าจอและไปยังพจนานุกรมเมื่อปล่อย"/>
 			</node>
 			<node name="navigateOverAllWords" value="ตัวเลือกคำสามารถเลือกได้ทุกคำ">
@@ -1138,5 +1138,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

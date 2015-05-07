@@ -226,11 +226,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Գիրքը բեռնվեց"/>
-		<node name="tickerError" value="Չհաջողվեց բեռնել գիրքը"/>
-		<node name="contentSuccess" value="Բեռնումն ավարտվեց"/>
-		<node name="contentError" value="Բեռնումը ձախողվեց"/>
-		<node name="downloadingStarted" value="Գրքի բեռնումը սկսված է"/>
+		<node name="downloadCompleteTicker" value="Գիրքը բեռնվեց"/>
+		<node name="downloadFailedTicker" value="Չհաջողվեց բեռնել գիրքը"/>
+		<node name="downloadComplete" value="Բեռնումն ավարտվեց"/>
+		<node name="downloadFailed" value="Բեռնումը ձախողվեց"/>
+		<node name="downloadStarted" value="Գրքի բեռնումը սկսված է"/>
 		<node name="alreadyDownloading" value="Գիրքն արդեն բեռնվում է"/>
 		<node name="cannotCreateDirectory" value="Հնարավոր չէ ստեղծել %s գրացուցակը"/>
 		<node name="cannotCreateFile" value="Հնարավոր չէ ստեղծել %s նիշքը"/>
@@ -769,15 +769,15 @@
 		</node>
 		<node name="dictionary" value="Բառարան">
 			<node name="summary" value="Բառարանի կարգավորումները"/>
-			<node name="dictionary" value="Բառարան"/>
-			<node name="translator" value="Թարգմանիչ"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Թարգմանել ...">
 				<node name="any" value="Բոլոր լեզուներով"/>
 			</node>
 			<node name="longTapAction" value="Գործողություններ՝ էկրանին երկար սեղմելիս">
 				<node name="doNothing" value="Ոչինչ չանել"/>
 				<node name="selectSingleWord" value="Նշել մեկ բառ"/>
-				<node name="initSelection" value="Սկսել նշումը"/>
+				<node name="startSelecting" value="Սկսել նշումը"/>
 				<node name="openDictionary" value="Նշել մեկ բառ և գործարկել բառարանը"/>
 			</node>
 			<node name="navigateOverAllWords" value="Նավարկել բոլոր բառերով">
@@ -1153,5 +1153,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

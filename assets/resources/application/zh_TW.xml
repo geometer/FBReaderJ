@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="下載成功"/>
-		<node name="tickerError" value="下載錯誤"/>
-		<node name="contentSuccess" value="下載完成"/>
-		<node name="contentError" value="下載失敗"/>
-		<node name="downloadingStarted" value="開始下載"/>
+		<node name="downloadCompleteTicker" value="下載成功"/>
+		<node name="downloadFailedTicker" value="下載錯誤"/>
+		<node name="downloadComplete" value="下載完成"/>
+		<node name="downloadFailed" value="下載失敗"/>
+		<node name="downloadStarted" value="開始下載"/>
 		<node name="alreadyDownloading" value="已在下載"/>
 		<node name="cannotCreateDirectory" value="新增資料夾 %s 失敗"/>
 		<node name="cannotCreateFile" value="新增檔案 %s 失敗"/>
@@ -754,15 +754,15 @@
 		</node>
 		<node name="dictionary" value="字典">
 			<node name="summary" value="字典設定"/>
-			<node name="dictionary" value="字典"/>
-			<node name="translator" value="Translator" toBeTranslated="true"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
 			<node name="longTapAction" value="長按動作">
 				<node name="doNothing" value="長按不做任何動作"/>
 				<node name="selectSingleWord" value="長按選字"/>
-				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
+				<node name="startSelecting" value="Long tap initiates selection" toBeTranslated="true"/>
 				<node name="openDictionary" value="長按選字，放開後查詢詞義"/>
 			</node>
 			<node name="navigateOverAllWords" value="導航鍵訪問語句設定">
@@ -1138,5 +1138,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

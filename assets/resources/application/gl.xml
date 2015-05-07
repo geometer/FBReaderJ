@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="O libro foi descargado"/>
-		<node name="tickerError" value="Produciuse un erro na descarga"/>
-		<node name="contentSuccess" value="A descarga foi completada"/>
-		<node name="contentError" value="Fallou a descarga do libro"/>
-		<node name="downloadingStarted" value="Comezouse a descarga do libro"/>
+		<node name="downloadCompleteTicker" value="O libro foi descargado"/>
+		<node name="downloadFailedTicker" value="Produciuse un erro na descarga"/>
+		<node name="downloadComplete" value="A descarga foi completada"/>
+		<node name="downloadFailed" value="Fallou a descarga do libro"/>
+		<node name="downloadStarted" value="Comezouse a descarga do libro"/>
 		<node name="alreadyDownloading" value="O libro xa tiña sido descargado"/>
 		<node name="cannotCreateDirectory" value="Non foi posíbel crear o cartafol %s"/>
 		<node name="cannotCreateFile" value="Non foi posíbel crear o ficheiro %s"/>
@@ -754,15 +754,15 @@
 		</node>
 		<node name="dictionary" value="Dicionario">
 			<node name="summary" value="Preferencias do dicionario"/>
-			<node name="dictionary" value="Dicionario"/>
-			<node name="translator" value="Translator" toBeTranslated="true"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
 			<node name="longTapAction" value="Acción de pulsación longa">
 				<node name="doNothing" value="Pulsación longa non fai nada"/>
 				<node name="selectSingleWord" value="Pulsación longa selecciona a palabra"/>
-				<node name="initSelection" value="Long tap initiates selection" toBeTranslated="true"/>
+				<node name="startSelecting" value="Long tap initiates selection" toBeTranslated="true"/>
 				<node name="openDictionary" value="Pulsación longa selecciona a palabra, e a seguir abre o dicionario"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar por todas as palabras">
@@ -1138,5 +1138,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

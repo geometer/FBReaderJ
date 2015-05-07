@@ -214,11 +214,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Le livre a été téléchargé"/>
-		<node name="tickerError" value="Erreur de téléchargement du livre"/>
-		<node name="contentSuccess" value="Téléchargement terminé"/>
-		<node name="contentError" value="Téléchargement échoué"/>
-		<node name="downloadingStarted" value="Le téléchargement du livre a été démarré"/>
+		<node name="downloadCompleteTicker" value="Le livre a été téléchargé"/>
+		<node name="downloadFailedTicker" value="Erreur de téléchargement du livre"/>
+		<node name="downloadComplete" value="Téléchargement terminé"/>
+		<node name="downloadFailed" value="Téléchargement échoué"/>
+		<node name="downloadStarted" value="Le téléchargement du livre a été démarré"/>
 		<node name="alreadyDownloading" value="Le livre est déjà en cours de téléchargement"/>
 		<node name="cannotCreateDirectory" value="Impossible de créer le répertoire %s"/>
 		<node name="cannotCreateFile" value="Impossible de créer le fichier %s"/>
@@ -757,15 +757,15 @@
 		</node>
 		<node name="dictionary" value="Dictionnaire">
 			<node name="summary" value="Paramètres du dictionnaire"/>
-			<node name="dictionary" value="Dictionnaire"/>
-			<node name="translator" value="Traducteur"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Traduire vers">
 				<node name="any" value="Toutes les langues"/>
 			</node>
 			<node name="longTapAction" value="Configuration de l'appui long">
 				<node name="doNothing" value="Un appui long ne fait rien"/>
 				<node name="selectSingleWord" value="Un appui long selectionne le mot"/>
-				<node name="initSelection" value="Un appui long indique un début de sélection"/>
+				<node name="startSelecting" value="Un appui long indique un début de sélection"/>
 				<node name="openDictionary" value="Un appui long selectionne le mot, relâcher ouvre le dictionnaire"/>
 			</node>
 			<node name="navigateOverAllWords" value="Parcourir l'ensemble des mots">
@@ -1141,5 +1141,11 @@
 		<node name="positiveLength" value="i.e.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="i.e.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="i.e.: 125%%"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

@@ -221,11 +221,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Kitap indirildi"/>
-		<node name="tickerError" value="İndirme hatası"/>
-		<node name="contentSuccess" value="İndirme tamamlandı"/>
-		<node name="contentError" value="İndirme başarısız"/>
-		<node name="downloadingStarted" value="İndirme işlemi başlatıldı"/>
+		<node name="downloadCompleteTicker" value="Kitap indirildi"/>
+		<node name="downloadFailedTicker" value="İndirme hatası"/>
+		<node name="downloadComplete" value="İndirme tamamlandı"/>
+		<node name="downloadFailed" value="İndirme başarısız"/>
+		<node name="downloadStarted" value="İndirme işlemi başlatıldı"/>
 		<node name="alreadyDownloading" value="Bu kitap zaten indiriliyor"/>
 		<node name="cannotCreateDirectory" value="%s dizini oluşturulamadı"/>
 		<node name="cannotCreateFile" value="%s dosyası oluşturulamadı"/>
@@ -764,15 +764,15 @@
 		</node>
 		<node name="dictionary" value="Sözlük">
 			<node name="summary" value="Sözlük ayarları"/>
-			<node name="dictionary" value="Sözlük"/>
-			<node name="translator" value="Çevirmen"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
 			<node name="longTapAction" value="Uzun dokunma eylemi">
 				<node name="doNothing" value="Uzun dokunma eylemsiz"/>
 				<node name="selectSingleWord" value="Uzun dokunma bir kelime seçsin"/>
-				<node name="initSelection" value="Uzun dokunma metin seçimine geçirsin"/>
+				<node name="startSelecting" value="Uzun dokunma metin seçimine geçirsin"/>
 				<node name="openDictionary" value="Uzun dokunma tek kelime seçsin, bırakınca sözlük açılsın"/>
 			</node>
 			<node name="navigateOverAllWords" value="Tüm kelimeler üzerinde gezinme">
@@ -1148,5 +1148,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

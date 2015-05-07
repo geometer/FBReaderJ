@@ -211,11 +211,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="下载成功"/>
-		<node name="tickerError" value="下载出错"/>
-		<node name="contentSuccess" value="下载完成"/>
-		<node name="contentError" value="下载失败"/>
-		<node name="downloadingStarted" value="开始下载"/>
+		<node name="downloadCompleteTicker" value="下载成功"/>
+		<node name="downloadFailedTicker" value="下载出错"/>
+		<node name="downloadComplete" value="下载完成"/>
+		<node name="downloadFailed" value="下载失败"/>
+		<node name="downloadStarted" value="开始下载"/>
 		<node name="alreadyDownloading" value="已在下载"/>
 		<node name="cannotCreateDirectory" value="无法创建文件夹 %s"/>
 		<node name="cannotCreateFile" value="无法创建文件 %s"/>
@@ -754,15 +754,15 @@
 		</node>
 		<node name="dictionary" value="字典设定">
 			<node name="summary" value="设置字典及其对应操作"/>
-			<node name="dictionary" value="字典"/>
-			<node name="translator" value="译者"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="targetLanguage" value="翻译为">
 				<node name="any" value="所有语言"/>
 			</node>
 			<node name="longTapAction" value="长按动作设定">
 				<node name="doNothing" value="长按不做任何事"/>
 				<node name="selectSingleWord" value="长按选择词语"/>
-				<node name="initSelection" value="长按选择内容"/>
+				<node name="startSelecting" value="长按选择内容"/>
 				<node name="openDictionary" value="长按选择词语，放开后打开字典"/>
 			</node>
 			<node name="navigateOverAllWords" value="导航键访问词句设定">
@@ -1138,5 +1138,11 @@
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>
