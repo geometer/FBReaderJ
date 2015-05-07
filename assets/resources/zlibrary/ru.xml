@@ -55,6 +55,7 @@
 		<node name="it" value="итальянский"/>
 		<node name="ja" value="японский"/>
 		<node name="ka" value="грузинский"/>
+		<node name="ko" value="корейский"/>
 		<node name="lt" value="литовский"/>
 		<node name="nb" value="норвежский"/>
 		<node name="nl" value="голландский"/>

@@ -57,6 +57,7 @@
 		<node name="it" value="италиански"/>
 		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="грузински"/>
+		<node name="ko" value="Korean" toBeTranslated="true"/>
 		<node name="lt" value="литовски"/>
 		<node name="nb" value="норвежски"/>
 		<node name="nl" value="холандски"/>
