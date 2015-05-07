@@ -55,6 +55,7 @@
 		<node name="it" value="ایتالیایی"/>
 		<node name="ja" value="ژاپنی"/>
 		<node name="ka" value="گرجی"/>
+		<node name="ko" value="Korean" toBeTranslated="true"/>
 		<node name="lt" value="لیتوانی"/>
 		<node name="nb" value="نروژی"/>
 		<node name="nl" value="هلندی"/>
