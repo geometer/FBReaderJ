@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Vietnamese FBReaderJ resources, by Phạm Văn Hùng_Firestork -->
-<!-- Updated by Khánh Nguyễn Quốc, 27 Apr 2015 -->
+<!-- Updated by Khánh Nguyễn Quốc, 8 May 2015 -->
 <resources>
 	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Tác giả chưa biết"/>
@@ -25,7 +25,7 @@
 			<node name="summary" value="Sách của tôi"/>
 		</node>
 		<node name="bookshelfView" value="Xem kiểu Giá sách">
-			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+			<node name="summary" value="Giá sách thiết kế phong cách material"/>
 		</node>
 		<node name="found" value="Tìm thấy">
 			<node name="summary" value="Kết quả tìm kiếm khoảng: %s"/>
@@ -72,9 +72,9 @@
 		<node name="uploadAgain" value="Tải lên lại"/>
 		<node name="tryAgain" value="Thử lại"/>
 	</node>
-	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
-		<node name="sync" value="FBReader® book network" toBeTranslated="true">
-			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+	<node name="networkLibrary" value="Thư viện trực tuyến FBReader">
+		<node name="sync" value="Thư viện trực tuyến FBReader®">
+			<node name="summary" value="Kho sách cá nhân"/>
 		</node>
 		<node name="byAuthor" value="Tác giả">
 			<node name="summary" value="Xếp sách theo tác giả"/>
@@ -272,7 +272,7 @@
 		<node name="clearSelection" value="Xóa"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Được chia sẻ từ &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
@@ -308,7 +308,7 @@
 		<node name="screenOrientationReverseLandscape" value="Ngang: lộn đầu"/>
 		<node name="increaseFont" value="Chữ to hơn"/>
 		<node name="decreaseFont" value="Chữ nhỏ hơn"/>
-		<node name="toggleFullscreen" value="Toàn Màn hình "/>
+		<node name="toggleFullscreen" value="Choán hết màn hình "/>
 		<node name="bookmarks" value="Đánh dấu"/>
 		<node name="help" value="Trợ giúp"/>
 		<node name="plugins" value="Cài phần bổ sung"/>
@@ -383,9 +383,9 @@
 				<node name="summaryOn" value="Hiện thanh trạng thái khi đọc"/>
 				<node name="summaryOff" value=" Ẩn thanh trạng thái khi đọc"/>
 			</node>
-			<node name="showActionBar" value="Hiển thị trình đơn">
-				<node name="summaryOn" value="Hiển thị trình đơn khi đang đọc"/>
-				<node name="summaryOff" value="Dấu trình đơn khi đang đọc"/>
+			<node name="showActionBar" value="Hiển thanh điều khiển">
+				<node name="summaryOn" value="Hiển thanh điều khiển khi đang đọc"/>
+				<node name="summaryOff" value="Dấu thanh điều khiển khi đang đọc"/>
 			</node>
 			<node name="showStatusBarWhenMenuIsActive" value="Hiện thanh trạng thái cùng trình đơn">
 				<node name="summaryOn" value="Hiện thanh trạng thái cùng trình đơn"/>
@@ -639,9 +639,9 @@
 				<node name="chooser">
 					<node name="solidColor" value="Màu trơn…"/>
 					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
-					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+					<node name="selectFile" value="Chọn file…"/>
 				</node>
-				<node name="solidColor" value="Solid color" toBeTranslated="true"/>
+				<node name="solidColor" value="Một màu"/>
 				<node name="leather" value="Leather" toBeTranslated="true"/>
 				<node name="sepia" value="Sepia" toBeTranslated="true"/>
 				<node name="wood" value="Wood" toBeTranslated="true"/>
@@ -660,7 +660,7 @@
 			<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 			<node name="text" value="Văn bản Thường"/>
 			<node name="hyperlink" value="Siêu liên kết"/>
-			<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
+			<node name="hyperlinkVisited" value="Liên kết đã bấm"/>
 			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
 			<node name="highlightingBackground" value="Kết quả Tìm kiếm"/>
 			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
@@ -708,35 +708,35 @@
 			</node>
 			<node name="font" value="Họ font"/>
 		</node>
-		<node name="scrolling" value="Cuộn">
-			<node name="summary" value="Cách để cuộn văn bản"/>
-			<node name="fingerScrolling" value="Cuôn màn hình cảm ứng">
-				<node name="byTap" value="Cuộn trang bằng cách chạm nhẹ"/>
-				<node name="byFlick" value="Cuộn trang bằng cách búng nhẹ"/>
-				<node name="byTapAndFlick" value="Cuộn trang bằng cả búng và chạm nhẹ"/>
+		<node name="scrolling" value="Cuộn trang">
+			<node name="summary" value="Cách để cuộn sang trang"/>
+			<node name="fingerScrolling" value="Sang trang màn hình">
+				<node name="byTap" value="Chạm mép để sang trang"/>
+				<node name="byFlick" value="Vuốt màn hình để sang trang"/>
+				<node name="byTapAndFlick" value="Chạm hoặc vuốt để sang trang"/>
 			</node>
-			<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
-				<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
+			<node name="enableDoubleTapDetection" value="Chế độ gõ kép">
+				<node name="summaryOn" value="Gõ kép để gọi lệnh"/>
+				<node name="summaryOff" value="Bỏ qua gõ kép"/>
 			</node>
-			<node name="volumeKeys" value="Cuộn bằng phím âm lượng">
-				<node name="summaryOn" value="Dùng phím âm lượng để cuộn"/>
-				<node name="summaryOff" value="Giữ phím âm lượng cho âm thanh"/>
+			<node name="volumeKeys" value="Sang trang bằng nút âm lượng">
+				<node name="summaryOn" value="Dùng nút âm lượng để sang trang"/>
+				<node name="summaryOff" value="Phím âm lượng dùng cho âm thanh"/>
 			</node>
-			<node name="invertVolumeKeys" value="Đảo ngược cuộn bằng phím âm lượng">
+			<node name="invertVolumeKeys" value="Đảo ngược hướng sang trang bằng phím âm lượng">
 				<node name="summaryOn" value="Ấn lên (xuống) phím để cuộn trang xuống (lên)"/>
 				<node name="summaryOff" value="Ấn xuống (lên) phím để cuộn trang lên (xuống)"/>
 			</node>
-			<node name="animation" value="Animation" toBeTranslated="true">
-				<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
-				<node name="curl" value="Curl animation" toBeTranslated="true"/>
-				<node name="slide" value="Slide animation" toBeTranslated="true"/>
-				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
-				<node name="shift" value="Shift animation" toBeTranslated="true"/>
+			<node name="animation" value="Hiệu ứng">
+				<node name="none" value="Sang trang không có hiệu ứng"/>
+				<node name="curl" value="Cong mép"/>
+				<node name="slide" value="Trượt ngang"/>
+				<node name="slideOldStyle" value="Trượt ngang (kiểu cũ)"/>
+				<node name="shift" value="Dồn ngang"/>
 			</node>
-			<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
-				<node name="fast" value="fast" toBeTranslated="true"/>
-				<node name="slow" value="slow" toBeTranslated="true"/>
+			<node name="animationSpeed" value="Tốc độ hiệu ứng">
+				<node name="fast" value="Nhanh"/>
+				<node name="slow" value="Chậm"/>
 			</node>
 			<node name="horizontal" value="Cuộn ngang">
 				<node name="summaryOn" value="Cuộn trang theo chiều ngang"/>
@@ -760,11 +760,11 @@
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
 				<node name="any" value="all languages" toBeTranslated="true"/>
 			</node>
-			<node name="longTapAction" value="Nhấn giữ">
-				<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
-				<node name="selectSingleWord" value="Chọn từ khi nhấn giữ"/>
-				<node name="startSelecting" value="Long tap initiates selecting" toBeTranslated="true"/>
-				<node name="openDictionary" value="Chọn từ và mở từ điển khi nhấn giữ"/>
+			<node name="longTapAction" value="Bấm giữ">
+				<node name="doNothing" value="Không làm gì khi bấm giữ"/>
+				<node name="selectSingleWord" value="Chọn từ khi bấm giữ"/>
+				<node name="startSelecting" value="Bấm lâu để bắt đầu chọn"/>
+				<node name="openDictionary" value="Chọn từ và mở từ điển khi bấm giữ"/>
 			</node>
 			<node name="navigateOverAllWords" value="Điều hướng mọi từ">
 				<node name="summaryOn" value="Phím điều hướng tác động lên mọi từ"/>
@@ -803,7 +803,7 @@
 				<node name="summaryOn" value="Hiện mục 'Chuyển sang sách đọc lần trước'"/>
 				<node name="summaryOff" value="Không hiện mục 'Chuyển sang sách đọc lần trước'"/>
 			</node>
-			<node name="positions" value="3 vị trí mới nhất">
+			<node name="positions" value="Ba vị trí mới nhất">
 				<node name="summaryOn" value="Hiện 3 vị trí mới dừng gần nhất trong sách"/>
 				<node name="summaryOff" value="Không hiện 3 vị trí mới dừng gần nhất trong sách"/>
 			</node>
@@ -925,25 +925,25 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
-			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
+			<node name="tryConnect" value="Đang cố kết nối, vui lòng chờ…"/>
 			<node name="downloadingBook" value="Đang tải sách về %s"/>
-			<node name="search" value="Đang tìm. Xin chờ…"/>
-			<node name="loadInfo" value="Loading information. Please, wait…" toBeTranslated="true"/>
-			<node name="loadingBook" value="Đang mở sách. Xin chờ…"/>
-			<node name="loadingBookList" value="Đang mở thư viện. Xin chờ…"/>
-			<node name="creatingBooksDatabase" value="Đang tạo kho sách. Xin chờ…"/>
-			<node name="updatingBooksDatabase" value="Đang cập nhật kho sách. Xin chờ…"/>
-			<node name="loadingNetworkLibrary" value="Đang mở thư viện. Xin chờ…"/>
-			<node name="authentication" value="Xác thực. Xin chờ…"/>
-			<node name="signOut" value="Đang thoát. Xin chờ…"/>
-			<node name="purchaseBook" value="Mua sách. Xin chờ…"/>
+			<node name="search" value="Đang tìm, vui lòng chờ…"/>
+			<node name="loadInfo" value="Đang nạp thông tin, vui lòng chờ…"/>
+			<node name="loadingBook" value="Đang mở sách, vui lòng chờ…"/>
+			<node name="loadingBookList" value="Đang mở thư viện, vui lòng chờ…"/>
+			<node name="creatingBooksDatabase" value="Đang tạo kho sách, vui lòng chờ…"/>
+			<node name="updatingBooksDatabase" value="Đang cập nhật kho sách, vui lòng chờ…"/>
+			<node name="loadingNetworkLibrary" value="Đang mở thư viện, vui lòng chờ…"/>
+			<node name="authentication" value="Xác thực, vui lòng chờ…"/>
+			<node name="signOut" value="Đang thoát, vui lòng chờ…"/>
+			<node name="purchaseBook" value="Mua sách, vui lòng chờ…"/>
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait…"/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
-			<node name="registerUser" value="Đang đăng ký tài khoản. Xin chờ…"/>
+			<node name="registerUser" value="Đang đăng ký tài khoản, vui lòng chờ…"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
 		</node>
@@ -956,21 +956,21 @@
 			<node name="downloadLimitExceeded" value="Quá giói hạn tải về"/>
 			<node name="noUserForEmail" value="Không người nào đang ký&#10;với địa chỉ email xác định"/>
 			<node name="unsupportedOperation" value="Thao tác không được hỗ trợ"/>
-			<node name="notAnOPDS" value="Đây không phải là một catalo OPDS"/>
+			<node name="notAnOPDS" value="Đây không phải là một kho OPDS"/>
 			<node name="noRequiredInformation" value="Thông tin yêu cầu không định vị được trong catalo"/>
 			<node name="cacheDirectoryError" value="Không thể tạo thư mục đệm"/>
 			<node name="usernameAlreadyInUse" value="Tài khoản đã có thể dùng"/>
-			<node name="usernameNotSpecified" value="Xin nhập tên người dùng"/>
-			<node name="passwordNotSpecified" value="Xin nhập mật khẩu"/>
+			<node name="usernameNotSpecified" value="Hãy nhập tên người dùng"/>
+			<node name="passwordNotSpecified" value="Hãy nhập mật khẩu"/>
 			<node name="passwordsDoNotMatch" value="Mật khẩu và mật khẩu xác nhận phải giống nhau."/>
-			<node name="emailNotSpecified" value="Xin nhập 1 địa chỉ email"/>
+			<node name="emailNotSpecified" value="Hãy nhập địa chỉ email"/>
 			<node name="emailAlreadyInUse" value="Địa chỉ email đã được sử dụng"/>
 			<node name="invalidEMail" value="Địa chỉ email sai"/>
 			<node name="tooManyRegistrations" value="Có quá nhiều đăng ký từ IP của bạn;&#10;thử lại sau vài phút"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Xác thực"/>
-			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
+			<node name="unencryptedWarning" value="Mật khẩu không được mã hóa khi gửi đi"/>
 			<node name="login" value="Người dùng"/>
 			<node name="password" value="Mật khẩu"/>
 			<node name="loginIsEmpty" value="Tên người dùng không được rỗng"/>
@@ -994,14 +994,14 @@
 			<node name="title" value="Bộ lọc ngôn ngữ"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day" toBeTranslated="true"/>
-			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
-			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
-			<node name="more" value="Next tip" toBeTranslated="true"/>
+			<node name="title" value="Mỗi ngày một mẹo"/>
+			<node name="initializationText" value="Bạn có muốn hàng ngày FBReader gợi ý mẹo nhỏ? Những mẹo này được tải về từ FBReader. Lưu lượng sẽ mất khoảng 1-2kb mỗi tuần.&#10;&#10;Đồng ý?"/>
+			<node name="dontShowAgain" value="Không hiện lại"/>
+			<node name="more" value="Mẹo tiếp"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
-			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message1" value="FBReader mặc định choán màn hình khi chạy. Bấm vào giữa màn hình để gọi bảng điều khiển. Có thể thay đổi điều này trong phần Cài đặt --&gt; Giao diện."/>
+			<node name="message2" value="Tốt lắm! Giờ hãy gõ lại vào giữa màn hình để tắt thanh điều khiển và phần giới thiệu này. Nếu muốn giữ thanh điều khiển khi đọc sách, hãy chọn “Hiện thanh điều khiển” trong Cài đặt -&gt;  Giao diện."/>
 		</node>
 		<node name="folderList">
 			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
@@ -1039,7 +1039,7 @@
 				<node name="size" value="Size" toBeTranslated="true"/>
 				<node name="date" value="Date" toBeTranslated="true"/>
 			</node>
-			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+			<node name="permissionDenied" value="Không được cho phép"/>
 		</node>
 		<node name="missingPlugin">
 			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
@@ -1051,7 +1051,7 @@
 		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
 		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
 		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="File not found: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="Không tìm thấy: %s" toBeTranslated="true"/>
 		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
@@ -1071,7 +1071,7 @@
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 		<node name="bookIsMissingTitle" value="Sách bị mất"/>
-		<node name="bookIsMissing" value="Sách '%s' không có trên thiết bị này, rất tiếc."/>
+		<node name="bookIsMissing" value="Quyển '%s' không có trên thiết bị này, rất tiếc."/>
 		<node name="downloadFailed" value="Tải về thất bại"/>
 	</node>
 	<node name="external">
