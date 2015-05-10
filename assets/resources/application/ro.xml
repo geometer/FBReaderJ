@@ -273,7 +273,7 @@
 		<node name="clearSelection" value="Sterge"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Impartasit de la &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Impartasit de la &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
@@ -831,7 +831,7 @@
 			<node name="summary" value="Informatii versiune, contacte"/>
 			<node name="version" value="Versiune"/>
 			<node name="site" value="Visitati website-ul nostru">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="Trimiteti-ne un e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -1094,7 +1094,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Instalare plugin-uri">
 		<node name="noMorePlugins" value="Nu avem, plugin-uri noi in acest moment, ne pare rau"/>
