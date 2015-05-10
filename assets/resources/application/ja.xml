@@ -281,7 +281,7 @@
 		<node name="clearSelection" value="解除"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="共有元: &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="共有元: &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="スタート画面"/>
@@ -839,7 +839,7 @@
 			<node name="summary" value="バージョン情報や連絡先など"/>
 			<node name="version" value="バージョン"/>
 			<node name="site" value="公式ウェブサイト">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="メール (英語かロシア語で)">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -1102,7 +1102,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="プラグインをインストール">
 		<node name="noMorePlugins" value="現時点で新しいプラグインはありません。ご了承ください"/>

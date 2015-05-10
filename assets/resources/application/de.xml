@@ -286,7 +286,7 @@
 		<node name="clearSelection" value="Auswahl aufheben"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Bereitgestellt von &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Bereitgestellt von &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Startbildschirm"/>
@@ -844,7 +844,7 @@
 			<node name="summary" value="Versionsinformation, Kontakt"/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Homepage">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="E-Mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -1108,7 +1108,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Plugins installieren">
 		<node name="noMorePlugins" value="Aktuell sind keine neuen Plugins verfügbar."/>

@@ -271,7 +271,7 @@
 		<node name="clearSelection" value="清除"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="共享自 &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; "/>
+		<node name="sharedFrom" value="共享自 &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; "/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
@@ -829,7 +829,7 @@
 			<node name="summary" value="版本信息, 联系人"/>
 			<node name="version" value="版本"/>
 			<node name="site" value="访问我们的网站">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="给我们发送邮件">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -1093,7 +1093,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Install plugins" toBeTranslated="true">
 		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>

@@ -281,7 +281,7 @@
 		<node name="clearSelection" value="Ачысьціць"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Абагулена праз &lt;a href=&quot;http://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Абагулена праз &lt;a href=&quot;https://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
@@ -839,7 +839,7 @@
 			<node name="summary" value="Вэрсія й кантакты"/>
 			<node name="version" value="Вэрсія"/>
 			<node name="site" value="Наведаць наш сайт">
-				<node name="url" value="http://ru.fbreader.org/"/>
+				<node name="url" value="https://ru.fbreader.org/"/>
 			</node>
 			<node name="email" value="Даслаць нам ліст">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -1103,7 +1103,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://ru.fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://ru.fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Усталяваць убудовы">
 		<node name="noMorePlugins" value="Зараз няма новых убудоваў, прабачце"/>

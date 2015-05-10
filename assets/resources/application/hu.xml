@@ -271,7 +271,7 @@
 		<node name="clearSelection" value="Kijelölés eltávolítása"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Megosztva az &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;ből"/>
+		<node name="sharedFrom" value="Megosztva az &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;ből"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
@@ -829,7 +829,7 @@
 			<node name="summary" value="Verziószám, kapcsolat"/>
 			<node name="version" value="Verzió"/>
 			<node name="site" value="Ugrás a weboldalunkra">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="E-mail küldése">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -1093,7 +1093,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Bővítmények telepítése">
 		<node name="noMorePlugins" value="Jelenleg nincs új bővítmény"/>
