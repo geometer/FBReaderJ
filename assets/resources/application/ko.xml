@@ -281,7 +281,7 @@
 		<node name="clearSelection" value="지우기"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="&lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; 로부터 공유됨"/>
+		<node name="sharedFrom" value="&lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; 로부터 공유됨"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="시작 화면"/>
@@ -839,7 +839,7 @@
 			<node name="summary" value="버전 정보, 연락처"/>
 			<node name="version" value="버전"/>
 			<node name="site" value="웹사이트 방문">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="이메일 보내기">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -1102,7 +1102,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="플러그인 설치">
 		<node name="noMorePlugins" value="지금은 새로운 플러그인이 없습니다"/>
