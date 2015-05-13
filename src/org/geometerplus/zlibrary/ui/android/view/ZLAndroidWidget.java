@@ -19,6 +19,9 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
@@ -38,6 +41,8 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.eink.EInkUtil;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
+	public final ExecutorService PrepareService = Executors.newSingleThreadExecutor();
+
 	private final Paint myPaint = new Paint();
 	private final BitmapManager myBitmapManager = new BitmapManager(this);
 	private Bitmap myFooterBitmap;
@@ -303,25 +308,28 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
 		drawFooter(canvas, null);
-		new Thread() {
-			@Override
+		post(new Runnable() {
 			public void run() {
-				final ZLView view = ZLApplication.Instance().getCurrentView();
-				final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-					canvas,
-					new ZLAndroidPaintContext.Geometry(
-						getWidth(),
-						getHeight(),
-						getWidth(),
-						getMainAreaHeight(),
-						0,
-						0
-					),
-					view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
-				);
-				view.preparePage(context, ZLView.PageIndex.next);
+				PrepareService.execute(new Runnable() {
+					public void run() {
+						final ZLView view = ZLApplication.Instance().getCurrentView();
+						final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+							canvas,
+							new ZLAndroidPaintContext.Geometry(
+								getWidth(),
+								getHeight(),
+								getWidth(),
+								getMainAreaHeight(),
+								0,
+								0
+							),
+							view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+						);
+						view.preparePage(context, ZLView.PageIndex.next);
+					}
+				});
 			}
-		}.start();
+		});
 	}
 
 	@Override
