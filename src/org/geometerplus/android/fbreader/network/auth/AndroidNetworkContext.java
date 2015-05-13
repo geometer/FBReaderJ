@@ -23,6 +23,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import android.accounts.AccountManager;
+import android.accounts.AuthenticatorDescription;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -36,14 +38,31 @@ import org.geometerplus.zlibrary.core.network.*;
 public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	private volatile ConnectivityManager myConnectivityManager;
 
+	private boolean hasGoogleAuth(Context context) {
+		if (Build.VERSION.SDK_INT < 14) {
+			return false;
+		}
+		switch (GooglePlayServicesUtil.isGooglePlayServicesAvailable(context)) {
+			case ConnectionResult.SUCCESS:
+				break;
+			// TODO: process other codes
+			default:
+				return false;
+		}
+		for (AuthenticatorDescription desc : AccountManager.get(context).getAuthenticatorTypes()) {
+			if ("com.google".equals(desc.type)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public Map<String,String> authenticate(URI uri, String realm, Map<String,String> params) {
 		if (!"https".equalsIgnoreCase(uri.getScheme())) {
 			return errorMap("Connection is not secure");
 		}
-		// TODO: process other codes
-		if (Build.VERSION.SDK_INT >= 14 &&
-			GooglePlayServicesUtil.isGooglePlayServicesAvailable(getContext()) == ConnectionResult.SUCCESS) {
+		if (hasGoogleAuth(getContext())) {
 			final String authUrl = url(uri, params, "auth-url-token");
 			final String clientId = params.get("client-id");
 			if (authUrl == null || clientId == null) {
