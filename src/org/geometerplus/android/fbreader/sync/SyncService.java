@@ -385,7 +385,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 		} else if (!force && book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
 			return Status.FailedPreviuousTime;
 		}
-		if (file.length() > 50 * 1024 * 1024) {
+		if (file.length() > 120 * 1024 * 1024) {
 			return Status.Failure;
 		}
 
