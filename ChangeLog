@@ -11,6 +11,7 @@
 * Updated Czech localisation (by Marek Pavelka)
 * Links update: http => https
 * Better check for google account (do not try google auth if google account type is not allowed)
+* Max uploadable file size increased to 120Mb
 
 ===== 2.4.6 (May 06, 2015) =====
 * Dictan dictionary integration
