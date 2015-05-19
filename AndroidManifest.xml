@@ -134,6 +134,12 @@
 				<data android:mimeType="application/x-fictionbook"/>
 				<data android:mimeType="application/pdf"/>
 				<data android:mimeType="application/x-pdf"/>
+				<data android:mimeType="application/djvu"/>
+				<data android:mimeType="application/x-djvu"/>
+				<data android:mimeType="application/x-cbr"/>
+				<data android:mimeType="application/x-cbz"/>
+				<data android:mimeType="image/vnd.djvu"/>
+				<data android:mimeType="image/x-djvu"/>
 				<data android:mimeType="text/plain"/>
 			</intent-filter>
 			<intent-filter>
@@ -263,6 +269,12 @@
 				<data android:mimeType="application/x-fictionbook"/>
 				<data android:mimeType="application/pdf"/>
 				<data android:mimeType="application/x-pdf"/>
+				<data android:mimeType="application/djvu"/>
+				<data android:mimeType="application/x-djvu"/>
+				<data android:mimeType="application/x-cbr"/>
+				<data android:mimeType="application/x-cbz"/>
+				<data android:mimeType="image/vnd.djvu"/>
+				<data android:mimeType="image/x-djvu"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
