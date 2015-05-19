@@ -70,11 +70,12 @@ mainLoop:
 				}
 			}
 			final ZLTextElement element = cursor.getElement();
-			if (element instanceof ZLTextWord) {
-				final ZLTextWord word = (ZLTextWord)element;
+			if (element == ZLTextElement.HSpace) {
 				if (lineIsNonEmpty) {
 					phraseBuffer.append(" ");
 				}
+			} if (element instanceof ZLTextWord) {
+				final ZLTextWord word = (ZLTextWord)element;
 				phraseBuffer.Builder.append(word.Data, word.Offset, word.Length);
 				phraseBuffer.Cursor.setCursor(cursor);
 				phraseBuffer.Cursor.setCharIndex(word.Length);
