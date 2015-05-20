@@ -76,16 +76,21 @@ public abstract class DictionaryUtil {
 		Collections.synchronizedMap(new LinkedHashMap<PackageInfo,Integer>());
 
 	public static abstract class PackageInfo extends HashMap<String,String> {
-		public final String Id;
-		public final String Title;
-
 		public final boolean SupportsTargetLanguageSetting;
 
 		PackageInfo(String id, String title, boolean supportsTargetLanguageSetting) {
-			Id = id;
-			Title = title;
+			put("id", id);
+			put("title", title);
 
 			SupportsTargetLanguageSetting = supportsTargetLanguageSetting;
+		}
+
+		public final String getId() {
+			return get("id");
+		}
+
+		public final String getTitle() {
+			return get("title");
 		}
 
 		final Intent getDictionaryIntent(String text) {
@@ -127,7 +132,8 @@ public abstract class DictionaryUtil {
 		void open(String text, ZLTextRegion.Soul soulToSelect, FBReader fbreader, PopupFrameMetric frameMetrics) {
 			final Intent intent = getDictionaryIntent(text);
 			try {
-				if ("ABBYY Lingvo".equals(Id)) {
+				final String id = getId();
+				if ("ABBYY Lingvo".equals(id)) {
 					intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.Gravity);
 					intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.Height);
 					intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
@@ -137,7 +143,7 @@ public abstract class DictionaryUtil {
 					if (!Language.ANY_CODE.equals(targetLanguage)) {
 						intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, targetLanguage);
 					}
-				} else if ("ColorDict".equals(Id)) {
+				} else if ("ColorDict".equals(id)) {
 					intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
 					intent.putExtra(ColorDict3.GRAVITY, frameMetrics.Gravity);
 					final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
@@ -402,22 +408,26 @@ public abstract class DictionaryUtil {
 
 	public static ZLStringOption singleWordTranslatorOption() {
 		if (ourSingleWordTranslatorOption == null) {
-			ourSingleWordTranslatorOption = new ZLStringOption("Dictionary", "Id", firstInfo().Id);
+			ourSingleWordTranslatorOption = new ZLStringOption("Dictionary", "Id", firstInfo().getId());
 		}
 		return ourSingleWordTranslatorOption;
 	}
 
 	public static ZLStringOption multiWordTranslatorOption() {
 		if (ourMultiWordTranslatorOption == null) {
-			ourMultiWordTranslatorOption = new ZLStringOption("Translator", "Id", firstInfo().Id);
+			ourMultiWordTranslatorOption = new ZLStringOption("Translator", "Id", firstInfo().getId());
 		}
 		return ourMultiWordTranslatorOption;
 	}
 
 	private static PackageInfo getInfo(String id) {
+		if (id == null) {
+			return firstInfo();
+		}
+
 		synchronized (ourInfos) {
 			for (PackageInfo info : ourInfos.keySet()) {
-				if (info.Id.equals(id)) {
+				if (id.equals(info.getId())) {
 					return info;
 				}
 			}
@@ -493,7 +503,7 @@ public abstract class DictionaryUtil {
 		final ZLResource installResource = dialogResource.getResource("installDictionary");
 		new AlertDialog.Builder(activity)
 			.setTitle(installResource.getResource("title").getValue())
-			.setMessage(installResource.getResource("message").getValue().replace("%s", info.Title))
+			.setMessage(installResource.getResource("message").getValue().replace("%s", info.getTitle()))
 			.setIcon(0)
 			.setPositiveButton(
 				buttonResource.getResource("install").getValue(),
@@ -509,7 +519,7 @@ public abstract class DictionaryUtil {
 
 	private static void installDictionary(Activity activity, PackageInfo dictionaryInfo) {
 		if (!PackageUtil.installFromMarket(activity, dictionaryInfo.get("package"))) {
-			UIUtil.showErrorMessage(activity, "cannotRunAndroidMarket", dictionaryInfo.Title);
+			UIUtil.showErrorMessage(activity, "cannotRunAndroidMarket", dictionaryInfo.getTitle());
 		}
 	}
 

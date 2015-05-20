@@ -10,6 +10,8 @@
 * Updated Japanese localisation (by Tamotsu Takahashi)
 * Updated Czech localisation (by Marek Pavelka)
 * Links update: http => https
+* Fixed zero-width space issue for bookmarks in Japanese
+* Fixed old Slovoed integration
 * Better check for google account (do not try google auth if google account type is not allowed)
 * Max uploadable file size increased to 120Mb
 

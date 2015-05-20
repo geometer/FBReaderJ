@@ -40,8 +40,8 @@ class DictionaryPreference extends ZLStringListPreference {
 		final String[] texts = new String[infos.size()];
 		int index = 0;
 		for (DictionaryUtil.PackageInfo i : infos) {
-			values[index] = i.Id;
-			texts[index] = i.Title;
+			values[index] = i.getId();
+			texts[index] = i.getTitle();
 			++index;
 		}
 		setLists(values, texts);
