@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Armenian zlibrary resources, by Yavruhrat -->
+<!-- Armenian zlibrary resources, by Yavruhrat, Marat Yavrumyan -->
+<!-- Updated by Yavruhrat, Marat Yavrumyan 2015/05/17 -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -23,7 +24,7 @@
 			<node name="invalidURL" value="Սխալ URL"/>
 			<node name="hostCantBeReached" value="%s կայքն անհասանելի է"/>
 			<node name="connectionRefused" value="%s կայքի հետ կապն ավարտվեց"/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Ցանցն անհասանելի է"/>
 		</node>
 	</node>
 	<node name="color">
@@ -54,9 +55,9 @@
 		<node name="hy" value="հայերեն"/>
 		<node name="id" value="ինդոնեզերեն (կավի)"/>
 		<node name="it" value="իտալերեն"/>
-		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ja" value="ճապոներեն"/>
 		<node name="ka" value="վրացերեն"/>
-		<node name="ko" value="Korean" toBeTranslated="true"/>
+		<node name="ko" value="կորեերեն"/>
 		<node name="lt" value="լիտվաներեն"/>
 		<node name="nb" value="նորվեգերեն"/>
 		<node name="nl" value="հոլանդերեն"/>
@@ -76,7 +77,7 @@
 		<node name="any" value="ցանկացած"/>
 		<node name="other" value="այլ"/>
 		<node name="multi" value="բազմալեզու"/>
-		<node name="system" value="Համապատասխանեցնել համակարգին"/>
+		<node name="system" value="Սարքավորման լեզվով"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="միացնել"/>
