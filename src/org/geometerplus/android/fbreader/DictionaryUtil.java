@@ -540,14 +540,21 @@ public abstract class DictionaryUtil {
 			showDictanError(fbreader, -1, data);
 			return;
 		}
+		// a hack for obsolete (before 5.0 beta) dictan versions
 		final int index = text.indexOf("\000");
 		if (index >= 0) {
 			text = text.substring(0, index);
 		}
-
-		final SuperActivityToast toast;
+		final boolean hasExtraData;
 		if (text.length() == MAX_LENGTH_FOR_TOAST) {
 			text = trimArticle(text);
+			hasExtraData = true;
+		} else {
+			hasExtraData = data.getBooleanExtra("article.resources.contains", false);
+		}
+
+		final SuperActivityToast toast;
+		if (hasExtraData) {
 			toast = new SuperActivityToast(fbreader, SuperToast.Type.BUTTON);
 			toast.setButtonIcon(
 				android.R.drawable.ic_menu_more,

@@ -14,6 +14,7 @@
 * Fixed old Slovoed integration
 * Better check for google account (do not try google auth if google account type is not allowed)
 * Max uploadable file size increased to 120Mb
+* Better Dictan integration (uses Dictan 5.0 extra flags)
 
 ===== 2.4.6 (May 06, 2015) =====
 * Dictan dictionary integration
