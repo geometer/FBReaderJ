@@ -913,12 +913,15 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final String sql = "SELECT style_id,timestamp,name,bg_color,fg_color FROM HighlightingStyle";
 		final Cursor cursor = myDatabase.rawQuery(sql, null);
 		while (cursor.moveToNext()) {
+			final String name = cursor.getString(2);
+			final int bgColor = (int)cursor.getLong(3);
+			final int fgColor = (int)cursor.getLong(4);
 			list.add(createStyle(
 				(int)cursor.getLong(0),
 				cursor.getLong(1),
-				cursor.getString(2),
-				(int)cursor.getLong(3),
-				(int)cursor.getLong(4)
+				name.length() > 0 ? name : null,
+				bgColor != -1 ? new ZLColor(bgColor) : null,
+				fgColor != -1 ? new ZLColor(fgColor) : null
 			));
 		}
 		cursor.close();
@@ -930,7 +933,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color,fg_color,timestamp) VALUES (?,?,?,?,?)"
 		);
 		statement.bindLong(1, style.Id);
-		final String name = style.getName();
+		final String name = style.getNameOrNull();
 		statement.bindString(2, name != null ? name : "");
 		final ZLColor bgColor = style.getBackgroundColor();
 		statement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
