@@ -28,6 +28,7 @@ import android.view.Window;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
+import org.geometerplus.fbreader.book.BookmarkUtil;
 import org.geometerplus.fbreader.book.HighlightingStyle;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -76,13 +77,13 @@ public class EditStyleActivity extends PreferenceActivity {
 	private class NamePreference extends ZLStringPreference {
 		NamePreference() {
 			super(EditStyleActivity.this, myRootResource, "name");
-			super.setValue(myStyle.getName());
+			super.setValue(BookmarkUtil.getStyleName(myStyle));
 		}
 
 		@Override
 		protected void setValue(String value) {
 			super.setValue(value);
-			myStyle.setName(value);
+			BookmarkUtil.setStyleName(myStyle, value);
 			myCollection.saveHighlightingStyle(myStyle);
 		}
 	}

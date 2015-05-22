@@ -341,7 +341,7 @@ class XMLSerializer extends AbstractSerializer {
 		appendTag(buffer, "style", true,
 			"id", String.valueOf(style.Id),
 			"timestamp", String.valueOf(style.LastUpdateTimestamp),
-			"name", style.getName(),
+			"name", style.getNameOrNull(),
 			"bg-color", bgColor != null ? String.valueOf(bgColor.intValue()) : "-1",
 			"fg-color", fgColor != null ? String.valueOf(fgColor.intValue()) : "-1"
 		);
