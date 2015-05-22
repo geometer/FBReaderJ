@@ -126,46 +126,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myStyleId = collection.getDefaultHighlightingStyleId();
 	}
 
-	public void findEnd(ZLTextView view) {
-		if (myEnd != null) {
-			return;
-		}
-		ZLTextWordCursor cursor = view.getStartCursor();
-		if (cursor.isNull()) {
-			cursor = view.getEndCursor();
-		}
-		if (cursor.isNull()) {
-			return;
-		}
-		cursor = new ZLTextWordCursor(cursor);
-		cursor.moveTo(this);
-
-		ZLTextWord word = null;
-mainLoop:
-		for (int count = myLength; count > 0; cursor.nextWord()) {
-			while (cursor.isEndOfParagraph()) {
-				if (!cursor.nextParagraph()) {
-					break mainLoop;
-				}
-			}
-			final ZLTextElement element = cursor.getElement();
-			if (element instanceof ZLTextWord) {
-				if (word != null) {
-					--count;
-				}
-				word = (ZLTextWord)element;
-				count -= word.Length;
-			}
-		}
-		if (word != null) {
-			myEnd = new ZLTextFixedPosition(
-				cursor.getParagraphIndex(),
-				cursor.getElementIndex(),
-				word.Length
-			);
-		}
-	}
-
 	public long getId() {
 		return myId;
 	}
@@ -236,6 +196,10 @@ mainLoop:
 
 	public ZLTextPosition getEnd() {
 		return myEnd;
+	}
+
+	void setEnd(int paragraphsIndex, int elementIndex, int charIndex) {
+		myEnd = new ZLTextFixedPosition(paragraphsIndex, elementIndex, charIndex);
 	}
 
 	public int getLength() {
