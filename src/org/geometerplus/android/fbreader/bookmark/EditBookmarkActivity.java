@@ -235,7 +235,7 @@ public class EditBookmarkActivity extends Activity implements IBookCollection.Li
 			colorView.setVisibility(View.VISIBLE);
 			BookmarksUtil.setupColorView(colorView, style);
 
-			titleView.setText(style.getName());
+			titleView.setText(BookmarkUtil.getStyleName(style));
 
 			button.setVisibility(View.VISIBLE);
 			button.setText(myResource.getResource("editStyle").getValue());
