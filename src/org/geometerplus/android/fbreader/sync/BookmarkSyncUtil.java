@@ -151,7 +151,7 @@ class BookmarkSyncUtil {
 				} else {
 					boolean doUpdate = false;
 
-					final String clientName = style.getName();
+					final String clientName = BookmarkUtil.getStyleName(style);
 					final String serverName = (String)serverInfo.get("name");
 					if (!clientName.equals(serverName)) {
 						doUpdate = true;
@@ -175,7 +175,7 @@ class BookmarkSyncUtil {
 
 					if (doUpdate) {
 						if (style.LastUpdateTimestamp < (Long)serverInfo.get("timestamp")) {
-							style.setName(serverName);
+							BookmarkUtil.setStyleName(style, serverName);
 							style.setBackgroundColor(serverBg);
 							style.setForegroundColor(serverFg);
 							collection.saveHighlightingStyle(style);
@@ -189,7 +189,7 @@ class BookmarkSyncUtil {
 					final Map<String,Object> styleMap = new HashMap<String,Object>();
 					styleMap.put("style_id", style.Id);
 					styleMap.put("timestamp", style.LastUpdateTimestamp);
-					styleMap.put("name", style.getName());
+					styleMap.put("name", BookmarkUtil.getStyleName(style));
 					final ZLColor bg = style.getBackgroundColor();
 					if (bg != null) {
 						styleMap.put("bg_color", bg.intValue());
