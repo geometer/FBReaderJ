@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.book;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 public class HighlightingStyle {
@@ -39,19 +38,12 @@ public class HighlightingStyle {
 		myForegroundColor = fgColor;
 	}
 
-	private String defaultName() {
-		return ZLResource.resource("style").getValue().replace("%s", String.valueOf(Id));
+	public String getNameOrNull() {
+		return "".equals(myName) ? null : myName;
 	}
 
-	public String getName() {
-		if (myName == null || "".equals(myName)) {
-			return defaultName();
-		}
-		return myName;
-	}
-
-	public void setName(String name) {
-		myName = defaultName().equals(name) ? "" : name;
+	void setName(String name) {
+		myName = name;
 	}
 
 	public ZLColor getBackgroundColor() {
