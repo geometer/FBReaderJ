@@ -38,7 +38,7 @@ import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
-public class SyncService extends Service implements IBookCollection.Listener {
+public class SyncService extends Service implements IBookCollection.Listener<Book> {
 	private static void log(String message) {
 		Log.d("FBReader.Sync", message);
 	}
