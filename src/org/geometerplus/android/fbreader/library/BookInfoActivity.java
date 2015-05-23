@@ -76,7 +76,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 
 		final Intent intent = getIntent();
 		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myBook = FBReaderIntents.getBookExtra(intent);
+		myBook = FBReaderIntents.getBookExtra(intent, myCollection);
 
 		final ActionBar bar = getActionBar();
 		if (bar != null) {

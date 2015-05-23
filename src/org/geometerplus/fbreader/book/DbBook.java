@@ -19,32 +19,17 @@
 
 package org.geometerplus.fbreader.book;
 
-public final class BookmarkQuery {
-	public final AbstractBook Book;
-	public final boolean Visible;
-	public final int Limit;
-	public final int Page;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-	public BookmarkQuery(int limit) {
-		this(null, limit);
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+
+public class DbBook extends AbstractBook {
+	DbBook(long id, ZLFile file, String title, String encoding, String language) {
+		super(id, file, title, encoding, language);
 	}
 
-	public BookmarkQuery(AbstractBook book, int limit) {
-		this(book, true, limit);
-	}
-
-	public BookmarkQuery(AbstractBook book, boolean visible, int limit) {
-		this(book, visible, limit, 0);
-	}
-
-	BookmarkQuery(AbstractBook book, boolean visible, int limit, int page) {
-		Book = book;
-		Visible = visible;
-		Limit = limit;
-		Page = page;
-	}
-
-	public BookmarkQuery next() {
-		return new BookmarkQuery(Book, Visible, Limit, Page + 1);
+	DbBook(ZLFile file, FormatPlugin plugin) throws BookReadingException {
+		super(file, plugin);
 	}
 }

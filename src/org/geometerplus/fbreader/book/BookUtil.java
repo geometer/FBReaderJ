@@ -38,7 +38,7 @@ public abstract class BookUtil {
 	private static final WeakHashMap<ZLFile,WeakReference<ZLImage>> ourCovers =
 		new WeakHashMap<ZLFile,WeakReference<ZLImage>>();
 
-	public static ZLImage getCover(Book book) {
+	public static ZLImage getCover(AbstractBook book) {
 		if (book == null) {
 			return null;
 		}
@@ -67,7 +67,7 @@ public abstract class BookUtil {
 		return image;
 	}
 
-	public static String getAnnotation(Book book) {
+	public static String getAnnotation(AbstractBook book) {
 		try {
 			return book.getPlugin().readAnnotation(book.File);
 		} catch (BookReadingException e) {

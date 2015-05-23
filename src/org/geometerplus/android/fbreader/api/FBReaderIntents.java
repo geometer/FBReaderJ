@@ -74,12 +74,12 @@ public abstract class FBReaderIntents {
 		putBookExtra(intent, Key.BOOK, book);
 	}
 
-	public static Book getBookExtra(Intent intent, String key) {
-		return SerializerUtil.deserializeBook(intent.getStringExtra(key));
+	public static <B extends AbstractBook> B getBookExtra(Intent intent, String key, AbstractSerializer.BookCreator<B> creator) {
+		return SerializerUtil.deserializeBook(intent.getStringExtra(key), creator);
 	}
 
-	public static Book getBookExtra(Intent intent) {
-		return getBookExtra(intent, Key.BOOK);
+	public static <B extends AbstractBook> B getBookExtra(Intent intent, AbstractSerializer.BookCreator<B> creator) {
+		return getBookExtra(intent, Key.BOOK, creator);
 	}
 
 	public static void putBookmarkExtra(Intent intent, String key, Bookmark bookmark) {

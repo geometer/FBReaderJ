@@ -32,17 +32,17 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
-public class BookCollection extends AbstractBookCollection<Book> {
+public class BookCollection extends AbstractBookCollection<DbBook> {
 	private static final String ZERO_HASH = String.format("%040d", 0);
 
 	private final BooksDatabase myDatabase;
 	public final List<String> BookDirectories;
 	private Set<String> myActiveFormats;
 
-	private final Map<ZLFile,Book> myBooksByFile =
-		Collections.synchronizedMap(new LinkedHashMap<ZLFile,Book>());
-	private final Map<Long,Book> myBooksById =
-		Collections.synchronizedMap(new HashMap<Long,Book>());
+	private final Map<ZLFile,DbBook> myBooksByFile =
+		Collections.synchronizedMap(new LinkedHashMap<ZLFile,DbBook>());
+	private final Map<Long,DbBook> myBooksById =
+		Collections.synchronizedMap(new HashMap<Long,DbBook>());
 	private final List<String> myFilesToRescan =
 		Collections.synchronizedList(new LinkedList<String>());
 	private final DuplicateResolver myDuplicateResolver = new DuplicateResolver();
@@ -66,7 +66,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		return myBooksByFile.size();
 	}
 
-	public Book getBookByFile(ZLFile bookFile) {
+	public DbBook getBookByFile(ZLFile bookFile) {
 		if (bookFile == null) {
 			return null;
 		}
@@ -74,7 +74,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		return getBookByFile(bookFile, PluginCollection.Instance().getPlugin(bookFile));
 	}
 
-	private Book getBookByFile(ZLFile bookFile, final FormatPlugin plugin) {
+	private DbBook getBookByFile(ZLFile bookFile, final FormatPlugin plugin) {
 		if (plugin == null || !isFormatActive(plugin)) {
 			return null;
 		}
@@ -85,7 +85,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 			return null;
 		}
 
-		Book book = myBooksByFile.get(bookFile);
+		DbBook book = myBooksByFile.get(bookFile);
 		if (book != null) {
 			return book;
 		}
@@ -118,7 +118,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 
 		try {
 			if (book == null) {
-				book = new Book(bookFile, plugin);
+				book = new DbBook(bookFile, plugin);
 			} else {
 				book.readMetainfo(plugin);
 			}
@@ -130,8 +130,8 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		return book;
 	}
 
-	public Book getBookById(long id) {
-		Book book = myBooksById.get(id);
+	public DbBook getBookById(long id) {
+		DbBook book = myBooksById.get(id);
 		if (book != null) {
 			return book;
 		}
@@ -171,8 +171,8 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		}
 	}
 
-	public Book getBookByUid(UID uid) {
-		for (Book book : myBooksById.values()) {
+	public DbBook getBookByUid(UID uid) {
+		for (DbBook book : myBooksById.values()) {
 			if (book.matchesUid(uid)) {
 				return book;
 			}
@@ -181,13 +181,13 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		return bookId != null ? getBookById(bookId) : null;
 	}
 
-	public Book getBookByHash(String hash) {
+	public DbBook getBookByHash(String hash) {
 		if (ZERO_HASH.equals(hash)) {
 			return getBookByFile(BookUtil.getHelpFile());
 		}
 
 		for (long id : myDatabase.bookIdsByHash(hash)) {
-			final Book book = getBookById(id);
+			final DbBook book = getBookById(id);
 			if (book != null && book.File.exists()) {
 				return book;
 			}
@@ -195,20 +195,20 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		return null;
 	}
 
-	private boolean addBook(Book book, boolean force) {
+	private boolean addBook(DbBook book, boolean force) {
 		if (book == null) {
 			return false;
 		}
 
 		synchronized (myBooksByFile) {
-			final Book existing = myBooksByFile.get(book.File);
+			final DbBook existing = myBooksByFile.get(book.File);
 			if (existing == null) {
 				if (book.getId() == -1 && !book.save(myDatabase, true)) {
 					return false;
 				}
 
 				final ZLFile duplicate = myDuplicateResolver.findDuplicate(book.File);
-				final Book original = duplicate != null ? myBooksByFile.get(duplicate) : null;
+				final DbBook original = duplicate != null ? myBooksByFile.get(duplicate) : null;
 				if (original != null) {
 					if (new BookMergeHelper(this).merge(original, book)) {
 						fireBookEvent(BookEvent.Updated, original);
@@ -231,11 +231,11 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		}
 	}
 
-	public synchronized boolean saveBook(Book book) {
+	public synchronized boolean saveBook(DbBook book) {
 		return addBook(book, true);
 	}
 
-	public void removeBook(Book book, boolean deleteFromDisk) {
+	public void removeBook(DbBook book, boolean deleteFromDisk) {
 		synchronized (myBooksByFile) {
 			myBooksByFile.remove(book.File);
 			myDuplicateResolver.removeFile(book.File);
@@ -249,7 +249,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		fireBookEvent(BookEvent.Removed, book);
 	}
 
-	public boolean canRemoveBook(Book book, boolean deleteFromDisk) {
+	public boolean canRemoveBook(DbBook book, boolean deleteFromDisk) {
 		if (deleteFromDisk) {
 			ZLFile file = book.File;
 			if (file.getPhysicalFile() == null) {
@@ -272,15 +272,15 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		return myStatus;
 	}
 
-	public List<Book> books(BookQuery query) {
+	public List<DbBook> books(BookQuery query) {
 		if (query == null) {
 			return Collections.emptyList();
 		}
 
-		final List<Book> allBooks;
+		final List<DbBook> allBooks;
 		synchronized (myBooksByFile) {
-			//allBooks = new ArrayList<Book>(new LinkedHashSet<Book>(myBooksByFile.values()));
-			allBooks = new ArrayList<Book>(myBooksByFile.values());
+			//allBooks = new ArrayList<DbBook>(new LinkedHashSet<DbBook>(myBooksByFile.values()));
+			allBooks = new ArrayList<DbBook>(myBooksByFile.values());
 		}
 		final int start = query.Page * query.Limit;
 		if (start >= allBooks.size()) {
@@ -291,8 +291,8 @@ public class BookCollection extends AbstractBookCollection<Book> {
 			return allBooks.subList(start, Math.min(end, allBooks.size()));
 		} else {
 			int count = 0;
-			final List<Book> filtered = new ArrayList<Book>(query.Limit);
-			for (Book b : allBooks) {
+			final List<DbBook> filtered = new ArrayList<DbBook>(query.Limit);
+			for (DbBook b : allBooks) {
 				if (query.Filter.matches(b)) {
 					if (count >= start) {
 						filtered.add(b);
@@ -307,11 +307,11 @@ public class BookCollection extends AbstractBookCollection<Book> {
 	}
 
 	public boolean hasBooks(Filter filter) {
-		final List<Book> allBooks;
+		final List<DbBook> allBooks;
 		synchronized (myBooksByFile) {
-			allBooks = new ArrayList<Book>(myBooksByFile.values());
+			allBooks = new ArrayList<DbBook>(myBooksByFile.values());
 		}
-		for (Book b : allBooks) {
+		for (DbBook b : allBooks) {
 			if (filter.matches(b)) {
 				return true;
 			}
@@ -320,26 +320,26 @@ public class BookCollection extends AbstractBookCollection<Book> {
 	}
 
 	public List<String> titles(BookQuery query) {
-		final List<Book> books = books(query);
+		final List<DbBook> books = books(query);
 		final List<String> titles = new ArrayList<String>(books.size());
-		for (Book b : books) {
+		for (DbBook b : books) {
 			titles.add(b.getTitle());
 		}
 		return titles;
 	}
 
-	public List<Book> recentlyAddedBooks(int count) {
+	public List<DbBook> recentlyAddedBooks(int count) {
 		return books(myDatabase.loadRecentBookIds(BooksDatabase.HistoryEvent.Added, count));
 	}
 
-	public List<Book> recentlyOpenedBooks(int count) {
+	public List<DbBook> recentlyOpenedBooks(int count) {
 		return books(myDatabase.loadRecentBookIds(BooksDatabase.HistoryEvent.Opened, count));
 	}
 
-	private List<Book> books(List<Long> ids) {
-		final List<Book> bookList = new ArrayList<Book>(ids.size());
+	private List<DbBook> books(List<Long> ids) {
+		final List<DbBook> bookList = new ArrayList<DbBook>(ids.size());
 		for (long id : ids) {
-			final Book book = getBookById(id);
+			final DbBook book = getBookById(id);
 			if (book != null) {
 				bookList.add(book);
 			}
@@ -350,7 +350,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 	public List<Author> authors() {
 		final Set<Author> authors = new TreeSet<Author>();
 		synchronized (myBooksByFile) {
-			for (Book book : myBooksByFile.values()) {
+			for (DbBook book : myBooksByFile.values()) {
 				final List<Author> bookAuthors = book.authors();
 				if (bookAuthors.isEmpty()) {
 					authors.add(Author.NULL);
@@ -365,7 +365,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 	public List<Tag> tags() {
 		final Set<Tag> tags = new HashSet<Tag>();
 		synchronized (myBooksByFile) {
-			for (Book book : myBooksByFile.values()) {
+			for (DbBook book : myBooksByFile.values()) {
 				final List<Tag> bookTags = book.tags();
 				if (bookTags.isEmpty()) {
 					tags.add(Tag.NULL);
@@ -387,7 +387,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 
 	public boolean hasSeries() {
 		synchronized (myBooksByFile) {
-			for (Book book : myBooksByFile.values()) {
+			for (DbBook book : myBooksByFile.values()) {
 				if (book.getSeriesInfo() != null) {
 					return true;
 				}
@@ -399,7 +399,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 	public List<String> series() {
 		final Set<String> series = new TreeSet<String>();
 		synchronized (myBooksByFile) {
-			for (Book book : myBooksByFile.values()) {
+			for (DbBook book : myBooksByFile.values()) {
 				final SeriesInfo info = book.getSeriesInfo();
 				if (info != null) {
 					series.add(info.Series.getTitle());
@@ -412,7 +412,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 	public List<String> firstTitleLetters() {
 		synchronized (myBooksByFile) {
 			final TreeSet<String> letters = new TreeSet<String>();
-			for (Book book : myBooksByFile.values()) {
+			for (DbBook book : myBooksByFile.values()) {
 				final String l = book.firstTitleLetter();
 				if (l != null) {
 					letters.add(l);
@@ -422,17 +422,17 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		}
 	}
 
-	public Book getRecentBook(int index) {
+	public DbBook getRecentBook(int index) {
 		final List<Long> recentIds = myDatabase.loadRecentBookIds(BooksDatabase.HistoryEvent.Opened, index + 1);
 		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
 	}
 
-	public void addToRecentlyOpened(Book book) {
+	public void addToRecentlyOpened(DbBook book) {
 		myDatabase.addBookHistoryEvent(book.getId(), BooksDatabase.HistoryEvent.Opened);
 		fireBookEvent(BookEvent.Opened, book);
 	}
 
-	public void removeFromRecentlyOpened(Book book) {
+	public void removeFromRecentlyOpened(DbBook book) {
 		myDatabase.removeBookHistoryEvents(book.getId(), BooksDatabase.HistoryEvent.Opened);
 		fireBookEvent(BookEvent.Updated, book);
 	}
@@ -460,7 +460,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 					synchronized (myFilesToRescan) {
 						processFilesQueue();
 					}
-					for (Book book : new ArrayList<Book>(myBooksByFile.values())) {
+					for (DbBook book : new ArrayList<DbBook>(myBooksByFile.values())) {
 						getHash(book, false);
 					}
 				}
@@ -500,7 +500,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 				// collect books from archives
 				// rescan files and check book id
 				filesToRemove.remove(file);
-				final Book book = getBookByFile(file);
+				final DbBook book = getBookByFile(file);
 				if (book != null) {
 					saveBook(book);
 					getHash(book, false);
@@ -509,7 +509,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 
 			for (ZLFile f : filesToRemove) {
 				synchronized (myBooksByFile) {
-					final Book book = myBooksByFile.remove(f);
+					final DbBook book = myBooksByFile.remove(f);
 					myDuplicateResolver.removeFile(f);
 					if (book != null) {
 						myBooksById.remove(book.getId());
@@ -525,15 +525,15 @@ public class BookCollection extends AbstractBookCollection<Book> {
 	private void build() {
 		// Step 0: get database books marked as "existing"
 		final FileInfoSet fileInfos = new FileInfoSet(myDatabase);
-		final Map<Long,Book> savedBooksByFileId = myDatabase.loadBooks(fileInfos, true);
+		final Map<Long,DbBook> savedBooksByFileId = myDatabase.loadBooks(fileInfos, true);
 
 		// Step 1: check if files corresponding to "existing" books really exists;
 		//         add books to library if yes (and reload book info if needed);
 		//         collect newly "orphaned" books
-		final Set<Book> orphanedBooks = new HashSet<Book>();
+		final Set<DbBook> orphanedBooks = new HashSet<DbBook>();
 		final Set<ZLPhysicalFile> physicalFiles = new HashSet<ZLPhysicalFile>();
 		int count = 0;
-		for (Book book : savedBooksByFileId.values()) {
+		for (DbBook book : savedBooksByFileId.values()) {
 			final ZLPhysicalFile file = book.File.getPhysicalFile();
 			if (file != null) {
 				physicalFiles.add(file);
@@ -576,8 +576,8 @@ public class BookCollection extends AbstractBookCollection<Book> {
 
 		// Step 2: collect books from physical files; add new, update already added,
 		//         unmark orphaned as existing again, collect newly added
-		final Map<Long,Book> orphanedBooksByFileId = myDatabase.loadBooks(fileInfos, false);
-		final Set<Book> newBooks = new HashSet<Book>();
+		final Map<Long,DbBook> orphanedBooksByFileId = myDatabase.loadBooks(fileInfos, false);
+		final Set<DbBook> newBooks = new HashSet<DbBook>();
 
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles(BookDirectories);
 		for (ZLPhysicalFile file : physicalFilesList) {
@@ -595,7 +595,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 
 		// Step 3: add help file
 		final ZLFile helpFile = BookUtil.getHelpFile();
-		Book helpBook = savedBooksByFileId.get(fileInfos.getId(helpFile));
+		DbBook helpBook = savedBooksByFileId.get(fileInfos.getId(helpFile));
 		if (helpBook == null) {
 			helpBook = getBookByFile(helpFile);
 		}
@@ -606,7 +606,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 
 		myDatabase.executeAsTransaction(new Runnable() {
 			public void run() {
-				for (Book book : newBooks) {
+				for (DbBook book : newBooks) {
 					saveBook(book);
 				}
 			}
@@ -647,8 +647,8 @@ public class BookCollection extends AbstractBookCollection<Book> {
 
 	private void collectBooks(
 		ZLFile file, FileInfoSet fileInfos,
-		Map<Long,Book> savedBooksByFileId, Map<Long,Book> orphanedBooksByFileId,
-		Set<Book> newBooks,
+		Map<Long,DbBook> savedBooksByFileId, Map<Long,DbBook> orphanedBooksByFileId,
+		Set<DbBook> newBooks,
 		boolean doReadMetaInfo
 	) {
 		final long fileId = fileInfos.getId(file);
@@ -662,7 +662,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		}
 
 		try {
-			final Book book = orphanedBooksByFileId.get(fileId);
+			final DbBook book = orphanedBooksByFileId.get(fileId);
 			if (book != null) {
 				if (doReadMetaInfo) {
 					book.readMetainfo();
@@ -674,7 +674,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 			// ignore
 		}
 
-		final Book book = getBookByFile(file, plugin);
+		final DbBook book = getBookByFile(file, plugin);
 		if (book != null) {
 			newBooks.add(book);
 		} else if (file.isArchive()) {
@@ -690,18 +690,18 @@ public class BookCollection extends AbstractBookCollection<Book> {
 	}
 
 	@Override
-	public ZLImage getCover(Book book, int maxWidth, int maxHeight) {
+	public ZLImage getCover(DbBook book, int maxWidth, int maxHeight) {
 		return BookUtil.getCover(book);
 	}
 
 	@Override
-	public String getCoverUrl(Book book) {
+	public String getCoverUrl(DbBook book) {
 		// not implemented in non-shadow collection
 		return null;
 	}
 
 	@Override
-	public String getDescription(Book book) {
+	public String getDescription(DbBook book) {
 		// not implemented in non-shadow collection
 		return null;
 	}
@@ -714,7 +714,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		if (bookmark != null) {
 			bookmark.setId(myDatabase.saveBookmark(bookmark));
 			if (bookmark.IsVisible) {
-				final Book book = getBookById(bookmark.BookId);
+				final DbBook book = getBookById(bookmark.BookId);
 				if (book != null) {
 					book.HasBookmark = true;
 					fireBookEvent(BookEvent.BookmarksUpdated, book);
@@ -727,7 +727,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		if (bookmark != null && bookmark.getId() != -1) {
 			myDatabase.deleteBookmark(bookmark);
 			if (bookmark.IsVisible) {
-				final Book book = getBookById(bookmark.BookId);
+				final DbBook book = getBookById(bookmark.BookId);
 				if (book != null) {
 					book.HasBookmark = myDatabase.hasVisibleBookmark(bookmark.BookId);
 					fireBookEvent(BookEvent.BookmarksUpdated, book);
@@ -754,11 +754,11 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		}
 	}
 
-	public boolean isHyperlinkVisited(Book book, String linkId) {
+	public boolean isHyperlinkVisited(DbBook book, String linkId) {
 		return book.isHyperlinkVisited(myDatabase, linkId);
 	}
 
-	public void markHyperlinkAsVisited(Book book, String linkId) {
+	public void markHyperlinkAsVisited(DbBook book, String linkId) {
 		book.markHyperlinkAsVisited(myDatabase, linkId);
 	}
 
@@ -799,7 +799,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		myDatabase.setOptionValue(DEFAULT_STYLE_ID_KEY, String.valueOf(styleId));
 	}
 
-	public String getHash(Book book, boolean force) {
+	public String getHash(DbBook book, boolean force) {
 		final ZLPhysicalFile file = book.File.getPhysicalFile();
 		if (file == null) {
 			return ZERO_HASH;
@@ -827,7 +827,7 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		return hash;
 	}
 
-	public void setHash(Book book, String hash) {
+	public void setHash(DbBook book, String hash) {
 		try {
 			myDatabase.setHash(book.getId(), hash);
 		} catch (BooksDatabase.NotAvailable e) {
@@ -863,11 +863,15 @@ public class BookCollection extends AbstractBookCollection<Book> {
 		return myActiveFormats == null || myActiveFormats.contains(plugin.supportedFileType());
 	}
 
-	private boolean isBookFormatActive(Book book) {
+	private boolean isBookFormatActive(DbBook book) {
 		try {
 			return isFormatActive(book.getPlugin());
 		} catch (BookReadingException e) {
 			return false;
 		}
+	}
+
+	public DbBook createBook(long id, String url, String title, String encoding, String language) {
+		return new DbBook(id, ZLFile.createFileByUrl(url), title, encoding, language);
 	}
 }

@@ -100,7 +100,7 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			}
 		});
 
-		myBook = FBReaderIntents.getBookExtra(getIntent());
+		myBook = FBReaderIntents.getBookExtra(getIntent(), myCollection);
 		if (myBook == null) {
 			finish();
 		}
