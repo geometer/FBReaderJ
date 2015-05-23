@@ -83,7 +83,7 @@ public class BookTree extends LibraryTree {
 		if (cmp == 0 && tree instanceof BookTree) {
 			final Book b = ((BookTree)tree).Book;
 			if (Book != null && b != null) {
-				return Book.File.getPath().compareTo(b.File.getPath());
+				return Book.getPath().compareTo(b.getPath());
 			}
 		}
 		return cmp;
