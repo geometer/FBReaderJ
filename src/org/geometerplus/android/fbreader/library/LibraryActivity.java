@@ -196,7 +196,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, ContextItemId.OpenBook, 0, resource.getResource("openBook").getValue());
 		menu.add(0, ContextItemId.ShowBookInfo, 0, resource.getResource("showBookInfo").getValue());
-		if (book.File.getPhysicalFile() != null) {
+		if (BookUtil.fileByBook(book).getPhysicalFile() != null) {
 			menu.add(0, ContextItemId.ShareBook, 0, resource.getResource("shareBook").getValue());
 		}
 		if (labels.contains(Book.FAVORITE_LABEL)) {
@@ -401,7 +401,10 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		public void onClick(DialogInterface dialog, int which) {
 			if (getCurrentTree() instanceof FileTree) {
 				for (Book book : myBooks) {
-					getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), book.File));
+					getListAdapter().remove(new FileTree(
+						(FileTree)getCurrentTree(),
+						BookUtil.fileByBook(book)
+					));
 					myCollection.removeBook(book, true);
 				}
 				getListView().invalidateViews();

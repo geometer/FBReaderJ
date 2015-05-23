@@ -22,7 +22,6 @@ package org.geometerplus.fbreader.book;
 import java.math.BigDecimal;
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 
@@ -35,8 +34,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	public static final String SYNC_FAILURE_LABEL = "sync-failure";
 	public static final String SYNC_DELETED_LABEL = "sync-deleted";
 	public static final String SYNC_TOSYNC_LABEL = "sync-tosync";
-
-	public final ZLFile File;
 
 	protected volatile long myId;
 
@@ -53,13 +50,9 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 
 	protected volatile boolean myIsSaved;
 
-	AbstractBook(long id, ZLFile file, String title, String encoding, String language) {
+	AbstractBook(long id, String title, String encoding, String language) {
 		super(title);
-		if (file == null) {
-			throw new IllegalArgumentException("Creating book with no file");
-		}
 		myId = id;
-		File = file;
 		myEncoding = encoding;
 		myLanguage = language;
 		myIsSaved = true;
@@ -99,9 +92,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		}
 	}
 
-	public String getPath() {
-		return File.getPath();
-	}
+	public abstract String getPath();
 
 	public List<Author> authors() {
 		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();

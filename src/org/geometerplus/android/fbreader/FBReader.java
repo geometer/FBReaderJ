@@ -155,7 +155,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		}
 		if (myBook != null) {
-			ZLFile file = myBook.File;
+			ZLFile file = BookUtil.fileByBook(myBook);
 			if (!file.exists()) {
 				if (file.getPhysicalFile() != null) {
 					file = file.getPhysicalFile();
