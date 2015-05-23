@@ -31,7 +31,7 @@ public abstract class LibraryTree extends FBTree {
 		return ZLResource.resource("library");
 	}
 
-	public final IBookCollection Collection;
+	public final IBookCollection<Book> Collection;
 
 	static final String ROOT_EXTERNAL_VIEW = "bookshelfView";
 	static final String ROOT_FOUND = "found";

@@ -45,7 +45,7 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
-public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, IBookCollection.Listener {
+public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, IBookCollection.Listener<Book> {
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();

@@ -72,14 +72,14 @@ public final class FBReaderApp extends ZLApplication {
 	private ZLTextPosition myJumpEndPosition;
 	private Date myJumpTimeStamp;
 
-	public final IBookCollection Collection;
+	public final IBookCollection<Book> Collection;
 
 	private SyncData mySyncData = new SyncData();
 
 	public FBReaderApp(IBookCollection collection) {
 		Collection = collection;
 
-		collection.addListener(new IBookCollection.Listener() {
+		collection.addListener(new IBookCollection.Listener<Book>() {
 			public void onBookEvent(BookEvent event, Book book) {
 				switch (event) {
 					case BookmarkStyleChanged:

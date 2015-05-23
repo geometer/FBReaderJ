@@ -55,7 +55,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
-public class BookInfoActivity extends Activity implements IBookCollection.Listener {
+public class BookInfoActivity extends Activity implements IBookCollection.Listener<Book> {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String FROM_READING_MODE_KEY = "fbreader.from.reading.mode";
