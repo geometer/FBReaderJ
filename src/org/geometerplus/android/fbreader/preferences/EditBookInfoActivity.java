@@ -97,7 +97,7 @@ class EncodingPreference extends ZLStringListPreference {
 
 		final FormatPlugin plugin;
 		try {
-			plugin = book.getPlugin();
+			plugin = BookUtil.getPlugin(book);
 		} catch (BookReadingException e) {
 			return;
 		}
@@ -123,7 +123,7 @@ class EncodingPreference extends ZLStringListPreference {
 			setInitialValue(codes[0]);
 			setEnabled(false);
 		} else {
-			final String bookEncoding = book.getEncoding();
+			final String bookEncoding = BookUtil.getEncoding(book);
 			if (bookEncoding != null) {
 				setInitialValue(bookEncoding.toLowerCase());
 			}
@@ -135,7 +135,7 @@ class EncodingPreference extends ZLStringListPreference {
 		super.onDialogClosed(result);
 		if (result) {
 			final String value = getValue();
-			if (!value.equalsIgnoreCase(myBook.getEncoding())) {
+			if (!value.equalsIgnoreCase(BookUtil.getEncoding(myBook))) {
 				myBook.setEncoding(value);
 				((EditBookInfoActivity)getContext()).saveBook();
 			}
