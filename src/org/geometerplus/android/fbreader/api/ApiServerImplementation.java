@@ -344,7 +344,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public String getBookFilePath() {
 		final Book book = getReader().getCurrentBook();
-		return book != null ? book.File.getPath() : null;
+		return book != null ? book.getPath() : null;
 	}
 
 	public String getBookHash() {
