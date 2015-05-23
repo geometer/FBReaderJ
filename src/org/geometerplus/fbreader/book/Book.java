@@ -25,4 +25,20 @@ public class Book extends AbstractBook {
 	public Book(long id, ZLFile file, String title, String encoding, String language) {
 		super(id, file, title, encoding, language);
 	}
+
+	@Override
+	public int hashCode() {
+		return getPath().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Book)) {
+			return false;
+		}
+		return getPath().equals(((Book)o).getPath());
+	}
 }
