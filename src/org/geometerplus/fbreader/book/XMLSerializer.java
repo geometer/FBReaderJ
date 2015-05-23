@@ -232,7 +232,7 @@ class XMLSerializer extends AbstractSerializer {
 
 		appendTag(
 			buffer, "link", true,
-			"href", book.File.getUrl(),
+			"href", "file://" + book.getPath(),
 			// TODO: real book mimetype
 			"type", "application/epub+zip",
 			"rel", "http://opds-spec.org/acquisition"

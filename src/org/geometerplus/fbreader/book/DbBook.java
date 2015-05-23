@@ -28,16 +28,27 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 public class DbBook extends AbstractBook {
+	public final ZLFile File;
+
 	private Set<String> myVisitedHyperlinks;
 
 	DbBook(long id, ZLFile file, String title, String encoding, String language) {
-		super(id, file, title, encoding, language);
+		super(id, title, encoding, language);
+		if (file == null) {
+			throw new IllegalArgumentException("Creating book with no file");
+		}
+		File = file;
 	}
 
 	DbBook(ZLFile file, FormatPlugin plugin) throws BookReadingException {
-		super(-1, plugin.realBookFile(file), null, null, null);
+		this(-1, plugin.realBookFile(file), null, null, null);
 		BookUtil.readMetainfo(this, plugin);
 		myIsSaved = false;
+	}
+
+	@Override
+	public String getPath() {
+		return File.getPath();
 	}
 
 	void loadLists(BooksDatabase database) {

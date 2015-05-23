@@ -56,7 +56,7 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 		if (code != 0) {
 			throw new BookReadingException(
 				"nativeCodeFailure",
-				book.File,
+				BookUtil.fileByBook(book),
 				new String[] { String.valueOf(code), book.getPath() }
 			);
 		}
@@ -78,7 +78,7 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	synchronized public void readUids(AbstractBook book) throws BookReadingException {
 		readUidsNative(book);
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
+			book.addUid(BookUtil.createUid(book, "SHA-256"));
 		}
 	}
 
@@ -104,7 +104,7 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 			default:
 				throw new BookReadingException(
 					"nativeCodeFailure",
-					model.Book.File,
+					BookUtil.fileByBook(model.Book),
 					new String[] { String.valueOf(code), model.Book.getPath() }
 				);
 		}

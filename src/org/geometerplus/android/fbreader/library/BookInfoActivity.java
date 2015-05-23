@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
@@ -292,9 +293,10 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 
 		setupInfoPair(R.id.file_name, "name", book.getPath());
 		if (ENABLE_EXTENDED_FILE_INFO) {
-			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
+			final ZLFile bookFile = BookUtil.fileByBook(book);
+			setupInfoPair(R.id.file_type, "type", bookFile.getExtension());
 
-			final ZLPhysicalFile physFile = book.File.getPhysicalFile();
+			final ZLPhysicalFile physFile = bookFile.getPhysicalFile();
 			final File file = physFile == null ? null : physFile.javaFile();
 			if (file != null && file.exists() && file.isFile()) {
 				setupInfoPair(R.id.file_size, "size", formatSize(file.length()));
