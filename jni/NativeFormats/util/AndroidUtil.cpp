@@ -49,6 +49,7 @@ JavaClass AndroidUtil::Class_JavaEncodingCollection("org/geometerplus/zlibrary/c
 JavaClass AndroidUtil::Class_NativeFormatPlugin("org/geometerplus/fbreader/formats/NativeFormatPlugin");
 JavaClass AndroidUtil::Class_PluginCollection("org/geometerplus/fbreader/formats/PluginCollection");
 JavaClass AndroidUtil::Class_Paths("org/geometerplus/fbreader/Paths");
+JavaClass AndroidUtil::Class_AbstractBook("org/geometerplus/fbreader/book/AbstractBook");
 JavaClass AndroidUtil::Class_Book("org/geometerplus/fbreader/book/Book");
 JavaClass AndroidUtil::Class_Tag("org/geometerplus/fbreader/book/Tag");
 JavaClass AndroidUtil::Class_BookModel("org/geometerplus/fbreader/bookmodel/BookModel");
@@ -186,17 +187,17 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	StaticMethod_Paths_tempDirectory = new StaticObjectMethod(Class_Paths, "tempDirectory", Class_java_lang_String, "()");
 
-	Field_Book_File = new ObjectField(Class_Book, "File", Class_ZLFile);
-	Method_Book_getTitle = new StringMethod(Class_Book, "getTitle", "()");
-	Method_Book_getLanguage = new StringMethod(Class_Book, "getLanguage", "()");
-	Method_Book_getEncodingNoDetection = new StringMethod(Class_Book, "getEncodingNoDetection", "()");
-	Method_Book_setTitle = new VoidMethod(Class_Book, "setTitle", "(Ljava/lang/String;)");
-	Method_Book_setSeriesInfo = new VoidMethod(Class_Book, "setSeriesInfo", "(Ljava/lang/String;Ljava/lang/String;)");
-	Method_Book_setLanguage = new VoidMethod(Class_Book, "setLanguage", "(Ljava/lang/String;)");
-	Method_Book_setEncoding = new VoidMethod(Class_Book, "setEncoding", "(Ljava/lang/String;)");
-	Method_Book_addAuthor = new VoidMethod(Class_Book, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
-	Method_Book_addTag = new VoidMethod(Class_Book, "addTag", "(Lorg/geometerplus/fbreader/book/Tag;)");
-	Method_Book_addUid = new VoidMethod(Class_Book, "addUid", "(Ljava/lang/String;Ljava/lang/String;)");
+	Field_Book_File = new ObjectField(Class_AbstractBook, "File", Class_ZLFile);
+	Method_Book_getTitle = new StringMethod(Class_AbstractBook, "getTitle", "()");
+	Method_Book_getLanguage = new StringMethod(Class_AbstractBook, "getLanguage", "()");
+	Method_Book_getEncodingNoDetection = new StringMethod(Class_AbstractBook, "getEncodingNoDetection", "()");
+	Method_Book_setTitle = new VoidMethod(Class_AbstractBook, "setTitle", "(Ljava/lang/String;)");
+	Method_Book_setSeriesInfo = new VoidMethod(Class_AbstractBook, "setSeriesInfo", "(Ljava/lang/String;Ljava/lang/String;)");
+	Method_Book_setLanguage = new VoidMethod(Class_AbstractBook, "setLanguage", "(Ljava/lang/String;)");
+	Method_Book_setEncoding = new VoidMethod(Class_AbstractBook, "setEncoding", "(Ljava/lang/String;)");
+	Method_Book_addAuthor = new VoidMethod(Class_AbstractBook, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
+	Method_Book_addTag = new VoidMethod(Class_AbstractBook, "addTag", "(Lorg/geometerplus/fbreader/book/Tag;)");
+	Method_Book_addUid = new VoidMethod(Class_AbstractBook, "addUid", "(Ljava/lang/String;Ljava/lang/String;)");
 
 	StaticMethod_Tag_getTag = new StaticObjectMethod(Class_Tag, "getTag", Class_Tag, "(Lorg/geometerplus/fbreader/book/Tag;Ljava/lang/String;)");
 

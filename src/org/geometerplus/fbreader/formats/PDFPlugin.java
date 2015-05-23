@@ -23,7 +23,7 @@ import org.pdfparse.model.PDFDocInfo;
 import org.pdfparse.model.PDFDocument;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public class PDFPlugin extends ExternalFormatPlugin {
@@ -37,7 +37,7 @@ public class PDFPlugin extends ExternalFormatPlugin {
 	}
 
 	@Override
-	public void readMetainfo(Book book) {
+	public void readMetainfo(AbstractBook book) {
 		final ZLFile file = book.File;
 		if (file != file.getPhysicalFile()) {
 			// TODO: throw BookReadingException
