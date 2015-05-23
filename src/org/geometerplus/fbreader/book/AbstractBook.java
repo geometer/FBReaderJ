@@ -367,6 +367,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 				}
 			}
 		}
+
 		String fileName = getPath();
 		// first archive delimiter
 		int index = fileName.indexOf(":");
