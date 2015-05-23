@@ -26,12 +26,13 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.formats.BuiltinFormatPlugin;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 public final class BookModel {
 	public static BookModel createModel(Book book) throws BookReadingException {
-		final FormatPlugin plugin = book.getPlugin();
+		final FormatPlugin plugin = BookUtil.getPlugin(book);
 
 		if (plugin instanceof BuiltinFormatPlugin) {
 			final BookModel model = new BookModel(book);

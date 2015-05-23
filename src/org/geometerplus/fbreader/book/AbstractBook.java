@@ -22,13 +22,10 @@ package org.geometerplus.fbreader.book;
 import java.math.BigDecimal;
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.formats.PluginCollection;
-import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.sort.TitledEntity;
 
 public abstract class AbstractBook extends TitledEntity<AbstractBook> {
@@ -140,49 +137,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		if (HasBookmark != book.HasBookmark) {
 			HasBookmark = book.HasBookmark;
 			myIsSaved = false;
-		}
-	}
-
-	public void reloadInfoFromFile() {
-		try {
-			readMetainfo(getPlugin());
-		} catch (BookReadingException e) {
-			// ignore
-		}
-	}
-
-	public FormatPlugin getPlugin() throws BookReadingException {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
-		if (plugin == null) {
-			throw new BookReadingException("pluginNotFound", File);
-		}
-		return plugin;
-	}
-
-	void readMetainfo() throws BookReadingException {
-		readMetainfo(getPlugin());
-	}
-
-	void readMetainfo(FormatPlugin plugin) throws BookReadingException {
-		myEncoding = null;
-		myLanguage = null;
-		setTitle(null);
-		myAuthors = null;
-		myTags = null;
-		mySeriesInfo = null;
-		myUids = null;
-
-		myIsSaved = false;
-
-		plugin.readMetainfo(this);
-		if (myUids == null || myUids.isEmpty()) {
-			plugin.readUids(this);
-		}
-
-		if (isTitleEmpty()) {
-			final String fileName = File.getShortName();
-			final int index = fileName.lastIndexOf('.');
-			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
 		}
 	}
 
@@ -305,19 +259,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			resetSortKey();
 			myIsSaved = false;
 		}
-	}
-
-	public String getEncoding() {
-		if (myEncoding == null) {
-			try {
-				getPlugin().detectLanguageAndEncoding(this);
-			} catch (BookReadingException e) {
-			}
-			if (myEncoding == null) {
-				setEncoding("utf-8");
-			}
-		}
-		return myEncoding;
 	}
 
 	public String getEncodingNoDetection() {
