@@ -69,7 +69,7 @@ public abstract class BookUtil {
 
 	public static String getAnnotation(AbstractBook book) {
 		try {
-			return book.getPlugin().readAnnotation(book.File);
+			return getPlugin(book).readAnnotation(book.File);
 		} catch (BookReadingException e) {
 			return null;
 		}
@@ -127,6 +127,62 @@ public abstract class BookUtil {
 				} catch (IOException e) {
 				}
 			}
+		}
+	}
+
+	public static FormatPlugin getPlugin(AbstractBook book) throws BookReadingException {
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
+		if (plugin == null) {
+			throw new BookReadingException("pluginNotFound", book.File);
+		}
+		return plugin;
+	}
+
+	public static String getEncoding(AbstractBook book) {
+		if (book.getEncodingNoDetection() == null) {
+			try {
+				BookUtil.getPlugin(book).detectLanguageAndEncoding(book);
+			} catch (BookReadingException e) {
+			}
+			if (book.getEncodingNoDetection() == null) {
+				book.setEncoding("utf-8");
+			}
+		}
+		return book.getEncodingNoDetection();
+	}
+
+	public static void reloadInfoFromFile(AbstractBook book) {
+		try {
+			readMetainfo(book);
+		} catch (BookReadingException e) {
+			// ignore
+		}
+	}
+
+	static void readMetainfo(AbstractBook book) throws BookReadingException {
+		readMetainfo(book, getPlugin(book));
+	}
+
+	static void readMetainfo(AbstractBook book, FormatPlugin plugin) throws BookReadingException {
+		book.myEncoding = null;
+		book.myLanguage = null;
+		book.setTitle(null);
+		book.myAuthors = null;
+		book.myTags = null;
+		book.mySeriesInfo = null;
+		book.myUids = null;
+
+		book.myIsSaved = false;
+
+		plugin.readMetainfo(book);
+		if (book.myUids == null || book.myUids.isEmpty()) {
+			plugin.readUids(book);
+		}
+
+		if (book.isTitleEmpty()) {
+			final String fileName = book.File.getShortName();
+			final int index = fileName.lastIndexOf('.');
+			book.setTitle(index > 0 ? fileName.substring(0, index) : fileName);
 		}
 	}
 }
