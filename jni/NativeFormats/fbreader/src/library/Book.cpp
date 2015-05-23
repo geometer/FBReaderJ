@@ -86,10 +86,7 @@ shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
 */
 
 shared_ptr<Book> Book::loadFromJavaBook(JNIEnv *env, jobject javaBook) {
-	jobject javaFile = AndroidUtil::Field_Book_File->value(javaBook);
-	const std::string path = AndroidUtil::Method_ZLFile_getPath->callForCppString(javaFile);
-	env->DeleteLocalRef(javaFile);
-
+	const std::string path = AndroidUtil::Method_Book_getPath->callForCppString(javaBook);
 	const std::string title = AndroidUtil::Method_Book_getTitle->callForCppString(javaBook);
 	const std::string language = AndroidUtil::Method_Book_getLanguage->callForCppString(javaBook);
 	const std::string encoding = AndroidUtil::Method_Book_getEncodingNoDetection->callForCppString(javaBook);
