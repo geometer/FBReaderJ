@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.book;
 
-public class Book extends AbstractBook {
+public final class Book extends AbstractBook {
 	private final String myPath;
 
 	public Book(long id, String path, String title, String encoding, String language) {
