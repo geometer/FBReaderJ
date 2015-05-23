@@ -175,7 +175,7 @@ public class SyncService extends Service implements IBookCollection.Listener<Boo
 	}
 
 	private void addBook(Book book) {
-		if (book.File.getPhysicalFile() != null) {
+		if (book != null && BookUtil.fileByBook(book).getPhysicalFile() != null) {
 			myQueue.add(book);
 		}
 	}
@@ -373,7 +373,7 @@ public class SyncService extends Service implements IBookCollection.Listener<Boo
 	}
 
 	private Status uploadBookToServerInternal(Book book) {
-		final File file = book.File.getPhysicalFile().javaFile();
+		final File file = BookUtil.fileByBook(book).getPhysicalFile().javaFile();
 		final String hash = myCollection.getHash(book, false);
 		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {

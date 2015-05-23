@@ -19,16 +19,25 @@
 
 package org.geometerplus.fbreader.book;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
 public class Book extends AbstractBook {
-	public Book(long id, ZLFile file, String title, String encoding, String language) {
-		super(id, file, title, encoding, language);
+	private final String myPath;
+
+	public Book(long id, String path, String title, String encoding, String language) {
+		super(id, title, encoding, language);
+		if (path == null) {
+			throw new IllegalArgumentException("Creating book with no file");
+		}
+		myPath = path;
+	}
+
+	@Override
+	public String getPath() {
+		return myPath;
 	}
 
 	@Override
 	public int hashCode() {
-		return getPath().hashCode();
+		return myPath.hashCode();
 	}
 
 	@Override
@@ -39,6 +48,6 @@ public class Book extends AbstractBook {
 		if (!(o instanceof Book)) {
 			return false;
 		}
-		return getPath().equals(((Book)o).getPath());
+		return myPath.equals(((Book)o).myPath);
 	}
 }
