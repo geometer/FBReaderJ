@@ -140,7 +140,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openHelpBook() {
-		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null, null);
+		openBook(Collection.getBookByFile(BookUtil.getHelpFile().getPath()), null, null, null);
 	}
 
 	public Book getCurrentServerBook(Notifier notifier) {
@@ -174,7 +174,7 @@ public final class FBReaderApp extends ZLApplication {
 				book = Collection.getRecentBook(0);
 			}
 			if (book == null || !book.File.exists()) {
-				book = Collection.getBookByFile(BookUtil.getHelpFile());
+				book = Collection.getBookByFile(BookUtil.getHelpFile().getPath());
 			}
 			if (book == null) {
 				return;
