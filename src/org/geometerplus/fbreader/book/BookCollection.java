@@ -66,7 +66,11 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 		return myBooksByFile.size();
 	}
 
-	public DbBook getBookByFile(ZLFile bookFile) {
+	public DbBook getBookByFile(String path) {
+		return getBookByFile(ZLFile.createFileByPath(path));
+	}
+
+	private DbBook getBookByFile(ZLFile bookFile) {
 		if (bookFile == null) {
 			return null;
 		}
@@ -687,11 +691,6 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 				);
 			}
 		}
-	}
-
-	@Override
-	public ZLImage getCover(DbBook book, int maxWidth, int maxHeight) {
-		return BookUtil.getCover(book);
 	}
 
 	@Override
