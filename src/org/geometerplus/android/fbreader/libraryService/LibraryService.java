@@ -41,7 +41,6 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.httpd.DataUtil;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
-import org.geometerplus.android.util.BitmapCache;
 
 public class LibraryService extends Service {
 	private static SQLiteBooksDatabase ourDatabase;
@@ -52,8 +51,6 @@ public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 	static final String COVER_READY_ACTION = "fbreader.library_service.cover_ready";
-
-	private final BitmapCache myCoversCache = new BitmapCache(0.2f);
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
