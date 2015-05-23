@@ -424,7 +424,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			return null;
 		}
 		try {
-			return myInterface.getCoverUrl(book.File.getPath());
+			return myInterface.getCoverUrl(book.getPath());
 		} catch (RemoteException e) {
 			return null;
 		}
