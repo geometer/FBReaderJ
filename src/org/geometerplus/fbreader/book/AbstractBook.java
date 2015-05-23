@@ -69,12 +69,7 @@ public class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	AbstractBook(ZLFile file, FormatPlugin plugin) throws BookReadingException {
-		super(null);
-		if (file == null) {
-			throw new IllegalArgumentException("Creating book with no file");
-		}
-		myId = -1;
-		File = plugin.realBookFile(file);
+		this(-1, plugin.realBookFile(file), null, null, null);
 		readMetainfo(plugin);
 		myIsSaved = false;
 	}
