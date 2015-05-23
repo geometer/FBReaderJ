@@ -38,7 +38,7 @@ import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 
-public class BookCollectionShadow extends AbstractBookCollection implements ServiceConnection {
+public class BookCollectionShadow extends AbstractBookCollection<Book> implements ServiceConnection {
 	private volatile Context myContext;
 	private volatile LibraryInterface myInterface;
 	private final List<Runnable> myOnBindActions = new LinkedList<Runnable>();

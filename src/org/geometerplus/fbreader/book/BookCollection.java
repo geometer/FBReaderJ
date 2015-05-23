@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
-public class BookCollection extends AbstractBookCollection {
+public class BookCollection extends AbstractBookCollection<Book> {
 	private static final String ZERO_HASH = String.format("%040d", 0);
 
 	private final BooksDatabase myDatabase;
