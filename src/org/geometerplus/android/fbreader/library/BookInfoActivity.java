@@ -253,7 +253,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private void setupFileInfo(Book book) {
 		((TextView)findViewById(R.id.file_info_title)).setText(myResource.getResource("fileInfo").getValue());
 
-		setupInfoPair(R.id.file_name, "name", book.File.getPath());
+		setupInfoPair(R.id.file_name, "name", book.getPath());
 		if (ENABLE_EXTENDED_FILE_INFO) {
 			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
 
