@@ -35,7 +35,7 @@ public class DbBook extends AbstractBook {
 
 	DbBook(ZLFile file, FormatPlugin plugin) throws BookReadingException {
 		super(-1, plugin.realBookFile(file), null, null, null);
-		readMetainfo(plugin);
+		BookUtil.readMetainfo(this, plugin);
 		myIsSaved = false;
 	}
 
@@ -50,7 +50,7 @@ public class DbBook extends AbstractBook {
 		myIsSaved = true;
 		if (myUids == null || myUids.isEmpty()) {
 			try {
-				getPlugin().readUids(this);
+				BookUtil.getPlugin(this).readUids(this);
 				save(database, false);
 			} catch (BookReadingException e) {
 			}

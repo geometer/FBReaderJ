@@ -333,7 +333,7 @@ public final class FBReaderApp extends ZLApplication {
 
 		FormatPlugin plugin = null;
 		try {
-			plugin = book.getPlugin();
+			plugin = BookUtil.getPlugin(book);
 		} catch (BookReadingException e) {
 			// ignore
 		}
@@ -385,7 +385,7 @@ public final class FBReaderApp extends ZLApplication {
 		getViewWidget().repaint();
 
 		try {
-			for (FileEncryptionInfo info : book.getPlugin().readEncryptionInfos(book)) {
+			for (FileEncryptionInfo info : BookUtil.getPlugin(book).readEncryptionInfos(book)) {
 				if (info != null && !EncryptionMethod.isSupported(info.Method)) {
 					showErrorMessage("unsupportedEncryptionMethod", book.File.getPath());
 					break;
