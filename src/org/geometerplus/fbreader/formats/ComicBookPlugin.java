@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.AbstractBook;
 
 public class ComicBookPlugin extends ExternalFormatPlugin {
 	public ComicBookPlugin() {
@@ -32,7 +32,7 @@ public class ComicBookPlugin extends ExternalFormatPlugin {
 	}
 
 	@Override
-	public void readMetainfo(Book book) {
+	public void readMetainfo(AbstractBook book) {
 		// TODO: implement
 	}
 }

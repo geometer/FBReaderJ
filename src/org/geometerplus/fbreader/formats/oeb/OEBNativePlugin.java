@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
@@ -60,7 +60,7 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 	}
 
 	@Override
-	public void detectLanguageAndEncoding(Book book) {
+	public void detectLanguageAndEncoding(AbstractBook book) {
 		book.setEncoding("auto");
 	}
 

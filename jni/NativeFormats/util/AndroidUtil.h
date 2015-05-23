@@ -86,6 +86,7 @@ public:
 	static JavaClass Class_EncodingConverter;
 	static JavaClass Class_JavaEncodingCollection;
 	static JavaClass Class_Paths;
+	static JavaClass Class_AbstractBook;
 	static JavaClass Class_Book;
 	static JavaClass Class_Tag;
 	static JavaClass Class_BookModel;
