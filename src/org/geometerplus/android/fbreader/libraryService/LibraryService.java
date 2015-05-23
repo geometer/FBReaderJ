@@ -139,8 +139,8 @@ public class LibraryService extends Service {
 				myFileObservers.add(observer);
 			}
 
-			myCollection.addListener(new BookCollection.Listener<Book>() {
-				public void onBookEvent(BookEvent event, Book book) {
+			myCollection.addListener(new BookCollection.Listener<DbBook>() {
+				public void onBookEvent(BookEvent event, DbBook book) {
 					final Intent intent = new Intent(BOOK_EVENT_ACTION);
 					intent.putExtra("type", event.toString());
 					intent.putExtra("book", SerializerUtil.serialize(book));
@@ -247,23 +247,23 @@ public class LibraryService extends Service {
 		}
 
 		public boolean saveBook(String book) {
-			return myCollection.saveBook(SerializerUtil.deserializeBook(book));
+			return myCollection.saveBook(SerializerUtil.deserializeBook(book, myCollection));
 		}
 
 		public boolean canRemoveBook(String book, boolean deleteFromDisk) {
-			return myCollection.canRemoveBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
+			return myCollection.canRemoveBook(SerializerUtil.deserializeBook(book, myCollection), deleteFromDisk);
 		}
 
 		public void removeBook(String book, boolean deleteFromDisk) {
-			myCollection.removeBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
+			myCollection.removeBook(SerializerUtil.deserializeBook(book, myCollection), deleteFromDisk);
 		}
 
 		public void addToRecentlyOpened(String book) {
-			myCollection.addToRecentlyOpened(SerializerUtil.deserializeBook(book));
+			myCollection.addToRecentlyOpened(SerializerUtil.deserializeBook(book, myCollection));
 		}
 
 		public void removeFromRecentlyOpened(String book) {
-			myCollection.removeFromRecentlyOpened(SerializerUtil.deserializeBook(book));
+			myCollection.removeFromRecentlyOpened(SerializerUtil.deserializeBook(book, myCollection));
 		}
 
 		public List<String> labels() {
@@ -286,12 +286,12 @@ public class LibraryService extends Service {
 
 		@Override
 		public boolean isHyperlinkVisited(String book, String linkId) {
-			return myCollection.isHyperlinkVisited(SerializerUtil.deserializeBook(book), linkId);
+			return myCollection.isHyperlinkVisited(SerializerUtil.deserializeBook(book, myCollection), linkId);
 		}
 
 		@Override
 		public void markHyperlinkAsVisited(String book, String linkId) {
-			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book), linkId);
+			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book, myCollection), linkId);
 		}
 
 		@Override
@@ -301,14 +301,14 @@ public class LibraryService extends Service {
 
 		@Override
 		public String getDescription(String book) {
-			return BookUtil.getAnnotation(SerializerUtil.deserializeBook(book));
+			return BookUtil.getAnnotation(SerializerUtil.deserializeBook(book, myCollection));
 		}
 
 		@Override
 		public Bitmap getCover(final String bookString, final int maxWidth, final int maxHeight, boolean[] delayed) {
 			delayed[0] = false;
 
-			final Book book = SerializerUtil.deserializeBook(bookString);
+			final DbBook book = SerializerUtil.deserializeBook(bookString, myCollection);
 			if (book == null || book.getId() == -1) {
 				return null;
 			}
@@ -388,7 +388,7 @@ public class LibraryService extends Service {
 
 		public List<String> bookmarks(String query) {
 			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(
-				SerializerUtil.deserializeBookmarkQuery(query)
+				SerializerUtil.deserializeBookmarkQuery(query, myCollection)
 			));
 		}
 
@@ -435,11 +435,11 @@ public class LibraryService extends Service {
 		}
 
 		public String getHash(String book, boolean force) {
-			return myCollection.getHash(SerializerUtil.deserializeBook(book), force);
+			return myCollection.getHash(SerializerUtil.deserializeBook(book, myCollection), force);
 		}
 
 		public void setHash(String book, String hash) {
-			myCollection.setHash(SerializerUtil.deserializeBook(book), hash);
+			myCollection.setHash(SerializerUtil.deserializeBook(book, myCollection), hash);
 		}
 
 		public List<String> formats() {

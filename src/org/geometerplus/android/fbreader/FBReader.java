@@ -145,7 +145,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			return;
 		}
 
-		myBook = FBReaderIntents.getBookExtra(intent);
+		myBook = FBReaderIntents.getBookExtra(intent, myFBReaderApp.Collection);
 		final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(intent);
 		if (myBook == null) {
 			final Uri data = intent.getData();
@@ -361,7 +361,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		} else if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
 			myOpenBookIntent = intent;
 			if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
-				final Book b = FBReaderIntents.getBookExtra(intent);
+				final Book b = FBReaderIntents.getBookExtra(intent, myFBReaderApp.Collection);
 				if (b == null || !b.equals(myFBReaderApp.ExternalBook)) {
 					try {
 						final ExternalFormatPlugin plugin =
@@ -402,7 +402,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myCancelIntent = intent;
 			myOpenBookIntent = null;
 		} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(intent.getAction())) {
-			final Book book = FBReaderIntents.getBookExtra(intent);
+			final Book book = FBReaderIntents.getBookExtra(intent, myFBReaderApp.Collection);
 			myFBReaderApp.ExternalBook = null;
 			myOpenBookIntent = null;
 			getCollection().bindToService(this, new Runnable() {
@@ -698,7 +698,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 				if (resultCode != RESULT_DO_NOTHING && data != null) {
-					final Book book = FBReaderIntents.getBookExtra(data);
+					final Book book = FBReaderIntents.getBookExtra(data, myFBReaderApp.Collection);
 					if (book != null) {
 						getCollection().bindToService(this, new Runnable() {
 							public void run() {
