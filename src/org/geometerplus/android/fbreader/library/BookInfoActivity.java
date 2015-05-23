@@ -92,8 +92,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		OrientationUtil.setOrientation(this, getIntent());
 
 		if (myBook != null) {
-			// we do force language & encoding detection
-			myBook.getEncoding();
+			// we force language & encoding detection
+			BookUtil.getEncoding(myBook);
 
 			setupCover(myBook);
 			setupBookInfo(myBook);
@@ -359,7 +359,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				return true;
 			case RELOAD_INFO:
 				if (myBook != null) {
-					myBook.reloadInfoFromFile();
+					BookUtil.reloadInfoFromFile(myBook);
 					setupBookInfo(myBook);
 					saveBook();
 				}
