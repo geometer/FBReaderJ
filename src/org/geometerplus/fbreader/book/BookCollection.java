@@ -120,7 +120,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 			if (book == null) {
 				book = new DbBook(bookFile, plugin);
 			} else {
-				book.readMetainfo(plugin);
+				BookUtil.readMetainfo(book, plugin);
 			}
 		} catch (BookReadingException e) {
 			return null;
@@ -162,7 +162,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 		fileInfos.save();
 
 		try {
-			book.readMetainfo();
+			BookUtil.readMetainfo(book);
 			// loaded from db
 			addBook(book, false);
 			return book;
@@ -557,7 +557,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 				}
 				if (!fileInfos.check(file, true)) {
 					try {
-						book.readMetainfo();
+						BookUtil.readMetainfo(book);
 						saveBook(book);
 					} catch (BookReadingException e) {
 						doAdd = false;
@@ -665,7 +665,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 			final DbBook book = orphanedBooksByFileId.get(fileId);
 			if (book != null) {
 				if (doReadMetaInfo) {
-					book.readMetainfo();
+					BookUtil.readMetainfo(book);
 				}
 				newBooks.add(book);
 				return;
@@ -865,7 +865,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 
 	private boolean isBookFormatActive(DbBook book) {
 		try {
-			return isFormatActive(book.getPlugin());
+			return isFormatActive(BookUtil.getPlugin(book));
 		} catch (BookReadingException e) {
 			return false;
 		}

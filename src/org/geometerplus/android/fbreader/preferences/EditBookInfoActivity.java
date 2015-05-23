@@ -97,7 +97,7 @@ class EncodingPreference extends ZLStringListPreference {
 
 		final FormatPlugin plugin;
 		try {
-			plugin = book.getPlugin();
+			plugin = BookUtil.getPlugin(book);
 		} catch (BookReadingException e) {
 			return;
 		}

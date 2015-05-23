@@ -55,7 +55,7 @@ class BookMergeHelper {
 		}
 		final DbBook vanilla;
 		try {
-			vanilla = new DbBook(base.File, base.getPlugin());
+			vanilla = new DbBook(base.File, BookUtil.getPlugin(base));
 		} catch (BookReadingException e) {
 			return false;
 		}

@@ -119,7 +119,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
 			public void onClick(View view) {
 				if (myBook != null) {
-					myBook.reloadInfoFromFile();
+					BookUtil.reloadInfoFromFile(myBook);
 					setupBookInfo(myBook);
 					myDontReloadBook = false;
 					myCollection.bindToService(BookInfoActivity.this, new Runnable() {
