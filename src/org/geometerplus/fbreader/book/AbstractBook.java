@@ -407,13 +407,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 
 	@Override
 	public String toString() {
-		return new StringBuilder("Book[")
-			.append(getPath())
-			.append(", ")
-			.append(myId)
-			.append(", ")
-			.append(getTitle())
-			.append("]")
-			.toString();
+		return getClass().getName() + "[" + getPath() + ", " + myId + ", " + getTitle() + "]";
 	}
 }
