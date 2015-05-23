@@ -176,13 +176,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (file == null) {
 			return null;
 		}
-		Book book = myFBReaderApp.Collection.getBookByFile(file);
+		Book book = myFBReaderApp.Collection.getBookByFile(file.getPath());
 		if (book != null) {
 			return book;
 		}
 		if (file.isArchive()) {
 			for (ZLFile child : file.children()) {
-				book = myFBReaderApp.Collection.getBookByFile(child);
+				book = myFBReaderApp.Collection.getBookByFile(child.getPath());
 				if (book != null) {
 					return book;
 				}
