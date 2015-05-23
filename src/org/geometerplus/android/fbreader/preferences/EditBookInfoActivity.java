@@ -261,7 +261,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	protected void onStart() {
 		super.onStart();
 
-		myBook = FBReaderIntents.getBookExtra(getIntent());
+		myBook = FBReaderIntents.getBookExtra(getIntent(), myCollection);
 
 		if (myBook == null) {
 			finish();
