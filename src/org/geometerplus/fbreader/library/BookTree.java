@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 public class BookTree extends LibraryTree {
 	public final Book Book;
 
-	BookTree(IBookCollection collection, Book book) {
+	BookTree(IBookCollection<Book> collection, Book book) {
 		super(collection);
 		Book = book;
 	}
@@ -69,7 +69,7 @@ public class BookTree extends LibraryTree {
 
 	@Override
 	public boolean containsBook(Book book) {
-		return book != null && book.equals(Book);
+		return Collection.sameBook(book, Book);
 	}
 
 	@Override
