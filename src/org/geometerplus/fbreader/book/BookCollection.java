@@ -694,11 +694,6 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 	}
 
 	@Override
-	public ZLImage getCover(DbBook book, int maxWidth, int maxHeight) {
-		return BookUtil.getCover(book);
-	}
-
-	@Override
 	public String getCoverUrl(DbBook book) {
 		// not implemented in non-shadow collection
 		return null;

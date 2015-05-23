@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.book;
 
 import java.util.List;
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -86,7 +85,6 @@ public interface IBookCollection<B extends AbstractBook> extends AbstractSeriali
 	boolean isHyperlinkVisited(B book, String linkId);
 	void markHyperlinkAsVisited(B book, String linkId);
 
-	ZLImage getCover(B book, int maxWidth, int maxHeight);
 	String getCoverUrl(B book);
 	String getDescription(B book);
 
