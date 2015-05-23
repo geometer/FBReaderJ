@@ -104,7 +104,7 @@ shared_ptr<Constructor> AndroidUtil::Constructor_ZLFileImage;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Paths_tempDirectory;
 
-shared_ptr<ObjectField> AndroidUtil::Field_Book_File;
+shared_ptr<StringMethod> AndroidUtil::Method_Book_getPath;
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getTitle;
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getLanguage;
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getEncodingNoDetection;
@@ -187,7 +187,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	StaticMethod_Paths_tempDirectory = new StaticObjectMethod(Class_Paths, "tempDirectory", Class_java_lang_String, "()");
 
-	Field_Book_File = new ObjectField(Class_AbstractBook, "File", Class_ZLFile);
+	Method_Book_getPath = new StringMethod(Class_AbstractBook, "getPath", "()");
 	Method_Book_getTitle = new StringMethod(Class_AbstractBook, "getTitle", "()");
 	Method_Book_getLanguage = new StringMethod(Class_AbstractBook, "getLanguage", "()");
 	Method_Book_getEncodingNoDetection = new StringMethod(Class_AbstractBook, "getEncodingNoDetection", "()");

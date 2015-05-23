@@ -58,6 +58,8 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		myIsSaved = true;
 	}
 
+	public abstract String getPath();
+
 	public void updateFrom(AbstractBook book) {
 		if (book == null || myId != book.myId) {
 			return;
@@ -91,8 +93,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			myIsSaved = false;
 		}
 	}
-
-	public abstract String getPath();
 
 	public List<Author> authors() {
 		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
