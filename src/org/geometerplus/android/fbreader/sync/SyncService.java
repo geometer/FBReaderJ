@@ -175,7 +175,7 @@ public class SyncService extends Service implements IBookCollection.Listener<Boo
 	}
 
 	private void addBook(Book book) {
-		if (book != null && BookUtil.fileByBook(book).getPhysicalFile() != null) {
+		if (BookUtil.fileByBook(book).getPhysicalFile() != null) {
 			myQueue.add(book);
 		}
 	}
