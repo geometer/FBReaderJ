@@ -142,7 +142,7 @@ public:
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_Paths_tempDirectory;
 
-	static shared_ptr<ObjectField> Field_Book_File;
+	static shared_ptr<StringMethod> Method_Book_getPath;
 	static shared_ptr<StringMethod> Method_Book_getTitle;
 	static shared_ptr<StringMethod> Method_Book_getLanguage;
 	static shared_ptr<StringMethod> Method_Book_getEncodingNoDetection;
