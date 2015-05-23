@@ -138,6 +138,19 @@ public abstract class BookUtil {
 		return plugin;
 	}
 
+	public static String getEncoding(AbstractBook book) {
+		if (book.getEncodingNoDetection() == null) {
+			try {
+				BookUtil.getPlugin(book).detectLanguageAndEncoding(book);
+			} catch (BookReadingException e) {
+			}
+			if (book.getEncodingNoDetection() == null) {
+				book.setEncoding("utf-8");
+			}
+		}
+		return book.getEncodingNoDetection();
+	}
+
 	public static void reloadInfoFromFile(AbstractBook book) {
 		try {
 			readMetainfo(book);

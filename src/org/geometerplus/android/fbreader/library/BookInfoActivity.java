@@ -90,8 +90,8 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		OrientationUtil.setOrientation(this, getIntent());
 
 		if (myBook != null) {
-			// we do force language & encoding detection
-			myBook.getEncoding();
+			// we force language & encoding detection
+			BookUtil.getEncoding(myBook);
 
 			setupCover(myBook);
 			setupBookInfo(myBook);
