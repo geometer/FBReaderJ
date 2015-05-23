@@ -25,11 +25,7 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 public class Book extends AbstractBook {
-	Book(long id, ZLFile file, String title, String encoding, String language) {
+	public Book(long id, ZLFile file, String title, String encoding, String language) {
 		super(id, file, title, encoding, language);
-	}
-
-	Book(ZLFile file, FormatPlugin plugin) throws BookReadingException {
-		super(file, plugin);
 	}
 }

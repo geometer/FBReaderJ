@@ -194,8 +194,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Book loadBook(long bookId) {
-		Book book = null;
+	protected DbBook loadBook(long bookId) {
+		DbBook book = null;
 		final Cursor cursor = myDatabase.rawQuery("SELECT file_id,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
 		if (cursor.moveToNext()) {
 			book = createBook(
@@ -207,11 +207,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Book loadBookByFile(long fileId, ZLFile file) {
+	protected DbBook loadBookByFile(long fileId, ZLFile file) {
 		if (fileId == -1) {
 			return null;
 		}
-		Book book = null;
+		DbBook book = null;
 		final Cursor cursor = myDatabase.rawQuery("SELECT book_id,title,encoding,language FROM Books WHERE file_id = " + fileId, null);
 		if (cursor.moveToNext()) {
 			book = createBook(
@@ -245,16 +245,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing) {
+	protected Map<Long,DbBook> loadBooks(FileInfoSet infos, boolean existing) {
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id,file_id,title,encoding,language FROM Books WHERE `exists` = " + (existing ? 1 : 0), null
 		);
-		final HashMap<Long,Book> booksById = new HashMap<Long,Book>();
-		final HashMap<Long,Book> booksByFileId = new HashMap<Long,Book>();
+		final HashMap<Long,DbBook> booksById = new HashMap<Long,DbBook>();
+		final HashMap<Long,DbBook> booksByFileId = new HashMap<Long,DbBook>();
 		while (cursor.moveToNext()) {
 			final long id = cursor.getLong(0);
 			final long fileId = cursor.getLong(1);
-			final Book book = createBook(
+			final DbBook book = createBook(
 				id, infos.getFile(fileId), cursor.getString(2), cursor.getString(3), cursor.getString(4)
 			);
 			if (book != null) {
@@ -279,7 +279,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,author_id FROM BookAuthor ORDER BY author_index", null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				Author author = authorById.get(cursor.getLong(1));
 				if (author != null) {
@@ -291,7 +291,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 		cursor = myDatabase.rawQuery("SELECT book_id,tag_id FROM BookTag", null);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				addTag(book, getTagById(cursor.getLong(1)));
 			}
@@ -311,7 +311,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,series_id,book_index FROM BookSeries", null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				final String series = seriesById.get(cursor.getLong(1));
 				if (series != null) {
@@ -325,7 +325,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,type,uid FROM BookUid", null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				book.addUid(cursor.getString(1), cursor.getString(2));
 			}
@@ -338,7 +338,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				book.addLabel(cursor.getString(1));
 			}
@@ -350,7 +350,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				book.setProgress(RationalNumber.create(cursor.getLong(1), cursor.getLong(2)));
 			}
@@ -362,7 +362,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				book.HasBookmark = true;
 			}
@@ -373,13 +373,13 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected void setExistingFlag(Collection<Book> books, boolean flag) {
+	protected void setExistingFlag(Collection<DbBook> books, boolean flag) {
 		if (books.isEmpty()) {
 			return;
 		}
 		final StringBuilder bookSet = new StringBuilder("(");
 		boolean first = true;
-		for (Book b : books) {
+		for (DbBook b : books) {
 			if (first) {
 				first = false;
 			} else {
