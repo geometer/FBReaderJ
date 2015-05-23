@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.sort.TitledEntity;
 
-public class AbstractBook extends TitledEntity<AbstractBook> {
+public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	public static final String FAVORITE_LABEL = "favorite";
 	public static final String READ_LABEL = "read";
 	public static final String SYNCHRONISED_LABEL = "sync-success";
@@ -69,12 +69,7 @@ public class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	AbstractBook(ZLFile file, FormatPlugin plugin) throws BookReadingException {
-		super(null);
-		if (file == null) {
-			throw new IllegalArgumentException("Creating book with no file");
-		}
-		myId = -1;
-		File = plugin.realBookFile(file);
+		this(-1, plugin.realBookFile(file), null, null, null);
 		readMetainfo(plugin);
 		myIsSaved = false;
 	}

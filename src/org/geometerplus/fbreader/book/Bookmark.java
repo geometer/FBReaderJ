@@ -231,7 +231,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 		}
 	}
 
-	Bookmark transferToBook(Book book) {
+	Bookmark transferToBook(AbstractBook book) {
 		final long bookId = book.getId();
 		return bookId != -1 ? new Bookmark(bookId, this) : null;
 	}

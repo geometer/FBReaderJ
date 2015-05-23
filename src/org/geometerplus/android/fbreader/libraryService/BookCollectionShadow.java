@@ -52,7 +52,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			try {
 				final String type = intent.getStringExtra("type");
 				if (LibraryService.BOOK_EVENT_ACTION.equals(intent.getAction())) {
-					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"));
+					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"), BookCollectionShadow.this);
 					fireBookEvent(BookEvent.valueOf(type), book);
 				} else {
 					fireBuildEvent(Status.valueOf(type));
@@ -139,7 +139,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 		return listCall(new ListCallable<Book>() {
 			public List<Book> call() throws RemoteException {
 				return SerializerUtil.deserializeBookList(
-					myInterface.books(SerializerUtil.serialize(query))
+					myInterface.books(SerializerUtil.serialize(query)), BookCollectionShadow.this
 				);
 			}
 		});
@@ -159,7 +159,9 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 	public List<Book> recentlyAddedBooks(final int count) {
 		return listCall(new ListCallable<Book>() {
 			public List<Book> call() throws RemoteException {
-				return SerializerUtil.deserializeBookList(myInterface.recentlyAddedBooks(count));
+				return SerializerUtil.deserializeBookList(
+					myInterface.recentlyAddedBooks(count), BookCollectionShadow.this
+				);
 			}
 		});
 	}
@@ -167,7 +169,9 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 	public List<Book> recentlyOpenedBooks(final int count) {
 		return listCall(new ListCallable<Book>() {
 			public List<Book> call() throws RemoteException {
-				return SerializerUtil.deserializeBookList(myInterface.recentlyOpenedBooks(count));
+				return SerializerUtil.deserializeBookList(
+					myInterface.recentlyOpenedBooks(count), BookCollectionShadow.this
+				);
 			}
 		});
 	}
@@ -177,7 +181,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getRecentBook(index));
+			return SerializerUtil.deserializeBook(myInterface.getRecentBook(index), this);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return null;
@@ -189,7 +193,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookByFile(file.getPath()));
+			return SerializerUtil.deserializeBook(myInterface.getBookByFile(file.getPath()), this);
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -200,7 +204,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookById(id));
+			return SerializerUtil.deserializeBook(myInterface.getBookById(id), this);
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -211,7 +215,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookByUid(uid.Type, uid.Id));
+			return SerializerUtil.deserializeBook(myInterface.getBookByUid(uid.Type, uid.Id), this);
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -222,7 +226,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookByHash(hash));
+			return SerializerUtil.deserializeBook(myInterface.getBookByHash(hash), this);
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -616,5 +620,9 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 
 	// method from ServiceConnection interface
 	public synchronized void onServiceDisconnected(ComponentName name) {
+	}
+
+	public Book createBook(long id, String url, String title, String encoding, String language) {
+		return new Book(id, ZLFile.createFileByUrl(url), title, encoding, language);
 	}
 }

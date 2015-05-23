@@ -56,7 +56,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		mySelectedBook = FBReaderIntents.getBookExtra(getIntent());
+		mySelectedBook = FBReaderIntents.getBookExtra(getIntent(), myCollection);
 
 		new LibraryTreeAdapter(this);
 

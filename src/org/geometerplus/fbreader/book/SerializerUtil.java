@@ -39,30 +39,30 @@ public abstract class SerializerUtil {
 		return query != null ? defaultSerializer.serialize(query) : null;
 	}
 
-	public static BookmarkQuery deserializeBookmarkQuery(String xml) {
-		return xml != null ? defaultSerializer.deserializeBookmarkQuery(xml) : null;
+	public static BookmarkQuery deserializeBookmarkQuery(String xml, AbstractSerializer.BookCreator<? extends AbstractBook> creator) {
+		return xml != null ? defaultSerializer.deserializeBookmarkQuery(xml, creator) : null;
 	}
 
-	public static String serialize(Book book) {
+	public static String serialize(AbstractBook book) {
 		return book != null ? defaultSerializer.serialize(book) : null;
 	}
 
-	public static Book deserializeBook(String xml) {
-		return xml != null ? defaultSerializer.deserializeBook(xml) : null;
+	public static <B extends AbstractBook> B deserializeBook(String xml, AbstractSerializer.BookCreator<B> creator) {
+		return xml != null ? defaultSerializer.deserializeBook(xml, creator) : null;
 	}
 
-	public static List<String> serializeBookList(List<Book> books) {
+	public static List<String> serializeBookList(List<? extends AbstractBook> books) {
 		final List<String> serialized = new ArrayList<String>(books.size());
-		for (Book b : books) {
+		for (AbstractBook b : books) {
 			serialized.add(defaultSerializer.serialize(b));
 		}
 		return serialized;
 	}
 
-	public static List<Book> deserializeBookList(List<String> xmlList) {
-		final List<Book> books = new ArrayList<Book>(xmlList.size());
+	public static <B extends AbstractBook> List<B> deserializeBookList(List<String> xmlList, AbstractSerializer.BookCreator<B> creator) {
+		final List<B> books = new ArrayList<B>(xmlList.size());
 		for (String xml : xmlList) {
-			final Book b = defaultSerializer.deserializeBook(xml);
+			final B b = defaultSerializer.deserializeBook(xml, creator);
 			if (b != null) {
 				books.add(b);
 			}
