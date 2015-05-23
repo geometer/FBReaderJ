@@ -115,7 +115,7 @@ public abstract class Filter {
 
 	public final static class HasPhysicalFile extends Filter {
 		public boolean matches(AbstractBook book) {
-			return book != null && book.File.getPhysicalFile() != null;
+			return book != null && book.getPath().startsWith("/");
 		}
 	}
 
