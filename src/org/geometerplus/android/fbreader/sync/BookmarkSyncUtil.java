@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 
 class BookmarkSyncUtil {
-	static void sync(SyncNetworkContext context, final IBookCollection collection) {
+	static void sync(SyncNetworkContext context, final IBookCollection<Book> collection) {
 		try {
 			final Map<String,Info> actualServerInfos = new HashMap<String,Info>();
 			final Set<String> deletedOnServerUids = new HashSet<String>();
@@ -305,9 +305,9 @@ class BookmarkSyncUtil {
 	}
 
 	private static final class BooksByHash extends HashMap<String,Book> {
-		private final IBookCollection myCollection;
+		private final IBookCollection<Book> myCollection;
 
-		BooksByHash(IBookCollection collection) {
+		BooksByHash(IBookCollection<Book> collection) {
 			myCollection = collection;
 		}
 

@@ -48,7 +48,7 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.ViewUtil;
 
-public class EditBookmarkActivity extends Activity implements IBookCollection.Listener {
+public class EditBookmarkActivity extends Activity implements IBookCollection.Listener<Book> {
 	private final ZLResource myResource = ZLResource.resource("editBookmark");
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private Bookmark myBookmark;

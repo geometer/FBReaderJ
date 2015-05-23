@@ -73,7 +73,7 @@ public class CancelMenuHelper {
 		}
 	}
 
-	public List<ActionDescription> getActionsList(IBookCollection collection) {
+	public List<ActionDescription> getActionsList(IBookCollection<Book> collection) {
 		final List<ActionDescription> list = new ArrayList<ActionDescription>();
 
 		if (ShowLibraryItemOption.getValue()) {

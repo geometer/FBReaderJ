@@ -43,7 +43,7 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.*;
 
-public class BookmarksActivity extends Activity implements IBookCollection.Listener {
+public class BookmarksActivity extends Activity implements IBookCollection.Listener<Book> {
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;

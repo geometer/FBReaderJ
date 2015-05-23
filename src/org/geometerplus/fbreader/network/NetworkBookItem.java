@@ -133,7 +133,7 @@ public class NetworkBookItem extends NetworkItem {
 		return null;
 	}
 
-	public Status getStatus(IBookCollection collection) {
+	public Status getStatus(IBookCollection<Book> collection) {
 		if (localCopyFileName(collection) != null) {
 			return Status.Downloaded;
 		} else if (reference(UrlInfo.Type.Book) != null) {
@@ -201,7 +201,7 @@ public class NetworkBookItem extends NetworkItem {
 	}
 
 	private static final String HASH_PREFIX = "sha1:";
-	public String localCopyFileName(IBookCollection collection) {
+	public String localCopyFileName(IBookCollection<Book> collection) {
 		if (collection != null) {
 			for (String identifier : Identifiers) {
 				if (identifier.startsWith(HASH_PREFIX)) {

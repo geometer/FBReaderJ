@@ -138,7 +138,7 @@ public class SyncData {
 		);
 	}
 
-	private Map<String,Object> positionMap(IBookCollection collection, Book book) {
+	private Map<String,Object> positionMap(IBookCollection<Book> collection, Book book) {
 		if (book == null) {
 			return null;
 		}
@@ -146,7 +146,7 @@ public class SyncData {
 		return pos != null ? position2Map(pos) : null;
 	}
 
-	public Map<String,Object> data(IBookCollection collection) {
+	public Map<String,Object> data(IBookCollection<Book> collection) {
 		final Map<String,Object> map = new HashMap<String,Object>();
 		map.put("generation", myGeneration.getValue());
 		map.put("timestamp", System.currentTimeMillis());
