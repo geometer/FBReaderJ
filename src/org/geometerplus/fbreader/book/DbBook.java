@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.book;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
@@ -142,6 +143,47 @@ public class DbBook extends AbstractBook {
 			if (myId != -1) {
 				database.addVisitedHyperlink(myId, linkId);
 			}
+		}
+	}
+
+	boolean hasSameMetainfoAs(DbBook other) {
+		return
+			MiscUtil.equals(getTitle(), other.getTitle()) &&
+			MiscUtil.equals(myEncoding, other.myEncoding) &&
+			MiscUtil.equals(myLanguage, other.myLanguage) &&
+			MiscUtil.equals(myAuthors, other.myAuthors) &&
+			MiscUtil.listsEquals(myTags, other.myTags) &&
+			MiscUtil.equals(mySeriesInfo, other.mySeriesInfo) &&
+			MiscUtil.equals(myUids, other.myUids);
+	}
+
+	void merge(DbBook other, DbBook base) {
+		if (!MiscUtil.equals(getTitle(), other.getTitle()) &&
+			MiscUtil.equals(getTitle(), base.getTitle())) {
+			setTitle(other.getTitle());
+		}
+		if (!MiscUtil.equals(myEncoding, other.myEncoding) &&
+			MiscUtil.equals(myEncoding, base.myEncoding)) {
+			setEncoding(other.myEncoding);
+		}
+		if (!MiscUtil.equals(myLanguage, other.myLanguage) &&
+			MiscUtil.equals(myLanguage, base.myLanguage)) {
+			setLanguage(other.myLanguage);
+		}
+		if (!MiscUtil.listsEquals(myTags, other.myTags) &&
+			MiscUtil.listsEquals(myTags, base.myTags)) {
+			myTags = other.myTags != null ? new ArrayList<Tag>(other.myTags) : null;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.equals(mySeriesInfo, other.mySeriesInfo) &&
+			MiscUtil.equals(mySeriesInfo, base.mySeriesInfo)) {
+			mySeriesInfo = other.mySeriesInfo;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.listsEquals(myUids, other.myUids) &&
+			MiscUtil.listsEquals(myUids, base.myUids)) {
+			myUids = other.myUids != null ? new ArrayList<UID>(other.myUids) : null;
+			myIsSaved = false;
 		}
 	}
 }
