@@ -245,15 +245,15 @@
 		<node name="search" value="Zoeken"/>
 	</node>
 	<node name="editBookmark">
-		<node name="text" value="Text" toBeTranslated="true"/>
-		<node name="style" value="Style" toBeTranslated="true"/>
-		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="text" value="Tekst"/>
+		<node name="style" value="Stijl"/>
+		<node name="delete" value="Verwijderen"/>
 		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
-		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="saveText" value="Tekst opslaan"/>
 		<node name="editStyle" value="Stijl aanpassen…"/>
 	</node>
 	<node name="footnoteToast">
-		<node name="more" value="More" toBeTranslated="true"/>
+		<node name="more" value="Meer"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open bibliotheek"/>
@@ -334,8 +334,8 @@
 	<node name="Preferences">
 		<node name="sync" value="Synchronisatie">
 			<node name="summary" value="Boekennetwerk"/>
-			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
-				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			<node name="site" value="Lees verder over synchronisatie">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="Synchronisatie inschakelen">
 				<node name="summaryOn" value="Synchroniseer mijn bibliotheek met het FBReader boekennetwerk"/>
@@ -412,19 +412,19 @@
 				<node name="summaryOn" value="Toon tekst in twee kolommen als apparaat horizontaal wordt gehouden"/>
 				<node name="summaryOff" value="Toon tekst altijd in één kolom"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
-				<node name="never" value="Never" toBeTranslated="true"/>
-				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
-				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
-				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			<node name="showFootnoteToast" value="Toon gelinkte tekst in een pop-up">
+				<node name="never" value="Nooit"/>
+				<node name="footnotesOnly" value="Alleen voor voetnoten"/>
+				<node name="footnotesAndSuperscripts" value="Voor voetnoten en superscript links"/>
+				<node name="allInternalLinks" value="Voor alle interne links"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
-				<node name="duration1" value="1 second" toBeTranslated="true"/>
-				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
-				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
-				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
-				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
-				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="Hoe lang de linkpop-up tonen">
+				<node name="duration1" value="1 seconde"/>
+				<node name="duration3" value="3 seconden"/>
+				<node name="duration5" value="5 seconden"/>
+				<node name="duration10" value="10 seconden"/>
+				<node name="duration20" value="20 seconden"/>
+				<node name="duration300" value="5 minuten"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
 				<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>
@@ -764,8 +764,8 @@
 		</node>
 		<node name="dictionary" value="Woordenboek">
 			<node name="summary" value="Woordenboek instellingen"/>
-			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
-			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
+			<node name="dictionary" value="Enkel woord opzoeken in"/>
+			<node name="translator" value="Vertaal Translate zinsdelen via"/>
 			<node name="targetLanguage" value="Vertalen naar">
 				<node name="any" value="alle talen"/>
 			</node>
@@ -1151,9 +1151,9 @@
 		<node name="percent" value="Bijv.: 125%%"/>
 	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="unknown error" toBeTranslated="true"/>
-		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
-		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
-		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
+		<node name="unknown" value="onbekende fout"/>
+		<node name="noArticle" value="geen artikel gevonden voor “%s”"/>
+		<node name="cannotOpenDictionary" value="Kan woordenlijst niet openen"/>
+		<node name="noDictionarySelected" value="Geen woordenboek geselecteerd; lost dit op in de Dictan-instellingen"/>
 	</node>
 </resources>
