@@ -139,7 +139,7 @@ public class LibraryService extends Service {
 				myFileObservers.add(observer);
 			}
 
-			myCollection.addListener(new BookCollection.Listener() {
+			myCollection.addListener(new BookCollection.Listener<Book>() {
 				public void onBookEvent(BookEvent event, Book book) {
 					final Intent intent = new Intent(BOOK_EVENT_ACTION);
 					intent.putExtra("type", event.toString());
