@@ -30,11 +30,12 @@ import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 
 public abstract class FBUtil {
 	public static void shareBook(Activity activity, Book book) {
 		try {
-			final ZLPhysicalFile file = book.File.getPhysicalFile();
+			final ZLPhysicalFile file = BookUtil.fileByBook(book).getPhysicalFile();
 			if (file == null) {
 				// That should be impossible
 				return;

@@ -26,8 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.IBookCollection;
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -208,7 +207,7 @@ public class NetworkBookItem extends NetworkItem {
 					final String hash = identifier.substring(HASH_PREFIX.length());
 					final Book book = collection.getBookByHash(hash);
 					if (book != null) {
-						final ZLPhysicalFile file = book.File.getPhysicalFile();
+						final ZLPhysicalFile file = BookUtil.fileByBook(book).getPhysicalFile();
 						if (file != null) {
 							return file.getPath();
 						}
