@@ -28,7 +28,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import android.util.Xml;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
@@ -154,9 +153,9 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
-	public BookmarkQuery deserializeBookmarkQuery(String xml) {
+	public BookmarkQuery deserializeBookmarkQuery(String xml, BookCreator<? extends AbstractBook> creator) {
 		try {
-			final BookmarkQueryDeserializer deserializer = new BookmarkQueryDeserializer();
+			final BookmarkQueryDeserializer deserializer = new BookmarkQueryDeserializer(creator);
 			Xml.parse(xml, deserializer);
 			return deserializer.getQuery();
 		} catch (SAXException e) {
@@ -167,13 +166,13 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
-	public String serialize(Book book) {
+	public String serialize(AbstractBook book) {
 		final StringBuilder buffer = builder();
 		serialize(buffer, book);
 		return buffer.toString();
 	}
 
-	private void serialize(StringBuilder buffer, Book book) {
+	private void serialize(StringBuilder buffer, AbstractBook book) {
 		appendTag(
 			buffer, "entry", false,
 			"xmlns:dc", XMLNamespaces.DublinCore,
@@ -252,9 +251,9 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
-	public Book deserializeBook(String xml) {
+	public <B extends AbstractBook> B deserializeBook(String xml, BookCreator<B> creator) {
 		try {
-			final BookDeserializer deserializer = new BookDeserializer();
+			final BookDeserializer<B> deserializer = new BookDeserializer<B>(creator);
 			Xml.parse(xml, deserializer);
 			return deserializer.getBook();
 		} catch (SAXException e) {
@@ -515,7 +514,7 @@ class XMLSerializer extends AbstractSerializer {
 		return buffer.length() != 0 ? buffer.toString() : null;
 	}
 
-	private static final class BookDeserializer extends DefaultHandler {
+	private static final class BookDeserializer<B extends AbstractBook> extends DefaultHandler {
 		private static enum State {
 			READ_NOTHING,
 			READ_ENTRY,
@@ -531,6 +530,7 @@ class XMLSerializer extends AbstractSerializer {
 			READ_SERIES_INDEX,
 		}
 
+		private final BookCreator<B> myBookCreator;
 		private State myState = State.READ_NOTHING;
 
 		private long myId = -1;
@@ -551,9 +551,13 @@ class XMLSerializer extends AbstractSerializer {
 		private boolean myHasBookmark;
 		private RationalNumber myProgress;
 
-		private Book myBook;
+		private B myBook;
 
-		public Book getBook() {
+		private BookDeserializer(BookCreator<B> creator) {
+			myBookCreator = creator;
+		}
+
+		public B getBook() {
 			return myState == State.READ_NOTHING ? myBook : null;
 		}
 
@@ -584,12 +588,8 @@ class XMLSerializer extends AbstractSerializer {
 			if (myId == -1) {
 				return;
 			}
-			myBook = new Book(
-				myId,
-				ZLFile.createFileByUrl(myUrl),
-				string(myTitle),
-				string(myEncoding),
-				string(myLanguage)
+			myBook = myBookCreator.createBook(
+				myId, myUrl, string(myTitle), string(myEncoding), string(myLanguage)
 			);
 			for (Author author : myAuthors) {
 				myBook.addAuthorWithNoCheck(author);
@@ -870,8 +870,12 @@ class XMLSerializer extends AbstractSerializer {
 		private boolean myVisible;
 		private int myLimit;
 		private int myPage;
-		private final BookDeserializer myBookDeserializer = new BookDeserializer();
+		private final BookDeserializer<? extends AbstractBook> myBookDeserializer;
 		private BookmarkQuery myQuery;
+
+		BookmarkQueryDeserializer(BookCreator<? extends AbstractBook> creator) {
+			myBookDeserializer = new BookDeserializer(creator);
+		}
 
 		BookmarkQuery getQuery() {
 			return myQuery;
