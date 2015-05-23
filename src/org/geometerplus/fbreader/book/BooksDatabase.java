@@ -37,30 +37,30 @@ public abstract class BooksDatabase {
 	public static final class NotAvailable extends Exception {
 	}
 
-	protected Book createBook(long id, long fileId, String title, String encoding, String language) {
+	protected DbBook createBook(long id, long fileId, String title, String encoding, String language) {
 		final FileInfoSet infos = new FileInfoSet(this, fileId);
 		return createBook(id, infos.getFile(fileId), title, encoding, language);
 	}
-	protected Book createBook(long id, ZLFile file, String title, String encoding, String language) {
-		return file != null ? new Book(id, file, title, encoding, language) : null;
+	protected DbBook createBook(long id, ZLFile file, String title, String encoding, String language) {
+		return file != null ? new DbBook(id, file, title, encoding, language) : null;
 	}
-	protected void addAuthor(Book book, Author author) {
+	protected void addAuthor(DbBook book, Author author) {
 		book.addAuthorWithNoCheck(author);
 	}
-	protected void addTag(Book book, Tag tag) {
+	protected void addTag(DbBook book, Tag tag) {
 		book.addTagWithNoCheck(tag);
 	}
-	protected void setSeriesInfo(Book book, String series, String index) {
+	protected void setSeriesInfo(DbBook book, String series, String index) {
 		book.setSeriesInfoWithNoCheck(series, index);
 	}
 
 	protected abstract void executeAsTransaction(Runnable actions);
 
 	// returns map fileId -> book
-	protected abstract Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing);
-	protected abstract void setExistingFlag(Collection<Book> books, boolean flag);
-	protected abstract Book loadBook(long bookId);
-	protected abstract Book loadBookByFile(long fileId, ZLFile file);
+	protected abstract Map<Long,DbBook> loadBooks(FileInfoSet infos, boolean existing);
+	protected abstract void setExistingFlag(Collection<DbBook> books, boolean flag);
+	protected abstract DbBook loadBook(long bookId);
+	protected abstract DbBook loadBookByFile(long fileId, ZLFile file);
 	protected abstract void deleteBook(long bookId);
 
 	protected abstract List<String> listLabels();
