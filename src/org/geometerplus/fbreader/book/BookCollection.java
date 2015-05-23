@@ -66,7 +66,11 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 		return myBooksByFile.size();
 	}
 
-	public DbBook getBookByFile(ZLFile bookFile) {
+	public DbBook getBookByFile(String path) {
+		return getBookByFile(ZLFile.createFileByPath(path));
+	}
+
+	private DbBook getBookByFile(ZLFile bookFile) {
 		if (bookFile == null) {
 			return null;
 		}

@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.book;
 
 import java.util.List;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -63,7 +62,6 @@ public interface IBookCollection<B extends AbstractBook> extends AbstractSeriali
 	void removeFromRecentlyOpened(B book);
 
 	B getBookByFile(String path);
-	B getBookByFile(ZLFile file);
 	B getBookById(long id);
 	B getBookByUid(UID uid);
 	B getBookByHash(String hash);

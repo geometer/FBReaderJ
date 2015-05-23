@@ -188,12 +188,12 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 		}
 	}
 
-	public synchronized Book getBookByFile(ZLFile file) {
+	public synchronized Book getBookByFile(String path) {
 		if (myInterface == null) {
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookByFile(file.getPath()), this);
+			return SerializerUtil.deserializeBook(myInterface.getBookByFile(path), this);
 		} catch (RemoteException e) {
 			return null;
 		}
