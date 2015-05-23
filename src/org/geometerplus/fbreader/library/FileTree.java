@@ -99,7 +99,7 @@ public class FileTree extends LibraryTree {
 	@Override
 	public Book getBook() {
 		if (myBook == null) {
-			myBook = Collection.getBookByFile(myFile);
+			myBook = Collection.getBookByFile(myFile.getPath());
 			if (myBook == null) {
 				myBook = NULL_BOOK;
 			}
@@ -146,7 +146,7 @@ public class FileTree extends LibraryTree {
 		final TreeSet<ZLFile> set = new TreeSet<ZLFile>(ourFileComparator);
 		for (ZLFile file : myFile.children()) {
 			if (file.isDirectory() || file.isArchive() ||
-				Collection.getBookByFile(file) != null) {
+				Collection.getBookByFile(file.getPath()) != null) {
 				set.add(file);
 			}
 		}

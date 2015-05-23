@@ -26,7 +26,6 @@ import android.os.IBinder;
 import android.os.RemoteException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
@@ -188,12 +187,12 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 		}
 	}
 
-	public synchronized Book getBookByFile(ZLFile file) {
+	public synchronized Book getBookByFile(String path) {
 		if (myInterface == null) {
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookByFile(file.getPath()), this);
+			return SerializerUtil.deserializeBook(myInterface.getBookByFile(path), this);
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -416,19 +415,6 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 				myInterface.markHyperlinkAsVisited(SerializerUtil.serialize(book), linkId);
 			} catch (RemoteException e) {
 			}
-		}
-	}
-
-	@Override
-	public synchronized ZLImage getCover(Book book, int maxWidth, int maxHeight) {
-		if (myInterface == null) {
-			return null;
-		}
-		try {
-			final boolean[] delayed = new boolean[1];
-			return new ZLBitmapImage(myInterface.getCover(SerializerUtil.serialize(book), maxWidth, maxHeight, delayed));
-		} catch (RemoteException e) {
-			return null;
 		}
 	}
 

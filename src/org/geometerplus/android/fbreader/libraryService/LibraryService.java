@@ -27,8 +27,6 @@ import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.FileObserver;
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
@@ -306,58 +304,8 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(final String bookString, final int maxWidth, final int maxHeight, boolean[] delayed) {
+			// this method kept for compatibility
 			delayed[0] = false;
-
-			final DbBook book = SerializerUtil.deserializeBook(bookString, myCollection);
-			if (book == null || book.getId() == -1) {
-				return null;
-			}
-
-			final BitmapCache.Container container = myCoversCache.get(book.getId());
-			if (container != null) {
-				if (container.Bitmap == null) {
-					return null;
-				}
-				final Bitmap bitmap = getResizedBitmap(container.Bitmap, maxWidth, maxHeight);
-				if (bitmap != null) {
-					return bitmap;
-				} else {
-					myCoversCache.remove(book.getId());
-				}
-			}
-
-			final ZLImage image =
-				myCollection.getCover(book, maxWidth, maxHeight);
-			if (image == null) {
-				myCoversCache.put(book.getId(), null);
-				return null;
-			}
-
-			final ZLAndroidImageManager manager =
-				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			final ZLAndroidImageData data = manager.getImageData(image);
-			if (data != null) {
-				final Bitmap bitmap = data.getBitmap(maxWidth, maxHeight);
-				myCoversCache.put(book.getId(), bitmap);
-				return bitmap;
-			}
-
-			if (image instanceof ZLImageProxy) {
-				myImageSynchronizer.synchronize((ZLImageProxy)image, new Runnable() {
-					@Override
-					public void run() {
-						final ZLAndroidImageData data = manager.getImageData(image);
-						myCoversCache.put(book.getId(), data != null ? data.getBitmap(maxWidth, maxHeight) : null);
-						final Intent intent = new Intent(COVER_READY_ACTION);
-						intent.putExtra("book", bookString);
-						sendBroadcast(intent);
-					}
-				});
-				delayed[0] = true;
-				return null;
-			}
-
-			myCoversCache.put(book.getId(), null);
 			return null;
 		}
 
