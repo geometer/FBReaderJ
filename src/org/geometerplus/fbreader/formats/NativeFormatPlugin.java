@@ -57,7 +57,7 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 			throw new BookReadingException(
 				"nativeCodeFailure",
 				book.File,
-				new String[] { String.valueOf(code), book.File.getPath() }
+				new String[] { String.valueOf(code), book.getPath() }
 			);
 		}
 	}
@@ -105,7 +105,7 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 				throw new BookReadingException(
 					"nativeCodeFailure",
 					model.Book.File,
-					new String[] { String.valueOf(code), model.Book.File.getPath() }
+					new String[] { String.valueOf(code), model.Book.getPath() }
 				);
 		}
 	}

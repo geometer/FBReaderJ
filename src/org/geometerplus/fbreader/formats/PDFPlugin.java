@@ -45,7 +45,7 @@ public class PDFPlugin extends ExternalFormatPlugin {
 			return;
 		}
 		try {
-			final PDFDocument doc = new PDFDocument(book.File.getPath());
+			final PDFDocument doc = new PDFDocument(book.getPath());
 			// TODO: solution for rc4 encryption
 			if (!doc.isEncrypted()) {
 				final PDFDocInfo info = doc.getDocumentInfo();

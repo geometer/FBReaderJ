@@ -99,6 +99,10 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		}
 	}
 
+	public String getPath() {
+		return File.getPath();
+	}
+
 	public List<Author> authors() {
 		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
 	}
@@ -403,13 +407,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 
 	@Override
 	public String toString() {
-		return new StringBuilder("Book[")
-			.append(File.getPath())
-			.append(", ")
-			.append(myId)
-			.append(", ")
-			.append(getTitle())
-			.append("]")
-			.toString();
+		return getClass().getName() + "[" + getPath() + ", " + myId + ", " + getTitle() + "]";
 	}
 }
