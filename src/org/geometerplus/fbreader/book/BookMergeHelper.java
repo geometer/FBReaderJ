@@ -34,7 +34,7 @@ class BookMergeHelper {
 		myCollection = collection;
 	}
 
-	boolean merge(Book base, Book duplicate) {
+	boolean merge(DbBook base, DbBook duplicate) {
 		boolean result = false;
 		result |= mergeMetainfo(base, duplicate);
 		result |= mergeBookmarks(base, duplicate, true);
@@ -49,13 +49,13 @@ class BookMergeHelper {
 		return result;
 	}
 
-	private boolean mergeMetainfo(Book base, Book duplicate) {
+	private boolean mergeMetainfo(DbBook base, DbBook duplicate) {
 		if (base.hasSameMetainfoAs(duplicate)) {
 			return false;
 		}
-		final Book vanilla;
+		final DbBook vanilla;
 		try {
-			vanilla = new Book(base.File, base.getPlugin());
+			vanilla = new DbBook(base.File, base.getPlugin());
 		} catch (BookReadingException e) {
 			return false;
 		}
@@ -63,7 +63,7 @@ class BookMergeHelper {
 		return true;
 	}
 
-	private boolean mergeLabels(Book base, Book duplicate) {
+	private boolean mergeLabels(DbBook base, DbBook duplicate) {
 		final List<String> labels = duplicate.labels();
 		if (MiscUtil.listsEquals(labels, base.labels())) {
 			return false;
@@ -74,7 +74,7 @@ class BookMergeHelper {
 		return true;
 	}
 
-	private boolean mergePositions(Book base, Book duplicate) {
+	private boolean mergePositions(DbBook base, DbBook duplicate) {
 		if (myCollection.getStoredPosition(base.getId()) != null) {
 			return false;
 		}
@@ -86,7 +86,7 @@ class BookMergeHelper {
 		return true;
 	}
 
-	private boolean mergeProgress(Book base, Book duplicate) {
+	private boolean mergeProgress(DbBook base, DbBook duplicate) {
 		if (base.getProgress() != null) {
 			return false;
 		}
@@ -98,7 +98,7 @@ class BookMergeHelper {
 		return true;
 	}
 
-	private List<Bookmark> allBookmarks(Book book, boolean visible) {
+	private List<Bookmark> allBookmarks(DbBook book, boolean visible) {
 		List<Bookmark> result = null;
 		for (BookmarkQuery query = new BookmarkQuery(book, visible, 20); ; query = query.next()) {
 			final List<Bookmark> portion = myCollection.bookmarks(query);
@@ -123,7 +123,7 @@ class BookMergeHelper {
 		return false;
 	}
 
-	private boolean mergeBookmarks(Book base, Book duplicate, boolean visible) {
+	private boolean mergeBookmarks(DbBook base, DbBook duplicate, boolean visible) {
 		final List<Bookmark> duplicateBookmarks = allBookmarks(duplicate, visible);
 		if (duplicateBookmarks.isEmpty()) {
 			return false;

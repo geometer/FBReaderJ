@@ -22,10 +22,10 @@ package org.geometerplus.fbreader.book;
 import java.util.List;
 
 public abstract class Filter {
-	public abstract boolean matches(Book book);
+	public abstract boolean matches(AbstractBook book);
 
 	public final static class Empty extends Filter {
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			return true;
 		}
 	}
@@ -37,7 +37,7 @@ public abstract class Filter {
 			Author = author;
 		}
 
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			final List<Author> bookAuthors = book.authors();
 			return
 				Author.NULL.equals(Author) ? bookAuthors.isEmpty() : bookAuthors.contains(Author);
@@ -51,7 +51,7 @@ public abstract class Filter {
 			Tag = tag;
 		}
 
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			final List<Tag> bookTags = book.tags();
 			return
 				Tag.NULL.equals(Tag) ? bookTags.isEmpty() : bookTags.contains(Tag);
@@ -65,7 +65,7 @@ public abstract class Filter {
 			Label = label;
 		}
 
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			return book.labels().contains(Label);
 		}
 	}
@@ -77,7 +77,7 @@ public abstract class Filter {
 			Pattern = pattern != null ? pattern.toLowerCase() : "";
 		}
 
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			return book != null && !"".equals(Pattern) && book.matches(Pattern);
 		}
 	}
@@ -89,7 +89,7 @@ public abstract class Filter {
 			Prefix = prefix != null ? prefix : "";
 		}
 
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			return book != null && Prefix.equals(book.firstTitleLetter());
 		}
 	}
@@ -101,20 +101,20 @@ public abstract class Filter {
 			Series = series;
 		}
 
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			final SeriesInfo info = book.getSeriesInfo();
 			return info != null && Series.equals(info.Series);
 		}
 	}
 
 	public final static class HasBookmark extends Filter {
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			return book != null && book.HasBookmark;
 		}
 	}
 
 	public final static class HasPhysicalFile extends Filter {
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			return book != null && book.File.getPhysicalFile() != null;
 		}
 	}
@@ -128,7 +128,7 @@ public abstract class Filter {
 			Second = second;
 		}
 
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			return First.matches(book) && Second.matches(book);
 		}
 	}
@@ -142,7 +142,7 @@ public abstract class Filter {
 			Second = second;
 		}
 
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			return First.matches(book) || Second.matches(book);
 		}
 	}
@@ -154,7 +154,7 @@ public abstract class Filter {
 			Base = base;
 		}
 
-		public boolean matches(Book book) {
+		public boolean matches(AbstractBook book) {
 			return !Base.matches(book);
 		}
 	}

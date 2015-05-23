@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-public interface IBookCollection<B extends AbstractBook> {
+public interface IBookCollection<B extends AbstractBook> extends AbstractSerializer.BookCreator<B> {
 	public enum Status {
 		NotStarted(false),
 		Started(false),
