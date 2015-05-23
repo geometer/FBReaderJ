@@ -398,7 +398,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	}
 
 	public void onBookEvent(BookEvent event, Book book) {
-		if (event == BookEvent.Updated && book.equals(myBook)) {
+		if (event == BookEvent.Updated && myCollection.sameBook(book, myBook)) {
 			myBook.updateFrom(book);
 			setupBookInfo(book);
 			myDontReloadBook = false;

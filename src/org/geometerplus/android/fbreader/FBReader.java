@@ -372,8 +372,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		} else if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
 			myOpenBookIntent = intent;
 			if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
-				final Book b = FBReaderIntents.getBookExtra(intent, myFBReaderApp.Collection);
-				if (b == null || !b.equals(myFBReaderApp.ExternalBook)) {
+				final BookCollectionShadow collection = getCollection();
+				final Book b = FBReaderIntents.getBookExtra(intent, collection);
+				if (!collection.sameBook(b, myFBReaderApp.ExternalBook)) {
 					try {
 						final ExternalFormatPlugin plugin =
 							(ExternalFormatPlugin)BookUtil.getPlugin(myFBReaderApp.ExternalBook);
@@ -419,9 +420,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myOpenBookIntent = null;
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
-					Book b = myFBReaderApp.Collection.getRecentBook(0);
-					if (b.equals(book)) {
-						b = myFBReaderApp.Collection.getRecentBook(1);
+					final BookCollectionShadow collection = getCollection();
+					Book b = collection.getRecentBook(0);
+					if (collection.sameBook(b, book)) {
+						b = collection.getRecentBook(1);
 					}
 					myFBReaderApp.openBook(b, null, null, myNotifier);
 				}
@@ -835,10 +837,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	protected void onPluginNotFound(final Book book) {
-		getCollection().bindToService(this, new Runnable() {
+		final BookCollectionShadow collection = getCollection();
+		collection.bindToService(this, new Runnable() {
 			public void run() {
-				final Book recent = getCollection().getRecentBook(0);
-				if (recent != null && !recent.equals(book)) {
+				final Book recent = collection.getRecentBook(0);
+				if (recent != null && !collection.sameBook(recent, book)) {
 					myFBReaderApp.openBook(recent, null, null, null);
 				} else {
 					myFBReaderApp.openHelpBook();
