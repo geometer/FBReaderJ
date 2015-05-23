@@ -387,7 +387,7 @@ public final class FBReaderApp extends ZLApplication {
 		try {
 			for (FileEncryptionInfo info : BookUtil.getPlugin(book).readEncryptionInfos(book)) {
 				if (info != null && !EncryptionMethod.isSupported(info.Method)) {
-					showErrorMessage("unsupportedEncryptionMethod", book.File.getPath());
+					showErrorMessage("unsupportedEncryptionMethod", book.getPath());
 					break;
 				}
 			}
