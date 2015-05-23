@@ -163,7 +163,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void openBook(Book book, final Bookmark bookmark, Runnable postAction, Notifier notifier) {
 		if (Model != null) {
-			if (book == null || bookmark == null && book.File.equals(Model.Book.File)) {
+			if (book == null || bookmark == null && Collection.sameBook(book, Model.Book)) {
 				return;
 			}
 		}
