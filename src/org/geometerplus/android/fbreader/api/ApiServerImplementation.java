@@ -352,7 +352,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		if (book == null) {
 			return null;
 		}
-		final UID uid = BookUtil.createUid(book.File, "SHA-256");
+		final UID uid = BookUtil.createUid(book, "SHA-256");
 		return uid != null ? uid.Id : null;
 	}
 

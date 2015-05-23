@@ -43,7 +43,7 @@ public abstract class BookUtil {
 			return null;
 		}
 		synchronized (book) {
-			return getCover(book.File);
+			return getCover(fileByBook(book));
 		}
 	}
 
@@ -69,7 +69,7 @@ public abstract class BookUtil {
 
 	public static String getAnnotation(AbstractBook book) {
 		try {
-			return getPlugin(book).readAnnotation(book.File);
+			return getPlugin(book).readAnnotation(fileByBook(book));
 		} catch (BookReadingException e) {
 			return null;
 		}
@@ -93,6 +93,10 @@ public abstract class BookUtil {
 		}
 
 		return ZLResourceFile.createResourceFile("data/intro/intro-en.epub");
+	}
+
+	public static UID createUid(AbstractBook book, String algorithm) {
+		return createUid(fileByBook(book), algorithm);
 	}
 
 	public static UID createUid(ZLFile file, String algorithm) {
@@ -131,9 +135,10 @@ public abstract class BookUtil {
 	}
 
 	public static FormatPlugin getPlugin(AbstractBook book) throws BookReadingException {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
+		final ZLFile file = fileByBook(book);
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
 		if (plugin == null) {
-			throw new BookReadingException("pluginNotFound", book.File);
+			throw new BookReadingException("pluginNotFound", file);
 		}
 		return plugin;
 	}
@@ -180,9 +185,17 @@ public abstract class BookUtil {
 		}
 
 		if (book.isTitleEmpty()) {
-			final String fileName = book.File.getShortName();
+			final String fileName = fileByBook(book).getShortName();
 			final int index = fileName.lastIndexOf('.');
 			book.setTitle(index > 0 ? fileName.substring(0, index) : fileName);
+		}
+	}
+
+	public static ZLFile fileByBook(AbstractBook book) {
+		if (book instanceof DbBook) {
+			return ((DbBook)book).File;
+		} else {
+			return ZLFile.createFileByPath(book.getPath());
 		}
 	}
 }

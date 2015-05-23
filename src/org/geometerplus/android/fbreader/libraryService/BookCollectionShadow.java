@@ -609,6 +609,6 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 	}
 
 	public Book createBook(long id, String url, String title, String encoding, String language) {
-		return new Book(id, ZLFile.createFileByUrl(url), title, encoding, language);
+		return new Book(id, url.substring("file://".length()), title, encoding, language);
 	}
 }

@@ -59,7 +59,7 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 	@Override
 	public void readUids(AbstractBook book) {
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
+			book.addUid(BookUtil.createUid(book, "SHA-256"));
 		}
 	}
 
