@@ -78,6 +78,7 @@ public interface IBookCollection<B extends AbstractBook> extends AbstractSeriali
 
 	String getHash(B book, boolean force);
 	void setHash(B book, String hash);
+	boolean sameBook(B book0, B book1);
 
 	ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId);
 	void storePosition(long bookId, ZLTextPosition position);
@@ -100,7 +101,7 @@ public interface IBookCollection<B extends AbstractBook> extends AbstractSeriali
 	int getDefaultHighlightingStyleId();
 	void setDefaultHighlightingStyleId(int styleId);
 
-	public class FormatDescriptor {
+	class FormatDescriptor {
 		public String Id;
 		public String Name;
 		public boolean IsActive;

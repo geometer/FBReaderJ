@@ -186,4 +186,36 @@ public class DbBook extends AbstractBook {
 			myIsSaved = false;
 		}
 	}
+
+	@Override
+	public int hashCode() {
+		return File.getShortName().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof DbBook)) {
+			return false;
+		}
+		final DbBook obook = ((DbBook)o);
+		final ZLFile ofile = obook.File;
+		if (File.equals(ofile)) {
+			return true;
+		}
+		if (!File.getShortName().equals(ofile.getShortName())) {
+			return false;
+		}
+		if (myUids == null || obook.myUids == null) {
+			return false;
+		}
+		for (UID uid : obook.myUids) {
+			if (myUids.contains(uid)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

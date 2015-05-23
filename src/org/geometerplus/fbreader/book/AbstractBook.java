@@ -374,38 +374,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	@Override
-	public int hashCode() {
-		return File.getShortName().hashCode();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof AbstractBook)) {
-			return false;
-		}
-		final AbstractBook obook = ((AbstractBook)o);
-		final ZLFile ofile = obook.File;
-		if (File.equals(ofile)) {
-			return true;
-		}
-		if (!File.getShortName().equals(ofile.getShortName())) {
-			return false;
-		}
-		if (myUids == null || obook.myUids == null) {
-			return false;
-		}
-		for (UID uid : obook.myUids) {
-			if (myUids.contains(uid)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
 	public String toString() {
 		return getClass().getName() + "[" + getPath() + ", " + myId + ", " + getTitle() + "]";
 	}
