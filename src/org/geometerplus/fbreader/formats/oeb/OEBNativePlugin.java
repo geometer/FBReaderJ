@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.book.AbstractBook;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
@@ -38,7 +39,8 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 
 	@Override
 	public void readModel(BookModel model) throws BookReadingException {
-		model.Book.File.setCached(true);
+		final ZLFile file = BookUtil.fileByBook(model.Book);
+		file.setCached(true);
 		try {
 			super.readModel(model);
 			model.setLabelResolver(new BookModel.LabelResolver() {
@@ -50,7 +52,7 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 				}
 			});
 		} finally {
-			model.Book.File.setCached(false);
+			file.setCached(false);
 		}
 	}
 
