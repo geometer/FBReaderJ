@@ -41,20 +41,20 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 
 	public final ZLFile File;
 
-	private volatile long myId;
+	protected volatile long myId;
 
-	private volatile String myEncoding;
-	private volatile String myLanguage;
-	private volatile List<Author> myAuthors;
-	private volatile List<Tag> myTags;
-	private volatile List<String> myLabels;
-	private volatile SeriesInfo mySeriesInfo;
-	private volatile List<UID> myUids;
-	private volatile RationalNumber myProgress;
+	protected volatile String myEncoding;
+	protected volatile String myLanguage;
+	protected volatile List<Author> myAuthors;
+	protected volatile List<Tag> myTags;
+	protected volatile List<String> myLabels;
+	protected volatile SeriesInfo mySeriesInfo;
+	protected volatile List<UID> myUids;
+	protected volatile RationalNumber myProgress;
 
 	public volatile boolean HasBookmark;
 
-	private volatile boolean myIsSaved;
+	protected volatile boolean myIsSaved;
 
 	AbstractBook(long id, ZLFile file, String title, String encoding, String language) {
 		super(title);
@@ -66,12 +66,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		myEncoding = encoding;
 		myLanguage = language;
 		myIsSaved = true;
-	}
-
-	AbstractBook(ZLFile file, FormatPlugin plugin) throws BookReadingException {
-		this(-1, plugin.realBookFile(file), null, null, null);
-		readMetainfo(plugin);
-		myIsSaved = false;
 	}
 
 	boolean hasSameMetainfoAs(AbstractBook other) {
@@ -189,24 +183,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			final String fileName = File.getShortName();
 			final int index = fileName.lastIndexOf('.');
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
-		}
-	}
-
-	void loadLists(BooksDatabase database) {
-		myAuthors = database.listAuthors(myId);
-		myTags = database.listTags(myId);
-		myLabels = database.listLabels(myId);
-		mySeriesInfo = database.getSeriesInfo(myId);
-		myUids = database.listUids(myId);
-		myProgress = database.getProgress(myId);
-		HasBookmark = database.hasVisibleBookmark(myId);
-		myIsSaved = true;
-		if (myUids == null || myUids.isEmpty()) {
-			try {
-				getPlugin().readUids(this);
-				save(database, false);
-			} catch (BookReadingException e) {
-			}
 		}
 	}
 
@@ -491,95 +467,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			return true;
 		}
 		return false;
-	}
-
-	boolean save(final BooksDatabase database, boolean force) {
-		if (!force && myId != -1 && myIsSaved) {
-			return false;
-		}
-
-		final boolean[] result = new boolean[] { true };
-		database.executeAsTransaction(new Runnable() {
-			public void run() {
-				if (myId >= 0) {
-					final FileInfoSet fileInfos = new FileInfoSet(database, File);
-					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, getTitle());
-				} else {
-					myId = database.insertBookInfo(File, myEncoding, myLanguage, getTitle());
-					if (myId == -1) {
-						result[0] = false;
-						return;
-					}
-					if (myVisitedHyperlinks != null) {
-						for (String linkId : myVisitedHyperlinks) {
-							database.addVisitedHyperlink(myId, linkId);
-						}
-					}
-					database.addBookHistoryEvent(myId, BooksDatabase.HistoryEvent.Added);
-				}
-
-				long index = 0;
-				database.deleteAllBookAuthors(myId);
-				for (Author author : authors()) {
-					database.saveBookAuthorInfo(myId, index++, author);
-				}
-				database.deleteAllBookTags(myId);
-				for (Tag tag : tags()) {
-					database.saveBookTagInfo(myId, tag);
-				}
-				final List<String> labelsInDb = database.listLabels(myId);
-				for (String label : labelsInDb) {
-					if (myLabels == null || !myLabels.contains(label)) {
-						database.removeLabel(myId, label);
-					}
-				}
-				if (myLabels != null) {
-					for (String label : myLabels) {
-						database.setLabel(myId, label);
-					}
-				}
-				database.saveBookSeriesInfo(myId, mySeriesInfo);
-				database.deleteAllBookUids(myId);
-				for (UID uid : uids()) {
-					database.saveBookUid(myId, uid);
-				}
-				if (myProgress != null) {
-					database.saveBookProgress(myId, myProgress);
-				}
-			}
-		});
-
-		if (result[0]) {
-			myIsSaved = true;
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private Set<String> myVisitedHyperlinks;
-	private void initHyperlinkSet(BooksDatabase database) {
-		if (myVisitedHyperlinks == null) {
-			myVisitedHyperlinks = new TreeSet<String>();
-			if (myId != -1) {
-				myVisitedHyperlinks.addAll(database.loadVisitedHyperlinks(myId));
-			}
-		}
-	}
-
-	boolean isHyperlinkVisited(BooksDatabase database, String linkId) {
-		initHyperlinkSet(database);
-		return myVisitedHyperlinks.contains(linkId);
-	}
-
-	void markHyperlinkAsVisited(BooksDatabase database, String linkId) {
-		initHyperlinkSet(database);
-		if (!myVisitedHyperlinks.contains(linkId)) {
-			myVisitedHyperlinks.add(linkId);
-			if (myId != -1) {
-				database.addVisitedHyperlink(myId, linkId);
-			}
-		}
 	}
 
 	@Override

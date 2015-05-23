@@ -22,7 +22,6 @@ package org.geometerplus.fbreader.book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.formats.FormatPlugin;
 
 public class Book extends AbstractBook {
 	public Book(long id, ZLFile file, String title, String encoding, String language) {
