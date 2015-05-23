@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public abstract class FormatPlugin {
@@ -49,12 +49,12 @@ public abstract class FormatPlugin {
 	public ZLFile realBookFile(ZLFile file) throws BookReadingException {
 		return file;
 	}
-	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {
+	public List<FileEncryptionInfo> readEncryptionInfos(AbstractBook book) {
 		return Collections.emptyList();
 	}
-	public abstract void readMetainfo(Book book) throws BookReadingException;
-	public abstract void readUids(Book book) throws BookReadingException;
-	public abstract void detectLanguageAndEncoding(Book book) throws BookReadingException;
+	public abstract void readMetainfo(AbstractBook book) throws BookReadingException;
+	public abstract void readUids(AbstractBook book) throws BookReadingException;
+	public abstract void detectLanguageAndEncoding(AbstractBook book) throws BookReadingException;
 	public abstract ZLImage readCover(ZLFile file);
 	public abstract String readAnnotation(ZLFile file);
 
