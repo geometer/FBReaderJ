@@ -367,7 +367,18 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 				}
 			}
 		}
-		if (MiscUtil.matchesIgnoreCase(File.getLongName(), pattern)) {
+
+		String fileName = getPath();
+		// first archive delimiter
+		int index = fileName.indexOf(":");
+		// last path delimiter before first archive delimiter
+		if (index == -1) {
+			index = fileName.lastIndexOf("/");
+		} else {
+			index = fileName.lastIndexOf("/", index);
+		}
+		fileName = fileName.substring(index + 1);
+		if (MiscUtil.matchesIgnoreCase(fileName, pattern)) {
 			return true;
 		}
 		return false;
