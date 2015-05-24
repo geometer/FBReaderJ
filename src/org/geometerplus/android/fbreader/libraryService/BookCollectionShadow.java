@@ -21,17 +21,15 @@ package org.geometerplus.android.fbreader.libraryService;
 
 import java.util.*;
 
+import android.app.Service;
 import android.content.*;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
-import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
 import org.geometerplus.fbreader.book.*;
 
@@ -50,7 +48,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 
 			try {
 				final String type = intent.getStringExtra("type");
-				if (LibraryService.BOOK_EVENT_ACTION.equals(intent.getAction())) {
+				if (LibraryServiceActions.BOOK_EVENT_ACTION.equals(intent.getAction())) {
 					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"), BookCollectionShadow.this);
 					fireBookEvent(BookEvent.valueOf(type), book);
 				} else {
@@ -75,7 +73,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			final boolean result = context.bindService(
 				FBReaderIntents.internalIntent(FBReaderIntents.Action.LIBRARY_SERVICE),
 				this,
-				LibraryService.BIND_AUTO_CREATE
+				Service.BIND_AUTO_CREATE
 			);
 			if (result) {
 				myContext = context;
@@ -599,8 +597,8 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			Config.Instance().runOnConnect(myOnBindActions.remove(0));
 		}
 		if (myContext != null) {
-			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BOOK_EVENT_ACTION));
-			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BUILD_EVENT_ACTION));
+			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryServiceActions.BOOK_EVENT_ACTION));
+			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryServiceActions.BUILD_EVENT_ACTION));
 		}
 	}
 
