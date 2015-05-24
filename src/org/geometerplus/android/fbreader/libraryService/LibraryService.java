@@ -42,15 +42,11 @@ import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.httpd.DataUtil;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
-public class LibraryService extends Service {
+public class LibraryService extends Service implements LibraryServiceActions {
 	private static SQLiteBooksDatabase ourDatabase;
 	private static final Object ourDatabaseLock = new Object();
 
 	final DataService.Connection DataConnection = new DataService.Connection();
-
-	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
-	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
-	static final String COVER_READY_ACTION = "fbreader.library_service.cover_ready";
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
