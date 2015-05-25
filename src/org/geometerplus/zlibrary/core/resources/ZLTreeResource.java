@@ -21,10 +21,13 @@ package org.geometerplus.zlibrary.core.resources;
 
 import java.util.*;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import android.util.Xml;
+
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.language.Language;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 final class ZLTreeResource extends ZLResource {
 	private static interface Condition {
@@ -230,25 +233,24 @@ final class ZLTreeResource extends ZLResource {
 		return ZLMissingResource.Instance;
 	}
 
-	private static class ResourceTreeReader extends ZLXMLReaderAdapter {
+	private static class ResourceTreeReader extends DefaultHandler {
 		private static final String NODE = "node";
 		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
 
 		public void readDocument(ZLTreeResource root, ZLFile file) {
 			myStack.clear();
 			myStack.add(root);
-			readQuietly(file);
+			try {
+				Xml.parse(file.getInputStream(), Xml.Encoding.UTF_8, this);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		@Override
-		public boolean dontCacheAttributeValues() {
-			return true;
-		}
-
-		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			final ArrayList<ZLTreeResource> stack = myStack;
-			if (!stack.isEmpty() && (NODE.equals(tag))) {
+			if (!stack.isEmpty() && (NODE.equals(localName))) {
 				final String name = attributes.getValue("name");
 				final String condition = attributes.getValue("condition");
 				final String value = attributes.getValue("value");
@@ -284,16 +286,14 @@ final class ZLTreeResource extends ZLResource {
 					stack.add(peek);
 				}
 			}
-			return false;
 		}
 
 		@Override
-		public boolean endElementHandler(String tag) {
+		public void endElement(String uri, String localName, String qName) throws SAXException {
 			final ArrayList<ZLTreeResource> stack = myStack;
-			if (!stack.isEmpty() && (NODE.equals(tag))) {
+			if (!stack.isEmpty() && (NODE.equals(localName))) {
 				stack.remove(stack.size() - 1);
 			}
-			return false;
 		}
 	}
 }
