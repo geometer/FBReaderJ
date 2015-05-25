@@ -21,8 +21,11 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import android.util.Xml;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.*;
 
@@ -99,7 +102,11 @@ public class TapZoneMap {
 		final ZLFile mapFile = ZLFile.createFileByPath(
 			"default/tapzones/" + name.toLowerCase() + ".xml"
 		);
-		new Reader().readQuietly(mapFile);
+		try {
+			Xml.parse(mapFile.getInputStream(), Xml.Encoding.UTF_8, new Reader());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean isCustom() {
@@ -198,11 +205,11 @@ public class TapZoneMap {
 		}
 	}
 
-	private class Reader extends ZLXMLReaderAdapter {
+	private class Reader extends DefaultHandler {
 		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			try {
-				if ("zone".equals(tag)) {
+				if ("zone".equals(localName)) {
 					final Zone zone = new Zone(
 						Integer.parseInt(attributes.getValue("x")),
 						Integer.parseInt(attributes.getValue("y"))
@@ -215,7 +222,7 @@ public class TapZoneMap {
 					if (action2 != null) {
 						myZoneMap2.put(zone, createOptionForZone(zone, false, action2));
 					}
-				} else if ("tapZones".equals(tag)) {
+				} else if ("tapZones".equals(localName)) {
 					final String v = attributes.getValue("v");
 					if (v != null) {
 						myHeight.setValue(Integer.parseInt(v));
@@ -227,7 +234,6 @@ public class TapZoneMap {
 				}
 			} catch (Throwable e) {
 			}
-			return false;
 		}
 	}
 }
