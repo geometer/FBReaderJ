@@ -23,10 +23,13 @@ import java.util.*;
 
 import android.view.KeyEvent;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import android.util.Xml;
+
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 import org.geometerplus.fbreader.Paths;
 
@@ -61,18 +64,9 @@ public final class ZLKeyBindings {
 			} else {
 				keymapFilename = "keymap.xml";
 			}
-			new Reader(keys).readQuietly(ZLFile.createFileByPath("default/" + keymapFilename));
-
-			try {
-				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
-			} catch (Exception e) {
-				// ignore
-			}
-			try {
-				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.bookPath().get(0) + "/keymap.xml"));
-			} catch (Exception e) {
-				// ignore
-			}
+			new Reader(keys).readQuietly("default/" + keymapFilename);
+			new Reader(keys).readQuietly(Paths.systemShareDirectory() + "/keymap.xml");
+			new Reader(keys).readQuietly(Paths.bookPath().get(0) + "/keymap.xml");
 			myKeysOption = new ZLStringListOption(myName, "KeyList", new ArrayList<String>(keys), ",");
 		}
 	}
@@ -120,21 +114,23 @@ public final class ZLKeyBindings {
 		return !ZLApplication.NoAction.equals(getBinding(key, longPress));
 	}
 
-	private class Reader extends ZLXMLReaderAdapter {
+	private class Reader extends DefaultHandler {
 		private final Set<String> myKeySet;
 
 		Reader(Set<String> keySet) {
 			myKeySet = keySet;
 		}
 
-		@Override
-		public boolean dontCacheAttributeValues() {
-			return true;
+		public void readQuietly(String path) {
+			try {
+				Xml.parse(ZLFile.createFileByPath(path).getInputStream(), Xml.Encoding.UTF_8, this);
+			} catch (Exception e) {
+			}
 		}
 
 		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			if ("binding".equals(tag)) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if ("binding".equals(localName)) {
 				final String stringKey = attributes.getValue("key");
 				final String actionId = attributes.getValue("action");
 				if (stringKey != null && actionId != null) {
@@ -146,7 +142,6 @@ public final class ZLKeyBindings {
 					}
 				}
 			}
-			return false;
 		}
 	}
 }
