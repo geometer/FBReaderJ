@@ -51,8 +51,7 @@ import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -145,7 +144,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			return;
 		}
 
-		myBook = FBReaderIntents.getBookExtra(intent);
+		myBook = FBReaderIntents.getBookExtra(intent, myFBReaderApp.Collection);
 		final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(intent);
 		if (myBook == null) {
 			final Uri data = intent.getData();
@@ -154,7 +153,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		}
 		if (myBook != null) {
-			ZLFile file = myBook.File;
+			ZLFile file = BookUtil.fileByBook(myBook);
 			if (!file.exists()) {
 				if (file.getPhysicalFile() != null) {
 					file = file.getPhysicalFile();
@@ -177,13 +176,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (file == null) {
 			return null;
 		}
-		Book book = myFBReaderApp.Collection.getBookByFile(file);
+		Book book = myFBReaderApp.Collection.getBookByFile(file.getPath());
 		if (book != null) {
 			return book;
 		}
 		if (file.isArchive()) {
 			for (ZLFile child : file.children()) {
-				book = myFBReaderApp.Collection.getBookByFile(child);
+				book = myFBReaderApp.Collection.getBookByFile(child.getPath());
 				if (book != null) {
 					return book;
 				}
@@ -361,11 +360,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		} else if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
 			myOpenBookIntent = intent;
 			if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
-				final Book b = FBReaderIntents.getBookExtra(intent);
-				if (b == null || !b.equals(myFBReaderApp.ExternalBook)) {
+				final BookCollectionShadow collection = getCollection();
+				final Book b = FBReaderIntents.getBookExtra(intent, collection);
+				if (!collection.sameBook(b, myFBReaderApp.ExternalBook)) {
 					try {
 						final ExternalFormatPlugin plugin =
-							(ExternalFormatPlugin)myFBReaderApp.ExternalBook.getPlugin();
+							(ExternalFormatPlugin)BookUtil.getPlugin(myFBReaderApp.ExternalBook);
 						startActivity(PluginUtil.createIntent(plugin, PluginUtil.ACTION_KILL));
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -402,14 +402,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myCancelIntent = intent;
 			myOpenBookIntent = null;
 		} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(intent.getAction())) {
-			final Book book = FBReaderIntents.getBookExtra(intent);
+			final Book book = FBReaderIntents.getBookExtra(intent, myFBReaderApp.Collection);
 			myFBReaderApp.ExternalBook = null;
 			myOpenBookIntent = null;
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
-					Book b = myFBReaderApp.Collection.getRecentBook(0);
-					if (b.equals(book)) {
-						b = myFBReaderApp.Collection.getRecentBook(1);
+					final BookCollectionShadow collection = getCollection();
+					Book b = collection.getRecentBook(0);
+					if (collection.sameBook(b, book)) {
+						b = collection.getRecentBook(1);
 					}
 					myFBReaderApp.openBook(b, null, null, myNotifier);
 				}
@@ -697,7 +698,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 				if (resultCode != RESULT_DO_NOTHING && data != null) {
-					final Book book = FBReaderIntents.getBookExtra(data);
+					final Book book = FBReaderIntents.getBookExtra(data, myFBReaderApp.Collection);
 					if (book != null) {
 						getCollection().bindToService(this, new Runnable() {
 							public void run() {
@@ -819,10 +820,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	protected void onPluginNotFound(final Book book) {
-		getCollection().bindToService(this, new Runnable() {
+		final BookCollectionShadow collection = getCollection();
+		collection.bindToService(this, new Runnable() {
 			public void run() {
-				final Book recent = getCollection().getRecentBook(0);
-				if (recent != null && !recent.equals(book)) {
+				final Book recent = collection.getRecentBook(0);
+				if (recent != null && !collection.sameBook(recent, book)) {
 					myFBReaderApp.openBook(recent, null, null, null);
 				} else {
 					myFBReaderApp.openHelpBook();

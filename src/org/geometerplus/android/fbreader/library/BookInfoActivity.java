@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
@@ -55,7 +56,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
-public class BookInfoActivity extends Activity implements IBookCollection.Listener {
+public class BookInfoActivity extends Activity implements IBookCollection.Listener<Book> {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String FROM_READING_MODE_KEY = "fbreader.from.reading.mode";
@@ -77,7 +78,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 
 		final Intent intent = getIntent();
 		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myBook = FBReaderIntents.getBookExtra(intent);
+		myBook = FBReaderIntents.getBookExtra(intent, myCollection);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
@@ -90,8 +91,8 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		OrientationUtil.setOrientation(this, getIntent());
 
 		if (myBook != null) {
-			// we do force language & encoding detection
-			myBook.getEncoding();
+			// we force language & encoding detection
+			BookUtil.getEncoding(myBook);
 
 			setupCover(myBook);
 			setupBookInfo(myBook);
@@ -119,7 +120,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
 			public void onClick(View view) {
 				if (myBook != null) {
-					myBook.reloadInfoFromFile();
+					BookUtil.reloadInfoFromFile(myBook);
 					setupBookInfo(myBook);
 					myDontReloadBook = false;
 					myCollection.bindToService(BookInfoActivity.this, new Runnable() {
@@ -290,11 +291,12 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 	private void setupFileInfo(Book book) {
 		((TextView)findViewById(R.id.file_info_title)).setText(myResource.getResource("fileInfo").getValue());
 
-		setupInfoPair(R.id.file_name, "name", book.File.getPath());
+		setupInfoPair(R.id.file_name, "name", book.getPath());
 		if (ENABLE_EXTENDED_FILE_INFO) {
-			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
+			final ZLFile bookFile = BookUtil.fileByBook(book);
+			setupInfoPair(R.id.file_type, "type", bookFile.getExtension());
 
-			final ZLPhysicalFile physFile = book.File.getPhysicalFile();
+			final ZLPhysicalFile physFile = bookFile.getPhysicalFile();
 			final File file = physFile == null ? null : physFile.javaFile();
 			if (file != null && file.exists() && file.isFile()) {
 				setupInfoPair(R.id.file_size, "size", formatSize(file.length()));
@@ -335,7 +337,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 	}
 
 	public void onBookEvent(BookEvent event, Book book) {
-		if (event == BookEvent.Updated && book.equals(myBook)) {
+		if (event == BookEvent.Updated && myCollection.sameBook(book, myBook)) {
 			myBook.updateFrom(book);
 			setupBookInfo(book);
 			myDontReloadBook = false;

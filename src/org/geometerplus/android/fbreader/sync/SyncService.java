@@ -38,7 +38,7 @@ import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
-public class SyncService extends Service implements IBookCollection.Listener {
+public class SyncService extends Service implements IBookCollection.Listener<Book> {
 	private static void log(String message) {
 		Log.d("FBReader.Sync", message);
 	}
@@ -175,7 +175,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 	}
 
 	private void addBook(Book book) {
-		if (book.File.getPhysicalFile() != null) {
+		if (BookUtil.fileByBook(book).getPhysicalFile() != null) {
 			myQueue.add(book);
 		}
 	}
@@ -373,7 +373,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 	}
 
 	private Status uploadBookToServerInternal(Book book) {
-		final File file = book.File.getPhysicalFile().javaFile();
+		final File file = BookUtil.fileByBook(book).getPhysicalFile().javaFile();
 		final String hash = myCollection.getHash(book, false);
 		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {
@@ -385,7 +385,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 		} else if (!force && book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
 			return Status.FailedPreviuousTime;
 		}
-		if (file.length() > 50 * 1024 * 1024) {
+		if (file.length() > 120 * 1024 * 1024) {
 			return Status.Failure;
 		}
 

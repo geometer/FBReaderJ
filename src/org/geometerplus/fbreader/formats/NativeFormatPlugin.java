@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.CachedCharStorageException;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
@@ -51,45 +51,45 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	}
 
 	@Override
-	synchronized public void readMetainfo(Book book) throws BookReadingException {
+	synchronized public void readMetainfo(AbstractBook book) throws BookReadingException {
 		final int code = readMetainfoNative(book);
 		if (code != 0) {
 			throw new BookReadingException(
 				"nativeCodeFailure",
-				book.File,
-				new String[] { String.valueOf(code), book.File.getPath() }
+				BookUtil.fileByBook(book),
+				new String[] { String.valueOf(code), book.getPath() }
 			);
 		}
 	}
 
-	private native int readMetainfoNative(Book book);
+	private native int readMetainfoNative(AbstractBook book);
 
 	@Override
-	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {
+	public List<FileEncryptionInfo> readEncryptionInfos(AbstractBook book) {
 		final FileEncryptionInfo[] infos = readEncryptionInfosNative(book);
 		return infos != null
 			? Arrays.<FileEncryptionInfo>asList(infos)
 			: Collections.<FileEncryptionInfo>emptyList();
 	}
 
-	private native FileEncryptionInfo[] readEncryptionInfosNative(Book book);
+	private native FileEncryptionInfo[] readEncryptionInfosNative(AbstractBook book);
 
 	@Override
-	synchronized public void readUids(Book book) throws BookReadingException {
+	synchronized public void readUids(AbstractBook book) throws BookReadingException {
 		readUidsNative(book);
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
+			book.addUid(BookUtil.createUid(book, "SHA-256"));
 		}
 	}
 
-	private native boolean readUidsNative(Book book);
+	private native boolean readUidsNative(AbstractBook book);
 
 	@Override
-	public void detectLanguageAndEncoding(Book book) {
+	public void detectLanguageAndEncoding(AbstractBook book) {
 		detectLanguageAndEncodingNative(book);
 	}
 
-	public native void detectLanguageAndEncodingNative(Book book);
+	public native void detectLanguageAndEncodingNative(AbstractBook book);
 
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
@@ -104,8 +104,8 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 			default:
 				throw new BookReadingException(
 					"nativeCodeFailure",
-					model.Book.File,
-					new String[] { String.valueOf(code), model.Book.File.getPath() }
+					BookUtil.fileByBook(model.Book),
+					new String[] { String.valueOf(code), model.Book.getPath() }
 				);
 		}
 	}

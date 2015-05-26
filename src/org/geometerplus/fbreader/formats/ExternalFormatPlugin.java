@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.formats;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
 
 public abstract class ExternalFormatPlugin extends FormatPlugin {
@@ -48,7 +48,7 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public void detectLanguageAndEncoding(Book book) {
+	public void detectLanguageAndEncoding(AbstractBook book) {
 	}
 
 	@Override
@@ -57,9 +57,9 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public void readUids(Book book) {
+	public void readUids(AbstractBook book) {
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
+			book.addUid(BookUtil.createUid(book, "SHA-256"));
 		}
 	}
 

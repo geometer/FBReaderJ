@@ -24,6 +24,7 @@ import android.content.Context;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 
 public abstract class NotificationUtil {
 	public static final int MISSING_BOOK_ID = 0x0fffffff;
@@ -47,7 +48,7 @@ public abstract class NotificationUtil {
 		if (book == null) {
 			return;
 		}
-		final ZLPhysicalFile file = book.File.getPhysicalFile();
+		final ZLPhysicalFile file = BookUtil.fileByBook(book).getPhysicalFile();
 		if (file == null) {
 			return;
 		}
