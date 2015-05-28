@@ -31,15 +31,15 @@
 				<data android:scheme="BookReadingException"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".error.BugReportActivity" android:label="FBReader crash" android:theme="@style/FBReader.Activity" android:process=":crash" android:configChanges="orientation|keyboardHidden|screenSize"/>
-		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@style/FBReader.Dialog" android:process=":crash" android:configChanges="orientation|keyboardHidden|screenSize">
+		<activity android:name=".error.BugReportActivity" android:label="FBReader crash" android:theme="@style/FBReader.Activity" android:process=":crash" android:configChanges="orientation|keyboardHidden|screenSize" android:exported="false"/>
+		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@style/FBReader.Dialog" android:process=":crash" android:configChanges="orientation|keyboardHidden|screenSize" android:exported="false">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CRASH"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 				<data android:scheme="CachedCharStorageException"/>
 			</intent-filter>
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.crash.MissingNativeLibraryActivity" android:theme="@style/FBReader.Dialog" android:process=":crash" android:configChanges="orientation|keyboardHidden|screenSize">
+		<activity android:name="org.geometerplus.android.fbreader.crash.MissingNativeLibraryActivity" android:theme="@style/FBReader.Dialog" android:process=":crash" android:configChanges="orientation|keyboardHidden|screenSize" android:exported="false">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CRASH"/>
 				<category android:name="android.intent.category.DEFAULT"/>
