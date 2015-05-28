@@ -163,13 +163,6 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return true;
 	}
 
-	public void resetTree() {
-		myItems = new ZLTree[Root.getSize() - 1];
-		//myParent.invalidateViews();
-		//myParent.requestLayout();
-		notifyDataSetChanged();
-	}
-
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		runTreeItem(getItem(position));
 	}
