@@ -954,7 +954,7 @@
 			<node name="updatingCatalogsList" value="Atualizando lista de catálogos. Por favor, aguarde…"/>
 			<node name="updatingAccountInformation" value="Atualizando as informações da conta. Por favor, aguarde…"/>
 			<node name="initDRMEngine" value="Inicializando motor DRM. Por favor, aguarde…"/>
-			<node name="acquireLicense" value="Adquirindo licensa. Por favor, aguarde…"/>
+			<node name="acquireLicence" value="Adquirindo licensa. Por favor, aguarde…"/>
 			<node name="registerUser" value="A registar nova conta. Por favor, aguarde…"/>
 			<node name="autoSignIn" value="A entrar. Aguarde…"/>
 			<node name="recoverPassword" value="A recuperar senha. Aguarde…"/>

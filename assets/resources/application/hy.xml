@@ -956,7 +956,7 @@
 			<node name="updatingCatalogsList" value="Թարմացվում է գրացուցակների ցանկը, սպասեք..."/>
 			<node name="updatingAccountInformation" value="Բեռնվում են հաշվի մասին տվյալները, սպասեք..."/>
 			<node name="initDRMEngine" value="Ընթերցվում է DRM-ը, սպասեք..."/>
-			<node name="acquireLicense" value="Ընթերցվում է արտոնագիրը, սպասեք..."/>
+			<node name="acquireLicence" value="Ընթերցվում է արտոնագիրը, սպասեք..."/>
 			<node name="registerUser" value="Օգտահաշիվը գրանցվում է, սպասեք..."/>
 			<node name="autoSignIn" value="Մուտք համակարգ, սպասեք…"/>
 			<node name="recoverPassword" value="Վերականգնվում է գաղտնաբառը, սպասեք..."/>

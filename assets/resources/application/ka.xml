@@ -955,7 +955,7 @@
 			<node name="updatingCatalogsList" value="მიმდინარეობს კატალოგების ჩამონათვალის განახლება. გთხოვთ, დაიცადოთ…"/>
 			<node name="updatingAccountInformation" value="იტვირთება ინფორმაცია ანგარიშის შესახებ. გთხოვთ, დაიცადოთ…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicence" value="Acquiring licence. Please, wait…" toBeTranslated="true"/>
 			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>

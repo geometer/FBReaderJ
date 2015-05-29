@@ -950,7 +950,7 @@
 			<node name="updatingCatalogsList" value="Абнаўленьне сьпісу каталёгу. Калі ласка, пачакайце…"/>
 			<node name="updatingAccountInformation" value="Абнаўленьне інфармацыі рахунку. Калі ласка, пачакайце…"/>
 			<node name="initDRMEngine" value="Ініцыялізацыя DRM-рухавіка. Калі ласка, пачакайце…"/>
-			<node name="acquireLicense" value="Набыцьцё ліцэнзіі. Калі ласка, пачакайце…"/>
+			<node name="acquireLicence" value="Набыцьцё ліцэнзіі. Калі ласка, пачакайце…"/>
 			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>

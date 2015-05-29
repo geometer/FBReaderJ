@@ -940,7 +940,7 @@
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка…"/>
 			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка……"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicence" value="Acquiring licence. Please, wait…" toBeTranslated="true"/>
 			<node name="registerUser" value="Реєструємо користувача. Зачекайте, будь ласка…"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
