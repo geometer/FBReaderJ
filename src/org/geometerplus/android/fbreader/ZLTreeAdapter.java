@@ -33,7 +33,6 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	private final ListView myParent;
 	private ZLTree<?>[] myItems;
 	private final HashSet<ZLTree<?>> myOpenItems = new HashSet<ZLTree<?>>();
-	protected ZLTree<?> mySelectedTree;
 
 	protected ZLTreeAdapter(ListView parent, ZLTree<?> root) {
 		myParent = parent;
@@ -75,7 +74,6 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	}
 
 	public final void selectItem(ZLTree<?> tree) {
-		mySelectedTree = tree;
 		if (tree == null) {
 			return;
 		}
