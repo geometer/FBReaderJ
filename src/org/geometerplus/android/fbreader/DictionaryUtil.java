@@ -49,6 +49,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.XmlUtil;
 
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.text.view.ZLTextWord;
@@ -324,20 +325,14 @@ public abstract class DictionaryUtil {
 					}
 					return;
 				}
-				try {
-					final InputStream is =
-						ZLFile.createFileByPath("dictionaries/main.xml").getInputStream();
-					Xml.parse(is, Xml.Encoding.UTF_8, new InfoReader());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				try {
-					final InputStream is =
-						ZLFile.createFileByPath("dictionaries/bitknights.xml").getInputStream();
-					Xml.parse(is, Xml.Encoding.UTF_8, new BitKnightsInfoReader(myActivity));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				XmlUtil.parseQuietly(
+					ZLFile.createFileByPath("dictionaries/main.xml"),
+					new InfoReader()
+				);
+				XmlUtil.parseQuietly(
+					ZLFile.createFileByPath("dictionaries/bitknights.xml"),
+					new BitKnightsInfoReader(myActivity)
+				);
 				myActivity.runOnUiThread(new Runnable() {
 					public void run() {
 						collectOpenDictionaries(myActivity);
