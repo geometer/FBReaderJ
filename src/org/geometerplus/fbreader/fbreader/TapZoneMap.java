@@ -24,10 +24,10 @@ import java.util.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import android.util.Xml;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.util.XmlUtil;
 
 public class TapZoneMap {
 	private static final List<String> ourPredefinedMaps = new LinkedList<String>();
@@ -102,11 +102,7 @@ public class TapZoneMap {
 		final ZLFile mapFile = ZLFile.createFileByPath(
 			"default/tapzones/" + name.toLowerCase() + ".xml"
 		);
-		try {
-			Xml.parse(mapFile.getInputStream(), Xml.Encoding.UTF_8, new Reader());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		XmlUtil.parseQuietly(mapFile, new Reader());
 	}
 
 	public boolean isCustom() {
