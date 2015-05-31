@@ -24,10 +24,10 @@ import java.util.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import android.util.Xml;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.language.Language;
+import org.geometerplus.zlibrary.core.util.XmlUtil;
 
 final class ZLTreeResource extends ZLResource {
 	private static interface Condition {
@@ -240,11 +240,7 @@ final class ZLTreeResource extends ZLResource {
 		public void readDocument(ZLTreeResource root, ZLFile file) {
 			myStack.clear();
 			myStack.add(root);
-			try {
-				Xml.parse(file.getInputStream(), Xml.Encoding.UTF_8, this);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			XmlUtil.parseQuietly(file, this);
 		}
 
 		@Override
