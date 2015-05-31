@@ -26,10 +26,10 @@ import android.view.KeyEvent;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import android.util.Xml;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.XmlUtil;
 
 import org.geometerplus.fbreader.Paths;
 
@@ -122,10 +122,7 @@ public final class ZLKeyBindings {
 		}
 
 		public void readQuietly(String path) {
-			try {
-				Xml.parse(ZLFile.createFileByPath(path).getInputStream(), Xml.Encoding.UTF_8, this);
-			} catch (Exception e) {
-			}
+			XmlUtil.parseQuietly(ZLFile.createFileByPath(path), this);
 		}
 
 		@Override
