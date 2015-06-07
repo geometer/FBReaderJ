@@ -101,6 +101,7 @@ public abstract class DictionaryUtil {
 				}
 			}
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			text = IntentDataPattern.replace("%s", text);
 			if (IntentKey != null) {
 				return intent.putExtra(IntentKey, text);
