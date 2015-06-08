@@ -717,6 +717,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 
+		dictionaryScreen.addPreference(new ZLIntegerRangePreference(
+			this, dictionaryScreen.Resource.getResource("height"),
+			DictionaryUtil.HeightOption
+		));
+		
 		final Screen imagesScreen = createPreferenceScreen("images");
 		imagesScreen.addOption(imageOptions.TapAction, "longTapAction");
 		imagesScreen.addOption(imageOptions.FitToScreen, "fitImagesToScreen");

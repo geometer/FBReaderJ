@@ -779,6 +779,7 @@
 				<node name="summaryOn" value="Ключавая навігацыя па ўсіх словах"/>
 				<node name="summaryOff" value="Ключавая навігацыя толькі па спасылках"/>
 			</node>
+			<node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Выявы">
 			<node name="summary" value="Налады адлюстраваньня выяваў"/>

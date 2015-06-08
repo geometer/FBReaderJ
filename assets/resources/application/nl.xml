@@ -779,6 +779,7 @@
 				<node name="summaryOn" value="Navigatietoetsen bezoeken alle woorden"/>
 				<node name="summaryOff" value="Navigatietoetsen bezoeken alleen hyperlinks"/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Afbeeldingen">
 			<node name="summary" value="Tonen afbeeldingen opties"/>
