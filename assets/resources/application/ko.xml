@@ -933,6 +933,7 @@
 			<node name="passwordSent" value="당신의 계정 정보가 %s 로 전송되었습니다. 메일을 확인하세요."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="접속 시도중입니다. 기다려 주세요."/>
 			<node name="downloadingBook" value="책 다운로드중"/>
 			<node name="search" value="검색중입니다. 기다려 주세요"/>
@@ -950,7 +951,7 @@
 			<node name="updatingCatalogsList" value="카탈로그 목록을 업데이트 중입니다. 기다려 주세요."/>
 			<node name="updatingAccountInformation" value="계정 정보를 업데이트 중입니다. 기다려 주세요."/>
 			<node name="initDRMEngine" value="DRM 엔진을 시작하고 있습니다. 기다려 주세요."/>
-			<node name="acquireLicense" value="라이센스를 얻고 있습니다. 기다려 주세요."/>
+			<node name="acquireLicence" value="라이센스를 얻고 있습니다. 기다려 주세요."/>
 			<node name="registerUser" value="새 계정을 등록하고 있습니다. 기다려 주세요."/>
 			<node name="autoSignIn" value="로그인 중입니다. 기다려 주세요."/>
 			<node name="recoverPassword" value="암호를 복구하고 있습니다. 기다려 주세요."/>
