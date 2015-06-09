@@ -759,8 +759,8 @@
 				<node name="custom" value="Personalizado…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Dicionário">
-			<node name="summary" value="Configurações de dicionário"/>
+		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
+			<node name="summary" value="Translation settings" toBeTranslated="true"/>
 			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
 			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
