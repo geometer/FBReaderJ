@@ -755,8 +755,8 @@
 				<node name="custom" value="独自設定…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="辞書">
-			<node name="summary" value="辞書まわりの設定"/>
+		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
+			<node name="summary" value="Translation settings" toBeTranslated="true"/>
 			<node name="dictionary" value="単語を引くとき"/>
 			<node name="translator" value="文を翻訳するとき"/>
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>

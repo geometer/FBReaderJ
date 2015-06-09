@@ -755,8 +755,8 @@
 				<node name="custom" value="Aangepast…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Woordenboek">
-			<node name="summary" value="Woordenboek instellingen"/>
+		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
+			<node name="summary" value="Translation settings" toBeTranslated="true"/>
 			<node name="dictionary" value="Enkel woord opzoeken in"/>
 			<node name="translator" value="Vertaal Translate zinsdelen via"/>
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
