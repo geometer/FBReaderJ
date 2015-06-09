@@ -764,8 +764,8 @@
 				<node name="custom" value="Vlastní…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Slovník">
-			<node name="summary" value="Nastavení slovníku"/>
+		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
+			<node name="summary" value="Translation settings" toBeTranslated="true"/>
 			<node name="dictionary" value="Vyhledat jedno slovo v"/>
 			<node name="translator" value="Přeložit fráze pomocí"/>
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
