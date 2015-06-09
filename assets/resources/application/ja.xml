@@ -933,6 +933,7 @@
 			<node name="passwordSent" value="アカウント情報が %s に送信されます。メールボックスをご確認ください。"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="接続しようとしています。しばらくお待ちください…"/>
 			<node name="downloadingBook" value="ダウンロード中です (%s)"/>
 			<node name="search" value="検索中です。しばらくお待ちください…"/>
@@ -950,7 +951,7 @@
 			<node name="updatingCatalogsList" value="カタログリストを更新中です。しばらくお待ちください…"/>
 			<node name="updatingAccountInformation" value="アカウント情報を更新中です。しばらくお待ちください…"/>
 			<node name="initDRMEngine" value="DRM エンジンを起動中です。しばらくお待ちください…"/>
-			<node name="acquireLicense" value="ライセンスを取得中です。しばらくお待ちください…"/>
+			<node name="acquireLicence" value="ライセンスを取得中です。しばらくお待ちください…"/>
 			<node name="registerUser" value="新しいアカウントを登録中です。しばらくお待ちください…"/>
 			<node name="autoSignIn" value="サインインしています。しばらくお待ちください…"/>
 			<node name="recoverPassword" value="パスワードを復元中です。しばらくお待ちください…"/>
