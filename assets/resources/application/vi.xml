@@ -746,8 +746,8 @@
 				<node name="custom" value="Custom…" toBeTranslated="true"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Từ điển">
-			<node name="summary" value="Cài đặt từ điển"/>
+		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
+			<node name="summary" value="Translation settings" toBeTranslated="true"/>
 			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
 			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>

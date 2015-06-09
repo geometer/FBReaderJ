@@ -761,8 +761,8 @@
 				<node name="custom" value="Ըստ սովորության..."/>
 			</node>
 		</node>
-		<node name="dictionary" value="Բառարան">
-			<node name="summary" value="Բառարանի կարգավորումներ"/>
+		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
+			<node name="summary" value="Translation settings" toBeTranslated="true"/>
 			<node name="dictionary" value="Փնտրել առանձին բառերով"/>
 			<node name="translator" value="Թարգմանել բառակապակցությունը"/>
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>

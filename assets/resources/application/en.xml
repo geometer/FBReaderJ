@@ -755,8 +755,8 @@
 				<node name="custom" value="Custom…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Dictionary">
-			<node name="summary" value="Dictionary settings"/>
+		<node name="dictionary" value="Dictionary &amp; translator">
+			<node name="summary" value="Translation settings"/>
 			<node name="dictionary" value="Look up single word in"/>
 			<node name="translator" value="Translate phrases via"/>
 			<node name="translationToastDuration" value="How long to show translation popup"/>
