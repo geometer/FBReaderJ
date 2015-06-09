@@ -932,6 +932,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="Overfør bog %s"/>
 			<node name="search" value="Søger. Vent venligst..."/>

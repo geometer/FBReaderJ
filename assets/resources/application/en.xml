@@ -933,6 +933,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…"/>
 			<node name="tryConnect" value="Trying to connect. Please, wait…"/>
 			<node name="downloadingBook" value="Downloading book “%s”"/>
 			<node name="search" value="Searching. Please, wait…"/>

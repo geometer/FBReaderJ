@@ -937,6 +937,7 @@
 			<node name="passwordSent" value="Informações da conta enviadas para %s. Por favor, verifique caixa de entrada."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="A tentar ligar, por favor, espere…"/>
 			<node name="downloadingBook" value="Descarregar livro %s"/>
 			<node name="search" value="Pesquisando. Por favor, aguarde…"/>

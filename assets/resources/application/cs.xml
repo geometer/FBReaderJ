@@ -942,6 +942,7 @@
 			<node name="passwordSent" value="Informace o vašem účtu byly odeslány na %s. Zkontrolujte svou poštovní schránku."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
 			<node name="downloadingBook" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte…"/>

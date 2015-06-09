@@ -939,6 +939,7 @@
 			<node name="passwordSent" value="LitRes Ձեր օգտահաշվի մասին տեղեկություններն ուղարկվել են %s հասցեով։"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Կապը միանում է, սպասեք..."/>
 			<node name="downloadingBook" value="Բեռնվում է %s գիրքը"/>
 			<node name="search" value="Փնտրվում է, սպասեք..."/>

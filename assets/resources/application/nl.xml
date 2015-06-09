@@ -933,6 +933,7 @@
 			<node name="passwordSent" value="Jouw accountinformatie is verzonden naar %s. Controleer je Postvak IN"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Bezig met verbinden. Een ogenblik…"/>
 			<node name="downloadingBook" value="Boek %s wordt gedownload"/>
 			<node name="search" value="Bezig met zoeken. Een ogenblik…"/>

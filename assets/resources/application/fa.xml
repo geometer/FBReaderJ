@@ -932,6 +932,7 @@
 			<node name="passwordSent" value="اطلاعات حساب شما ارسال شده به %s. لطفا صندوق ایمیل خود را بررسی کنید."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="تلاش برای اتصال. لطفا صبر کنید ..."/>
 			<node name="downloadingBook" value="دانلود كتاب %s"/>
 			<node name="search" value="در حال جستجو. لطفاً صبر كنيد..."/>
