@@ -927,6 +927,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Connexion en cours, veuillez patienter…"/>
 			<node name="downloadingBook" value="Téléchargement de %s"/>
 			<node name="search" value="Recherche en cours, veuillez patienter…"/>
@@ -944,7 +945,7 @@
 			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier…"/>
 			<node name="updatingAccountInformation" value="Mise à jour des informations du compte, veuillez patienter…"/>
 			<node name="initDRMEngine" value="Initialisation du moteur DRM, veuillez patienter…"/>
-			<node name="acquireLicense" value="Récupération de la licence, veuillez patienter…"/>
+			<node name="acquireLicence" value="Récupération de la licence, veuillez patienter…"/>
 			<node name="registerUser" value="Inscription en cours. Veuillez patienter…"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>

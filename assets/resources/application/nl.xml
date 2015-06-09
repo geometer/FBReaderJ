@@ -934,6 +934,7 @@
 			<node name="passwordSent" value="Jouw accountinformatie is verzonden naar %s. Controleer je Postvak IN"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Bezig met verbinden. Een ogenblik…"/>
 			<node name="downloadingBook" value="Boek %s wordt gedownload"/>
 			<node name="search" value="Bezig met zoeken. Een ogenblik…"/>
@@ -951,7 +952,7 @@
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik…"/>
 			<node name="updatingAccountInformation" value="Accountinformatie wordt bijgewerkt. Een ogenblik…"/>
 			<node name="initDRMEngine" value="DRM-engine wordt geïnitialiseerd. Een ogenblik…"/>
-			<node name="acquireLicense" value="Licentie ophalen. Een ogenblik…"/>
+			<node name="acquireLicence" value="Licentie ophalen. Een ogenblik…"/>
 			<node name="registerUser" value="Nieuwe account registeren. Een ogenblik…"/>
 			<node name="autoSignIn" value="Aanmelden. Een ogenblik…"/>
 			<node name="recoverPassword" value="Wachtwoord aan het herstellen. Een ogenblik…"/>

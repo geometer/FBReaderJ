@@ -934,6 +934,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…"/>
 			<node name="tryConnect" value="Trying to connect. Please, wait…"/>
 			<node name="downloadingBook" value="Downloading book “%s”"/>
 			<node name="search" value="Searching. Please, wait…"/>
@@ -951,7 +952,7 @@
 			<node name="updatingCatalogsList" value="Updating catalogues list. Please, wait…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…"/>
+			<node name="acquireLicence" value="Acquiring licence. Please, wait…"/>
 			<node name="registerUser" value="Registering new account. Please, wait…"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…"/>

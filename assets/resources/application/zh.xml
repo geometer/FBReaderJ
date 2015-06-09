@@ -924,6 +924,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="已下载 %s"/>
 			<node name="search" value="搜索中，请等待…"/>
@@ -941,7 +942,7 @@
 			<node name="updatingCatalogsList" value="更新书库列表中，请稍待…"/>
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicence" value="Acquiring licence. Please, wait…" toBeTranslated="true"/>
 			<node name="registerUser" value="正在注册新账号，请稍等…"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>

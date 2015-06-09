@@ -940,6 +940,7 @@
 			<node name="passwordSent" value="LitRes Ձեր օգտահաշվի մասին տեղեկություններն ուղարկվել են %s հասցեով։"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Կապը միանում է, սպասեք..."/>
 			<node name="downloadingBook" value="Բեռնվում է %s գիրքը"/>
 			<node name="search" value="Փնտրվում է, սպասեք..."/>
@@ -957,7 +958,7 @@
 			<node name="updatingCatalogsList" value="Թարմացվում է գրացուցակների ցանկը, սպասեք..."/>
 			<node name="updatingAccountInformation" value="Բեռնվում են հաշվի մասին տվյալները, սպասեք..."/>
 			<node name="initDRMEngine" value="Ընթերցվում է DRM-ը, սպասեք..."/>
-			<node name="acquireLicense" value="Ընթերցվում է արտոնագիրը, սպասեք..."/>
+			<node name="acquireLicence" value="Ընթերցվում է արտոնագիրը, սպասեք..."/>
 			<node name="registerUser" value="Օգտահաշիվը գրանցվում է, սպասեք..."/>
 			<node name="autoSignIn" value="Մուտք համակարգ, սպասեք…"/>
 			<node name="recoverPassword" value="Վերականգնվում է գաղտնաբառը, սպասեք..."/>

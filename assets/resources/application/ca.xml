@@ -940,6 +940,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="Descargando libro %s" toBeTranslated="true"/>
 			<node name="search" value="Buscando. Por favor, espere…" toBeTranslated="true"/>
@@ -957,7 +958,7 @@
 			<node name="updatingCatalogsList" value="Actualizando lista de catálogos. Por favor, espere…" toBeTranslated="true"/>
 			<node name="updatingAccountInformation" value="Actualizando información de cuenta. Por favor, espere…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicence" value="Acquiring licence. Please, wait…" toBeTranslated="true"/>
 			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>

@@ -925,6 +925,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Đang cố kết nối, vui lòng chờ…"/>
 			<node name="downloadingBook" value="Đang tải sách về %s"/>
 			<node name="search" value="Đang tìm, vui lòng chờ…"/>
@@ -942,7 +943,7 @@
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicence" value="Acquiring licence. Please, wait…" toBeTranslated="true"/>
 			<node name="registerUser" value="Đang đăng ký tài khoản, vui lòng chờ…"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>

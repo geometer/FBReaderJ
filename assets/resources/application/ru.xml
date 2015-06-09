@@ -943,6 +943,7 @@
 			<node name="passwordSent" value="Информация о вашем счете ЛитРес выслана на %s."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Устанавливается соединение. Подождите, пожалуйста…"/>
 			<node name="downloadingBook" value="Загужается книга «%s»"/>
 			<node name="search" value="Идет поиск. Подождите, пожалуйста…"/>
@@ -960,7 +961,7 @@
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста…"/>
 			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста…"/>
 			<node name="initDRMEngine" value="Инициализация DRM. Подождите, пожалуйста…"/>
-			<node name="acquireLicense" value="Получение лицензии. Подождите, пожалуйста…"/>
+			<node name="acquireLicence" value="Получение лицензии. Подождите, пожалуйста…"/>
 			<node name="registerUser" value="Регистрируем пользователя. Подождите, пожалуйста…"/>
 			<node name="autoSignIn" value="Входим в систему. Подождите, пожалуйста…"/>
 			<node name="recoverPassword" value="Восстанавливаем пароль. Подождите, пожалуйста…"/>

@@ -939,6 +939,7 @@
 			<node name="passwordSent" value="Ihre Konto Informationen wurden an %s gesendet. Bitte prüfen Sie ihr Postfach"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Verbindungsversuch. Bitte warten…"/>
 			<node name="downloadingBook" value="Buch wird geladen %s"/>
 			<node name="search" value="Suche läuft. Bitte warten…"/>
@@ -956,7 +957,7 @@
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten…"/>
 			<node name="updatingAccountInformation" value="Konto-Information wird aktualisiert. Bitte waren…"/>
 			<node name="initDRMEngine" value="Initialisiere das Rechtemanagement. Bitte warten…"/>
-			<node name="acquireLicense" value="Empfange Lizenz. Bitte warten…"/>
+			<node name="acquireLicence" value="Empfange Lizenz. Bitte warten…"/>
 			<node name="registerUser" value="Neues Benutzerkonto wird registriert. Bitte warten…"/>
 			<node name="autoSignIn" value="Anmeldung. Bitte warten…"/>
 			<node name="recoverPassword" value="Passwortwiederherstellung. Bitte warten…"/>

@@ -934,6 +934,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Спроба злучэньня. Калі ласка, пачакайце…"/>
 			<node name="downloadingBook" value="Зладаваньне кнігі %s"/>
 			<node name="search" value="Пошук. Калі ласка, пачакайце…"/>
@@ -951,7 +952,7 @@
 			<node name="updatingCatalogsList" value="Абнаўленьне сьпісу каталёгу. Калі ласка, пачакайце…"/>
 			<node name="updatingAccountInformation" value="Абнаўленьне інфармацыі рахунку. Калі ласка, пачакайце…"/>
 			<node name="initDRMEngine" value="Ініцыялізацыя DRM-рухавіка. Калі ласка, пачакайце…"/>
-			<node name="acquireLicense" value="Набыцьцё ліцэнзіі. Калі ласка, пачакайце…"/>
+			<node name="acquireLicence" value="Набыцьцё ліцэнзіі. Калі ласка, пачакайце…"/>
 			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>

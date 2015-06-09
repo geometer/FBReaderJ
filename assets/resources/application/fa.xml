@@ -933,6 +933,7 @@
 			<node name="passwordSent" value="اطلاعات حساب شما ارسال شده به %s. لطفا صندوق ایمیل خود را بررسی کنید."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="تلاش برای اتصال. لطفا صبر کنید ..."/>
 			<node name="downloadingBook" value="دانلود كتاب %s"/>
 			<node name="search" value="در حال جستجو. لطفاً صبر كنيد..."/>
@@ -950,7 +951,7 @@
 			<node name="updatingCatalogsList" value="در حال آپديت ليست كاتالوگ. لطفاً صبر كنيد..."/>
 			<node name="updatingAccountInformation" value="در حال آپديت اطلاعات كاربري. لطفاً صبر كنيد..."/>
 			<node name="initDRMEngine" value="مقداردهی اولیه موتور DRM. لطفا صبر کنید ..."/>
-			<node name="acquireLicense" value="کسب مجوز. لطفا صبر کنید ..."/>
+			<node name="acquireLicence" value="کسب مجوز. لطفا صبر کنید ..."/>
 			<node name="registerUser" value="ثبت نام حساب جدید. لطفا صبر کنید ..."/>
 			<node name="autoSignIn" value="ورود به سیستم. لطفا، منتظر بمانید ..."/>
 			<node name="recoverPassword" value="بازیابی رمز عبور. لطفا صبر کنید ..."/>

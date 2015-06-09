@@ -940,6 +940,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="Сваляне на книгата %s"/>
 			<node name="search" value="Търсене. Моля, изчакайте…"/>
@@ -957,7 +958,7 @@
 			<node name="updatingCatalogsList" value="Обновяване на списъка с каталози. Моля, изчакайте…"/>
 			<node name="updatingAccountInformation" value="Обновяване на информацията за акаунта. Моля, изчакайте…"/>
 			<node name="initDRMEngine" value="Инициализиране на DRM енджин. Моля, изчакайте…"/>
-			<node name="acquireLicense" value="Получаване на лиценз. Моля, изчакайте…"/>
+			<node name="acquireLicence" value="Получаване на лиценз. Моля, изчакайте…"/>
 			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>

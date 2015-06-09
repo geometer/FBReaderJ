@@ -943,6 +943,7 @@
 			<node name="passwordSent" value="Informace o vašem účtu byly odeslány na %s. Zkontrolujte svou poštovní schránku."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
 			<node name="downloadingBook" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte…"/>
@@ -960,7 +961,7 @@
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte…"/>
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte…"/>
 			<node name="initDRMEngine" value="Inicializace modulu DRM. Čekejte…"/>
-			<node name="acquireLicense" value="Načítání licence. Čekejte…"/>
+			<node name="acquireLicence" value="Načítání licence. Čekejte…"/>
 			<node name="registerUser" value="Registrace nového účtu. Čekejte..."/>
 			<node name="autoSignIn" value="Přihlašování. Čekejte…"/>
 			<node name="recoverPassword" value="Obnovování hesla. Čekejte…"/>
