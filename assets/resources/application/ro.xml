@@ -925,6 +925,7 @@
 			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Incercare de conectare. Va rugam asteptati…"/>
 			<node name="downloadingBook" value="Descarcare carte %s"/>
 			<node name="search" value="Cautarea a inceput. Va rugam asteptati…"/>
@@ -942,7 +943,7 @@
 			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati…"/>
 			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati…"/>
 			<node name="initDRMEngine" value="Se incarca motorul DRM. Va rugam asteptati…"/>
-			<node name="acquireLicense" value="Preluam licenta. Va rugam asteptati…"/>
+			<node name="acquireLicence" value="Preluam licenta. Va rugam asteptati…"/>
 			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
 			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
 			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
