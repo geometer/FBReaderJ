@@ -411,14 +411,7 @@
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
-				<node name="duration1" value="1 second" toBeTranslated="true"/>
-				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
-				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
-				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
-				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
-				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
-			</node>
+			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true"/>
 			<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
 				<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
 				<node name="summaryOff" value="Contrôle désactivé"/>
@@ -759,6 +752,8 @@
 			<node name="summary" value="Paramètres du dictionnaire"/>
 			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
 			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
+			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
+			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Traduire vers">
 				<node name="any" value="Toutes les langues"/>
 			</node>
@@ -1143,6 +1138,16 @@
 		<node name="positiveLength" value="i.e.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="i.e.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="i.e.: 125%%"/>
+	</node>
+	<node name="duration">
+		<node name="duration1" value="1 second" toBeTranslated="true"/>
+		<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+		<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+		<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+		<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
+		<node name="duration60" value="1 minute" toBeTranslated="true"/>
+		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="unknown error" toBeTranslated="true"/>

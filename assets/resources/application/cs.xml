@@ -427,14 +427,7 @@
 				<node name="footnotesAndSuperscripts" value="Pro poznámky pod čarou a odkazy horních indexů"/>
 				<node name="allInternalLinks" value="Pro všechny vnitřní odkazy"/>
 			</node>
-			<node name="footnoteToastDuration" value="Jak dlouho zobrazovat překryvné okno odkazu">
-				<node name="duration1" value="1 sekundu"/>
-				<node name="duration3" value="3 sekundy"/>
-				<node name="duration5" value="5 sekund"/>
-				<node name="duration10" value="10 sekund"/>
-				<node name="duration20" value="20 sekund"/>
-				<node name="duration300" value="5 minut"/>
-			</node>
+			<node name="footnoteToastDuration" value="Jak dlouho zobrazovat překryvné okno odkazu"/>
 			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu displeje">
 				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje displeje"/>
 				<node name="summaryOff" value="Zakázáno"/>
@@ -775,6 +768,8 @@
 			<node name="summary" value="Nastavení slovníku"/>
 			<node name="dictionary" value="Vyhledat jedno slovo v"/>
 			<node name="translator" value="Přeložit fráze pomocí"/>
+			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
+			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
 			<node name="targetLanguage" value="Přeložit do">
 				<node name="any" value="všechny jazyky"/>
 			</node>
@@ -1159,6 +1154,16 @@
 		<node name="positiveLength" value="Např.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="Např.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="Např.: 125%%"/>
+	</node>
+	<node name="duration">
+		<node name="duration1" value="1 sekundu"/>
+		<node name="duration3" value="3 sekundy"/>
+		<node name="duration5" value="5 sekund"/>
+		<node name="duration10" value="10 sekund"/>
+		<node name="duration20" value="20 sekund"/>
+		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
+		<node name="duration60" value="1 minute" toBeTranslated="true"/>
+		<node name="duration300" value="5 minut"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="neznámá chyba"/>

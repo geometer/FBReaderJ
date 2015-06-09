@@ -423,14 +423,7 @@
 				<node name="footnotesAndSuperscripts" value="Для сносок и «поднятых» ссылок"/>
 				<node name="allInternalLinks" value="Для всех ссылок внутри книги"/>
 			</node>
-			<node name="footnoteToastDuration" value="Как долго показывать окошко с текстом ссылки">
-				<node name="duration1" value="1 секунду"/>
-				<node name="duration3" value="3 секунды"/>
-				<node name="duration5" value="5 секунд"/>
-				<node name="duration10" value="10 секунд"/>
-				<node name="duration20" value="20 секунд"/>
-				<node name="duration300" value="5 минут"/>
-			</node>
+			<node name="footnoteToastDuration" value="Как долго показывать окошко с текстом ссылки"/>
 			<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
 				<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
 				<node name="summaryOff" value="Выключена"/>
@@ -771,6 +764,8 @@
 			<node name="summary" value="Настройки словаря"/>
 			<node name="dictionary" value="Искать отдельное слово в"/>
 			<node name="translator" value="Переводить фразы с помощью"/>
+			<node name="translationToastDuration" value="Как долго показывать окошко перевода"/>
+			<node name="errorToastDuration" value="Как долго показывать сообщение об ошибке"/>
 			<node name="targetLanguage" value="Переводить на">
 				<node name="any" value="все языки"/>
 			</node>
@@ -943,7 +938,7 @@
 			<node name="passwordSent" value="Информация о вашем счете ЛитРес выслана на %s."/>
 		</node>
 		<node name="waitMessage">
-			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
+			<node name="translating" value="Идёт перевод…"/>
 			<node name="tryConnect" value="Устанавливается соединение. Подождите, пожалуйста…"/>
 			<node name="downloadingBook" value="Загужается книга «%s»"/>
 			<node name="search" value="Идет поиск. Подождите, пожалуйста…"/>
@@ -1159,6 +1154,16 @@
 		<node name="positiveLength" value="Например: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="Например: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="Например: 125%%"/>
+	</node>
+	<node name="duration">
+		<node name="duration1" value="1 секунду"/>
+		<node name="duration3" value="3 секунды"/>
+		<node name="duration5" value="5 секунд"/>
+		<node name="duration10" value="10 секунд"/>
+		<node name="duration20" value="20 секунд"/>
+		<node name="duration40" value="40 секунд"/>
+		<node name="duration60" value="1 минута"/>
+		<node name="duration300" value="5 минут"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="неизвестная ошибка"/>
