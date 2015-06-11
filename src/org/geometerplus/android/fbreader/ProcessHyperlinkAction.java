@@ -39,9 +39,10 @@ import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.util.AutoTextSnippet;
 
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
+import org.geometerplus.android.fbreader.image.ImageViewActivity;
 import org.geometerplus.android.fbreader.network.*;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
-import org.geometerplus.android.fbreader.image.ImageViewActivity;
 import org.geometerplus.android.util.UIUtil;
 
 class ProcessHyperlinkAction extends FBAndroidAction {
