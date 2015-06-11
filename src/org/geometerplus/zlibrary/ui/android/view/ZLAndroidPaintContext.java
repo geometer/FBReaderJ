@@ -225,7 +225,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		return myBackgroundColor;
 	}
 
-	public void fillPolygon(int[] xs, int ys[]) {
+	public void fillPolygon(int[] xs, int[] ys) {
 		final Path path = new Path();
 		final int last = xs.length - 1;
 		path.moveTo(xs[last], ys[last]);
@@ -235,7 +235,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myFillPaint);
 	}
 
-	public void drawPolygonalLine(int[] xs, int ys[]) {
+	public void drawPolygonalLine(int[] xs, int[] ys) {
 		final Path path = new Path();
 		final int last = xs.length - 1;
 		path.moveTo(xs[last], ys[last]);
@@ -245,7 +245,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myLinePaint);
 	}
 
-	public void drawOutline(int[] xs, int ys[]) {
+	public void drawOutline(int[] xs, int[] ys) {
 		final int last = xs.length - 1;
 		int xStart = (xs[0] + xs[last]) / 2;
 		int yStart = (ys[0] + ys[last]) / 2;
@@ -441,5 +441,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			y0 = swap;
 		}
 		myCanvas.drawRect(x0, y0, x1 + 1, y1 + 1, myFillPaint);
+	}
+
+	@Override
+	public void fillCircle(int x, int y, int radius) {
+		myCanvas.drawCircle(x, y, radius, myFillPaint);
 	}
 }
