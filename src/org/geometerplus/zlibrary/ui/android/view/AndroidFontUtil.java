@@ -19,13 +19,12 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.content.res.AssetManager;
 import android.graphics.Typeface;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;

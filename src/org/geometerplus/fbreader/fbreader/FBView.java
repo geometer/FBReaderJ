@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.SelectionCursor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
@@ -162,10 +163,10 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, maxSelectionDistance());
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = findSelectionCursor(x, y, maxSelectionDistance());
+		if (cursor != null) {
 			myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
-			moveSelectionCursorTo(cursor, x, y, true);
+			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
 
@@ -203,9 +204,9 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
-			moveSelectionCursorTo(cursor, x, y, true);
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
+			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
 
@@ -233,8 +234,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
 			releaseSelectionCursor();
 			return true;
 		}
@@ -270,9 +271,9 @@ public final class FBView extends ZLTextView {
 					case startSelecting:
 						myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
 						initSelection(x, y);
-						final ZLTextSelectionCursor cursor = findSelectionCursor(x, y);
-						if (cursor != ZLTextSelectionCursor.None) {
-							moveSelectionCursorTo(cursor, x, y, false);
+						final SelectionCursor.Which cursor = findSelectionCursor(x, y);
+						if (cursor != null) {
+							moveSelectionCursorTo(cursor, x, y);
 						}
 						return true;
 					case selectSingleWord:
@@ -304,9 +305,9 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
-			moveSelectionCursorTo(cursor, x, y, true);
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
+			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
 
@@ -338,8 +339,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
 			releaseSelectionCursor();
 			return true;
 		}

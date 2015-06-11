@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import org.geometerplus.zlibrary.core.view.HorizontalConvexHull;
+
 public abstract class ZLTextSimpleHighlighting extends ZLTextHighlighting {
 	protected final ZLTextView View;
 	private final ZLTextPosition myStartPosition;
