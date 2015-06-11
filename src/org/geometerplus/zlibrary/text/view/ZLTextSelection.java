@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.text.view;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.SelectionCursor;
 
 class ZLTextSelection extends ZLTextHighlighting {
 	static class Point {
@@ -37,17 +38,13 @@ class ZLTextSelection extends ZLTextHighlighting {
 	private ZLTextRegion.Soul myLeftMostRegionSoul;
 	private ZLTextRegion.Soul myRightMostRegionSoul;
 
-	private ZLTextSelectionCursor myCursorInMovement = ZLTextSelectionCursor.None;
+	private SelectionCursor.Which myCursorInMovement = null;
 	private final Point myCursorInMovementPoint = new Point(-1, -1);
 
 	private Scroller myScroller;
 
 	ZLTextSelection(ZLTextView view) {
 		myView = view;
-	}
-
-	ZLTextRegion.Soul getSoul() {
-		return myLeftMostRegionSoul != null && myLeftMostRegionSoul.equals(myRightMostRegionSoul) ? myLeftMostRegionSoul : null;
 	}
 
 	@Override
@@ -63,17 +60,17 @@ class ZLTextSelection extends ZLTextHighlighting {
 		stop();
 		myLeftMostRegionSoul = null;
 		myRightMostRegionSoul = null;
-		myCursorInMovement = ZLTextSelectionCursor.None;
+		myCursorInMovement = null;
 		return true;
 	}
 
-	void setCursorInMovement(ZLTextSelectionCursor cursor, int x, int y) {
-		myCursorInMovement = cursor;
+	void setCursorInMovement(SelectionCursor.Which which, int x, int y) {
+		myCursorInMovement = which;
 		myCursorInMovementPoint.X = x;
 		myCursorInMovementPoint.Y = y;
 	}
 
-	ZLTextSelectionCursor getCursorInMovement() {
+	SelectionCursor.Which getCursorInMovement() {
 		return myCursorInMovement;
 	}
 
@@ -96,7 +93,7 @@ class ZLTextSelection extends ZLTextHighlighting {
 	}
 
 	void stop() {
-		myCursorInMovement = ZLTextSelectionCursor.None;
+		myCursorInMovement = null;
 		if (myScroller != null) {
 			myScroller.stop();
 			myScroller = null;
@@ -120,7 +117,8 @@ class ZLTextSelection extends ZLTextHighlighting {
 				myScroller = new Scroller(page, false, x, y);
 				return;
 			}
-		} else if (lastArea != null && y + ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2 > lastArea.YEnd) {
+		//} else if (lastArea != null && y + ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2 > lastArea.YEnd) {
+		} else if (lastArea != null && y > lastArea.YEnd) {
 			if (myScroller != null && !myScroller.scrollsForward()) {
 				myScroller.stop();
 				myScroller = null;
@@ -141,21 +139,40 @@ class ZLTextSelection extends ZLTextHighlighting {
 		}
 
 		ZLTextRegion region = myView.findRegion(x, y, myView.maxSelectionDistance(), ZLTextRegion.AnyRegionFilter);
-		if (region == null && myScroller != null) {
-			region = myView.findRegion(x, y, ZLTextRegion.AnyRegionFilter);
+		if (region == null) {
+			final ZLTextElementAreaVector.RegionPair pair =
+				myView.findRegionsPair(x, y, ZLTextRegion.AnyRegionFilter);
+			if (pair.Before != null || pair.After != null) {
+				final ZLTextRegion.Soul base =
+					myCursorInMovement == SelectionCursor.Which.Right
+						? myLeftMostRegionSoul : myRightMostRegionSoul;
+				if (pair.Before != null) {
+					if (base.compareTo(pair.Before.getSoul()) <= 0) {
+						region = pair.Before;
+					} else {
+						region = pair.After;
+					}
+				} else {
+					if (base.compareTo(pair.After.getSoul()) >= 0) {
+						region = pair.After;
+					} else {
+						region = pair.Before;
+					}
+				}
+			}
 		}
 		if (region == null) {
 			return;
 		}
 
 		final ZLTextRegion.Soul soul = region.getSoul();
-		if (myCursorInMovement == ZLTextSelectionCursor.Right) {
+		if (myCursorInMovement == SelectionCursor.Which.Right) {
 			if (myLeftMostRegionSoul.compareTo(soul) <= 0) {
 				myRightMostRegionSoul = soul;
 			} else {
 				myRightMostRegionSoul = myLeftMostRegionSoul;
 				myLeftMostRegionSoul = soul;
-				myCursorInMovement = ZLTextSelectionCursor.Left;
+				myCursorInMovement = SelectionCursor.Which.Left;
 			}
 		} else {
 			if (myRightMostRegionSoul.compareTo(soul) >= 0) {
@@ -163,11 +180,11 @@ class ZLTextSelection extends ZLTextHighlighting {
 			} else {
 				myLeftMostRegionSoul = myRightMostRegionSoul;
 				myRightMostRegionSoul = soul;
-				myCursorInMovement = ZLTextSelectionCursor.Right;
+				myCursorInMovement = SelectionCursor.Which.Right;
 			}
 		}
 
-		if (myCursorInMovement == ZLTextSelectionCursor.Right) {
+		if (myCursorInMovement == SelectionCursor.Which.Right) {
 			if (hasPartAfterPage(page)) {
 				myView.turnPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
@@ -274,6 +291,11 @@ class ZLTextSelection extends ZLTextHighlighting {
 	@Override
 	public ZLColor getForegroundColor() {
 		return myView.getSelectionForegroundColor();
+	}
+
+	@Override
+	public ZLColor getOutlineColor() {
+		return null;
 	}
 
 	private class Scroller implements Runnable {

@@ -103,6 +103,10 @@ public final class ZLTextWord extends ZLTextElement {
 
 	@Override
 	public String toString() {
+		return getString();
+	}
+
+	public String getString() {
 		return new String(Data, Offset, Length);
 	}
 }
