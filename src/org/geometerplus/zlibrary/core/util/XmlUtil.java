@@ -30,7 +30,6 @@ public abstract class XmlUtil {
 			Xml.parse(file.getInputStream(), Xml.Encoding.UTF_8, handler);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 	}

@@ -52,26 +52,22 @@ public class BugReportActivity extends Activity implements ErrorKeys {
 		reportTextView.append("FBReader " + versionName + " has been crached. You can send the report to developers.\n\n");
 		reportTextView.append(reportText);
 
-		findViewById(R.id.send_report).setOnClickListener(
-			new View.OnClickListener() {
-				public void onClick(View view) {
-					Intent sendIntent = new Intent(Intent.ACTION_SEND);
-					sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "exception@geometerplus.com" });
-					sendIntent.putExtra(Intent.EXTRA_TEXT, reportText.toString());
-					sendIntent.putExtra(Intent.EXTRA_SUBJECT, "FBReader " + versionName + " exception report");
-					sendIntent.setType("message/rfc822");
-					startActivity(sendIntent);
-					finish();
-				}
+		findViewById(R.id.send_report).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				Intent sendIntent = new Intent(Intent.ACTION_SEND);
+				sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "exception@geometerplus.com" });
+				sendIntent.putExtra(Intent.EXTRA_TEXT, reportText.toString());
+				sendIntent.putExtra(Intent.EXTRA_SUBJECT, "FBReader " + versionName + " exception report");
+				sendIntent.setType("message/rfc822");
+				startActivity(sendIntent);
+				finish();
 			}
-		);
+		});
 
-		findViewById(R.id.cancel_report).setOnClickListener(
-			new View.OnClickListener() {
-				public void onClick(View view) {
-					finish();
-				}
+		findViewById(R.id.cancel_report).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				finish();
 			}
-		);
+		});
 	}
 }
