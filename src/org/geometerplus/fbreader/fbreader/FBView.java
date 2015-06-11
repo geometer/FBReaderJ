@@ -163,7 +163,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final SelectionCursor.Which cursor = findSelectionCursor(x, y, maxSelectionDistance());
+		final SelectionCursor.Which cursor = findSelectionCursor(x, y, ZLibrary.Instance().getDisplayDPI() / 4);
 		if (cursor != null) {
 			myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
 			moveSelectionCursorTo(cursor, x, y);
