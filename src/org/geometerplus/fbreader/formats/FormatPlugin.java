@@ -29,7 +29,6 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.AbstractBook;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public abstract class FormatPlugin {
 	private final String myFileType;

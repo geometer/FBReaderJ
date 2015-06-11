@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public abstract class BuiltinFormatPlugin extends FormatPlugin {
 	protected BuiltinFormatPlugin(String fileType) {
