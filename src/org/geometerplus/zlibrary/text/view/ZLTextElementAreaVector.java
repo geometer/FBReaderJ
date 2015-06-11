@@ -38,9 +38,10 @@ final class ZLTextElementAreaVector {
 		return myAreas.size();
 	}
 
-	// TODO: remove this unsafe method
-	public ZLTextElementArea get(int index) {
-		return myAreas.get(index);
+	public List<ZLTextElementArea> areas() {
+		synchronized (myAreas) {
+			return new ArrayList<ZLTextElementArea>(myAreas);
+		}
 	}
 
 	public ZLTextElementArea getFirstArea() {
@@ -166,6 +167,28 @@ final class ZLTextElementAreaVector {
 			}
 		}
 		return bestRegion;
+	}
+
+	static class RegionPair {
+		ZLTextRegion Before;
+		ZLTextRegion After;
+	}
+
+	RegionPair findRegionsPair(int x, int y, int columnIndex, ZLTextRegion.Filter filter) {
+		RegionPair pair = new RegionPair();
+		synchronized (myElementRegions) {
+			for (ZLTextRegion region : myElementRegions) {
+				if (filter.accepts(region)) {
+					if (region.isBefore(x, y, columnIndex)) {
+						pair.Before = region;
+					} else {
+						pair.After = region;
+						break;
+					}
+				}
+			}
+		}
+		return pair;
 	}
 
 	protected ZLTextRegion nextRegion(ZLTextRegion currentRegion, ZLTextView.Direction direction, ZLTextRegion.Filter filter) {

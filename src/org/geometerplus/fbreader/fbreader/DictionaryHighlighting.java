@@ -20,44 +20,25 @@
 package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
-
 import org.geometerplus.zlibrary.text.view.*;
 
-import org.geometerplus.fbreader.book.*;
-
-public final class BookmarkHighlighting extends ZLTextSimpleHighlighting {
-	final IBookCollection Collection;
-	final Bookmark Bookmark;
-
-	private static ZLTextPosition startPosition(Bookmark bookmark) {
-		return new ZLTextFixedPosition(bookmark.getParagraphIndex(), bookmark.getElementIndex(), 0);
+public final class DictionaryHighlighting extends ZLTextSimpleHighlighting {
+	public DictionaryHighlighting(ZLTextView view) {
+		this(view, view.getSelectionHighlighting());
 	}
 
-	private static ZLTextPosition endPosition(Bookmark bookmark) {
-		final ZLTextPosition end = bookmark.getEnd();
-		if (end != null) {
-			return end;
-		}
-		// TODO: compute end and save bookmark
-		return bookmark;
-	}
-
-	BookmarkHighlighting(ZLTextView view, IBookCollection collection, Bookmark bookmark) {
-		super(view, startPosition(bookmark), endPosition(bookmark));
-		Collection = collection;
-		Bookmark = bookmark;
+	private DictionaryHighlighting(ZLTextView view, ZLTextHighlighting selection) {
+		super(view, selection.getStartPosition(), selection.getEndPosition());
 	}
 
 	@Override
 	public ZLColor getBackgroundColor() {
-		final HighlightingStyle bmStyle = Collection.getHighlightingStyle(Bookmark.getStyleId());
-		return bmStyle != null ? bmStyle.getBackgroundColor() : null;
+		return View.getSelectionBackgroundColor();
 	}
 
 	@Override
 	public ZLColor getForegroundColor() {
-		final HighlightingStyle bmStyle = Collection.getHighlightingStyle(Bookmark.getStyleId());
-		return bmStyle != null ? bmStyle.getForegroundColor() : null;
+		return null;
 	}
 
 	@Override

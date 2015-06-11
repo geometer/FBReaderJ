@@ -17,20 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.util;
+package org.geometerplus.zlibrary.core.view;
 
-import org.xml.sax.helpers.DefaultHandler;
-import android.util.Xml;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+public abstract class SelectionCursor {
+	public enum Which {
+		Left,
+		Right
+	}
 
-public abstract class XmlUtil {
-	public static boolean parseQuietly(ZLFile file, DefaultHandler handler) {
-		try {
-			Xml.parse(file.getInputStream(), Xml.Encoding.UTF_8, handler);
-			return true;
-		} catch (Exception e) {
-			return false;
+	public static void draw(ZLPaintContext context, Which which, int x, int y, ZLColor color) {
+		context.setFillColor(color);
+		final int dpi = ZLibrary.Instance().getDisplayDPI();
+		final int unit = dpi / 120;
+		final int xCenter = which == Which.Left ? x - unit - 1 : x + unit + 1;
+		context.fillRectangle(xCenter - unit, y + dpi / 8, xCenter + unit, y - dpi / 8);
+		if (which == Which.Left) {
+			context.fillCircle(xCenter, y - dpi / 8, unit * 6);
+		} else {
+			context.fillCircle(xCenter, y + dpi / 8, unit * 6);
 		}
 	}
 }
