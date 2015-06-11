@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.view.Hull;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public final class ZLTextRegion {
@@ -139,7 +140,8 @@ public final class ZLTextRegion {
 	private ZLTextElementArea[] myAreas;
 	private final int myFromIndex;
 	private int myToIndex;
-	private ZLTextHorizontalConvexHull myHull;
+	private Hull myHull;
+	private Hull myHull0; // convex hull for left page column
 
 	ZLTextRegion(Soul soul, List<ZLTextElementArea> list, int fromIndex) {
 		mySoul = soul;
@@ -157,7 +159,7 @@ public final class ZLTextRegion {
 		return mySoul;
 	}
 
-	private ZLTextElementArea[] textAreas() {
+	ZLTextElementArea[] textAreas() {
 		if (myAreas == null || myAreas.length != myToIndex - myFromIndex) {
 			synchronized (myAreaList) {
 				myAreas = new ZLTextElementArea[myToIndex - myFromIndex];
@@ -168,11 +170,23 @@ public final class ZLTextRegion {
 		}
 		return myAreas;
 	}
-	private ZLTextHorizontalConvexHull convexHull() {
+	Hull hull() {
 		if (myHull == null) {
-			myHull = new ZLTextHorizontalConvexHull(textAreas());
+			myHull = HullUtil.hull(textAreas());
 		}
 		return myHull;
+	}
+	Hull hull0() {
+		if (myHull0 == null) {
+			final List<ZLTextElementArea> column0 = new ArrayList<ZLTextElementArea>();
+			for (ZLTextElementArea a : textAreas()) {
+				if (a.ColumnIndex == 0) {
+					column0.add(a);
+				}
+			}
+			myHull0 = HullUtil.hull(column0);
+		}
+		return myHull0;
 	}
 
 	ZLTextElementArea getFirstArea() {
@@ -208,12 +222,42 @@ public final class ZLTextRegion {
 		return getLastArea().YEnd;
 	}
 
-	void draw(ZLPaintContext context) {
-		convexHull().draw(context);
+	int distanceTo(int x, int y) {
+		return hull().distanceTo(x, y);
 	}
 
-	int distanceTo(int x, int y) {
-		return convexHull().distanceTo(x, y);
+	boolean isBefore(int x, int y, int columnIndex) {
+		switch (columnIndex) {
+			default:
+			case -1:
+				return hull().isBefore(x, y);
+			case 0:
+			{
+				int count0 = 0;
+				int count1 = 0;
+				for (ZLTextElementArea area : textAreas()) {
+					if (area.ColumnIndex == 0) {
+						++count0;
+					} else {
+						++count1;
+					}
+				}
+				if (count0 == 0) {
+					return false;
+				} else if (count1 == 0) {
+					return hull().isBefore(x, y);
+				} else {
+					return hull0().isBefore(x, y);
+				}
+			}
+			case 1:
+				for (ZLTextElementArea area : textAreas()) {
+					if (area.ColumnIndex == 0) {
+						return true;
+					}
+				}
+				return hull().isBefore(x, y);
+		}
 	}
 
 	boolean isAtRightOf(ZLTextRegion other) {

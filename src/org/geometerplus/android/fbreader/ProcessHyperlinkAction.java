@@ -151,8 +151,17 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 				}
 			}
 		} else if (soul instanceof ZLTextWordRegionSoul) {
-			DictionaryUtil.openWordInDictionary(
-				BaseActivity, ((ZLTextWordRegionSoul)soul).Word, region
+			DictionaryUtil.openTextInDictionary(
+				BaseActivity,
+				((ZLTextWordRegionSoul)soul).Word.getString(),
+				true,
+				region.getTop(),
+				region.getBottom(),
+				new Runnable() {
+					public void run() {
+						BaseActivity.outlineRegion(soul);
+					}
+				}
 			);
 		}
 	}

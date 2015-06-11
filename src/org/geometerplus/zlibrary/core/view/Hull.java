@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,40 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.zlibrary.core.view;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
+public interface Hull {
+	interface DrawMode {
+		int None = 0;
+		int Outline = 1;
+		int Fill = 2;
+	};
 
-public enum ZLTextSelectionCursor {
-	None,
-	Left,
-	Right;
-
-	private static int ourHeight;
-	private static int ourWidth;
-	private static int ourAccent;
-
-	private static void init() {
-		if (ourHeight == 0) {
-			final int dpi = ZLibrary.Instance().getDisplayDPI();
-			ourAccent = dpi / 12;
-			ourWidth = dpi / 6;
-			ourHeight = dpi / 4;
-		}
-	}
-
-	static int getHeight() {
-		init();
-		return ourHeight;
-	}
-
-	static int getWidth() {
-		init();
-		return ourWidth;
-	}
-
-	static int getAccent() {
-		init();
-		return ourAccent;
-	}
+	void draw(ZLPaintContext context, int mode);
+	int distanceTo(int x, int y);
+	boolean isBefore(int x, int y);
 }
