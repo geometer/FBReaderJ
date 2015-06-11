@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.android.fbreader.dict;
 
 import java.io.InputStream;
 import java.util.*;
@@ -56,6 +56,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextWord;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
+import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
@@ -518,7 +519,7 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	static void onActivityResult(final FBReader fbreader, int resultCode, final Intent data) {
+	public static void onActivityResult(final FBReader fbreader, int resultCode, final Intent data) {
 		if (data == null) {
 			fbreader.hideOutline();
 			return;
