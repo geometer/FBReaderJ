@@ -29,7 +29,7 @@ import android.util.Log;
 
 import com.paragon.open.dictionary.api.*;
 
-import org.geometerplus.android.fbreader.DictionaryUtil;
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 
 public class OpenDictionaryFlyout {
 	private final Direction myDirection;
