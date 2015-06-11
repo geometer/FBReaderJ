@@ -25,7 +25,6 @@ import org.pdfparse.model.PDFDocument;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public class PDFPlugin extends ExternalFormatPlugin {
 	public PDFPlugin() {

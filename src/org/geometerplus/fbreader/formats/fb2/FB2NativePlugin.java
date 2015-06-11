@@ -30,7 +30,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.BookReadingException;
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 
 public class FB2NativePlugin extends NativeFormatPlugin {
