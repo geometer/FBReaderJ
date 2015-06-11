@@ -60,6 +60,7 @@ import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -1210,7 +1211,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	}
 
-	void showToast(SuperActivityToast toast) {
+	public void showToast(SuperActivityToast toast) {
 		hideToast();
 		myToast = toast;
 		toast.show();
