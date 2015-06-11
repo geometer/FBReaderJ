@@ -26,7 +26,7 @@ import android.content.Context;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.android.fbreader.DictionaryUtil;
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 
 class DictionaryPreference extends ZLStringListPreference {
 	private final ZLStringOption myOption;
