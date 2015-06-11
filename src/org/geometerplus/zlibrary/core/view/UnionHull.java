@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,37 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.zlibrary.core.view;
 
-import org.geometerplus.zlibrary.core.util.ZLColor;
+import java.util.*;
 
-class ZLTextManualHighlighting extends ZLTextSimpleHighlighting {
-	ZLTextManualHighlighting(ZLTextView view, ZLTextPosition start, ZLTextPosition end) {
-		super(view, start, end);
+public class UnionHull implements Hull {
+	private final List<Hull> myComponents;
+
+	public UnionHull(Hull ... components) {
+		myComponents = new ArrayList<Hull>(Arrays.asList(components));
 	}
 
-	@Override
-	public ZLColor getBackgroundColor() {
-		return View.getHighlightingBackgroundColor();
+	public void draw(ZLPaintContext context, int mode) {
+		for (Hull h : myComponents) {
+			h.draw(context, mode);
+		}
 	}
 
-	@Override
-	public ZLColor getForegroundColor() {
-		return View.getHighlightingForegroundColor();
+	public int distanceTo(int x, int y) {
+		int dist = Integer.MAX_VALUE;
+		for (Hull h : myComponents) {
+			dist = Math.min(dist, h.distanceTo(x, y));
+		}
+		return dist;
 	}
 
-	@Override
-	public ZLColor getOutlineColor() {
-		return null;
+	public boolean isBefore(int x, int y) {
+		for (Hull h : myComponents) {
+			if (h.isBefore(x, y)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

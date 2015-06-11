@@ -51,7 +51,6 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.XmlUtil;
 
-import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.text.view.ZLTextWord;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
@@ -122,7 +121,7 @@ public abstract class DictionaryUtil {
 			}
 		}
 
-		abstract void open(String text, ZLTextRegion.Soul soulToSelect, FBReader fbreader, PopupFrameMetric frameMetrics);
+		abstract void open(String text, Runnable outliner, FBReader fbreader, PopupFrameMetric frameMetrics);
 	}
 
 	private static class PlainPackageInfo extends PackageInfo {
@@ -131,7 +130,7 @@ public abstract class DictionaryUtil {
 		}
 
 		@Override
-		void open(String text, ZLTextRegion.Soul soulToSelect, FBReader fbreader, PopupFrameMetric frameMetrics) {
+		void open(String text, Runnable outliner, FBReader fbreader, PopupFrameMetric frameMetrics) {
 			final Intent intent = getDictionaryIntent(text);
 			try {
 				final String id = getId();
@@ -167,7 +166,7 @@ public abstract class DictionaryUtil {
 		}
 
 		@Override
-		void open(String text, ZLTextRegion.Soul soulToSelect, FBReader fbreader, PopupFrameMetric frameMetrics) {
+		void open(String text, Runnable outliner, FBReader fbreader, PopupFrameMetric frameMetrics) {
 			final Intent intent = getDictionaryIntent(text);
 			try {
 				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -176,7 +175,9 @@ public abstract class DictionaryUtil {
 				intent.putExtra("article.text.size.max", MAX_LENGTH_FOR_TOAST);
 				fbreader.startActivityForResult(intent, FBReader.REQUEST_DICTIONARY);
 				fbreader.overridePendingTransition(0, 0);
-				fbreader.outlineRegion(soulToSelect);
+				if (outliner != null) {
+					outliner.run();
+				}
 			} catch (ActivityNotFoundException e) {
 				fbreader.hideOutline();
 				installDictionaryIfNotInstalled(fbreader, this);
@@ -199,7 +200,7 @@ public abstract class DictionaryUtil {
 		}
 
 		@Override
-		void open(String text, ZLTextRegion.Soul soulToSelect, FBReader fbreader, PopupFrameMetric frameMetrics) {
+		void open(String text, Runnable outliner, FBReader fbreader, PopupFrameMetric frameMetrics) {
 			Flyout.showTranslation(fbreader, text, frameMetrics);
 		}
 	}
@@ -455,7 +456,7 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	public static void openTextInDictionary(final FBReader fbreader, String text, boolean singleWord, int selectionTop, int selectionBottom, final ZLTextRegion.Soul soulToSelect) {
+	public static void openTextInDictionary(final FBReader fbreader, String text, boolean singleWord, int selectionTop, int selectionBottom, final Runnable outliner) {
 		final String textToTranslate;
 		if (singleWord) {
 			int start = 0;
@@ -478,15 +479,9 @@ public abstract class DictionaryUtil {
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
 		fbreader.runOnUiThread(new Runnable() {
 			public void run() {
-				info.open(textToTranslate, soulToSelect, fbreader, frameMetrics);
+				info.open(textToTranslate, outliner, fbreader, frameMetrics);
 			}
 		});
-	}
-
-	public static void openWordInDictionary(FBReader fbreader, ZLTextWord word, ZLTextRegion region) {
-		openTextInDictionary(
-			fbreader, word.toString(), true, region.getTop(), region.getBottom(), region.getSoul()
-		);
 	}
 
 	public static void installDictionaryIfNotInstalled(final Activity activity, final PackageInfo info) {

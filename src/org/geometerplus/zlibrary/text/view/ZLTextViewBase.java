@@ -110,6 +110,13 @@ abstract class ZLTextViewBase extends ZLView {
 		return getContextHeight() - getTopMargin() - getBottomMargin();
 	}
 
+	protected int getColumnIndex(int x) {
+		if (!twoColumnView()) {
+			return -1;
+		}
+		return 2 * x <= getContextWidth() + getLeftMargin() - getRightMargin() ? 0 : 1;
+	}
+
 	public int getTextColumnWidth() {
 		return twoColumnView()
 			? (getContextWidth() - getLeftMargin() - getSpaceBetweenColumns() - getRightMargin()) / 2
