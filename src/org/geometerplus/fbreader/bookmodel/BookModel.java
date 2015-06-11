@@ -27,8 +27,7 @@ import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
-import org.geometerplus.fbreader.formats.BuiltinFormatPlugin;
-import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.*;
 
 public final class BookModel {
 	public static BookModel createModel(Book book) throws BookReadingException {

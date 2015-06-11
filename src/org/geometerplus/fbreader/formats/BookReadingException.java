@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.bookmodel;
+package org.geometerplus.fbreader.formats;
 
 import java.io.IOException;
 
