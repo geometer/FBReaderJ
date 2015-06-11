@@ -114,12 +114,16 @@ final class DummyPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void fillPolygon(int[] xs, int ys[]) {
+	public void fillPolygon(int[] xs, int[] ys) {
 	}
 	@Override
-	public void drawPolygonalLine(int[] xs, int ys[]) {
+	public void drawPolygonalLine(int[] xs, int[] ys) {
 	}
 	@Override
-	public void drawOutline(int[] xs, int ys[]) {
+	public void drawOutline(int[] xs, int[] ys) {
+	}
+
+	@Override
+	public void fillCircle(int x, int y, int radius) {
 	}
 }
