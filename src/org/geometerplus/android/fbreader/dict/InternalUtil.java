@@ -23,7 +23,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 
-import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.FBReaderMainActivity;
 import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.PackageUtil;
 
@@ -60,7 +60,7 @@ abstract class InternalUtil {
 		}
 	}
 
-	static void startDictionaryActivity(FBReader fbreader, Intent intent, DictionaryUtil.PackageInfo info) {
+	static void startDictionaryActivity(FBReaderMainActivity fbreader, Intent intent, DictionaryUtil.PackageInfo info) {
 		try {
 			fbreader.startActivity(intent);
 			fbreader.overridePendingTransition(0, 0);
