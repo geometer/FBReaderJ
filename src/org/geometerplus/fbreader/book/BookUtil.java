@@ -21,50 +21,15 @@ package org.geometerplus.fbreader.book;
 
 import java.io.InputStream;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.formats.*;
 
 public abstract class BookUtil {
-	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
-	private static final WeakHashMap<ZLFile,WeakReference<ZLImage>> ourCovers =
-		new WeakHashMap<ZLFile,WeakReference<ZLImage>>();
-
-	public static ZLImage getCover(AbstractBook book) {
-		if (book == null) {
-			return null;
-		}
-		synchronized (book) {
-			return getCover(fileByBook(book));
-		}
-	}
-
-	public static ZLImage getCover(ZLFile file) {
-		WeakReference<ZLImage> cover = ourCovers.get(file);
-		if (cover == NULL_IMAGE) {
-			return null;
-		} else if (cover != null) {
-			final ZLImage image = cover.get();
-			if (image != null) {
-				return image;
-			}
-		}
-		ZLImage image = null;
-		try {
-			image = PluginCollection.Instance().getPlugin(file).readCover(file);
-		} catch (Exception e) {
-			// ignore
-		}
-		ourCovers.put(file, image != null ? new WeakReference<ZLImage>(image) : NULL_IMAGE);
-		return image;
-	}
-
 	public static String getAnnotation(AbstractBook book) {
 		try {
 			return getPlugin(book).readAnnotation(fileByBook(book));
