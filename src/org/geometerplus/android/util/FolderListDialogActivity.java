@@ -94,7 +94,7 @@ public class FolderListDialogActivity extends ListActivity {
 				}
 				((DirectoriesAdapter)getListAdapter()).notifyDataSetChanged();
 			} else if (existing != index - 1) {
-				UIUtil.showMessageText(
+				UIMessageUtil.showMessageText(
 					this, myResource.getResource("duplicate").getValue().replace("%s", path)
 				);
 			}
