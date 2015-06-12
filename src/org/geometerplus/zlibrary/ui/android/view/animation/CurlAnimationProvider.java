@@ -17,16 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.view;
+package org.geometerplus.zlibrary.ui.android.view.animation;
 
 import android.graphics.*;
 import android.util.FloatMath;
 
-import org.geometerplus.zlibrary.core.view.ZLView;
-
+import org.geometerplus.zlibrary.core.util.BitmapUtil;
+import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
-class CurlAnimationProvider extends AnimationProvider {
+public final class CurlAnimationProvider extends AnimationProvider {
 	private final Paint myPaint = new Paint();
 	private final Paint myBackPaint = new Paint();
 	private final Paint myEdgePaint = new Paint();
@@ -37,7 +37,7 @@ class CurlAnimationProvider extends AnimationProvider {
 
 	private float mySpeedFactor = 1;
 
-	CurlAnimationProvider(BitmapManager bitmapManager) {
+	public CurlAnimationProvider(BitmapManager bitmapManager) {
 		super(bitmapManager);
 
 		myBackPaint.setAntiAlias(true);
@@ -60,7 +60,7 @@ class CurlAnimationProvider extends AnimationProvider {
 			if (myBuffer == null ||
 				myBuffer.getWidth() != myWidth ||
 				myBuffer.getHeight() != myHeight) {
-				myBuffer = Bitmap.createBitmap(myWidth, myHeight, getBitmapTo().getConfig());
+				myBuffer = BitmapUtil.createBitmap(myWidth, myHeight, getBitmapTo().getConfig());
 			}
 			final Canvas softCanvas = new Canvas(myBuffer);
 			drawInternalNoHack(softCanvas);
@@ -76,8 +76,7 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	private void drawInternalNoHack(Canvas canvas) {
-		canvas.drawBitmap(getBitmapTo(), 0, 0, myPaint);
-		final Bitmap fgBitmap = getBitmapFrom();
+		drawBitmapTo(canvas, 0, 0, myPaint);
 
 		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
 		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;
@@ -160,10 +159,10 @@ class CurlAnimationProvider extends AnimationProvider {
 
 		canvas.save();
 		canvas.clipPath(myFgPath);
-		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
+		drawBitmapFrom(canvas, 0, 0, myPaint);
 		canvas.restore();
 
-		myEdgePaint.setColor(ZLAndroidColorUtil.rgb(ZLAndroidColorUtil.getAverageColor(fgBitmap)));
+		myEdgePaint.setColor(ZLAndroidColorUtil.rgb(ZLAndroidColorUtil.getAverageColor(getBitmapFrom())));
 
 		myEdgePath.rewind();
 		myEdgePath.moveTo(x, y);
@@ -208,22 +207,22 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	ZLView.PageIndex getPageToScrollTo(int x, int y) {
+	public ZLViewEnums.PageIndex getPageToScrollTo(int x, int y) {
 		if (myDirection == null) {
-			return ZLView.PageIndex.current;
+			return ZLViewEnums.PageIndex.current;
 		}
 
 		switch (myDirection) {
 			case leftToRight:
-				return myStartX < myWidth / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartX < myWidth / 2 ? ZLViewEnums.PageIndex.next : ZLViewEnums.PageIndex.previous;
 			case rightToLeft:
-				return myStartX < myWidth / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartX < myWidth / 2 ? ZLViewEnums.PageIndex.previous : ZLViewEnums.PageIndex.next;
 			case up:
-				return myStartY < myHeight / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartY < myHeight / 2 ? ZLViewEnums.PageIndex.previous : ZLViewEnums.PageIndex.next;
 			case down:
-				return myStartY < myHeight / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartY < myHeight / 2 ? ZLViewEnums.PageIndex.next : ZLViewEnums.PageIndex.previous;
 		}
-		return ZLView.PageIndex.current;
+		return ZLViewEnums.PageIndex.current;
 	}
 
 	@Override
@@ -261,7 +260,7 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	void doStep() {
+	public void doStep() {
 		if (!getMode().Auto) {
 			return;
 		}
@@ -330,7 +329,7 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	protected void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+	public void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
 		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
 	}
 }
