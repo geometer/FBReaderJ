@@ -88,10 +88,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		context.startActivity(intent);
 	}
 
-	private static ZLAndroidLibrary getZLibrary() {
-		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-	}
-
 	private FBReaderApp myFBReaderApp;
 	private volatile Book myBook;
 
@@ -296,7 +292,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_SENSOR, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_SENSOR));
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_PORTRAIT));
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_LANDSCAPE));
-		if (ZLibrary.Instance().supportsAllOrientations()) {
+		if (getZLibrary().supportsAllOrientations()) {
 			myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_REVERSE_PORTRAIT));
 			myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
@@ -554,7 +550,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		registerReceiver(mySyncUpdateReceiver, new IntentFilter(SyncOperations.UPDATED));
 
-		SetScreenOrientationAction.setOrientation(this, ZLibrary.Instance().getOrientationOption().getValue());
+		SetScreenOrientationAction.setOrientation(this, getZLibrary().getOrientationOption().getValue());
 		if (myCancelIntent != null) {
 			final Intent intent = myCancelIntent;
 			myCancelIntent = null;
@@ -1109,5 +1105,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	public void hideOutline() {
 		myFBReaderApp.getTextView().hideOutline();
 		myFBReaderApp.getViewWidget().repaint();
+	}
+
+	public ZLAndroidLibrary getZLibrary() {
+		return ((ZLAndroidApplication)getApplication()).library();
 	}
 }
