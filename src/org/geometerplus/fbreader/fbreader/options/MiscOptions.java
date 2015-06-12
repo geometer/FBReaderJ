@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.fbreader.fbreader.DurationEnum;
 
 public class MiscOptions {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustment;
@@ -37,15 +38,6 @@ public class MiscOptions {
 		never, footnotesOnly, footnotesAndSuperscripts, allInternalLinks
 	}
 	public final ZLEnumOption<FootnoteToastEnum> ShowFootnoteToast;
-	public static enum DurationEnum {
-		duration1(1000), duration3(3000), duration5(5000), duration10(10000), duration20(20000), duration300(300000);
-
-		public final int Value;
-
-		DurationEnum(int value) {
-			Value = value;
-		}
-	}
 	public final ZLEnumOption<DurationEnum> FootnoteToastDuration;
 
 	public MiscOptions() {
