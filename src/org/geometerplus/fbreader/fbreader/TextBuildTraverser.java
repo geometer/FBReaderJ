@@ -44,6 +44,11 @@ class TextBuildTraverser extends ZLTextTraverser {
 	}
 
 	@Override
+	protected void processNbSpace() {
+		myBuffer.append("\240");
+	}
+
+	@Override
 	protected void processEndOfParagraph() {
 		myBuffer.append("\n");
 	}

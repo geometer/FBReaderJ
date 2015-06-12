@@ -881,7 +881,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
 				} else if (element instanceof ExtensionElement) {
 					((ExtensionElement)element).draw(context, area);
-				} else if (element == ZLTextElement.HSpace) {
+				} else if (element == ZLTextElement.HSpace || element == ZLTextElement.NBSpace) {
 					final int cw = context.getSpaceWidth();
 					/*
 					context.setFillColor(getHighlightingColor());
@@ -1091,6 +1091,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					lastSpaceWidth = context.getSpaceWidth();
 					newWidth += lastSpaceWidth;
 				}
+			} else if (element == ZLTextElement.NBSpace) {
+				wordOccurred = true;
+				internalSpaceCounter++;
+				lastSpaceWidth = context.getSpaceWidth();
+				newWidth += lastSpaceWidth;
 			} else if (element instanceof ZLTextWord) {
 				wordOccurred = true;
 				isVisible = true;
@@ -1117,9 +1122,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			boolean allowBreak = currentElementIndex == endIndex;
 			if (!allowBreak) {
 				element = paragraphCursor.getElement(currentElementIndex);
-				allowBreak = ((!(element instanceof ZLTextWord) || previousElement instanceof ZLTextWord) &&
-						!(element instanceof ZLTextImageElement) &&
-						!(element instanceof ZLTextControlElement));
+				allowBreak =
+					previousElement != ZLTextElement.NBSpace &&
+					element != ZLTextElement.NBSpace &&
+					(!(element instanceof ZLTextWord) || previousElement instanceof ZLTextWord) &&
+					!(element instanceof ZLTextImageElement) &&
+					!(element instanceof ZLTextControlElement);
 			}
 			if (allowBreak) {
 				info.IsVisible = isVisible;
@@ -1282,8 +1290,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		for (int wordIndex = info.RealStartElementIndex; wordIndex != endElementIndex; ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
 			final int width = getElementWidth(element, charIndex);
-			if (element == ZLTextElement.HSpace) {
-				if (wordOccurred && (spaceCounter > 0)) {
+			if (element == ZLTextElement.HSpace || element == ZLTextElement.NBSpace) {
+				if (wordOccurred && spaceCounter > 0) {
 					final int correction = fullCorrection / spaceCounter;
 					final int spaceLength = context.getSpaceWidth() + correction;
 					if (getTextStyle().isUnderline()) {

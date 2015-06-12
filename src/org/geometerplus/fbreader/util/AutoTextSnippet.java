@@ -74,6 +74,10 @@ mainLoop:
 				if (lineIsNonEmpty) {
 					phraseBuffer.append(" ");
 				}
+			} else if (element == ZLTextElement.NBSpace) {
+				if (lineIsNonEmpty) {
+					phraseBuffer.append("\240");
+				}
 			} else if (element instanceof ZLTextWord) {
 				final ZLTextWord word = (ZLTextWord)element;
 				phraseBuffer.Builder.append(word.Data, word.Offset, word.Length);
