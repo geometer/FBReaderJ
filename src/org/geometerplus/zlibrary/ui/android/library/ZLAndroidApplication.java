@@ -32,6 +32,9 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.android.fbreader.config.ConfigShadow;
 
 public abstract class ZLAndroidApplication extends Application {
+	private ZLAndroidLibrary myLibrary;
+	private ConfigShadow myConfig;
+
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	private String getExternalCacheDirPath() {
 		final File d = getExternalCacheDir();
@@ -47,11 +50,19 @@ public abstract class ZLAndroidApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		final ConfigShadow config = new ConfigShadow(this);
-		new ZLAndroidImageManager();
-		new ZLAndroidLibrary(this);
 
-		config.runOnConnect(new Runnable() {
+		// this is a workaround for strange issue on some devices:
+		//    NoClassDefFoundError for android.os.AsyncTask
+		try {
+			Class.forName("android.os.AsyncTask");
+		} catch (Throwable t) {
+		}
+
+		myConfig = new ConfigShadow(this);
+		new ZLAndroidImageManager();
+		myLibrary = new ZLAndroidLibrary(this);
+
+		myConfig.runOnConnect(new Runnable() {
 			public void run() {
 				if ("".equals(Paths.TempDirectoryOption.getValue())) {
 					String dir = null;
@@ -65,5 +76,9 @@ public abstract class ZLAndroidApplication extends Application {
 				}
 			}
 		});
+	}
+
+	public final ZLAndroidLibrary library() {
+		return myLibrary;
 	}
 }
