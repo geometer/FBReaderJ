@@ -10,6 +10,7 @@
 * Added Korean intro text
 * New style selection rendering
 * Better non-breakable space processing
+* Do not start page sliding for very short horizontal shifts
 
 ===== 2.4.7 (May 20, 2015) =====
 * Added Korean localisation
