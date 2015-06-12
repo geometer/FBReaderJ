@@ -42,7 +42,7 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 
 	@Override
 	void open(String text, Runnable outliner, FBReader fbreader, DictionaryUtil.PopupFrameMetric frameMetrics) {
-		final Intent intent = getDictionaryIntent(text);
+		final Intent intent = getActionIntent(text);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		intent.putExtra("article.mode", 20);
@@ -100,7 +100,7 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 				@Override
 				public void onClick(View view, Parcelable token) {
 					final String word = data.getStringExtra("article.word");
-					final Intent intent = getDictionaryIntent(word);
+					final Intent intent = getActionIntent(word);
 					try {
 						intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 						intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
