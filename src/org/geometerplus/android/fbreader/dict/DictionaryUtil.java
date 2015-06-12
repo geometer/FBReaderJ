@@ -32,10 +32,8 @@ import android.net.Uri;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.util.DisplayMetrics;
-import android.util.Xml;
 import android.view.View;
 
-import com.abbyy.mobile.lingvo.api.MinicardContract;
 import com.paragon.dictionary.fbreader.OpenDictionaryFlyout;
 import com.paragon.open.dictionary.api.Dictionary;
 import com.paragon.open.dictionary.api.OpenDictionaryAPI;
@@ -122,8 +120,8 @@ public abstract class DictionaryUtil {
 	}
 
 	private static class PlainPackageInfo extends PackageInfo {
-		PlainPackageInfo(String id, String title, boolean supportsTargetLanguageSetting) {
-			super(id, title, supportsTargetLanguageSetting);
+		PlainPackageInfo(String id, String title) {
+			super(id, title, false);
 		}
 
 		@Override
@@ -131,17 +129,7 @@ public abstract class DictionaryUtil {
 			final Intent intent = getDictionaryIntent(text);
 			try {
 				final String id = getId();
-				if ("ABBYY Lingvo".equals(id)) {
-					intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.Gravity);
-					intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.Height);
-					intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
-					intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
-					intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
-					final String targetLanguage = TargetLanguageOption.getValue();
-					if (!Language.ANY_CODE.equals(targetLanguage)) {
-						intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, targetLanguage);
-					}
-				} else if ("ColorDict".equals(id)) {
+				if ("ColorDict".equals(id)) {
 					intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
 					intent.putExtra(ColorDict3.GRAVITY, frameMetrics.Gravity);
 					final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
@@ -201,12 +189,10 @@ public abstract class DictionaryUtil {
 			final PackageInfo info;
 			if ("dictan".equals(id)) {
 				info = new Dictan(id, title);
+			} else if ("ABBYY Lingvo".equals(id)) {
+				info = new Lingvo(id, title);
 			} else {
-				info = new PlainPackageInfo(
-					id,
-					title,
-					"true".equals(attributes.getValue("supportsTargetLanguage"))
-				);
+				info = new PlainPackageInfo(id, title);
 			}
 			for (int i = attributes.getLength() - 1; i >= 0; --i) {
 				info.put(attributes.getLocalName(i), attributes.getValue(i));
@@ -231,8 +217,7 @@ public abstract class DictionaryUtil {
 
 			final PackageInfo info = new PlainPackageInfo(
 				"BK" + myCounter ++,
-				attributes.getValue("title"),
-				false
+				attributes.getValue("title")
 			);
 			for (int i = attributes.getLength() - 1; i >= 0; --i) {
 				info.put(attributes.getLocalName(i), attributes.getValue(i));
