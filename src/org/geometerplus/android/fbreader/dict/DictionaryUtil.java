@@ -44,12 +44,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.XmlUtil;
 
-import org.geometerplus.zlibrary.text.view.ZLTextWord;
-
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
-
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class DictionaryUtil {
@@ -127,21 +122,9 @@ public abstract class DictionaryUtil {
 		@Override
 		void open(String text, Runnable outliner, FBReader fbreader, PopupFrameMetric frameMetrics) {
 			final Intent intent = getDictionaryIntent(text);
-			try {
-				final String id = getId();
-				if ("ColorDict".equals(id)) {
-					intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
-					intent.putExtra(ColorDict3.GRAVITY, frameMetrics.Gravity);
-					final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-					intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
-				}
-				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-				fbreader.startActivity(intent);
-				fbreader.overridePendingTransition(0, 0);
-			} catch (ActivityNotFoundException e) {
-				installDictionaryIfNotInstalled(fbreader, this);
-			}
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			InternalUtil.startDictionaryActivity(fbreader, intent, this);
 		}
 	}
 
@@ -191,6 +174,8 @@ public abstract class DictionaryUtil {
 				info = new Dictan(id, title);
 			} else if ("ABBYY Lingvo".equals(id)) {
 				info = new Lingvo(id, title);
+			} else if ("ColorDict".equals(id)) {
+				info = new ColorDict(id, title);
 			} else {
 				info = new PlainPackageInfo(id, title);
 			}
@@ -229,19 +214,6 @@ public abstract class DictionaryUtil {
 				ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
 			}
 		}
-	}
-
-	private interface ColorDict3 {
-		String ACTION = "colordict.intent.action.SEARCH";
-		String QUERY = "EXTRA_QUERY";
-		String HEIGHT = "EXTRA_HEIGHT";
-		String WIDTH = "EXTRA_WIDTH";
-		String GRAVITY = "EXTRA_GRAVITY";
-		String MARGIN_LEFT = "EXTRA_MARGIN_LEFT";
-		String MARGIN_TOP = "EXTRA_MARGIN_TOP";
-		String MARGIN_BOTTOM = "EXTRA_MARGIN_BOTTOM";
-		String MARGIN_RIGHT = "EXTRA_MARGIN_RIGHT";
-		String FULLSCREEN = "EXTRA_FULLSCREEN";
 	}
 
 	private static void collectOpenDictionaries(Context context) {
@@ -435,36 +407,6 @@ public abstract class DictionaryUtil {
 				info.open(textToTranslate, outliner, fbreader, frameMetrics);
 			}
 		});
-	}
-
-	public static void installDictionaryIfNotInstalled(final Activity activity, final PackageInfo info) {
-		if (PackageUtil.canBeStarted(activity, info.getDictionaryIntent("test"), false)) {
-			return;
-		}
-
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		final ZLResource installResource = dialogResource.getResource("installDictionary");
-		new AlertDialog.Builder(activity)
-			.setTitle(installResource.getResource("title").getValue())
-			.setMessage(installResource.getResource("message").getValue().replace("%s", info.getTitle()))
-			.setIcon(0)
-			.setPositiveButton(
-				buttonResource.getResource("install").getValue(),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						installDictionary(activity, info);
-					}
-				}
-			)
-			.setNegativeButton(buttonResource.getResource("skip").getValue(), null)
-			.create().show();
-	}
-
-	private static void installDictionary(Activity activity, PackageInfo dictionaryInfo) {
-		if (!PackageUtil.installFromMarket(activity, dictionaryInfo.get("package"))) {
-			UIMessageUtil.showErrorMessage(activity, "cannotRunAndroidMarket", dictionaryInfo.getTitle());
-		}
 	}
 
 	public static void onActivityResult(final FBReader fbreader, int resultCode, final Intent data) {
