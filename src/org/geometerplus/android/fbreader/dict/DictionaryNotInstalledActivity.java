@@ -87,7 +87,7 @@ public class DictionaryNotInstalledActivity extends ListActivity {
 					break;
 				case 1: // configure
 					startActivity(new Intent(
-						Intent.ACTION_VIEW, Uri.parse("com-fbreader-action:preferences#dictionary")
+						Intent.ACTION_VIEW, Uri.parse("fbreader-action:preferences#dictionary")
 					));
 					break;
 				case 2: // skip
