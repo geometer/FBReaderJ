@@ -9,6 +9,7 @@
 * Updated Armenian localisation (by Yavruhrat, Marat Yavrumyan)
 * Added Korean intro text
 * New style selection rendering
+* Better non-breakable space processing
 
 ===== 2.4.7 (May 20, 2015) =====
 * Added Korean localisation
