@@ -20,11 +20,16 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 
 public abstract class FBReaderMainActivity extends Activity {
 	public static final int REQUEST_PREFERENCES = 1;
@@ -32,6 +37,24 @@ public abstract class FBReaderMainActivity extends Activity {
 	public static final int REQUEST_DICTIONARY = 3;
 
 	private volatile SuperActivityToast myToast;
+
+	@Override
+	protected void onCreate(Bundle saved) {
+		super.onCreate(saved);
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			default:
+				super.onActivityResult(requestCode, resultCode, data);
+				break;
+			case REQUEST_DICTIONARY:
+				DictionaryUtil.onActivityResult(this, resultCode, data);
+				break;
+		}
+	}
 
 	public ZLAndroidLibrary getZLibrary() {
 		return FBReaderUtil.getZLibrary(this);
