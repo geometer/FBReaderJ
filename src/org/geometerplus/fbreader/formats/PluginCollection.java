@@ -26,7 +26,7 @@ import android.os.Build;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
-public class PluginCollection {
+public class PluginCollection implements IFormatPluginCollection {
 	static {
 		System.loadLibrary("NativeFormats-v4");
 	}
