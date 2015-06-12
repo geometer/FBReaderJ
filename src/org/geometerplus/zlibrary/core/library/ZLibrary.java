@@ -56,8 +56,6 @@ public abstract class ZLibrary {
 	abstract public String getVersionName();
 	abstract public String getFullVersionName();
 	abstract public String getCurrentTimeString();
-	abstract public void setScreenBrightness(int percent);
-	abstract public int getScreenBrightness();
 	abstract public int getDisplayDPI();
 	abstract public int getWidthInPixels();
 	abstract public int getHeightInPixels();

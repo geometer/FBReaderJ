@@ -39,9 +39,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 
-import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.DeviceType;
 
 public final class ZLAndroidLibrary extends ZLibrary {
@@ -66,15 +63,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return DeviceType.Instance().isEInk();
 	}
 
-	private FBReader myActivity;
 	private final Application myApplication;
 
 	ZLAndroidLibrary(Application application) {
 		myApplication = application;
-	}
-
-	public void setActivity(FBReader activity) {
-		myActivity = activity;
 	}
 
 	public AssetManager getAssets() {
@@ -116,18 +108,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public String getCurrentTimeString() {
 		return DateFormat.getTimeFormat(myApplication.getApplicationContext()).format(new Date());
-	}
-
-	@Override
-	public void setScreenBrightness(int percent) {
-		if (myActivity != null) {
-			myActivity.setScreenBrightness(percent);
-		}
-	}
-
-	@Override
-	public int getScreenBrightness() {
-		return (myActivity != null) ? myActivity.getScreenBrightness() : 0;
 	}
 
 	private DisplayMetrics myMetrics;
