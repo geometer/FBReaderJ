@@ -55,6 +55,7 @@ import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
+import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.UIUtil;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
@@ -140,7 +141,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 							uri.toString().replace("litres-book://", "http://")
 						);
 					} catch (ZLNetworkException e) {
-						UIUtil.showMessageText(NetworkBookInfoActivity.this, e.getMessage());
+						UIMessageUtil.showMessageText(NetworkBookInfoActivity.this, e.getMessage());
 					}
 					if (myBook != null) {
 						myTree = library.getFakeBookTree(myBook);
@@ -404,7 +405,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code, Object[] params) {
 		if (code == NetworkLibrary.ChangeListener.Code.InitializationFailed) {
-			UIUtil.showMessageText(this, (String)params[0]);
+			UIMessageUtil.showMessageText(this, (String)params[0]);
 			return;
 		}
 

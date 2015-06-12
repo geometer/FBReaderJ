@@ -48,7 +48,7 @@ import org.geometerplus.android.fbreader.network.action.*;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.UIMessageUtil;
 
 public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
 	public static final int REQUEST_MANAGE_CATALOGS = 1;
@@ -421,14 +421,14 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 						openTree((NetworkTree)params[0]);
 						break;
 					case NotFound:
-						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyNetworkSearchResults");
+						UIMessageUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyNetworkSearchResults");
 						getListView().invalidateViews();
 						break;
 					case EmptyCatalog:
-						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyCatalog");
+						UIMessageUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyCatalog");
 						break;
 					case NetworkError:
-						UIUtil.showMessageText(NetworkLibraryActivity.this, (String)params[0]);
+						UIMessageUtil.showMessageText(NetworkLibraryActivity.this, (String)params[0]);
 						break;
 				}
 			}
