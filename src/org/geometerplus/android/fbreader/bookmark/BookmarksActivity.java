@@ -242,7 +242,7 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			}
 			mySearchResultsAdapter.addAll(bookmarks);
 		} else {
-			UIUtil.showErrorMessage(this, "bookmarkNotFound");
+			UIMessageUtil.showErrorMessage(this, "bookmarkNotFound");
 		}
 	}
 
@@ -301,7 +301,7 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 		if (book != null) {
 			FBReader.openBookActivity(this, book, bookmark);
 		} else {
-			UIUtil.showErrorMessage(this, "cannotOpenBook");
+			UIMessageUtil.showErrorMessage(this, "cannotOpenBook");
 		}
 	}
 

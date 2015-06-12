@@ -17,33 +17,33 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.android.util;
 
-import android.app.Application;
-import android.text.ClipboardManager;
+import android.app.Activity;
+import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-
-import org.geometerplus.android.util.UIMessageUtil;
-
-public class SelectionCopyAction extends FBAndroidAction {
-	SelectionCopyAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader);
+public abstract class UIMessageUtil {
+	public static void showMessageText(final Activity activity, final String text) {
+		activity.runOnUiThread(new Runnable() {
+			public void run() {
+				Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 
-	@Override
-	protected void run(Object ... params) {
-		final String text = Reader.getTextView().getSelectedSnippet().getText();
-		Reader.getTextView().clearSelection();
+	public static void showErrorMessage(Activity activity, String resourceKey) {
+		showMessageText(
+			activity,
+			ZLResource.resource("errorMessage").getResource(resourceKey).getValue()
+		);
+	}
 
-		final ClipboardManager clipboard =
-			(ClipboardManager)BaseActivity.getApplication().getSystemService(Application.CLIPBOARD_SERVICE);
-		clipboard.setText(text);
-		UIMessageUtil.showMessageText(
-			BaseActivity,
-			ZLResource.resource("selection").getResource("textInBuffer").getValue().replace("%s", clipboard.getText())
+	public static void showErrorMessage(Activity activity, String resourceKey, String parameter) {
+		showMessageText(
+			activity,
+			ZLResource.resource("errorMessage").getResource(resourceKey).getValue().replace("%s", parameter)
 		);
 	}
 }
