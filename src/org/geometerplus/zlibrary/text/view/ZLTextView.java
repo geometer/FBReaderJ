@@ -883,13 +883,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					((ExtensionElement)element).draw(context, area);
 				} else if (element == ZLTextElement.HSpace || element == ZLTextElement.NBSpace) {
 					final int cw = context.getSpaceWidth();
-					/*
-					context.setFillColor(getHighlightingColor());
-					context.fillRectangle(
-						area.XStart, areaY - context.getStringHeight(),
-						area.XEnd - 1, areaY + context.getDescent()
-					);
-					*/
 					for (int len = 0; len < area.XEnd - area.XStart; len += cw) {
 						context.drawString(areaX + len, areaY, SPACE, 0, 1);
 					}
@@ -1093,9 +1086,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 			} else if (element == ZLTextElement.NBSpace) {
 				wordOccurred = true;
-				internalSpaceCounter++;
-				lastSpaceWidth = context.getSpaceWidth();
-				newWidth += lastSpaceWidth;
 			} else if (element instanceof ZLTextWord) {
 				wordOccurred = true;
 				isVisible = true;
@@ -1290,7 +1280,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		for (int wordIndex = info.RealStartElementIndex; wordIndex != endElementIndex; ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
 			final int width = getElementWidth(element, charIndex);
-			if (element == ZLTextElement.HSpace || element == ZLTextElement.NBSpace) {
+			if (element == ZLTextElement.HSpace) {
 				if (wordOccurred && spaceCounter > 0) {
 					final int correction = fullCorrection / spaceCounter;
 					final int spaceLength = context.getSpaceWidth() + correction;
