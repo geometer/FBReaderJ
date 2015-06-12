@@ -32,13 +32,20 @@ import android.util.DisplayMetrics;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.language.Language;
+import org.geometerplus.zlibrary.core.options.ZLEnumOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.util.XmlUtil;
 
+import org.geometerplus.fbreader.fbreader.DurationEnum;
 import org.geometerplus.android.fbreader.FBReaderMainActivity;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class DictionaryUtil {
+	public static final ZLEnumOption<DurationEnum> TranslationToastDurationOption =
+		new ZLEnumOption<DurationEnum>("Dictionary", "TranslationToastDuration", DurationEnum.duration40);
+	public static final ZLEnumOption<DurationEnum> ErrorToastDurationOption =
+		new ZLEnumOption<DurationEnum>("Dictionary", "ErrorToastDuration", DurationEnum.duration5);
+
 	private static int FLAG_INSTALLED_ONLY = 1;
 	static int FLAG_SHOW_AS_DICTIONARY = 2;
 	private static int FLAG_SHOW_AS_TRANSLATOR = 4;
@@ -55,6 +62,10 @@ public abstract class DictionaryUtil {
 
 	public static abstract class PackageInfo extends HashMap<String,String> {
 		public final boolean SupportsTargetLanguageSetting;
+
+		PackageInfo(String id, String title) {
+			this(id, title, false);
+		}
 
 		PackageInfo(String id, String title, boolean supportsTargetLanguageSetting) {
 			put("id", id);
@@ -107,7 +118,7 @@ public abstract class DictionaryUtil {
 
 	private static class PlainPackageInfo extends PackageInfo {
 		PlainPackageInfo(String id, String title) {
-			super(id, title, false);
+			super(id, title);
 		}
 
 		@Override
