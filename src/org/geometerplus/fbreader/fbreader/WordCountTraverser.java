@@ -44,6 +44,11 @@ class WordCountTraverser extends ZLTextTraverser {
 	}
 
 	@Override
+	protected void processNbSpace() {
+		// does nothing
+	}
+
+	@Override
 	protected void processEndOfParagraph() {
 		// does nothing
 	}
