@@ -47,6 +47,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
@@ -149,7 +150,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		final ZLImage image = BookUtil.getCover(book);
+		final ZLImage image = CoverUtil.getCover(book, PluginCollection.Instance());
 
 		if (image == null) {
 			return;
