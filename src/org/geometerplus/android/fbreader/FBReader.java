@@ -86,10 +86,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		context.startActivity(intent);
 	}
 
-	private static ZLAndroidLibrary getZLibrary() {
-		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-	}
-
 	private FBReaderApp myFBReaderApp;
 	private volatile Book myBook;
 
@@ -328,7 +324,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_SENSOR, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_SENSOR));
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_PORTRAIT));
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_LANDSCAPE));
-		if (ZLibrary.Instance().supportsAllOrientations()) {
+		if (getZLibrary().supportsAllOrientations()) {
 			myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_REVERSE_PORTRAIT));
 			myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
@@ -581,7 +577,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		registerReceiver(mySyncUpdateReceiver, new IntentFilter(SyncOperations.UPDATED));
 
-		SetScreenOrientationAction.setOrientation(this, ZLibrary.Instance().getOrientationOption().getValue());
+		SetScreenOrientationAction.setOrientation(this, getZLibrary().getOrientationOption().getValue());
 		if (myCancelIntent != null) {
 			final Intent intent = myCancelIntent;
 			myCancelIntent = null;
@@ -877,28 +873,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		return myNavigationPopup != null;
 	}
 
-	static void ensureFullscreen(View view) {
-		if (view == null) {
-			return;
-		}
-
-		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-				&& zlibrary.EnableFullscreenModeOption.getValue()) {
-			view.setSystemUiVisibility(
-				View.SYSTEM_UI_FLAG_LOW_PROFILE |
-				View.SYSTEM_UI_FLAG_IMMERSIVE |
-				View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
-				View.SYSTEM_UI_FLAG_FULLSCREEN |
-				View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-			);
-		} else if (zlibrary.DisableButtonLightsOption.getValue()) {
-			view.setSystemUiVisibility(
-				View.SYSTEM_UI_FLAG_LOW_PROFILE
-			);
-		}
-	}
-
 	void hideBars() {
 		if (myNavigationPopup != null) {
 			myNavigationPopup.stopNavigation();
@@ -911,7 +885,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			invalidateOptionsMenu();
 		}
 
-		ensureFullscreen(myRootView);
+		FBReaderUtil.ensureFullscreen(this, myRootView);
 
 		setStatusBarVisibility(false);
 	}
@@ -1223,5 +1197,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	public void hideOutline() {
 		myFBReaderApp.getTextView().hideOutline();
 		myFBReaderApp.getViewWidget().repaint();
+	}
+
+	private ZLAndroidLibrary getZLibrary() {
+		return FBReaderUtil.getZLibrary(this);
 	}
 }
