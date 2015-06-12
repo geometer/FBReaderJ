@@ -43,11 +43,11 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 	@Override
 	void open(String text, Runnable outliner, FBReader fbreader, DictionaryUtil.PopupFrameMetric frameMetrics) {
 		final Intent intent = getDictionaryIntent(text);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		intent.putExtra("article.mode", 20);
+		intent.putExtra("article.text.size.max", MAX_LENGTH_FOR_TOAST);
 		try {
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			intent.putExtra("article.mode", 20);
-			intent.putExtra("article.text.size.max", MAX_LENGTH_FOR_TOAST);
 			fbreader.startActivityForResult(intent, FBReader.REQUEST_DICTIONARY);
 			fbreader.overridePendingTransition(0, 0);
 			if (outliner != null) {
