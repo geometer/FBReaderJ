@@ -27,7 +27,7 @@ import android.content.*;
 import android.os.IBinder;
 
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
-import org.geometerplus.zlibrary.core.image.ZLImageSelfSynchronizableProxy;
+import org.geometerplus.zlibrary.core.image.ZLImageSimpleProxy;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
@@ -95,8 +95,8 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 			if (postAction != null) {
 				postAction.run();
 			}
-		} else if (image instanceof ZLImageSelfSynchronizableProxy) {
-			((ZLImageSelfSynchronizableProxy)image).synchronize();
+		} else if (image instanceof ZLImageSimpleProxy) {
+			((ZLImageSimpleProxy)image).synchronize();
 			if (postAction != null) {
 				postAction.run();
 			}
