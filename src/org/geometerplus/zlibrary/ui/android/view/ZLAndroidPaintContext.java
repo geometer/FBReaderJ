@@ -58,13 +58,13 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private final Paint myFillPaint = new Paint();
 	private final Paint myOutlinePaint = new Paint();
 
-	static class Geometry {
+	public static final class Geometry {
 		final Size ScreenSize;
 		final Size AreaSize;
 		final int LeftMargin;
 		final int TopMargin;
 
-		Geometry(int screenWidth, int screenHeight, int width, int height, int leftMargin, int topMargin) {
+		public Geometry(int screenWidth, int screenHeight, int width, int height, int leftMargin, int topMargin) {
 			ScreenSize = new Size(screenWidth, screenHeight);
 			AreaSize = new Size(width, height);
 			LeftMargin = leftMargin;
@@ -77,7 +77,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
 
-	ZLAndroidPaintContext(Canvas canvas, Geometry geometry, int scrollbarWidth) {
+	public ZLAndroidPaintContext(Canvas canvas, Geometry geometry, int scrollbarWidth) {
 		myCanvas = canvas;
 		myGeometry = geometry;
 		myScrollbarWidth = scrollbarWidth;
@@ -97,7 +97,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 		myLinePaint.setStyle(Paint.Style.STROKE);
 
-		myOutlinePaint.setColor(Color.rgb(255, 127, 0));
+		myFillPaint.setAntiAlias(AntiAliasOption.getValue());
+
 		myOutlinePaint.setAntiAlias(true);
 		myOutlinePaint.setDither(true);
 		myOutlinePaint.setStrokeWidth(4);
@@ -320,8 +321,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public void setLineColor(ZLColor color) {
 		if (color != null) {
 			myLinePaint.setColor(ZLAndroidColorUtil.rgb(color));
+			myOutlinePaint.setColor(ZLAndroidColorUtil.rgb(color));
 		}
 	}
+
 	@Override
 	public void setLineWidth(int width) {
 		myLinePaint.setStrokeWidth(width);
@@ -337,6 +340,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public int getWidth() {
 		return myGeometry.AreaSize.Width - myScrollbarWidth;
 	}
+
 	public int getHeight() {
 		return myGeometry.AreaSize.Height;
 	}
@@ -364,10 +368,12 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			return (int)(myTextPaint.measureText(corrected, 0, len) + 0.5f);
 		}
 	}
+
 	@Override
 	protected int getSpaceWidthInternal() {
 		return (int)(myTextPaint.measureText(" ", 0, 1) + 0.5f);
 	}
+
 	@Override
 	protected int getCharHeightInternal(char chr) {
 		final Rect r = new Rect();
@@ -375,14 +381,17 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myTextPaint.getTextBounds(txt, 0, 1, r);
 		return r.bottom - r.top;
 	}
+
 	@Override
 	protected int getStringHeightInternal() {
 		return (int)(myTextPaint.getTextSize() + 0.5f);
 	}
+
 	@Override
 	protected int getDescentInternal() {
 		return (int)(myTextPaint.descent() + 0.5f);
 	}
+
 	@Override
 	public void drawString(int x, int y, char[] string, int offset, int length) {
 		boolean containsSoftHyphen = false;
