@@ -34,7 +34,7 @@ final class Lingvo extends DictionaryUtil.PackageInfo {
 
 	@Override
 	void open(String text, Runnable outliner, FBReader fbreader, DictionaryUtil.PopupFrameMetric frameMetrics) {
-		final Intent intent = getDictionaryIntent(text);
+		final Intent intent = getActionIntent(text);
 		intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.Gravity);
 		intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.Height);
 		intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
