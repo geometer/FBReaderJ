@@ -21,18 +21,24 @@ package org.geometerplus.zlibrary.core.encodings;
 
 import java.util.*;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import android.util.Xml;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 abstract class FilteredEncodingCollection extends EncodingCollection {
 	private final List<Encoding> myEncodings = new ArrayList<Encoding>();
 	private final Map<String,Encoding> myEncodingByAlias = new HashMap<String,Encoding>();
 
 	FilteredEncodingCollection() {
-		new EncodingCollectionReader().readQuietly(
-			ZLResourceFile.createResourceFile("encodings/Encodings.xml")
-		);
+		try {
+			final ZLResourceFile file = ZLResourceFile.createResourceFile("encodings/Encodings.xml");
+			Xml.parse(file.getInputStream(), Xml.Encoding.UTF_8, new EncodingCollectionReader());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public abstract boolean isEncodingSupported(String name);
@@ -62,20 +68,15 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 		return myEncodingByAlias.containsKey(alias) || isEncodingSupported(alias);
 	}
 
-	private class EncodingCollectionReader extends ZLXMLReaderAdapter {
+	private class EncodingCollectionReader extends DefaultHandler {
 		private String myCurrentFamilyName;
 		private Encoding myCurrentEncoding;
 
 		@Override
-		public boolean dontCacheAttributeValues() {
-			return true;
-		}
-
-		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			if ("group".equals(tag)) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if ("group".equals(localName)) {
 				myCurrentFamilyName = attributes.getValue("name");
-			} else if ("encoding".equals(tag)) {
+			} else if ("encoding".equals(localName)) {
 				final String name = attributes.getValue("name").toLowerCase();
 				final String region = attributes.getValue("region");
 				if (isEncodingSupported(name)) {
@@ -87,16 +88,15 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 				} else {
 					myCurrentEncoding = null;
 				}
-			} else if ("code".equals(tag)) {
+			} else if ("code".equals(localName)) {
 				if (myCurrentEncoding != null) {
 					myEncodingByAlias.put(attributes.getValue("number"), myCurrentEncoding);
 				}
-			} else if ("alias".equals(tag)) {
+			} else if ("alias".equals(localName)) {
 				if (myCurrentEncoding != null) {
 					myEncodingByAlias.put(attributes.getValue("name").toLowerCase(), myCurrentEncoding);
 				}
 			}
-			return false;
 		}
 	}
 }
