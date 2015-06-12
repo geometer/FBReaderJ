@@ -51,11 +51,7 @@ final class OpenDictionary extends DictionaryUtil.PackageInfo {
 	final OpenDictionaryFlyout Flyout;
 
 	OpenDictionary(Dictionary dictionary) {
-		super(
-			dictionary.getUID(),
-			dictionary.getName(),
-			false
-		);
+		super(dictionary.getUID(), dictionary.getName());
 		put("package", dictionary.getApplicationPackageName());
 		put("class", ".Start");
 		Flyout = new OpenDictionaryFlyout(dictionary);
