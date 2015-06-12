@@ -28,11 +28,10 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.OnDismissWrapper;
 
-import org.geometerplus.android.fbreader.FBReaderMainActivity;
-import org.geometerplus.android.util.UIMessageUtil;
-import org.geometerplus.android.util.PackageUtil;
-
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.android.fbreader.FBReaderMainActivity;
+import org.geometerplus.android.util.PackageUtil;
 
 abstract class InternalUtil {
 	static void installDictionaryIfNotInstalled(final Activity activity, final DictionaryUtil.PackageInfo info) {
