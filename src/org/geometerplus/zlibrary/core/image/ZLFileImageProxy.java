@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.core.image;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class ZLFileImageProxy extends ZLImageSimpleProxy {
 	protected final ZLFile File;
