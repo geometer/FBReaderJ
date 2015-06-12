@@ -43,7 +43,7 @@ final class ColorDict extends DictionaryUtil.PackageInfo {
 
 	@Override
 	void open(String text, Runnable outliner, FBReader fbreader, DictionaryUtil.PopupFrameMetric frameMetrics) {
-		final Intent intent = getDictionaryIntent(text);
+		final Intent intent = getActionIntent(text);
 		intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
 		intent.putExtra(ColorDict3.GRAVITY, frameMetrics.Gravity);
 		intent.putExtra(ColorDict3.FULLSCREEN, !fbreader.getZLibrary().ShowStatusBarOption.getValue());

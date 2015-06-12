@@ -71,7 +71,7 @@ public abstract class DictionaryUtil {
 			return get("title");
 		}
 
-		final Intent getDictionaryIntent(String text) {
+		final Intent getActionIntent(String text) {
 			final Intent intent = new Intent(get("action"));
 
 			final String packageName = get("package");
@@ -112,7 +112,7 @@ public abstract class DictionaryUtil {
 
 		@Override
 		void open(String text, Runnable outliner, FBReader fbreader, PopupFrameMetric frameMetrics) {
-			final Intent intent = getDictionaryIntent(text);
+			final Intent intent = getActionIntent(text);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			InternalUtil.startDictionaryActivity(fbreader, intent, this);
@@ -181,7 +181,7 @@ public abstract class DictionaryUtil {
 			info.put("class", "com.bitknights.dict.ShareTranslateActivity");
 			info.put("action", Intent.ACTION_VIEW);
 			// TODO: other attributes
-			if (PackageUtil.canBeStarted(myContext, info.getDictionaryIntent("test"), false)) {
+			if (PackageUtil.canBeStarted(myContext, info.getActionIntent("test"), false)) {
 				ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
 			}
 		}
@@ -257,7 +257,7 @@ public abstract class DictionaryUtil {
 					installedPackages.contains(packageName)) {
 					list.add(info);
 				} else if (!notInstalledPackages.contains(packageName)) {
-					if (PackageUtil.canBeStarted(context, info.getDictionaryIntent("test"), false)) {
+					if (PackageUtil.canBeStarted(context, info.getActionIntent("test"), false)) {
 						list.add(info);
 						installedPackages.add(packageName);
 					} else {

@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class InternalUtil {
 	static void installDictionaryIfNotInstalled(final Activity activity, final DictionaryUtil.PackageInfo info) {
-		if (PackageUtil.canBeStarted(activity, info.getDictionaryIntent("test"), false)) {
+		if (PackageUtil.canBeStarted(activity, info.getActionIntent("test"), false)) {
 			return;
 		}
 
