@@ -761,6 +761,9 @@
 			<node name="translator" value="Translate phrases via"/>
 			<node name="translationToastDuration" value="How long to show translation popup"/>
 			<node name="errorToastDuration" value="How long to show error message"/>
+			<node name="sourceLanguage" value="Translate from">
+				<node name="detect" value="Automatically detected language"/>
+			</node>
 			<node name="targetLanguage" value="Translate to">
 				<node name="any" value="all languages"/>
 			</node>
@@ -893,6 +896,11 @@
 		</node>
 		<node name="backgroundAuthentication">
 			<node name="message" value="Authentication required"/>
+		</node>
+		<node name="missingDictionary" value="Missing %s">
+			<node name="install" value="Install %s"/>
+			<node name="configure" value="Configure translation"/>
+			<node name="skip" value="Skip"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Install dictionary"/>

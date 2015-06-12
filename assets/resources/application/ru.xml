@@ -766,6 +766,9 @@
 			<node name="translator" value="Переводить фразы с помощью"/>
 			<node name="translationToastDuration" value="Как долго показывать окошко перевода"/>
 			<node name="errorToastDuration" value="Как долго показывать сообщение об ошибке"/>
+			<node name="sourceLanguage" value="Язык, с которого переводить">
+				<node name="detect" value="определять автоматически"/>
+			</node>
 			<node name="targetLanguage" value="Переводить на">
 				<node name="any" value="все языки"/>
 			</node>
@@ -898,6 +901,11 @@
 		</node>
 		<node name="backgroundAuthentication">
 			<node name="message" value="Требуется авторизация"/>
+		</node>
+		<node name="missingDictionary" value="%s не найден">
+			<node name="install" value="Установить %s"/>
+			<node name="configure" value="Настройки перевода"/>
+			<node name="skip" value="Пропустить"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Установка словаря"/>
