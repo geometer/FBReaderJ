@@ -36,7 +36,7 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 	private static final int MAX_LENGTH_FOR_TOAST = 180;
 
 	Dictan(String id, String title) {
-		super(id, title, false);
+		super(id, title);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 			toast = new SuperActivityToast(fbreader, SuperToast.Type.STANDARD);
 		}
 		toast.setText(text);
-		toast.setDuration(20000);
+		toast.setDuration(DictionaryUtil.TranslationToastDurationOption.getValue().Value);
 		InternalUtil.showToast(toast, fbreader);
 	}
 
@@ -154,7 +154,7 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 
 		final SuperActivityToast toast = new SuperActivityToast(fbreader, SuperToast.Type.STANDARD);
 		toast.setText("Dictan: " + message);
-		toast.setDuration(5000);
+		toast.setDuration(DictionaryUtil.ErrorToastDurationOption.getValue().Value);
 		InternalUtil.showToast(toast, fbreader);
 	}
 }
