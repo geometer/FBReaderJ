@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
 
-public final class NetworkImage extends ZLImageSelfSynchronizableProxy {
+public final class NetworkImage extends ZLImageSimpleProxy {
 	public final String Url;
 
 	public NetworkImage(String url) {
