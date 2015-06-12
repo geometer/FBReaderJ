@@ -33,8 +33,6 @@ import android.os.*;
 import android.view.*;
 import android.widget.RelativeLayout;
 
-import com.github.johnpersano.supertoasts.SuperActivityToast;
-
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -53,8 +51,7 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.tips.TipsManager;
@@ -69,13 +66,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.*;
 
-public final class FBReader extends Activity implements ZLApplicationWindow {
-	static final int ACTION_BAR_COLOR = Color.DKGRAY;
-
-	public static final int REQUEST_PREFERENCES = 1;
-	public static final int REQUEST_CANCEL_MENU = 2;
-	public static final int REQUEST_DICTIONARY = 3;
-
+public final class FBReader extends FBReaderMainActivity implements ZLApplicationWindow {
 	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
 
@@ -93,8 +84,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private RelativeLayout myRootView;
 	private ZLAndroidWidget myMainView;
-
-	private SuperActivityToast myToast;
 
 	private volatile boolean myShowStatusBarFlag;
 	private String myMenuLanguage;
@@ -1055,25 +1044,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	};
 
-	boolean isToastShown() {
-		final SuperActivityToast toast = myToast;
-		return toast != null && toast.isShowing();
-	}
-
-	void hideToast() {
-		final SuperActivityToast toast = myToast;
-		if (toast != null && toast.isShowing()) {
-			toast.dismiss();
-			myToast = null;
-		}
-	}
-
-	public void showToast(SuperActivityToast toast) {
-		hideToast();
-		myToast = toast;
-		toast.show();
-	}
-
 	public void outlineRegion(ZLTextRegion.Soul soul) {
 		myFBReaderApp.getTextView().outlineRegion(soul);
 		myFBReaderApp.getViewWidget().repaint();
@@ -1084,7 +1054,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.getViewWidget().repaint();
 	}
 
-	public ZLAndroidLibrary getZLibrary() {
-		return ((ZLAndroidApplication)getApplication()).library();
+	public void hideDictionarySelection() {
+		myFBReaderApp.getTextView().hideOutline();
+		myFBReaderApp.getTextView().removeHighlightings(DictionaryHighlighting.class);
+		myFBReaderApp.getViewWidget().reset();
+		myFBReaderApp.getViewWidget().repaint();
 	}
 }
