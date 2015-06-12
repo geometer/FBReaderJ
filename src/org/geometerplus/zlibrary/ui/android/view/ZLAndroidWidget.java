@@ -39,6 +39,7 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.view.animation.*;
 
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import org.geometerplus.android.fbreader.FBReader;
@@ -47,7 +48,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	public final ExecutorService PrepareService = Executors.newSingleThreadExecutor();
 
 	private final Paint myPaint = new Paint();
-	private final BitmapManager myBitmapManager = new BitmapManager(this);
+	private final BitmapManagerImpl myBitmapManager = new BitmapManagerImpl(this);
 	private Bitmap myFooterBitmap;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
@@ -117,6 +118,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			canvas.translate(0, myHShift);
 		}
 
+		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		if (getAnimationProvider().inProgress()) {
 			onDrawInScrolling(canvas);
 		} else {
@@ -227,9 +229,6 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	private void onDrawInScrolling(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-
-//		final int w = getWidth();
-//		final int h = getMainAreaHeight();
 
 		final AnimationProvider animator = getAnimationProvider();
 		final AnimationProvider.Mode oldMode = animator.getMode();
@@ -385,7 +384,6 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 
 	private void onDrawStatic(final Canvas canvas) {
-		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
 		drawFooter(canvas, null);
 		post(new Runnable() {

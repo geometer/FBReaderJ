@@ -17,26 +17,26 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.view;
+package org.geometerplus.zlibrary.ui.android.view.animation;
 
 import android.graphics.*;
 
-import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 
-class NoneAnimationProvider extends AnimationProvider {
+public final class NoneAnimationProvider extends AnimationProvider {
 	private final Paint myPaint = new Paint();
 
-	NoneAnimationProvider(BitmapManager bitmapManager) {
+	public NoneAnimationProvider(BitmapManager bitmapManager) {
 		super(bitmapManager);
 	}
 
 	@Override
 	protected void drawInternal(Canvas canvas) {
-		canvas.drawBitmap(getBitmapFrom(), 0, 0, myPaint);
+		drawBitmapFrom(canvas, 0, 0, myPaint);
 	}
 
 	@Override
-	void doStep() {
+	public void doStep() {
 		if (getMode().Auto) {
 			terminate();
 		}
@@ -60,26 +60,26 @@ class NoneAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	ZLView.PageIndex getPageToScrollTo(int x, int y) {
+	public ZLViewEnums.PageIndex getPageToScrollTo(int x, int y) {
 		if (myDirection == null) {
-			return ZLView.PageIndex.current;
+			return ZLViewEnums.PageIndex.current;
 		}
 
 		switch (myDirection) {
 			case rightToLeft:
-				return myStartX < x ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartX < x ? ZLViewEnums.PageIndex.previous : ZLViewEnums.PageIndex.next;
 			case leftToRight:
-				return myStartX < x ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartX < x ? ZLViewEnums.PageIndex.next : ZLViewEnums.PageIndex.previous;
 			case up:
-				return myStartY < y ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartY < y ? ZLViewEnums.PageIndex.previous : ZLViewEnums.PageIndex.next;
 			case down:
-				return myStartY < y ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartY < y ? ZLViewEnums.PageIndex.next : ZLViewEnums.PageIndex.previous;
 		}
-		return ZLView.PageIndex.current;
+		return ZLViewEnums.PageIndex.current;
 	}
 
 	@Override
-	protected void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+	public void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
 		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
 	}
 }
