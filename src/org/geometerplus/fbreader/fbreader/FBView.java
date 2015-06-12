@@ -169,7 +169,7 @@ public final class FBView extends ZLTextView {
 		if (myReader.MiscOptions.AllowScreenBrightnessAdjustment.getValue() && x < getContextWidth() / 10) {
 			myIsBrightnessAdjustmentInProgress = true;
 			myStartY = y;
-			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
+			myStartBrightness = myReader.getViewWidget().getScreenBrightness();
 			return true;
 		}
 
@@ -213,7 +213,7 @@ public final class FBView extends ZLTextView {
 					startManualScrolling(x, y);
 				} else {
 					final int delta = (myStartBrightness + 30) * (myStartY - y) / getContextHeight();
-					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
+					myReader.getViewWidget().setScreenBrightness(myStartBrightness + delta);
 					return true;
 				}
 			}
