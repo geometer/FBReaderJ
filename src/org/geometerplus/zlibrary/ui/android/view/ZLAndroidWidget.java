@@ -537,4 +537,20 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
 		return footer != null ? getHeight() - footer.getHeight() : getHeight();
 	}
+
+	public void setScreenBrightness(int percent) {
+		final Context context = getContext();
+		if (!(context instanceof FBReader)) {
+			return;
+		}
+		((FBReader)context).setScreenBrightness(percent);
+	}
+
+	public int getScreenBrightness() {
+		final Context context = getContext();
+		if (!(context instanceof FBReader)) {
+			return 50;
+		}
+		return ((FBReader)context).getScreenBrightness();
+	}
 }
