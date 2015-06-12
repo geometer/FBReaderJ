@@ -38,7 +38,7 @@ final class ColorDict extends DictionaryUtil.PackageInfo {
 	}
 
 	ColorDict(String id, String title) {
-		super(id, title, false);
+		super(id, title);
 	}
 
 	@Override
