@@ -45,7 +45,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
-import org.geometerplus.zlibrary.ui.android.library.*;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
@@ -197,7 +198,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		bindService(
 			new Intent(this, DataService.class),
@@ -681,6 +681,9 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		myMainView.prepareFullRefresh();
 		switch (requestCode) {
+			default:
+				super.onActivityResult(requestCode, resultCode, data);
+				break;
 			case REQUEST_PREFERENCES:
 				if (resultCode != RESULT_DO_NOTHING && data != null) {
 					final Book book = FBReaderIntents.getBookExtra(data, myFBReaderApp.Collection);
@@ -695,9 +698,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 				break;
 			case REQUEST_CANCEL_MENU:
 				runCancelAction(data);
-				break;
-			case REQUEST_DICTIONARY:
-				DictionaryUtil.onActivityResult(this, resultCode, data);
 				break;
 		}
 	}
