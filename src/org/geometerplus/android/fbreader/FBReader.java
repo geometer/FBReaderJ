@@ -1199,7 +1199,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.getViewWidget().repaint();
 	}
 
-	private ZLAndroidLibrary getZLibrary() {
+	public ZLAndroidLibrary getZLibrary() {
 		return FBReaderUtil.getZLibrary(this);
 	}
 }
