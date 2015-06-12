@@ -81,7 +81,7 @@ public abstract class DictionaryUtil {
 
 		PackageInfo(String id, String title, boolean supportsTargetLanguageSetting) {
 			put("id", id);
-			put("title", title);
+			put("title", title != null ? title : id);
 
 			SupportsTargetLanguageSetting = supportsTargetLanguageSetting;
 		}
@@ -228,15 +228,11 @@ public abstract class DictionaryUtil {
 			}
 			final PackageInfo info;
 			if ("dictan".equals(id)) {
-				info = new DictanPackageInfo(
-					id,
-					title != null ? title : id,
-					false
-				);
+				info = new DictanPackageInfo(id, title, false);
 			} else {
 				info = new PlainPackageInfo(
 					id,
-					title != null ? title : id,
+					title,
 					"true".equals(attributes.getValue("supportsTargetLanguage"))
 				);
 			}
