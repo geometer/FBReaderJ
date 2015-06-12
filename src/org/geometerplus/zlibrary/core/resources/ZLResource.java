@@ -38,7 +38,7 @@ abstract public class ZLResource {
 				for (ZLFile file : children) {
 					final String name = file.getShortName();
 					final String postfix = ".xml";
-					if (name.endsWith(postfix)) {
+					if (name.endsWith(postfix) && !"neutral.xml".equals(name)) {
 						ourLanguageCodes.add(name.substring(0, name.length() - postfix.length()));
 					}
 				}
