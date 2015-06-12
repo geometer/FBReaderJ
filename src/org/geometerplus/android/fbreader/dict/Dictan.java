@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.dict;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.OnClickWrapper;
-import com.github.johnpersano.supertoasts.util.OnDismissWrapper;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -116,13 +115,7 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 		}
 		toast.setText(text);
 		toast.setDuration(20000);
-		toast.setOnDismissWrapper(new OnDismissWrapper("dict", new SuperToast.OnDismissListener() {
-			@Override
-			public void onDismiss(View view) {
-				fbreader.hideDictionarySelection();
-			}
-		}));
-		fbreader.showToast(toast);
+		InternalUtil.showToast(toast, fbreader);
 	}
 
 	private static String trimArticle(String text) {
@@ -163,12 +156,6 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 		final SuperActivityToast toast = new SuperActivityToast(fbreader, SuperToast.Type.STANDARD);
 		toast.setText("Dictan: " + message);
 		toast.setDuration(5000);
-		toast.setOnDismissWrapper(new OnDismissWrapper("dict", new SuperToast.OnDismissListener() {
-			@Override
-			public void onDismiss(View view) {
-				fbreader.hideDictionarySelection();
-			}
-		}));
-		fbreader.showToast(toast);
+		InternalUtil.showToast(toast, fbreader);
 	}
 }
