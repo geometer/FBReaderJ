@@ -20,8 +20,8 @@
 package org.geometerplus.android.fbreader.dict;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.*;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 
 import org.geometerplus.android.fbreader.FBReaderMainActivity;
 import org.geometerplus.android.util.UIMessageUtil;
@@ -35,29 +35,10 @@ abstract class InternalUtil {
 			return;
 		}
 
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		final ZLResource installResource = dialogResource.getResource("installDictionary");
-		new AlertDialog.Builder(activity)
-			.setTitle(installResource.getResource("title").getValue())
-			.setMessage(installResource.getResource("message").getValue().replace("%s", info.getTitle()))
-			.setIcon(0)
-			.setPositiveButton(
-				buttonResource.getResource("install").getValue(),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						installDictionary(activity, info);
-					}
-				}
-			)
-			.setNegativeButton(buttonResource.getResource("skip").getValue(), null)
-			.create().show();
-	}
-
-	private static void installDictionary(Activity activity, DictionaryUtil.PackageInfo dictionaryInfo) {
-		if (!PackageUtil.installFromMarket(activity, dictionaryInfo.get("package"))) {
-			UIMessageUtil.showErrorMessage(activity, "cannotRunAndroidMarket", dictionaryInfo.getTitle());
-		}
+		final Intent intent = new Intent(activity, DictionaryNotInstalledActivity.class);
+		intent.putExtra(DictionaryNotInstalledActivity.DICTIONARY_NAME_KEY, info.getTitle());
+		intent.putExtra(DictionaryNotInstalledActivity.PACKAGE_NAME_KEY, info.get("package"));
+		activity.startActivity(intent);
 	}
 
 	static void startDictionaryActivity(FBReaderMainActivity fbreader, Intent intent, DictionaryUtil.PackageInfo info) {
