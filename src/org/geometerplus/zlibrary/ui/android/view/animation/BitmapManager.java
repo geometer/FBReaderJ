@@ -17,15 +17,13 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.zlibrary.ui.android.view.animation;
 
-import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.android.util.DeviceType;
+import android.graphics.*;
 
-public abstract class DeviceUtil {
-	public static final int titleViewId() {
-		return DeviceType.Instance() == DeviceType.LENOVO_TAB
-			? R.layout.title_view_lenovo_fix
-			: R.layout.title_view;
-	}
+import org.geometerplus.zlibrary.core.view.ZLViewEnums;
+
+public interface BitmapManager {
+	Bitmap getBitmap(ZLViewEnums.PageIndex index);
+	void drawBitmap(Canvas canvas, int x, int y, ZLViewEnums.PageIndex index, Paint paint);
 }
