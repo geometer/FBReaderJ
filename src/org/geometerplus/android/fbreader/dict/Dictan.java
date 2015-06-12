@@ -55,7 +55,7 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 			}
 		} catch (ActivityNotFoundException e) {
 			fbreader.hideOutline();
-			DictionaryUtil.installDictionaryIfNotInstalled(fbreader, this);
+			InternalUtil.installDictionaryIfNotInstalled(fbreader, this);
 		}
 	}
 

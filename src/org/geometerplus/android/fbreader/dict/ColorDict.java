@@ -21,29 +21,35 @@ package org.geometerplus.android.fbreader.dict;
 
 import android.content.Intent;
 
-import com.abbyy.mobile.lingvo.api.MinicardContract;
-
-import org.geometerplus.zlibrary.core.language.Language;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.android.fbreader.FBReader;
 
-final class Lingvo extends DictionaryUtil.PackageInfo {
-	Lingvo(String id, String title) {
-		super(id, title, true);
+final class ColorDict extends DictionaryUtil.PackageInfo {
+	private interface ColorDict3 {
+		String ACTION = "colordict.intent.action.SEARCH";
+		String QUERY = "EXTRA_QUERY";
+		String HEIGHT = "EXTRA_HEIGHT";
+		String WIDTH = "EXTRA_WIDTH";
+		String GRAVITY = "EXTRA_GRAVITY";
+		String MARGIN_LEFT = "EXTRA_MARGIN_LEFT";
+		String MARGIN_TOP = "EXTRA_MARGIN_TOP";
+		String MARGIN_BOTTOM = "EXTRA_MARGIN_BOTTOM";
+		String MARGIN_RIGHT = "EXTRA_MARGIN_RIGHT";
+		String FULLSCREEN = "EXTRA_FULLSCREEN";
+	}
+
+	ColorDict(String id, String title) {
+		super(id, title, false);
 	}
 
 	@Override
 	void open(String text, Runnable outliner, FBReader fbreader, DictionaryUtil.PopupFrameMetric frameMetrics) {
 		final Intent intent = getDictionaryIntent(text);
-		intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.Gravity);
-		intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.Height);
-		intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
-		intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
-		intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
-		final String targetLanguage = DictionaryUtil.TargetLanguageOption.getValue();
-		if (!Language.ANY_CODE.equals(targetLanguage)) {
-			intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, targetLanguage);
-		}
+		intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
+		intent.putExtra(ColorDict3.GRAVITY, frameMetrics.Gravity);
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		InternalUtil.startDictionaryActivity(fbreader, intent, this);
