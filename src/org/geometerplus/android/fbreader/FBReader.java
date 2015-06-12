@@ -159,7 +159,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				if (file.getPhysicalFile() != null) {
 					file = file.getPhysicalFile();
 				}
-				UIUtil.showErrorMessage(this, "fileNotFound", file.getPath());
+				UIMessageUtil.showErrorMessage(this, "fileNotFound", file.getPath());
 				myBook = null;
 			} else {
 				NotificationUtil.drop(this, myBook);
@@ -391,7 +391,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					} else {
 						runOnUiThread(new Runnable() {
 							public void run() {
-								UIUtil.showErrorMessage(FBReader.this, "textNotFound");
+								UIMessageUtil.showErrorMessage(FBReader.this, "textNotFound");
 								popup.StartPosition = null;
 							}
 						});
@@ -949,12 +949,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	// methods from ZLApplicationWindow interface
 	@Override
 	public void showErrorMessage(String key) {
-		UIUtil.showErrorMessage(this, key);
+		UIMessageUtil.showErrorMessage(this, key);
 	}
 
 	@Override
 	public void showErrorMessage(String key, String parameter) {
-		UIUtil.showErrorMessage(this, key, parameter);
+		UIMessageUtil.showErrorMessage(this, key, parameter);
 	}
 
 	@Override
