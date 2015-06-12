@@ -658,4 +658,20 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
 		return resourceId > 0 ? res.getDimensionPixelSize(resourceId) : 0;
 	}
+
+	public void setScreenBrightness(int percent) {
+		final Context context = getContext();
+		if (!(context instanceof FBReader)) {
+			return;
+		}
+		((FBReader)context).setScreenBrightness(percent);
+	}
+
+	public int getScreenBrightness() {
+		final Context context = getContext();
+		if (!(context instanceof FBReader)) {
+			return 50;
+		}
+		return ((FBReader)context).getScreenBrightness();
+	}
 }

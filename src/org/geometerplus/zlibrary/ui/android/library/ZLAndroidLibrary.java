@@ -39,9 +39,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 
-import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.DeviceType;
 
 public final class ZLAndroidLibrary extends ZLibrary {
@@ -61,15 +58,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 
-	private FBReader myActivity;
 	private final Application myApplication;
 
 	ZLAndroidLibrary(Application application) {
 		myApplication = application;
-	}
-
-	public void setActivity(FBReader activity) {
-		myActivity = activity;
 	}
 
 	public AssetManager getAssets() {
@@ -111,18 +103,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public String getCurrentTimeString() {
 		return DateFormat.getTimeFormat(myApplication.getApplicationContext()).format(new Date());
-	}
-
-	@Override
-	public void setScreenBrightness(int percent) {
-		if (myActivity != null) {
-			myActivity.setScreenBrightness(percent);
-		}
-	}
-
-	@Override
-	public int getScreenBrightness() {
-		return (myActivity != null) ? myActivity.getScreenBrightness() : 0;
 	}
 
 	private DisplayMetrics myMetrics;
