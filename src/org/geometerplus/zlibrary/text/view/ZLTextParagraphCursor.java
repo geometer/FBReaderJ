@@ -130,7 +130,7 @@ public final class ZLTextParagraphCursor {
 		private static byte[] ourBreaks = new byte[1024];
 		private static final int NO_SPACE = 0;
 		private static final int SPACE = 1;
-		//private static final int NON_BREAKABLE_SPACE = 2;
+		private static final int NON_BREAKABLE_SPACE = 2;
 		private void processTextEntry(final char[] data, final int offset, final int length, ZLTextHyperlink hyperlink) {
 			if (length != 0) {
 				if (ourBreaks.length < length) {
@@ -140,6 +140,7 @@ public final class ZLTextParagraphCursor {
 				myLineBreaker.setLineBreaks(data, offset, length, breaks);
 
 				final ZLTextElement hSpace = ZLTextElement.HSpace;
+				final ZLTextElement nbSpace = ZLTextElement.NBSpace;
 				final ArrayList<ZLTextElement> elements = myElements;
 				char ch = 0;
 				char previousChar = 0;
@@ -148,11 +149,18 @@ public final class ZLTextParagraphCursor {
 				for (int index = 0; index < length; ++index) {
 					previousChar = ch;
 					ch = data[offset + index];
-					if (Character.isSpace(ch)) {
+					if (Character.isWhitespace(ch)) {
 						if (index > 0 && spaceState == NO_SPACE) {
 							addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart, hyperlink);
 						}
 						spaceState = SPACE;
+					} else if (Character.isSpaceChar(ch)) {
+						if (index > 0 && spaceState == NO_SPACE) {
+							addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart, hyperlink);
+						}
+						if (spaceState != SPACE) {
+							spaceState = NON_BREAKABLE_SPACE;
+						}
 					} else {
 						switch (spaceState) {
 							case SPACE:
@@ -161,8 +169,10 @@ public final class ZLTextParagraphCursor {
 								elements.add(hSpace);
 								wordStart = index;
 								break;
-							//case NON_BREAKABLE_SPACE:
-								//break;
+							case NON_BREAKABLE_SPACE:
+								elements.add(nbSpace);
+								wordStart = index;
+								break;
 							case NO_SPACE:
 								if (index > 0 &&
 									breaks[index - 1] != LineBreaker.NOBREAK &&
@@ -180,8 +190,9 @@ public final class ZLTextParagraphCursor {
 					case SPACE:
 						elements.add(hSpace);
 						break;
-					//case NON_BREAKABLE_SPACE:
-						//break;
+					case NON_BREAKABLE_SPACE:
+						elements.add(nbSpace);
+						break;
 					case NO_SPACE:
 						addWord(data, offset + wordStart, length - wordStart, myOffset + wordStart, hyperlink);
 						break;
