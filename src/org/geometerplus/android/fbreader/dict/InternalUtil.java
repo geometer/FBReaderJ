@@ -22,6 +22,11 @@ package org.geometerplus.android.fbreader.dict;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.view.View;
+
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.OnDismissWrapper;
 
 import org.geometerplus.android.fbreader.FBReaderMainActivity;
 import org.geometerplus.android.util.UIMessageUtil;
@@ -48,5 +53,15 @@ abstract class InternalUtil {
 		} catch (ActivityNotFoundException e) {
 			installDictionaryIfNotInstalled(fbreader, info);
 		}
+	}
+
+	static void showToast(SuperActivityToast toast, final FBReaderMainActivity fbreader) {
+		toast.setOnDismissWrapper(new OnDismissWrapper("dict", new SuperToast.OnDismissListener() {
+			@Override
+			public void onDismiss(View view) {
+				fbreader.hideDictionarySelection();
+			}
+		}));
+		fbreader.showToast(toast);
 	}
 }
