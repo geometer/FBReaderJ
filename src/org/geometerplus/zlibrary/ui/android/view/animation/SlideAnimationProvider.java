@@ -17,16 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.view;
+package org.geometerplus.zlibrary.ui.android.view.animation;
 
 import android.graphics.*;
 import android.graphics.drawable.GradientDrawable;
 
-class SlideAnimationProvider extends SimpleAnimationProvider {
+public final class SlideAnimationProvider extends SimpleAnimationProvider {
 	private final Paint myDarkPaint = new Paint();
 	private final Paint myPaint = new Paint();
 
-	SlideAnimationProvider(BitmapManager bitmapManager) {
+	public SlideAnimationProvider(BitmapManager bitmapManager) {
 		super(bitmapManager);
 	}
 
@@ -58,14 +58,14 @@ class SlideAnimationProvider extends SimpleAnimationProvider {
 		if (myDirection.IsHorizontal) {
 			final int dX = myEndX - myStartX;
 			setDarkFilter(dX, myWidth);
-			canvas.drawBitmap(getBitmapTo(), 0, 0, myDarkPaint);
-			canvas.drawBitmap(getBitmapFrom(), dX, 0, myPaint);
+			drawBitmapTo(canvas, 0, 0, myDarkPaint);
+			drawBitmapFrom(canvas, dX, 0, myPaint);
 			drawShadow(canvas, 0, myHeight, dX);
 		} else {
 			final int dY = myEndY - myStartY;
 			setDarkFilter(dY, myHeight);
-			canvas.drawBitmap(getBitmapTo(), 0, 0, myDarkPaint);
-			canvas.drawBitmap(getBitmapFrom(), 0, dY, myPaint);
+			drawBitmapTo(canvas, 0, 0, myDarkPaint);
+			drawBitmapFrom(canvas, 0, dY, myPaint);
 		}
 	}
 
@@ -79,7 +79,7 @@ class SlideAnimationProvider extends SimpleAnimationProvider {
 	}
 
 	@Override
-	protected void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+	public void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
 		if (myDirection.IsHorizontal) {
 			final int dX = myEndX - myStartX;
 			setDarkFilter(dX, myWidth);
