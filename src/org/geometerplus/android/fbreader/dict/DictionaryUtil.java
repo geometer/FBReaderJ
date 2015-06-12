@@ -19,29 +19,20 @@
 
 package org.geometerplus.android.fbreader.dict;
 
-import java.io.InputStream;
 import java.util.*;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.app.*;
+import android.app.Activity;
 import android.content.*;
 import android.net.Uri;
-import android.os.Looper;
-import android.os.Parcelable;
 import android.util.DisplayMetrics;
-import android.view.View;
-
-import com.paragon.dictionary.fbreader.OpenDictionaryFlyout;
-import com.paragon.open.dictionary.api.Dictionary;
-import com.paragon.open.dictionary.api.OpenDictionaryAPI;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.XmlUtil;
 
 import org.geometerplus.android.fbreader.FBReader;
@@ -49,7 +40,7 @@ import org.geometerplus.android.util.PackageUtil;
 
 public abstract class DictionaryUtil {
 	private static int FLAG_INSTALLED_ONLY = 1;
-	private static int FLAG_SHOW_AS_DICTIONARY = 2;
+	static int FLAG_SHOW_AS_DICTIONARY = 2;
 	private static int FLAG_SHOW_AS_TRANSLATOR = 4;
 
 	private static ZLStringOption ourSingleWordTranslatorOption;
@@ -128,26 +119,6 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	private static class OpenDictionaryPackageInfo extends PackageInfo {
-		final OpenDictionaryFlyout Flyout;
-
-		OpenDictionaryPackageInfo(Dictionary dictionary) {
-			super(
-				dictionary.getUID(),
-				dictionary.getName(),
-				false
-			);
-			put("package", dictionary.getApplicationPackageName());
-			put("class", ".Start");
-			Flyout = new OpenDictionaryFlyout(dictionary);
-		}
-
-		@Override
-		void open(String text, Runnable outliner, FBReader fbreader, PopupFrameMetric frameMetrics) {
-			Flyout.showTranslation(fbreader, text, frameMetrics);
-		}
-	}
-
 	private static class InfoReader extends DefaultHandler {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -216,25 +187,6 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	private static void collectOpenDictionaries(Context context) {
-		final SortedSet<Dictionary> dictionariesTreeSet =
-			new TreeSet<Dictionary>(new Comparator<Dictionary>() {
-				@Override
-				public int compare(Dictionary lhs, Dictionary rhs) {
-					return lhs.toString().compareTo(rhs.toString());
-				}
-			}
-		);
-		dictionariesTreeSet.addAll(
-			new OpenDictionaryAPI(context).getDictionaries()
-		);
-
-		for (Dictionary dict : dictionariesTreeSet) {
-			final PackageInfo info = new OpenDictionaryPackageInfo(dict);
-			ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY);
-		}
-	}
-
 	private static final class Initializer implements Runnable {
 		private final Activity myActivity;
 		private final Runnable myPostAction;
@@ -262,7 +214,7 @@ public abstract class DictionaryUtil {
 				);
 				myActivity.runOnUiThread(new Runnable() {
 					public void run() {
-						collectOpenDictionaries(myActivity);
+						OpenDictionary.collect(myActivity, ourInfos);
 						if (myPostAction != null) {
 							myPostAction.run();
 						}
