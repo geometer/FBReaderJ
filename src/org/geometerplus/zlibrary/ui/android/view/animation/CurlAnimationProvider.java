@@ -201,7 +201,7 @@ public final class CurlAnimationProvider extends AnimationProvider {
 			angle = 180 - 180 / 3.1416f * (float)Math.atan2(x - cornerX, y - y1);
 		}
 		m.postRotate(angle, x, y);
-		canvas.drawBitmap(fgBitmap, m, myBackPaint);
+		canvas.drawBitmap(getBitmapFrom(), m, myBackPaint);
 		canvas.restore();
 		*/
 	}
