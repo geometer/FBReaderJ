@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextVideoRegionSoul;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.httpd.DataUtil;
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.UIMessageUtil;
 
 class OpenVideoAction extends FBAndroidAction {
 	OpenVideoAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -56,7 +56,7 @@ class OpenVideoAction extends FBAndroidAction {
 			final Intent intent = new Intent(Intent.ACTION_VIEW);
 			final String url = DataUtil.buildUrl(BaseActivity.DataConnection, mime, path);
 			if (url == null) {
-				UIUtil.showErrorMessage(BaseActivity, "videoServiceNotWorking");
+				UIMessageUtil.showErrorMessage(BaseActivity, "videoServiceNotWorking");
 				return;
 			}
 			intent.setDataAndType(Uri.parse(url), mime);
@@ -69,7 +69,7 @@ class OpenVideoAction extends FBAndroidAction {
 			}
 		}
 		if (playerNotFound) {
-			UIUtil.showErrorMessage(BaseActivity, "videoPlayerNotFound");
+			UIMessageUtil.showErrorMessage(BaseActivity, "videoPlayerNotFound");
 		}
 	}
 }

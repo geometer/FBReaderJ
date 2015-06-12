@@ -47,6 +47,7 @@ import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
+import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.UIUtil;
 
 class DisplayBookPopupAction extends FBAndroidAction {
@@ -173,7 +174,7 @@ class DisplayBookPopupAction extends FBAndroidAction {
 										new QuietNetworkContext().downloadToFile(bookInfo.Url, file);
 										openBook(popup, Reader.Collection.getBookByFile(fileName));
 									} catch (ZLNetworkException e) {
-										UIUtil.showErrorMessage(BaseActivity, "downloadFailed");
+										UIMessageUtil.showErrorMessage(BaseActivity, "downloadFailed");
 										e.printStackTrace();
 									}
 								}

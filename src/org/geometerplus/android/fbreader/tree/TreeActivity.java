@@ -30,6 +30,7 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -226,7 +227,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 				);
 				break;
 			case CANNOT_OPEN:
-				UIUtil.showErrorMessage(TreeActivity.this, tree.getOpeningStatusMessage());
+				UIMessageUtil.showErrorMessage(TreeActivity.this, tree.getOpeningStatusMessage());
 				break;
 		}
 	}

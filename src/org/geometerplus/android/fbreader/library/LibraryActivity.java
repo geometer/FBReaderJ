@@ -479,7 +479,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				if (found) {
 					openSearchResults();
 				} else {
-					UIUtil.showErrorMessage(LibraryActivity.this, "bookNotFound");
+					UIMessageUtil.showErrorMessage(LibraryActivity.this, "bookNotFound");
 				}
 			}
 		});
