@@ -56,7 +56,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextWord;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class DictionaryUtil {
@@ -510,7 +510,7 @@ public abstract class DictionaryUtil {
 
 	private static void installDictionary(Activity activity, PackageInfo dictionaryInfo) {
 		if (!PackageUtil.installFromMarket(activity, dictionaryInfo.get("package"))) {
-			UIUtil.showErrorMessage(activity, "cannotRunAndroidMarket", dictionaryInfo.getTitle());
+			UIMessageUtil.showErrorMessage(activity, "cannotRunAndroidMarket", dictionaryInfo.getTitle());
 		}
 	}
 
