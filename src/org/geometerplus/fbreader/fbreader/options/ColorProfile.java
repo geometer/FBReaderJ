@@ -38,8 +38,10 @@ public class ColorProfile {
 			if (size == 0) {
 				ourNames.add(DAY);
 				ourNames.add(NIGHT);
-			} else for (int i = 0; i < size; ++i) {
-				ourNames.add(new ZLStringOption("Colors", "Scheme" + i, "").getValue());
+			} else {
+				for (int i = 0; i < size; ++i) {
+					ourNames.add(new ZLStringOption("Colors", "Scheme" + i, "").getValue());
+				}
 			}
 		}
 		return Collections.unmodifiableList(ourNames);
