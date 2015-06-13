@@ -1066,6 +1066,14 @@
 		<node name="missingPlugin">
 			<node name="title" value="Модуль для чтения файлов %s не установлен. Установить прямо сейчас?"/>
 		</node>
+		<node name="licensing">
+			<node name="title" value="%s не лицензирован"/>
+			<node name="message" value="Купить на Google Play?"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Не удалось проверить лицензию %s"/>
+			<node name="message" value="Попробовать ещё раз?"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Ошибка %s в нативном коде при чтении '%s'"/>
