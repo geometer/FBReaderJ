@@ -111,6 +111,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 							toast.setOnClickWrapper(new OnClickWrapper("ftnt", new SuperToast.OnClickListener() {
 								@Override
 								public void onClick(View view, Parcelable token) {
+									Reader.getTextView().hideOutline();
 									Reader.tryOpenFootnote(hyperlink.Id);
 								}
 							}));
