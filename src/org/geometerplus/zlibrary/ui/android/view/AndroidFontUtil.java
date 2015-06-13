@@ -175,7 +175,7 @@ public final class AndroidFontUtil {
 		}
 	}
 
-	private static Typeface systemTypeface(String family, boolean bold, boolean italic) {
+	public static Typeface systemTypeface(String family, boolean bold, boolean italic) {
 		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = ourTypefaces.get(family);

@@ -336,6 +336,12 @@ public class SuperActivityToast {
 
     }
 
+	public void setTypeface(Typeface typeface) {
+		if (typeface != null) {
+			mMessageTextView.setTypeface(typeface);
+		}
+	}
+
     /**
      * Sets the message typeface style of the {@value #TAG}.
      *
