@@ -1056,6 +1056,14 @@
 		<node name="missingPlugin">
 			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
 		</node>
+		<node name="licensing">
+			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
+			<node name="message" value="Purchase on Google Play right now?" toBeTranslated="true"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
+			<node name="message" value="Try again?" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
