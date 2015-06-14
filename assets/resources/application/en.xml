@@ -24,7 +24,7 @@
 			<node name="summary" value="My favourite books"/>
 		</node>
 		<node name="bookshelfView" value="Bookshelf view">
-			<node name="summary" value="Modern (material design style) library view"/>
+			<node name="summary" value="Switch to thumbnail view"/>
 		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
@@ -762,7 +762,7 @@
 			<node name="translationToastDuration" value="How long to show translation popup"/>
 			<node name="errorToastDuration" value="How long to show error message"/>
 			<node name="sourceLanguage" value="Translate from">
-				<node name="detect" value="Automatically detected language"/>
+				<node name="detect" value="Automatically detect language"/>
 			</node>
 			<node name="targetLanguage" value="Translate to">
 				<node name="any" value="All languages"/>
