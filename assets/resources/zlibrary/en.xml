@@ -11,12 +11,12 @@
 		<node name="networkError">
 			<node name="title" value="Network error"/>
 			<node name="unknownErrorMessage" value="Unknown error"/>
-			<node name="operationTimedOutMessage" value="Operation is timed out"/>
-			<node name="somethingWrongMessage" value="Something goes wrong for %s"/>
-			<node name="couldntCreateDirectoryMessage" value="Couldn't create a directory %s"/>
-			<node name="couldntCreateFileMessage" value="Couldn't create a file %s"/>
-			<node name="couldntConnectMessage" value="Couldn't connect to host %s"/>
-			<node name="couldntResolveHostMessage" value="Couldn't resolve host %s"/>
+			<node name="operationTimedOutMessage" value="Operation has timed out"/>
+			<node name="somethingWrongMessage" value="Something went wrong with %s"/>
+			<node name="couldntCreateDirectoryMessage" value="Failed to create directory %s"/>
+			<node name="couldntCreateFileMessage" value="Failed to create file %s"/>
+			<node name="couldntConnectMessage" value="Failed to connect to host %s"/>
+			<node name="couldntResolveHostMessage" value="Failed to resolve host %s"/>
 			<node name="authenticationFailed" value="Authentication failed"/>
 			<node name="unsupportedProtocol" value="Unsupported protocol"/>
 			<node name="invalidURL" value="Invalid URL"/>
@@ -38,7 +38,7 @@
 		<node name="cs" value="Czech"/>
 		<node name="da" value="Danish"/>
 		<node name="de" value="German"/>
-		<node name="de-traditional" value="German (traditional orthography)"/>
+		<node name="de-traditional" value="German (traditional spelling)"/>
 		<node name="el" value="Greek"/>
 		<node name="en" value="English"/>
 		<node name="eo" value="Esperanto"/>
@@ -78,9 +78,9 @@
 		<node name="system" value="System"/>
 	</node>
 	<node name="boolean3">
-		<node name="on" value="on"/>
-		<node name="off" value="off"/>
-		<node name="unchanged" value="unchanged"/>
+		<node name="on" value="On"/>
+		<node name="off" value="Off"/>
+		<node name="unchanged" value="Unchanged"/>
 	</node>
 	<node name="keyOptionView">
 		<node name="actionFor" value="Action for Key"/>
