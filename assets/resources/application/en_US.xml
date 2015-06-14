@@ -29,12 +29,12 @@
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
-		<node name="sync" value="Synchronisation">
-			<node name="summary" value="Books by synchronisation status"/>
+		<node name="sync" value="Synchronization">
+			<node name="summary" value="Books by synchronization status"/>
 			<node name="sync-success" value="Synchronized">
 				<node name="summary" value="Books successfully uploaded to the server"/>
 			</node>
-			<node name="sync-failure" value="Synchronisation failed">
+			<node name="sync-failure" value="Synchronization failed">
 				<node name="summary" value="Books not uploaded to the server due to errors"/>
 			</node>
 			<node name="sync-deleted" value="Deleted from server">
@@ -185,7 +185,7 @@
 		<node name="confirm" value="Are you sure you want to buy &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?"/>
 		<node name="alreadyBought" value="Book has already been purchased"/>
-		<node name="notAuthorised" value="Authorisation required"/>
+		<node name="notAuthorised" value="Authorization required"/>
 		<node name="noAccountInformation" value="Cannot load account details"/>
 		<node name="unsufficientFunds" value="This purchase costs %0, your balance is %1"/>
 		<node name="zeroFunds" value="This purchase costs %0"/>
@@ -332,12 +332,12 @@
 		<node name="series" value="Series"/>
 	</node>
 	<node name="Preferences">
-		<node name="sync" value="Synchronisation">
+		<node name="sync" value="Synchronization">
 			<node name="summary" value="Book network settings"/>
-			<node name="site" value="Read more about synchronisation">
+			<node name="site" value="Read more about synchronization">
 				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
-			<node name="enable" value="Enable synchronisation">
+			<node name="enable" value="Enable synchronization">
 				<node name="summaryOn" value="Synchronize my library with FBReader book network server"/>
 				<node name="summaryOnWithAccount" value="Synchronize my library as %s"/>
 				<node name="summaryOff" value="Do not synchronize my library with FBReader book network server"/>
