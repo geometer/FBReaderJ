@@ -1168,4 +1168,7 @@
 		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
 		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
 	</node>
+	<node name="dictionary">
+		<node name="Yandex.Translate" value="Яндекс.Перекладач"/>
+	</node>
 </resources>
