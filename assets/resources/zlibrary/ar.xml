@@ -11,12 +11,12 @@
 		<node name="networkError">
 			<node name="title" value="خطأ في الشبكة"/>
 			<node name="unknownErrorMessage" value="خطأ غير معروف"/>
-			<node name="operationTimedOutMessage" value="Operation is timed out" toBeTranslated="true"/>
-			<node name="somethingWrongMessage" value="Something goes wrong for %s" toBeTranslated="true"/>
+			<node name="operationTimedOutMessage" value="Operation has timed out" toBeTranslated="true"/>
+			<node name="somethingWrongMessage" value="Something went wrong with %s" toBeTranslated="true"/>
 			<node name="couldntCreateDirectoryMessage" value="لا يمكن إنشاء المجلد %s"/>
 			<node name="couldntCreateFileMessage" value="لا يمكن إنشاء الملف %s"/>
 			<node name="couldntConnectMessage" value="لايمكن الإتصال بالمضيف %s"/>
-			<node name="couldntResolveHostMessage" value="Couldn't resolve host %s" toBeTranslated="true"/>
+			<node name="couldntResolveHostMessage" value="Failed to resolve host %s" toBeTranslated="true"/>
 			<node name="authenticationFailed" value="Authentication failed" toBeTranslated="true"/>
 			<node name="unsupportedProtocol" value="Unsupported protocol" toBeTranslated="true"/>
 			<node name="invalidURL" value="Invalid URL" toBeTranslated="true"/>
