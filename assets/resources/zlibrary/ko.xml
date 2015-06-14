@@ -38,7 +38,7 @@
 		<node name="cs" value="Czech" toBeTranslated="true"/>
 		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="German" toBeTranslated="true"/>
-		<node name="de-traditional" value="German (traditional orthography)" toBeTranslated="true"/>
+		<node name="de-traditional" value="German (traditional spelling)" toBeTranslated="true"/>
 		<node name="el" value="Greek" toBeTranslated="true"/>
 		<node name="en" value="English" toBeTranslated="true"/>
 		<node name="eo" value="Esperanto" toBeTranslated="true"/>
