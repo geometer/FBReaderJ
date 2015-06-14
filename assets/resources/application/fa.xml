@@ -23,7 +23,7 @@
 			<node name="summary" value="کتابهای منتخب من"/>
 		</node>
 		<node name="bookshelfView" value="مشاهده قفسه کتاب">
-			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+			<node name="summary" value="Switch to thumbnail view" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="پیدا شد">
 			<node name="summary" value="نتایج جستجو برای: %s"/>
@@ -417,7 +417,7 @@
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
 			<node name="allowScreenBrightnessAdjustment" value="تنظيم روشنايي صفحه نمايش ">
 				<node name="summaryOn" value="كشيدن انگشت به بالا/پائين گوشه چپ صفحه نمايش "/>
 				<node name="summaryOff" value="غير فعال"/>
@@ -761,7 +761,7 @@
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
 			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
 			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
-				<node name="detect" value="Automatically detected language" toBeTranslated="true"/>
+				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
 			</node>
 			<node name="targetLanguage" value="ترجمه به">
 				<node name="any" value="همه زبان ها"/>
@@ -1058,7 +1058,7 @@
 		</node>
 		<node name="licensing">
 			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play right now?" toBeTranslated="true"/>
+			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
 		</node>
 		<node name="retryLicensing">
 			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
@@ -1101,7 +1101,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="مشکل اف بی ریدر"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
+			<node name="text" value="Cannot write to FBReader cache. Please check that your memory card is inserted correctly, or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="خطای اف بی ریدر"/>
@@ -1172,9 +1172,9 @@
 		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="unknown error" toBeTranslated="true"/>
-		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
-		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
-		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
+		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="No article found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="Cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

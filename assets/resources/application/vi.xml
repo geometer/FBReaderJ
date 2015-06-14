@@ -96,8 +96,8 @@
 		<node name="found" value="Tìm thấy">
 			<node name="summary" value="Kết quả tìm kiếm khoảng: %s"/>
 		</node>
-		<node name="recent" value="Recent catalogs" toBeTranslated="true">
-			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
+		<node name="recent" value="Recent catalogues" toBeTranslated="true">
+			<node name="summary" value="Catalogues you browsed recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Mở danh mục"/>
 		<node name="networkSearch" value="Tìm kiếm"/>
@@ -129,7 +129,7 @@
 		<node name="topupSummary" value="Hiện tại: %s"/>
 		<node name="basket" value="Basket" toBeTranslated="true"/>
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
-		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 books" toBeTranslated="true"/>
 		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Sách đang được tải về"/>
 		<node name="alreadyDownloadingDemo" value="Bản thử đang được tải về"/>
@@ -139,7 +139,7 @@
 		<node name="removeCustomCatalog" value="Xóa catalo"/>
 		<node name="addCustomCatalog" value="Thêm"/>
 		<node name="addCustomCatalogSummary" value="Thêm tùy chỉnh OPDS bằng tay"/>
-		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
+		<node name="disableCatalog" value="Disable catalogue" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Bạn muốn đọc bản nội bộ?"/>
 			<node name="download" value="Bạn muốn tải về quyển sách này?"/>
@@ -153,8 +153,8 @@
 		<node name="searchingNetwork" value="Đang tìm sách trên mạng"/>
 		<!-- used as notification title -->
 		<node name="addCatalog">
-			<node name="title" value="Add catalog" toBeTranslated="true"/>
-			<node name="editUrl" value="Nhập URL thủ công" toBeTranslated="true"/>
+			<node name="title" value="Add catalogue" toBeTranslated="true"/>
+			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
 		</node>
 		<node name="manageCatalogs" value="Quản lý kho sách">
 			<node name="summary" value="Cấu hình danh mục kho sách"/>
@@ -162,7 +162,7 @@
 			<node name="disabled" value="Không dùng"/>
 		</node>
 		<node name="menu">
-			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
+			<node name="openRoot" value="Root catalogue" toBeTranslated="true"/>
 			<node name="networkSearch" value="Tìm trên mạng"/>
 			<node name="reload" value="Tải lại"/>
 			<node name="signIn" value="Đăng nhập"/>
@@ -171,7 +171,7 @@
 			<node name="topup" value="Tái đầy tài khoản "/>
 			<node name="addCustomCatalog" value="Thêm catalo"/>
 			<node name="refreshCatalogsList" value="Tải lại các catalo"/>
-			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
+			<node name="manageCatalogs" value="Manage catalogues" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
@@ -183,8 +183,8 @@
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
 		<node name="alreadyBought" value="Sách đã mua"/>
 		<node name="notAuthorised" value="Authorisation required" toBeTranslated="true"/>
-		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
-		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
+		<node name="noAccountInformation" value="Cannot load account details" toBeTranslated="true"/>
+		<node name="unsufficientFunds" value="This purchase costs %0, your balance is %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
@@ -205,7 +205,7 @@
 		<node name="time" value="Lần sửa cuối:"/>
 		<node name="sizeInBytes" value="%s byte"/>
 		<node name="sizeInKiloBytes" value="%s kB"/>
-		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
+		<node name="catalog" value="Catalogue:" toBeTranslated="true"/>
 		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 		<node name="menu">
 			<node name="edit" value="Sửa"/>
@@ -409,7 +409,7 @@
 				<node name="footnotesAndSuperscripts" value="Chỉ chú thích và đường dẫn dùng thẻ sup"/>
 				<node name="allInternalLinks" value="Tất cả các liên kết nội bộ"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
 			<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
 				<node name="summaryOn" value="Vuốt ngón tay theo lề trái màn hình"/>
 				<node name="summaryOff" value="Tắt"/>
@@ -438,8 +438,8 @@
 					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
 				</node>
 				<node name="dithering" value="Dithering" toBeTranslated="true">
-					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					<node name="summaryOn" value="Colour dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Colour dithering is disabled" toBeTranslated="true"/>
 				</node>
 				<node name="hinting" value="Hinting" toBeTranslated="true">
 					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
@@ -644,7 +644,7 @@
 			<node name="fillMode" value="Fill mode" toBeTranslated="true">
 				<node name="tile" value="Tile" toBeTranslated="true"/>
 				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
-				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="fullscreen" value="Fullscreen" toBeTranslated="true"/>
 				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
 				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
 				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
@@ -679,10 +679,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Chiều cao của cuối trang"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="Footer (old style) colour" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background colour" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text colour" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line colour" toBeTranslated="true"/>
 			<node name="tocMarks" value="Hiện đánh dấu mục lục">
 				<node name="summaryOn" value="Hiện đánh dấu mục lục ở thanh cuối trang"/>
 				<node name="summaryOff" value="Không Hiện đánh dấu mục lục ở thanh cuối trang"/>
@@ -737,7 +737,7 @@
 			</node>
 		</node>
 		<node name="tapZones" value="Tap zones" toBeTranslated="true">
-			<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+			<node name="summary" value="Finger tap actions" toBeTranslated="true"/>
 			<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
 				<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
 				<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
@@ -753,10 +753,10 @@
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
 			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
 			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
-				<node name="detect" value="Automatically detected language" toBeTranslated="true"/>
+				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
 			</node>
 			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
-				<node name="any" value="all languages" toBeTranslated="true"/>
+				<node name="any" value="All languages" toBeTranslated="true"/>
 			</node>
 			<node name="longTapAction" value="Bấm giữ">
 				<node name="doNothing" value="Không làm gì khi bấm giữ"/>
@@ -924,8 +924,8 @@
 				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
 			</node>
 			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
-			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
-			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information has been sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information was sent to %s. Please check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
 			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
@@ -942,14 +942,14 @@
 			<node name="signOut" value="Đang thoát, vui lòng chờ…"/>
 			<node name="purchaseBook" value="Mua sách, vui lòng chờ…"/>
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait…"/>
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please wait…" toBeTranslated="true"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
-			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
-			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicence" value="Acquiring licence. Please, wait…" toBeTranslated="true"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please wait…" toBeTranslated="true"/>
+			<node name="acquireLicence" value="Acquiring licence. Please wait…" toBeTranslated="true"/>
 			<node name="registerUser" value="Đang đăng ký tài khoản, vui lòng chờ…"/>
-			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
-			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
+			<node name="autoSignIn" value="Signing in. Please wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Lỗi mạng nội bộ "/>
@@ -981,7 +981,7 @@
 			<node name="register" value="Đăng ký"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true"/>
+			<node name="title" value="FBReader: add custom catalogue" toBeTranslated="true"/>
 			<node name="catalogTitle" value="Tiêu đề"/>
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Tóm tắt"/>
@@ -1046,11 +1046,11 @@
 			<node name="permissionDenied" value="Không được cho phép"/>
 		</node>
 		<node name="missingPlugin">
-			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
+			<node name="title" value="Plugin for %s files is not installed. Install now?" toBeTranslated="true"/>
 		</node>
 		<node name="licensing">
 			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play right now?" toBeTranslated="true"/>
+			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
 		</node>
 		<node name="retryLicensing">
 			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
@@ -1058,13 +1058,13 @@
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="nativeCodeFailure" value="Error %s in native code while reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Error occured while reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Error occured while extracting '%s'" toBeTranslated="true"/>
 		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
 		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="Không tìm thấy: %s" toBeTranslated="true"/>
-		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File not found: %s" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="File %s encryption method is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
@@ -1076,12 +1076,12 @@
 		<node name="dictionaryIsNotInstalled" value="Xin lỗi, từ điển chưa được cài"/>
 		<node name="permissionDenied" value="Xin lỗi, từ chối cho phép "/>
 		<node name="noFavorites" value="Xin lỗi, danh sách yêu thích của bạn đang trống"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="noSeries" value="There are no books in series" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Danh mục rỗng"/>
-		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyBasket" value="Your basket is empty" toBeTranslated="true"/>
 		<node name="emptyNetworkSearchResults" value="Không tìm thấy sách, rất tiếc."/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
+		<node name="videoServiceNotWorking" value="Video service is not available" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="No video player installed on this device" toBeTranslated="true"/>
 		<node name="bookIsMissingTitle" value="Sách bị mất"/>
 		<node name="bookIsMissing" value="Quyển '%s' không có trên thiết bị này, rất tiếc."/>
 		<node name="downloadFailed" value="Tải về thất bại"/>
@@ -1093,11 +1093,11 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
+			<node name="text" value="Cannot write to FBReader cache. Please check that your memory card is inserted correctly, or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the problem persists please try to reinstall FBReader." toBeTranslated="true"/>
+			<node name="text" value="FBReader cannot load native library. If the issue persists, please reinstall FBReader." toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="error">
@@ -1117,7 +1117,7 @@
 			<node name="summary" value="Read aloud" toBeTranslated="true"/>
 		</node>
 		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
-			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+			<node name="summary" value="Connect to Calibre server in your local network" toBeTranslated="true"/>
 		</node>
 		<node name="local_opds_scanner" value="Local OPDS Scanner" toBeTranslated="true">
 			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
@@ -1126,7 +1126,7 @@
 			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
 		</node>
 		<node name="opds_server" value="OPDS Server" toBeTranslated="true">
-			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+			<node name="summary" value="Allow your device to act as server" toBeTranslated="true"/>
 		</node>
 		<node name="widgets" value="Widgets" toBeTranslated="true">
 			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
@@ -1138,7 +1138,7 @@
 			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 		<node name="cbr" value="Comic Books" toBeTranslated="true">
-			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
+			<node name="summary" value="Read comic books (CBR, CBZ)" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">
@@ -1164,9 +1164,9 @@
 		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="unknown error" toBeTranslated="true"/>
-		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
-		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
-		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
+		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="No article found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="Cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

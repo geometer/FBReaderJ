@@ -768,7 +768,7 @@
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
 			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
 			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
-				<node name="detect" value="Automatically detected language" toBeTranslated="true"/>
+				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
 			</node>
 			<node name="targetLanguage" value="Թարգմանել">
 				<node name="any" value="բոլոր լեզուներով"/>
@@ -1065,7 +1065,7 @@
 		</node>
 		<node name="licensing">
 			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play right now?" toBeTranslated="true"/>
+			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
 		</node>
 		<node name="retryLicensing">
 			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>

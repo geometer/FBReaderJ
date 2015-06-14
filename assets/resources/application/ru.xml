@@ -452,8 +452,8 @@
 					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
 				</node>
 				<node name="dithering" value="Dithering" toBeTranslated="true">
-					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					<node name="summaryOn" value="Colour dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Colour dithering is disabled" toBeTranslated="true"/>
 				</node>
 				<node name="hinting" value="Hinting" toBeTranslated="true">
 					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
@@ -751,7 +751,7 @@
 			</node>
 		</node>
 		<node name="tapZones" value="Tap zones" toBeTranslated="true">
-			<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+			<node name="summary" value="Finger tap actions" toBeTranslated="true"/>
 			<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
 				<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
 				<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>

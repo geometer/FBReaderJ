@@ -27,7 +27,7 @@
 			<node name="summary" value="Ma sélection de livres"/>
 		</node>
 		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
-			<node name="summary" value="Modern (material design style) library view" toBeTranslated="true"/>
+			<node name="summary" value="Switch to thumbnail view" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="Trouvé(s)">
 			<node name="summary" value="Résultats de la recherche : %s"/>
@@ -411,7 +411,7 @@
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
 			<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
 				<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
 				<node name="summaryOff" value="Contrôle désactivé"/>
@@ -681,10 +681,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="Hauteur du pied de page"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="Footer (old style) colour" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background colour" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text colour" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line colour" toBeTranslated="true"/>
 			<node name="tocMarks" value="Afficher les repères de la table des matières">
 				<node name="summaryOn" value="Afficher les repères dans la barre du pied de page"/>
 				<node name="summaryOff" value="Ne pas afficher les repères dans la barre du pied de page"/>
@@ -755,7 +755,7 @@
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
 			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
 			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
-				<node name="detect" value="Automatically detected language" toBeTranslated="true"/>
+				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
 			</node>
 			<node name="targetLanguage" value="Traduire vers">
 				<node name="any" value="Toutes les langues"/>
@@ -926,8 +926,8 @@
 				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
 			</node>
 			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
-			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
-			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information has been sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information was sent to %s. Please check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
 			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
@@ -950,8 +950,8 @@
 			<node name="initDRMEngine" value="Initialisation du moteur DRM, veuillez patienter…"/>
 			<node name="acquireLicence" value="Récupération de la licence, veuillez patienter…"/>
 			<node name="registerUser" value="Inscription en cours. Veuillez patienter…"/>
-			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
-			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
+			<node name="autoSignIn" value="Signing in. Please wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>
@@ -970,7 +970,7 @@
 			<node name="passwordNotSpecified" value="Veuillez entrer un mot de passe non vide"/>
 			<node name="passwordsDoNotMatch" value="Les deux mots de passe indiqués doivent être les mêmes."/>
 			<node name="emailNotSpecified" value="Veuillez entrer une adresse email"/>
-			<node name="emailAlreadyInUse" value="Email address already in use" toBeTranslated="true"/>
+			<node name="emailAlreadyInUse" value="Email address is already in use" toBeTranslated="true"/>
 			<node name="invalidEMail" value="Adresse email invalide"/>
 			<node name="tooManyRegistrations" value="Trop d'inscriptions depuis votre IP ;&#10;essayer à nouvea dans quelques minutes"/>
 		</node>
@@ -1052,7 +1052,7 @@
 		</node>
 		<node name="licensing">
 			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play right now?" toBeTranslated="true"/>
+			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
 		</node>
 		<node name="retryLicensing">
 			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
@@ -1119,7 +1119,7 @@
 			<node name="summary" value="Lire à voix haute"/>
 		</node>
 		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
-			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+			<node name="summary" value="Connect to Calibre server in your local network" toBeTranslated="true"/>
 		</node>
 		<node name="local_opds_scanner" value="Scanner OPDS local">
 			<node name="summary" value="Chercher des livres sur le réseau local"/>
@@ -1140,7 +1140,7 @@
 			<node name="summary" value="Lire des livres au format DjVu"/>
 		</node>
 		<node name="cbr" value="Comic Books" toBeTranslated="true">
-			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
+			<node name="summary" value="Read comic books (CBR, CBZ)" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">
@@ -1166,9 +1166,9 @@
 		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
 	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="unknown error" toBeTranslated="true"/>
-		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
-		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
-		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
+		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="No article found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="Cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>
