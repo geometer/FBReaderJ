@@ -113,7 +113,8 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_item, parent, false);
-			((TextView)view).setText(getItem(position).MenuItemName);
+			final TextView titleView = (TextView)view.findViewById(R.id.menu_item_title);
+			titleView.setText(getItem(position).MenuItemName);
 			return view;
 		}
 	}
