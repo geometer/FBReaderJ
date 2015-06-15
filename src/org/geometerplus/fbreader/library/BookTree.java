@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class BookTree extends LibraryTree {
@@ -64,7 +65,7 @@ public class BookTree extends LibraryTree {
 
 	@Override
 	protected ZLImage createCover() {
-		return BookUtil.getCover(Book);
+		return CoverUtil.getCover(Book, PluginCollection.Instance());
 	}
 
 	@Override

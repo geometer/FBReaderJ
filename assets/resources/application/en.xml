@@ -21,10 +21,10 @@
 			<node name="summary" value="Recently opened books"/>
 		</node>
 		<node name="favorites" value="Favourites">
-			<node name="summary" value="My selected books"/>
+			<node name="summary" value="My favourite books"/>
 		</node>
 		<node name="bookshelfView" value="Bookshelf view">
-			<node name="summary" value="Modern (material design style) library view"/>
+			<node name="summary" value="Switch to thumbnail view"/>
 		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
@@ -32,16 +32,16 @@
 		<node name="sync" value="Synchronisation">
 			<node name="summary" value="Books by synchronisation status"/>
 			<node name="sync-success" value="Synchronised">
-				<node name="summary" value="Books uploaded to the server"/>
+				<node name="summary" value="Books successfully uploaded to the server"/>
 			</node>
 			<node name="sync-failure" value="Synchronisation failed">
-				<node name="summary" value="Books not uploaded to the server due some problems"/>
+				<node name="summary" value="Books not uploaded to the server due to errors"/>
 			</node>
 			<node name="sync-deleted" value="Deleted from server">
-				<node name="summary" value="Books not accessible from the server more"/>
+				<node name="summary" value="Books no longer accessible from the server"/>
 			</node>
 			<node name="sync-tosync" value="Not synchronised yet">
-				<node name="summary" value="Books to be uploaded to the server"/>
+				<node name="summary" value="Books yet to be uploaded to the server"/>
 			</node>
 		</node>
 		<node name="fileTree" value="File tree">
@@ -82,7 +82,7 @@
 			<node name="summary" value="Books sorted by title"/>
 		</node>
 		<node name="byDate" value="By date">
-			<node name="summary" value="Books sorted by date of purchasing"/>
+			<node name="summary" value="Books sorted by date of purchase"/>
 		</node>
 		<node name="bySeries" value="By series">
 			<node name="summary" value="Books sorted by series"/>
@@ -96,15 +96,15 @@
 			<node name="summary" value="Search results for: %s"/>
 		</node>
 		<node name="recent" value="Recent catalogues">
-			<node name="summary" value="Catalogues you visited recently"/>
+			<node name="summary" value="Catalogues you browsed recently"/>
 		</node>
 		<node name="openCatalog" value="Open catalogue"/>
 		<node name="networkSearch" value="Search"/>
 		<node name="showResults" value="Show results"/>
 		<node name="showBooks" value="Show books"/>
 		<node name="download" value="Download"/>
-		<node name="read" value="Read local copy"/>
-		<node name="delete" value="Delete local copy"/>
+		<node name="read" value="Read downloaded copy"/>
+		<node name="delete" value="Delete downloaded copy"/>
 		<node name="readDemo" value="Read sample"/>
 		<node name="deleteDemo" value="Delete sample"/>
 		<node name="downloadDemo" value="Download sample"/>
@@ -144,12 +144,12 @@
 		<node name="addCustomCatalogSummary" value="Add custom OPDS catalogue manually"/>
 		<node name="disableCatalog" value="Disable catalogue"/>
 		<node name="confirmQuestions">
-			<node name="read" value="Do you want to read local copy?"/>
+			<node name="read" value="Do you want to read downloaded copy?"/>
 			<node name="download" value="Do you want to download the book?"/>
-			<node name="readDemo" value="Do you want to read sample?"/>
-			<node name="downloadDemo" value="Do you want to download sample?"/>
+			<node name="readDemo" value="Do you want to read the sample?"/>
+			<node name="downloadDemo" value="Do you want to download the sample?"/>
 			<node name="buy" value="Do you want to buy the book? (%s)"/>
-			<node name="openInBrowser" value="Do you want to open the link in browser?"/>
+			<node name="openInBrowser" value="Do you want to open the link in a browser?"/>
 		</node>
 		<node name="downloadingCatalogs" value="Downloading catalogues"/>
 		<!-- used as notification title -->
@@ -160,7 +160,7 @@
 			<node name="editUrl" value="Enter URL manually"/>
 		</node>
 		<node name="manageCatalogs" value="Manage catalogues">
-			<node name="summary" value="Configure your catalogues list"/>
+			<node name="summary" value="Configure your catalogues"/>
 			<node name="enabled" value="Enabled"/>
 			<node name="disabled" value="Disabled"/>
 		</node>
@@ -184,24 +184,24 @@
 		<node name="titleSeveralBooks" value="Purchase books"/>
 		<node name="confirm" value="Are you sure you want to buy &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?"/>
-		<node name="alreadyBought" value="Book is already bought"/>
+		<node name="alreadyBought" value="Book has already been purchased"/>
 		<node name="notAuthorised" value="Authorisation required"/>
-		<node name="noAccountInformation" value="Cannot load account state"/>
-		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1"/>
+		<node name="noAccountInformation" value="Cannot load account details"/>
+		<node name="unsufficientFunds" value="This purchase costs %0, your balance is %1"/>
 		<node name="zeroFunds" value="This purchase costs %0"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Book Info"/>
 		<node name="fileInfo" value="File Info"/>
 		<node name="description" value="Description"/>
-		<node name="noDescription" value="No description available."/>
+		<node name="noDescription" value="No description available"/>
 		<node name="annotation" value="Annotation"/>
 		<node name="title" value="Title:"/>
 		<node name="authors" value="Authors:">
 			<node condition="value 1" value="Author:"/>
 		</node>
 		<node name="series" value="Series:"/>
-		<node name="indexInSeries" value="Index in series:"/>
+		<node name="indexInSeries" value="Number in series:"/>
 		<node name="tags" value="Tags:">
 			<node condition="value 1" value="Tag:"/>
 		</node>
@@ -277,7 +277,7 @@
 		<node name="copyToClipboard" value="Copy to clipboard"/>
 		<node name="openInDictionary" value="Open in dictionary"/>
 		<node name="quoteFrom" value="Quote from %s"/>
-		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s"/>
+		<node name="textInBuffer" value="Copied to clipboard:&#10;%s"/>
 		<node name="clearSelection" value="Clear"/>
 	</node>
 	<node name="sharing">
@@ -297,11 +297,11 @@
 		<node name="navigate" value="Navigate">
 			<node name="toc" value="Table of Contents"/>
 			<node name="gotoHome" value="Go to Start of Document"/>
-			<node name="gotoPageNumber" value="Go to Page…"/>
-			<node name="gotoSectionStart" value="Go to Start of Text Section"/>
-			<node name="gotoSectionEnd" value="Go to End of Text Section"/>
-			<node name="nextTOCSection" value="Go to Next TOC Item"/>
-			<node name="previousTOCSection" value="Go to Previous TOC Item"/>
+			<node name="gotoPageNumber" value="Go to page…"/>
+			<node name="gotoSectionStart" value="Go to start of text section"/>
+			<node name="gotoSectionEnd" value="Go to end of text section"/>
+			<node name="nextTOCSection" value="Go to next TOC item"/>
+			<node name="previousTOCSection" value="Go to previous TOC item"/>
 			<node name="undo" value="Go Back"/>
 			<node name="redo" value="Go Forward"/>
 		</node>
@@ -310,14 +310,14 @@
 		<node name="rotate" value="Rotate screen"/>
 		<node name="screenOrientation" value="Screen orientation"/>
 		<node name="screenOrientationSystem" value="System"/>
-		<node name="screenOrientationSensor" value="Device orientation sensitive"/>
+		<node name="screenOrientationSensor" value="Auto-rotate"/>
 		<node name="screenOrientationPortrait" value="Portrait"/>
 		<node name="screenOrientationLandscape" value="Landscape"/>
 		<node name="screenOrientationReversePortrait" value="Reverse portrait"/>
 		<node name="screenOrientationReverseLandscape" value="Reverse landscape"/>
 		<node name="increaseFont" value="Zoom in"/>
 		<node name="decreaseFont" value="Zoom out"/>
-		<node name="toggleFullscreen" value="Full Screen"/>
+		<node name="toggleFullscreen" value="Fullscreen mode"/>
 		<node name="bookmarks" value="Bookmarks"/>
 		<node name="help" value="Help"/>
 		<node name="plugins" value="Install plugins"/>
@@ -355,18 +355,18 @@
 			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)"/>
 			<node name="changeCurrentBook" value="Change current book">
 				<node name="summaryOn" value="Open same book on all devices"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically"/>
+				<node name="summaryOff" value="Synchronise reading positions, but do not open same book on all devices"/>
 			</node>
 		</node>
 		<node name="directories" value="Directories">
-			<node name="summary" value="Directories to seek for files"/>
-			<node name="bookPath" value="Where to seek for books">
+			<node name="summary" value="Directories to search for files"/>
+			<node name="bookPath" value="Where to search for books">
 				<node name="chooserTitle" value="Books folder"/>
 			</node>
 			<node name="downloadDir" value="Where to store downloaded books">
 				<node name="chooserTitle" value="Books folder"/>
 			</node>
-			<node name="fontPath" value="Where to seek for fonts">
+			<node name="fontPath" value="Where to search for fonts">
 				<node name="chooserTitle" value="Fonts folder"/>
 			</node>
 			<node name="tempDir" value="Where to store temporary files">
@@ -378,15 +378,15 @@
 			<node name="language" value="Interface language"/>
 			<node name="screenOrientation" value="Screen orientation">
 				<node name="system" value="System"/>
-				<node name="sensor" value="Device orientation sensitive"/>
+				<node name="sensor" value="Auto-rotate"/>
 				<node name="portrait" value="Portrait"/>
 				<node name="landscape" value="Landscape"/>
 				<node name="reversePortrait" value="Reverse portrait"/>
 				<node name="reverseLandscape" value="Reverse landscape"/>
 			</node>
 			<node name="autoOrientation" value="Automatic rotation">
-				<node name="summaryOn" value="The display will rotate when user moves the device"/>
-				<node name="summaryOff" value="The display will not rotate when user moves the device"/>
+				<node name="summaryOn" value="The display will rotate when user rotates the device"/>
+				<node name="summaryOff" value="The display will not rotate when user rotates the device"/>
 			</node>
 			<node name="showStatusBar" value="Show status bar">
 				<node name="summaryOn" value="Show status bar in reading mode"/>
@@ -396,20 +396,20 @@
 				<node name="summaryOn" value="Show action bar in reading mode"/>
 				<node name="summaryOff" value="Hide action bar in reading mode"/>
 			</node>
-			<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active">
-				<node name="summaryOn" value="Show status bar when menu becomes active"/>
-				<node name="summaryOff" value="Don't show status bar when menu becomes active"/>
+			<node name="showStatusBarWhenMenuIsActive" value="Show/hide status bar when menu is active">
+				<node name="summaryOn" value="Show status bar when menu is active"/>
+				<node name="summaryOff" value="Don't show status bar when menu is active"/>
 			</node>
 			<node name="fullscreenMode" value="Fullscreen mode">
 				<node name="summaryOn" value="Hide navigation controls"/>
 				<node name="summaryOff" value="Show navigation controls"/>
 			</node>
-			<node name="disableButtonLights" value="Disable buttons light during reading">
-				<node name="summaryOn" value="Disable button lights (does not work for some devices)"/>
-				<node name="summaryOff" value="Don't try to disable button lights"/>
+			<node name="disableButtonLights" value="Disable button lights while reading">
+				<node name="summaryOn" value="Disable button lights (most devices)"/>
+				<node name="summaryOff" value="Don't disable button lights"/>
 			</node>
 			<node name="twoColumnView" value="Two column view">
-				<node name="summaryOn" value="Display text in two columns when device is held horizontally"/>
+				<node name="summaryOn" value="Display text in two columns when viewed horizontally"/>
 				<node name="summaryOff" value="Always display text in one column"/>
 			</node>
 			<node name="showFootnoteToast" value="Show linked text in a popup">
@@ -418,27 +418,20 @@
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links"/>
 				<node name="allInternalLinks" value="For all internal links"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to show link popup">
-				<node name="duration1" value="1 second"/>
-				<node name="duration3" value="3 seconds"/>
-				<node name="duration5" value="5 seconds"/>
-				<node name="duration10" value="10 seconds"/>
-				<node name="duration20" value="20 seconds"/>
-				<node name="duration300" value="5 minutes"/>
-			</node>
+			<node name="footnoteToastDuration" value="How long to display link popup"/>
 			<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
-				<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
+				<node name="summaryOn" value="By dragging finger up/down the left side of the screen"/>
 				<node name="summaryOff" value="Disabled"/>
 			</node>
 			<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
 				<node name="0" value="Always"/>
-				<node name="25" value="While battery level is greater than 25%%"/>
-				<node name="50" value="While battery level is greater than 50%%"/>
+				<node name="25" value="While battery level is above 25%%"/>
+				<node name="50" value="While battery level is above 50%%"/>
 				<node name="100" value="Never"/>
 			</node>
-			<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging">
-				<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode"/>
-				<node name="summaryOff" value="Switch screen off even if device is in charging mode"/>
+			<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping while charging">
+				<node name="summaryOn" value="Prevent screen from sleeping while device is in charging mode"/>
+				<node name="summaryOff" value="Allow screen to sleep while device is in charging mode"/>
 			</node>
 		</node>
 		<node name="text" value="Text">
@@ -490,7 +483,7 @@
 				<node name="inherit" value="&lt;unchanged&gt;"/>
 				<node name="none" value="no decorations"/>
 				<node name="underline" value="underlined"/>
-				<node name="line-through" value="striked through"/>
+				<node name="line-through" value="strikethrough"/>
 			</node>
 			<node name="lineSpacing" value="Line spacing">
 				<node name="inherit" value="&lt;unchanged&gt;"/>
@@ -498,17 +491,17 @@
 			<node name="alignment" value="Alignment">
 				<node name="left" value="Left"/>
 				<node name="right" value="Right"/>
-				<node name="center" value="Center"/>
-				<node name="justify" value="Justify"/>
+				<node name="center" value="Centered"/>
+				<node name="justify" value="Justified"/>
 				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
-			<node name="autoHyphenations" value="Auto hyphenations">
+			<node name="autoHyphenations" value="Auto hyphenation">
 				<node name="summaryOn" value="Hyphenate words automatically"/>
 				<node name="summaryOff" value="Do not hyphenate words automatically"/>
 			</node>
-			<node name="allowHyphenations" value="Allow hyphenations">
-				<node name="auto" value="hyphenate words"/>
-				<node name="none" value="don't hyphenate words"/>
+			<node name="allowHyphenations" value="Allow hyphenation">
+				<node name="auto" value="Hyphenate words"/>
+				<node name="none" value="Don't hyphenate words"/>
 				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="First line indent"/>
@@ -564,7 +557,7 @@
 				<node name="Date" value="Date">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Internal Hyperlink" value="Internal Hyperlink">
+				<node name="Internal Hyperlink" value="Internal hyperlink">
 					<node name="summary" value=""/>
 				</node>
 				<node name="Footnote" value="Footnote">
@@ -585,7 +578,7 @@
 				<node name="Code" value="Code">
 					<node name="summary" value=""/>
 				</node>
-				<node name="StrikeThrough" value="StrikeThrough">
+				<node name="StrikeThrough" value="Strikethrough">
 					<node name="summary" value=""/>
 				</node>
 				<node name="Italic" value="Italic">
@@ -597,7 +590,7 @@
 				<node name="Definition" value="Definition">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Definition Description" value="Definition Description">
+				<node name="Definition Description" value="Definition description">
 					<node name="summary" value=""/>
 				</node>
 				<node name="Header 1" value="Header 1">
@@ -618,7 +611,7 @@
 				<node name="Header 6" value="Header 6">
 					<node name="summary" value=""/>
 				</node>
-				<node name="External Hyperlink" value="External Hyperlink">
+				<node name="External Hyperlink" value="External hyperlink">
 					<node name="summary" value=""/>
 				</node>
 			</node>
@@ -660,7 +653,7 @@
 			<node name="fillMode" value="Fill mode">
 				<node name="tile" value="Tile"/>
 				<node name="tileMirror" value="Mirrored tile"/>
-				<node name="fullscreen" value="Full screen"/>
+				<node name="fullscreen" value="Fullscreen"/>
 				<node name="stretch" value="Stretch to fill screen"/>
 				<node name="tileVertically" value="Stretch horizontally, tile vertically"/>
 				<node name="tileHorizontally" value="Stretch vertically, tile horizontally"/>
@@ -683,7 +676,7 @@
 			<node name="right" value="Right margin"/>
 			<node name="top" value="Top margin"/>
 			<node name="bottom" value="Bottom margin"/>
-			<node name="spaceBetweenColumns" value="Space between columns"/>
+			<node name="spaceBetweenColumns" value="Column spacing"/>
 		</node>
 		<node name="scrollBar" value="Progress indicator">
 			<node name="summary" value="Scrollbar &amp; footer settings"/>
@@ -730,7 +723,7 @@
 			</node>
 			<node name="volumeKeys" value="Turn page with volume keys">
 				<node name="summaryOn" value="Use volume keys to turn the pages"/>
-				<node name="summaryOff" value="Keep volume keys for sound"/>
+				<node name="summaryOff" value="Use volume keys for sound"/>
 			</node>
 			<node name="invertVolumeKeys" value="Invert volume keys direction">
 				<node name="summaryOn" value="Louder (lower) key turns to previous (next) page"/>
@@ -744,8 +737,8 @@
 				<node name="shift" value="Shift animation"/>
 			</node>
 			<node name="animationSpeed" value="Animation speed">
-				<node name="fast" value="fast"/>
-				<node name="slow" value="slow"/>
+				<node name="fast" value="Fast"/>
+				<node name="slow" value="Slow"/>
 			</node>
 			<node name="horizontal" value="Horizontal scrolling">
 				<node name="summaryOn" value="Scroll pages horizontally"/>
@@ -753,7 +746,7 @@
 			</node>
 		</node>
 		<node name="tapZones" value="Tap zones">
-			<node name="summary" value="Actions on finger tap"/>
+			<node name="summary" value="Finger tap actions"/>
 			<node name="tapZonesScheme" value="Tap zones scheme">
 				<node name="left_to_right" value="Left to right page scrolling"/>
 				<node name="right_to_left" value="Right to left page scrolling"/>
@@ -762,31 +755,36 @@
 				<node name="custom" value="Custom…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Dictionary">
-			<node name="summary" value="Dictionary settings"/>
+		<node name="dictionary" value="Dictionary &amp; translator">
+			<node name="summary" value="Translation settings"/>
 			<node name="dictionary" value="Look up single word in"/>
 			<node name="translator" value="Translate phrases via"/>
+			<node name="translationToastDuration" value="How long to show translation popup"/>
+			<node name="errorToastDuration" value="How long to show error message"/>
+			<node name="sourceLanguage" value="Translate from">
+				<node name="detect" value="Automatically detect language"/>
+			</node>
 			<node name="targetLanguage" value="Translate to">
-				<node name="any" value="all languages"/>
+				<node name="any" value="All languages"/>
 			</node>
 			<node name="longTapAction" value="Long tap action">
 				<node name="doNothing" value="Long tap does nothing"/>
-				<node name="selectSingleWord" value="Long tap selects single word"/>
-				<node name="startSelecting" value="Long tap initiates selection"/>
-				<node name="openDictionary" value="Long tap selects single word, release opens dictionary"/>
+				<node name="selectSingleWord" value="Long tap to select single word"/>
+				<node name="startSelecting" value="Long tap to initiate selection"/>
+				<node name="openDictionary" value="Long tap to select single word, release to open dictionary"/>
 			</node>
-			<node name="navigateOverAllWords" value="Navigate over all words">
+			<node name="navigateOverAllWords" value="Key navigation over words">
 				<node name="summaryOn" value="Key navigation visits all words"/>
 				<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
 			</node>
 		</node>
 		<node name="images" value="Images">
-			<node name="summary" value="Image displaying options"/>
-			<node name="backgroundColor" value="Background colour for image view"/>
+			<node name="summary" value="Image display options"/>
+			<node name="backgroundColor" value="Background colour in image view"/>
 			<node name="longTapAction" value="Long tap action">
 				<node name="doNothing" value="Long tap does nothing"/>
-				<node name="selectImage" value="Long tap selects the image"/>
-				<node name="openImageView" value="Long tap opens image view"/>
+				<node name="selectImage" value="Long tap to select the image"/>
+				<node name="openImageView" value="Long tap to open image view"/>
 			</node>
 			<node name="fitImagesToScreen" value="Fit images to screen">
 				<node name="none" value="None"/>
@@ -794,7 +792,7 @@
 				<node name="all" value="All"/>
 			</node>
 			<node name="matchBackground" value="Match background intensity">
-				<node name="summaryOn" value="Adjust image colour according background"/>
+				<node name="summaryOn" value="Adjust image colour to background"/>
 				<node name="summaryOff" value="Do not adjust image colour"/>
 			</node>
 		</node>
@@ -832,11 +830,11 @@
 			<node name="summary" value="Daily tips settings"/>
 			<node name="showTips" value="Show tips">
 				<node name="summaryOn" value="Show daily tips"/>
-				<node name="summaryOff" value="Do not show"/>
+				<node name="summaryOff" value="Do not show daily tips"/>
 			</node>
 		</node>
 		<node name="about" value="About FBReader">
-			<node name="summary" value="Version info, contacts"/>
+			<node name="summary" value="Version info, contacts, etc."/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Visit our website">
 				<node name="url" value="https://fbreader.org/"/>
@@ -847,7 +845,7 @@
 			<node name="googleplus" value="Join FBReader Google+ community">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Follow us at Twitter">
+			<node name="twitter" value="Follow us on Twitter">
 				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on Facebook">
@@ -898,19 +896,24 @@
 		<node name="backgroundAuthentication">
 			<node name="message" value="Authentication required"/>
 		</node>
+		<node name="missingDictionary" value="Missing %s">
+			<node name="install" value="Install %s"/>
+			<node name="configure" value="Configure translation"/>
+			<node name="skip" value="Skip"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Install dictionary"/>
 			<node name="message" value="Would you like to install %s?"/>
 		</node>
 		<node name="deleteBookBox">
-			<node name="message" value="The book file will be removed irreversibly. Are you sure?"/>
+			<node name="message" value="This file will be removed permanently. Are you sure?"/>
 		</node>
 		<node name="deleteMultipleBookBox">
 			<node name="title" value="Delete books"/>
-			<node name="message" value="%s book files will be removed irreversibly. Are you sure?"/>
+			<node name="message" value="%s files will be removed permanently. Are you sure?"/>
 		</node>
 		<node name="redownloadFileBox">
-			<node name="message" value="File already exists. Redownload?"/>
+			<node name="message" value="File already exists. Download again?"/>
 		</node>
 		<node name="litresUserRegistration">
 			<node name="title" value="Register User"/>
@@ -929,31 +932,32 @@
 				<node name="anotherEmail" value="Select another email"/>
 			</node>
 			<node name="signedIn" value="You are signed in with email address %s."/>
-			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s."/>
-			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox."/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information has been sent to %s."/>
+			<node name="passwordSent" value="Your account information was sent to %s. Please check your mailbox."/>
 		</node>
 		<node name="waitMessage">
-			<node name="tryConnect" value="Trying to connect. Please, wait…"/>
+			<node name="translating" value="Translation in progress…"/>
+			<node name="tryConnect" value="Trying to connect. Please wait…"/>
 			<node name="downloadingBook" value="Downloading book “%s”"/>
-			<node name="search" value="Searching. Please, wait…"/>
-			<node name="loadInfo" value="Loading information. Please, wait…"/>
-			<node name="loadingBook" value="Opening book. Please, wait…"/>
-			<node name="loadingBookList" value="Opening library. Please, wait…"/>
-			<node name="creatingBooksDatabase" value="Creating books database. Please, wait…"/>
-			<node name="updatingBooksDatabase" value="Updating books database. Please, wait…"/>
-			<node name="loadingNetworkLibrary" value="Opening library. Please, wait…"/>
-			<node name="authentication" value="Authentication. Please, wait…"/>
-			<node name="signOut" value="Signing out. Please, wait…"/>
-			<node name="purchaseBook" value="Purchase book. Please, wait…"/>
-			<node name="loadingCatalogInfo" value="Loading catalogue information. Please, wait…"/>
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…"/>
-			<node name="updatingCatalogsList" value="Updating catalogues list. Please, wait…"/>
-			<node name="updatingAccountInformation" value="Updating account information. Please, wait…"/>
-			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…"/>
-			<node name="registerUser" value="Registering new account. Please, wait…"/>
-			<node name="autoSignIn" value="Signing in. Please, wait…"/>
-			<node name="recoverPassword" value="Recovering password. Please, wait…"/>
+			<node name="search" value="Searching. Please wait…"/>
+			<node name="loadInfo" value="Loading information. Please wait…"/>
+			<node name="loadingBook" value="Opening book. Please wait…"/>
+			<node name="loadingBookList" value="Opening library. Please wait…"/>
+			<node name="creatingBooksDatabase" value="Creating book database. Please wait…"/>
+			<node name="updatingBooksDatabase" value="Updating book database. Please wait…"/>
+			<node name="loadingNetworkLibrary" value="Opening library. Please wait…"/>
+			<node name="authentication" value="Authenticating. Please wait…"/>
+			<node name="signOut" value="Signing out. Please wait…"/>
+			<node name="purchaseBook" value="Purchasing book. Please wait…"/>
+			<node name="loadingCatalogInfo" value="Loading catalogue information. Please wait…"/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please wait…"/>
+			<node name="updatingCatalogsList" value="Updating catalogues list. Please wait…"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please wait…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please wait…"/>
+			<node name="acquireLicence" value="Acquiring licence. Please wait…"/>
+			<node name="registerUser" value="Registering new account. Please wait…"/>
+			<node name="autoSignIn" value="Signing in. Please wait…"/>
+			<node name="recoverPassword" value="Recovering password. Please wait…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>
@@ -962,26 +966,26 @@
 			<node name="purchaseAlreadyPurchased" value="Already purchased"/>
 			<node name="bookNotPurchased" value="Book was not purchased"/>
 			<node name="downloadLimitExceeded" value="Download limit exceeded"/>
-			<node name="noUserForEmail" value="No user was registered&#10;with specified email address"/>
+			<node name="noUserForEmail" value="No user is registered&#10;with specified email address"/>
 			<node name="unsupportedOperation" value="Unsupported operation"/>
 			<node name="notAnOPDS" value="This is not an OPDS catalogue"/>
 			<node name="noRequiredInformation" value="Required information is not specified in the catalogue"/>
 			<node name="cacheDirectoryError" value="Unable to create cache directory"/>
 			<node name="usernameAlreadyInUse" value="Username already in use"/>
-			<node name="usernameNotSpecified" value="Username should be non-empty"/>
-			<node name="passwordNotSpecified" value="Password should be non-empty"/>
-			<node name="passwordsDoNotMatch" value="The entered passwords do not match"/>
-			<node name="emailNotSpecified" value="Email address is empty"/>
-			<node name="emailAlreadyInUse" value="Email address already in use"/>
+			<node name="usernameNotSpecified" value="Username should not be blank"/>
+			<node name="passwordNotSpecified" value="Password should not be blank"/>
+			<node name="passwordsDoNotMatch" value="The two passwords do not match"/>
+			<node name="emailNotSpecified" value="Email address is blank"/>
+			<node name="emailAlreadyInUse" value="Email address is already in use"/>
 			<node name="invalidEMail" value="Invalid email address"/>
-			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes"/>
+			<node name="tooManyRegistrations" value="Too many registrations from your IP address;&#10;please try again in a few minutes"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentication"/>
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted"/>
 			<node name="login" value="Username"/>
 			<node name="password" value="Password"/>
-			<node name="loginIsEmpty" value="Username should be non-empty"/>
+			<node name="loginIsEmpty" value="Username should not be blank"/>
 			<node name="register" value="Sign up"/>
 		</node>
 		<node name="CustomCatalogDialog">
@@ -992,8 +996,8 @@
 			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalogue"/>
 			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="E.g.: Public domain books"/>
-			<node name="titleIsEmpty" value="Title should be non-empty"/>
-			<node name="urlIsEmpty" value="URL should be non-empty"/>
+			<node name="titleIsEmpty" value="Title should not be blank"/>
+			<node name="urlIsEmpty" value="URL should not be empty"/>
 			<node name="invalidUrl" value="Invalid URL"/>
 			<node name="titleAlreadyExists" value="Specified title is already in use"/>
 			<node name="siteAlreadyExists" value="Specified site is already in use"/>
@@ -1003,13 +1007,13 @@
 		</node>
 		<node name="tips">
 			<node name="title" value="Tip of the day"/>
-			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
+			<node name="initializationText" value="Would you like to read FBReader's daily tips? New tips would be downloaded from the FBReader site, with expected network traffic 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog."/>
-			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog."/>
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap the center third of the screen now to show controls. You can change this in the “Appearance” section of the Settings dialog."/>
+			<node name="message2" value="Well done! Now tap the center third of the screen again to hide the controls and this hint. If you want to keep controls on the screen while reading, select the “Show action bar” option in “Appearance” in Settings."/>
 		</node>
 		<node name="folderList">
 			<node name="addFolder" value="Add folder"/>
@@ -1050,50 +1054,58 @@
 			<node name="permissionDenied" value="Permission denied"/>
 		</node>
 		<node name="missingPlugin">
-			<node name="title" value="Plugin for %s files is not installed. Install right now?"/>
+			<node name="title" value="Plugin for %s files is not installed. Install now?"/>
+		</node>
+		<node name="licensing">
+			<node name="title" value="%s is not licensed"/>
+			<node name="message" value="Purchase on Google Play now?"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Cannot verify %s licence"/>
+			<node name="message" value="Try again?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'"/>
-		<node name="errorReadingFile" value="Error occured during reading '%s'"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'"/>
+		<node name="nativeCodeFailure" value="Error %s in native code while reading '%s'"/>
+		<node name="errorReadingFile" value="Error occured while reading '%s'"/>
+		<node name="errorReadingZip" value="Error occured while extracting '%s'"/>
 		<node name="pluginNotFound" value="No plugin for '%s'"/>
 		<node name="unknownPluginType" value="Unknown plugin type: %s"/>
 		<node name="fileNotFound" value="File not found: %s"/>
-		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable"/>
+		<node name="unsupportedEncryptionMethod" value="File %s encryption method is not supported by FBReader. Some pages are not readable"/>
 		<node name="opfFileNotFound" value="OPF is not found in %s"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
-		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually"/>
+		<node name="cannotRunAndroidMarket" value="Cannot access Google Play. Please install %s manually"/>
 		<node name="textNotFound" value="Matching text not found"/>
-		<node name="bookNotFound" value="There are no suitable books in the library, sorry"/>
-		<node name="bookmarkNotFound" value="There are no suitable bookmarks, sorry"/>
-		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>
-		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry"/>
-		<node name="permissionDenied" value="Permission denied, sorry"/>
-		<node name="noFavorites" value="Your favourites list is empty, sorry"/>
-		<node name="noSeries" value="There are no books in series, sorry"/>
-		<node name="emptyCatalog" value="Catalogue is empty, sorry"/>
-		<node name="emptyBasket" value="Your basket is empty, sorry"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry"/>
+		<node name="bookNotFound" value="There are no matching books in the library"/>
+		<node name="bookmarkNotFound" value="There are no matching bookmarks"/>
+		<node name="cannotOpenBook" value="Cannot open this book at the moment"/>
+		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed"/>
+		<node name="permissionDenied" value="Permission denied"/>
+		<node name="noFavorites" value="Your favourites list is empty"/>
+		<node name="noSeries" value="There are no books in series"/>
+		<node name="emptyCatalog" value="Catalogue is empty"/>
+		<node name="emptyBasket" value="Your basket is empty"/>
+		<node name="emptyNetworkSearchResults" value="No books found"/>
+		<node name="videoServiceNotWorking" value="Video service is not available"/>
+		<node name="videoPlayerNotFound" value="No video player installed on this device"/>
 		<node name="bookIsMissingTitle" value="Missing book"/>
-		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry"/>
+		<node name="bookIsMissing" value="Book '%s' is not found on the device"/>
 		<node name="downloadFailed" value="Download failed"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
-		<node name="defaultBrowser" value="Default Browser"/>
+		<node name="defaultBrowser" value="Default browser"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory."/>
+			<node name="text" value="Cannot write to FBReader cache. Please check that your memory card is inserted correctly, or select another directory."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader issue"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader."/>
+			<node name="text" value="FBReader cannot load native library. If the issue persists, please reinstall FBReader."/>
 		</node>
 	</node>
 	<node name="error">
@@ -1113,7 +1125,7 @@
 			<node name="summary" value="Read aloud"/>
 		</node>
 		<node name="calibre_server_integration" value="Calibre connection">
-			<node name="summary" value="Connect Calibre server in your local network"/>
+			<node name="summary" value="Connect to Calibre server in your local network"/>
 		</node>
 		<node name="local_opds_scanner" value="Local OPDS Scanner">
 			<node name="summary" value="Look for books in the local network"/>
@@ -1122,7 +1134,7 @@
 			<node name="summary" value="Thumbnail library view"/>
 		</node>
 		<node name="opds_server" value="OPDS Server">
-			<node name="summary" value="Serve books from your device"/>
+			<node name="summary" value="Allow your device to act as server"/>
 		</node>
 		<node name="widgets" value="Widgets">
 			<node name="summary" value="Add books to your home screen"/>
@@ -1134,7 +1146,7 @@
 			<node name="summary" value="Read books in DjVu format"/>
 		</node>
 		<node name="cbr" value="Comic Books">
-			<node name="summary" value="Read Comic Books (CBR, CBZ)"/>
+			<node name="summary" value="Read comic books (CBR, CBZ)"/>
 		</node>
 	</node>
 	<node name="drm">
@@ -1149,10 +1161,20 @@
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="E.g.: 125%%"/>
 	</node>
+	<node name="duration">
+		<node name="duration1" value="1 second"/>
+		<node name="duration3" value="3 seconds"/>
+		<node name="duration5" value="5 seconds"/>
+		<node name="duration10" value="10 seconds"/>
+		<node name="duration20" value="20 seconds"/>
+		<node name="duration40" value="40 seconds"/>
+		<node name="duration60" value="1 minute"/>
+		<node name="duration300" value="5 minutes"/>
+	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="unknown error"/>
-		<node name="noArticle" value="no artcle found for “%s”"/>
-		<node name="cannotOpenDictionary" value="cannot open dictionary"/>
-		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings"/>
+		<node name="unknown" value="Unknown error"/>
+		<node name="noArticle" value="No article found for “%s”"/>
+		<node name="cannotOpenDictionary" value="Cannot open dictionary"/>
+		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings"/>
 	</node>
 </resources>

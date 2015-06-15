@@ -38,8 +38,10 @@ public class ColorProfile {
 			if (size == 0) {
 				ourNames.add(DAY);
 				ourNames.add(NIGHT);
-			} else for (int i = 0; i < size; ++i) {
-				ourNames.add(new ZLStringOption("Colors", "Scheme" + i, "").getValue());
+			} else {
+				for (int i = 0; i < size; ++i) {
+					ourNames.add(new ZLStringOption("Colors", "Scheme" + i, "").getValue());
+				}
 			}
 		}
 		return Collections.unmodifiableList(ourNames);
@@ -109,7 +111,7 @@ public class ColorProfile {
 			SelectionBackgroundOption =
 				createOption(name, "SelectionBackground", 82, 131, 194);
 			SelectionForegroundOption =
-				createOption(name, "SelectionForeground", 255, 255, 220);
+				createNullOption(name, "SelectionForeground");
 			HighlightingBackgroundOption =
 				createOption(name, "Highlighting", 96, 96, 128);
 			HighlightingForegroundOption =
@@ -138,7 +140,7 @@ public class ColorProfile {
 			SelectionBackgroundOption =
 				createOption(name, "SelectionBackground", 82, 131, 194);
 			SelectionForegroundOption =
-				createOption(name, "SelectionForeground", 255, 255, 220);
+				createNullOption(name, "SelectionForeground");
 			HighlightingBackgroundOption =
 				createOption(name, "Highlighting", 255, 192, 128);
 			HighlightingForegroundOption =

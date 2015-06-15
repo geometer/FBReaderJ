@@ -423,14 +423,7 @@
 				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
 				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to show link popup" toBeTranslated="true">
-				<node name="duration1" value="1 second" toBeTranslated="true"/>
-				<node name="duration3" value="3 seconds" toBeTranslated="true"/>
-				<node name="duration5" value="5 seconds" toBeTranslated="true"/>
-				<node name="duration10" value="10 seconds" toBeTranslated="true"/>
-				<node name="duration20" value="20 seconds" toBeTranslated="true"/>
-				<node name="duration300" value="5 minutes" toBeTranslated="true"/>
-			</node>
+			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
 			<node name="allowScreenBrightnessAdjustment" value="Helligkeitsanpassung">
 				<node name="summaryOn" value="Mit dem Finger durch hoch/runter-schieben am linken Bildschirmrand"/>
 				<node name="summaryOff" value="Abgeschaltet"/>
@@ -767,10 +760,15 @@
 				<node name="custom" value="Benutzerdefiniert…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Wörterbuch">
-			<node name="summary" value="Wörterbucheinstellungen"/>
+		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
+			<node name="summary" value="Translation settings" toBeTranslated="true"/>
 			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
 			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
+			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
+			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
+			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
+				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
+			</node>
 			<node name="targetLanguage" value="Übersetzen in">
 				<node name="any" value="Alle Sprachen"/>
 			</node>
@@ -903,6 +901,11 @@
 		<node name="backgroundAuthentication">
 			<node name="message" value="Anmeldedaten benötigt"/>
 		</node>
+		<node name="missingDictionary" value="Missing %s" toBeTranslated="true">
+			<node name="install" value="Install %s" toBeTranslated="true"/>
+			<node name="configure" value="Configure translation" toBeTranslated="true"/>
+			<node name="skip" value="Skip" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Installationsverzeichnis"/>
 			<node name="message" value="Möchten Sie %s installieren?"/>
@@ -938,6 +941,7 @@
 			<node name="passwordSent" value="Ihre Konto Informationen wurden an %s gesendet. Bitte prüfen Sie ihr Postfach"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="Verbindungsversuch. Bitte warten…"/>
 			<node name="downloadingBook" value="Buch wird geladen %s"/>
 			<node name="search" value="Suche läuft. Bitte warten…"/>
@@ -955,7 +959,7 @@
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten…"/>
 			<node name="updatingAccountInformation" value="Konto-Information wird aktualisiert. Bitte waren…"/>
 			<node name="initDRMEngine" value="Initialisiere das Rechtemanagement. Bitte warten…"/>
-			<node name="acquireLicense" value="Empfange Lizenz. Bitte warten…"/>
+			<node name="acquireLicence" value="Empfange Lizenz. Bitte warten…"/>
 			<node name="registerUser" value="Neues Benutzerkonto wird registriert. Bitte warten…"/>
 			<node name="autoSignIn" value="Anmeldung. Bitte warten…"/>
 			<node name="recoverPassword" value="Passwortwiederherstellung. Bitte warten…"/>
@@ -1057,6 +1061,14 @@
 		<node name="missingPlugin">
 			<node name="title" value="Plugin für %s Dateien ist nicht installiert. Jetzt installieren?"/>
 		</node>
+		<node name="licensing">
+			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
+			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
+			<node name="message" value="Try again?" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Fehler %s während des Lesens von '%s'"/>
@@ -1154,10 +1166,20 @@
 		<node name="length" value="z.B.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="z.B.: 125%%"/>
 	</node>
+	<node name="duration">
+		<node name="duration1" value="1 second" toBeTranslated="true"/>
+		<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+		<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+		<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+		<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
+		<node name="duration60" value="1 minute" toBeTranslated="true"/>
+		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="unknown error" toBeTranslated="true"/>
-		<node name="noArticle" value="no artcle found for “%s”" toBeTranslated="true"/>
-		<node name="cannotOpenDictionary" value="cannot open dictionary" toBeTranslated="true"/>
-		<node name="noDictionarySelected" value="dictionary not selected; please fix in Dictan settings" toBeTranslated="true"/>
+		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="No article found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="Cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings" toBeTranslated="true"/>
 	</node>
 </resources>

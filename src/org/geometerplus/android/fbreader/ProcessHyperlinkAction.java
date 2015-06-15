@@ -39,10 +39,11 @@ import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.util.AutoTextSnippet;
 
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
+import org.geometerplus.android.fbreader.image.ImageViewActivity;
 import org.geometerplus.android.fbreader.network.*;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
-import org.geometerplus.android.fbreader.image.ImageViewActivity;
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.UIMessageUtil;
 
 class ProcessHyperlinkAction extends FBAndroidAction {
 	ProcessHyperlinkAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -110,6 +111,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 							toast.setOnClickWrapper(new OnClickWrapper("ftnt", new SuperToast.OnClickListener() {
 								@Override
 								public void onClick(View view, Parcelable token) {
+									Reader.getTextView().hideOutline();
 									Reader.tryOpenFootnote(hyperlink.Id);
 								}
 							}));
@@ -150,8 +152,17 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 				}
 			}
 		} else if (soul instanceof ZLTextWordRegionSoul) {
-			DictionaryUtil.openWordInDictionary(
-				BaseActivity, ((ZLTextWordRegionSoul)soul).Word, region
+			DictionaryUtil.openTextInDictionary(
+				BaseActivity,
+				((ZLTextWordRegionSoul)soul).Word.getString(),
+				true,
+				region.getTop(),
+				region.getBottom(),
+				new Runnable() {
+					public void run() {
+						BaseActivity.outlineRegion(soul);
+					}
+				}
 			);
 		}
 	}
@@ -159,7 +170,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 	private void openInBrowser(final String url) {
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
 		final boolean externalUrl;
-		if (BookDownloader.acceptsUri(Uri.parse(url))) {
+		if (BookDownloader.acceptsUri(Uri.parse(url), null)) {
 			intent.setClass(BaseActivity, BookDownloader.class);
 			intent.putExtra(BookDownloaderService.Key.SHOW_NOTIFICATIONS, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
@@ -174,7 +185,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 						nLibrary.initialize(new ActivityNetworkContext(BaseActivity));
 					} catch (ZLNetworkException e) {
 						e.printStackTrace();
-						UIUtil.showMessageText(BaseActivity, e.getMessage());
+						UIMessageUtil.showMessageText(BaseActivity, e.getMessage());
 						return;
 					}
 				}

@@ -35,4 +35,9 @@ class ZLTextManualHighlighting extends ZLTextSimpleHighlighting {
 	public ZLColor getForegroundColor() {
 		return View.getHighlightingForegroundColor();
 	}
+
+	@Override
+	public ZLColor getOutlineColor() {
+		return null;
+	}
 }

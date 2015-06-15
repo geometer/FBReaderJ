@@ -50,7 +50,6 @@
 		action="com.abbyy.mobile.lingvo.intent.action.TRANSLATE"
 		dataKey="com.abbyy.mobile.lingvo.intent.extra.TEXT"
 		role="dictionary"
-		supportsTargetLanguage="true"
 	/>
 	<dictionary
 		id="Lingo Quiz Lite"

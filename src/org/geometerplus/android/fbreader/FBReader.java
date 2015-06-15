@@ -33,8 +33,6 @@ import android.os.*;
 import android.view.*;
 import android.widget.RelativeLayout;
 
-import com.github.johnpersano.supertoasts.SuperActivityToast;
-
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -47,19 +45,20 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
-import org.geometerplus.zlibrary.ui.android.library.*;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -68,13 +67,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.*;
 
-public final class FBReader extends Activity implements ZLApplicationWindow {
-	static final int ACTION_BAR_COLOR = Color.DKGRAY;
-
-	public static final int REQUEST_PREFERENCES = 1;
-	public static final int REQUEST_CANCEL_MENU = 2;
-	public static final int REQUEST_DICTIONARY = 3;
-
+public final class FBReader extends FBReaderMainActivity implements ZLApplicationWindow {
 	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
 
@@ -87,17 +80,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		context.startActivity(intent);
 	}
 
-	private static ZLAndroidLibrary getZLibrary() {
-		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-	}
-
 	private FBReaderApp myFBReaderApp;
 	private volatile Book myBook;
 
 	private RelativeLayout myRootView;
 	private ZLAndroidWidget myMainView;
-
-	private SuperActivityToast myToast;
 
 	private volatile boolean myShowStatusBarFlag;
 	private String myMenuLanguage;
@@ -158,7 +145,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				if (file.getPhysicalFile() != null) {
 					file = file.getPhysicalFile();
 				}
-				UIUtil.showErrorMessage(this, "fileNotFound", file.getPath());
+				UIMessageUtil.showErrorMessage(this, "fileNotFound", file.getPath());
 				myBook = null;
 			} else {
 				NotificationUtil.drop(this, myBook);
@@ -211,7 +198,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		bindService(
 			new Intent(this, DataService.class),
@@ -239,8 +225,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myRootView = (RelativeLayout)findViewById(R.id.root_view);
 		myMainView = (ZLAndroidWidget)findViewById(R.id.main_view);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-
-		zlibrary.setActivity(this);
 
 		myFBReaderApp = (FBReaderApp)FBReaderApp.Instance();
 		if (myFBReaderApp == null) {
@@ -300,7 +284,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_SENSOR, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_SENSOR));
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_PORTRAIT));
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_LANDSCAPE));
-		if (ZLibrary.Instance().supportsAllOrientations()) {
+		if (getZLibrary().supportsAllOrientations()) {
 			myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_REVERSE_PORTRAIT));
 			myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
@@ -390,7 +374,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					} else {
 						runOnUiThread(new Runnable() {
 							public void run() {
-								UIUtil.showErrorMessage(FBReader.this, "textNotFound");
+								UIMessageUtil.showErrorMessage(FBReader.this, "textNotFound");
 								popup.StartPosition = null;
 							}
 						});
@@ -557,7 +541,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		registerReceiver(mySyncUpdateReceiver, new IntentFilter(SyncOperations.UPDATED));
 
-		SetScreenOrientationAction.setOrientation(this, ZLibrary.Instance().getOrientationOption().getValue());
+		SetScreenOrientationAction.setOrientation(this, getZLibrary().getOrientationOption().getValue());
 		if (myCancelIntent != null) {
 			final Intent intent = myCancelIntent;
 			myCancelIntent = null;
@@ -696,6 +680,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
+			default:
+				super.onActivityResult(requestCode, resultCode, data);
+				break;
 			case REQUEST_PREFERENCES:
 				if (resultCode != RESULT_DO_NOTHING && data != null) {
 					final Book book = FBReaderIntents.getBookExtra(data, myFBReaderApp.Collection);
@@ -710,9 +697,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				break;
 			case REQUEST_CANCEL_MENU:
 				runCancelAction(data);
-				break;
-			case REQUEST_DICTIONARY:
-				DictionaryUtil.onActivityResult(this, resultCode, data);
 				break;
 		}
 	}
@@ -948,12 +932,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	// methods from ZLApplicationWindow interface
 	@Override
 	public void showErrorMessage(String key) {
-		UIUtil.showErrorMessage(this, key);
+		UIMessageUtil.showErrorMessage(this, key);
 	}
 
 	@Override
 	public void showErrorMessage(String key, String parameter) {
-		UIUtil.showErrorMessage(this, key, parameter);
+		UIMessageUtil.showErrorMessage(this, key, parameter);
 	}
 
 	@Override
@@ -1060,25 +1044,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	};
 
-	boolean isToastShown() {
-		final SuperActivityToast toast = myToast;
-		return toast != null && toast.isShowing();
-	}
-
-	void hideToast() {
-		final SuperActivityToast toast = myToast;
-		if (toast != null && toast.isShowing()) {
-			toast.dismiss();
-			myToast = null;
-		}
-	}
-
-	void showToast(SuperActivityToast toast) {
-		hideToast();
-		myToast = toast;
-		toast.show();
-	}
-
 	public void outlineRegion(ZLTextRegion.Soul soul) {
 		myFBReaderApp.getTextView().outlineRegion(soul);
 		myFBReaderApp.getViewWidget().repaint();
@@ -1086,6 +1051,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	public void hideOutline() {
 		myFBReaderApp.getTextView().hideOutline();
+		myFBReaderApp.getViewWidget().repaint();
+	}
+
+	public void hideDictionarySelection() {
+		myFBReaderApp.getTextView().hideOutline();
+		myFBReaderApp.getTextView().removeHighlightings(DictionaryHighlighting.class);
+		myFBReaderApp.getViewWidget().reset();
 		myFBReaderApp.getViewWidget().repaint();
 	}
 }

@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.SelectionCursor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
@@ -158,17 +159,17 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, maxSelectionDistance());
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = findSelectionCursor(x, y, ZLibrary.Instance().getDisplayDPI() / 4);
+		if (cursor != null) {
 			myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
-			moveSelectionCursorTo(cursor, x, y, true);
+			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
 
 		if (myReader.MiscOptions.AllowScreenBrightnessAdjustment.getValue() && x < getContextWidth() / 10) {
 			myIsBrightnessAdjustmentInProgress = true;
 			myStartY = y;
-			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
+			myStartBrightness = myReader.getViewWidget().getScreenBrightness();
 			return true;
 		}
 
@@ -199,9 +200,9 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
-			moveSelectionCursorTo(cursor, x, y, true);
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
+			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
 
@@ -212,7 +213,7 @@ public final class FBView extends ZLTextView {
 					startManualScrolling(x, y);
 				} else {
 					final int delta = (myStartBrightness + 30) * (myStartY - y) / getContextHeight();
-					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
+					myReader.getViewWidget().setScreenBrightness(myStartBrightness + delta);
 					return true;
 				}
 			}
@@ -229,8 +230,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
 			releaseSelectionCursor();
 			return true;
 		}
@@ -266,9 +267,9 @@ public final class FBView extends ZLTextView {
 					case startSelecting:
 						myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
 						initSelection(x, y);
-						final ZLTextSelectionCursor cursor = findSelectionCursor(x, y);
-						if (cursor != ZLTextSelectionCursor.None) {
-							moveSelectionCursorTo(cursor, x, y, false);
+						final SelectionCursor.Which cursor = findSelectionCursor(x, y);
+						if (cursor != null) {
+							moveSelectionCursorTo(cursor, x, y);
 						}
 						return true;
 					case selectSingleWord:
@@ -300,9 +301,9 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
-			moveSelectionCursorTo(cursor, x, y, true);
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
+			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
 
@@ -334,8 +335,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
 			releaseSelectionCursor();
 			return true;
 		}

@@ -4,9 +4,23 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.5 beta 0 (Jun ??, 2015) =====
+===== 2.5 beta 2 (Jun ??, 2015) =====
+* Hide outline on clicking footnote's 'more' button
+* Better look for menu activities in Android 5+
+* Separate resources for en and en_US
+* Updated English resources
+
+===== 2.5 beta 1 (Jun 13, 2015) =====
+* BookDownloader accepts all new file types (including pdf)
+* Same font size in the main text and in popups
+
+===== 2.5 beta 0 (Jun 12, 2015) =====
 * ComicBook plugin icon
 * Updated Armenian localisation (by Yavruhrat, Marat Yavrumyan)
+* Added Korean intro text
+* New style selection rendering
+* Better non-breakable space processing
+* Do not start page sliding for very short horizontal shifts
 
 ===== 2.4.7 (May 20, 2015) =====
 * Added Korean localisation

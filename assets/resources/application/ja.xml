@@ -418,14 +418,7 @@
 				<node name="footnotesAndSuperscripts" value="脚注と上付きリンクのみ"/>
 				<node name="allInternalLinks" value="内部リンクすべて"/>
 			</node>
-			<node name="footnoteToastDuration" value="ポップアップを表示する時間">
-				<node name="duration1" value="1 秒"/>
-				<node name="duration3" value="3 秒"/>
-				<node name="duration5" value="5 秒"/>
-				<node name="duration10" value="10 秒"/>
-				<node name="duration20" value="20 秒"/>
-				<node name="duration300" value="5 分"/>
-			</node>
+			<node name="footnoteToastDuration" value="ポップアップを表示する時間"/>
 			<node name="allowScreenBrightnessAdjustment" value="画面の明るさ調節">
 				<node name="summaryOn" value="画面の左端を上下になぞって調節"/>
 				<node name="summaryOff" value="無効"/>
@@ -762,10 +755,15 @@
 				<node name="custom" value="独自設定…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="辞書">
-			<node name="summary" value="辞書まわりの設定"/>
+		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
+			<node name="summary" value="Translation settings" toBeTranslated="true"/>
 			<node name="dictionary" value="単語を引くとき"/>
 			<node name="translator" value="文を翻訳するとき"/>
+			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
+			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
+			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
+				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
+			</node>
 			<node name="targetLanguage" value="何語に翻訳">
 				<node name="any" value="すべての言語"/>
 			</node>
@@ -898,6 +896,11 @@
 		<node name="backgroundAuthentication">
 			<node name="message" value="認証が必要"/>
 		</node>
+		<node name="missingDictionary" value="Missing %s" toBeTranslated="true">
+			<node name="install" value="Install %s" toBeTranslated="true"/>
+			<node name="configure" value="Configure translation" toBeTranslated="true"/>
+			<node name="skip" value="Skip" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="辞書をインストール"/>
 			<node name="message" value="辞書 %s をインストールしますか?"/>
@@ -933,6 +936,7 @@
 			<node name="passwordSent" value="アカウント情報が %s に送信されます。メールボックスをご確認ください。"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
 			<node name="tryConnect" value="接続しようとしています。しばらくお待ちください…"/>
 			<node name="downloadingBook" value="ダウンロード中です (%s)"/>
 			<node name="search" value="検索中です。しばらくお待ちください…"/>
@@ -950,7 +954,7 @@
 			<node name="updatingCatalogsList" value="カタログリストを更新中です。しばらくお待ちください…"/>
 			<node name="updatingAccountInformation" value="アカウント情報を更新中です。しばらくお待ちください…"/>
 			<node name="initDRMEngine" value="DRM エンジンを起動中です。しばらくお待ちください…"/>
-			<node name="acquireLicense" value="ライセンスを取得中です。しばらくお待ちください…"/>
+			<node name="acquireLicence" value="ライセンスを取得中です。しばらくお待ちください…"/>
 			<node name="registerUser" value="新しいアカウントを登録中です。しばらくお待ちください…"/>
 			<node name="autoSignIn" value="サインインしています。しばらくお待ちください…"/>
 			<node name="recoverPassword" value="パスワードを復元中です。しばらくお待ちください…"/>
@@ -1052,6 +1056,14 @@
 		<node name="missingPlugin">
 			<node name="title" value="ファイル形式 %s 用のプラグインがインストールされていません。今すぐインストールしますか?"/>
 		</node>
+		<node name="licensing">
+			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
+			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
+			<node name="message" value="Try again?" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="エラー %s がネイティブコードで ('%s' を読み込み中に) 発生"/>
@@ -1148,6 +1160,16 @@
 		<node name="positiveLength" value="例: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="例: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="例: 125%%"/>
+	</node>
+	<node name="duration">
+		<node name="duration1" value="1 秒"/>
+		<node name="duration3" value="3 秒"/>
+		<node name="duration5" value="5 秒"/>
+		<node name="duration10" value="10 秒"/>
+		<node name="duration20" value="20 秒"/>
+		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
+		<node name="duration60" value="1 minute" toBeTranslated="true"/>
+		<node name="duration300" value="5 分"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="不明なエラー"/>
