@@ -6,6 +6,9 @@
 
 ===== 2.5 beta 2 (Jun ??, 2015) =====
 * Hide outline on clicking footnote's 'more' button
+* Better look for menu activities in Android 5+
+* Separate resources for en and en_US
+* Updated English resources
 
 ===== 2.5 beta 1 (Jun 13, 2015) =====
 * BookDownloader accepts all new file types (including pdf)
