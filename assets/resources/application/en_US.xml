@@ -144,7 +144,7 @@
 		<node name="addCustomCatalogSummary" value="Add custom OPDS catalog manually"/>
 		<node name="disableCatalog" value="Disable catalog"/>
 		<node name="confirmQuestions">
-			<node name="read" value="Do you want to read downloaded copy?"/>
+			<node name="read" value="Do you want to read the downloaded copy?"/>
 			<node name="download" value="Do you want to download the book?"/>
 			<node name="readDemo" value="Do you want to read the sample?"/>
 			<node name="downloadDemo" value="Do you want to download the sample?"/>
