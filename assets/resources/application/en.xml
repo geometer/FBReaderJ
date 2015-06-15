@@ -144,7 +144,7 @@
 		<node name="addCustomCatalogSummary" value="Add custom OPDS catalogue manually"/>
 		<node name="disableCatalog" value="Disable catalogue"/>
 		<node name="confirmQuestions">
-			<node name="read" value="Do you want to read downloaded copy?"/>
+			<node name="read" value="Do you want to read the downloaded copy?"/>
 			<node name="download" value="Do you want to download the book?"/>
 			<node name="readDemo" value="Do you want to read the sample?"/>
 			<node name="downloadDemo" value="Do you want to download the sample?"/>
@@ -491,7 +491,7 @@
 			<node name="alignment" value="Alignment">
 				<node name="left" value="Left"/>
 				<node name="right" value="Right"/>
-				<node name="center" value="Centered"/>
+				<node name="center" value="Centred"/>
 				<node name="justify" value="Justified"/>
 				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
@@ -1013,8 +1013,8 @@
 			<node name="more" value="Next tip"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="FBReader works in fullscreen mode by default. Tap the center third of the screen now to show controls. You can change this in the “Appearance” section of the Settings dialog."/>
-			<node name="message2" value="Well done! Now tap the center third of the screen again to hide the controls and this hint. If you want to keep controls on the screen while reading, select the “Show action bar” option in “Appearance” in Settings."/>
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap the centre third of the screen now to show controls. You can change this in the “Appearance” section of the Settings dialog."/>
+			<node name="message2" value="Well done! Now tap the centre third of the screen again to hide the controls and this hint. If you want to keep controls on the screen while reading, select the “Show action bar” option in “Appearance” in Settings."/>
 		</node>
 		<node name="folderList">
 			<node name="addFolder" value="Add folder"/>
