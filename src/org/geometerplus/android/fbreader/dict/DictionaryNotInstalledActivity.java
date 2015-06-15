@@ -74,7 +74,8 @@ public class DictionaryNotInstalledActivity extends ListActivity {
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_item, parent, false);
-			((TextView)view).setText(
+			final TextView titleView = (TextView)view.findViewById(R.id.menu_item_title);
+			titleView.setText(
 				myResource.getResource(myItems[position]).getValue().replaceAll("%s", myDictionaryName)
 			);
 			return view;
