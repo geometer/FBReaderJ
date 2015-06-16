@@ -23,6 +23,12 @@
 		<node name="favorites" value="즐겨찾기">
 			<node name="summary" value="내가 선택한 책들"/>
 		</node>
+		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
+		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
+		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
+		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
+		<node name="coversView" value="Covers" toBeTranslated="true"/>
+		<node name="oldView" value="Classic" toBeTranslated="true"/>
 		<node name="bookshelfView" value="책장 형식으로 보기">
 			<node name="summary" value="현대적인 (Material Design 형식) 라이브러리"/>
 		</node>
