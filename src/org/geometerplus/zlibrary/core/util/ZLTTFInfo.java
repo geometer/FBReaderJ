@@ -19,7 +19,22 @@
 
 package org.geometerplus.zlibrary.core.util;
 
-public class ZLTTFInfo {
-	public String FamilyName;
-	public String SubFamilyName;
+public final class ZLTTFInfo {
+	public final String FamilyName;
+	public final String SubfamilyName;
+
+	public ZLTTFInfo(String family, String subfamily) {
+		FamilyName = family;
+		if ("Literata".equals(family) && "Bold Literata".equals(subfamily)) {
+			SubfamilyName = "Bold Italic";
+		} else {
+			SubfamilyName = subfamily;
+		}
+		System.err.println(this);
+	}
+
+	@Override
+	public String toString() {
+		return "FontInfo [" + FamilyName + " (" + SubfamilyName + ")]";
+	}
 }

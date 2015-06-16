@@ -43,40 +43,42 @@ public class ZLTTFInfoDetector {
 			try {
 				stream = new FileInputStream(f);
 				final ZLTTFInfo info = detectInfo(stream);
-				if (info != null && info.FamilyName != null) {
-					String familyName = info.FamilyName;
-					String subfamilyName = info.SubFamilyName;
-					if (subfamilyName == null || !STYLES.contains(subfamilyName.toLowerCase())) {
-						final String full =
-							subfamilyName != null ? familyName + " " + subfamilyName : familyName;
-						final String lower = full.toLowerCase();
-						familyName = full;
-						subfamilyName = "";
-						for (String style : STYLES) {
-							if (lower.endsWith(" " + style)) {
-								familyName = full.substring(0, lower.length() - style.length() - 1);
-								subfamilyName = full.substring(lower.length() - style.length());
-								break;
-							}
+				if (info == null) {
+					continue;
+				}
+
+				String family = info.FamilyName;
+				String subfamily = info.SubfamilyName;
+				if (subfamily == null || !STYLES.contains(subfamily.toLowerCase())) {
+					final String full =
+						subfamily != null ? family + " " + subfamily : family;
+					final String lower = full.toLowerCase();
+					family = full;
+					subfamily = "";
+					for (String style : STYLES) {
+						if (lower.endsWith(" " + style)) {
+							family = full.substring(0, lower.length() - style.length() - 1);
+							subfamily = full.substring(lower.length() - style.length());
+							break;
 						}
 					}
+				}
 
-					File[] table = fonts.get(familyName);
-					if (table == null) {
-						table = new File[4];
-						fonts.put(familyName, table);
-					}
-					if ("bold".equalsIgnoreCase(subfamilyName)) {
-						table[1] = f;
-					} else if ("italic".equalsIgnoreCase(subfamilyName) ||
-							   "oblique".equalsIgnoreCase(subfamilyName)) {
-						table[2] = f;
-					} else if ("bold italic".equalsIgnoreCase(subfamilyName) ||
-							   "bold oblique".equalsIgnoreCase(subfamilyName)) {
-						table[3] = f;
-					} else {
-						table[0] = f;
-					}
+				File[] table = fonts.get(family);
+				if (table == null) {
+					table = new File[4];
+					fonts.put(family, table);
+				}
+				if ("bold".equalsIgnoreCase(subfamily)) {
+					table[1] = f;
+				} else if ("italic".equalsIgnoreCase(subfamily) ||
+						   "oblique".equalsIgnoreCase(subfamily)) {
+					table[2] = f;
+				} else if ("bold italic".equalsIgnoreCase(subfamily) ||
+						   "bold oblique".equalsIgnoreCase(subfamily)) {
+					table[3] = f;
+				} else {
+					table[0] = f;
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -197,7 +199,8 @@ public class ZLTTFInfoDetector {
 		}
 		final int count = Math.min(getInt16(buffer, 2), (buffer.length - 6) / 12);
 		final int stringOffset = getInt16(buffer, 4);
-		final ZLTTFInfo fontInfo = new ZLTTFInfo();
+		String family = null;
+		String subfamily = null;
 		for (int i = 0; i < count; ++i) {
 			final int platformId = getInt16(buffer, 12 * i + 6);
 			//final int platformSpecificId = getInt16(buffer, 12 * i + 8);
@@ -205,20 +208,24 @@ public class ZLTTFInfoDetector {
 			final int nameId = getInt16(buffer, 12 * i + 12);
 			final int length = getInt16(buffer, 12 * i + 14);
 			final int offset = getInt16(buffer, 12 * i + 16);
+			System.err.println(nameId + ": " + new String(
+				buffer, stringOffset + offset, length,
+				platformId == 1 ? "ISO-8859-1" : "UTF-16BE"
+			));
 			switch (nameId) {
 				case 1:
-					if ((fontInfo.FamilyName == null || languageId == 1033) &&
+					if ((family == null || languageId == 1033) &&
 						stringOffset + offset + length <= buffer.length) {
-						fontInfo.FamilyName = new String(
+						family = new String(
 							buffer, stringOffset + offset, length,
 							platformId == 1 ? "ISO-8859-1" : "UTF-16BE"
 						);
 					}
 					break;
 				case 2:
-					if ((fontInfo.FamilyName == null || languageId == 1033) &&
+					if ((subfamily == null || languageId == 1033) &&
 						stringOffset + offset + length <= buffer.length) {
-						fontInfo.SubFamilyName = new String(
+						subfamily = new String(
 							buffer, stringOffset + offset, length,
 							platformId == 1 ? "ISO-8859-1" : "UTF-16BE"
 						);
@@ -226,6 +233,6 @@ public class ZLTTFInfoDetector {
 					break;
 			}
 		}
-		return fontInfo;
+		return family != null ? new ZLTTFInfo(family, subfamily) : null;
 	}
 }
