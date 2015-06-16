@@ -30,7 +30,6 @@ public final class ZLTTFInfo {
 		} else {
 			SubfamilyName = subfamily;
 		}
-		System.err.println(this);
 	}
 
 	@Override
