@@ -208,10 +208,6 @@ public class ZLTTFInfoDetector {
 			final int nameId = getInt16(buffer, 12 * i + 12);
 			final int length = getInt16(buffer, 12 * i + 14);
 			final int offset = getInt16(buffer, 12 * i + 16);
-			System.err.println(nameId + ": " + new String(
-				buffer, stringOffset + offset, length,
-				platformId == 1 ? "ISO-8859-1" : "UTF-16BE"
-			));
 			switch (nameId) {
 				case 1:
 					if ((family == null || languageId == 1033) &&
