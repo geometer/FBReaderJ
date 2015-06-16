@@ -80,6 +80,13 @@
 		dataKey="query"
 	/>
 	<dictionary
+		id="Aard2 Dictionary"
+		package="itkach.aard2"
+		class=".ArticleCollectionActivity"
+		action="android.intent.action.SEND"
+		dataKey="query"
+	/>
+	<dictionary
 		id="LEO Dictionary"
 		package="org.leo.android.dict"
 		class=".LeoDict"
