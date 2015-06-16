@@ -359,8 +359,8 @@
 				<node name="never" value="Никогда"/>
 			</node>
 			<node name="uploadAllBooks" value="Загружать все книги на сервер"/>
-			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Скачивать с сервера все книги"/>
+			<node name="downloadCurrentBook" value="Автоматически скачивать с сервера текущую книгу"/>
 			<node name="positions" value="Синхронизировать позиции"/>
 			<node name="bookmarks" value="Синхронизировать закладки"/>
 			<node name="metainfo" value="Синхронизировать информацию о книге (название, категории, и т.п.)"/>
