@@ -23,6 +23,12 @@
 		<node name="favorites" value="超爱的书">
 			<node name="summary" value="很喜欢的，特地收藏起来的书刊"/>
 		</node>
+		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
+		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
+		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
+		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
+		<node name="coversView" value="Covers" toBeTranslated="true"/>
+		<node name="oldView" value="Classic" toBeTranslated="true"/>
 		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
 			<node name="summary" value="Switch to thumbnail view" toBeTranslated="true"/>
 		</node>
@@ -1003,8 +1009,8 @@
 			<node name="more" value="下个提示"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="FBReader works in fullscreen mode by default. Tap the center third of the screen now to show controls. You can change this in the “Appearance” section of the Settings dialog." toBeTranslated="true"/>
-			<node name="message2" value="Well done! Now tap the center third of the screen again to hide the controls and this hint. If you want to keep controls on the screen while reading, select the “Show action bar” option in “Appearance” in Settings." toBeTranslated="true"/>
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap the centre third of the screen now to show controls. You can change this in the “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the centre third of the screen again to hide the controls and this hint. If you want to keep controls on the screen while reading, select the “Show action bar” option in “Appearance” in Settings." toBeTranslated="true"/>
 		</node>
 		<node name="folderList">
 			<node name="addFolder" value="Add folder" toBeTranslated="true"/>

@@ -25,6 +25,12 @@
 		<node name="favorites" value="Favoritos">
 			<node name="summary" value="A minha seleção de livros"/>
 		</node>
+		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
+		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
+		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
+		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
+		<node name="coversView" value="Covers" toBeTranslated="true"/>
+		<node name="oldView" value="Classic" toBeTranslated="true"/>
 		<node name="bookshelfView" value="Vista de Estante">
 			<node name="summary" value="Exbição de Biblioteca Moderna (design com estilo material)"/>
 		</node>
