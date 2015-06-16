@@ -9,6 +9,8 @@
 * Better look for menu activities in Android 5+
 * Separate resources for en and en_US
 * Updated English resources
+* Updated German localisation (by Matthias Dill)
+* Added Aard2 support (by Mike Fabian)
 
 ===== 2.5 beta 1 (Jun 13, 2015) =====
 * BookDownloader accepts all new file types (including pdf)
