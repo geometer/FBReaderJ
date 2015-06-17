@@ -25,12 +25,12 @@
 		<node name="favorites" value="Favoritos">
 			<node name="summary" value="A minha seleção de livros"/>
 		</node>
-		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
-		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
-		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
-		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
-		<node name="coversView" value="Covers" toBeTranslated="true"/>
-		<node name="oldView" value="Classic" toBeTranslated="true"/>
+		<node name="chooseView" value="Escolher vista"/>
+		<node name="wideCardsView" value="Capas grandes"/>
+		<node name="smallCardsView" value="Capas pequenas"/>
+		<node name="tinyCardsView" value="Capas minúsculas"/>
+		<node name="coversView" value="Capas"/>
+		<node name="oldView" value="Clássico"/>
 		<node name="bookshelfView" value="Vista de Estante">
 			<node name="summary" value="Exbição de Biblioteca Moderna (design com estilo material)"/>
 		</node>
@@ -255,15 +255,15 @@
 		<node name="search" value="Pesquisar"/>
 	</node>
 	<node name="editBookmark">
-		<node name="text" value="Text" toBeTranslated="true"/>
-		<node name="style" value="Style" toBeTranslated="true"/>
-		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="text" value="Texto"/>
+		<node name="style" value="Estilo"/>
+		<node name="delete" value="Eliminar"/>
 		<node name="deleteBookmark" value="Eliminar marcador"/>
-		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="saveText" value="Guardar texto"/>
 		<node name="editStyle" value="Editar estilo…"/>
 	</node>
 	<node name="footnoteToast">
-		<node name="more" value="More" toBeTranslated="true"/>
+		<node name="more" value="Mais"/>
 	</node>
 	<node name="cancelMenu" value="Menu cancelar">
 		<node name="library" value="Abra a biblioteca"/>
@@ -344,8 +344,8 @@
 	<node name="Preferences" value="Preferências">
 		<node name="sync" value="Sincronização">
 			<node name="summary" value="Marcar opções de rede"/>
-			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
-				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			<node name="site" value="Ler mais sobre a sincronização">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="Ativar sicronização">
 				<node name="summaryOn" value="Sincronizar a minha biblioteca com a rede de servidores de livros do FBReader"/>
@@ -422,13 +422,13 @@
 				<node name="summaryOn" value="Apresentar texto em duas colunas quando o dispositivo está na horizontal"/>
 				<node name="summaryOff" value="Apresentar sempre o texto numa só coluna"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
-				<node name="never" value="Never" toBeTranslated="true"/>
-				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
-				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
-				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			<node name="showFootnoteToast" value="Ver texto linkado num popup">
+				<node name="never" value="Nunca"/>
+				<node name="footnotesOnly" value="Apenas em notas de rodapé"/>
+				<node name="footnotesAndSuperscripts" value="Em notas de rodapé e links superscript"/>
+				<node name="allInternalLinks" value="Em todos os links internos"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="Quanto tempo apresentar popup do link"/>
 			<node name="allowScreenBrightnessAdjustment" value="Ajuste de brilho do ecrã">
 				<node name="summaryOn" value="Arrastando dedo para cima/para baixo ao longo do lado esquerdo do ecrã"/>
 				<node name="summaryOff" value="Desativado"/>
@@ -765,14 +765,14 @@
 				<node name="custom" value="Personalizado…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
-			<node name="summary" value="Translation settings" toBeTranslated="true"/>
-			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
-			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
-			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
-			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
-			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
-				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
+		<node name="dictionary" value="Dicionário &amp; tradutor">
+			<node name="summary" value="Definições de tradução"/>
+			<node name="dictionary" value="Procurar palavra única em"/>
+			<node name="translator" value="Traduzir frase via"/>
+			<node name="translationToastDuration" value="Quanto tempo mostrar popup de tradução"/>
+			<node name="errorToastDuration" value="Quanto tempo mostrar mensagem de erro"/>
+			<node name="sourceLanguage" value="Traduzir a partir do">
+				<node name="detect" value="Detetar automaticamente a língua"/>
 			</node>
 			<node name="targetLanguage" value="Traduzir para">
 				<node name="any" value="todos os idiomas"/>
@@ -907,10 +907,10 @@
 		<node name="backgroundAuthentication">
 			<node name="message" value="Autenticação necessária"/>
 		</node>
-		<node name="missingDictionary" value="Missing %s" toBeTranslated="true">
-			<node name="install" value="Install %s" toBeTranslated="true"/>
-			<node name="configure" value="Configure translation" toBeTranslated="true"/>
-			<node name="skip" value="Skip" toBeTranslated="true"/>
+		<node name="missingDictionary" value="%s em falta">
+			<node name="install" value="Instalar %s"/>
+			<node name="configure" value="Configurar tradução"/>
+			<node name="skip" value="Saltar"/>
 		</node>
 		<node name="installDictionary" value="Instalar Diconário">
 			<node name="title" value="Instalar dicionário"/>
@@ -947,7 +947,7 @@
 			<node name="passwordSent" value="Informações da conta enviadas para %s. Por favor, verifique caixa de entrada."/>
 		</node>
 		<node name="waitMessage">
-			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
+			<node name="translating" value="Tradução em progresso…"/>
 			<node name="tryConnect" value="A tentar ligar, por favor, espere…"/>
 			<node name="downloadingBook" value="Descarregar livro %s"/>
 			<node name="search" value="Pesquisando. Por favor, aguarde…"/>
@@ -1068,12 +1068,12 @@
 			<node name="title" value="Plug-in %s para ficheiros não instalado. Instalar agora?"/>
 		</node>
 		<node name="licensing">
-			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+			<node name="title" value="%s não está licenciado"/>
+			<node name="message" value="Comprar no Google Play agora?"/>
 		</node>
 		<node name="retryLicensing">
-			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
-			<node name="message" value="Try again?" toBeTranslated="true"/>
+			<node name="title" value="Não foi possível verificar a licença %s"/>
+			<node name="message" value="Tentar novamente?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -1173,19 +1173,19 @@
 		<node name="percent" value="Exemplo: 125%%"/>
 	</node>
 	<node name="duration">
-		<node name="duration1" value="1 second" toBeTranslated="true"/>
-		<node name="duration3" value="3 seconds" toBeTranslated="true"/>
-		<node name="duration5" value="5 seconds" toBeTranslated="true"/>
-		<node name="duration10" value="10 seconds" toBeTranslated="true"/>
-		<node name="duration20" value="20 seconds" toBeTranslated="true"/>
-		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
-		<node name="duration60" value="1 minute" toBeTranslated="true"/>
-		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+		<node name="duration1" value="1 segundo"/>
+		<node name="duration3" value="3 segundos"/>
+		<node name="duration5" value="5 segundos"/>
+		<node name="duration10" value="10 segundos"/>
+		<node name="duration20" value="20 segundos"/>
+		<node name="duration40" value="40 segundos"/>
+		<node name="duration60" value="1 minuto"/>
+		<node name="duration300" value="5 minutos"/>
 	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
-		<node name="noArticle" value="No article found for “%s”" toBeTranslated="true"/>
-		<node name="cannotOpenDictionary" value="Cannot open dictionary" toBeTranslated="true"/>
-		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings" toBeTranslated="true"/>
+		<node name="unknown" value="Erro desconhecido"/>
+		<node name="noArticle" value="Nenhum artigo encontrado para “%s”"/>
+		<node name="cannotOpenDictionary" value="Não foi possível abrir dicionário"/>
+		<node name="noDictionarySelected" value="Dicionário não selecionado; por favor ajuste as definições Dictan"/>
 	</node>
 </resources>
