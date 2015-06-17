@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 23-Mar-2015 -->
+<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 17-Jun-2015 -->
 <resources>
 	<node name="library" value="FBReader bibliotheek">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
@@ -24,11 +24,11 @@
 			<node name="summary" value="Mijn geselecteerde boeken"/>
 		</node>
 		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
-		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
-		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
-		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
-		<node name="coversView" value="Covers" toBeTranslated="true"/>
-		<node name="oldView" value="Classic" toBeTranslated="true"/>
+		<node name="wideCardsView" value="Brede kaarten"/>
+		<node name="smallCardsView" value="Kleine kaarten"/>
+		<node name="tinyCardsView" value="Zeer kleine kaarten"/>
+		<node name="coversView" value="Covers"/>
+		<node name="oldView" value="Klassiek"/>
 		<node name="bookshelfView" value="Boekenplank">
 			<node name="summary" value="Moderne (material design) bibliotheek"/>
 		</node>
@@ -761,14 +761,14 @@
 				<node name="custom" value="Aangepast…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
-			<node name="summary" value="Translation settings" toBeTranslated="true"/>
+		<node name="dictionary" value="Woordenboek &amp; vertaler">
+			<node name="summary" value="Vertaalinstellingen"/>
 			<node name="dictionary" value="Enkel woord opzoeken in"/>
 			<node name="translator" value="Vertaal Translate zinsdelen via"/>
-			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
-			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
-			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
-				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
+			<node name="translationToastDuration" value="Hoe lang de vertaalpopup tonen"/>
+			<node name="errorToastDuration" value="Hoe lang de foutmelding tonen"/>
+			<node name="sourceLanguage" value="Vertalen vanuit">
+				<node name="detect" value="Taal automatisch detecteren"/>
 			</node>
 			<node name="targetLanguage" value="Vertalen naar">
 				<node name="any" value="alle talen"/>
@@ -903,10 +903,10 @@
 		<node name="backgroundAuthentication">
 			<node name="message" value="Authenticatie vereist"/>
 		</node>
-		<node name="missingDictionary" value="Missing %s" toBeTranslated="true">
-			<node name="install" value="Install %s" toBeTranslated="true"/>
-			<node name="configure" value="Configure translation" toBeTranslated="true"/>
-			<node name="skip" value="Skip" toBeTranslated="true"/>
+		<node name="missingDictionary" value="%s ontbreekt">
+			<node name="install" value="Installeer %s"/>
+			<node name="configure" value="Vertaling instellen"/>
+			<node name="skip" value="Overslaan"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Installeer woordenboek"/>
@@ -943,7 +943,7 @@
 			<node name="passwordSent" value="Jouw accountinformatie is verzonden naar %s. Controleer je Postvak IN"/>
 		</node>
 		<node name="waitMessage">
-			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
+			<node name="translating" value="Bezig met vertalen…"/>
 			<node name="tryConnect" value="Bezig met verbinden. Een ogenblik…"/>
 			<node name="downloadingBook" value="Boek %s wordt gedownload"/>
 			<node name="search" value="Bezig met zoeken. Een ogenblik…"/>
@@ -1064,12 +1064,12 @@
 			<node name="title" value="Geen plug-in voor %s-bestanden geïnstalleerd. Nu installeren?"/>
 		</node>
 		<node name="licensing">
-			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+			<node name="title" value="Geen licentie voor %s"/>
+			<node name="message" value="Nu op Google Play kopen?"/>
 		</node>
 		<node name="retryLicensing">
-			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
-			<node name="message" value="Try again?" toBeTranslated="true"/>
+			<node name="title" value="Kan licentie voor %s niet controleren."/>
+			<node name="message" value="Nogmaals proberen?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -1174,8 +1174,8 @@
 		<node name="duration5" value="5 seconden"/>
 		<node name="duration10" value="10 seconden"/>
 		<node name="duration20" value="20 seconden"/>
-		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
-		<node name="duration60" value="1 minute" toBeTranslated="true"/>
+		<node name="duration40" value="40 seconden"/>
+		<node name="duration60" value="1 minuut"/>
 		<node name="duration300" value="5 minuten"/>
 	</node>
 	<node name="dictanErrors">
