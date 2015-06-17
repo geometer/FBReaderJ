@@ -415,23 +415,23 @@
 				<node name="footnotesAndSuperscripts" value="Chỉ chú thích và đường dẫn dùng thẻ sup"/>
 				<node name="allInternalLinks" value="Tất cả các liên kết nội bộ"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="Thời lượng hiển thị chú thích"/>
 			<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
 				<node name="summaryOn" value="Vuốt ngón tay theo lề trái màn hình"/>
 				<node name="summaryOff" value="Tắt"/>
 			</node>
 			<node name="dontTurnScreenOff" value="Ngăn màn hình tắt">
-				<node name="0" value="Luôn luôn"/>
-				<node name="25" value="Khi pin nhiều hơn 25%%"/>
-				<node name="50" value="Khi pin nhiều hơn 50%%"/>
-				<node name="100" value="Màn hình tắt tự động"/>
+				<node name="0" value="Không bao giờ tắt"/>
+				<node name="25" value="Không tắt khi pin nhiều hơn 25%%"/>
+				<node name="50" value="Không tắt khi pin nhiều hơn 50%%"/>
+				<node name="100" value="Tắt tự động"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Ngăn màn hình tắt trong khi sạc">
 				<node name="summaryOn" value="Ngăn màn hình tắt nếu máy đang sạc"/>
 				<node name="summaryOff" value="Tắt màn hình ngay cả khi máy đang sạc"/>
 			</node>
 		</node>
-		<node name="text" value="Cấu hình chữ">
+		<node name="text" value="Chỉnh chữ">
 			<node name="summary" value="Kiểu chữ, tách chữ, v..v."/>
 			<node name="fontProperties" value="Font properties" toBeTranslated="true">
 				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
@@ -456,7 +456,7 @@
 					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
 				</node>
 			</node>
-			<node name="font" value="Họ font">
+			<node name="font" value="Dạng chữ">
 				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
 			<node name="fontSize" value="Cỡ"/>
@@ -489,7 +489,7 @@
 				<node name="left" value="Trái"/>
 				<node name="right" value="Phải"/>
 				<node name="center" value="Giữa"/>
-				<node name="justify" value="Căn chỉnh"/>
+				<node name="justify" value="Đều"/>
 				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Tự động Tách từ">
@@ -963,7 +963,7 @@
 			<node name="purchaseMissingBook" value="Mất sách"/>
 			<node name="purchaseAlreadyPurchased" value="Đã mua"/>
 			<node name="bookNotPurchased" value="Sách chưa được mua"/>
-			<node name="downloadLimitExceeded" value="Quá giói hạn tải về"/>
+			<node name="downloadLimitExceeded" value="Quá giới hạn tải về"/>
 			<node name="noUserForEmail" value="Không người nào đang ký&#10;với địa chỉ email xác định"/>
 			<node name="unsupportedOperation" value="Thao tác không được hỗ trợ"/>
 			<node name="notAnOPDS" value="Đây không phải là một kho OPDS"/>
@@ -1069,7 +1069,7 @@
 		<node name="errorReadingZip" value="Error occured while extracting '%s'" toBeTranslated="true"/>
 		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
 		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="File not found: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="Không tìm thấy: %s"/>
 		<node name="unsupportedEncryptionMethod" value="File %s encryption method is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
@@ -1119,16 +1119,16 @@
 		<node name="litres" value="LitRes" toBeTranslated="true">
 			<node name="summary" value="Russian book store" toBeTranslated="true"/>
 		</node>
-		<node name="tts_plus" value="TTS+" toBeTranslated="true">
-			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		<node name="tts_plus" value="TTS+">
+			<node name="summary" value="Đọc to"/>
 		</node>
-		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
-			<node name="summary" value="Connect to Calibre server in your local network" toBeTranslated="true"/>
+		<node name="calibre_server_integration" value="Nối với Calibre">
+			<node name="summary" value="Nối với Calibre trên mạng nội bộ"/>
 		</node>
-		<node name="local_opds_scanner" value="Local OPDS Scanner" toBeTranslated="true">
-			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		<node name="local_opds_scanner" value="Quét OPDS nội bộ">
+			<node name="summary" value="Tìm sách trên mạng nội bộ"/>
 		</node>
-		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+		<node name="bookshelf" value="Giá sách">
 			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
 		</node>
 		<node name="opds_server" value="OPDS Server" toBeTranslated="true">
@@ -1160,14 +1160,14 @@
 		<node name="percent" value="VD: 125%%"/>
 	</node>
 	<node name="duration">
-		<node name="duration1" value="1 second" toBeTranslated="true"/>
-		<node name="duration3" value="3 seconds" toBeTranslated="true"/>
-		<node name="duration5" value="5 seconds" toBeTranslated="true"/>
-		<node name="duration10" value="10 seconds" toBeTranslated="true"/>
-		<node name="duration20" value="20 seconds" toBeTranslated="true"/>
-		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
-		<node name="duration60" value="1 minute" toBeTranslated="true"/>
-		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+		<node name="duration1" value="1 giây"/>
+		<node name="duration3" value="3 giây"/>
+		<node name="duration5" value="5 giây"/>
+		<node name="duration10" value="10 giây"/>
+		<node name="duration20" value="20 giây"/>
+		<node name="duration40" value="40 giây"/>
+		<node name="duration60" value="1 phút"/>
+		<node name="duration300" value="5 phút"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
