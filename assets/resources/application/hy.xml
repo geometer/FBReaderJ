@@ -876,6 +876,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="No, thanks" toBeTranslated="true"/>
 			<node name="install" value="Տեղադրել"/>
 			<node name="update" value="Թարմացնել"/>
 			<node name="skip" value="Ոչ այժմ"/>
@@ -1190,4 +1191,5 @@
 		<node name="cannotOpenDictionary" value="չհաջողվեց բացել բառարանը"/>
 		<node name="noDictionarySelected" value="բառարան ընտրված չէ, ընտրեք այն Dictan  կարգավորումներում"/>
 	</node>
+	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true"/>
 </resources>

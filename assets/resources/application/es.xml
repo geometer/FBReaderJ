@@ -876,6 +876,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="No, gracias"/>
 			<node name="install" value="Instalar"/>
 			<node name="update" value="Actualizar"/>
 			<node name="skip" value="Omitir"/>
@@ -1190,4 +1191,5 @@
 		<node name="cannotOpenDictionary" value="No se ha podido abrir el diccionario"/>
 		<node name="noDictionarySelected" value="No se ha seleccionado el diccionario; por favor, configure los ajustes de Dictan"/>
 	</node>
+	<node name="premium" value="FBReader Premium Edition"/>
 </resources>

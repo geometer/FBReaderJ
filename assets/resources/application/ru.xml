@@ -875,6 +875,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="Нет, спасибо"/>
 			<node name="install" value="Установить"/>
 			<node name="update" value="Обновить"/>
 			<node name="skip" value="Не сейчас"/>
@@ -1193,6 +1194,7 @@
 		<node name="cannotOpenDictionary" value="не удалось открыть словать"/>
 		<node name="noDictionarySelected" value="словарь не выбран; сделайте это в настроках Dictan"/>
 	</node>
+	<node name="premium" value="FBReader Premium"/>
 	<node name="dictionary">
 		<node name="Yandex.Translate" value="Яндекс.Переводчик"/>
 	</node>

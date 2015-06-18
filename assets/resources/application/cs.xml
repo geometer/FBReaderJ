@@ -879,6 +879,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="No, thanks" toBeTranslated="true"/>
 			<node name="install" value="Instalovat"/>
 			<node name="update" value="Aktualizovat"/>
 			<node name="skip" value="Přeskočit"/>
@@ -1193,4 +1194,5 @@
 		<node name="cannotOpenDictionary" value="nelze otevřít slovník"/>
 		<node name="noDictionarySelected" value="není vybrán slovník; opravte to v nastavení Dictan"/>
 	</node>
+	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true"/>
 </resources>
