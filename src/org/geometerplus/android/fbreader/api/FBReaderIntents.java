@@ -49,13 +49,28 @@ public abstract class FBReaderIntents {
 		String EDIT_STYLES                      = "android.fbreader.action.EDIT_STYLES";
 		String EDIT_BOOKMARK                    = "android.fbreader.action.EDIT_BOOKMARK";
 		String SWITCH_YOTA_SCREEN               = "android.fbreader.action.SWITCH_YOTA_SCREEN";
+
+		String SYNC_START                       = "android.fbreader.action.sync.START";
+		String SYNC_STOP                        = "android.fbreader.action.sync.STOP";
+		String SYNC_SYNC                        = "android.fbreader.action.sync.SYNC";
+		String SYNC_QUICK_SYNC                  = "android.fbreader.action.sync.QUICK_SYNC";
+	}
+
+	public interface Event {
+		String CONFIG_OPTION_CHANGE             = "fbreader.config_service.option_change_event";
+
+		String LIBRARY_BOOK                     = "fbreader.library_service.book_event";
+		String LIBRARY_BUILD                    = "fbreader.library_service.build_event";
+		String LIBRARY_COVER_READY              = "fbreader.library_service.cover_ready";
+
+		String SYNC_UPDATED                     = "android.fbreader.event.sync.UPDATED";
 	}
 
 	public interface Key {
-		String BOOK                     = "fbreader.book";
-		String BOOKMARK                 = "fbreader.bookmark";
-		String PLUGIN                   = "fbreader.plugin";
-		String TYPE                     = "fbreader.type";
+		String BOOK                             = "fbreader.book";
+		String BOOKMARK                         = "fbreader.bookmark";
+		String PLUGIN                           = "fbreader.plugin";
+		String TYPE                             = "fbreader.type";
 	}
 
 	public static Intent defaultInternalIntent(String action) {

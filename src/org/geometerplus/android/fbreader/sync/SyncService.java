@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.fbreader.network.sync.SyncData;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class SyncService extends Service implements IBookCollection.Listener<Book> {
@@ -119,14 +120,14 @@ public class SyncService extends Service implements IBookCollection.Listener<Boo
 
 	private PendingIntent syncIntent() {
 		return PendingIntent.getService(
-			this, 0, new Intent(this, getClass()).setAction(SyncOperations.Action.SYNC), 0
+			this, 0, new Intent(this, getClass()).setAction(FBReaderIntents.Action.SYNC_SYNC), 0
 		);
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		final String action = intent != null ? intent.getAction() : SyncOperations.Action.SYNC;
-		if (SyncOperations.Action.START.equals(action)) {
+		final String action = intent != null ? intent.getAction() : FBReaderIntents.Action.SYNC_SYNC;
+		if (FBReaderIntents.Action.SYNC_START.equals(action)) {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
 
@@ -151,16 +152,16 @@ public class SyncService extends Service implements IBookCollection.Listener<Boo
 					myCollection.bindToService(SyncService.this, myQuickSynchroniser);
 				}
 			});
-		} else if (SyncOperations.Action.STOP.equals(action)) {
+		} else if (FBReaderIntents.Action.SYNC_STOP.equals(action)) {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
 			log("stopped");
 			stopSelf();
-		} else if (SyncOperations.Action.SYNC.equals(action)) {
+		} else if (FBReaderIntents.Action.SYNC_SYNC.equals(action)) {
 			SQLiteCookieDatabase.init(this);
 			myCollection.bindToService(this, myQuickSynchroniser);
 			myCollection.bindToService(this, myStandardSynchroniser);
-		} else if (SyncOperations.Action.QUICK_SYNC.equals(action)) {
+		} else if (FBReaderIntents.Action.SYNC_QUICK_SYNC.equals(action)) {
 			log("quick sync");
 			SQLiteCookieDatabase.init(this);
 			myCollection.bindToService(this, myQuickSynchroniser);
@@ -449,7 +450,7 @@ public class SyncService extends Service implements IBookCollection.Listener<Boo
 				@Override
 				public void processResponse(Object response) {
 					if (mySyncData.updateFromServer((Map<String,Object>)response)) {
-						sendBroadcast(new Intent(SyncOperations.UPDATED));
+						sendBroadcast(new Intent(FBReaderIntents.Event.SYNC_UPDATED));
 					}
 				}
 			});
