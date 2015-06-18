@@ -874,7 +874,7 @@
 	</node>
 	<node name="dialog" value="Diálogo">
 		<node name="button" value="Botão">
-			<node name="noThanks" value="Não, graças"/>
+			<node name="noThanks" value="Não, obrigado"/>
 			<node name="install" value="Instalar"/>
 			<node name="update" value="Atualizar"/>
 			<node name="skip" value="Saltar"/>
