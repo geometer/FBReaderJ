@@ -19,13 +19,13 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.*;
 
 import android.app.*;
 import android.content.*;
 import android.net.Uri;
+import android.text.Html;
 import android.os.*;
 import android.view.*;
 import android.widget.RelativeLayout;
@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
@@ -329,6 +330,8 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 			public void run() {
 				if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
 					new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, true).run();
+				} else {
+					showPremiumDialog();
 				}
 			}
 		});
@@ -1176,5 +1179,73 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		myFBReaderApp.getTextView().removeHighlightings(DictionaryHighlighting.class);
 		myFBReaderApp.getViewWidget().reset();
 		myFBReaderApp.getViewWidget().repaint();
+	}
+
+	private void showPremiumDialog() {
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			return;
+		}
+		final ZLIntegerOption countOption = new ZLIntegerOption("Premium", "Count", 0);
+		final ZLIntegerOption lastCallOption = new ZLIntegerOption("Premium", "LastCall", 0);
+		final int count = countOption.getValue();
+		if (count < 5) {
+			countOption.setValue(count + 1);
+			return;
+		}
+		final int lastCall = lastCallOption.getValue();
+		final int currentTime = (int)(System.currentTimeMillis() / 1000 / 60 / 60);
+		if (lastCall != 0 && lastCall + 15 * 24 > currentTime) {
+			return;
+		}
+
+		if (isFinishing()) {
+			return;
+		}
+
+		countOption.setValue(0);
+		lastCallOption.setValue(currentTime);
+
+		ZLFile textFile =
+			ZLFile.createFileByPath("data/premium/" + ZLResource.getLanguage() + ".html");
+		if (!textFile.exists()) {
+			textFile = ZLFile.createFileByPath("data/premium/en.html");
+		}
+		final StringBuilder buffer = new StringBuilder();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new InputStreamReader(textFile.getInputStream(), "utf-8"));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				buffer.append(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		} finally {
+			try {
+				reader.close();
+			} catch (Exception e) {
+				// ignore
+			}
+		}
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		new AlertDialog.Builder(this)
+			.setTitle(ZLResource.resource("premium").getValue())
+			.setMessage(Html.fromHtml(buffer.toString()))
+			.setIcon(0)
+			.setPositiveButton(
+				buttonResource.getResource("buy").getValue(),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						startActivity(new Intent(
+							Intent.ACTION_VIEW,
+							Uri.parse("market://details?id=" + getPackageName())
+						));
+					}
+				}
+			)
+			.setNegativeButton(buttonResource.getResource("noThanks").getValue(), null)
+			.create()
+			.show();
 	}
 }
