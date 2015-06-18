@@ -29,6 +29,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
+
 final class SQLiteConfig extends ConfigInterface.Stub {
 	private final Service myService;
 
@@ -161,7 +163,7 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 
 	private void sendChangeEvent(String group, String name, String value) {
 		myService.sendBroadcast(
-			new Intent(ConfigShadow.OPTION_CHANGE_EVENT_ACTION)
+			new Intent(FBReaderIntents.Event.CONFIG_OPTION_CHANGE)
 				.putExtra("group", group)
 				.putExtra("name", name)
 				.putExtra("value", value)

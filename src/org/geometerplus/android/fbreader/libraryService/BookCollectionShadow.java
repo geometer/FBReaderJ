@@ -48,7 +48,7 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 
 			try {
 				final String type = intent.getStringExtra("type");
-				if (LibraryServiceActions.BOOK_EVENT_ACTION.equals(intent.getAction())) {
+				if (FBReaderIntents.Event.LIBRARY_BOOK.equals(intent.getAction())) {
 					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"), BookCollectionShadow.this);
 					fireBookEvent(BookEvent.valueOf(type), book);
 				} else {
@@ -597,8 +597,8 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			Config.Instance().runOnConnect(myOnBindActions.remove(0));
 		}
 		if (myContext != null) {
-			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryServiceActions.BOOK_EVENT_ACTION));
-			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryServiceActions.BUILD_EVENT_ACTION));
+			myContext.registerReceiver(myReceiver, new IntentFilter(FBReaderIntents.Event.LIBRARY_BOOK));
+			myContext.registerReceiver(myReceiver, new IntentFilter(FBReaderIntents.Event.LIBRARY_BUILD));
 		}
 	}
 
