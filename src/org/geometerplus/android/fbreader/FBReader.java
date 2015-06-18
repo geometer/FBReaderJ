@@ -559,7 +559,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 			action.run();
 		}
 
-		registerReceiver(mySyncUpdateReceiver, new IntentFilter(SyncOperations.UPDATED));
+		registerReceiver(mySyncUpdateReceiver, new IntentFilter(FBReaderIntents.Event.SYNC_UPDATED));
 
 		SetScreenOrientationAction.setOrientation(this, getZLibrary().getOrientationOption().getValue());
 		if (myCancelIntent != null) {
