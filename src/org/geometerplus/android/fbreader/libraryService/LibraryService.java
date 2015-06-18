@@ -38,11 +38,12 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.httpd.DataUtil;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
-public class LibraryService extends Service implements LibraryServiceActions {
+public class LibraryService extends Service {
 	private static SQLiteBooksDatabase ourDatabase;
 	private static final Object ourDatabaseLock = new Object();
 
@@ -132,14 +133,14 @@ public class LibraryService extends Service implements LibraryServiceActions {
 
 			myCollection.addListener(new BookCollection.Listener<DbBook>() {
 				public void onBookEvent(BookEvent event, DbBook book) {
-					final Intent intent = new Intent(BOOK_EVENT_ACTION);
+					final Intent intent = new Intent(FBReaderIntents.Event.LIBRARY_BOOK);
 					intent.putExtra("type", event.toString());
 					intent.putExtra("book", SerializerUtil.serialize(book));
 					sendBroadcast(intent);
 				}
 
 				public void onBuildEvent(BookCollection.Status status) {
-					final Intent intent = new Intent(BUILD_EVENT_ACTION);
+					final Intent intent = new Intent(FBReaderIntents.Event.LIBRARY_BUILD);
 					intent.putExtra("type", status.toString());
 					sendBroadcast(intent);
 				}
