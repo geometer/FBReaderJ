@@ -870,6 +870,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="No, thanks" toBeTranslated="true"/>
 			<node name="install" value="インストール"/>
 			<node name="update" value="アップデート"/>
 			<node name="skip" value="今回はしない"/>
@@ -1183,4 +1184,5 @@
 		<node name="cannotOpenDictionary" value="辞書を開くことができません"/>
 		<node name="noDictionarySelected" value="辞書が選択されていません; Dictan で設定を直してください"/>
 	</node>
+	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true"/>
 </resources>
