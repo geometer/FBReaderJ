@@ -371,7 +371,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 					try {
 						final ExternalFormatPlugin plugin =
 							(ExternalFormatPlugin)BookUtil.getPlugin(myFBReaderApp.ExternalBook);
-						startActivity(PluginUtil.createIntent(plugin, PluginUtil.ACTION_KILL));
+						startActivity(PluginUtil.createIntent(plugin, FBReaderIntents.Action.PLUGIN_KILL));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
