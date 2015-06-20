@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.formats.PluginImage;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.formatPlugin.CoverReader;
 
@@ -133,7 +134,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 			connection = new Connection(plugin);
 			myConnections.put(plugin, connection);
 			myContext.bindService(
-				PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE),
+				PluginUtil.createIntent(plugin, FBReaderIntents.Action.PLUGIN_CONNECT_COVER_SERVICE),
 				connection,
 				Context.BIND_AUTO_CREATE
 			);
