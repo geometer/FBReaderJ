@@ -54,6 +54,10 @@ public abstract class FBReaderIntents {
 		String SYNC_STOP                        = "android.fbreader.action.sync.STOP";
 		String SYNC_SYNC                        = "android.fbreader.action.sync.SYNC";
 		String SYNC_QUICK_SYNC                  = "android.fbreader.action.sync.QUICK_SYNC";
+
+		String PLUGIN_VIEW                      = "android.fbreader.action.plugin.VIEW";
+		String PLUGIN_KILL                      = "android.fbreader.action.plugin.KILL";
+		String PLUGIN_CONNECT_COVER_SERVICE     = "android.fbreader.action.plugin.CONNECT_COVER_SERVICE";
 	}
 
 	public interface Event {
