@@ -135,7 +135,13 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 		final Intent intent = getIntent();
 		final Uri data = intent.getData();
-		final String screenId = intent.getStringExtra(SCREEN_KEY);
+		final String screenId;
+		if (Intent.ACTION_VIEW.equals(intent.getAction())
+				&& data != null && "fbreader-preferences".equals(data.getScheme())) {
+			screenId = data.getEncodedSchemeSpecificPart();
+		} else {
+			screenId = intent.getStringExtra(SCREEN_KEY);
+		}
 
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
