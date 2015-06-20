@@ -53,7 +53,7 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 			myDialog = null;
 		}
 
-		final Intent intent = PluginUtil.createIntent(plugin, PluginUtil.ACTION_VIEW);
+		final Intent intent = PluginUtil.createIntent(plugin, FBReaderIntents.Action.PLUGIN_VIEW);
 		FBReaderIntents.putBookExtra(intent, book);
 		FBReaderIntents.putBookmarkExtra(intent, bookmark);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

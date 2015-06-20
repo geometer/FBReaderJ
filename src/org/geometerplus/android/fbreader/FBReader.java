@@ -365,7 +365,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 					try {
 						final ExternalFormatPlugin plugin =
 							(ExternalFormatPlugin)BookUtil.getPlugin(myFBReaderApp.ExternalBook);
-						startActivity(PluginUtil.createIntent(plugin, PluginUtil.ACTION_KILL));
+						startActivity(PluginUtil.createIntent(plugin, FBReaderIntents.Action.PLUGIN_KILL));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -1175,16 +1175,20 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			return;
 		}
-		final ZLIntegerOption countOption = new ZLIntegerOption("Premium", "Count", 0);
+		final int currentTime = (int)(System.currentTimeMillis() / 1000 / 60 / 60);
 		final ZLIntegerOption lastCallOption = new ZLIntegerOption("Premium", "LastCall", 0);
+		final int lastCall = lastCallOption.getValue();
+		if (lastCall == 0) {
+			lastCallOption.setValue(currentTime - 10 * 24);
+			return;
+		}
+		final ZLIntegerOption countOption = new ZLIntegerOption("Premium", "Count", 0);
 		final int count = countOption.getValue();
 		if (count < 5) {
 			countOption.setValue(count + 1);
 			return;
 		}
-		final int lastCall = lastCallOption.getValue();
-		final int currentTime = (int)(System.currentTimeMillis() / 1000 / 60 / 60);
-		if (lastCall != 0 && lastCall + 15 * 24 > currentTime) {
+		if (lastCall + 15 * 24 > currentTime) {
 			return;
 		}
 
