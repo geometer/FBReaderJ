@@ -376,9 +376,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private float distance2ToCursor(int x, int y, SelectionCursor.Which which) {
 		final ZLTextSelection.Point point = getSelectionCursorPoint(myCurrentPage, which);
+		if (point == null) {
+			return Floor.MAX_VALUE;
+		}
 		final float dX = x - point.X;
 		final float dY = y - point.Y;
-		return point != null ? dX * dX + dY * dY : Float.MAX_VALUE;
+		return dX * dX + dY * dY;
 	}
 
 	protected SelectionCursor.Which findSelectionCursor(int x, int y) {
