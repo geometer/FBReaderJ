@@ -21,8 +21,6 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
 
-import android.util.FloatMath;
-
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
@@ -376,27 +374,29 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return null;
 	}
 
-	private float distanceToCursor(int x, int y, SelectionCursor.Which which) {
+	private float distance2ToCursor(int x, int y, SelectionCursor.Which which) {
 		final ZLTextSelection.Point point = getSelectionCursorPoint(myCurrentPage, which);
-		return point != null ? FloatMath.hypot(x - point.X, y - point.Y) : Float.MAX_VALUE;
+		final float dX = x - point.X;
+		final float dY = y - point.Y;
+		return point != null ? dX * dX + dY * dY : Float.MAX_VALUE;
 	}
 
 	protected SelectionCursor.Which findSelectionCursor(int x, int y) {
 		return findSelectionCursor(x, y, Float.MAX_VALUE);
 	}
 
-	protected SelectionCursor.Which findSelectionCursor(int x, int y, float maxDistance) {
+	protected SelectionCursor.Which findSelectionCursor(int x, int y, float maxDistance2) {
 		if (mySelection.isEmpty()) {
 			return null;
 		}
 
-		final float leftDistance = distanceToCursor(x, y, SelectionCursor.Which.Left);
-		final float rightDistance = distanceToCursor(x, y, SelectionCursor.Which.Right);
+		final float leftDistance2 = distance2ToCursor(x, y, SelectionCursor.Which.Left);
+		final float rightDistance2 = distance2ToCursor(x, y, SelectionCursor.Which.Right);
 
-		if (rightDistance < leftDistance) {
-			return rightDistance <= maxDistance ? SelectionCursor.Which.Right : null;
+		if (rightDistance2 < leftDistance2) {
+			return rightDistance2 <= maxDistance2 ? SelectionCursor.Which.Right : null;
 		} else {
-			return leftDistance <= maxDistance ? SelectionCursor.Which.Left : null;
+			return leftDistance2 <= maxDistance2 ? SelectionCursor.Which.Left : null;
 		}
 	}
 
