@@ -4,6 +4,9 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.5.2 (Jun ??, 2015) =====
+* better communication with plugin cover services
+
 ===== 2.5.1 (Jun 21, 2015) =====
 * removed FloatMath.hypot call
 
