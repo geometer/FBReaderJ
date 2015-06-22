@@ -20,6 +20,8 @@
 package org.geometerplus.android.fbreader.util;
 
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 
 import android.app.Activity;
 import android.app.Service;
@@ -39,6 +41,8 @@ import org.geometerplus.android.fbreader.formatPlugin.CoverReader;
 
 public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	private static final class Connection implements ServiceConnection {
+		private final ExecutorService myExecutor = Executors.newSingleThreadExecutor();
+
 		private final ExternalFormatPlugin myPlugin;
 		private volatile CoverReader Reader;
 		private final List<Runnable> myPostActions = new LinkedList<Runnable>();
@@ -49,7 +53,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 
 		synchronized void runOrAddAction(Runnable action) {
 			if (Reader != null) {
-				new Thread(action).start();
+				myExecutor.execute(action);
 			} else {
 				myPostActions.add(action);
 			}
@@ -58,10 +62,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 		public synchronized void onServiceConnected(ComponentName className, IBinder binder) {
 			Reader = CoverReader.Stub.asInterface(binder);
 			for (Runnable action : myPostActions) {
-				try {
-					action.run();
-				} catch (Throwable t) {
-				}
+				myExecutor.execute(action);
 			}
 			myPostActions.clear();
 		}
