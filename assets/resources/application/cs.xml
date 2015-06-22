@@ -23,12 +23,12 @@
 		<node name="favorites" value="Oblíbené">
 			<node name="summary" value="Mé oblíbené knihy"/>
 		</node>
-		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
-		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
-		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
-		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
-		<node name="coversView" value="Covers" toBeTranslated="true"/>
-		<node name="oldView" value="Classic" toBeTranslated="true"/>
+		<node name="chooseView" value="Zvolte zobrazení"/>
+		<node name="wideCardsView" value="Široké karty"/>
+		<node name="smallCardsView" value="Malé karty"/>
+		<node name="tinyCardsView" value="Malinké karty"/>
+		<node name="coversView" value="Obálky"/>
+		<node name="oldView" value="Clasické"/>
 		<node name="bookshelfView" value="Zobrazení Poličky knih">
 			<node name="summary" value="Moderní (styl Material designu) zobrazení knihovny"/>
 		</node>
@@ -770,14 +770,14 @@
 				<node name="custom" value="Vlastní…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
-			<node name="summary" value="Translation settings" toBeTranslated="true"/>
+		<node name="dictionary" value="Slovník a překladač">
+			<node name="summary" value="Nastavení překladu"/>
 			<node name="dictionary" value="Vyhledat jedno slovo v"/>
 			<node name="translator" value="Přeložit fráze pomocí"/>
-			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
-			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
-			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
-				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
+			<node name="translationToastDuration" value="Jak dlouho zobrazovat překryvné okno překladu"/>
+			<node name="errorToastDuration" value="Jak dlouho zobrazovat chybovou zprávu"/>
+			<node name="sourceLanguage" value="Přeložit z">
+				<node name="detect" value="Automaticky rozpoznat jazyk"/>
 			</node>
 			<node name="targetLanguage" value="Přeložit do">
 				<node name="any" value="všechny jazyky"/>
@@ -879,7 +879,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="noThanks" value="No, thanks" toBeTranslated="true"/>
+			<node name="noThanks" value="Ne, díky"/>
 			<node name="install" value="Instalovat"/>
 			<node name="update" value="Aktualizovat"/>
 			<node name="skip" value="Přeskočit"/>
@@ -913,10 +913,10 @@
 		<node name="backgroundAuthentication">
 			<node name="message" value="Je požadováno ověření"/>
 		</node>
-		<node name="missingDictionary" value="Missing %s" toBeTranslated="true">
-			<node name="install" value="Install %s" toBeTranslated="true"/>
-			<node name="configure" value="Configure translation" toBeTranslated="true"/>
-			<node name="skip" value="Skip" toBeTranslated="true"/>
+		<node name="missingDictionary" value="Chybějící %s">
+			<node name="install" value="Nainstalovat %s"/>
+			<node name="configure" value="Konfigurovat překlad"/>
+			<node name="skip" value="Přeskočit"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalovat slovník"/>
@@ -953,7 +953,7 @@
 			<node name="passwordSent" value="Informace o vašem účtu byly odeslány na %s. Zkontrolujte svou poštovní schránku."/>
 		</node>
 		<node name="waitMessage">
-			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
+			<node name="translating" value="Probíhá překlad…"/>
 			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
 			<node name="downloadingBook" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte…"/>
@@ -1074,12 +1074,12 @@
 			<node name="title" value="Doplněk pro soubory %s není nainstalován. Nainstalovat ho nyní?"/>
 		</node>
 		<node name="licensing">
-			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+			<node name="title" value="%s není licencovaný"/>
+			<node name="message" value="Zakoupit nyní na Google Play?"/>
 		</node>
 		<node name="retryLicensing">
-			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
-			<node name="message" value="Try again?" toBeTranslated="true"/>
+			<node name="title" value="Nelze ověřit licenci %s"/>
+			<node name="message" value="Zkusit znovu?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -1184,8 +1184,8 @@
 		<node name="duration5" value="5 sekund"/>
 		<node name="duration10" value="10 sekund"/>
 		<node name="duration20" value="20 sekund"/>
-		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
-		<node name="duration60" value="1 minute" toBeTranslated="true"/>
+		<node name="duration40" value="40 sekund"/>
+		<node name="duration60" value="1 minutu"/>
 		<node name="duration300" value="5 minut"/>
 	</node>
 	<node name="dictanErrors">
@@ -1194,5 +1194,5 @@
 		<node name="cannotOpenDictionary" value="nelze otevřít slovník"/>
 		<node name="noDictionarySelected" value="není vybrán slovník; opravte to v nastavení Dictan"/>
 	</node>
-	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true"/>
+	<node name="premium" value="FBReader prémiová edice"/>
 </resources>

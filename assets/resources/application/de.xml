@@ -28,12 +28,12 @@
 		<node name="favorites" value="Favoriten">
 			<node name="summary" value="Meine Lieblingsbücher"/>
 		</node>
-		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
-		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
-		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
-		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
-		<node name="coversView" value="Covers" toBeTranslated="true"/>
-		<node name="oldView" value="Classic" toBeTranslated="true"/>
+		<node name="chooseView" value="Ansicht wählen"/>
+		<node name="wideCardsView" value="Breite Karten"/>
+		<node name="smallCardsView" value="Schmale Karten"/>
+		<node name="tinyCardsView" value="Winzige Karten"/>
+		<node name="coversView" value="Titelseiten"/>
+		<node name="oldView" value="Klassisch"/>
 		<node name="bookshelfView" value="Wechseln zur Buchregalansicht">
 			<node name="summary" value="Moderne (Material Design) Bibliotheksansicht"/>
 		</node>
@@ -875,7 +875,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="noThanks" value="No, thanks" toBeTranslated="true"/>
+			<node name="noThanks" value="Nein, Danke"/>
 			<node name="install" value="Installieren"/>
 			<node name="update" value="Aktualisierung"/>
 			<node name="skip" value="Überspringen"/>
@@ -1190,5 +1190,5 @@
 		<node name="cannotOpenDictionary" value="Wörterbuch kann nicht geöffnet werden"/>
 		<node name="noDictionarySelected" value="Kein Wörterbuch ausgewählt; Bitte in den Dictan Einstellungen beheben"/>
 	</node>
-	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true"/>
+	<node name="premium" value="FBReader Premium Edition"/>
 </resources>
