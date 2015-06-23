@@ -1243,7 +1243,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 					public void onClick(DialogInterface dialog, int which) {
 						startActivity(new Intent(
 							Intent.ACTION_VIEW,
-							Uri.parse("market://details?id=" + getPackageName())
+							Uri.parse("market://details?id=com.fbreader")
 						));
 					}
 				}
