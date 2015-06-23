@@ -137,8 +137,14 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		set.add(Locale.getDefault().getLanguage());
 		final TelephonyManager manager = (TelephonyManager)myApplication.getSystemService(Context.TELEPHONY_SERVICE);
 		if (manager != null) {
-			final String country0 = manager.getSimCountryIso().toLowerCase();
-			final String country1 = manager.getNetworkCountryIso().toLowerCase();
+			String country0 = manager.getSimCountryIso();
+			if (country0 != null) {
+				country0 = country0.toLowerCase();
+			}
+			String country1 = manager.getNetworkCountryIso();
+			if (country1 != null) {
+				country1 = country1.toLowerCase();
+			}
 			for (Locale locale : Locale.getAvailableLocales()) {
 				final String country = locale.getCountry().toLowerCase();
 				if (country != null && country.length() > 0 &&
