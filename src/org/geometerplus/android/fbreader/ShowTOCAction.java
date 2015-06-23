@@ -38,7 +38,7 @@ class ShowTOCAction extends FBAndroidAction {
 
 	@Override
 	public boolean isVisible() {
-		return isTOCAvailable(reader);
+		return isTOCAvailable(Reader);
 	}
 
 	@Override
