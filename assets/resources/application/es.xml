@@ -622,6 +622,7 @@
 			</node>
 		</node>
 		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
 			<node name="showFootnoteToast" value="Mostrar el texto enlazado en un pop-up">
 				<node name="never" value="Nunca"/>
 				<node name="footnotesOnly" value="Sólo para notas al pie"/>

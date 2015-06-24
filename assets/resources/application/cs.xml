@@ -625,6 +625,7 @@
 			</node>
 		</node>
 		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
 			<node name="showFootnoteToast" value="Zobrazit propojený text v překryvném okně">
 				<node name="never" value="Nikdy"/>
 				<node name="footnotesOnly" value="Pouze pro poznámky pod čarou"/>

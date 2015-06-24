@@ -620,7 +620,8 @@
 				</node>
 			</node>
 		</node>
-		<node name="toast" value="Pop-ups" toBeTranslated="true">
+		<node name="toast" value="Всплывающие окошки">
+			<node name="summary" value="Окошки ссылок, и т.п."/>
 			<node name="showFootnoteToast" value="Показывать текст по ссылке в окошке">
 				<node name="never" value="Никогда"/>
 				<node name="footnotesOnly" value="Только для сносок"/>
@@ -628,7 +629,7 @@
 				<node name="allInternalLinks" value="Для всех ссылок внутри книги"/>
 			</node>
 			<node name="footnoteToastDuration" value="Как долго показывать окошко с текстом ссылки"/>
-			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
+			<node name="fontSizePercent" value="Размер шрифта (в процентах от основного текста)"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Использовать ли форматирование CSS"/>
