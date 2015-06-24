@@ -34,6 +34,7 @@ public class MiscOptions {
 	}
 	public final ZLEnumOption<WordTappingActionEnum> WordTappingAction;
 
+	public final ZLIntegerRangeOption ToastFontSizePercent;
 	public static enum FootnoteToastEnum {
 		never, footnotesOnly, footnotesAndSuperscripts, allInternalLinks
 	}
@@ -54,6 +55,8 @@ public class MiscOptions {
 		WordTappingAction =
 			new ZLEnumOption<WordTappingActionEnum>("Options", "WordTappingAction", WordTappingActionEnum.startSelecting);
 
+		ToastFontSizePercent =
+			new ZLIntegerRangeOption("Options", "ToastFontSizePercent", 25, 100, 85);
 		ShowFootnoteToast =
 			new ZLEnumOption<FootnoteToastEnum>("Options", "ShowFootnoteToast", FootnoteToastEnum.footnotesAndSuperscripts);
 		FootnoteToastDuration =

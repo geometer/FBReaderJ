@@ -418,13 +418,6 @@
 				<node name="summaryOn" value="本体がヨコ持ちのとき本文を二段組みで表示"/>
 				<node name="summaryOff" value="いつでも本文を一段で表示"/>
 			</node>
-			<node name="showFootnoteToast" value="リンク先の文章をポップアップで表示">
-				<node name="never" value="しない"/>
-				<node name="footnotesOnly" value="脚注のみ"/>
-				<node name="footnotesAndSuperscripts" value="脚注と上付きリンクのみ"/>
-				<node name="allInternalLinks" value="内部リンクすべて"/>
-			</node>
-			<node name="footnoteToastDuration" value="ポップアップを表示する時間"/>
 			<node name="allowScreenBrightnessAdjustment" value="画面の明るさ調節">
 				<node name="summaryOn" value="画面の左端を上下になぞって調節"/>
 				<node name="summaryOff" value="無効"/>
@@ -621,6 +614,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="showFootnoteToast" value="リンク先の文章をポップアップで表示">
+				<node name="never" value="しない"/>
+				<node name="footnotesOnly" value="脚注のみ"/>
+				<node name="footnotesAndSuperscripts" value="脚注と上付きリンクのみ"/>
+				<node name="allInternalLinks" value="内部リンクすべて"/>
+			</node>
+			<node name="footnoteToastDuration" value="ポップアップを表示する時間"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="本の CSS で定義された値を適用あるいは無視"/>

@@ -418,13 +418,6 @@
 				<node name="summaryOn" value="기기가 가로 화면 상태일때 텍스트를 2개의 세로단으로 표시합니다"/>
 				<node name="summaryOff" value="텍스트를 항상 1개의 세로단으로 표시합니다"/>
 			</node>
-			<node name="showFootnoteToast" value="링크된 텍스트를 팝업으로 표시">
-				<node name="never" value="안함"/>
-				<node name="footnotesOnly" value="각주만"/>
-				<node name="footnotesAndSuperscripts" value="각주와 어깨 글자 링크"/>
-				<node name="allInternalLinks" value="내부의 모든 링크"/>
-			</node>
-			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
 			<node name="allowScreenBrightnessAdjustment" value="화면 밝기 조절">
 				<node name="summaryOn" value="화면의 왼쪽을 위아래로 손가락으로 끌어서 조절"/>
 				<node name="summaryOff" value="해제됨"/>
@@ -621,6 +614,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="showFootnoteToast" value="링크된 텍스트를 팝업으로 표시">
+				<node name="never" value="안함"/>
+				<node name="footnotesOnly" value="각주만"/>
+				<node name="footnotesAndSuperscripts" value="각주와 어깨 글자 링크"/>
+				<node name="allInternalLinks" value="내부의 모든 링크"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="CSS에 지정된 값 적용/무시"/>
