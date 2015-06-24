@@ -300,6 +300,10 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return requestString(GET_BOOK_HASH, EMPTY_PARAMETERS);
 	}
 
+	public float getBookProgress() throws ApiException {
+		return requestFloat(GET_BOOK_PROGRESS, EMPTY_PARAMETERS);
+	}
+
 	public String getBookUniqueId() throws ApiException {
 		return requestString(GET_BOOK_UNIQUE_ID, EMPTY_PARAMETERS);
 	}
