@@ -622,6 +622,7 @@
 			</node>
 		</node>
 		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
 			<node name="showFootnoteToast" value="Բացել հղումը թռուցիկի տեսքով">
 				<node name="never" value="Երբեք"/>
 				<node name="footnotesOnly" value="Միայն էջատակերը"/>

@@ -616,6 +616,7 @@
 			</node>
 		</node>
 		<node name="toast" value="Pop-ups">
+			<node name="summary" value="Footnote windows, etc."/>
 			<node name="showFootnoteToast" value="Show linked text in a popup">
 				<node name="never" value="Never"/>
 				<node name="footnotesOnly" value="For footnotes only"/>

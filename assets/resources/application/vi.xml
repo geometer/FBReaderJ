@@ -607,6 +607,7 @@
 			</node>
 		</node>
 		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
 			<node name="showFootnoteToast" value="Xem nội dung liên kết ở cửa sổ con">
 				<node name="never" value="Không"/>
 				<node name="footnotesOnly" value="Chỉ với chú thích"/>
