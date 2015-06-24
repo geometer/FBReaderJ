@@ -409,13 +409,6 @@
 				<node name="summaryOn" value="Hiển thị văn bản thành hai cột khi máy nằm ngang"/>
 				<node name="summaryOff" value="Luôn hiển thị thành hai cột"/>
 			</node>
-			<node name="showFootnoteToast" value="Xem nội dung liên kết ở cửa sổ con">
-				<node name="never" value="Không"/>
-				<node name="footnotesOnly" value="Chỉ với chú thích"/>
-				<node name="footnotesAndSuperscripts" value="Chỉ chú thích và đường dẫn dùng thẻ sup"/>
-				<node name="allInternalLinks" value="Tất cả các liên kết nội bộ"/>
-			</node>
-			<node name="footnoteToastDuration" value="Thời lượng hiển thị chú thích"/>
 			<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
 				<node name="summaryOn" value="Vuốt ngón tay theo lề trái màn hình"/>
 				<node name="summaryOff" value="Tắt"/>
@@ -612,6 +605,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Xem nội dung liên kết ở cửa sổ con">
+				<node name="never" value="Không"/>
+				<node name="footnotesOnly" value="Chỉ với chú thích"/>
+				<node name="footnotesAndSuperscripts" value="Chỉ chú thích và đường dẫn dùng thẻ sup"/>
+				<node name="allInternalLinks" value="Tất cả các liên kết nội bộ"/>
+			</node>
+			<node name="footnoteToastDuration" value="Thời lượng hiển thị chú thích"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Sử dụng thông số trong CSS"/>
