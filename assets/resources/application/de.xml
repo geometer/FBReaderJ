@@ -423,13 +423,6 @@
 				<node name="summaryOn" value="Zeige Text in zwei Spalten wenn das Gerät horizontal gehalten wird"/>
 				<node name="summaryOff" value="Text immer in einer Spalte anzeigen"/>
 			</node>
-			<node name="showFootnoteToast" value="Zeige verknüpften Text in Popups">
-				<node name="never" value="Niemals"/>
-				<node name="footnotesOnly" value="Nur für Fußnoten"/>
-				<node name="footnotesAndSuperscripts" value="Für Fußnoten und hochgestellte Verknüfungen"/>
-				<node name="allInternalLinks" value="Für alle internen Verknüpfungen"/>
-			</node>
-			<node name="footnoteToastDuration" value="Anzeigedauer für Popups"/>
 			<node name="allowScreenBrightnessAdjustment" value="Helligkeitsanpassung">
 				<node name="summaryOn" value="Mit dem Finger durch hoch/runter-schieben am linken Bildschirmrand"/>
 				<node name="summaryOff" value="Abgeschaltet"/>
@@ -626,6 +619,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Zeige verknüpften Text in Popups">
+				<node name="never" value="Niemals"/>
+				<node name="footnotesOnly" value="Nur für Fußnoten"/>
+				<node name="footnotesAndSuperscripts" value="Für Fußnoten und hochgestellte Verknüfungen"/>
+				<node name="allInternalLinks" value="Für alle internen Verknüpfungen"/>
+			</node>
+			<node name="footnoteToastDuration" value="Anzeigedauer für Popups"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Cascading Style Sheets Einstellungen"/>

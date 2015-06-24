@@ -418,13 +418,6 @@
 				<node name="summaryOn" value="Toon tekst in twee kolommen als apparaat horizontaal wordt gehouden"/>
 				<node name="summaryOff" value="Toon tekst altijd in één kolom"/>
 			</node>
-			<node name="showFootnoteToast" value="Toon gelinkte tekst in een pop-up">
-				<node name="never" value="Nooit"/>
-				<node name="footnotesOnly" value="Alleen voor voetnoten"/>
-				<node name="footnotesAndSuperscripts" value="Voor voetnoten en superscript links"/>
-				<node name="allInternalLinks" value="Voor alle interne links"/>
-			</node>
-			<node name="footnoteToastDuration" value="Hoe lang de linkpop-up tonen"/>
 			<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
 				<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>
 				<node name="summaryOff" value="Uitgeschakeld"/>
@@ -621,6 +614,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Toon gelinkte tekst in een pop-up">
+				<node name="never" value="Nooit"/>
+				<node name="footnotesOnly" value="Alleen voor voetnoten"/>
+				<node name="footnotesAndSuperscripts" value="Voor voetnoten en superscript links"/>
+				<node name="allInternalLinks" value="Voor alle interne links"/>
+			</node>
+			<node name="footnoteToastDuration" value="Hoe lang de linkpop-up tonen"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Gebruik/Negeer waarden gedefinieerd in CSS"/>

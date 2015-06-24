@@ -422,13 +422,6 @@
 				<node name="summaryOn" value="Apresentar texto em duas colunas quando o dispositivo está na horizontal"/>
 				<node name="summaryOff" value="Apresentar sempre o texto numa só coluna"/>
 			</node>
-			<node name="showFootnoteToast" value="Ver texto linkado num popup">
-				<node name="never" value="Nunca"/>
-				<node name="footnotesOnly" value="Apenas em notas de rodapé"/>
-				<node name="footnotesAndSuperscripts" value="Em notas de rodapé e links superscript"/>
-				<node name="allInternalLinks" value="Em todos os links internos"/>
-			</node>
-			<node name="footnoteToastDuration" value="Quanto tempo apresentar popup do link"/>
 			<node name="allowScreenBrightnessAdjustment" value="Ajuste de brilho do ecrã">
 				<node name="summaryOn" value="Arrastando dedo para cima/para baixo ao longo do lado esquerdo do ecrã"/>
 				<node name="summaryOff" value="Desativado"/>
@@ -625,6 +618,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Ver texto linkado num popup">
+				<node name="never" value="Nunca"/>
+				<node name="footnotesOnly" value="Apenas em notas de rodapé"/>
+				<node name="footnotesAndSuperscripts" value="Em notas de rodapé e links superscript"/>
+				<node name="allInternalLinks" value="Em todos os links internos"/>
+			</node>
+			<node name="footnoteToastDuration" value="Quanto tempo apresentar popup do link"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Aplicar/Ignorar valores definidos em CSS"/>

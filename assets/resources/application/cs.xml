@@ -427,13 +427,6 @@
 				<node name="summaryOn" value="Zobrazit text ve dvou sloupcích, pokud je zařízení drženo vodorovně"/>
 				<node name="summaryOff" value="Vždy zobrazovat text v jednom sloupci"/>
 			</node>
-			<node name="showFootnoteToast" value="Zobrazit propojený text v překryvném okně">
-				<node name="never" value="Nikdy"/>
-				<node name="footnotesOnly" value="Pouze pro poznámky pod čarou"/>
-				<node name="footnotesAndSuperscripts" value="Pro poznámky pod čarou a odkazy horních indexů"/>
-				<node name="allInternalLinks" value="Pro všechny vnitřní odkazy"/>
-			</node>
-			<node name="footnoteToastDuration" value="Jak dlouho zobrazovat překryvné okno odkazu"/>
 			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu displeje">
 				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje displeje"/>
 				<node name="summaryOff" value="Zakázáno"/>
@@ -630,6 +623,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Zobrazit propojený text v překryvném okně">
+				<node name="never" value="Nikdy"/>
+				<node name="footnotesOnly" value="Pouze pro poznámky pod čarou"/>
+				<node name="footnotesAndSuperscripts" value="Pro poznámky pod čarou a odkazy horních indexů"/>
+				<node name="allInternalLinks" value="Pro všechny vnitřní odkazy"/>
+			</node>
+			<node name="footnoteToastDuration" value="Jak dlouho zobrazovat překryvné okno odkazu"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Použít/ignorovat hodnoty definované v CSS"/>

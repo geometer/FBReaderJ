@@ -418,13 +418,6 @@
 				<node name="summaryOn" value="Display text in two columns when viewed horizontally"/>
 				<node name="summaryOff" value="Always display text in one column"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a popup">
-				<node name="never" value="Never"/>
-				<node name="footnotesOnly" value="For footnotes only"/>
-				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links"/>
-				<node name="allInternalLinks" value="For all internal links"/>
-			</node>
-			<node name="footnoteToastDuration" value="How long to display link popup"/>
 			<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
 				<node name="summaryOn" value="By dragging finger up/down the left side of the screen"/>
 				<node name="summaryOff" value="Disabled"/>
@@ -621,6 +614,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups">
+			<node name="showFootnoteToast" value="Show linked text in a popup">
+				<node name="never" value="Never"/>
+				<node name="footnotesOnly" value="For footnotes only"/>
+				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links"/>
+				<node name="allInternalLinks" value="For all internal links"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to display link popup"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Apply/ignore values defined in CSS"/>
