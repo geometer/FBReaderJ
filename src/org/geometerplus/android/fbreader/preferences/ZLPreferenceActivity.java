@@ -65,15 +65,21 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		}
 
 		public Preference addOption(ZLBooleanOption option, String resourceKey) {
-			return addPreference(
-				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource.getResource(resourceKey))
-			);
+			return addPreference(new ZLBooleanPreference(
+				ZLPreferenceActivity.this, option, Resource.getResource(resourceKey)
+			));
 		}
 
 		public Preference addOption(ZLColorOption option, String resourceKey) {
-			return addPreference(
-				new ZLColorPreference(ZLPreferenceActivity.this, Resource, resourceKey, option)
-			);
+			return addPreference(new ZLColorPreference(
+				ZLPreferenceActivity.this, Resource, resourceKey, option
+			));
+		}
+
+		public Preference addOption(ZLIntegerRangeOption option, String resourceKey) {
+			return addPreference(new ZLIntegerRangePreference(
+				ZLPreferenceActivity.this, Resource.getResource(resourceKey), option
+			));
 		}
 
 		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String key) {

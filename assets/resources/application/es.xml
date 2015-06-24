@@ -424,13 +424,6 @@
 				<node name="summaryOn" value="Mostrar el texto en dos columnas cuando el dispositivo se sostiene horizontalmente"/>
 				<node name="summaryOff" value="Mostrar siempre el texto en una sola columna"/>
 			</node>
-			<node name="showFootnoteToast" value="Mostrar el texto enlazado en un pop-up">
-				<node name="never" value="Nunca"/>
-				<node name="footnotesOnly" value="Sólo para notas al pie"/>
-				<node name="footnotesAndSuperscripts" value="Para notas al pie y enlaces en superíndices"/>
-				<node name="allInternalLinks" value="Para todos los enlaces internos"/>
-			</node>
-			<node name="footnoteToastDuration" value="Tiempo durante el que se mostrará el pop-up"/>
 			<node name="allowScreenBrightnessAdjustment" value="Ajuste de brillo de la pantalla">
 				<node name="summaryOn" value="Al arrastrar el dedo arriba/abajo en el borde izquierdo de la pantalla"/>
 				<node name="summaryOff" value="Desactivado"/>
@@ -627,6 +620,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Mostrar el texto enlazado en un pop-up">
+				<node name="never" value="Nunca"/>
+				<node name="footnotesOnly" value="Sólo para notas al pie"/>
+				<node name="footnotesAndSuperscripts" value="Para notas al pie y enlaces en superíndices"/>
+				<node name="allInternalLinks" value="Para todos los enlaces internos"/>
+			</node>
+			<node name="footnoteToastDuration" value="Tiempo durante el que se mostrará el pop-up"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Aplicar/ignorar valores definidos en el CSS"/>

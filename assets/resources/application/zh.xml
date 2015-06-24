@@ -408,13 +408,6 @@
 				<node name="summaryOn" value="水平方向手持设备时使用双列显示文字"/>
 				<node name="summaryOff" value="始终将文字一列显示"/>
 			</node>
-			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
-				<node name="never" value="Never" toBeTranslated="true"/>
-				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
-				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
-				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
-			</node>
-			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
 			<node name="allowScreenBrightnessAdjustment" value="屏幕亮度调整">
 				<node name="summaryOn" value="通过在屏幕左侧上下滑动手指来调整"/>
 				<node name="summaryOff" value="禁用屏幕亮度调整"/>
@@ -611,6 +604,16 @@
 					<node name="summary" value=""/>
 				</node>
 			</node>
+		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="使用/忽略CSS中定义的值"/>
