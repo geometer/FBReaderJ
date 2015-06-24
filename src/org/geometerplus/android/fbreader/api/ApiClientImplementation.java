@@ -147,6 +147,14 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		}
 		return ((ApiObject.Integer)object).Value;
 	}
+	
+	private float requestFloat(int method, ApiObject[] params) throws ApiException {
+		final ApiObject object = request(method, params);
+		if (!(object instanceof ApiObject.Float)) {
+			throw new ApiException("Cannot cast return type of method " + method + " to float");
+		} 
+		return ((ApiObject.Float)object).Value;
+	}
 
 	private boolean requestBoolean(int method, ApiObject[] params) throws ApiException {
 		final ApiObject object = request(method, params);
@@ -215,6 +223,10 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	private static ApiObject[] envelope(int value) {
+		return new ApiObject[] { ApiObject.envelope(value) };
+	}
+
+	private static ApiObject[] envelope(float value) {
 		return new ApiObject[] { ApiObject.envelope(value) };
 	}
 
