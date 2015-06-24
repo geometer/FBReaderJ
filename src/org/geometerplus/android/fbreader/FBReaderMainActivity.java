@@ -25,8 +25,7 @@ import android.os.Bundle;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
@@ -87,7 +86,8 @@ public abstract class FBReaderMainActivity extends Activity {
 		final int dpi = getZLibrary().getDisplayDPI();
 		final int defaultFontSize = dpi * 18 / 160;
 		final int fontSize = new ZLIntegerOption("Style", "Base:fontSize", defaultFontSize).getValue();
-		final int dpFontSize = fontSize * 160 / dpi;
+		final int percent = new ZLIntegerRangeOption("Options", "ToastFontSizePercent", 25, 100, 85).getValue();
+		final int dpFontSize = fontSize * 160 * percent / dpi / 100;
 		toast.setTextSize(dpFontSize);
 		toast.setButtonTextSize(dpFontSize * 7 / 8);
 

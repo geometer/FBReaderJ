@@ -266,8 +266,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			viewOptions.TwoColumnView,
 			appearanceScreen.Resource.getResource("twoColumnView")
 		));
-		appearanceScreen.addOption(miscOptions.ShowFootnoteToast, "showFootnoteToast");
-		appearanceScreen.addOption(miscOptions.FootnoteToastDuration, "footnoteToastDuration");
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			miscOptions.AllowScreenBrightnessAdjustment,
@@ -448,40 +446,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			));
 		}
 
-		final PreferenceSet footerPreferences = new PreferenceSet.Enabler() {
-			@Override
-			protected Boolean detectState() {
-				switch (viewOptions.ScrollbarType.getValue()) {
-					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
-					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
-						return true;
-					default:
-						return false;
-				}
-			}
-		};
-		final PreferenceSet oldStyleFooterPreferences = new PreferenceSet.Enabler() {
-			@Override
-			protected Boolean detectState() {
-				switch (viewOptions.ScrollbarType.getValue()) {
-					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
-						return true;
-					default:
-						return false;
-				}
-			}
-		};
-		final PreferenceSet newStyleFooterPreferences = new PreferenceSet.Enabler() {
-			@Override
-			protected Boolean detectState() {
-				switch (viewOptions.ScrollbarType.getValue()) {
-					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
-						return true;
-					default:
-						return false;
-				}
-			}
-		};
+		final Screen toastsScreen = createPreferenceScreen("toast");
+		toastsScreen.addOption(miscOptions.ToastFontSizePercent, "fontSizePercent");
+		toastsScreen.addOption(miscOptions.ShowFootnoteToast, "showFootnoteToast");
+		toastsScreen.addOption(miscOptions.FootnoteToastDuration, "footnoteToastDuration");
 
 		final Screen cssScreen = createPreferenceScreen("css");
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");
@@ -526,28 +494,49 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		colorsScreen.addOption(profile.HighlightingBackgroundOption, "highlightingBackground");
 
 		final Screen marginsScreen = createPreferenceScreen("margins");
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("left"),
-			viewOptions.LeftMargin
-		));
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("right"),
-			viewOptions.RightMargin
-		));
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("top"),
-			viewOptions.TopMargin
-		));
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("bottom"),
-			viewOptions.BottomMargin
-		));
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("spaceBetweenColumns"),
-			viewOptions.SpaceBetweenColumns
-		));
+		marginsScreen.addOption(viewOptions.LeftMargin, "left");
+		marginsScreen.addOption(viewOptions.RightMargin, "right");
+		marginsScreen.addOption(viewOptions.TopMargin, "top");
+		marginsScreen.addOption(viewOptions.BottomMargin, "bottom");
+		marginsScreen.addOption(viewOptions.SpaceBetweenColumns, "spaceBetweenColumns");
 
 		final Screen statusLineScreen = createPreferenceScreen("scrollBar");
+
+		final PreferenceSet footerPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
+						return true;
+					default:
+						return false;
+				}
+			}
+		};
+		final PreferenceSet oldStyleFooterPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
+						return true;
+					default:
+						return false;
+				}
+			}
+		};
+		final PreferenceSet newStyleFooterPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
+						return true;
+					default:
+						return false;
+				}
+			}
+		};
+
 
 		final String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter", "showAsFooterOldStyle"};
 		statusLineScreen.addPreference(new ZLChoicePreference(
