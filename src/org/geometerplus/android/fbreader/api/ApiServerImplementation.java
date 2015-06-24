@@ -350,7 +350,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	public float getBookProgress() {
 		final Book book = getReader().getCurrentBook();
 		if (book == null) {
-			return 0.0f;
+			return -1.0f;
 		}
 		RationalNumber progress=book.getProgress();
 		return progress.toFloat();
