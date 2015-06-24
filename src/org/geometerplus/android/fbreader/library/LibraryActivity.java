@@ -370,6 +370,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 					}
 				}
 				tryToDeleteBooks(books);
+				return true;
 			}
 			case OptionsItemId.ExternalView:
 				runOrInstallExternalView();
