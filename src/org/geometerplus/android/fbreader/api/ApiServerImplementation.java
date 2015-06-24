@@ -352,24 +352,21 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		if (book == null) {
 			return -1.0f;
 		}
-		RationalNumber progress=book.getProgress();
-		return progress.toFloat();
+		final RationalNumber progress = book.getProgress();
+		return progress != null ? progress.toFloat() : -1.0f;
 	}
 
 	public List<String> getBookAuthors() {
-		final Book book=getReader().getCurrentBook();
+		final Book book = getReader().getCurrentBook();
 		if (book == null) {
 			return null;
 		}
-		List<Author> authors=book.getAuthors();
-		if (authors == null) {
-			return Collections.emptyList();
+		final List<Author> authors = book.authors();
+		final List<String> authorNames = new ArrayList<String>(authors.size());
+		for (Author a : authors) {
+			authorNames.add(a.DisplayName);
 		}
-		List<String> result=new LinkedList<String>();
-		for (Author author:authors) {
-			result.add(author.DisplayName);
-		}
-		return result;
+		return authorNames;
 	}
 
 	public String getBookFilePath() {

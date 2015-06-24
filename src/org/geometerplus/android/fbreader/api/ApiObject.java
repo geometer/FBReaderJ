@@ -219,6 +219,7 @@ public abstract class ApiObject implements Parcelable {
 	static ApiObject envelope(float value) {
 		return new Float(value);
 	}
+
 	static ApiObject envelope(boolean value) {
 		return new Boolean(value);
 	}

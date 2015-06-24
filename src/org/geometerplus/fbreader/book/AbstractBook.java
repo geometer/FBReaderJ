@@ -60,10 +60,6 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 
 	public abstract String getPath();
 
-	public List<Author> getAuthors() {
-		return myAuthors!=null ? myAuthors: null;
-	}
-
 	public void updateFrom(AbstractBook book) {
 		if (book == null || myId != book.myId) {
 			return;
