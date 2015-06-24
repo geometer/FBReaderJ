@@ -263,6 +263,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					));
 				case LIST_BOOK_TAGS:
 					return ApiObject.envelopeStringList(getBookTags());
+				case LIST_BOOK_AUTHORS:
+					return ApiObject.envelopeStringList(getBookAuthors());
 				case LIST_ACTIONS:
 					return ApiObject.envelopeStringList(listActions());
 				case LIST_ACTION_NAMES:
@@ -352,6 +354,22 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		}
 		RationalNumber progress=book.getProgress();
 		return progress.toFloat();
+	}
+
+	public List<String> getBookAuthors() {
+		final Book book=getReader().getCurrentBook();
+		if (book == null) {
+			return null;
+		}
+		List<Author> authors=book.getAuthors();
+		if (authors == null) {
+			return Collections.emptyList();
+		}
+		List<String> result=new LinkedList<String>();
+		for (Author author:authors) {
+			result.add(author.DisplayName);
+		}
+		return result;
 	}
 
 	public String getBookFilePath() {
