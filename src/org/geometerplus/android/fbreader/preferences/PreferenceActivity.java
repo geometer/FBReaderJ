@@ -449,7 +449,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen toastsScreen = createPreferenceScreen("toast");
 		toastsScreen.addOption(miscOptions.ToastFontSizePercent, "fontSizePercent");
 		toastsScreen.addOption(miscOptions.ShowFootnoteToast, "showFootnoteToast");
-		toastsScreen.addOption(miscOptions.FootnoteToastDuration, "footnoteToastDuration");
+        toastsScreen.addPreference(new ZLEnumPreference(
+            this,
+            miscOptions.FootnoteToastDuration,
+            toastsScreen.Resource.getResource("footnoteToastDuration"),
+            ZLResource.resource("duration")
+        ));
 
 		final Screen cssScreen = createPreferenceScreen("css");
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");

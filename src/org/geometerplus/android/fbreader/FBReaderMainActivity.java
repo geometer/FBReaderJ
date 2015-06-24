@@ -86,7 +86,7 @@ public abstract class FBReaderMainActivity extends Activity {
 		final int dpi = getZLibrary().getDisplayDPI();
 		final int defaultFontSize = dpi * 18 / 160;
 		final int fontSize = new ZLIntegerOption("Style", "Base:fontSize", defaultFontSize).getValue();
-		final int percent = new ZLIntegerRangeOption("Options", "ToastFontSizePercent", 25, 100, 85).getValue();
+		final int percent = new ZLIntegerRangeOption("Options", "ToastFontSizePercent", 25, 100, 90).getValue();
 		final int dpFontSize = fontSize * 160 * percent / dpi / 100;
 		toast.setTextSize(dpFontSize);
 		toast.setButtonTextSize(dpFontSize * 7 / 8);
