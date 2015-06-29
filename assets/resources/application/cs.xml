@@ -624,16 +624,16 @@
 				</node>
 			</node>
 		</node>
-		<node name="toast" value="Pop-ups" toBeTranslated="true">
-			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
-			<node name="showFootnoteToast" value="Zobrazit propojený text v překryvném okně">
+		<node name="toast" value="Automaticky otevíraná okna">
+			<node name="summary" value="Okna poznámek pod čarou atd."/>
+			<node name="showFootnoteToast" value="Zobrazit propojený text v automaticky otevíraném okně">
 				<node name="never" value="Nikdy"/>
 				<node name="footnotesOnly" value="Pouze pro poznámky pod čarou"/>
 				<node name="footnotesAndSuperscripts" value="Pro poznámky pod čarou a odkazy horních indexů"/>
 				<node name="allInternalLinks" value="Pro všechny vnitřní odkazy"/>
 			</node>
-			<node name="footnoteToastDuration" value="Jak dlouho zobrazovat překryvné okno odkazu"/>
-			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="Jak dlouho zobrazovat automaticky otevírané okno odkazu"/>
+			<node name="fontSizePercent" value="Velikost písma (procenta z běžného textu)"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Použít/ignorovat hodnoty definované v CSS"/>
@@ -778,7 +778,7 @@
 			<node name="summary" value="Nastavení překladu"/>
 			<node name="dictionary" value="Vyhledat jedno slovo v"/>
 			<node name="translator" value="Přeložit fráze pomocí"/>
-			<node name="translationToastDuration" value="Jak dlouho zobrazovat překryvné okno překladu"/>
+			<node name="translationToastDuration" value="Jak dlouho zobrazovat automaticky otevírané okno překladu"/>
 			<node name="errorToastDuration" value="Jak dlouho zobrazovat chybovou zprávu"/>
 			<node name="sourceLanguage" value="Přeložit z">
 				<node name="detect" value="Automaticky rozpoznat jazyk"/>
