@@ -5,7 +5,9 @@
 * (planned) CSS selectors priority
 
 ===== 2.5.3 (Jun ??, 2015) =====
+* Fixed large libraries scanning issue
 * Popups font size option
+* Updated Czech localisation (by Marek Pavelka)
 * Updated German localisation (by Matthias Dill)
 
 ===== 2.5.2 (Jun 23, 2015) =====
