@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,13 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class BookTree extends LibraryTree {
 	public final Book Book;
 
-	BookTree(IBookCollection collection, Book book) {
+	BookTree(IBookCollection<Book> collection, Book book) {
 		super(collection);
 		Book = book;
 	}
@@ -64,12 +65,12 @@ public class BookTree extends LibraryTree {
 
 	@Override
 	protected ZLImage createCover() {
-		return BookUtil.getCover(Book);
+		return CoverUtil.getCover(Book, PluginCollection.Instance());
 	}
 
 	@Override
 	public boolean containsBook(Book book) {
-		return book != null && book.equals(Book);
+		return Collection.sameBook(book, Book);
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class BookTree extends LibraryTree {
 		if (cmp == 0 && tree instanceof BookTree) {
 			final Book b = ((BookTree)tree).Book;
 			if (Book != null && b != null) {
-				return Book.File.getPath().compareTo(b.File.getPath());
+				return Book.getPath().compareTo(b.getPath());
 			}
 		}
 		return cmp;

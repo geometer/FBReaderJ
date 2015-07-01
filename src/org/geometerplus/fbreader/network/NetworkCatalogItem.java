@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,22 +112,19 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 				return ZLBoolean3.B3_FALSE;
 			case ALWAYS:
 				return ZLBoolean3.B3_TRUE;
+			case HAS_BOOKS:
+				if (Link.getBasketItem() != null && Link.getBasketItem().bookIds().size() > 0) {
+					return ZLBoolean3.B3_TRUE;
+				}
+				// go through!
 			case SIGNED_IN:
 				if (mgr == null) {
 					return ZLBoolean3.B3_FALSE;
 				}
 				try {
-					return mgr.isAuthorised(false) ?
-							ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
+					return mgr.isAuthorised(false) ?  ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
 				} catch (ZLNetworkException e) {
 					return ZLBoolean3.B3_UNDEFINED;
-				}
-			case HAS_BOOKS:
-				if ((Link.getBasketItem() != null && Link.getBasketItem().bookIds().size() > 0) ||
-					(mgr != null && mgr.purchasedBooks().size() > 0)) {
-					return ZLBoolean3.B3_TRUE;
-				} else {
-					return ZLBoolean3.B3_FALSE;
 				}
 		}
 	}

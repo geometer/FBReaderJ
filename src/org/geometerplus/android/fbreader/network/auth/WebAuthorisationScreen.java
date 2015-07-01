@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ public class WebAuthorisationScreen extends Activity {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				setTitle(url);
-				if (url != null && url.equals(completeUrl)) {
+				if (url != null && url.startsWith(completeUrl)) {
 					final HashMap<String,String> cookies = new HashMap<String,String>();
 					final String cookieString = CookieManager.getInstance().getCookie(url);
 					if (cookieString != null) {

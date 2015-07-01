@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,5 +58,10 @@ public final class BookmarkHighlighting extends ZLTextSimpleHighlighting {
 	public ZLColor getForegroundColor() {
 		final HighlightingStyle bmStyle = Collection.getHighlightingStyle(Bookmark.getStyleId());
 		return bmStyle != null ? bmStyle.getForegroundColor() : null;
+	}
+
+	@Override
+	public ZLColor getOutlineColor() {
+		return null;
 	}
 }

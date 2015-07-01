@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,9 @@ public abstract class LibraryTree extends FBTree {
 		return ZLResource.resource("library");
 	}
 
-	public final IBookCollection Collection;
+	public final IBookCollection<Book> Collection;
 
+	static final String ROOT_EXTERNAL_VIEW = "bookshelfView";
 	static final String ROOT_FOUND = "found";
 	static final String ROOT_FAVORITES = "favorites";
 	static final String ROOT_RECENT = "recent";

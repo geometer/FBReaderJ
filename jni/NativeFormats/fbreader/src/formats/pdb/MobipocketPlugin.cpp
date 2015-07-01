@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 #include "../../bookmodel/BookModel.h"
 
 const std::string MobipocketPlugin::supportedFileType() const {
-	return "Mobipocket";
+	return "mobi";
 }
 //bool MobipocketPlugin::acceptsFile(const ZLFile &file) const {
 //	return PdbPlugin::fileType(file) == "BOOKMOBI";

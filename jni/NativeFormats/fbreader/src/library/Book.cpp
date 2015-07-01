@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,10 +86,7 @@ shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
 */
 
 shared_ptr<Book> Book::loadFromJavaBook(JNIEnv *env, jobject javaBook) {
-	jobject javaFile = AndroidUtil::Field_Book_File->value(javaBook);
-	const std::string path = AndroidUtil::Method_ZLFile_getPath->callForCppString(javaFile);
-	env->DeleteLocalRef(javaFile);
-
+	const std::string path = AndroidUtil::Method_Book_getPath->callForCppString(javaBook);
 	const std::string title = AndroidUtil::Method_Book_getTitle->callForCppString(javaBook);
 	const std::string language = AndroidUtil::Method_Book_getLanguage->callForCppString(javaBook);
 	const std::string encoding = AndroidUtil::Method_Book_getEncodingNoDetection->callForCppString(javaBook);

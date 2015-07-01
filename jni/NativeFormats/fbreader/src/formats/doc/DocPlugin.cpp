@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 #include "DocMetaInfoReader.h"
 #include "DocBookReader.h"
 #include "DocStreams.h"
+#include "../rtf/RtfPlugin.h"
 #include "../../bookmodel/BookModel.h"
 #include "../../library/Book.h"
 
@@ -36,12 +37,23 @@ DocPlugin::DocPlugin() {
 DocPlugin::~DocPlugin() {
 }
 
+static bool isRtf(const Book &book) {
+	shared_ptr<ZLInputStream> stream = book.file().inputStream();
+	if (stream.isNull() || !stream->open()) {
+		return false;
+	}
+	char buffer[6] = { 0 };
+	stream->read(buffer, 5);
+	static const std::string RTF_BYTES = "{\\rtf";
+	return RTF_BYTES == buffer;
+}
+
 bool DocPlugin::providesMetainfo() const {
 	return true;
 }
 
 const std::string DocPlugin::supportedFileType() const {
-	return "MS Word document";
+	return "msdoc";
 }
 
 bool DocPlugin::acceptsFile(const ZLFile &file) const {
@@ -49,6 +61,10 @@ bool DocPlugin::acceptsFile(const ZLFile &file) const {
 }
 
 bool DocPlugin::readMetainfo(Book &book) const {
+	if (::isRtf(book)) {
+		return RtfPlugin().readMetainfo(book);
+	}
+
 	if (!DocMetaInfoReader(book).readMetainfo()) {
 		return false;
 	}
@@ -71,5 +87,9 @@ bool DocPlugin::readLanguageAndEncoding(Book &/*book*/) const {
 }
 
 bool DocPlugin::readModel(BookModel &model) const {
+	if (::isRtf(*model.book())) {
+		return RtfPlugin().readModel(model);
+	}
+
 	return DocBookReader(model, model.book()->encoding()).readBook();
 }

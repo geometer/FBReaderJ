@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	private int mySpaceBefore;
 	private int mySpaceAfter;
 	private int myVerticalAlign;
+	private Boolean myIsVerticallyAligned;
 	private int myLeftMargin;
 	private int myRightMargin;
 	private int myLeftPadding;
@@ -161,6 +162,15 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		return myVerticalAlign;
 	}
 	protected abstract int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize);
+
+	@Override
+	public boolean isVerticallyAligned() {
+		if (myIsVerticallyAligned == null) {
+			myIsVerticallyAligned = Parent.isVerticallyAligned() || isVerticallyAlignedInternal();
+		}
+		return myIsVerticallyAligned;
+	}
+	protected abstract boolean isVerticallyAlignedInternal();
 
 	@Override
 	public final int getLeftMargin(ZLTextMetrics metrics) {

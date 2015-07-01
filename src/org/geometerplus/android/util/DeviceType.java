@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ public enum DeviceType {
 	EKEN_M001,
 	PAN_DIGITAL,
 	SAMSUNG_GT_S5830,
+	SAMSUNG_TAB_MULTIWINDOW,
 	LENOVO_TAB;
 
 	private static DeviceType ourInstance;
@@ -55,12 +56,13 @@ public enum DeviceType {
 				ourInstance = PAN_DIGITAL;
 			} else if ("BarnesAndNoble".equals(Build.MANUFACTURER) &&
 					   "zoom2".equals(Build.DEVICE) &&
+					   Build.MODEL != null &&
 					   ("NOOK".equals(Build.MODEL) ||
 						"unknown".equals(Build.MODEL) ||
-						"BNRV350".equals(Build.MODEL) ||
-						"BNRV300".equals(Build.MODEL))) {
-				if ("1.2.0".equals(Build.VERSION.INCREMENTAL) ||
-					"1.2.1".equals(Build.VERSION.INCREMENTAL)) {
+						Build.MODEL.startsWith("BNRV"))) {
+				if (Build.VERSION.INCREMENTAL != null &&
+					(Build.VERSION.INCREMENTAL.startsWith("1.2") ||
+					 Build.VERSION.INCREMENTAL.startsWith("1.3"))) {
 					ourInstance = NOOK12;
 				} else {
 					ourInstance = NOOK;
@@ -69,6 +71,9 @@ public enum DeviceType {
 					   Build.MODEL != null &&
 					   Build.MODEL.toLowerCase().matches("lenovo.*tab.*")) {
 				ourInstance = LENOVO_TAB;
+			} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH &&
+					   "samsung".equalsIgnoreCase(Build.MANUFACTURER)) {
+				ourInstance = SAMSUNG_TAB_MULTIWINDOW;
 			} else {
 				ourInstance = GENERIC;
 			}

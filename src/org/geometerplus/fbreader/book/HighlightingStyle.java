@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,36 +19,31 @@
 
 package org.geometerplus.fbreader.book;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 public class HighlightingStyle {
 	public final int Id;
+	public final long LastUpdateTimestamp;
 
 	private String myName;
 	private ZLColor myBackgroundColor;
 	private ZLColor myForegroundColor;
 
-	HighlightingStyle(int id, String name, ZLColor bgColor, ZLColor fgColor) {
+	HighlightingStyle(int id, long timestamp, String name, ZLColor bgColor, ZLColor fgColor) {
 		Id = id;
+		LastUpdateTimestamp = timestamp;
+
 		myName = name;
 		myBackgroundColor = bgColor;
 		myForegroundColor = fgColor;
 	}
 
-	private String defaultName() {
-		return ZLResource.resource("style").getValue().replace("%s", String.valueOf(Id));
+	public String getNameOrNull() {
+		return "".equals(myName) ? null : myName;
 	}
 
-	public String getName() {
-		if (myName == null || "".equals(myName)) {
-			return defaultName();
-		}
-		return myName;
-	}
-
-	public void setName(String name) {
-		myName = defaultName().equals(name) ? "" : name;
+	void setName(String name) {
+		myName = name;
 	}
 
 	public ZLColor getBackgroundColor() {

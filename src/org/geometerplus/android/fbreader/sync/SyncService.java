@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,9 +36,10 @@ import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.fbreader.network.sync.SyncData;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
-public class SyncService extends Service implements IBookCollection.Listener {
+public class SyncService extends Service implements IBookCollection.Listener<Book> {
 	private static void log(String message) {
 		Log.d("FBReader.Sync", message);
 	}
@@ -76,6 +77,8 @@ public class SyncService extends Service implements IBookCollection.Listener {
 		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.UploadAllBooks);
 	private final SyncNetworkContext mySyncPositionsContext =
 		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.Positions);
+	private final SyncNetworkContext mySyncBookmarksContext =
+		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.Bookmarks);
 
 	private static volatile Thread ourSynchronizationThread;
 	private static volatile Thread ourQuickSynchronizationThread;
@@ -117,14 +120,14 @@ public class SyncService extends Service implements IBookCollection.Listener {
 
 	private PendingIntent syncIntent() {
 		return PendingIntent.getService(
-			this, 0, new Intent(this, getClass()).setAction(SyncOperations.Action.SYNC), 0
+			this, 0, new Intent(this, getClass()).setAction(FBReaderIntents.Action.SYNC_SYNC), 0
 		);
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		final String action = intent != null ? intent.getAction() : SyncOperations.Action.SYNC;
-		if (SyncOperations.Action.START.equals(action)) {
+		final String action = intent != null ? intent.getAction() : FBReaderIntents.Action.SYNC_SYNC;
+		if (FBReaderIntents.Action.SYNC_START.equals(action)) {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
 
@@ -149,16 +152,16 @@ public class SyncService extends Service implements IBookCollection.Listener {
 					myCollection.bindToService(SyncService.this, myQuickSynchroniser);
 				}
 			});
-		} else if (SyncOperations.Action.STOP.equals(action)) {
+		} else if (FBReaderIntents.Action.SYNC_STOP.equals(action)) {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
 			log("stopped");
 			stopSelf();
-		} else if (SyncOperations.Action.SYNC.equals(action)) {
+		} else if (FBReaderIntents.Action.SYNC_SYNC.equals(action)) {
 			SQLiteCookieDatabase.init(this);
 			myCollection.bindToService(this, myQuickSynchroniser);
 			myCollection.bindToService(this, myStandardSynchroniser);
-		} else if (SyncOperations.Action.QUICK_SYNC.equals(action)) {
+		} else if (FBReaderIntents.Action.SYNC_QUICK_SYNC.equals(action)) {
 			log("quick sync");
 			SQLiteCookieDatabase.init(this);
 			myCollection.bindToService(this, myQuickSynchroniser);
@@ -173,7 +176,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 	}
 
 	private void addBook(Book book) {
-		if (book.File.getPhysicalFile() != null) {
+		if (BookUtil.fileByBook(book).getPhysicalFile() != null) {
 			myQueue.add(book);
 		}
 	}
@@ -287,6 +290,8 @@ public class SyncService extends Service implements IBookCollection.Listener {
 					public void run() {
 						try {
 							syncPositions();
+							syncCustomShelves();
+							BookmarkSyncUtil.sync(mySyncBookmarksContext, myCollection);
 						} finally {
 							ourQuickSynchronizationThread = null;
 						}
@@ -369,10 +374,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 	}
 
 	private Status uploadBookToServerInternal(Book book) {
-		final File file = book.File.getPhysicalFile().javaFile();
-		if (file.length() > 30 * 1024 * 1024) {
-			return Status.Failure;
-		}
+		final File file = BookUtil.fileByBook(book).getPhysicalFile().javaFile();
 		final String hash = myCollection.getHash(book, false);
 		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {
@@ -383,6 +385,9 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			return Status.ToBeDeleted;
 		} else if (!force && book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
 			return Status.FailedPreviuousTime;
+		}
+		if (file.length() > 120 * 1024 * 1024) {
+			return Status.Failure;
 		}
 
 		initHashTables();
@@ -445,13 +450,16 @@ public class SyncService extends Service implements IBookCollection.Listener {
 				@Override
 				public void processResponse(Object response) {
 					if (mySyncData.updateFromServer((Map<String,Object>)response)) {
-						sendBroadcast(new Intent(SyncOperations.UPDATED));
+						sendBroadcast(new Intent(FBReaderIntents.Event.SYNC_UPDATED));
 					}
 				}
 			});
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
+	}
+
+	private void syncCustomShelves() {
 	}
 
 	@Override

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="확인"/>
+			<node name="cancel" value="취소"/>
+			<node name="yes" value="예"/>
+			<node name="no" value="아니오"/>
+			<node name="apply" value="적용"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="네트워크 오류"/>
+			<node name="unknownErrorMessage" value="알 수 없는 오류"/>
+			<node name="operationTimedOutMessage" value="작업 시간 초과"/>
+			<node name="somethingWrongMessage" value="무언가가 잘못되었습니다: %s"/>
+			<node name="couldntCreateDirectoryMessage" value="%s 폴더를 만들 수 없습니다"/>
+			<node name="couldntCreateFileMessage" value="%s 파일을 만들 수 없습니다"/>
+			<node name="couldntConnectMessage" value="%s 호스트에 접속할 수 없습니다"/>
+			<node name="couldntResolveHostMessage" value="%s 호스트를 찾을 수 없습니다"/>
+			<node name="authenticationFailed" value="인증 실패"/>
+			<node name="unsupportedProtocol" value="지원하지 않는 프로토콜"/>
+			<node name="invalidURL" value="잘못된 URL"/>
+			<node name="hostCantBeReached" value="%s 호스트에 도달할 수 없습니다"/>
+			<node name="connectionRefused" value="%s에 의해 연결이 거절되었습니다"/>
+			<node name="networkNotAvailable" value="네트워크를 사용할 수 없습니다"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="빨강"/>
+		<node name="green" value="초록"/>
+		<node name="blue" value="파랑"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabic" toBeTranslated="true"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="cs" value="Czech" toBeTranslated="true"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="de" value="German" toBeTranslated="true"/>
+		<node name="de-traditional" value="German (traditional spelling)" toBeTranslated="true"/>
+		<node name="el" value="Greek" toBeTranslated="true"/>
+		<node name="en" value="English" toBeTranslated="true"/>
+		<node name="eo" value="Esperanto" toBeTranslated="true"/>
+		<node name="es" value="Spanish" toBeTranslated="true"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fi" value="Finnish" toBeTranslated="true"/>
+		<node name="fr" value="French" toBeTranslated="true"/>
+		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="he" value="Hebrew" toBeTranslated="true"/>
+		<node name="hu" value="Hungarian" toBeTranslated="true"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="id" value="Indonesian" toBeTranslated="true"/>
+		<node name="it" value="Italian" toBeTranslated="true"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="ko" value="Korean" toBeTranslated="true"/>
+		<node name="lt" value="Lithuanian" toBeTranslated="true"/>
+		<node name="nb" value="Norwegian" toBeTranslated="true"/>
+		<node name="nl" value="Dutch" toBeTranslated="true"/>
+		<node name="pl" value="Polish" toBeTranslated="true"/>
+		<node name="pt" value="Portuguese" toBeTranslated="true"/>
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ru" value="Russian" toBeTranslated="true"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sv" value="Swedish" toBeTranslated="true"/>
+		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="tr" value="Turkish" toBeTranslated="true"/>
+		<node name="uk" value="Ukrainian" toBeTranslated="true"/>
+		<node name="vi" value="Vietnamese" toBeTranslated="true"/>
+		<node name="zh" value="Chinese" toBeTranslated="true"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="other" value="기타"/>
+		<node name="multi" value="다중 언어"/>
+		<node name="system" value="시스템 설정"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="켜짐"/>
+		<node name="off" value="꺼짐"/>
+		<node name="unchanged" value="변화 없음"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="키 동작"/>
+	</node>
+</resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 package org.geometerplus.android.fbreader.util;
 
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 
 import android.app.Activity;
 import android.app.Service;
@@ -27,17 +29,20 @@ import android.content.*;
 import android.os.IBinder;
 
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
-import org.geometerplus.zlibrary.core.image.ZLImageSelfSynchronizableProxy;
+import org.geometerplus.zlibrary.core.image.ZLImageSimpleProxy;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.formats.PluginImage;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.formatPlugin.CoverReader;
 
 public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	private static final class Connection implements ServiceConnection {
+		private final ExecutorService myExecutor = Executors.newSingleThreadExecutor();
+
 		private final ExternalFormatPlugin myPlugin;
 		private volatile CoverReader Reader;
 		private final List<Runnable> myPostActions = new LinkedList<Runnable>();
@@ -48,7 +53,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 
 		synchronized void runOrAddAction(Runnable action) {
 			if (Reader != null) {
-				action.run();
+				myExecutor.execute(action);
 			} else {
 				myPostActions.add(action);
 			}
@@ -57,10 +62,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 		public synchronized void onServiceConnected(ComponentName className, IBinder binder) {
 			Reader = CoverReader.Stub.asInterface(binder);
 			for (Runnable action : myPostActions) {
-				try {
-					action.run();
-				} catch (Throwable t) {
-				}
+				myExecutor.execute(action);
 			}
 			myPostActions.clear();
 		}
@@ -95,8 +97,8 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 			if (postAction != null) {
 				postAction.run();
 			}
-		} else if (image instanceof ZLImageSelfSynchronizableProxy) {
-			((ZLImageSelfSynchronizableProxy)image).synchronize();
+		} else if (image instanceof ZLImageSimpleProxy) {
+			((ZLImageSimpleProxy)image).synchronize();
 			if (postAction != null) {
 				postAction.run();
 			}
@@ -133,7 +135,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 			connection = new Connection(plugin);
 			myConnections.put(plugin, connection);
 			myContext.bindService(
-				PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE),
+				PluginUtil.createIntent(plugin, FBReaderIntents.Action.PLUGIN_CONNECT_COVER_SERVICE),
 				connection,
 				Context.BIND_AUTO_CREATE
 			);

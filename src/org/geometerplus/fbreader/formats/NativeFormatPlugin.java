@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,14 +28,15 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.CachedCharStorageException;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.fb2.FB2NativePlugin;
 import org.geometerplus.fbreader.formats.oeb.OEBNativePlugin;
 
 public class NativeFormatPlugin extends BuiltinFormatPlugin {
+	private static final Object ourNativeLock = new Object();
+
 	public static NativeFormatPlugin create(String fileType) {
 		if ("fb2".equals(fileType)) {
 			return new FB2NativePlugin();
@@ -51,50 +52,63 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	}
 
 	@Override
-	synchronized public void readMetainfo(Book book) throws BookReadingException {
-		final int code = readMetainfoNative(book);
+	synchronized public void readMetainfo(AbstractBook book) throws BookReadingException {
+		final int code;
+		synchronized (ourNativeLock) {
+			code = readMetainfoNative(book);
+		}
 		if (code != 0) {
 			throw new BookReadingException(
 				"nativeCodeFailure",
-				book.File,
-				new String[] { String.valueOf(code), book.File.getPath() }
+				BookUtil.fileByBook(book),
+				new String[] { String.valueOf(code), book.getPath() }
 			);
 		}
 	}
 
-	private native int readMetainfoNative(Book book);
+	private native int readMetainfoNative(AbstractBook book);
 
 	@Override
-	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {
-		final FileEncryptionInfo[] infos = readEncryptionInfosNative(book);
+	public List<FileEncryptionInfo> readEncryptionInfos(AbstractBook book) {
+		final FileEncryptionInfo[] infos;
+		synchronized (ourNativeLock) {
+			infos = readEncryptionInfosNative(book);
+		}
 		return infos != null
 			? Arrays.<FileEncryptionInfo>asList(infos)
 			: Collections.<FileEncryptionInfo>emptyList();
 	}
 
-	private native FileEncryptionInfo[] readEncryptionInfosNative(Book book);
+	private native FileEncryptionInfo[] readEncryptionInfosNative(AbstractBook book);
 
 	@Override
-	synchronized public void readUids(Book book) throws BookReadingException {
-		readUidsNative(book);
+	synchronized public void readUids(AbstractBook book) throws BookReadingException {
+		synchronized (ourNativeLock) {
+			readUidsNative(book);
+		}
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
+			book.addUid(BookUtil.createUid(book, "SHA-256"));
 		}
 	}
 
-	private native boolean readUidsNative(Book book);
+	private native boolean readUidsNative(AbstractBook book);
 
 	@Override
-	public void detectLanguageAndEncoding(Book book) {
-		detectLanguageAndEncodingNative(book);
+	public void detectLanguageAndEncoding(AbstractBook book) {
+		synchronized (ourNativeLock) {
+			detectLanguageAndEncodingNative(book);
+		}
 	}
 
-	public native void detectLanguageAndEncodingNative(Book book);
+	private native void detectLanguageAndEncodingNative(AbstractBook book);
 
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
 		//android.os.Debug.startMethodTracing("ep.trace", 32 * 1024 * 1024);
-		final int code = readModelNative(model);
+		final int code;
+		synchronized (ourNativeLock) {
+			code = readModelNative(model);
+		}
 		//android.os.Debug.stopMethodTracing();
 		switch (code) {
 			case 0:
@@ -104,8 +118,8 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 			default:
 				throw new BookReadingException(
 					"nativeCodeFailure",
-					model.Book.File,
-					new String[] { String.valueOf(code), model.Book.File.getPath() }
+					BookUtil.fileByBook(model.Book),
+					new String[] { String.valueOf(code), model.Book.getPath() }
 				);
 		}
 	}
@@ -113,29 +127,33 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	private native int readModelNative(BookModel model);
 
 	@Override
-	public ZLFileImageProxy readCover(ZLFile file) {
+	public final ZLFileImageProxy readCover(ZLFile file) {
 		return new ZLFileImageProxy(file) {
 			@Override
 			protected ZLFileImage retrieveRealImage() {
 				final ZLFileImage[] box = new ZLFileImage[1];
-				readCoverInternal(File, box);
+				synchronized (ourNativeLock) {
+					readCoverNative(File, box);
+				}
 				return box[0];
 			}
 		};
 	}
 
-	protected native void readCoverInternal(ZLFile file, ZLFileImage[] box);
+	private native void readCoverNative(ZLFile file, ZLFileImage[] box);
 
 	@Override
 	public String readAnnotation(ZLFile file) {
-		return readAnnotationInternal(file);
+		synchronized (ourNativeLock) {
+			return readAnnotationNative(file);
+		}
 	}
 
-	protected native String readAnnotationInternal(ZLFile file);
+	private native String readAnnotationNative(ZLFile file);
 
 	@Override
-	public Type type() {
-		return Type.BUILTIN;
+	public int priority() {
+		return 5;
 	}
 
 	@Override

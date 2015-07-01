@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,18 +22,28 @@ package org.geometerplus.android.fbreader;
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
+import android.os.Parcelable;
+import android.view.View;
+
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.OnClickWrapper;
+import com.github.johnpersano.supertoasts.util.OnDismissWrapper;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.util.AutoTextSnippet;
 
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
+import org.geometerplus.android.fbreader.image.ImageViewActivity;
 import org.geometerplus.android.fbreader.network.*;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
-import org.geometerplus.android.fbreader.image.ImageViewActivity;
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.UIMessageUtil;
 
 class ProcessHyperlinkAction extends FBAndroidAction {
 	ProcessHyperlinkAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -42,19 +52,19 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 
 	@Override
 	public boolean isEnabled() {
-		return Reader.getTextView().getSelectedRegion() != null;
+		return Reader.getTextView().getOutlinedRegion() != null;
 	}
 
 	@Override
 	protected void run(Object ... params) {
-		final ZLTextRegion region = Reader.getTextView().getSelectedRegion();
+		final ZLTextRegion region = Reader.getTextView().getOutlinedRegion();
 		if (region == null) {
 			return;
 		}
 
 		final ZLTextRegion.Soul soul = region.getSoul();
 		if (soul instanceof ZLTextHyperlinkRegionSoul) {
-			Reader.getTextView().hideSelectedRegionBorder();
+			Reader.getTextView().hideOutline();
 			Reader.getViewWidget().repaint();
 			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegionSoul)soul).Hyperlink;
 			switch (hyperlink.Type) {
@@ -62,19 +72,76 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					openInBrowser(hyperlink.Id);
 					break;
 				case FBHyperlinkType.INTERNAL:
+				case FBHyperlinkType.FOOTNOTE:
+				{
+					final AutoTextSnippet snippet = Reader.getFootnoteData(hyperlink.Id);
+					if (snippet == null) {
+						break;
+					}
+
 					Reader.Collection.markHyperlinkAsVisited(Reader.getCurrentBook(), hyperlink.Id);
-					Reader.tryOpenFootnote(hyperlink.Id);
+					final boolean showToast;
+					switch (Reader.MiscOptions.ShowFootnoteToast.getValue()) {
+						default:
+						case never:
+							showToast = false;
+							break;
+						case footnotesOnly:
+							showToast = hyperlink.Type == FBHyperlinkType.FOOTNOTE;
+							break;
+						case footnotesAndSuperscripts:
+							showToast =
+								hyperlink.Type == FBHyperlinkType.FOOTNOTE ||
+								region.isVerticallyAligned();
+							break;
+						case allInternalLinks:
+							showToast = true;
+							break;
+					}
+					if (showToast) {
+						final SuperActivityToast toast;
+						if (snippet.IsEndOfText) {
+							toast = new SuperActivityToast(BaseActivity, SuperToast.Type.STANDARD);
+						} else {
+							toast = new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
+							toast.setButtonIcon(
+								android.R.drawable.ic_menu_more,
+								ZLResource.resource("footnoteToast").getResource("more").getValue()
+							);
+							toast.setOnClickWrapper(new OnClickWrapper("ftnt", new SuperToast.OnClickListener() {
+								@Override
+								public void onClick(View view, Parcelable token) {
+									Reader.getTextView().hideOutline();
+									Reader.tryOpenFootnote(hyperlink.Id);
+								}
+							}));
+						}
+						toast.setText(snippet.getText());
+						toast.setDuration(Reader.MiscOptions.FootnoteToastDuration.getValue().Value);
+						toast.setOnDismissWrapper(new OnDismissWrapper("ftnt", new SuperToast.OnDismissListener() {
+							@Override
+							public void onDismiss(View view) {
+								Reader.getTextView().hideOutline();
+								Reader.getViewWidget().repaint();
+							}
+						}));
+						Reader.getTextView().outlineRegion(region);
+						BaseActivity.showToast(toast);
+					} else {
+						Reader.tryOpenFootnote(hyperlink.Id);
+					}
 					break;
+				}
 			}
 		} else if (soul instanceof ZLTextImageRegionSoul) {
-			Reader.getTextView().hideSelectedRegionBorder();
+			Reader.getTextView().hideOutline();
 			Reader.getViewWidget().repaint();
 			final String url = ((ZLTextImageRegionSoul)soul).ImageElement.URL;
 			if (url != null) {
 				try {
 					final Intent intent = new Intent();
 					intent.setClass(BaseActivity, ImageViewActivity.class);
-					intent.setData(Uri.parse(url));
+					intent.putExtra(ImageViewActivity.URL_KEY, url);
 					intent.putExtra(
 						ImageViewActivity.BACKGROUND_COLOR_KEY,
 						Reader.ImageOptions.ImageViewBackground.getValue().intValue()
@@ -85,8 +152,17 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 				}
 			}
 		} else if (soul instanceof ZLTextWordRegionSoul) {
-			DictionaryUtil.openWordInDictionary(
-				BaseActivity, ((ZLTextWordRegionSoul)soul).Word, region
+			DictionaryUtil.openTextInDictionary(
+				BaseActivity,
+				((ZLTextWordRegionSoul)soul).Word.getString(),
+				true,
+				region.getTop(),
+				region.getBottom(),
+				new Runnable() {
+					public void run() {
+						BaseActivity.outlineRegion(soul);
+					}
+				}
 			);
 		}
 	}
@@ -94,7 +170,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 	private void openInBrowser(final String url) {
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
 		final boolean externalUrl;
-		if (BookDownloader.acceptsUri(Uri.parse(url))) {
+		if (BookDownloader.acceptsUri(Uri.parse(url), null)) {
 			intent.setClass(BaseActivity, BookDownloader.class);
 			intent.putExtra(BookDownloaderService.Key.SHOW_NOTIFICATIONS, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
@@ -109,7 +185,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 						nLibrary.initialize(new ActivityNetworkContext(BaseActivity));
 					} catch (ZLNetworkException e) {
 						e.printStackTrace();
-						UIUtil.showMessageText(BaseActivity, e.getMessage());
+						UIMessageUtil.showMessageText(BaseActivity, e.getMessage());
 						return;
 					}
 				}

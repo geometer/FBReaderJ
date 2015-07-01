@@ -3,6 +3,10 @@
     <item name="android:colorPrimary">@color/primary</item>
     <item name="android:colorPrimaryDark">@color/primary_dark</item>
   </style>
+  <style name="FBReader.Activity.NoActionBar" parent="android:Theme.Material.NoActionBar">
+    <item name="android:colorPrimary">@color/primary</item>
+    <item name="android:colorPrimaryDark">@color/primary_dark</item>
+  </style>
   <style name="FBReader.Dialog" parent="android:Theme.Material.Dialog">
     <item name="android:colorPrimary">@color/primary</item>
     <item name="android:colorPrimaryDark">@color/primary_dark</item>

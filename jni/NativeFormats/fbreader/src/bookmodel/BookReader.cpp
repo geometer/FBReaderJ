@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -156,9 +156,12 @@ void BookReader::addHyperlinkControl(FBTextKind kind, const std::string &label) 
 	std::string type;
 	switch (myHyperlinkKind) {
 		case INTERNAL_HYPERLINK:
-		case FOOTNOTE:
 			myHyperlinkType = HYPERLINK_INTERNAL;
 			type = "internal";
+			break;
+		case FOOTNOTE:
+			myHyperlinkType = HYPERLINK_FOOTNOTE;
+			type = "footnote";
 			break;
 		case EXTERNAL_HYPERLINK:
 			myHyperlinkType = HYPERLINK_EXTERNAL;
@@ -232,7 +235,7 @@ void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image
 
 	jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
 	JString javaId(env, id);
-	AndroidUtil::Method_NativeBookModel_addImage->call(myModel.myJavaModel, javaId.j(), javaImage);
+	AndroidUtil::Method_BookModel_addImage->call(myModel.myJavaModel, javaId.j(), javaImage);
 
 	env->DeleteLocalRef(javaImage);
 }
@@ -266,6 +269,10 @@ void BookReader::insertEndParagraph(ZLTextParagraph::Kind kind) {
 
 void BookReader::insertEndOfSectionParagraph() {
 	insertEndParagraph(ZLTextParagraph::END_OF_SECTION_PARAGRAPH);
+}
+
+void BookReader::insertPseudoEndOfSectionParagraph() {
+	insertEndParagraph(ZLTextParagraph::PSEUDO_END_OF_SECTION_PARAGRAPH);
 }
 
 void BookReader::insertEndOfTextParagraph() {

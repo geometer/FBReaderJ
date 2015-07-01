@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.fbreader.fbreader.DurationEnum;
 
 public class MiscOptions {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustment;
@@ -32,6 +33,13 @@ public class MiscOptions {
 		doNothing, selectSingleWord, startSelecting, openDictionary
 	}
 	public final ZLEnumOption<WordTappingActionEnum> WordTappingAction;
+
+	public final ZLIntegerRangeOption ToastFontSizePercent;
+	public static enum FootnoteToastEnum {
+		never, footnotesOnly, footnotesAndSuperscripts, allInternalLinks
+	}
+	public final ZLEnumOption<FootnoteToastEnum> ShowFootnoteToast;
+	public final ZLEnumOption<DurationEnum> FootnoteToastDuration;
 
 	public MiscOptions() {
 		AllowScreenBrightnessAdjustment =
@@ -46,5 +54,12 @@ public class MiscOptions {
 
 		WordTappingAction =
 			new ZLEnumOption<WordTappingActionEnum>("Options", "WordTappingAction", WordTappingActionEnum.startSelecting);
+
+		ToastFontSizePercent =
+			new ZLIntegerRangeOption("Options", "ToastFontSizePercent", 25, 100, 90);
+		ShowFootnoteToast =
+			new ZLEnumOption<FootnoteToastEnum>("Options", "ShowFootnoteToast", FootnoteToastEnum.footnotesAndSuperscripts);
+		FootnoteToastDuration =
+			new ZLEnumOption<DurationEnum>("Options", "FootnoteToastDuration", DurationEnum.duration5);
 	}
 }

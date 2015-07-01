@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,6 +129,10 @@ public abstract class ZLTextStyleEntry {
 
 	public final int getLength(int featureId, ZLTextMetrics metrics, int fontSize) {
 		return compute(myLengths[featureId], metrics, fontSize, featureId);
+	}
+
+	public final boolean hasNonZeroLength(int featureId) {
+		return myLengths[featureId].Size != 0;
 	}
 
 	public static int compute(Length length, ZLTextMetrics metrics, int fontSize, int featureId) {

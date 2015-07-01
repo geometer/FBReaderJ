@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,8 @@ public class SyncOptions {
 		new ZLBooleanOption("Sync", "ChangeCurrentBook", true);
 	public final ZLEnumOption<Condition> Bookmarks =
 		new ZLEnumOption<Condition>("Sync", "Bookmarks", Condition.always);
+	public final ZLEnumOption<Condition> CustomShelves =
+		new ZLEnumOption<Condition>("Sync", "CustomShelves", Condition.always);
 	public final ZLEnumOption<Condition> Metainfo =
 		new ZLEnumOption<Condition>("Sync", "Metainfo", Condition.always);
 }

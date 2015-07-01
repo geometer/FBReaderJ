@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,24 +21,21 @@ package org.geometerplus.android.fbreader.libraryService;
 
 import java.util.*;
 
+import android.app.Service;
 import android.content.*;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
-
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 
-public class BookCollectionShadow extends AbstractBookCollection implements ServiceConnection {
+public class BookCollectionShadow extends AbstractBookCollection<Book> implements ServiceConnection {
 	private volatile Context myContext;
 	private volatile LibraryInterface myInterface;
 	private final List<Runnable> myOnBindActions = new LinkedList<Runnable>();
@@ -51,8 +48,8 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 
 			try {
 				final String type = intent.getStringExtra("type");
-				if (LibraryService.BOOK_EVENT_ACTION.equals(intent.getAction())) {
-					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"));
+				if (FBReaderIntents.Event.LIBRARY_BOOK.equals(intent.getAction())) {
+					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"), BookCollectionShadow.this);
 					fireBookEvent(BookEvent.valueOf(type), book);
 				} else {
 					fireBuildEvent(Status.valueOf(type));
@@ -63,21 +60,25 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	};
 
-	public synchronized void bindToService(Context context, Runnable onBindAction) {
+	public synchronized boolean bindToService(Context context, Runnable onBindAction) {
 		if (myInterface != null && myContext == context) {
 			if (onBindAction != null) {
 				Config.Instance().runOnConnect(onBindAction);
 			}
+			return true;
 		} else {
 			if (onBindAction != null) {
 				myOnBindActions.add(onBindAction);
 			}
-			context.bindService(
+			final boolean result = context.bindService(
 				FBReaderIntents.internalIntent(FBReaderIntents.Action.LIBRARY_SERVICE),
 				this,
-				LibraryService.BIND_AUTO_CREATE
+				Service.BIND_AUTO_CREATE
 			);
-			myContext = context;
+			if (result) {
+				myContext = context;
+			}
+			return result;
 		}
 	}
 
@@ -131,15 +132,14 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Book> books(BookQuery query) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return SerializerUtil.deserializeBookList(myInterface.books(SerializerUtil.serialize(query)));
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+	public List<Book> books(final BookQuery query) {
+		return listCall(new ListCallable<Book>() {
+			public List<Book> call() throws RemoteException {
+				return SerializerUtil.deserializeBookList(
+					myInterface.books(SerializerUtil.serialize(query)), BookCollectionShadow.this
+				);
+			}
+		});
 	}
 
 	public synchronized boolean hasBooks(Filter filter) {
@@ -153,26 +153,24 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Book> recentlyAddedBooks(int count) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return SerializerUtil.deserializeBookList(myInterface.recentlyAddedBooks(count));
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+	public List<Book> recentlyAddedBooks(final int count) {
+		return listCall(new ListCallable<Book>() {
+			public List<Book> call() throws RemoteException {
+				return SerializerUtil.deserializeBookList(
+					myInterface.recentlyAddedBooks(count), BookCollectionShadow.this
+				);
+			}
+		});
 	}
 
-	public synchronized List<Book> recentlyOpenedBooks(int count) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return SerializerUtil.deserializeBookList(myInterface.recentlyOpenedBooks(count));
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+	public List<Book> recentlyOpenedBooks(final int count) {
+		return listCall(new ListCallable<Book>() {
+			public List<Book> call() throws RemoteException {
+				return SerializerUtil.deserializeBookList(
+					myInterface.recentlyOpenedBooks(count), BookCollectionShadow.this
+				);
+			}
+		});
 	}
 
 	public synchronized Book getRecentBook(int index) {
@@ -180,19 +178,19 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getRecentBook(index));
+			return SerializerUtil.deserializeBook(myInterface.getRecentBook(index), this);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public synchronized Book getBookByFile(ZLFile file) {
+	public synchronized Book getBookByFile(String path) {
 		if (myInterface == null) {
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookByFile(file.getPath()));
+			return SerializerUtil.deserializeBook(myInterface.getBookByFile(path), this);
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -203,7 +201,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookById(id));
+			return SerializerUtil.deserializeBook(myInterface.getBookById(id), this);
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -214,7 +212,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookByUid(uid.Type, uid.Id));
+			return SerializerUtil.deserializeBook(myInterface.getBookByUid(uid.Type, uid.Id), this);
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -225,42 +223,36 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.getBookByHash(hash));
+			return SerializerUtil.deserializeBook(myInterface.getBookByHash(hash), this);
 		} catch (RemoteException e) {
 			return null;
 		}
 	}
 
-	public synchronized List<Author> authors() {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			final List<String> strings = myInterface.authors();
-			final List<Author> authors = new ArrayList<Author>(strings.size());
-			for (String s : strings) {
-				authors.add(Util.stringToAuthor(s));
+	public List<Author> authors() {
+		return listCall(new ListCallable<Author>() {
+			public List<Author> call() throws RemoteException {
+				final List<String> strings = myInterface.authors();
+				final List<Author> authors = new ArrayList<Author>(strings.size());
+				for (String s : strings) {
+					authors.add(Util.stringToAuthor(s));
+				}
+				return authors;
 			}
-			return authors;
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+		});
 	}
 
-	public synchronized List<Tag> tags() {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			final List<String> strings = myInterface.tags();
-			final List<Tag> tags = new ArrayList<Tag>(strings.size());
-			for (String s : strings) {
-				tags.add(Util.stringToTag(s));
+	public List<Tag> tags() {
+		return listCall(new ListCallable<Tag>() {
+			public List<Tag> call() throws RemoteException {
+				final List<String> strings = myInterface.tags();
+				final List<Tag> tags = new ArrayList<Tag>(strings.size());
+				for (String s : strings) {
+					tags.add(Util.stringToTag(s));
+				}
+				return tags;
 			}
-			return tags;
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+		});
 	}
 
 	public synchronized boolean hasSeries() {
@@ -273,37 +265,28 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		return false;
 	}
 
-	public synchronized List<String> series() {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return myInterface.series();
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+	public List<String> series() {
+		return listCall(new ListCallable<String>() {
+			public List<String> call() throws RemoteException {
+				return myInterface.series();
+			}
+		});
 	}
 
-	public synchronized List<String> titles(BookQuery query) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return myInterface.titles(SerializerUtil.serialize(query));
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+	public List<String> titles(final BookQuery query) {
+		return listCall(new ListCallable<String>() {
+			public List<String> call() throws RemoteException {
+				return myInterface.titles(SerializerUtil.serialize(query));
+			}
+		});
 	}
 
-	public synchronized List<String> firstTitleLetters() {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return myInterface.firstTitleLetters();
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+	public List<String> firstTitleLetters() {
+		return listCall(new ListCallable<String>() {
+			public List<String> call() throws RemoteException {
+				return myInterface.firstTitleLetters();
+			}
+		});
 	}
 
 	public synchronized boolean saveBook(Book book) {
@@ -312,6 +295,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 		try {
 			return myInterface.saveBook(SerializerUtil.serialize(book));
+		} catch (RemoteException e) {
+			return false;
+		}
+	}
+
+	public synchronized boolean canRemoveBook(Book book, boolean deleteFromDisk) {
+		if (myInterface == null) {
+			return false;
+		}
+		try {
+			return myInterface.canRemoveBook(SerializerUtil.serialize(book), deleteFromDisk);
 		} catch (RemoteException e) {
 			return false;
 		}
@@ -344,14 +338,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<String> labels() {
-		if (myInterface != null) {
-			try {
+	public List<String> labels() {
+		return listCall(new ListCallable<String>() {
+			public List<String> call() throws RemoteException {
 				return myInterface.labels();
-			} catch (RemoteException e) {
 			}
-		}
-		return Collections.emptyList();
+		});
 	}
 
 	public String getHash(Book book, boolean force) {
@@ -425,25 +417,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
-	public synchronized ZLImage getCover(Book book, int maxWidth, int maxHeight) {
-		if (myInterface == null) {
-			return null;
-		}
-		try {
-			final boolean[] delayed = new boolean[1];
-			return new ZLBitmapImage(myInterface.getCover(SerializerUtil.serialize(book), maxWidth, maxHeight, delayed));
-		} catch (RemoteException e) {
-			return null;
-		}
-	}
-
-	@Override
 	public String getCoverUrl(Book book) {
 		if (myInterface == null) {
 			return null;
 		}
 		try {
-			return myInterface.getCoverUrl(book.File.getPath());
+			return myInterface.getCoverUrl(book.getPath());
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -462,17 +441,14 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
-	public synchronized List<Bookmark> bookmarks(BookmarkQuery query) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return SerializerUtil.deserializeBookmarkList(
-				myInterface.bookmarks(SerializerUtil.serialize(query))
-			);
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+	public List<Bookmark> bookmarks(final BookmarkQuery query) {
+		return listCall(new ListCallable<Bookmark>() {
+			public List<Bookmark> call() throws RemoteException {
+				return SerializerUtil.deserializeBookmarkList(
+					myInterface.bookmarks(SerializerUtil.serialize(query))
+				);
+			}
+		});
 	}
 
 	public synchronized void saveBookmark(Bookmark bookmark) {
@@ -495,6 +471,23 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized List<String> deletedBookmarkUids() {
+		return listCall(new ListCallable<String>() {
+			public List<String> call() throws RemoteException {
+				return myInterface.deletedBookmarkUids();
+			}
+		});
+	}
+
+	public void purgeBookmarks(List<String> uids) {
+		if (myInterface != null) {
+			try {
+				myInterface.purgeBookmarks(uids);
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
 	public synchronized HighlightingStyle getHighlightingStyle(int styleId) {
 		if (myInterface == null) {
 			return null;
@@ -506,21 +499,39 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<HighlightingStyle> highlightingStyles() {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return SerializerUtil.deserializeStyleList(myInterface.highlightingStyles());
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+	public List<HighlightingStyle> highlightingStyles() {
+		return listCall(new ListCallable<HighlightingStyle>() {
+			public List<HighlightingStyle> call() throws RemoteException {
+				return SerializerUtil.deserializeStyleList(myInterface.highlightingStyles());
+			}
+		});
 	}
 
 	public synchronized void saveHighlightingStyle(HighlightingStyle style) {
 		if (myInterface != null) {
 			try {
 				myInterface.saveHighlightingStyle(SerializerUtil.serialize(style));
+			} catch (RemoteException e) {
+				// ignore
+			}
+		}
+	}
+
+	public int getDefaultHighlightingStyleId() {
+		if (myInterface == null) {
+			return 1;
+		}
+		try {
+			return myInterface.getDefaultHighlightingStyleId();
+		} catch (RemoteException e) {
+			return 1;
+		}
+	}
+
+	public void setDefaultHighlightingStyleId(int styleId) {
+		if (myInterface != null) {
+			try {
+				myInterface.setDefaultHighlightingStyleId(styleId);
 			} catch (RemoteException e) {
 				// ignore
 			}
@@ -537,6 +548,48 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public List<FormatDescriptor> formats() {
+		return listCall(new ListCallable<FormatDescriptor>() {
+			public List<FormatDescriptor> call() throws RemoteException {
+				final List<String> serialized = myInterface.formats();
+				final List<FormatDescriptor> formats =
+					new ArrayList<FormatDescriptor>(serialized.size());
+				for (String s : serialized) {
+					formats.add(Util.stringToFormatDescriptor(s));
+				}
+				return formats;
+			}
+		});
+	}
+
+	public synchronized boolean setActiveFormats(List<String> formats) {
+		if (myInterface != null) {
+			try {
+				return myInterface.setActiveFormats(formats);
+			} catch (RemoteException e) {
+			}
+		}
+		return false;
+	}
+
+	private interface ListCallable<T> {
+		List<T> call() throws RemoteException;
+	}
+
+	private synchronized <T> List<T> listCall(ListCallable<T> callable) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return callable.call();
+		} catch (Exception e) {
+			return Collections.emptyList();
+		} catch (Throwable e) {
+			// TODO: report problem
+			return Collections.emptyList();
+		}
+	}
+
 	// method from ServiceConnection interface
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = LibraryInterface.Stub.asInterface(service);
@@ -544,12 +597,16 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			Config.Instance().runOnConnect(myOnBindActions.remove(0));
 		}
 		if (myContext != null) {
-			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BOOK_EVENT_ACTION));
-			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BUILD_EVENT_ACTION));
+			myContext.registerReceiver(myReceiver, new IntentFilter(FBReaderIntents.Event.LIBRARY_BOOK));
+			myContext.registerReceiver(myReceiver, new IntentFilter(FBReaderIntents.Event.LIBRARY_BUILD));
 		}
 	}
 
 	// method from ServiceConnection interface
 	public synchronized void onServiceDisconnected(ComponentName name) {
+	}
+
+	public Book createBook(long id, String url, String title, String encoding, String language) {
+		return new Book(id, url.substring("file://".length()), title, encoding, language);
 	}
 }

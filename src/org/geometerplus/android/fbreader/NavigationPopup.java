@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 final class NavigationPopup {
-	private PopupWindow myWindow;
+	private NavigationWindow myWindow;
 	private ZLTextWordCursor myStartPosition;
 	private final FBReaderApp myFBReader;
 	private Button myResetButton;
@@ -43,7 +43,7 @@ final class NavigationPopup {
 	}
 
 	public void runNavigation(FBReader activity, RelativeLayout root) {
-		createControlPanel(activity, root);
+		createPanel(activity, root);
 		myStartPosition = new ZLTextWordCursor(myFBReader.getTextView().getStartCursor());
 		myWindow.show();
 		setupNavigation();
@@ -69,17 +69,16 @@ final class NavigationPopup {
 		myWindow = null;
 	}
 
-	public void createControlPanel(FBReader activity, RelativeLayout root) {
-		if (myWindow != null && activity == myWindow.getActivity()) {
+	private void createPanel(FBReader activity, RelativeLayout root) {
+		if (myWindow != null && activity == myWindow.getContext()) {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Location.BottomFlat);
+		activity.getLayoutInflater().inflate(R.layout.navigation_panel, root);
+		myWindow = (NavigationWindow)root.findViewById(R.id.navigation_panel);
 
-		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myWindow, false);
-
-		final SeekBar slider = (SeekBar)layout.findViewById(R.id.navigation_slider);
-		final TextView text = (TextView)layout.findViewById(R.id.navigation_text);
+		final SeekBar slider = (SeekBar)myWindow.findViewById(R.id.navigation_slider);
+		final TextView text = (TextView)myWindow.findViewById(R.id.navigation_text);
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
@@ -109,7 +108,7 @@ final class NavigationPopup {
 			}
 		});
 
-		myResetButton = (Button)layout.findViewById(R.id.navigation_reset_button);
+		myResetButton = (Button)myWindow.findViewById(R.id.navigation_reset_button);
 		myResetButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (myStartPosition != null) {
@@ -122,8 +121,6 @@ final class NavigationPopup {
 		});
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		myResetButton.setText(buttonResource.getResource("resetPosition").getValue());
-
-		myWindow.addView(layout);
 	}
 
 	private void setupNavigation() {

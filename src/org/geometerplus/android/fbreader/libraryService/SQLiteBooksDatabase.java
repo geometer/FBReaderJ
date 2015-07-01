@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 31;
+		final int currentVersion = 39;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -145,6 +145,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables29();
 			case 30:
 				updateTables30();
+			case 31:
+				updateTables31();
+			case 32:
+				updateTables32();
+			case 33:
+				updateTables33();
+			case 34:
+				updateTables34();
+			case 35:
+				updateTables35();
+			case 36:
+				updateTables36();
+			case 37:
+				updateTables37();
+			case 38:
+				updateTables38();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -154,8 +170,32 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Book loadBook(long bookId) {
-		Book book = null;
+	protected String getOptionValue(String name) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT value FROM Options WHERE name=?", new String[] { name }
+		);
+		try {
+			return cursor.moveToNext() ? cursor.getString(0) : null;
+		} finally {
+			cursor.close();
+		}
+	}
+
+	@Override
+	protected void setOptionValue(String name, String value) {
+		final SQLiteStatement statement = get(
+			"INSERT OR REPLACE INTO Options (name,value) VALUES (?,?)"
+		);
+		synchronized (statement) {
+			SQLiteUtil.bindString(statement, 1, name);
+			SQLiteUtil.bindString(statement, 2, value);
+			statement.execute();
+		}
+	}
+
+	@Override
+	protected DbBook loadBook(long bookId) {
+		DbBook book = null;
 		final Cursor cursor = myDatabase.rawQuery("SELECT file_id,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
 		if (cursor.moveToNext()) {
 			book = createBook(
@@ -167,11 +207,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Book loadBookByFile(long fileId, ZLFile file) {
+	protected DbBook loadBookByFile(long fileId, ZLFile file) {
 		if (fileId == -1) {
 			return null;
 		}
-		Book book = null;
+		DbBook book = null;
 		final Cursor cursor = myDatabase.rawQuery("SELECT book_id,title,encoding,language FROM Books WHERE file_id = " + fileId, null);
 		if (cursor.moveToNext()) {
 			book = createBook(
@@ -205,16 +245,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing) {
+	protected Map<Long,DbBook> loadBooks(FileInfoSet infos, boolean existing) {
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id,file_id,title,encoding,language FROM Books WHERE `exists` = " + (existing ? 1 : 0), null
 		);
-		final HashMap<Long,Book> booksById = new HashMap<Long,Book>();
-		final HashMap<Long,Book> booksByFileId = new HashMap<Long,Book>();
+		final HashMap<Long,DbBook> booksById = new HashMap<Long,DbBook>();
+		final HashMap<Long,DbBook> booksByFileId = new HashMap<Long,DbBook>();
 		while (cursor.moveToNext()) {
 			final long id = cursor.getLong(0);
 			final long fileId = cursor.getLong(1);
-			final Book book = createBook(
+			final DbBook book = createBook(
 				id, infos.getFile(fileId), cursor.getString(2), cursor.getString(3), cursor.getString(4)
 			);
 			if (book != null) {
@@ -239,7 +279,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,author_id FROM BookAuthor ORDER BY author_index", null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				Author author = authorById.get(cursor.getLong(1));
 				if (author != null) {
@@ -251,7 +291,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 		cursor = myDatabase.rawQuery("SELECT book_id,tag_id FROM BookTag", null);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				addTag(book, getTagById(cursor.getLong(1)));
 			}
@@ -271,7 +311,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,series_id,book_index FROM BookSeries", null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				final String series = seriesById.get(cursor.getLong(1));
 				if (series != null) {
@@ -285,7 +325,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,type,uid FROM BookUid", null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				book.addUid(cursor.getString(1), cursor.getString(2));
 			}
@@ -298,7 +338,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				book.addLabel(cursor.getString(1));
 			}
@@ -310,7 +350,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				book.setProgress(RationalNumber.create(cursor.getLong(1), cursor.getLong(2)));
 			}
@@ -322,7 +362,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			null
 		);
 		while (cursor.moveToNext()) {
-			final Book book = booksById.get(cursor.getLong(0));
+			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				book.HasBookmark = true;
 			}
@@ -333,13 +373,13 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected void setExistingFlag(Collection<Book> books, boolean flag) {
+	protected void setExistingFlag(Collection<DbBook> books, boolean flag) {
 		if (books.isEmpty()) {
 			return;
 		}
 		final StringBuilder bookSet = new StringBuilder("(");
 		boolean first = true;
-		for (Book b : books) {
+		for (DbBook b : books) {
 			if (first) {
 				first = false;
 			} else {
@@ -513,6 +553,23 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
 			" WHERE BookLabel.book_id=?",
 			new String[] { String.valueOf(bookId) }
+		);
+		final LinkedList<String> names = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			names.add(cursor.getString(0));
+		}
+		cursor.close();
+		return names;
+	}
+
+	@Override
+	protected List<String> listLabels() {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT DISTINCT(Labels.name) FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
+			" INNER JOIN Books ON BookLabel.book_id=Books.book_id" +
+			" WHERE Books.`exists`=1",
+			null
 		);
 		final LinkedList<String> names = new LinkedList<String>();
 		while (cursor.moveToNext()) {
@@ -771,11 +828,12 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void setLabel(long bookId, String label) {
 		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES (?)", new Object[] { label });
 		final SQLiteStatement statement = get(
-			"INSERT OR IGNORE INTO BookLabel(label_id,book_id)" +
-			" SELECT label_id,? FROM Labels WHERE name=?"
+			"INSERT OR IGNORE INTO BookLabel(label_id,book_id,timestamp)" +
+			" SELECT label_id,?,? FROM Labels WHERE name=?"
 		);
 		statement.bindLong(1, bookId);
-		statement.bindString(2, label);
+		statement.bindLong(2, System.currentTimeMillis());
+		statement.bindString(3, label);
 		statement.execute();
 	}
 
@@ -805,8 +863,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected List<Bookmark> loadBookmarks(BookmarkQuery query) {
 		final LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		final StringBuilder sql = new StringBuilder("SELECT")
-			.append(" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,")
-			.append("bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,")
+			.append(" bm.bookmark_id,bm.uid,bm.version_uid,")
+			.append("bm.book_id,b.title,bm.bookmark_text,bm.original_text,")
+			.append("bm.creation_time,bm.modification_time,bm.access_time,")
 			.append("bm.model_id,bm.paragraph,bm.word,bm.char,")
 			.append("bm.end_paragraph,bm.end_word,bm.end_character,")
 			.append("bm.style_id")
@@ -824,22 +883,24 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
 				cursor.getLong(0),
-				cursor.getLong(1),
+				cursor.getString(1),
 				cursor.getString(2),
-				cursor.getString(3),
-				SQLiteUtil.getDate(cursor, 4),
-				SQLiteUtil.getDate(cursor, 5),
-				SQLiteUtil.getDate(cursor, 6),
-				(int)cursor.getLong(7),
-				cursor.getString(8),
-				(int)cursor.getLong(9),
-				(int)cursor.getLong(10),
+				cursor.getLong(3),
+				cursor.getString(4),
+				cursor.getString(5),
+				cursor.isNull(6) ? null : cursor.getString(6),
+				cursor.getLong(7),
+				cursor.isNull(8) ? null : cursor.getLong(8),
+				cursor.isNull(9) ? null : cursor.getLong(9),
+				cursor.getString(10),
 				(int)cursor.getLong(11),
 				(int)cursor.getLong(12),
-				cursor.isNull(13) ? -1 : (int)cursor.getLong(13),
-				cursor.isNull(14) ? -1 : (int)cursor.getLong(14),
+				(int)cursor.getLong(13),
+				(int)cursor.getLong(14),
+				cursor.isNull(15) ? -1 : (int)cursor.getLong(15),
+				cursor.isNull(16) ? -1 : (int)cursor.getLong(16),
 				query.Visible,
-				(int)cursor.getLong(15)
+				(int)cursor.getLong(17)
 			));
 		}
 		cursor.close();
@@ -849,14 +910,18 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected List<HighlightingStyle> loadStyles() {
 		final LinkedList<HighlightingStyle> list = new LinkedList<HighlightingStyle>();
-		final String sql = "SELECT style_id,name,bg_color,fg_color FROM HighlightingStyle";
+		final String sql = "SELECT style_id,timestamp,name,bg_color,fg_color FROM HighlightingStyle";
 		final Cursor cursor = myDatabase.rawQuery(sql, null);
 		while (cursor.moveToNext()) {
+			final String name = cursor.getString(2);
+			final int bgColor = (int)cursor.getLong(3);
+			final int fgColor = (int)cursor.getLong(4);
 			list.add(createStyle(
 				(int)cursor.getLong(0),
-				cursor.getString(1),
-				(int)cursor.getLong(2),
-				(int)cursor.getLong(3)
+				cursor.getLong(1),
+				name.length() > 0 ? name : null,
+				bgColor != -1 ? new ZLColor(bgColor) : null,
+				fgColor != -1 ? new ZLColor(fgColor) : null
 			));
 		}
 		cursor.close();
@@ -865,74 +930,127 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected void saveStyle(HighlightingStyle style) {
 		final SQLiteStatement statement = get(
-			"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color,fg_color) VALUES (?,?,?,?)"
+			"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color,fg_color,timestamp) VALUES (?,?,?,?,?)"
 		);
 		statement.bindLong(1, style.Id);
-		final String name = style.getName();
+		final String name = style.getNameOrNull();
 		statement.bindString(2, name != null ? name : "");
 		final ZLColor bgColor = style.getBackgroundColor();
 		statement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
 		final ZLColor fgColor = style.getForegroundColor();
 		statement.bindLong(4, fgColor != null ? fgColor.intValue() : -1);
+		statement.bindLong(5, System.currentTimeMillis());
 		statement.execute();
+	}
+
+	// this is workaround for working with old format plugins;
+	// it should never go via the third way with new versions
+	private String uid(Bookmark bookmark) {
+		if (bookmark.Uid != null) {
+			return bookmark.Uid;
+		}
+		if (bookmark.getId() == -1) {
+			return UUID.randomUUID().toString();
+		}
+
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT uid FROM Bookmarks WHERE bookmark_id = " + bookmark.getId(), null
+		);
+		try {
+			if (cursor.moveToNext()) {
+				return cursor.getString(0);
+			}
+		} finally {
+			cursor.close();
+		}
+
+		return UUID.randomUUID().toString();
 	}
 
 	@Override
 	protected long saveBookmark(Bookmark bookmark) {
-		SQLiteStatement statement;
-		if (bookmark.getId() == -1) {
+		final SQLiteStatement statement;
+		final long bookmarkId = bookmark.getId();
+
+		if (bookmarkId == -1) {
 			statement = get(
-				"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+				"INSERT INTO Bookmarks (uid,version_uid,book_id,bookmark_text,original_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 			);
 		} else {
 			statement = get(
-				"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ?, style_id = ? WHERE bookmark_id = ?"
+				"UPDATE Bookmarks SET uid=?,version_uid=?,book_id=?,bookmark_text=?,original_text=?,creation_time=?,modification_time=?,access_time=?,model_id=?,paragraph=?,word=?,char=?,end_paragraph=?,end_word=?,end_character=?,visible=?,style_id=? WHERE bookmark_id=?"
 			);
 		}
 
-		statement.bindLong(1, bookmark.getBookId());
-		statement.bindString(2, bookmark.getText());
-		SQLiteUtil.bindDate(statement, 3, bookmark.getDate(Bookmark.DateType.Creation));
-		SQLiteUtil.bindDate(statement, 4, bookmark.getDate(Bookmark.DateType.Modification));
-		SQLiteUtil.bindDate(statement, 5, bookmark.getDate(Bookmark.DateType.Access));
-		statement.bindLong(6, bookmark.getAccessCount());
-		SQLiteUtil.bindString(statement, 7, bookmark.ModelId);
-		statement.bindLong(8, bookmark.ParagraphIndex);
-		statement.bindLong(9, bookmark.ElementIndex);
-		statement.bindLong(10, bookmark.CharIndex);
+		int fieldCount = 0;
+		SQLiteUtil.bindString(statement, ++fieldCount, uid(bookmark));
+		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getVersionUid());
+		statement.bindLong(++fieldCount, bookmark.BookId);
+		statement.bindString(++fieldCount, bookmark.getText());
+		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getOriginalText());
+		SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Creation));
+		SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Modification));
+		SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Access));
+		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.ModelId);
+		statement.bindLong(++fieldCount, bookmark.ParagraphIndex);
+		statement.bindLong(++fieldCount, bookmark.ElementIndex);
+		statement.bindLong(++fieldCount, bookmark.CharIndex);
 		final ZLTextPosition end = bookmark.getEnd();
 		if (end != null) {
-			statement.bindLong(11, end.getParagraphIndex());
-			statement.bindLong(12, end.getElementIndex());
-			statement.bindLong(13, end.getCharIndex());
+			statement.bindLong(++fieldCount, end.getParagraphIndex());
+			statement.bindLong(++fieldCount, end.getElementIndex());
+			statement.bindLong(++fieldCount, end.getCharIndex());
 		} else {
-			statement.bindLong(11, bookmark.getLength());
-			statement.bindNull(12);
-			statement.bindNull(13);
+			statement.bindLong(++fieldCount, bookmark.getLength());
+			statement.bindNull(++fieldCount);
+			statement.bindNull(++fieldCount);
 		}
-		statement.bindLong(14, bookmark.IsVisible ? 1 : 0);
-		statement.bindLong(15, bookmark.getStyleId());
+		statement.bindLong(++fieldCount, bookmark.IsVisible ? 1 : 0);
+		statement.bindLong(++fieldCount, bookmark.getStyleId());
 
-		if (bookmark.getId() == -1) {
+		if (bookmarkId == -1) {
 			return statement.executeInsert();
 		} else {
-			final long id = bookmark.getId();
-			statement.bindLong(16, id);
+			statement.bindLong(++fieldCount, bookmarkId);
 			statement.execute();
-			return id;
+			return bookmarkId;
 		}
 	}
 
 	@Override
 	protected void deleteBookmark(Bookmark bookmark) {
-		final SQLiteStatement statement = get("DELETE FROM Bookmarks WHERE bookmark_id=?");
-		statement.bindLong(1, bookmark.getId());
+		final String uuid = uid(bookmark);
+		SQLiteStatement statement = get("DELETE FROM Bookmarks WHERE uid=?");
+		statement.bindString(1, uuid);
 		statement.execute();
+		statement = get("INSERT OR IGNORE INTO DeletedBookmarkIds (uid) VALUES (?)");
+		statement.bindString(1, uuid);
+		statement.execute();
+	}
+
+	@Override
+	protected List<String> deletedBookmarkUids() {
+		final Cursor cursor = myDatabase.rawQuery("SELECT uid FROM DeletedBookmarkIds", null);
+		final LinkedList<String> uids = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			uids.add(cursor.getString(0));
+		}
+		cursor.close();
+		return uids;
+	}
+
+	@Override
+	protected void purgeBookmarks(List<String> uids) {
+		final SQLiteStatement statement = get("DELETE FROM DeletedBookmarkIds WHERE uid=?");
+		for (String u : uids) {
+			statement.bindString(1, u);
+			statement.execute();
+		}
 	}
 
 	protected ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
 		ZLTextFixedPosition.WithTimestamp position = null;
-		Cursor cursor = myDatabase.rawQuery(
+		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT paragraph,word,char,timestamp FROM BookState WHERE book_id = " + bookId, null
 		);
 		if (cursor.moveToNext()) {
@@ -1546,6 +1664,123 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables30() {
 		myDatabase.execSQL("DROP TABLE IF EXISTS RecentBooks");
+	}
+
+	private void updateTables31() {
+		myDatabase.execSQL("ALTER TABLE BookLabel ADD COLUMN timestamp INTEGER NOT NULL DEFAULT -1");
+		myDatabase.execSQL("ALTER TABLE BookLabel ADD COLUMN comment TEXT DEFAULT NULL");
+	}
+
+	private void updateTables32() {
+		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Options(name TEXT PRIMARY KEY, value TEXT)");
+	}
+
+	private void updateTables33() {
+		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN uid TEXT(36)");
+		final Cursor cursor = myDatabase.rawQuery("SELECT bookmark_id FROM Bookmarks", null);
+		final SQLiteStatement statement = get("UPDATE Bookmarks SET uid=? WHERE bookmark_id=?");
+		while (cursor.moveToNext()) {
+			statement.bindString(1, UUID.randomUUID().toString());
+			statement.bindLong(2, cursor.getLong(0));
+			statement.execute();
+		}
+		cursor.close();
+
+		myDatabase.execSQL("ALTER TABLE Bookmarks RENAME TO Bookmarks_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS Bookmarks(" +
+				"bookmark_id INTEGER PRIMARY KEY," +
+				"uid TEXT(36) NOT NULL UNIQUE," +
+				"version_uid TEXT(36)," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"visible INTEGER DEFAULT 1," +
+				"style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1," +
+				"bookmark_text TEXT NOT NULL," +
+				"creation_time INTEGER NOT NULL," +
+				"modification_time INTEGER," +
+				"access_time INTEGER," +
+				"model_id TEXT," +
+				"paragraph INTEGER NOT NULL," +
+				"word INTEGER NOT NULL," +
+				"char INTEGER NOT NULL," +
+				"end_paragraph INTEGER," +
+				"end_word INTEGER," +
+				"end_character INTEGER)"
+		);
+		final String fields = "bookmark_id,uid,book_id,visible,style_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character";
+		myDatabase.execSQL("INSERT INTO Bookmarks (" + fields + ") SELECT " + fields + " FROM Bookmarks_Obsolete");
+		myDatabase.execSQL("DROP TABLE IF EXISTS Bookmarks_Obsolete");
+	}
+
+	private void updateTables34() {
+		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS DeletedBookmarkIds(uid TEXT(36) PRIMARY KEY)");
+	}
+
+	private void updateTables35() {
+		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN original_text TEXT DEFAULT NULL");
+	}
+
+	private int styleBg(int styleId) {
+		switch (styleId) {
+			case 1:
+				return 0x888a85;
+			case 2:
+				return 0xf57900;
+			case 3:
+				return 0x729fcf;
+			default:
+				return 0;
+		}
+	}
+
+	private void updateTables36() {
+		myDatabase.execSQL("ALTER TABLE HighlightingStyle ADD COLUMN timestamp INTEGER DEFAULT 0");
+
+		final String sql = "SELECT style_id,name,bg_color FROM HighlightingStyle";
+		final Cursor cursor = myDatabase.rawQuery(sql, null);
+		final SQLiteStatement statement =
+			get("UPDATE HighlightingStyle SET timestamp=? WHERE style_id=?");
+		while (cursor.moveToNext()) {
+			final int styleId = (int)cursor.getLong(0);
+			if ((!cursor.isNull(1) && !"".equals(cursor.getString(1))) ||
+					styleBg(styleId) != (int)cursor.getLong(2)) {
+				statement.bindLong(1, System.currentTimeMillis());
+				statement.bindLong(2, styleId);
+				statement.execute();
+			}
+		}
+		cursor.close();
+	}
+
+	private void updateTables37() {
+		myDatabase.execSQL("ALTER TABLE Bookmarks RENAME TO Bookmarks_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS Bookmarks(" +
+				"bookmark_id INTEGER PRIMARY KEY," +
+				"uid TEXT(36) NOT NULL UNIQUE," +
+				"version_uid TEXT(36)," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"visible INTEGER DEFAULT 1," +
+				"style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1," +
+				"bookmark_text TEXT NOT NULL," +
+				"creation_time INTEGER NOT NULL," +
+				"modification_time INTEGER," +
+				"access_time INTEGER," +
+				"model_id TEXT," +
+				"paragraph INTEGER NOT NULL," +
+				"word INTEGER NOT NULL," +
+				"char INTEGER NOT NULL," +
+				"end_paragraph INTEGER," +
+				"end_word INTEGER," +
+				"end_character INTEGER)"
+		);
+		final String fields = "bookmark_id,uid,version_uid,book_id,visible,style_id,bookmark_text,creation_time,modification_time,access_time,model_id,paragraph,word,char,end_paragraph,end_word,end_character";
+		myDatabase.execSQL("INSERT INTO Bookmarks (" + fields + ") SELECT " + fields + " FROM Bookmarks_Obsolete");
+		myDatabase.execSQL("DROP TABLE IF EXISTS Bookmarks_Obsolete");
+	}
+
+	private void updateTables38() {
+		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN original_text TEXT DEFAULT NULL");
 	}
 
 	private SQLiteStatement get(String sql) {

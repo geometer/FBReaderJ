@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,10 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-public class ZLTextElement {
-	final static ZLTextElement HSpace = new ZLTextElement();
-	final static ZLTextElement AfterParagraph = new ZLTextElement();
-	final static ZLTextElement Indent = new ZLTextElement();
-	final static ZLTextElement StyleClose = new ZLTextElement();
+public abstract class ZLTextElement {
+	public final static ZLTextElement HSpace = new ZLTextElement() {};
+	public final static ZLTextElement NBSpace = new ZLTextElement() {};
+	public final static ZLTextElement AfterParagraph = new ZLTextElement() {};
+	public final static ZLTextElement Indent = new ZLTextElement() {};
+	public final static ZLTextElement StyleClose = new ZLTextElement() {};
 }

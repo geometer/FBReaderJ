@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 public class ShareBookAction extends FBAndroidAction {
@@ -30,7 +31,7 @@ public class ShareBookAction extends FBAndroidAction {
 	@Override
 	public boolean isVisible() {
 		final Book book = Reader.getCurrentBook();
-		return book != null && book.File.getPhysicalFile() != null;
+		return book != null && BookUtil.fileByBook(book).getPhysicalFile() != null;
 	}
 
 	@Override

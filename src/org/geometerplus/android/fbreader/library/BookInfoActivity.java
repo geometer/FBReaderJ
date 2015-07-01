@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
@@ -46,6 +47,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
@@ -54,7 +56,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
-public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener, IBookCollection.Listener {
+public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener, IBookCollection.Listener<Book> {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String FROM_READING_MODE_KEY = "fbreader.from.reading.mode";
@@ -76,7 +78,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 
 		final Intent intent = getIntent();
 		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myBook = FBReaderIntents.getBookExtra(intent);
+		myBook = FBReaderIntents.getBookExtra(intent, myCollection);
 
 		final ActionBar bar = getActionBar();
 		if (bar != null) {
@@ -92,8 +94,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		OrientationUtil.setOrientation(this, getIntent());
 
 		if (myBook != null) {
-			// we do force language & encoding detection
-			myBook.getEncoding();
+			// we force language & encoding detection
+			BookUtil.getEncoding(myBook);
 
 			setupCover(myBook);
 			setupBookInfo(myBook);
@@ -148,7 +150,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		final ZLImage image = BookUtil.getCover(book);
+		final ZLImage image = CoverUtil.getCover(book, PluginCollection.Instance());
 
 		if (image == null) {
 			return;
@@ -253,11 +255,12 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private void setupFileInfo(Book book) {
 		((TextView)findViewById(R.id.file_info_title)).setText(myResource.getResource("fileInfo").getValue());
 
-		setupInfoPair(R.id.file_name, "name", book.File.getPath());
+		setupInfoPair(R.id.file_name, "name", book.getPath());
 		if (ENABLE_EXTENDED_FILE_INFO) {
-			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
+			final ZLFile bookFile = BookUtil.fileByBook(book);
+			setupInfoPair(R.id.file_type, "type", bookFile.getExtension());
 
-			final ZLPhysicalFile physFile = book.File.getPhysicalFile();
+			final ZLPhysicalFile physFile = bookFile.getPhysicalFile();
 			final File file = physFile == null ? null : physFile.javaFile();
 			if (file != null && file.exists() && file.isFile()) {
 				setupInfoPair(R.id.file_size, "size", formatSize(file.length()));
@@ -310,7 +313,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		addMenuItem(menu, OPEN_BOOK, "openBook", true);
-		addMenuItem(menu, EDIT_INFO, "editInfo", true);
+		addMenuItem(menu, EDIT_INFO, "edit", true);
 		addMenuItem(menu, SHARE_BOOK, "shareBook", false);
 		addMenuItem(menu, RELOAD_INFO, "reloadInfo", false);
 		if (myBook.labels().contains(Book.FAVORITE_LABEL)) {
@@ -359,7 +362,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				return true;
 			case RELOAD_INFO:
 				if (myBook != null) {
-					myBook.reloadInfoFromFile();
+					BookUtil.reloadInfoFromFile(myBook);
 					setupBookInfo(myBook);
 					saveBook();
 				}
@@ -398,7 +401,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	}
 
 	public void onBookEvent(BookEvent event, Book book) {
-		if (event == BookEvent.Updated && book.equals(myBook)) {
+		if (event == BookEvent.Updated && myCollection.sameBook(book, myBook)) {
 			myBook.updateFrom(book);
 			setupBookInfo(book);
 			myDontReloadBook = false;

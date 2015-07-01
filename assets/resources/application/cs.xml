@@ -23,6 +23,15 @@
 		<node name="favorites" value="Oblíbené">
 			<node name="summary" value="Mé oblíbené knihy"/>
 		</node>
+		<node name="chooseView" value="Zvolte zobrazení"/>
+		<node name="wideCardsView" value="Široké karty"/>
+		<node name="smallCardsView" value="Malé karty"/>
+		<node name="tinyCardsView" value="Malinké karty"/>
+		<node name="coversView" value="Obálky"/>
+		<node name="oldView" value="Clasické"/>
+		<node name="bookshelfView" value="Zobrazení Poličky knih">
+			<node name="summary" value="Moderní (styl Material designu) zobrazení knihovny"/>
+		</node>
 		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>
@@ -67,7 +76,6 @@
 		<node name="deleteAll" value="Odstranit vše"/>
 		<node name="uploadAgain" value="Znovu nahrát"/>
 		<node name="tryAgain" value="Zkusit znovu"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
 		<node name="sync" value="Síťová knihovna FBReaderu®">
@@ -228,11 +236,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Kniha byla stažena"/>
-		<node name="tickerError" value="Chyba stahování knihy"/>
-		<node name="contentSuccess" value="Stahování dokončeno"/>
-		<node name="contentError" value="Stahování selhalo"/>
-		<node name="downloadingStarted" value="Stahování knihy bylo zahájeno"/>
+		<node name="downloadCompleteTicker" value="Kniha byla stažena"/>
+		<node name="downloadFailedTicker" value="Chyba stahování knihy"/>
+		<node name="downloadComplete" value="Stahování dokončeno"/>
+		<node name="downloadFailed" value="Stahování selhalo"/>
+		<node name="downloadStarted" value="Stahování knihy bylo zahájeno"/>
 		<node name="alreadyDownloading" value="Kniha se již stahuje"/>
 		<node name="cannotCreateDirectory" value="Nelze vytvořit adresář %s"/>
 		<node name="cannotCreateFile" value="Nelze vytvořit soubor %s"/>
@@ -245,14 +253,22 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Tato kniha"/>
 		<node name="allBooks" value="Všechny knihy"/>
-		<node name="found" value="Nalezené"/>
 		<node name="new" value="Nová záložka"/>
-		<node name="open" value="Otevřít"/>
-		<node name="edit" value="Upravit záložku"/>
-		<node name="delete" value="Odstranit záložku"/>
-		<node name="menu">
-			<node name="search" value="Hledat"/>
-		</node>
+		<node name="openBook" value="Otevřít"/>
+		<node name="editBookmark" value="Upravit záložku"/>
+		<node name="deleteBookmark" value="Odstranit záložku"/>
+		<node name="search" value="Hledat"/>
+	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text"/>
+		<node name="style" value="Styl"/>
+		<node name="delete" value="Odstranit"/>
+		<node name="deleteBookmark" value="Odstranit záložku"/>
+		<node name="saveText" value="Uložit text"/>
+		<node name="editStyle" value="Upravit styl…"/>
+	</node>
+	<node name="footnoteToast">
+		<node name="more" value="Více"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Otevřít knihovnu"/>
@@ -264,10 +280,6 @@
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
 	<node name="style" value="Styl %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Upravit styl…"/>
-		<node name="deleteBookmark" value="Odstranit záložku"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Název stylu"/>
 		<node name="invisible" value="Skrytý">
@@ -281,11 +293,10 @@
 		<node name="openInDictionary" value="Otevřít ve slovníku"/>
 		<node name="quoteFrom" value="Citovat z %s"/>
 		<node name="textInBuffer" value="Zkopírováno do schránky:&#10;%s"/>
-		<node name="bookmarkCreated" value="Vytvořena záložka:&#10;%s"/>
 		<node name="clearSelection" value="Vymazat"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Úvodní obrazovka"/>
@@ -338,6 +349,9 @@
 	<node name="Preferences">
 		<node name="sync" value="Synchronizace">
 			<node name="summary" value="Nastavení síťové knihovny"/>
+			<node name="site" value="Přečtěte si více o synchronizaci">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
+			</node>
 			<node name="enable" value="Povolit synchronizaci">
 				<node name="summaryOn" value="Synchronizovat mou knihovnu se serverem síťové knihovny FBReaderu"/>
 				<node name="summaryOnWithAccount" value="Synchronizovat mou knihovnu jako %s"/>
@@ -610,6 +624,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="toast" value="Automaticky otevíraná okna">
+			<node name="summary" value="Okna poznámek pod čarou atd."/>
+			<node name="showFootnoteToast" value="Zobrazit propojený text v automaticky otevíraném okně">
+				<node name="never" value="Nikdy"/>
+				<node name="footnotesOnly" value="Pouze pro poznámky pod čarou"/>
+				<node name="footnotesAndSuperscripts" value="Pro poznámky pod čarou a odkazy horních indexů"/>
+				<node name="allInternalLinks" value="Pro všechny vnitřní odkazy"/>
+			</node>
+			<node name="footnoteToastDuration" value="Jak dlouho zobrazovat automaticky otevírané okno odkazu"/>
+			<node name="fontSizePercent" value="Velikost písma (procenta z běžného textu)"/>
+		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Použít/ignorovat hodnoty definované v CSS"/>
 			<node name="fontFamily" value="Rodina písem">
@@ -708,8 +733,8 @@
 			<node name="summary" value="Jak posouvat text"/>
 			<node name="fingerScrolling" value="Posouvání dotykem displeje">
 				<node name="byTap" value="Posouvat stránky klepnutím prstem"/>
-				<node name="byFlick" value="Posouvat stránky rychlým pohybem prstem"/>
-				<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstem"/>
+				<node name="byFlick" value="Posouvat stránky rychlým pohybem prstu"/>
+				<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstu"/>
 			</node>
 			<node name="enableDoubleTapDetection" value="Rozpoznání poklepání">
 				<node name="summaryOn" value="Poklepání spustí navigaci nebo menu"/>
@@ -749,14 +774,19 @@
 				<node name="custom" value="Vlastní…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Slovník">
-			<node name="summary" value="Nastavení slovníku"/>
-			<node name="dictionary" value="Slovník"/>
-			<node name="translator" value="Překladač"/>
+		<node name="dictionary" value="Slovník a překladač">
+			<node name="summary" value="Nastavení překladu"/>
+			<node name="dictionary" value="Vyhledat jedno slovo v"/>
+			<node name="translator" value="Přeložit fráze pomocí"/>
+			<node name="translationToastDuration" value="Jak dlouho zobrazovat automaticky otevírané okno překladu"/>
+			<node name="errorToastDuration" value="Jak dlouho zobrazovat chybovou zprávu"/>
+			<node name="sourceLanguage" value="Přeložit z">
+				<node name="detect" value="Automaticky rozpoznat jazyk"/>
+			</node>
 			<node name="targetLanguage" value="Přeložit do">
 				<node name="any" value="všechny jazyky"/>
 			</node>
-			<node name="tappingAction" value="Dlouhé klepnutí">
+			<node name="longTapAction" value="Dlouhé klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
 				<node name="startSelecting" value="Dlouhé klepnutí spustí vybírání"/>
@@ -770,7 +800,7 @@
 		<node name="images" value="Obrázky">
 			<node name="summary" value="Možnosti zobrazení obrázku"/>
 			<node name="backgroundColor" value="Barva pozadí pro zobrazení obrázku"/>
-			<node name="tappingAction" value="Akce dlouhého klepnutí">
+			<node name="longTapAction" value="Akce dlouhého klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
 				<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
@@ -826,7 +856,7 @@
 			<node name="summary" value="Informace o verzi, kontakty"/>
 			<node name="version" value="Verze"/>
 			<node name="site" value="Navštivte naši webovou stránku">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="Pošlete nám e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -853,6 +883,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="Ne, díky"/>
 			<node name="install" value="Instalovat"/>
 			<node name="update" value="Aktualizovat"/>
 			<node name="skip" value="Přeskočit"/>
@@ -863,13 +894,13 @@
 			<node name="editUrl" value="Upravit adresu"/>
 			<node name="tryAgain" value="Zkusit znovu"/>
 			<node name="openBook" value="Číst"/>
-			<node name="editInfo" value="Upravit"/>
+			<node name="edit" value="Upravit"/>
 			<node name="reloadInfo" value="Znovu načíst"/>
 			<node name="shareBook" value="Sdílet"/>
 			<node name="topup" value="Doplnit účet"/>
 			<node name="pay" value="Zaplatit"/>
 			<node name="refresh" value="Aktualizovat"/>
-			<node name="authorise" value="Authorisovat"/>
+			<node name="authorise" value="Autorizovat"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
 			<node name="sendReport" value="Odeslat zprávu"/>
 			<node name="addToFavorites" value="Přidat do oblíbených"/>
@@ -884,6 +915,11 @@
 		</node>
 		<node name="backgroundAuthentication">
 			<node name="message" value="Je požadováno ověření"/>
+		</node>
+		<node name="missingDictionary" value="Chybějící %s">
+			<node name="install" value="Nainstalovat %s"/>
+			<node name="configure" value="Konfigurovat překlad"/>
+			<node name="skip" value="Přeskočit"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalovat slovník"/>
@@ -920,6 +956,7 @@
 			<node name="passwordSent" value="Informace o vašem účtu byly odeslány na %s. Zkontrolujte svou poštovní schránku."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Probíhá překlad…"/>
 			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
 			<node name="downloadingBook" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte…"/>
@@ -937,14 +974,14 @@
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte…"/>
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte…"/>
 			<node name="initDRMEngine" value="Inicializace modulu DRM. Čekejte…"/>
-			<node name="acquireLicense" value="Načítání licence. Čekejte…"/>
+			<node name="acquireLicence" value="Načítání licence. Čekejte…"/>
 			<node name="registerUser" value="Registrace nového účtu. Čekejte..."/>
 			<node name="autoSignIn" value="Přihlašování. Čekejte…"/>
 			<node name="recoverPassword" value="Obnovování hesla. Čekejte…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
-			<node name="purchaseNotEnoughMoney" value="Nemáte dost poněz"/>
+			<node name="purchaseNotEnoughMoney" value="Nemáte dost peněz"/>
 			<node name="purchaseMissingBook" value="Chybějící kniha"/>
 			<node name="purchaseAlreadyPurchased" value="Již zakoupena"/>
 			<node name="bookNotPurchased" value="Kniha nebyla zakoupena"/>
@@ -1039,6 +1076,14 @@
 		<node name="missingPlugin">
 			<node name="title" value="Doplněk pro soubory %s není nainstalován. Nainstalovat ho nyní?"/>
 		</node>
+		<node name="licensing">
+			<node name="title" value="%s není licencovaný"/>
+			<node name="message" value="Zakoupit nyní na Google Play?"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Nelze ověřit licenci %s"/>
+			<node name="message" value="Zkusit znovu?"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Chyba %s v nativním kódu během čtení '%s'"/>
@@ -1089,7 +1134,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Instalovat doplňky">
 		<node name="noMorePlugins" value="Bohužel, právě nemáme žádné nové doplňky"/>
@@ -1136,4 +1181,21 @@
 		<node name="length" value="Např.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="Např.: 125%%"/>
 	</node>
+	<node name="duration">
+		<node name="duration1" value="1 sekundu"/>
+		<node name="duration3" value="3 sekundy"/>
+		<node name="duration5" value="5 sekund"/>
+		<node name="duration10" value="10 sekund"/>
+		<node name="duration20" value="20 sekund"/>
+		<node name="duration40" value="40 sekund"/>
+		<node name="duration60" value="1 minutu"/>
+		<node name="duration300" value="5 minut"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="neznámá chyba"/>
+		<node name="noArticle" value="nenalezen žádný článek pro “%s”"/>
+		<node name="cannotOpenDictionary" value="nelze otevřít slovník"/>
+		<node name="noDictionarySelected" value="není vybrán slovník; opravte to v nastavení Dictan"/>
+	</node>
+	<node name="premium" value="FBReader prémiová edice"/>
 </resources>

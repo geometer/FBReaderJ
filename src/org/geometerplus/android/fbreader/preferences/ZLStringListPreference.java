@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,8 +52,20 @@ abstract class ZLStringListPreference extends ListPreference {
 
 	protected final void setLists(String[] values, String[] texts) {
 		assert(values.length == texts.length);
-		setEntries(texts);
+
 		setEntryValues(values);
+
+		// It appears that setEntries() DOES NOT perform any formatting on the char sequences
+		// http://developer.android.com/reference/android/preference/ListPreference.html#setEntries(java.lang.CharSequence[])
+		final String[] entries = new String[texts.length];
+		for (int i = 0; i < texts.length; ++i) {
+			try {
+				entries[i] = String.format(texts[i]);
+			} catch (Exception e) {
+				entries[i] = texts[i];
+			}
+		}
+		setEntries(entries);
 	}
 
 	protected final boolean setInitialValue(String value) {
@@ -70,15 +82,12 @@ abstract class ZLStringListPreference extends ListPreference {
 			}
 		}
 		setValueIndex(index);
-		setSummary(getEntry());
 		return found;
 	}
 
 	@Override
-	protected void onDialogClosed(boolean result) {
-		super.onDialogClosed(result);
-		if (result) {
-			setSummary(getEntry());
-		}
+	public CharSequence getSummary() {
+		// standard getSummary() calls extra String.format(), that causes exceptions in some cases
+		return getEntry();
 	}
 }

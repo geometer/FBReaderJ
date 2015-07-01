@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,8 +67,9 @@ public interface ZLTextParagraph {
 		byte BEFORE_SKIP_PARAGRAPH = 3;
 		byte AFTER_SKIP_PARAGRAPH = 4;
 		byte END_OF_SECTION_PARAGRAPH = 5;
-		byte END_OF_TEXT_PARAGRAPH = 6;
-		byte ENCRYPTED_SECTION_PARAGRAPH = 7;
+		byte PSEUDO_END_OF_SECTION_PARAGRAPH = 6;
+		byte END_OF_TEXT_PARAGRAPH = 7;
+		byte ENCRYPTED_SECTION_PARAGRAPH = 8;
 	};
 
 	byte getKind();

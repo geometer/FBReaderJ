@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,16 +28,19 @@ import org.xml.sax.helpers.DefaultHandler;
 import android.util.Xml;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 class XMLSerializer extends AbstractSerializer {
+	private StringBuilder builder() {
+		return new StringBuilder("<?xml version='1.1' encoding='UTF-8'?>");
+	}
+
 	@Override
 	public String serialize(BookQuery query) {
-		final StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = builder();
 		appendTag(buffer, "query", false,
 			"limit", String.valueOf(query.Limit),
 			"page", String.valueOf(query.Page)
@@ -136,7 +139,7 @@ class XMLSerializer extends AbstractSerializer {
 
 	@Override
 	public String serialize(BookmarkQuery query) {
-		final StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = builder();
 		appendTag(buffer, "query", false,
 			"visible", String.valueOf(query.Visible),
 			"limit", String.valueOf(query.Limit),
@@ -150,9 +153,9 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
-	public BookmarkQuery deserializeBookmarkQuery(String xml) {
+	public BookmarkQuery deserializeBookmarkQuery(String xml, BookCreator<? extends AbstractBook> creator) {
 		try {
-			final BookmarkQueryDeserializer deserializer = new BookmarkQueryDeserializer();
+			final BookmarkQueryDeserializer deserializer = new BookmarkQueryDeserializer(creator);
 			Xml.parse(xml, deserializer);
 			return deserializer.getQuery();
 		} catch (SAXException e) {
@@ -163,13 +166,13 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
-	public String serialize(Book book) {
-		final StringBuilder buffer = new StringBuilder();
+	public String serialize(AbstractBook book) {
+		final StringBuilder buffer = builder();
 		serialize(buffer, book);
 		return buffer.toString();
 	}
 
-	private void serialize(StringBuilder buffer, Book book) {
+	private void serialize(StringBuilder buffer, AbstractBook book) {
 		appendTag(
 			buffer, "entry", false,
 			"xmlns:dc", XMLNamespaces.DublinCore,
@@ -229,7 +232,7 @@ class XMLSerializer extends AbstractSerializer {
 
 		appendTag(
 			buffer, "link", true,
-			"href", book.File.getUrl(),
+			"href", "file://" + book.getPath(),
 			// TODO: real book mimetype
 			"type", "application/epub+zip",
 			"rel", "http://opds-spec.org/acquisition"
@@ -248,9 +251,9 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
-	public Book deserializeBook(String xml) {
+	public <B extends AbstractBook> B deserializeBook(String xml, BookCreator<B> creator) {
 		try {
-			final BookDeserializer deserializer = new BookDeserializer();
+			final BookDeserializer<B> deserializer = new BookDeserializer<B>(creator);
 			Xml.parse(xml, deserializer);
 			return deserializer.getBook();
 		} catch (SAXException e) {
@@ -262,24 +265,30 @@ class XMLSerializer extends AbstractSerializer {
 
 	@Override
 	public String serialize(Bookmark bookmark) {
-		final StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = builder();
 		appendTag(
 			buffer, "bookmark", false,
 			"id", String.valueOf(bookmark.getId()),
+			"uid", bookmark.Uid,
+			"versionUid", bookmark.getVersionUid(),
 			"visible", String.valueOf(bookmark.IsVisible)
 		);
 		appendTag(
 			buffer, "book", true,
-			"id", String.valueOf(bookmark.getBookId()),
-			"title", bookmark.getBookTitle()
+			"id", String.valueOf(bookmark.BookId),
+			"title", bookmark.BookTitle
 		);
 		appendTagWithContent(buffer, "text", bookmark.getText());
+		appendTagWithContent(buffer, "original-text", bookmark.getOriginalText());
 		appendTag(
 			buffer, "history", true,
-			"date-creation", formatDate(bookmark.getDate(Bookmark.DateType.Creation)),
-			"date-modification", formatDate(bookmark.getDate(Bookmark.DateType.Modification)),
-			"date-access", formatDate(bookmark.getDate(Bookmark.DateType.Access)),
-			"access-count", String.valueOf(bookmark.getAccessCount())
+			"ts-creation", timestampByDate(bookmark.getTimestamp(Bookmark.DateType.Creation)),
+			"ts-modification", timestampByDate(bookmark.getTimestamp(Bookmark.DateType.Modification)),
+			"ts-access", timestampByDate(bookmark.getTimestamp(Bookmark.DateType.Access)),
+			// obsolete, old format plugins compatibility
+			"date-creation", formatDate(bookmark.getTimestamp(Bookmark.DateType.Creation)),
+			"date-modification", formatDate(bookmark.getTimestamp(Bookmark.DateType.Modification)),
+			"date-access", formatDate(bookmark.getTimestamp(Bookmark.DateType.Access))
 		);
 		appendTag(
 			buffer, "start", true,
@@ -325,12 +334,13 @@ class XMLSerializer extends AbstractSerializer {
 
 	@Override
 	public String serialize(HighlightingStyle style) {
-		final StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = builder();
 		final ZLColor bgColor = style.getBackgroundColor();
 		final ZLColor fgColor = style.getForegroundColor();
 		appendTag(buffer, "style", true,
 			"id", String.valueOf(style.Id),
-			"name", style.getName(),
+			"timestamp", String.valueOf(style.LastUpdateTimestamp),
+			"name", style.getNameOrNull(),
 			"bg-color", bgColor != null ? String.valueOf(bgColor.intValue()) : "-1",
 			"fg-color", fgColor != null ? String.valueOf(fgColor.intValue()) : "-1"
 		);
@@ -350,20 +360,30 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 
-	private static DateFormat ourDateFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, Locale.ENGLISH);
-	private static String formatDate(Date date) {
-		return date != null ? ourDateFormatter.format(date) : null;
+	private static String timestampByDate(Long date) {
+		return date != null ? String.valueOf(date) : null;
 	}
-	private static Date parseDate(String str) throws SAXException {
+	private static Date dateByTimestamp(String str) throws SAXException {
 		try {
-			return str != null ? ourDateFormatter.parse(str) : null;
+			return str != null ? new Date(Long.valueOf(str)) : null;
 		} catch (Exception e) {
 			throw new SAXException("XML parsing error", e);
 		}
 	}
-	private static Date parseDateSafe(String str) throws SAXException {
+	private static DateFormat ourDateFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, Locale.ENGLISH);
+	private static String formatDate(Long timestamp) {
+		return timestamp != null ? ourDateFormatter.format(new Date(timestamp)) : null;
+	}
+	private static long parseDate(String str) throws SAXException {
 		try {
-			return str != null ? ourDateFormatter.parse(str) : null;
+			return str != null ? ourDateFormatter.parse(str).getTime() : null;
+		} catch (Exception e) {
+			throw new SAXException("XML parsing error", e);
+		}
+	}
+	private static Long parseDateSafe(String str) throws SAXException {
+		try {
+			return str != null ? ourDateFormatter.parse(str).getTime() : null;
 		} catch (Exception e) {
 			return null;
 		}
@@ -396,6 +416,13 @@ class XMLSerializer extends AbstractSerializer {
 			return Long.parseLong(str);
 		} catch (Exception e) {
 			return defaultValue;
+		}
+	}
+	private static Long parseLongObjectSafe(String str) {
+		try {
+			return Long.parseLong(str);
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
@@ -441,23 +468,42 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 
-	private static String escapeForXml(String data) {
-		if (data.indexOf('&') != -1) {
-			data = data.replaceAll("&", "&amp;");
+	private static CharSequence escapeForXml(String data) {
+		final StringBuilder buffer = new StringBuilder();
+
+		final int len = data.length();
+		for (int i = 0; i < len; ++i) {
+			final char ch = data.charAt(i);
+			switch (ch) {
+				case '\u0009':
+				case '\n':
+					buffer.append(ch);
+					break;
+				default:
+					if ((ch >= '\u0020' && ch <= '\uD7FF') ||
+						(ch >= '\u0E00' && ch <= '\uFFFD')) {
+						buffer.append(ch);
+					}
+					break;
+				case '&':
+					buffer.append("&amp;");
+					break;
+				case '<':
+					buffer.append("&lt;");
+					break;
+				case '>':
+					buffer.append("&gt;");
+					break;
+				case '"':
+					buffer.append("&quot;");
+					break;
+				case '\'':
+					buffer.append("&apos;");
+					break;
+			}
 		}
-		if (data.indexOf('<') != -1) {
-			data = data.replaceAll("<", "&lt;");
-		}
-		if (data.indexOf('>') != -1) {
-			data = data.replaceAll(">", "&gt;");
-		}
-		if (data.indexOf('\'') != -1) {
-			data = data.replaceAll("'", "&apos;");
-		}
-		if (data.indexOf('"') != -1) {
-			data = data.replaceAll("\"", "&quot;");
-		}
-		return data;
+
+		return buffer;
 	}
 
 	private static void clear(StringBuilder buffer) {
@@ -468,7 +514,7 @@ class XMLSerializer extends AbstractSerializer {
 		return buffer.length() != 0 ? buffer.toString() : null;
 	}
 
-	private static final class BookDeserializer extends DefaultHandler {
+	private static final class BookDeserializer<B extends AbstractBook> extends DefaultHandler {
 		private static enum State {
 			READ_NOTHING,
 			READ_ENTRY,
@@ -484,6 +530,7 @@ class XMLSerializer extends AbstractSerializer {
 			READ_SERIES_INDEX,
 		}
 
+		private final BookCreator<B> myBookCreator;
 		private State myState = State.READ_NOTHING;
 
 		private long myId = -1;
@@ -504,9 +551,13 @@ class XMLSerializer extends AbstractSerializer {
 		private boolean myHasBookmark;
 		private RationalNumber myProgress;
 
-		private Book myBook;
+		private B myBook;
 
-		public Book getBook() {
+		private BookDeserializer(BookCreator<B> creator) {
+			myBookCreator = creator;
+		}
+
+		public B getBook() {
 			return myState == State.READ_NOTHING ? myBook : null;
 		}
 
@@ -537,12 +588,8 @@ class XMLSerializer extends AbstractSerializer {
 			if (myId == -1) {
 				return;
 			}
-			myBook = new Book(
-				myId,
-				ZLFile.createFileByUrl(myUrl),
-				string(myTitle),
-				string(myEncoding),
-				string(myLanguage)
+			myBook = myBookCreator.createBook(
+				myId, myUrl, string(myTitle), string(myEncoding), string(myLanguage)
 			);
 			for (Author author : myAuthors) {
 				myBook.addAuthorWithNoCheck(author);
@@ -823,8 +870,12 @@ class XMLSerializer extends AbstractSerializer {
 		private boolean myVisible;
 		private int myLimit;
 		private int myPage;
-		private final BookDeserializer myBookDeserializer = new BookDeserializer();
+		private final BookDeserializer<? extends AbstractBook> myBookDeserializer;
 		private BookmarkQuery myQuery;
+
+		BookmarkQueryDeserializer(BookCreator<? extends AbstractBook> creator) {
+			myBookDeserializer = new BookDeserializer(creator);
+		}
 
 		BookmarkQuery getQuery() {
 			return myQuery;
@@ -870,20 +921,23 @@ class XMLSerializer extends AbstractSerializer {
 		private static enum State {
 			READ_NOTHING,
 			READ_BOOKMARK,
-			READ_TEXT
+			READ_TEXT,
+			READ_ORIGINAL_TEXT
 		}
 
 		private State myState = State.READ_NOTHING;
 		private Bookmark myBookmark;
 
 		private long myId = -1;
+		private String myUid;
+		private String myVersionUid;
 		private long myBookId;
 		private String myBookTitle;
 		private final StringBuilder myText = new StringBuilder();
-		private Date myCreationDate;
-		private Date myModificationDate;
-		private Date myAccessDate;
-		private int myAccessCount;
+		private StringBuilder myOriginalText;
+		private Long myCreationTimestamp;
+		private Long myModificationTimestamp;
+		private Long myAccessTimestamp;
 		private String myModelId;
 		private int myStartParagraphIndex;
 		private int myStartElementIndex;
@@ -903,13 +957,15 @@ class XMLSerializer extends AbstractSerializer {
 			myBookmark = null;
 
 			myId = -1;
+			myUid = null;
+			myVersionUid = null;
 			myBookId = -1;
 			myBookTitle = null;
 			clear(myText);
-			myCreationDate = null;
-			myModificationDate = null;
-			myAccessDate = null;
-			myAccessCount = 0;
+			myOriginalText = null;
+			myCreationTimestamp = null;
+			myModificationTimestamp = null;
+			myAccessTimestamp = null;
 			myModelId = null;
 			myStartParagraphIndex = 0;
 			myStartElementIndex = 0;
@@ -929,8 +985,10 @@ class XMLSerializer extends AbstractSerializer {
 				return;
 			}
 			myBookmark = new Bookmark(
-				myId, myBookId, myBookTitle, myText.toString(),
-				myCreationDate, myModificationDate, myAccessDate, myAccessCount,
+				myId, myUid, myVersionUid,
+				myBookId, myBookTitle, myText.toString(),
+				myOriginalText != null ? myOriginalText.toString() : null,
+				myCreationTimestamp, myModificationTimestamp, myAccessTimestamp,
 				myModelId,
 				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
 				myEndParagraphIndex, myEndElementIndex, myEndCharIndex,
@@ -947,6 +1005,8 @@ class XMLSerializer extends AbstractSerializer {
 						throw new SAXException("Unexpected tag " + localName);
 					}
 					myId = parseLong(attributes.getValue("id"));
+					myUid = attributes.getValue("uid");
+					myVersionUid = attributes.getValue("versionUid");
 					myIsVisible = parseBoolean(attributes.getValue("visible"));
 					myState = State.READ_BOOKMARK;
 					break;
@@ -956,11 +1016,20 @@ class XMLSerializer extends AbstractSerializer {
 						myBookTitle = attributes.getValue("title");
 					} else if ("text".equals(localName)) {
 						myState = State.READ_TEXT;
+					} else if ("original-text".equals(localName)) {
+						myState = State.READ_ORIGINAL_TEXT;
+						myOriginalText = new StringBuilder();
 					} else if ("history".equals(localName)) {
-						myCreationDate = parseDate(attributes.getValue("date-creation"));
-						myModificationDate = parseDateSafe(attributes.getValue("date-modification"));
-						myAccessDate = parseDateSafe(attributes.getValue("date-access"));
-						myAccessCount = parseIntSafe(attributes.getValue("access-count"), 0);
+						if (attributes.getValue("ts-creation") != null) {
+							myCreationTimestamp = parseLong(attributes.getValue("ts-creation"));
+							myModificationTimestamp = parseLongObjectSafe(attributes.getValue("ts-modification"));
+							myAccessTimestamp = parseLongObjectSafe(attributes.getValue("ts-access"));
+						} else {
+							// obsolete, old format plugins compatibility
+							myCreationTimestamp = parseDate(attributes.getValue("date-creation"));
+							myModificationTimestamp = parseDateSafe(attributes.getValue("date-modification"));
+							myAccessTimestamp = parseDateSafe(attributes.getValue("date-access"));
+						}
 					} else if ("start".equals(localName)) {
 						myModelId = attributes.getValue("model");
 						myStartParagraphIndex = parseInt(attributes.getValue("paragraph"));
@@ -984,6 +1053,7 @@ class XMLSerializer extends AbstractSerializer {
 					}
 					break;
 				case READ_TEXT:
+				case READ_ORIGINAL_TEXT:
 					throw new SAXException("Unexpected tag " + localName);
 			}
 		}
@@ -999,14 +1069,20 @@ class XMLSerializer extends AbstractSerializer {
 					}
 					break;
 				case READ_TEXT:
+				case READ_ORIGINAL_TEXT:
 					myState = State.READ_BOOKMARK;
 			}
 		}
 
 		@Override
 		public void characters(char[] ch, int start, int length) {
-			if (myState == State.READ_TEXT) {
-				myText.append(ch, start, length);
+			switch (myState) {
+				case READ_TEXT:
+					myText.append(ch, start, length);
+					break;
+				case READ_ORIGINAL_TEXT:
+					myOriginalText.append(ch, start, length);
+					break;
 			}
 		}
 	}
@@ -1028,10 +1104,11 @@ class XMLSerializer extends AbstractSerializer {
 			if ("style".equals(localName)) {
 				final int id = parseIntSafe(attributes.getValue("id"), -1);
 				if (id != -1) {
+					final long timestamp = parseLongSafe(attributes.getValue("timestamp"), 0L);
 					final int bg = parseIntSafe(attributes.getValue("bg-color"), -1);
 					final int fg = parseIntSafe(attributes.getValue("fg-color"), -1);
 					myStyle = new HighlightingStyle(
-						id, attributes.getValue("name"),
+						id, timestamp, attributes.getValue("name"),
 						bg != -1 ? new ZLColor(bg) : null,
 						fg != -1 ? new ZLColor(fg) : null
 					);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@ import org.pdfparse.model.PDFDocInfo;
 import org.pdfparse.model.PDFDocument;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.book.AbstractBook;
+import org.geometerplus.fbreader.book.BookUtil;
 
 public class PDFPlugin extends ExternalFormatPlugin {
 	public PDFPlugin() {
@@ -37,15 +37,15 @@ public class PDFPlugin extends ExternalFormatPlugin {
 	}
 
 	@Override
-	public void readMetainfo(Book book) {
-		final ZLFile file = book.File;
+	public void readMetainfo(AbstractBook book) {
+		final ZLFile file = BookUtil.fileByBook(book);
 		if (file != file.getPhysicalFile()) {
 			// TODO: throw BookReadingException
 			System.err.println("Only physical PDF files are supported");
 			return;
 		}
 		try {
-			final PDFDocument doc = new PDFDocument(book.File.getPath());
+			final PDFDocument doc = new PDFDocument(book.getPath());
 			// TODO: solution for rc4 encryption
 			if (!doc.isEncrypted()) {
 				final PDFDocInfo info = doc.getDocumentInfo();

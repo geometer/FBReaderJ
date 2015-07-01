@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,15 @@ class CatalogExpander extends NetworkItemsLoader {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			try {
 				if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
-					mgr.initialize();
+					new Thread() {
+						public void run() {
+							try {
+								mgr.initialize();
+							} catch (ZLNetworkException e) {
+								e.printStackTrace();
+							}
+						}
+					}.start();
 				}
 			} catch (ZLNetworkException e) {
 				mgr.logOut();

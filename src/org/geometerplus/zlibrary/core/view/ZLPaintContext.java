@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -177,6 +177,11 @@ abstract public class ZLPaintContext {
 			final Size s = (Size)other;
 			return Width == s.Width && Height == s.Height;
 		}
+
+		@Override
+		public String toString() {
+			return "ZLPaintContext.Size[" + Width + "x" + Height + "]";
+		}
 	}
 	public static enum ScalingType {
 		OriginalSize,
@@ -195,7 +200,9 @@ abstract public class ZLPaintContext {
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
 
-	abstract public void drawPolygonalLine(int[] xs, int ys[]);
+	abstract public void drawPolygonalLine(int[] xs, int[] ys);
 	abstract public void fillPolygon(int[] xs, int[] ys);
-	abstract public void drawOutline(int[] xs, int ys[]);
+	abstract public void drawOutline(int[] xs, int[] ys);
+
+	abstract public void fillCircle(int x, int y, int radius);
 }

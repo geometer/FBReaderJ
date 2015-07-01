@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,9 @@
 enum FBHyperlinkType {
 	HYPERLINK_NONE = 0,
 	HYPERLINK_INTERNAL = 1,
-	HYPERLINK_EXTERNAL = 2,
-	//HYPERLINK_BOOK = 3,
+	HYPERLINK_FOOTNOTE = 2,
+	HYPERLINK_EXTERNAL = 3,
+	//HYPERLINK_BOOK = 4,
 };
 
 #endif /* __FBHYPERLINKTYPE_H__ */

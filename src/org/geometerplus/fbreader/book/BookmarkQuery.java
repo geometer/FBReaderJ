@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.book;
 
 public final class BookmarkQuery {
-	public final Book Book;
+	public final AbstractBook Book;
 	public final boolean Visible;
 	public final int Limit;
 	public final int Page;
@@ -29,15 +29,15 @@ public final class BookmarkQuery {
 		this(null, limit);
 	}
 
-	public BookmarkQuery(Book book, int limit) {
+	public BookmarkQuery(AbstractBook book, int limit) {
 		this(book, true, limit);
 	}
 
-	public BookmarkQuery(Book book, boolean visible, int limit) {
+	public BookmarkQuery(AbstractBook book, boolean visible, int limit) {
 		this(book, visible, limit, 0);
 	}
 
-	BookmarkQuery(Book book, boolean visible, int limit, int page) {
+	BookmarkQuery(AbstractBook book, boolean visible, int limit, int page) {
 		Book = book;
 		Visible = visible;
 		Limit = limit;

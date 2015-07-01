@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 16-Nov-2014 -->
+<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 17-Jun-2015 -->
 <resources>
 	<node name="library" value="FBReader bibliotheek">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
@@ -22,6 +22,15 @@
 		</node>
 		<node name="favorites" value="Favorieten">
 			<node name="summary" value="Mijn geselecteerde boeken"/>
+		</node>
+		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
+		<node name="wideCardsView" value="Brede kaarten"/>
+		<node name="smallCardsView" value="Kleine kaarten"/>
+		<node name="tinyCardsView" value="Zeer kleine kaarten"/>
+		<node name="coversView" value="Covers"/>
+		<node name="oldView" value="Klassiek"/>
+		<node name="bookshelfView" value="Boekenplank">
+			<node name="summary" value="Moderne (material design) bibliotheek"/>
 		</node>
 		<node name="found" value="Gevonden">
 			<node name="summary" value="Zoekresultaten voor: %s"/>
@@ -67,7 +76,6 @@
 		<node name="deleteAll" value="Alles verwijderen"/>
 		<node name="uploadAgain" value="Opnieuw versturen"/>
 		<node name="tryAgain" value="Nogmaals proberen"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader netwerkbibliotheek">
 		<node name="sync" value="FBReader® boekennetwerk">
@@ -137,7 +145,7 @@
 		<node name="stoppingCatalogLoading" value="Stoppen met laden"/>
 		<node name="stoppingNetworkSearch" value="Stoppen met zoeken"/>
 		<node name="editCustomCatalog" value="Catalogus bewerken"/>
-		<node name="removeCustomCatalog" value="Verwijder catalogus"/>
+		<node name="removeCustomCatalog" value="Catalogus verwijderen"/>
 		<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 		<node name="addCustomCatalogSummary" value="Voeg handmatig eigen OPDS-catalogus toe"/>
 		<node name="disableCatalog" value="Catalogus uitschakelen"/>
@@ -172,7 +180,7 @@
 			<node name="topup" value="Account opwaarderen"/>
 			<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 			<node name="refreshCatalogsList" value="Catalogussen vernieuwen"/>
-			<node name="manageCatalogs" value="Beheer catalogussen"/>
+			<node name="manageCatalogs" value="Catalogussen beheren"/>
 			<node name="clearBasket" value="Leeg mandje"/>
 			<node name="buyAllBooks" value="Koop alle boeken"/>
 		</node>
@@ -219,11 +227,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Boek is gedownload"/>
-		<node name="tickerError" value="Fout bij downloaden boek"/>
-		<node name="contentSuccess" value="Klaar met downloaden"/>
-		<node name="contentError" value="Download mislukt"/>
-		<node name="downloadingStarted" value="Downloaden van boek is begonnen"/>
+		<node name="downloadCompleteTicker" value="Boek is gedownload"/>
+		<node name="downloadFailedTicker" value="Fout bij downloaden boek"/>
+		<node name="downloadComplete" value="Klaar met downloaden"/>
+		<node name="downloadFailed" value="Download mislukt"/>
+		<node name="downloadStarted" value="Downloaden van boek is begonnen"/>
 		<node name="alreadyDownloading" value="Boek wordt al gedownload"/>
 		<node name="cannotCreateDirectory" value="Aanmaken map %s mislukt"/>
 		<node name="cannotCreateFile" value="Aanmaken bestand %s mislukt"/>
@@ -236,14 +244,22 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Dit boek"/>
 		<node name="allBooks" value="Alle boeken"/>
-		<node name="found" value="Gevonden"/>
 		<node name="new" value="Nieuwe bladwijzer"/>
-		<node name="open" value="Openen"/>
-		<node name="edit" value="Bladwijzer bewerken"/>
-		<node name="delete" value="Bladwijzer verwijderen"/>
-		<node name="menu">
-			<node name="search" value="Zoeken"/>
-		</node>
+		<node name="openBook" value="Openen"/>
+		<node name="editBookmark" value="Bladwijzer bewerken"/>
+		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
+		<node name="search" value="Zoeken"/>
+	</node>
+	<node name="editBookmark">
+		<node name="text" value="Tekst"/>
+		<node name="style" value="Stijl"/>
+		<node name="delete" value="Verwijderen"/>
+		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
+		<node name="saveText" value="Tekst opslaan"/>
+		<node name="editStyle" value="Stijl aanpassen…"/>
+	</node>
+	<node name="footnoteToast">
+		<node name="more" value="Meer"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open bibliotheek"/>
@@ -255,10 +271,6 @@
 		<node name="close" value="FBReader afsluiten"/>
 	</node>
 	<node name="style" value="Stijl %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Stijl aanpassen…"/>
-		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Stijlnaam"/>
 		<node name="invisible" value="Onzichtbaar">
@@ -272,11 +284,10 @@
 		<node name="openInDictionary" value="Openen in woordenboek"/>
 		<node name="quoteFrom" value="Quote van %s"/>
 		<node name="textInBuffer" value="Gekopieerd naar het klembord:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bladwijzer gemaakt:&#10;%s"/>
 		<node name="clearSelection" value="Wissen"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Gedeeld van &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Gedeeld van &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Startscherm"/>
@@ -329,6 +340,9 @@
 	<node name="Preferences">
 		<node name="sync" value="Synchronisatie">
 			<node name="summary" value="Boekennetwerk"/>
+			<node name="site" value="Lees verder over synchronisatie">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
+			</node>
 			<node name="enable" value="Synchronisatie inschakelen">
 				<node name="summaryOn" value="Synchroniseer mijn bibliotheek met het FBReader boekennetwerk"/>
 				<node name="summaryOnWithAccount" value="Synchroniseer mijn bibliotheek als %s"/>
@@ -601,6 +615,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
+			<node name="showFootnoteToast" value="Toon gelinkte tekst in een pop-up">
+				<node name="never" value="Nooit"/>
+				<node name="footnotesOnly" value="Alleen voor voetnoten"/>
+				<node name="footnotesAndSuperscripts" value="Voor voetnoten en superscript links"/>
+				<node name="allInternalLinks" value="Voor alle interne links"/>
+			</node>
+			<node name="footnoteToastDuration" value="Hoe lang de linkpop-up tonen"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
+		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Gebruik/Negeer waarden gedefinieerd in CSS"/>
 			<node name="fontFamily" value="Lettertype">
@@ -740,14 +765,19 @@
 				<node name="custom" value="Aangepast…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Woordenboek">
-			<node name="summary" value="Woordenboek instellingen"/>
-			<node name="dictionary" value="Woordenboek"/>
-			<node name="translator" value="Vertaler"/>
+		<node name="dictionary" value="Woordenboek &amp; vertaler">
+			<node name="summary" value="Vertaalinstellingen"/>
+			<node name="dictionary" value="Enkel woord opzoeken in"/>
+			<node name="translator" value="Vertaal Translate zinsdelen via"/>
+			<node name="translationToastDuration" value="Hoe lang de vertaalpopup tonen"/>
+			<node name="errorToastDuration" value="Hoe lang de foutmelding tonen"/>
+			<node name="sourceLanguage" value="Vertalen vanuit">
+				<node name="detect" value="Taal automatisch detecteren"/>
+			</node>
 			<node name="targetLanguage" value="Vertalen naar">
 				<node name="any" value="alle talen"/>
 			</node>
-			<node name="tappingAction" value="Lang aantikken">
+			<node name="longTapAction" value="Lang aantikken">
 				<node name="doNothing" value="Lang aantikken doet niets"/>
 				<node name="selectSingleWord" value="Lang aantikken selecteert enkel woord"/>
 				<node name="startSelecting" value="Lang aantikken begint selecteermogelijkheid"/>
@@ -761,7 +791,7 @@
 		<node name="images" value="Afbeeldingen">
 			<node name="summary" value="Tonen afbeeldingen opties"/>
 			<node name="backgroundColor" value="Achtergrondkleur bij bekijken afbeelding"/>
-			<node name="tappingAction" value="Lang aantikken">
+			<node name="longTapAction" value="Lang aantikken">
 				<node name="doNothing" value="Lang aantikken doet niets"/>
 				<node name="selectImage" value="Lang aantikken selecteert de afbeelding"/>
 				<node name="openImageView" value="Lang aantikken opent de afbeelding"/>
@@ -817,7 +847,7 @@
 			<node name="summary" value="Versieinformatie, contact"/>
 			<node name="version" value="Versie"/>
 			<node name="site" value="Bezoek onze website">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="Stuur ons een (Engelstalige) e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -844,6 +874,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="No, thanks" toBeTranslated="true"/>
 			<node name="install" value="Installeren"/>
 			<node name="update" value="Bijwerken"/>
 			<node name="skip" value="Overslaan"/>
@@ -854,7 +885,7 @@
 			<node name="editUrl" value="URL bewerken"/>
 			<node name="tryAgain" value="Probeer opnieuw"/>
 			<node name="openBook" value="Lezen"/>
-			<node name="editInfo" value="Bewerken"/>
+			<node name="edit" value="Bewerken"/>
 			<node name="reloadInfo" value="Vernieuwen"/>
 			<node name="shareBook" value="Delen"/>
 			<node name="topup" value="Opwaarderen"/>
@@ -875,6 +906,11 @@
 		</node>
 		<node name="backgroundAuthentication">
 			<node name="message" value="Authenticatie vereist"/>
+		</node>
+		<node name="missingDictionary" value="%s ontbreekt">
+			<node name="install" value="Installeer %s"/>
+			<node name="configure" value="Vertaling instellen"/>
+			<node name="skip" value="Overslaan"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Installeer woordenboek"/>
@@ -911,6 +947,7 @@
 			<node name="passwordSent" value="Jouw accountinformatie is verzonden naar %s. Controleer je Postvak IN"/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Bezig met vertalen…"/>
 			<node name="tryConnect" value="Bezig met verbinden. Een ogenblik…"/>
 			<node name="downloadingBook" value="Boek %s wordt gedownload"/>
 			<node name="search" value="Bezig met zoeken. Een ogenblik…"/>
@@ -928,7 +965,7 @@
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik…"/>
 			<node name="updatingAccountInformation" value="Accountinformatie wordt bijgewerkt. Een ogenblik…"/>
 			<node name="initDRMEngine" value="DRM-engine wordt geïnitialiseerd. Een ogenblik…"/>
-			<node name="acquireLicense" value="Licentie ophalen. Een ogenblik…"/>
+			<node name="acquireLicence" value="Licentie ophalen. Een ogenblik…"/>
 			<node name="registerUser" value="Nieuwe account registeren. Een ogenblik…"/>
 			<node name="autoSignIn" value="Aanmelden. Een ogenblik…"/>
 			<node name="recoverPassword" value="Wachtwoord aan het herstellen. Een ogenblik…"/>
@@ -1030,6 +1067,14 @@
 		<node name="missingPlugin">
 			<node name="title" value="Geen plug-in voor %s-bestanden geïnstalleerd. Nu installeren?"/>
 		</node>
+		<node name="licensing">
+			<node name="title" value="Geen licentie voor %s"/>
+			<node name="message" value="Nu op Google Play kopen?"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Kan licentie voor %s niet controleren."/>
+			<node name="message" value="Nogmaals proberen?"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Fout %s in native code tijden lezen van '%s'"/>
@@ -1080,7 +1125,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Installeer plug-ins">
 		<node name="noMorePlugins" value="Er zijn geen nieuwe plug-ins beschikbaar, sorry"/>
@@ -1127,4 +1172,21 @@
 		<node name="length" value="Bijv.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="Bijv.: 125%%"/>
 	</node>
+	<node name="duration">
+		<node name="duration1" value="1 seconde"/>
+		<node name="duration3" value="3 seconden"/>
+		<node name="duration5" value="5 seconden"/>
+		<node name="duration10" value="10 seconden"/>
+		<node name="duration20" value="20 seconden"/>
+		<node name="duration40" value="40 seconden"/>
+		<node name="duration60" value="1 minuut"/>
+		<node name="duration300" value="5 minuten"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="onbekende fout"/>
+		<node name="noArticle" value="geen artikel gevonden voor “%s”"/>
+		<node name="cannotOpenDictionary" value="Kan woordenlijst niet openen"/>
+		<node name="noDictionarySelected" value="Geen woordenboek geselecteerd; lost dit op in de Dictan-instellingen"/>
+	</node>
+	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true"/>
 </resources>

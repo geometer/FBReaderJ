@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@ import org.geometerplus.zlibrary.text.model.*;
 
 public final class ZLTextParagraphCursor {
 	private static final class Processor {
-		private final ZLTextView myView;
 		private final ZLTextParagraph myParagraph;
+		private final ExtensionElementManager myExtManager;
 		private final LineBreaker myLineBreaker;
 		private final ArrayList<ZLTextElement> myElements;
 		private int myOffset;
@@ -38,8 +38,8 @@ public final class ZLTextParagraphCursor {
 		private int myLastMark;
 		private final List<ZLTextMark> myMarks;
 
-		private Processor(ZLTextView view, ZLTextParagraph paragraph, LineBreaker lineBreaker, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
-			myView = view;
+		private Processor(ZLTextParagraph paragraph, ExtensionElementManager extManager, LineBreaker lineBreaker, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
+			myExtManager = extManager;
 			myParagraph = paragraph;
 			myLineBreaker = lineBreaker;
 			myElements = elements;
@@ -109,7 +109,9 @@ public final class ZLTextParagraphCursor {
 						elements.add(new ZLTextVideoElement(it.getVideoEntry().sources()));
 						break;
 					case ZLTextParagraph.Entry.EXTENSION:
-						elements.addAll(myView.getExtensionManager().getElements(it.getExtensionEntry()));
+						if (myExtManager != null) {
+							elements.addAll(myExtManager.getElements(it.getExtensionEntry()));
+						}
 						break;
 					case ZLTextParagraph.Entry.STYLE_CSS:
 					case ZLTextParagraph.Entry.STYLE_OTHER:
@@ -128,7 +130,7 @@ public final class ZLTextParagraphCursor {
 		private static byte[] ourBreaks = new byte[1024];
 		private static final int NO_SPACE = 0;
 		private static final int SPACE = 1;
-		//private static final int NON_BREAKABLE_SPACE = 2;
+		private static final int NON_BREAKABLE_SPACE = 2;
 		private void processTextEntry(final char[] data, final int offset, final int length, ZLTextHyperlink hyperlink) {
 			if (length != 0) {
 				if (ourBreaks.length < length) {
@@ -138,6 +140,7 @@ public final class ZLTextParagraphCursor {
 				myLineBreaker.setLineBreaks(data, offset, length, breaks);
 
 				final ZLTextElement hSpace = ZLTextElement.HSpace;
+				final ZLTextElement nbSpace = ZLTextElement.NBSpace;
 				final ArrayList<ZLTextElement> elements = myElements;
 				char ch = 0;
 				char previousChar = 0;
@@ -146,11 +149,18 @@ public final class ZLTextParagraphCursor {
 				for (int index = 0; index < length; ++index) {
 					previousChar = ch;
 					ch = data[offset + index];
-					if (Character.isSpace(ch)) {
+					if (Character.isWhitespace(ch)) {
 						if (index > 0 && spaceState == NO_SPACE) {
 							addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart, hyperlink);
 						}
 						spaceState = SPACE;
+					} else if (Character.isSpaceChar(ch)) {
+						if (index > 0 && spaceState == NO_SPACE) {
+							addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart, hyperlink);
+						}
+						if (spaceState != SPACE) {
+							spaceState = NON_BREAKABLE_SPACE;
+						}
 					} else {
 						switch (spaceState) {
 							case SPACE:
@@ -159,8 +169,10 @@ public final class ZLTextParagraphCursor {
 								elements.add(hSpace);
 								wordStart = index;
 								break;
-							//case NON_BREAKABLE_SPACE:
-								//break;
+							case NON_BREAKABLE_SPACE:
+								elements.add(nbSpace);
+								wordStart = index;
+								break;
 							case NO_SPACE:
 								if (index > 0 &&
 									breaks[index - 1] != LineBreaker.NOBREAK &&
@@ -178,8 +190,9 @@ public final class ZLTextParagraphCursor {
 					case SPACE:
 						elements.add(hSpace);
 						break;
-					//case NON_BREAKABLE_SPACE:
-						//break;
+					case NON_BREAKABLE_SPACE:
+						elements.add(nbSpace);
+						break;
 					case NO_SPACE:
 						addWord(data, offset + wordStart, length - wordStart, myOffset + wordStart, hyperlink);
 						break;
@@ -204,12 +217,16 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public final int Index;
-	final ZLTextView View;
+	final CursorManager CursorManager;
 	public final ZLTextModel Model;
 	private final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
 
-	ZLTextParagraphCursor(ZLTextView view, ZLTextModel model, int index) {
-		View = view;
+	public ZLTextParagraphCursor(ZLTextModel model, int index) {
+		this(new CursorManager(model, null), model, index);
+	}
+
+	ZLTextParagraphCursor(CursorManager cManager, ZLTextModel model, int index) {
+		CursorManager = cManager;
 		Model = model;
 		Index = Math.min(index, model.getParagraphsNumber() - 1);
 		fill();
@@ -220,7 +237,7 @@ public final class ZLTextParagraphCursor {
 		ZLTextParagraph	paragraph = Model.getParagraph(Index);
 		switch (paragraph.getKind()) {
 			case ZLTextParagraph.Kind.TEXT_PARAGRAPH:
-				new Processor(View, paragraph, new LineBreaker(Model.getLanguage()), Model.getMarks(), Index, myElements).fill();
+				new Processor(paragraph, CursorManager.ExtensionManager, new LineBreaker(Model.getLanguage()), Model.getMarks(), Index, myElements).fill();
 				break;
 			case ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH:
 				myElements.add(new ZLTextWord(SPACE_ARRAY, 0, 1, 0));
@@ -250,6 +267,16 @@ public final class ZLTextParagraphCursor {
 		return Index + 1 >= Model.getParagraphsNumber();
 	}
 
+	public boolean isLikeEndOfSection() {
+		switch (Model.getParagraph(Index).getKind()) {
+			case ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH:
+			case ZLTextParagraph.Kind.PSEUDO_END_OF_SECTION_PARAGRAPH:
+				return true;
+			default:
+				return false;
+		}
+	}
+
 	public boolean isEndOfSection() {
 		return Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH;
 	}
@@ -259,11 +286,11 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public ZLTextParagraphCursor previous() {
-		return isFirst() ? null : View.cursor(Index - 1);
+		return isFirst() ? null : CursorManager.get(Index - 1);
 	}
 
 	public ZLTextParagraphCursor next() {
-		return isLast() ? null : View.cursor(Index + 1);
+		return isLast() ? null : CursorManager.get(Index + 1);
 	}
 
 	ZLTextElement getElement(int index) {

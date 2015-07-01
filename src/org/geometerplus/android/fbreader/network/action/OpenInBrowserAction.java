@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,18 +55,22 @@ public class OpenInBrowserAction extends CatalogAction {
 		final String url =
 			((NetworkURLCatalogItem)((NetworkCatalogTree)tree).Item).getUrl(UrlInfo.Type.HtmlPage);
 
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final String message = NetworkLibrary.resource().getResource("confirmQuestions").getResource("openInBrowser").getValue();
-		new AlertDialog.Builder(myActivity)
-			.setTitle(tree.getName())
-			.setMessage(message)
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					Util.openInBrowser(myActivity, url);
-				}
-			})
-			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-			.create().show();
+		if (Util.isOurLink(url)) {
+			Util.openInBrowser(myActivity, url);
+		} else {
+			final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+			final String message = NetworkLibrary.resource().getResource("confirmQuestions").getResource("openInBrowser").getValue();
+			new AlertDialog.Builder(myActivity)
+				.setTitle(tree.getName())
+				.setMessage(message)
+				.setIcon(0)
+				.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Util.openInBrowser(myActivity, url);
+					}
+				})
+				.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+				.create().show();
+		}
 	}
 }

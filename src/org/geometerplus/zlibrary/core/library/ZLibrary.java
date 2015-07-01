@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.library;
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public abstract class ZLibrary {
@@ -38,6 +39,9 @@ public abstract class ZLibrary {
 	public static final String SCREEN_ORIENTATION_REVERSE_PORTRAIT = "reversePortrait";
 	public static final String SCREEN_ORIENTATION_REVERSE_LANDSCAPE = "reverseLandscape";
 
+	public final ZLIntegerOption ScreenHintStageOption =
+		new ZLIntegerOption("LookNFeel", "ScreenHintStage", 0);
+
 	public final ZLStringOption getOrientationOption() {
 		return new ZLStringOption("LookNFeel", "Orientation", "system");
 	}
@@ -52,8 +56,6 @@ public abstract class ZLibrary {
 	abstract public String getVersionName();
 	abstract public String getFullVersionName();
 	abstract public String getCurrentTimeString();
-	abstract public void setScreenBrightness(int percent);
-	abstract public int getScreenBrightness();
 	abstract public int getDisplayDPI();
 	abstract public int getWidthInPixels();
 	abstract public int getHeightInPixels();

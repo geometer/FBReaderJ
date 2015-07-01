@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,12 @@ import android.os.Build;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
-public class PluginCollection {
+public class PluginCollection implements IFormatPluginCollection {
 	static {
 		System.loadLibrary("NativeFormats-v4");
 	}
 
-	private static PluginCollection ourInstance;
+	private static volatile PluginCollection ourInstance;
 
 	private final List<BuiltinFormatPlugin> myBuiltinPlugins =
 		new LinkedList<BuiltinFormatPlugin>();
@@ -40,15 +40,22 @@ public class PluginCollection {
 
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
+			createInstance();
+		}
+		return ourInstance;
+	}
+
+	private static synchronized void createInstance() {
+		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
 
-			// This code can not be moved to constructor because nativePlugins() is a native method
+			// This code cannot be moved to constructor
+			// because nativePlugins() is a native method
 			for (NativeFormatPlugin p : ourInstance.nativePlugins()) {
 				ourInstance.myBuiltinPlugins.add(p);
 				System.err.println("native plugin: " + p);
 			}
 		}
-		return ourInstance;
 	}
 
 	public static void deleteInstance() {
@@ -90,6 +97,22 @@ public class PluginCollection {
 			}
 		}
 		return null;
+	}
+
+	public List<FormatPlugin> plugins() {
+		final ArrayList<FormatPlugin> all = new ArrayList<FormatPlugin>();
+		all.addAll(myBuiltinPlugins);
+		all.addAll(myExternalPlugins);
+		Collections.sort(all, new Comparator<FormatPlugin>() {
+			public int compare(FormatPlugin p0, FormatPlugin p1) {
+				final int diff = p0.priority() - p1.priority();
+				if (diff != 0) {
+					return diff;
+				}
+				return p0.supportedFileType().compareTo(p1.supportedFileType());
+			}
+		});
+		return all;
 	}
 
 	private native NativeFormatPlugin[] nativePlugins();

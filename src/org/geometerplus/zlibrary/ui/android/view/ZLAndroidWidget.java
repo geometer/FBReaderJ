@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
@@ -36,13 +39,16 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.view.animation.*;
 
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
+	public final ExecutorService PrepareService = Executors.newSingleThreadExecutor();
+
 	private final Paint myPaint = new Paint();
-	private final BitmapManager myBitmapManager = new BitmapManager(this);
+	private final BitmapManagerImpl myBitmapManager = new BitmapManagerImpl(this);
 	private Bitmap myFooterBitmap;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
@@ -112,6 +118,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			canvas.translate(0, myHShift);
 		}
 
+		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		if (getAnimationProvider().inProgress()) {
 			onDrawInScrolling(canvas);
 		} else {
@@ -222,9 +229,6 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	private void onDrawInScrolling(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-
-//		final int w = getWidth();
-//		final int h = getMainAreaHeight();
 
 		final AnimationProvider animator = getAnimationProvider();
 		final AnimationProvider.Mode oldMode = animator.getMode();
@@ -380,28 +384,30 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 
 	private void onDrawStatic(final Canvas canvas) {
-		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
 		drawFooter(canvas, null);
-		new Thread() {
-			@Override
+		post(new Runnable() {
 			public void run() {
-				final ZLView view = ZLApplication.Instance().getCurrentView();
-				final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-					canvas,
-					new ZLAndroidPaintContext.Geometry(
-						getWidth(),
-						getHeight(),
-						getWidth(),
-						getMainAreaHeight(),
-						0,
-						0
-					),
-					view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
-				);
-				view.preparePage(context, ZLView.PageIndex.next);
+				PrepareService.execute(new Runnable() {
+					public void run() {
+						final ZLView view = ZLApplication.Instance().getCurrentView();
+						final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+							canvas,
+							new ZLAndroidPaintContext.Geometry(
+								getWidth(),
+								getHeight(),
+								getWidth(),
+								getMainAreaHeight(),
+								0,
+								0
+							),
+							view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+						);
+						view.preparePage(context, ZLView.PageIndex.next);
+					}
+				});
 			}
-		}.start();
+		});
 	}
 
 	@Override
@@ -637,5 +643,21 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		final Resources res = getContext().getResources();
 		int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
 		return resourceId > 0 ? res.getDimensionPixelSize(resourceId) : 0;
+	}
+
+	public void setScreenBrightness(int percent) {
+		final Context context = getContext();
+		if (!(context instanceof FBReader)) {
+			return;
+		}
+		((FBReader)context).setScreenBrightness(percent);
+	}
+
+	public int getScreenBrightness() {
+		final Context context = getContext();
+		if (!(context instanceof FBReader)) {
+			return 50;
+		}
+		return ((FBReader)context).getScreenBrightness();
 	}
 }

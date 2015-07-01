@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -135,6 +135,10 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 	@Override
 	protected int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize) {
 		return myDescription.getVerticalAlign(metrics, Parent.getVerticalAlign(metrics), fontSize);
+	}
+	@Override
+	protected boolean isVerticallyAlignedInternal() {
+		return myDescription.hasNonZeroVerticalAlign();
 	}
 	@Override
 	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,8 +47,8 @@ import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.sync.SyncUtil;
 import org.geometerplus.fbreader.tips.TipsManager;
 
-import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
@@ -156,6 +156,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				return syncOptions.Enabled.getValue();
 			}
 		};
+		syncScreen.addPreference(new UrlPreference(this, syncScreen.Resource, "site"));
 		syncScreen.addPreference(new ZLCheckBoxPreference(
 			this, syncScreen.Resource.getResource("enable")
 		) {
@@ -232,7 +233,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		syncPreferences.add(syncScreen.addOption(syncOptions.Positions, "positions", "values"));
 		syncPreferences.add(syncScreen.addOption(syncOptions.ChangeCurrentBook, "changeCurrentBook"));
 		//syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo", "values"));
-		//syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks", "values"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks", "values"));
 		syncPreferences.run();
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
@@ -445,40 +446,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			));
 		}
 
-		final PreferenceSet footerPreferences = new PreferenceSet.Enabler() {
-			@Override
-			protected Boolean detectState() {
-				switch (viewOptions.ScrollbarType.getValue()) {
-					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
-					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
-						return true;
-					default:
-						return false;
-				}
-			}
-		};
-		final PreferenceSet oldStyleFooterPreferences = new PreferenceSet.Enabler() {
-			@Override
-			protected Boolean detectState() {
-				switch (viewOptions.ScrollbarType.getValue()) {
-					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
-						return true;
-					default:
-						return false;
-				}
-			}
-		};
-		final PreferenceSet newStyleFooterPreferences = new PreferenceSet.Enabler() {
-			@Override
-			protected Boolean detectState() {
-				switch (viewOptions.ScrollbarType.getValue()) {
-					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
-						return true;
-					default:
-						return false;
-				}
-			}
-		};
+		final Screen toastsScreen = createPreferenceScreen("toast");
+		toastsScreen.addOption(miscOptions.ToastFontSizePercent, "fontSizePercent");
+		toastsScreen.addOption(miscOptions.ShowFootnoteToast, "showFootnoteToast");
+		toastsScreen.addPreference(new ZLEnumPreference(
+			this,
+			miscOptions.FootnoteToastDuration,
+			toastsScreen.Resource.getResource("footnoteToastDuration"),
+			ZLResource.resource("duration")
+		));
 
 		final Screen cssScreen = createPreferenceScreen("css");
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");
@@ -523,28 +499,49 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		colorsScreen.addOption(profile.HighlightingBackgroundOption, "highlightingBackground");
 
 		final Screen marginsScreen = createPreferenceScreen("margins");
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("left"),
-			viewOptions.LeftMargin
-		));
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("right"),
-			viewOptions.RightMargin
-		));
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("top"),
-			viewOptions.TopMargin
-		));
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("bottom"),
-			viewOptions.BottomMargin
-		));
-		marginsScreen.addPreference(new ZLIntegerRangePreference(
-			this, marginsScreen.Resource.getResource("spaceBetweenColumns"),
-			viewOptions.SpaceBetweenColumns
-		));
+		marginsScreen.addOption(viewOptions.LeftMargin, "left");
+		marginsScreen.addOption(viewOptions.RightMargin, "right");
+		marginsScreen.addOption(viewOptions.TopMargin, "top");
+		marginsScreen.addOption(viewOptions.BottomMargin, "bottom");
+		marginsScreen.addOption(viewOptions.SpaceBetweenColumns, "spaceBetweenColumns");
 
 		final Screen statusLineScreen = createPreferenceScreen("scrollBar");
+
+		final PreferenceSet footerPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
+						return true;
+					default:
+						return false;
+				}
+			}
+		};
+		final PreferenceSet oldStyleFooterPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
+						return true;
+					default:
+						return false;
+				}
+			}
+		};
+		final PreferenceSet newStyleFooterPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
+						return true;
+					default:
+						return false;
+				}
+			}
+		};
+
 
 		final String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter", "showAsFooterOldStyle"};
 		statusLineScreen.addPreference(new ZLChoicePreference(
@@ -706,7 +703,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					miscOptions.NavigateAllWords,
 					dictionaryScreen.Resource.getResource("navigateOverAllWords")
 				));
-				dictionaryScreen.addOption(miscOptions.WordTappingAction, "tappingAction");
+				dictionaryScreen.addOption(miscOptions.WordTappingAction, "longTapAction");
 				dictionaryScreen.addPreference(targetLanguagePreference);
 				targetLanguagePreference.setEnabled(
 					DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
@@ -715,7 +712,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		});
 
 		final Screen imagesScreen = createPreferenceScreen("images");
-		imagesScreen.addOption(imageOptions.TapAction, "tappingAction");
+		imagesScreen.addOption(imageOptions.TapAction, "longTapAction");
 		imagesScreen.addOption(imageOptions.FitToScreen, "fitImagesToScreen");
 		imagesScreen.addOption(imageOptions.ImageViewBackground, "backgroundColor");
 		imagesScreen.addOption(imageOptions.MatchBackground, "matchBackground");

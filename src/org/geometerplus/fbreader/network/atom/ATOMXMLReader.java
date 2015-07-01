@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -522,8 +522,12 @@ public class ATOMXMLReader<MetadataType extends ATOMFeedMetadata,EntryType exten
 			case FE_UPDATED:
 				if (ns == XMLNamespaces.Atom && tag == TAG_UPDATED) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
-					if (ATOMDateConstruct.parse(bufferContent, myUpdated)) {
-						myEntry.Updated = myUpdated;
+					try {
+						if (ATOMDateConstruct.parse(bufferContent, myUpdated)) {
+							myEntry.Updated = myUpdated;
+						}
+					} catch (Exception e) {
+						// this ATOMDateConstruct.parse() throws OOB exception time to time
 					}
 					myUpdated = null;
 					myState = F_ENTRY;

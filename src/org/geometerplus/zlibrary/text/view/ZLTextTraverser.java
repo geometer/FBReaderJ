@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ public abstract class ZLTextTraverser {
 	protected abstract void processWord(ZLTextWord word);
 	protected abstract void processControlElement(ZLTextControlElement control);
 	protected abstract void processSpace();
+	protected abstract void processNbSpace();
 	protected abstract void processEndOfParagraph();
 
 	public void traverse(ZLTextPosition from, ZLTextPosition to) {
@@ -43,6 +44,8 @@ public abstract class ZLTextTraverser {
 				final ZLTextElement element = cursor.getElement(j);
 				if (element == ZLTextElement.HSpace) {
 					processSpace();
+				} else if (element == ZLTextElement.NBSpace) {
+					processNbSpace();
 				} else if (element instanceof ZLTextWord) {
 					processWord((ZLTextWord)element);
 				}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +19,12 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.content.res.AssetManager;
 import android.graphics.Typeface;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -176,7 +175,7 @@ public final class AndroidFontUtil {
 		}
 	}
 
-	private static Typeface systemTypeface(String family, boolean bold, boolean italic) {
+	public static Typeface systemTypeface(String family, boolean bold, boolean italic) {
 		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = ourTypefaces.get(family);

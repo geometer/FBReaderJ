@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.geometerplus.android.fbreader.SimplePopupWindow
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/search_panel"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentBottom="true"
+	android:layout_centerHorizontal="true"
+	android:layout_marginTop="25dp"
+	android:layout_marginBottom="25dp"
+	android:paddingLeft="15dp"
+	android:paddingRight="15dp"
+	android:background="@drawable/panel"
+	android:visibility="gone"
+	android:focusable="false"
+>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
+	>
+		<ImageView
+			android:id="@+id/search_panel_previous"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/popup_back"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+		/>
+		<ImageView
+			android:id="@+id/search_panel_close"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/popup_close_large"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+		/>
+		<ImageView
+			android:id="@+id/search_panel_next"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/popup_forward"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+		/>
+	</LinearLayout>
+</org.geometerplus.android.fbreader.SimplePopupWindow>

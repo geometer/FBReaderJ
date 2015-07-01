@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 class FileTypeMobipocket extends FileTypePalm {
 	FileTypeMobipocket() {
-		super("Mobipocket", "BOOKMOBI");
+		super("mobi", "BOOKMOBI");
 	}
 
 	@Override

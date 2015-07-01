@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ public class FileTree extends LibraryTree {
 
 	@Override
 	public ZLImage createCover() {
-		return BookUtil.getCover(getBook());
+		return CoverUtil.getCover(getBook(), PluginCollection.Instance());
 	}
 
 	public ZLFile getFile() {
@@ -99,7 +99,7 @@ public class FileTree extends LibraryTree {
 	@Override
 	public Book getBook() {
 		if (myBook == null) {
-			myBook = Collection.getBookByFile(myFile);
+			myBook = Collection.getBookByFile(myFile.getPath());
 			if (myBook == null) {
 				myBook = NULL_BOOK;
 			}
@@ -117,9 +117,9 @@ public class FileTree extends LibraryTree {
 			if (!prefix.endsWith("/")) {
 				prefix += "/";
 			}
-			return book.File.getPath().startsWith(prefix);
+			return book.getPath().startsWith(prefix);
 		} else if (myFile.isArchive()) {
-			return book.File.getPath().startsWith(myFile.getPath() + ":");
+			return book.getPath().startsWith(myFile.getPath() + ":");
 		} else {
 			return book.equals(getBook());
 		}
@@ -146,7 +146,7 @@ public class FileTree extends LibraryTree {
 		final TreeSet<ZLFile> set = new TreeSet<ZLFile>(ourFileComparator);
 		for (ZLFile file : myFile.children()) {
 			if (file.isDirectory() || file.isArchive() ||
-				PluginCollection.Instance().getPlugin(file) != null) {
+				Collection.getBookByFile(file.getPath()) != null) {
 				set.add(file);
 			}
 		}
