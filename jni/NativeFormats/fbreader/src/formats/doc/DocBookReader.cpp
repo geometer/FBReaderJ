@@ -354,16 +354,8 @@ void DocBookReader::footnotesStartHandler() {
 }
 
 void DocBookReader::ansiDataHandler(const char *buffer, std::size_t len) {
-	if (myConverter.isNull()) {
-		// lazy converter initialization
-		const ZLEncodingCollection &collection = ZLEncodingCollection::Instance();
-		myConverter = collection.converter(myEncoding);
-		if (myConverter.isNull()) {
-			myConverter = collection.defaultConverter();
-		}
-	}
 	std::string utf8String;
-	myConverter->convert(utf8String, buffer, buffer + len);
+	myConverter.convert(utf8String, buffer, buffer + len);
 	ZLUnicodeUtil::utf8ToUcs2(myBuffer, utf8String);
 }
 

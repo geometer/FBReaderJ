@@ -31,6 +31,7 @@
 
 #include "OleMainStream.h"
 #include "OleStreamParser.h"
+#include "DocAnsiConverter.h"
 
 class DocBookReader : public OleStreamParser {
 
@@ -95,7 +96,7 @@ private:
 	unsigned int myPictureCounter;
 
 	const std::string myEncoding;
-	shared_ptr<ZLEncodingConverter> myConverter;
+	DocAnsiConverter myConverter;
 };
 
 inline DocBookReader::~DocBookReader() {}
