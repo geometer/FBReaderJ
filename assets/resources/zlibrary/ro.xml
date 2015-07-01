@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Updated by girlea_alex@yahoo.com, Jun 21 of 2015 -->
+<!-- Updated by girlea_alex@yahoo.com, Jul 6 of 2014 -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -38,7 +40,7 @@
 		<node name="cs" value="Ceha"/>
 		<node name="da" value="Daneza"/>
 		<node name="de" value="Germana"/>
-		<node name="de-traditional" value="Germana (ortografia traditionala)"/>
+		<node name="de-traditional" value="Germana (traditionala)"/>
 		<node name="el" value="Greaca"/>
 		<node name="en" value="Engleza"/>
 		<node name="eo" value="Esperanto"/>
@@ -55,13 +57,13 @@
 		<node name="it" value="Italiana"/>
 		<node name="ja" value="Japoneza"/>
 		<node name="ka" value="Georgiana"/>
-		<node name="ko" value="Korean" toBeTranslated="true"/>
+		<node name="ko" value="Koreana"/>
 		<node name="lt" value="Lituaniana"/>
 		<node name="nb" value="Norvegiana"/>
 		<node name="nl" value="Olandeza"/>
 		<node name="pl" value="Poloneaza"/>
 		<node name="pt" value="Portugheza"/>
-		<node name="ro" value="Romana"/>
+		<node name="ro" value="Româna"/>
 		<node name="ru" value="Rusa"/>
 		<node name="sr" value="Sirba"/>
 		<node name="sv" value="Suedeza"/>
@@ -74,7 +76,7 @@
 		<node name="zh_TW" value="Chineza(traditionala)"/>
 		<node name="any" value="Oricare"/>
 		<node name="other" value="Altele"/>
-		<node name="multi" value="Multi limba"/>
+		<node name="multi" value="Mai multe limbi"/>
 		<node name="system" value="Sistem"/>
 	</node>
 	<node name="boolean3">
