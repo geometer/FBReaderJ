@@ -34,7 +34,8 @@ FBTextKind MiscUtil::referenceType(const std::string &link) {
 	if (!isFileReference) {
 		return
 			ZLStringUtil::stringStartsWith(lowerCasedLink, "mailto:") ||
-			ZLStringUtil::stringStartsWith(lowerCasedLink, "fbreader-action:")
+			ZLStringUtil::stringStartsWith(lowerCasedLink, "fbreader-action:") ||
+			ZLStringUtil::stringStartsWith(lowerCasedLink, "com-fbreader-action:")
 				? EXTERNAL_HYPERLINK : INTERNAL_HYPERLINK;
 	}
 	/*static const std::string FeedBooksPrefix0 = "http://feedbooks.com/book/stanza/";
