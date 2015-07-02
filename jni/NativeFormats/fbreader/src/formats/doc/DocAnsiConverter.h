@@ -21,11 +21,11 @@
 #define __DOCANSICONVERTER_H__
 
 #include <string>
-#include <map>
+#include <vector>
 
 class DocAnsiConverter {
 private:
-	std::map<unsigned int, std::string> myCharMap;
+	std::vector<std::string> myCharMap;
 public:
 	DocAnsiConverter();
 	void convert(std::string &dst, const char *srcStart, const char *srcEnd);
