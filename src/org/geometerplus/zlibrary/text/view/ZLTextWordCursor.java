@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -163,7 +163,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 		if (!isNull() && (paragraphIndex != myParagraphCursor.Index)) {
 			final ZLTextModel model = myParagraphCursor.Model;
 			paragraphIndex = Math.max(0, Math.min(paragraphIndex, model.getParagraphsNumber() - 1));
-			myParagraphCursor = myParagraphCursor.View.cursor(paragraphIndex);
+			myParagraphCursor = myParagraphCursor.CursorManager.get(paragraphIndex);
 			moveToParagraphStart();
 		}
 	}

@@ -2,6 +2,7 @@
 <!-- Romanian FBReaderJ resources aplicatii.romanesti@gmail.com -->
 <!-- Updated by girlea_alex@yahoo.com, Jul 6 of 2014 -->
 <!-- Updated by aplicatii.romanesti@gmail.com, Nov 20 of 2014 -->
+<!-- Updated by girlea_alex@yahoo.com, Jun 21 of 2015 -->
 <resources>
 	<node name="library" value="Biblioteca">
 		<node name="unknownAuthor" value="Autor necunoscut"/>
@@ -24,6 +25,15 @@
 		</node>
 		<node name="favorites" value="Favoritele mele">
 			<node name="summary" value="Cartile mele selectate"/>
+		</node>
+		<node name="chooseView" value="Alegeti vizualizarea"/>
+		<node name="wideCardsView" value="Carti mari"/>
+		<node name="smallCardsView" value="Carti mici"/>
+		<node name="tinyCardsView" value="Carti foarte mici"/>
+		<node name="coversView" value="Coperti"/>
+		<node name="oldView" value="Classic"/>
+		<node name="bookshelfView" value="Vizualizare raft">
+			<node name="summary" value="Comutați la vizualizarea de miniaturi"/>
 		</node>
 		<node name="found" value="S-au gasit">
 			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
@@ -69,7 +79,6 @@
 		<node name="deleteAll" value="Sterge pe toate"/>
 		<node name="uploadAgain" value="Incarca iarasi"/>
 		<node name="tryAgain" value="Incearca iarasi"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Reteaua de biblioteci Online">
 		<node name="sync" value="Reteaua de carti FBReader®">
@@ -119,8 +128,8 @@
 		<node name="stopSearching" value="Opri cautarea"/>
 		<node name="signIn" value="Conectati-va în"/>
 		<node name="signOut" value="Deconectare (%s)"/>
-		<node name="signUp" value="Sign up" toBeTranslated="true"/>
-		<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		<node name="signUp" value="Logare"/>
+		<node name="quickBuy" value="Cumpara rapid"/>
 		<node name="topup" value="Incarcati contul (în prezent: %s)"/>
 		<node name="topupTitle" value="Incarcati contul"/>
 		<node name="topupViaBrowser" value="Pagina deschis în browser"/>
@@ -211,11 +220,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Cartea a fost descarcata"/>
-		<node name="tickerError" value="Eroare descarcare carte"/>
-		<node name="contentSuccess" value="Descarcare completa"/>
-		<node name="contentError" value="Descarcare esuata"/>
-		<node name="downloadingStarted" value="Descarcarea cartii a inceput"/>
+		<node name="downloadCompleteTicker" value="Cartea a fost descarcata"/>
+		<node name="downloadFailedTicker" value="Eroare descarcare carte"/>
+		<node name="downloadComplete" value="Descarcare completa"/>
+		<node name="downloadFailed" value="Descarcare esuata"/>
+		<node name="downloadStarted" value="Descarcarea cartii a inceput"/>
 		<node name="alreadyDownloading" value="Cartea deja se descarcata"/>
 		<node name="cannotCreateDirectory" value="Nu se poate crea directorul %s"/>
 		<node name="cannotCreateFile" value="Nu se poate crea fisierul %s"/>
@@ -228,14 +237,22 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Aceasta carte"/>
 		<node name="allBooks" value="Toate cartile"/>
-		<node name="found" value="S-au gasit"/>
 		<node name="new" value="Marcaj nou"/>
-		<node name="open" value="Deschis"/>
-		<node name="edit" value="Editeaza marcaj"/>
-		<node name="delete" value="Sterge marcaj"/>
-		<node name="menu">
-			<node name="search" value="Cautare"/>
-		</node>
+		<node name="openBook" value="Deschis"/>
+		<node name="editBookmark" value="Editeaza marcaj"/>
+		<node name="deleteBookmark" value="Sterge marcaj"/>
+		<node name="search" value="Cautare"/>
+	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text"/>
+		<node name="style" value="Stil"/>
+		<node name="delete" value="Sterge"/>
+		<node name="deleteBookmark" value="Sterge marcaj"/>
+		<node name="saveText" value="Salvare text"/>
+		<node name="editStyle" value="Editeaza stilul…"/>
+	</node>
+	<node name="footnoteToast">
+		<node name="more" value="Mai mult"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Deschide libraria"/>
@@ -247,10 +264,6 @@
 		<node name="close" value="Inchide Aplicatia"/>
 	</node>
 	<node name="style" value="Stilul %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Editeaza stilul…"/>
-		<node name="deleteBookmark" value="Sterge marcaj"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Numele stilului"/>
 		<node name="invisible" value="Invizibil">
@@ -264,14 +277,13 @@
 		<node name="openInDictionary" value="Open in dictionar"/>
 		<node name="quoteFrom" value="Citat de la %s"/>
 		<node name="textInBuffer" value="Copiat în clipboard:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bookmark creat:&#10;%s"/>
 		<node name="clearSelection" value="Sterge"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Impartasit de la &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Impartasit de la &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
-		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
+		<node name="openStartScreen" value="Ecranul de start"/>
 		<node name="preferences" value="Setari"/>
 		<node name="bookInfo" value="Informatii despre carte"/>
 		<node name="library" value="Biblioteca"/>
@@ -321,6 +333,9 @@
 	<node name="Preferences">
 		<node name="sync" value="Sincronizare">
 			<node name="summary" value="Setarile retelei de carti"/>
+			<node name="site" value="Citește mai multe despre sincronizare">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
+			</node>
 			<node name="enable" value="Activeaza sincronizarea">
 				<node name="summaryOn" value="Sincronizeaza-mi libraria cu serverul FBReader"/>
 				<node name="summaryOnWithAccount" value="Sincronizeaza-mi libraria ca %s"/>
@@ -593,6 +608,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
+			<node name="showFootnoteToast" value="Afișare text legat într-o fereastr?">
+				<node name="never" value="Niciodata"/>
+				<node name="footnotesOnly" value="Doar pentru notele de subsol"/>
+				<node name="footnotesAndSuperscripts" value="Pentru notele de subsol ?i link-uri"/>
+				<node name="allInternalLinks" value="Pentru toate link-urile interne"/>
+			</node>
+			<node name="footnoteToastDuration" value="Cât timp pentru a afișa link-ul"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
+		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Aplica/ignora valoride definite in CSS"/>
 			<node name="fontFamily" value="Familia de fonturi">
@@ -642,10 +668,10 @@
 			<node name="hyperlinkVisited" value="Textul hyperlinkului vizitat"/>
 			<node name="highlightingForeground" value="Rezultatele cauratii"/>
 			<node name="highlightingBackground" value="Rezultatele cautarii in fundal"/>
-			<node name="footerOldStyle" value="Footer (old style)" toBeTranslated="true"/>
-			<node name="footerBackground" value="Footer background" toBeTranslated="true"/>
-			<node name="footerForeground" value="Footer text" toBeTranslated="true"/>
-			<node name="footerForegroundUnread" value="Footer line" toBeTranslated="true"/>
+			<node name="footerOldStyle" value="Subsol (stil clasic)"/>
+			<node name="footerBackground" value="Fundal subsol"/>
+			<node name="footerForeground" value="Text subsol"/>
+			<node name="footerForegroundUnread" value="Linie subsol"/>
 		</node>
 		<node name="margins" value="Margini">
 			<node name="summary" value="Marginile textului"/>
@@ -662,13 +688,13 @@
 				<node name="show" value="Glisorul vertical"/>
 				<node name="showAsProgress" value="Bara verticala de progres"/>
 				<node name="showAsFooter" value="Subsol orizontal"/>
-				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
+				<node name="showAsFooterOldStyle" value="Subsol orizontal (stil clasic)"/>
 			</node>
 			<node name="footerHeight" value="înaltime subsol"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="Culoare subsol (stil clasic)"/>
+			<node name="footerBackgroundColor" value="Culoare fundal subsol"/>
+			<node name="footerForegroundColor" value="Culoare text subsol"/>
+			<node name="footerForegroundUnreadColor" value="Culoare linie subsol "/>
 			<node name="tocMarks" value="Arata favoritele curpinsului">
 				<node name="summaryOn" value="Arata favoritele curpinsului în bara de subsol"/>
 				<node name="summaryOff" value="Nu arata semne de cuprins în bara de subsol"/>
@@ -710,7 +736,7 @@
 				<node name="none" value="Derulati fara animatie"/>
 				<node name="curl" value="Animatie la rotund"/>
 				<node name="slide" value="Animatie glisare"/>
-				<node name="slideOldStyle" value="Slide animation (old style)" toBeTranslated="true"/>
+				<node name="slideOldStyle" value="Animatie slide (stil clasic)"/>
 				<node name="shift" value="Animatie mutare"/>
 			</node>
 			<node name="animationSpeed" value="Viteza de animatie">
@@ -732,14 +758,19 @@
 				<node name="custom" value="Particularizate…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Dictionar">
-			<node name="summary" value="Setari dictionar "/>
-			<node name="dictionary" value="Dictionar"/>
-			<node name="translator" value="Traducator"/>
+		<node name="dictionary" value="Dictionar &amp; traducator">
+			<node name="summary" value="Setari de traducere"/>
+			<node name="dictionary" value="Cautati un singur cuvant in"/>
+			<node name="translator" value="Traduce fraze prin"/>
+			<node name="translationToastDuration" value="Cât timp pentru a afisa traducerea"/>
+			<node name="errorToastDuration" value="Cât timp pentru a afisa mesajul de eroare"/>
+			<node name="sourceLanguage" value="Traducere din">
+				<node name="detect" value="Autodetectare limba"/>
+				</node>
 			<node name="targetLanguage" value="Tradu in">
 				<node name="any" value="toate limbile"/>
 			</node>
-			<node name="tappingAction" value="Atingere lunga pentru actiune">
+			<node name="longTapAction" value="Atingere lunga pentru actiune">
 				<node name="doNothing" value="Apasând lung nu face nimic"/>
 				<node name="selectSingleWord" value="Apasând lung selecteaza un singur cuvânt"/>
 				<node name="startSelecting" value="Apasând lung initiaza selectarea"/>
@@ -753,7 +784,7 @@
 		<node name="images" value="Imagini">
 			<node name="summary" value="Setari afisare imagine"/>
 			<node name="backgroundColor" value="Culoare de fundal pentru a vizualizare imagini"/>
-			<node name="tappingAction" value="Actiune la apasare lunga">
+			<node name="longTapAction" value="Actiune la apasare lunga">
 				<node name="doNothing" value="Apasând lung nu face nimic"/>
 				<node name="selectImage" value="Apasând lung selecteaza imaginea"/>
 				<node name="openImageView" value="Apasând lung se vizualizeaza imaginea"/>
@@ -809,7 +840,7 @@
 			<node name="summary" value="Informatii versiune, contacte"/>
 			<node name="version" value="Versiune"/>
 			<node name="site" value="Visitati website-ul nostru">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="Trimiteti-ne un e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -836,6 +867,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="Nu, mersi"/>
 			<node name="install" value="Instaleaza"/>
 			<node name="update" value="Actualizati"/>
 			<node name="skip" value="Sari peste"/>
@@ -846,7 +878,7 @@
 			<node name="editUrl" value="Editati URL-ul"/>
 			<node name="tryAgain" value="Încercati din nou"/>
 			<node name="openBook" value="Citeste"/>
-			<node name="editInfo" value="Editeaza"/>
+			<node name="edit" value="Editeaza"/>
 			<node name="reloadInfo" value="Reîncarca"/>
 			<node name="shareBook" value="Impartaseste"/>
 			<node name="topup" value="Incarca"/>
@@ -868,6 +900,11 @@
 		<node name="backgroundAuthentication">
 			<node name="message" value="Este necesara autentificarea"/>
 		</node>
+		<node name="missingDictionary" value="Disparut %s">
+			<node name="install" value="Instalare %s"/>
+			<node name="configure" value="Configurare traducere"/>
+			<node name="skip" value="Sari"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalati dictionar"/>
 			<node name="message" value="Doriti sa instalati %s?"/>
@@ -883,26 +920,27 @@
 			<node name="message" value="Fisierul exista deja. Doriti reincarcarea lui?"/>
 		</node>
 		<node name="litresUserRegistration">
-			<node name="title" value="Register User" toBeTranslated="true"/>
-			<node name="login" value="Username" toBeTranslated="true"/>
-			<node name="password" value="Password" toBeTranslated="true"/>
-			<node name="confirmPassword" value="Password&#10;confirmation" toBeTranslated="true"/>
-			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="title" value="Inregistrare utilizator"/>
+			<node name="login" value="Nume de utilizator"/>
+			<node name="password" value="Parola"/>
+			<node name="confirmPassword" value="Parola&#10;confirmare"/>
+			<node name="email" value="Email"/>
 		</node>
 		<node name="litresAutoSignIn">
-			<node name="title" value="Signing in" toBeTranslated="true"/>
-			<node name="email" value="Email" toBeTranslated="true"/>
+			<node name="title" value="Conectare"/>
+			<node name="email" value="Email"/>
 			<node name="actions">
-				<node name="title" value="Unable to sign in with email&#10;%s" toBeTranslated="true"/>
-				<node name="recover" value="Recover account information" toBeTranslated="true"/>
-				<node name="signIn" value="Sign in manually" toBeTranslated="true"/>
-				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
+				<node name="title" value="Imposibil de a conecta cu acest email&#10;%s"/>
+				<node name="recover" value="Recuperare informații de cont"/>
+				<node name="signIn" value="Conectare manuala"/>
+				<node name="anotherEmail" value="Selectati un alt email"/>
 			</node>
-			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
-			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
-			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+			<node name="signedIn" value="Sunteți conectat cu adresa de e-mail %s."/>
+			<node name="registrationSuccessful" value="Am creat un cont pentru dumneavoastră. Informații detaliate au fost trimise la %s."/>
+			<node name="passwordSent" value="Informațiile contului dvs. au fost trimise la %s. Vă rugăm să verificați email-ul."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Traducerea este in  progres…"/>
 			<node name="tryConnect" value="Incercare de conectare. Va rugam asteptati…"/>
 			<node name="downloadingBook" value="Descarcare carte %s"/>
 			<node name="search" value="Cautarea a inceput. Va rugam asteptati…"/>
@@ -920,10 +958,10 @@
 			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati…"/>
 			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati…"/>
 			<node name="initDRMEngine" value="Se incarca motorul DRM. Va rugam asteptati…"/>
-			<node name="acquireLicense" value="Preluam licenta. Va rugam asteptati…"/>
-			<node name="registerUser" value="Registering new account. Please, wait…" toBeTranslated="true"/>
-			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
-			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicence" value="Preluam licenta. Va rugam asteptati…"/>
+			<node name="registerUser" value="Inregistrare cont nou. Asteptati va rog…"/>
+			<node name="autoSignIn" value="Conectare. Asteptati va rog…"/>
+			<node name="recoverPassword" value="Recuperare parola. Asteptati va rog…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Eroare interna la server"/>
@@ -937,14 +975,14 @@
 			<node name="notAnOPDS" value="Acesta nu este un catalog OPDS"/>
 			<node name="noRequiredInformation" value="Informatia solicitata nu exista în catalog"/>
 			<node name="cacheDirectoryError" value="Nu se poate crea un directorul de cache"/>
-			<node name="usernameAlreadyInUse" value="Username already in use" toBeTranslated="true"/>
-			<node name="usernameNotSpecified" value="Username should be non-empty" toBeTranslated="true"/>
-			<node name="passwordNotSpecified" value="Password should be non-empty" toBeTranslated="true"/>
-			<node name="passwordsDoNotMatch" value="The entered passwords do not match" toBeTranslated="true"/>
-			<node name="emailNotSpecified" value="Email address is empty" toBeTranslated="true"/>
-			<node name="emailAlreadyInUse" value="Email address already in use" toBeTranslated="true"/>
-			<node name="invalidEMail" value="Invalid email address" toBeTranslated="true"/>
-			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" toBeTranslated="true"/>
+			<node name="usernameAlreadyInUse" value="Nume utilizator deja în uz"/>
+			<node name="usernameNotSpecified" value="Numele de utilizator nu ar trebui să fie gol"/>
+			<node name="passwordNotSpecified" value="Parola nu trebuie să fie goala"/>
+			<node name="passwordsDoNotMatch" value="Cele două parole nu se potrivesc"/>
+			<node name="emailNotSpecified" value="Adresa de e-mail este necompletata"/>
+			<node name="emailAlreadyInUse" value="Adresa de e-mail este deja în uz"/>
+			<node name="invalidEMail" value="Adresa de e-mail este invalida"/>
+			<node name="tooManyRegistrations" value="Prea multe înregistrări de la adresa dumneavoastră de IP;&#10;vă rugăm să încercați din nou în câteva minute"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Autentificare"/>
@@ -1022,6 +1060,14 @@
 		<node name="missingPlugin">
 			<node name="title" value="Plugin-ul pentru fisierele e tip %s nu este instalat. Sa-l instalez acum?"/>
 		</node>
+		<node name="licensing">
+			<node name="title" value="%s nu este licențiat"/>
+			<node name="message" value="Cumpărati acum pe Google Play?"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Nu se poate verifica %s licenta"/>
+			<node name="message" value="Incercati din nou?"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Eroare %s in codul nativ in timpul lecturii '%s'"/>
@@ -1072,7 +1118,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Instalare plugin-uri">
 		<node name="noMorePlugins" value="Nu avem, plugin-uri noi in acest moment, ne pare rau"/>
@@ -1103,8 +1149,8 @@
 		<node name="djvu" value="DjVu">
 			<node name="summary" value="Citeste carti in format DjVu"/>
 		</node>
-		<node name="cbr" value="Comic Books" toBeTranslated="true">
-			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
+		<node name="cbr" value="Cărți de benzi desenate">
+			<node name="summary" value="Citire cărți de benzi desenate (CBR, CBZ)"/>
 		</node>
 	</node>
 	<node name="drm">
@@ -1119,4 +1165,21 @@
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="E.g.: 125%%"/>
 	</node>
+	<node name="duration">
+		<node name="duration1" value="1 secunda"/>
+		<node name="duration3" value="3 secunde"/>
+		<node name="duration5" value="5 secunde"/>
+		<node name="duration10" value="10 secunde"/>
+		<node name="duration20" value="20 secunde"/>
+		<node name="duration40" value="40 secunde"/>
+		<node name="duration60" value="1 minuta"/>
+		<node name="duration300" value="5 minute"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="Eroare necunoscuta"/>
+		<node name="noArticle" value="Nu sau gasit articole pentru “%s”"/>
+		<node name="cannotOpenDictionary" value="Nu se poate deschide dictionarul"/>
+		<node name="noDictionarySelected" value="Dictionar ne selectat; vă rugăm să ajustați setările Dictionar"/>
+	</node>
+	<node name="premium" value="FBReader Premium Edition"/>
 </resources>

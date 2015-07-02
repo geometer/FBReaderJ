@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,7 +113,8 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_item, parent, false);
-			((TextView)view).setText(getItem(position).MenuItemName);
+			final TextView titleView = (TextView)view.findViewById(R.id.menu_item_title);
+			titleView.setText(getItem(position).MenuItemName);
 			return view;
 		}
 	}

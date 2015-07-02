@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.FBView;
+import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 
 public class SelectionTranslateAction extends FBAndroidAction {
 	SelectionTranslateAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -30,12 +30,19 @@ public class SelectionTranslateAction extends FBAndroidAction {
 	@Override
 	protected void run(Object ... params) {
 		final FBView fbview = Reader.getTextView();
+		final DictionaryHighlighting dictionaryHilite = new DictionaryHighlighting(fbview);
 		DictionaryUtil.openTextInDictionary(
 			BaseActivity,
-			fbview.getSelectedText(),
+			fbview.getSelectedSnippet().getText(),
 			fbview.getCountOfSelectedWords() == 1,
 			fbview.getSelectionStartY(),
-			fbview.getSelectionEndY()
+			fbview.getSelectionEndY(),
+			new Runnable() {
+				public void run() {
+					fbview.addHighlighting(dictionaryHilite);
+					Reader.getViewWidget().repaint();
+				}
+			}
 		);
 		fbview.clearSelection();
 	}

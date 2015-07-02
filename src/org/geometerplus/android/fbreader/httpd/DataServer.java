@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,22 +19,30 @@
 
 package org.geometerplus.android.fbreader.httpd;
 
-import java.io.InputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
+import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
-import org.geometerplus.fbreader.book.BookUtil;
+import org.geometerplus.fbreader.book.CoverUtil;
+import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.formats.PluginImage;
 
 public class DataServer extends NanoHTTPD {
-	DataServer(int port) {
+	private final DataService myService;
+
+	DataServer(DataService service, int port) {
 		super(port);
+		myService = service;
 	}
 
 	@Override
@@ -50,7 +58,10 @@ public class DataServer extends NanoHTTPD {
 
 	private Response serveCover(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
 		try {
-			final ZLImage image = BookUtil.getCover(DataUtil.fileFromEncodedPath(uri.substring(7)));
+			final ZLImage image = CoverUtil.getCover(
+				DataUtil.fileFromEncodedPath(uri.substring(7)),
+				PluginCollection.Instance()
+			);
 			if (image instanceof ZLFileImageProxy) {
 				final ZLFileImageProxy proxy = (ZLFileImageProxy)image;
 				proxy.synchronize();
@@ -58,16 +69,56 @@ public class DataServer extends NanoHTTPD {
 				if (realImage == null) {
 					return notFound(uri);
 				}
-				final InputStream stream = realImage.inputStream();
+				InputStream stream = realImage.inputStream();
 				if (stream == null) {
 					return notFound(uri);
 				}
-				return new Response(Response.Status.OK, MimeType.IMAGE_PNG.toString(), stream);
-			} else /* TODO: process PluginImage & null */ {
+				final BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inJustDecodeBounds = true;
+				try {
+					BitmapFactory.decodeStream(stream, null, options);
+				} catch (Exception e) {
+					return notFound(uri);
+				}
+				if (options.outWidth <= 0 || options.outHeight <= 0) {
+					return notFound(uri);
+				}
+				stream.close();
+				stream = realImage.inputStream();
+				if (stream == null) {
+					return notFound(uri);
+				}
+				final Response res =
+					new Response(Response.Status.OK, MimeType.IMAGE_PNG.toString(), stream);
+				res.addHeader("X-Width", String.valueOf(options.outWidth));
+				res.addHeader("X-Height", String.valueOf(options.outHeight));
+				return res;
+			} else if (image instanceof PluginImage) {
+				final PluginImage pluginImage = (PluginImage)image;
+				if (pluginImage.isSynchronized()) {
+					try {
+						final Bitmap bitmap =
+							((ZLBitmapImage)pluginImage.getRealImage()).getBitmap();
+						final ByteArrayOutputStream os = new ByteArrayOutputStream();
+						bitmap.compress(Bitmap.CompressFormat.JPEG, 85, os);
+						final InputStream is = new ByteArrayInputStream(os.toByteArray());
+						final Response res =
+							new Response(Response.Status.OK, MimeType.IMAGE_JPEG.toString(), is);
+						res.addHeader("X-Width", String.valueOf(bitmap.getWidth()));
+						res.addHeader("X-Height", String.valueOf(bitmap.getHeight()));
+						return res;
+					} catch (Throwable t) {
+						return noContent(uri);
+					}
+				} else {
+					myService.ImageSynchronizer.synchronize(pluginImage, null);
+					return noContent(uri);
+				}
+			} else {
 				return notFound(uri);
 			}
-		} catch (Exception e) {
-			return forbidden(uri, e);
+		} catch (Throwable t) {
+			return forbidden(uri, t);
 		}
 	}
 
@@ -152,6 +203,14 @@ public class DataServer extends NanoHTTPD {
 			Response.Status.NOT_FOUND,
 			MimeType.TEXT_HTML.toString(),
 			"<html><body><h1>Not found: " + uri + "</h1></body></html>"
+		);
+	}
+
+	private Response noContent(String uri) {
+		return new Response(
+			Response.Status.NO_CONTENT,
+			MimeType.TEXT_HTML.toString(),
+			"<html><body><h1>No content: " + uri + "</h1></body></html>"
 		);
 	}
 

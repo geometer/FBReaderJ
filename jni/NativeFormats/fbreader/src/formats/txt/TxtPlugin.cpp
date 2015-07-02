@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ bool TxtPlugin::providesMetainfo() const {
 }
 
 const std::string TxtPlugin::supportedFileType() const {
-	return "plain text";
+	return "txt";
 }
 
 bool TxtPlugin::readMetainfo(Book &/*book*/) const {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,16 +39,12 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 
-import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.DeviceType;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
 	public final ZLBooleanOption OldShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBar", true);
 	public final ZLBooleanOption ShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBarNew", false);
-	public final ZLIntegerOption ScreenHintStageOption = new ZLIntegerOption("LookNFeel", "ScreenHintStage", 0);
 	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
 	{
@@ -62,15 +58,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 
-	private FBReader myActivity;
 	private final Application myApplication;
 
 	ZLAndroidLibrary(Application application) {
 		myApplication = application;
-	}
-
-	public void setActivity(FBReader activity) {
-		myActivity = activity;
 	}
 
 	public AssetManager getAssets() {
@@ -114,18 +105,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return DateFormat.getTimeFormat(myApplication.getApplicationContext()).format(new Date());
 	}
 
-	@Override
-	public void setScreenBrightness(int percent) {
-		if (myActivity != null) {
-			myActivity.setScreenBrightness(percent);
-		}
-	}
-
-	@Override
-	public int getScreenBrightness() {
-		return (myActivity != null) ? myActivity.getScreenBrightness() : 0;
-	}
-
 	private DisplayMetrics myMetrics;
 	private DisplayMetrics getMetrics() {
 		if (myMetrics == null) {
@@ -158,8 +137,14 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		set.add(Locale.getDefault().getLanguage());
 		final TelephonyManager manager = (TelephonyManager)myApplication.getSystemService(Context.TELEPHONY_SERVICE);
 		if (manager != null) {
-			final String country0 = manager.getSimCountryIso().toLowerCase();
-			final String country1 = manager.getNetworkCountryIso().toLowerCase();
+			String country0 = manager.getSimCountryIso();
+			if (country0 != null) {
+				country0 = country0.toLowerCase();
+			}
+			String country1 = manager.getNetworkCountryIso();
+			if (country1 != null) {
+				country1 = country1.toLowerCase();
+			}
 			for (Locale locale : Locale.getAvailableLocales()) {
 				final String country = locale.getCountry().toLowerCase();
 				if (country != null && country.length() > 0 &&

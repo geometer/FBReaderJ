@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -189,7 +189,7 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 				if (ref[0] == '#') {
 					const char *type = attributeValue(xmlattributes, "type");
 					static const std::string NOTE = "note";
-					if ((type != 0) && (NOTE == type)) {
+					if (type != 0 && NOTE == type) {
 						myHyperlinkType = FOOTNOTE;
 					} else {
 						myHyperlinkType = INTERNAL_HYPERLINK;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,6 +259,23 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 			return Parent.getVerticalAlign(metrics);
 		}
 	}
+	@Override
+	protected boolean isVerticallyAlignedInternal() {
+		if (myEntry.isFeatureSupported(LENGTH_VERTICAL_ALIGN)) {
+			return myEntry.hasNonZeroLength(LENGTH_VERTICAL_ALIGN);
+		} else if (myEntry.isFeatureSupported(NON_LENGTH_VERTICAL_ALIGN)) {
+			switch (myEntry.getVerticalAlignCode()) {
+				default:
+					return false;
+				case 0: // sub
+				case 1: // super
+					return true;
+			}
+		} else {
+			return false;
+		}
+	}
+
 	@Override
 	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {

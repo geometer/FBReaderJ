@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.network.Util;
+import org.geometerplus.android.fbreader.network.litres.UserRegistrationActivity;
 
 public class SignUpAction extends Action {
 	public SignUpAction(Activity activity) {
@@ -51,7 +52,7 @@ public class SignUpAction extends Action {
 		final INetworkLink link = tree.getLink();
 		try {
 			myActivity.startActivity(Util.authorisationIntent(
-				link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/signUp")
+				link, myActivity, UserRegistrationActivity.class
 			));
 		} catch (ActivityNotFoundException e) {
 		}

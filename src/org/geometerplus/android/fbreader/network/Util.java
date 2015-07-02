@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,8 +79,8 @@ public abstract class Util implements UserRegistrationConstants {
 		});
 	}
 
-	public static Intent authorisationIntent(INetworkLink link, Uri id) {
-		final Intent intent = new Intent(AUTHORISATION_ACTION, id);
+	public static Intent authorisationIntent(INetworkLink link, Activity activity, Class<? extends Activity> cls) {
+		final Intent intent = new Intent(activity, cls);
 		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
 		intent.putExtra(SIGNIN_URL, link.getUrl(UrlInfo.Type.SignIn));
 		intent.putExtra(SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));
@@ -97,6 +97,14 @@ public abstract class Util implements UserRegistrationConstants {
 		intent.putExtra(AuthenticationActivity.SCHEME_KEY, "https");
 		intent.putExtra(AuthenticationActivity.CUSTOM_AUTH_KEY, true);
 		activity.startActivity(intent);
+	}
+
+	public static boolean isOurLink(String url) {
+		try {
+			return Uri.parse(url).getHost().endsWith(".fbreader.org");
+		} catch (Throwable t) {
+			return false;
+		}
 	}
 
 	public static void openInBrowser(Activity activity, String url) {

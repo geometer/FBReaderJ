@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,5 +22,6 @@ package org.geometerplus.fbreader.bookmodel;
 public interface FBHyperlinkType {
 	byte NONE = 0;
 	byte INTERNAL = 1;
-	byte EXTERNAL = 2;
+	byte FOOTNOTE = 2;
+	byte EXTERNAL = 3;
 }

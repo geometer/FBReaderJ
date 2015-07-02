@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,14 @@ public abstract class SQLiteUtil {
 	public static void bindString(SQLiteStatement statement, int index, String value) {
 		if (value != null) {
 			statement.bindString(index, value);
+		} else {
+			statement.bindNull(index);
+		}
+	}
+
+	public static void bindLong(SQLiteStatement statement, int index, Long value) {
+		if (value != null) {
+			statement.bindLong(index, value);
 		} else {
 			statement.bindNull(index);
 		}

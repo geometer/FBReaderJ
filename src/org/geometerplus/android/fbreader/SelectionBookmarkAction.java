@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,12 @@
 package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
+import android.os.Parcelable;
+import android.view.View;
+
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -27,8 +33,7 @@ import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
-import org.geometerplus.android.fbreader.style.StyleListActivity;
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.fbreader.bookmark.EditBookmarkActivity;
 
 public class SelectionBookmarkAction extends FBAndroidAction {
 	SelectionBookmarkAction(FBReader baseApplication, FBReaderApp fbreader) {
@@ -37,26 +42,30 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final boolean existingBookmark;
 		final Bookmark bookmark;
-
 		if (params.length != 0) {
-			existingBookmark = true;
 			bookmark = (Bookmark)params[0];
 		} else {
-			existingBookmark = false;
 			bookmark = Reader.addSelectionBookmark();
-			UIUtil.showMessageText(
-				BaseActivity,
-				ZLResource.resource("selection").getResource("bookmarkCreated").getValue()
-					.replace("%s", bookmark.getText())
-			);
 		}
 
-		final Intent intent =
-			new Intent(BaseActivity.getApplicationContext(), StyleListActivity.class);
-		FBReaderIntents.putBookmarkExtra(intent, bookmark);
-		intent.putExtra(StyleListActivity.EXISTING_BOOKMARK_KEY, existingBookmark);
-		OrientationUtil.startActivity(BaseActivity, intent);
+		final SuperActivityToast toast =
+			new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
+		toast.setText(bookmark.getText());
+		toast.setDuration(SuperToast.Duration.EXTRA_LONG);
+		toast.setButtonIcon(
+			android.R.drawable.ic_menu_edit,
+			ZLResource.resource("dialog").getResource("button").getResource("edit").getValue()
+		);
+		toast.setOnClickWrapper(new OnClickWrapper("bkmk", new SuperToast.OnClickListener() {
+			@Override
+			public void onClick(View view, Parcelable token) {
+				final Intent intent =
+					new Intent(BaseActivity.getApplicationContext(), EditBookmarkActivity.class);
+				FBReaderIntents.putBookmarkExtra(intent, bookmark);
+				OrientationUtil.startActivity(BaseActivity, intent);
+			}
+		}));
+		BaseActivity.showToast(toast);
 	}
 }

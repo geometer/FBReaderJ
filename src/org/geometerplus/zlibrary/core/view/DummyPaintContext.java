@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,12 +114,16 @@ final class DummyPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void fillPolygon(int[] xs, int ys[]) {
+	public void fillPolygon(int[] xs, int[] ys) {
 	}
 	@Override
-	public void drawPolygonalLine(int[] xs, int ys[]) {
+	public void drawPolygonalLine(int[] xs, int[] ys) {
 	}
 	@Override
-	public void drawOutline(int[] xs, int ys[]) {
+	public void drawOutline(int[] xs, int[] ys) {
+	}
+
+	@Override
+	public void fillCircle(int x, int y, int radius) {
 	}
 }

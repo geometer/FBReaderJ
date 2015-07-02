@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ public class FolderListDialogActivity extends ListActivity {
 				}
 				((DirectoriesAdapter)getListAdapter()).notifyDataSetChanged();
 			} else if (existing != index - 1) {
-				UIUtil.showMessageText(
+				UIMessageUtil.showMessageText(
 					this, myResource.getResource("duplicate").getValue().replace("%s", path)
 				);
 			}

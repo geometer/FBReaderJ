@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ public class SearchResultsTree extends FilteredTree {
 	private final String myId;
 	private final ZLResource myResource;
 
-	SearchResultsTree(RootTree root, String id, String pattern) {
-		super(root, new Filter.ByPattern(pattern), 0);
+	SearchResultsTree(RootTree root, String id, String pattern, int position) {
+		super(root, new Filter.ByPattern(pattern), position);
 		myId = id;
 		myResource = resource().getResource(myId);
 		Pattern = pattern != null ? pattern : "";

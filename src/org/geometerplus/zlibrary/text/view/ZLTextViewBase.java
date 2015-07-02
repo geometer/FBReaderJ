@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,14 @@ abstract class ZLTextViewBase extends ZLView {
 
 	ZLTextViewBase(ZLApplication application) {
 		super(application);
+	}
+
+	private int myMaxSelectionDistance = 0;
+	protected final int maxSelectionDistance() {
+		if (myMaxSelectionDistance == 0) {
+			myMaxSelectionDistance = ZLibrary.Instance().getDisplayDPI() / 20;
+		}
+		return myMaxSelectionDistance;
 	}
 
 	protected void resetMetrics() {
@@ -100,6 +108,13 @@ abstract class ZLTextViewBase extends ZLView {
 
 	int getTextAreaHeight() {
 		return getContextHeight() - getTopMargin() - getBottomMargin();
+	}
+
+	protected int getColumnIndex(int x) {
+		if (!twoColumnView()) {
+			return -1;
+		}
+		return 2 * x <= getContextWidth() + getLeftMargin() - getRightMargin() ? 0 : 1;
 	}
 
 	public int getTextColumnWidth() {
@@ -201,6 +216,8 @@ abstract class ZLTextViewBase extends ZLView {
 			return Math.min(300, getTextColumnWidth());
 		} else if (element instanceof ExtensionElement) {
 			return ((ExtensionElement)element).getWidth();
+		} else if (element == ZLTextElement.NBSpace) {
+			return getContext().getSpaceWidth();
 		} else if (element == ZLTextElement.Indent) {
 			return myTextStyle.getFirstLineIndent(metrics());
 		} else if (element instanceof ZLTextFixedHSpaceElement) {

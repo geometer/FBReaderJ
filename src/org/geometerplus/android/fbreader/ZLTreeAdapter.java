@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,12 +28,11 @@ import org.geometerplus.zlibrary.core.tree.ZLTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
-	final ZLTree<?> Root;
+public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 	private final ListView myParent;
+	private final ZLTree<?> Root;
 	private ZLTree<?>[] myItems;
 	private final HashSet<ZLTree<?>> myOpenItems = new HashSet<ZLTree<?>>();
-	protected ZLTree<?> mySelectedTree;
 
 	protected ZLTreeAdapter(ListView parent, ZLTree<?> root) {
 		myParent = parent;
@@ -75,7 +74,6 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	}
 
 	public final void selectItem(ZLTree<?> tree) {
-		mySelectedTree = tree;
 		if (tree == null) {
 			return;
 		}
@@ -161,13 +159,6 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		}
 		expandOrCollapseTree(tree);
 		return true;
-	}
-
-	public void resetTree() {
-		myItems = new ZLTree[Root.getSize() - 1];
-		//myParent.invalidateViews();
-		//myParent.requestLayout();
-		notifyDataSetChanged();
 	}
 
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {

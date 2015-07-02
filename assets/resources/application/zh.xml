@@ -23,22 +23,31 @@
 		<node name="favorites" value="超爱的书">
 			<node name="summary" value="很喜欢的，特地收藏起来的书刊"/>
 		</node>
+		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
+		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
+		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
+		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
+		<node name="coversView" value="Covers" toBeTranslated="true"/>
+		<node name="oldView" value="Classic" toBeTranslated="true"/>
+		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
+			<node name="summary" value="Switch to thumbnail view" toBeTranslated="true"/>
+		</node>
 		<node name="found" value="搜索结果">
 			<node name="summary" value="搜索结果: %s"/>
 		</node>
 		<node name="sync" value="Synchronisation" toBeTranslated="true">
 			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
 			<node name="sync-success" value="Synchronised" toBeTranslated="true">
-				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+				<node name="summary" value="Books successfully uploaded to the server" toBeTranslated="true"/>
 			</node>
 			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
-				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+				<node name="summary" value="Books not uploaded to the server due to errors" toBeTranslated="true"/>
 			</node>
 			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
-				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+				<node name="summary" value="Books no longer accessible from the server" toBeTranslated="true"/>
 			</node>
 			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
-				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+				<node name="summary" value="Books yet to be uploaded to the server" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="fileTree" value="文件夹">
@@ -67,11 +76,10 @@
 		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
 		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
 		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader 网络书库">
 		<node name="sync" value="FBReader® book network" toBeTranslated="true">
-			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+			<node name="summary" value="My personal catalogue" toBeTranslated="true"/>
 		</node>
 		<node name="byAuthor" value="作者">
 			<node name="summary" value="按作者排序"/>
@@ -209,11 +217,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="下载成功"/>
-		<node name="tickerError" value="下载出错"/>
-		<node name="contentSuccess" value="下载完成"/>
-		<node name="contentError" value="下载失败"/>
-		<node name="downloadingStarted" value="开始下载"/>
+		<node name="downloadCompleteTicker" value="下载成功"/>
+		<node name="downloadFailedTicker" value="下载出错"/>
+		<node name="downloadComplete" value="下载完成"/>
+		<node name="downloadFailed" value="下载失败"/>
+		<node name="downloadStarted" value="开始下载"/>
 		<node name="alreadyDownloading" value="已在下载"/>
 		<node name="cannotCreateDirectory" value="无法创建文件夹 %s"/>
 		<node name="cannotCreateFile" value="无法创建文件 %s"/>
@@ -226,14 +234,22 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="本书"/>
 		<node name="allBooks" value="所有图书"/>
-		<node name="found" value="搜索结果"/>
 		<node name="new" value="添加书签"/>
-		<node name="open" value="打开书签"/>
-		<node name="edit" value="编辑书签"/>
-		<node name="delete" value="删除书签"/>
-		<node name="menu">
-			<node name="search" value="搜索"/>
-		</node>
+		<node name="openBook" value="打开书签"/>
+		<node name="editBookmark" value="编辑书签"/>
+		<node name="deleteBookmark" value="删除书签"/>
+		<node name="search" value="搜索"/>
+	</node>
+	<node name="editBookmark">
+		<node name="text" value="Text" toBeTranslated="true"/>
+		<node name="style" value="Style" toBeTranslated="true"/>
+		<node name="delete" value="Delete" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="删除书签"/>
+		<node name="saveText" value="Save text" toBeTranslated="true"/>
+		<node name="editStyle" value="编辑样式…"/>
+	</node>
+	<node name="footnoteToast">
+		<node name="more" value="More" toBeTranslated="true"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="打开书库"/>
@@ -245,10 +261,6 @@
 		<node name="close" value="关闭FBReader"/>
 	</node>
 	<node name="style" value="样式 %s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="编辑样式…"/>
-		<node name="deleteBookmark" value="删除书签"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="样式名称"/>
 		<node name="invisible" value="不可见">
@@ -262,11 +274,10 @@
 		<node name="openInDictionary" value="打开字典"/>
 		<node name="quoteFrom" value="从%s中引用"/>
 		<node name="textInBuffer" value="复制到剪贴板:&#10;%s"/>
-		<node name="bookmarkCreated" value="创建书签:&#10;%s"/>
 		<node name="clearSelection" value="清除"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="共享自 &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; "/>
+		<node name="sharedFrom" value="共享自 &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; "/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
@@ -319,6 +330,9 @@
 	<node name="Preferences">
 		<node name="sync" value="Synchronisation" toBeTranslated="true">
 			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
+				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
+			</node>
 			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
 				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
@@ -337,18 +351,18 @@
 			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
 			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
 				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+				<node name="summaryOff" value="Synchronise reading positions, but do not open same book on all devices" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="directories" value="文件夹设定">
 			<node name="summary" value="相关文件夹位置设定"/>
-			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
+			<node name="bookPath" value="Where to search for books" toBeTranslated="true">
 				<node name="chooserTitle" value="书文存放位置"/>
 			</node>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true">
 				<node name="chooserTitle" value="书文存放位置"/>
 			</node>
-			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
+			<node name="fontPath" value="Where to search for fonts" toBeTranslated="true">
 				<node name="chooserTitle" value="字体存放位置"/>
 			</node>
 			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
@@ -591,6 +605,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="toast" value="Pop-ups" toBeTranslated="true">
+			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
+			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
+				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
+				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
+				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+			</node>
+			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
+		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="使用/忽略CSS中定义的值"/>
 			<node name="fontFamily" value="Font family" toBeTranslated="true">
@@ -614,7 +639,7 @@
 			<node name="summary" value="设置颜色"/>
 			<node name="background" value="背景色">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="solidColor" value="Solid colour…" toBeTranslated="true"/>
 					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
 					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
 				</node>
@@ -628,7 +653,7 @@
 			<node name="fillMode" value="Fill mode" toBeTranslated="true">
 				<node name="tile" value="Tile" toBeTranslated="true"/>
 				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
-				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="fullscreen" value="Fullscreen" toBeTranslated="true"/>
 				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
 				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
 				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
@@ -663,10 +688,10 @@
 				<node name="showAsFooterOldStyle" value="Horizontal footer (old style)" toBeTranslated="true"/>
 			</node>
 			<node name="footerHeight" value="页脚高度"/>
-			<node name="footerOldStyleColor" value="Footer (old style) color" toBeTranslated="true"/>
-			<node name="footerBackgroundColor" value="Footer background color" toBeTranslated="true"/>
-			<node name="footerForegroundColor" value="Footer text color" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line color" toBeTranslated="true"/>
+			<node name="footerOldStyleColor" value="Footer (old style) colour" toBeTranslated="true"/>
+			<node name="footerBackgroundColor" value="Footer background colour" toBeTranslated="true"/>
+			<node name="footerForegroundColor" value="Footer text colour" toBeTranslated="true"/>
+			<node name="footerForegroundUnreadColor" value="Footer line colour" toBeTranslated="true"/>
 			<node name="tocMarks" value="显示内容目录标志">
 				<node name="summaryOn" value="在页脚栏显示内容目录标志"/>
 				<node name="summaryOff" value="不在页脚栏显示内容目录标志"/>
@@ -730,14 +755,19 @@
 				<node name="custom" value="定制…"/>
 			</node>
 		</node>
-		<node name="dictionary" value="字典设定">
-			<node name="summary" value="设置字典及其对应操作"/>
-			<node name="dictionary" value="字典"/>
-			<node name="translator" value="译者"/>
+		<node name="dictionary" value="Dictionary &amp; translator" toBeTranslated="true">
+			<node name="summary" value="Translation settings" toBeTranslated="true"/>
+			<node name="dictionary" value="Look up single word in" toBeTranslated="true"/>
+			<node name="translator" value="Translate phrases via" toBeTranslated="true"/>
+			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
+			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
+			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
+				<node name="detect" value="Automatically detect language" toBeTranslated="true"/>
+			</node>
 			<node name="targetLanguage" value="翻译为">
 				<node name="any" value="所有语言"/>
 			</node>
-			<node name="tappingAction" value="长按动作设定">
+			<node name="longTapAction" value="长按动作设定">
 				<node name="doNothing" value="长按不做任何事"/>
 				<node name="selectSingleWord" value="长按选择词语"/>
 				<node name="startSelecting" value="长按选择内容"/>
@@ -751,7 +781,7 @@
 		<node name="images" value="图像设定">
 			<node name="summary" value="图像显示选项"/>
 			<node name="backgroundColor" value="图像显示时的背景颜色"/>
-			<node name="tappingAction" value="长按动作设定">
+			<node name="longTapAction" value="长按动作设定">
 				<node name="doNothing" value="长按不做任何事"/>
 				<node name="selectImage" value="长按选择图像"/>
 				<node name="openImageView" value="长按打开图像"/>
@@ -762,8 +792,8 @@
 				<node name="all" value="所有"/>
 			</node>
 			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
-				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
-				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+				<node name="summaryOn" value="Adjust image colour to background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image colour" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="取消菜单设定">
@@ -807,7 +837,7 @@
 			<node name="summary" value="版本信息, 联系人"/>
 			<node name="version" value="版本"/>
 			<node name="site" value="访问我们的网站">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="给我们发送邮件">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -834,6 +864,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="No, thanks" toBeTranslated="true"/>
 			<node name="install" value="安装"/>
 			<node name="update" value="更新"/>
 			<node name="skip" value="跳过"/>
@@ -844,7 +875,7 @@
 			<node name="editUrl" value="编辑 URL"/>
 			<node name="tryAgain" value="再次尝试"/>
 			<node name="openBook" value="阅读"/>
-			<node name="editInfo" value="编辑"/>
+			<node name="edit" value="编辑"/>
 			<node name="reloadInfo" value="重新加载"/>
 			<node name="shareBook" value="共享"/>
 			<node name="topup" value="重新输入账号"/>
@@ -866,6 +897,11 @@
 		<node name="backgroundAuthentication">
 			<node name="message" value="Authentication required" toBeTranslated="true"/>
 		</node>
+		<node name="missingDictionary" value="Missing %s" toBeTranslated="true">
+			<node name="install" value="Install %s" toBeTranslated="true"/>
+			<node name="configure" value="Configure translation" toBeTranslated="true"/>
+			<node name="skip" value="Skip" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="安装字典"/>
 			<node name="message" value="你希望安装 %s 么?"/>
@@ -875,7 +911,7 @@
 		</node>
 		<node name="deleteMultipleBookBox">
 			<node name="title" value="Delete books" toBeTranslated="true"/>
-			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+			<node name="message" value="%s files will be removed permanently. Are you sure?" toBeTranslated="true"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="该文件已存在，确认重新下载?"/>
@@ -897,11 +933,12 @@
 				<node name="anotherEmail" value="Select another email" toBeTranslated="true"/>
 			</node>
 			<node name="signedIn" value="You are signed in with email address %s." toBeTranslated="true"/>
-			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information sent to %s." toBeTranslated="true"/>
-			<node name="passwordSent" value="Your account information sent to %s. Please, check your mailbox." toBeTranslated="true"/>
+			<node name="registrationSuccessful" value="We created a LitRes account for you. Detailed information has been sent to %s." toBeTranslated="true"/>
+			<node name="passwordSent" value="Your account information was sent to %s. Please check your mailbox." toBeTranslated="true"/>
 		</node>
 		<node name="waitMessage">
-			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
+			<node name="translating" value="Translation in progress…" toBeTranslated="true"/>
+			<node name="tryConnect" value="Trying to connect. Please wait…" toBeTranslated="true"/>
 			<node name="downloadingBook" value="已下载 %s"/>
 			<node name="search" value="搜索中，请等待…"/>
 			<node name="loadInfo" value="信息加载中，请等待…"/>
@@ -917,11 +954,11 @@
 			<node name="loadingNetworkBookInfo" value="书籍信息加载中，请等待…"/>
 			<node name="updatingCatalogsList" value="更新书库列表中，请稍待…"/>
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待…"/>
-			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please wait…" toBeTranslated="true"/>
+			<node name="acquireLicence" value="Acquiring licence. Please wait…" toBeTranslated="true"/>
 			<node name="registerUser" value="正在注册新账号，请稍等…"/>
-			<node name="autoSignIn" value="Signing in. Please, wait…" toBeTranslated="true"/>
-			<node name="recoverPassword" value="Recovering password. Please, wait…" toBeTranslated="true"/>
+			<node name="autoSignIn" value="Signing in. Please wait…" toBeTranslated="true"/>
+			<node name="recoverPassword" value="Recovering password. Please wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错"/>
@@ -976,8 +1013,8 @@
 			<node name="more" value="下个提示"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
-			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap the centre third of the screen now to show controls. You can change this in the “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the centre third of the screen again to hide the controls and this hint. If you want to keep controls on the screen while reading, select the “Show action bar” option in “Appearance” in Settings." toBeTranslated="true"/>
 		</node>
 		<node name="folderList">
 			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
@@ -1018,17 +1055,25 @@
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 		</node>
 		<node name="missingPlugin">
-			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
+			<node name="title" value="Plugin for %s files is not installed. Install now?" toBeTranslated="true"/>
+		</node>
+		<node name="licensing">
+			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
+			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
+			<node name="message" value="Try again?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="nativeCodeFailure" value="Error %s in native code while reading '%s'" toBeTranslated="true"/>
 		<node name="errorReadingFile" value="读取 '%s' 时发生错误"/>
 		<node name="errorReadingZip" value="解压 '%s' 时发生错误"/>
 		<node name="pluginNotFound" value="没有这个插件 '%s'"/>
 		<node name="unknownPluginType" value="未知插件类型: %s"/>
 		<node name="fileNotFound" value="文件未找到: %s"/>
-		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="File %s encryption method is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="在 %s 文件夹未找到 OPF  "/>
 		<node name="unsupportedFileFormat" value="文件格式 '%s' 不支持"/>
 		<node name="errorParsingRtf" value="Rtf解析错误: %s"/>
@@ -1044,10 +1089,10 @@
 		<node name="emptyCatalog" value="空书库目录"/>
 		<node name="emptyBasket" value="很抱歉，你的购物篮是空的"/>
 		<node name="emptyNetworkSearchResults" value="没有找到对应的书籍"/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
+		<node name="videoServiceNotWorking" value="Video service is not available" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="No video player installed on this device" toBeTranslated="true"/>
 		<node name="bookIsMissingTitle" value="Missing book" toBeTranslated="true"/>
-		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
+		<node name="bookIsMissing" value="Book '%s' is not found on the device" toBeTranslated="true"/>
 		<node name="downloadFailed" value="下载失败"/>
 	</node>
 	<node name="external">
@@ -1057,7 +1102,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader 问题"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
+			<node name="text" value="Cannot write to FBReader cache. Please check that your memory card is inserted correctly, or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader 问题"/>
@@ -1070,7 +1115,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Install plugins" toBeTranslated="true">
 		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
@@ -1081,7 +1126,7 @@
 			<node name="summary" value="Read aloud" toBeTranslated="true"/>
 		</node>
 		<node name="calibre_server_integration" value="Calibre connection" toBeTranslated="true">
-			<node name="summary" value="Connect Calibre server in your local network" toBeTranslated="true"/>
+			<node name="summary" value="Connect to Calibre server in your local network" toBeTranslated="true"/>
 		</node>
 		<node name="local_opds_scanner" value="Local OPDS Scanner" toBeTranslated="true">
 			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
@@ -1090,7 +1135,7 @@
 			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
 		</node>
 		<node name="opds_server" value="OPDS Server" toBeTranslated="true">
-			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+			<node name="summary" value="Allow your device to act as server" toBeTranslated="true"/>
 		</node>
 		<node name="widgets" value="Widgets" toBeTranslated="true">
 			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
@@ -1102,7 +1147,7 @@
 			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 		<node name="cbr" value="Comic Books" toBeTranslated="true">
-			<node name="summary" value="Read Comic Books (CBR, CBZ)" toBeTranslated="true"/>
+			<node name="summary" value="Read comic books (CBR, CBZ)" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">
@@ -1117,4 +1162,21 @@
 		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
 		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
+	<node name="duration">
+		<node name="duration1" value="1 second" toBeTranslated="true"/>
+		<node name="duration3" value="3 seconds" toBeTranslated="true"/>
+		<node name="duration5" value="5 seconds" toBeTranslated="true"/>
+		<node name="duration10" value="10 seconds" toBeTranslated="true"/>
+		<node name="duration20" value="20 seconds" toBeTranslated="true"/>
+		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
+		<node name="duration60" value="1 minute" toBeTranslated="true"/>
+		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
+		<node name="noArticle" value="No article found for “%s”" toBeTranslated="true"/>
+		<node name="cannotOpenDictionary" value="Cannot open dictionary" toBeTranslated="true"/>
+		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings" toBeTranslated="true"/>
+	</node>
+	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true"/>
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,9 +26,10 @@ import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.AbstractBook;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.BookReadingException;
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 
 public class OEBNativePlugin extends NativeFormatPlugin {
@@ -38,7 +39,8 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 
 	@Override
 	public void readModel(BookModel model) throws BookReadingException {
-		model.Book.File.setCached(true);
+		final ZLFile file = BookUtil.fileByBook(model.Book);
+		file.setCached(true);
 		try {
 			super.readModel(model);
 			model.setLabelResolver(new BookModel.LabelResolver() {
@@ -50,7 +52,7 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 				}
 			});
 		} finally {
-			model.Book.File.setCached(false);
+			file.setCached(false);
 		}
 	}
 
@@ -60,7 +62,7 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 	}
 
 	@Override
-	public void detectLanguageAndEncoding(Book book) {
+	public void detectLanguageAndEncoding(AbstractBook book) {
 		book.setEncoding("auto");
 	}
 
@@ -97,5 +99,10 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 			}
 		}
 		throw new BookReadingException("opfFileNotFound", oebFile);
+	}
+
+	@Override
+	public int priority() {
+		return 0;
 	}
 }

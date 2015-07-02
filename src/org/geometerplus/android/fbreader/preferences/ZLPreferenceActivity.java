@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,15 +65,21 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		}
 
 		public Preference addOption(ZLBooleanOption option, String resourceKey) {
-			return addPreference(
-				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource.getResource(resourceKey))
-			);
+			return addPreference(new ZLBooleanPreference(
+				ZLPreferenceActivity.this, option, Resource.getResource(resourceKey)
+			));
 		}
 
 		public Preference addOption(ZLColorOption option, String resourceKey) {
-			return addPreference(
-				new ZLColorPreference(ZLPreferenceActivity.this, Resource, resourceKey, option)
-			);
+			return addPreference(new ZLColorPreference(
+				ZLPreferenceActivity.this, Resource, resourceKey, option
+			));
+		}
+
+		public Preference addOption(ZLIntegerRangeOption option, String resourceKey) {
+			return addPreference(new ZLIntegerRangePreference(
+				ZLPreferenceActivity.this, Resource.getResource(resourceKey), option
+			));
 		}
 
 		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String key) {

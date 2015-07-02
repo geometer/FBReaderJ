@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Russian FBReaderJ resources, by Geometer Plus -->
+<!-- Russian FBReaderJ resources, by FBReader.ORG Limited -->
 <resources>
 	<node name="library" value="FBReader: библиотека">
 		<node name="unknownAuthor" value="Автор не указан"/>
@@ -22,6 +22,15 @@
 		</node>
 		<node name="favorites" value="Избранное">
 			<node name="summary" value="Мои любимые книги"/>
+		</node>
+		<node name="chooseView" value="Выбор внешнего вида"/>
+		<node name="wideCardsView" value="Широкие карточки"/>
+		<node name="smallCardsView" value="Маленькие карточки"/>
+		<node name="tinyCardsView" value="Совсем маленькие карточки"/>
+		<node name="coversView" value="Только обложки"/>
+		<node name="oldView" value="Классика"/>
+		<node name="bookshelfView" value="Книжная полка">
+			<node name="summary" value="Современный внешний вид для библиотеки"/>
 		</node>
 		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s"/>
@@ -67,7 +76,6 @@
 		<node name="deleteAll" value="Удалить все"/>
 		<node name="uploadAgain" value="Загрузить снова"/>
 		<node name="tryAgain" value="Попробовать снова"/>
-		<node name="materialView" value="Material view" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
 		<node name="sync" value="Книжная сеть FBReader®">
@@ -151,7 +159,7 @@
 			<node name="readDemo" value="Вы хотите открыть фрагмент?"/>
 			<node name="downloadDemo" value="Вы хотите скачать фрагмент?"/>
 			<node name="buy" value="Вы хотите купить эту книгу? (%s)"/>
-			<node name="openInBrowser" value="Вы хотите открыть этот каталог в браузере?"/>
+			<node name="openInBrowser" value="Вы хотите открыть эту ссылку в браузере?"/>
 		</node>
 		<node name="downloadingCatalogs" value="Идёт загрузка каталогов"/>
 		<!-- used as notification title -->
@@ -224,11 +232,11 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Книга скачана"/>
-		<node name="tickerError" value="Книгу скачать не удалось"/>
-		<node name="contentSuccess" value="Скачивание завершено"/>
-		<node name="contentError" value="Не удалось скачать"/>
-		<node name="downloadingStarted" value="Скачивание книги запущено"/>
+		<node name="downloadCompleteTicker" value="Книга скачана"/>
+		<node name="downloadFailedTicker" value="Книгу скачать не удалось"/>
+		<node name="downloadComplete" value="Скачивание завершено"/>
+		<node name="downloadFailed" value="Не удалось скачать"/>
+		<node name="downloadStarted" value="Скачивание книги запущено"/>
 		<node name="alreadyDownloading" value="Книга уже скачивается"/>
 		<node name="cannotCreateDirectory" value="Невозможно создать каталог %s"/>
 		<node name="cannotCreateFile" value="Невозможно создать файл %s"/>
@@ -241,14 +249,22 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Эта книга"/>
 		<node name="allBooks" value="Все книги"/>
-		<node name="found" value="Найдено"/>
 		<node name="new" value="Добавить закладку"/>
-		<node name="open" value="Открыть"/>
-		<node name="edit" value="Поправить закладку"/>
-		<node name="delete" value="Стереть закладку"/>
-		<node name="menu">
-			<node name="search" value="Поиск"/>
-		</node>
+		<node name="openBook" value="Открыть"/>
+		<node name="editBookmark" value="Поправить закладку"/>
+		<node name="deleteBookmark" value="Стереть закладку"/>
+		<node name="search" value="Поиск"/>
+	</node>
+	<node name="editBookmark">
+		<node name="text" value="Текст"/>
+		<node name="style" value="Стиль"/>
+		<node name="delete" value="Стереть"/>
+		<node name="deleteBookmark" value="Стереть закладку"/>
+		<node name="saveText" value="Сохранить текст"/>
+		<node name="editStyle" value="Изменить…"/>
+	</node>
+	<node name="footnoteToast">
+		<node name="more" value="Дальше"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Открыть библиотеку"/>
@@ -260,10 +276,6 @@
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
 	<node name="style" value="Стиль №%s"/>
-	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Изменить…"/>
-		<node name="deleteBookmark" value="Стереть закладку"/>
-	</node>
 	<node name="editStyle">
 		<node name="name" value="Название стиля"/>
 		<node name="invisible" value="Невидимый">
@@ -277,11 +289,10 @@
 		<node name="openInDictionary" value="Посмотреть в словаре"/>
 		<node name="quoteFrom" value="Цитата из %s"/>
 		<node name="textInBuffer" value="Текст в буфере обмена:&#10;%s"/>
-		<node name="bookmarkCreated" value="Создана закладка:&#10;%s"/>
 		<node name="clearSelection" value="Убрать пометку"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;https://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="openStartScreen" value="Стартовый экран"/>
@@ -334,6 +345,9 @@
 	<node name="Preferences">
 		<node name="sync" value="Синхронизация">
 			<node name="summary" value="Настройки книжной сети"/>
+			<node name="site" value="Как работает синхронизация FBReader">
+				<node name="url" value="https://books.fbreader.org/help.html"/>
+			</node>
 			<node name="enable" value="Включить синхронизацию">
 				<node name="summaryOn" value="Синхронизировать мою библиотеку с сервером книжной сети"/>
 				<node name="summaryOnWithAccount" value="Синхронизировать библиотеку от имени %s"/>
@@ -345,8 +359,8 @@
 				<node name="never" value="Никогда"/>
 			</node>
 			<node name="uploadAllBooks" value="Загружать все книги на сервер"/>
-			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Скачивать с сервера все книги"/>
+			<node name="downloadCurrentBook" value="Автоматически скачивать с сервера текущую книгу"/>
 			<node name="positions" value="Синхронизировать позиции"/>
 			<node name="bookmarks" value="Синхронизировать закладки"/>
 			<node name="metainfo" value="Синхронизировать информацию о книге (название, категории, и т.п.)"/>
@@ -437,8 +451,8 @@
 					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
 				</node>
 				<node name="dithering" value="Dithering" toBeTranslated="true">
-					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					<node name="summaryOn" value="Colour dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Colour dithering is disabled" toBeTranslated="true"/>
 				</node>
 				<node name="hinting" value="Hinting" toBeTranslated="true">
 					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
@@ -606,6 +620,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="toast" value="Всплывающие окошки">
+			<node name="summary" value="Окошки ссылок, и т.п."/>
+			<node name="showFootnoteToast" value="Показывать текст по ссылке в окошке">
+				<node name="never" value="Никогда"/>
+				<node name="footnotesOnly" value="Только для сносок"/>
+				<node name="footnotesAndSuperscripts" value="Для сносок и «поднятых» ссылок"/>
+				<node name="allInternalLinks" value="Для всех ссылок внутри книги"/>
+			</node>
+			<node name="footnoteToastDuration" value="Как долго показывать окошко с текстом ссылки"/>
+			<node name="fontSizePercent" value="Размер шрифта (в процентах от основного текста)"/>
+		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Использовать ли форматирование CSS"/>
 			<node name="fontFamily" value="Названия шрифтов">
@@ -680,26 +705,7 @@
 			<node name="footerHeight" value="Высота подвала"/>
 			<node name="footerOldStyleColor" value="Цвет подвала (старый стиль)"/>
 			<node name="footerBackgroundColor" value="Цвет фона подвала"/>
-			<node name="footerForegroundColor" value="Footer text colour" toBeTranslated="true"/>
-			<node name="footerForegroundUnreadColor" value="Footer line colour" toBeTranslated="true"/>
-			<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
-				<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
-			</node>
-			<node name="showProgress" value="Show page number" toBeTranslated="true">
-				<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
-			</node>
-			<node name="showBattery" value="Show battery level" toBeTranslated="true">
-				<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
-			</node>
-			<node name="showClock" value="Show clock" toBeTranslated="true">
-				<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
-			</node>
-			<node name="font" value="Font family" toBeTranslated="true"/>
-			<node name="footerForegroundColot" value="Цвет текста в подвале"/>
+			<node name="footerForegroundColor" value="Цвет текста в подвале"/>
 			<node name="footerForegroundUnreadColor" value="Цвет индикатора в подвале"/>
 			<node name="tocMarks" value="Показывать метки по главам">
 				<node name="summaryOn" value="Рисовать пометку на подвале в начале главы"/>
@@ -755,7 +761,7 @@
 			</node>
 		</node>
 		<node name="tapZones" value="Tap zones" toBeTranslated="true">
-			<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+			<node name="summary" value="Finger tap actions" toBeTranslated="true"/>
 			<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
 				<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
 				<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
@@ -764,14 +770,19 @@
 				<node name="custom" value="Custom…" toBeTranslated="true"/>
 			</node>
 		</node>
-		<node name="dictionary" value="Словарь">
-			<node name="summary" value="Настройки словаря"/>
-			<node name="dictionary" value="Словарь"/>
-			<node name="translator" value="Переводчик"/>
+		<node name="dictionary" value="Словарь и переводчик">
+			<node name="summary" value="Настройки перевода"/>
+			<node name="dictionary" value="Искать отдельное слово в"/>
+			<node name="translator" value="Переводить фразы с помощью"/>
+			<node name="translationToastDuration" value="Как долго показывать окошко перевода"/>
+			<node name="errorToastDuration" value="Как долго показывать сообщение об ошибке"/>
+			<node name="sourceLanguage" value="Язык, с которого переводить">
+				<node name="detect" value="определять автоматически"/>
+			</node>
 			<node name="targetLanguage" value="Переводить на">
 				<node name="any" value="все языки"/>
 			</node>
-			<node name="tappingAction" value="Действие при долгом нажатии на экран">
+			<node name="longTapAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Ничего не делать"/>
 				<node name="selectSingleWord" value="Выделять одно слово"/>
 				<node name="startSelecting" value="Начинать процесс пометки"/>
@@ -785,7 +796,7 @@
 		<node name="images" value="Картинки">
 			<node name="summary" value="Настройки отображения картинок"/>
 			<node name="backgroundColor" value="Цвет фона при полноэкранном просмотре"/>
-			<node name="tappingAction" value="Действие при долгом нажатии на экран">
+			<node name="longTapAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Не делать ничего"/>
 				<node name="selectImage" value="Выделять картинку"/>
 				<node name="openImageView" value="Запускать полноэкранный просмотр"/>
@@ -841,7 +852,7 @@
 			<node name="summary" value="Версия, контакты"/>
 			<node name="version" value="Версия"/>
 			<node name="site" value="Наш веб-сайт">
-				<node name="url" value="http://ru.fbreader.org/"/>
+				<node name="url" value="https://ru.fbreader.org/"/>
 			</node>
 			<node name="email" value="Отправьте нам письмо">
 				<node name="url" value="mailto:contact@fbreader.org"/>
@@ -868,6 +879,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="noThanks" value="Нет, спасибо"/>
 			<node name="install" value="Установить"/>
 			<node name="update" value="Обновить"/>
 			<node name="skip" value="Не сейчас"/>
@@ -878,7 +890,7 @@
 			<node name="editUrl" value="Изменить URL"/>
 			<node name="tryAgain" value="Повторить"/>
 			<node name="openBook" value="Читать"/>
-			<node name="editInfo" value="Изменить"/>
+			<node name="edit" value="Изменить"/>
 			<node name="reloadInfo" value="Обновить"/>
 			<node name="shareBook" value="Поделиться"/>
 			<node name="topup" value="Пополнить счёт"/>
@@ -899,6 +911,11 @@
 		</node>
 		<node name="backgroundAuthentication">
 			<node name="message" value="Требуется авторизация"/>
+		</node>
+		<node name="missingDictionary" value="%s не найден">
+			<node name="install" value="Установить %s"/>
+			<node name="configure" value="Настройки перевода"/>
+			<node name="skip" value="Пропустить"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Установка словаря"/>
@@ -939,6 +956,7 @@
 			<node name="passwordSent" value="Информация о вашем счете ЛитРес выслана на %s."/>
 		</node>
 		<node name="waitMessage">
+			<node name="translating" value="Идёт перевод…"/>
 			<node name="tryConnect" value="Устанавливается соединение. Подождите, пожалуйста…"/>
 			<node name="downloadingBook" value="Загужается книга «%s»"/>
 			<node name="search" value="Идет поиск. Подождите, пожалуйста…"/>
@@ -956,7 +974,7 @@
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста…"/>
 			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста…"/>
 			<node name="initDRMEngine" value="Инициализация DRM. Подождите, пожалуйста…"/>
-			<node name="acquireLicense" value="Получение лицензии. Подождите, пожалуйста…"/>
+			<node name="acquireLicence" value="Получение лицензии. Подождите, пожалуйста…"/>
 			<node name="registerUser" value="Регистрируем пользователя. Подождите, пожалуйста…"/>
 			<node name="autoSignIn" value="Входим в систему. Подождите, пожалуйста…"/>
 			<node name="recoverPassword" value="Восстанавливаем пароль. Подождите, пожалуйста…"/>
@@ -1058,6 +1076,14 @@
 		<node name="missingPlugin">
 			<node name="title" value="Модуль для чтения файлов %s не установлен. Установить прямо сейчас?"/>
 		</node>
+		<node name="licensing">
+			<node name="title" value="%s не лицензирован"/>
+			<node name="message" value="Купить на Google Play?"/>
+		</node>
+		<node name="retryLicensing">
+			<node name="title" value="Не удалось проверить лицензию %s"/>
+			<node name="message" value="Попробовать ещё раз?"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Ошибка %s в нативном коде при чтении '%s'"/>
@@ -1108,7 +1134,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://ru.fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://ru.fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Дополнительные модули">
 		<node name="noMorePlugins" value="Извините, но прямо сейчас у нас нет новых модулей"/>
@@ -1154,5 +1180,25 @@
 		<node name="positiveLength" value="Например: 20px, 10pt, 0.8em, 1ex, 120%%"/>
 		<node name="length" value="Например: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
 		<node name="percent" value="Например: 125%%"/>
+	</node>
+	<node name="duration">
+		<node name="duration1" value="1 секунду"/>
+		<node name="duration3" value="3 секунды"/>
+		<node name="duration5" value="5 секунд"/>
+		<node name="duration10" value="10 секунд"/>
+		<node name="duration20" value="20 секунд"/>
+		<node name="duration40" value="40 секунд"/>
+		<node name="duration60" value="1 минута"/>
+		<node name="duration300" value="5 минут"/>
+	</node>
+	<node name="dictanErrors">
+		<node name="unknown" value="неизвестная ошибка"/>
+		<node name="noArticle" value="нет статьи для «%s»"/>
+		<node name="cannotOpenDictionary" value="не удалось открыть словать"/>
+		<node name="noDictionarySelected" value="словарь не выбран; сделайте это в настроках Dictan"/>
+	</node>
+	<node name="premium" value="FBReader Premium"/>
+	<node name="dictionary">
+		<node name="Yandex.Translate" value="Яндекс.Переводчик"/>
 	</node>
 </resources>

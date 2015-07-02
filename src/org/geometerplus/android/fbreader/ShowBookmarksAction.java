@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import android.content.Intent;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.android.fbreader.bookmark.BookmarksActivity;
 import org.geometerplus.android.util.PackageUtil;
 
 class ShowBookmarksAction extends FBAndroidAction {
@@ -56,7 +57,7 @@ class ShowBookmarksAction extends FBAndroidAction {
 
 	private void startBookmarksActivity(Intent intent) {
 		FBReaderIntents.putBookExtra(intent, Reader.getCurrentBook());
-		FBReaderIntents.putBookmarkExtra(intent, Reader.createBookmark(20, true));
+		FBReaderIntents.putBookmarkExtra(intent, Reader.createBookmark(80, true));
 		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }

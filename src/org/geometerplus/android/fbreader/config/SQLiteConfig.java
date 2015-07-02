@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
+
 final class SQLiteConfig extends ConfigInterface.Stub {
 	private final Service myService;
 
@@ -43,7 +45,7 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 		myDatabase = service.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
 		switch (myDatabase.getVersion()) {
 			case 0:
-				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
+				myDatabase.execSQL("CREATE TABLE IF NOT EXISTS config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
 				break;
 			case 1:
 				myDatabase.beginTransaction();
@@ -161,7 +163,7 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 
 	private void sendChangeEvent(String group, String name, String value) {
 		myService.sendBroadcast(
-			new Intent(ConfigShadow.OPTION_CHANGE_EVENT_ACTION)
+			new Intent(FBReaderIntents.Event.CONFIG_OPTION_CHANGE)
 				.putExtra("group", group)
 				.putExtra("name", name)
 				.putExtra("value", value)

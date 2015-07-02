@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -332,8 +332,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public synchronized List<NetworkBookItem> purchasedBooks() {
-		return myPurchasedBooks.list();
+	public List<NetworkBookItem> purchasedBooks() {
+		synchronized (InitialisationLock) {
+			return myPurchasedBooks.list();
+		}
 	}
 
 	@Override
@@ -345,8 +347,16 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return !sid.equals(myInitializedDataSid);
 	}
 
+	private final Object InitialisationLock = new Object();
+
 	@Override
 	public void initialize() throws ZLNetworkException {
+		synchronized (InitialisationLock) {
+			initializeInternal();
+		}
+	}
+
+	private void initializeInternal() throws ZLNetworkException {
 		final String sid;
 		final LitResNetworkRequest purchasedBooksRequest;
 		final LitResNetworkRequest accountRequest;

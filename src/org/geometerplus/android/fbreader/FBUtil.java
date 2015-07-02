@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,11 +30,12 @@ import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 
 public abstract class FBUtil {
 	public static void shareBook(Activity activity, Book book) {
 		try {
-			final ZLPhysicalFile file = book.File.getPhysicalFile();
+			final ZLPhysicalFile file = BookUtil.fileByBook(book).getPhysicalFile();
 			if (file == null) {
 				// That should be impossible
 				return;

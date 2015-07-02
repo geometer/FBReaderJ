@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.SelectionCursor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
@@ -36,6 +37,8 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.util.FixedTextSnippet;
+import org.geometerplus.fbreader.util.TextSnippet;
 
 public final class FBView extends ZLTextView {
 	private final FBReaderApp myReader;
@@ -74,14 +77,28 @@ public final class FBView extends ZLTextView {
 		return myZoneMap;
 	}
 
+	private boolean onFingerSingleTapLastResort(int x, int y) {
+		myReader.runAction(getZoneMap().getActionByCoordinates(
+			x, y, getContextWidth(), getContextHeight(),
+			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
+		), x, y);
+
+		return true;
+	}
+
+	@Override
 	public boolean onFingerSingleTap(int x, int y) {
 		if (super.onFingerSingleTap(x, y)) {
 			return true;
 		}
 
-		final ZLTextRegion hyperlinkRegion = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
+		if (ZLibrary.Instance().ScreenHintStageOption.getValue() < 3) {
+			return onFingerSingleTapLastResort(x, y);
+		}
+
+		final ZLTextRegion hyperlinkRegion = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.HyperlinkFilter);
 		if (hyperlinkRegion != null) {
-			selectRegion(hyperlinkRegion);
+			outlineRegion(hyperlinkRegion);
 			myReader.getViewWidget().reset();
 			myReader.getViewWidget().repaint();
 			myReader.runAction(ActionCode.PROCESS_HYPERLINK);
@@ -96,14 +113,14 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextRegion videoRegion = findRegion(x, y, 0, ZLTextRegion.VideoFilter);
 		if (videoRegion != null) {
-			selectRegion(videoRegion);
+			outlineRegion(videoRegion);
 			myReader.getViewWidget().reset();
 			myReader.getViewWidget().repaint();
 			myReader.runAction(ActionCode.OPEN_VIDEO, (ZLTextVideoRegionSoul)videoRegion.getSoul());
 			return true;
 		}
 
-		final ZLTextHighlighting highlighting = findHighlighting(x, y, MAX_SELECTION_DISTANCE);
+		final ZLTextHighlighting highlighting = findHighlighting(x, y, maxSelectionDistance());
 		if (highlighting instanceof BookmarkHighlighting) {
 			myReader.runAction(
 				ActionCode.SELECTION_BOOKMARK,
@@ -112,12 +129,12 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		myReader.runAction(getZoneMap().getActionByCoordinates(
-			x, y, getContextWidth(), getContextHeight(),
-			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
-		), x, y);
+		if (myReader.isActionEnabled(ActionCode.HIDE_TOAST)) {
+			myReader.runAction(ActionCode.HIDE_TOAST);
+			return true;
+		}
 
-		return true;
+		return onFingerSingleTapLastResort(x, y);
 	}
 
 	@Override
@@ -127,9 +144,12 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public boolean onFingerDoubleTap(int x, int y) {
+		myReader.runAction(ActionCode.HIDE_TOAST);
+
 		if (super.onFingerDoubleTap(x, y)) {
 			return true;
 		}
+
 		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, getContextWidth(), getContextHeight(), TapZoneMap.Tap.doubleTap
 		), x, y);
@@ -137,12 +157,15 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerPress(int x, int y) {
+		myReader.runAction(ActionCode.HIDE_TOAST);
+
 		if (super.onFingerPress(x, y)) {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, MAX_SELECTION_DISTANCE);
-		if (cursor != ZLTextSelectionCursor.None) {
+		final float maxDist = ZLibrary.Instance().getDisplayDPI() / 4;
+		final SelectionCursor.Which cursor = findSelectionCursor(x, y, maxDist * maxDist);
+		if (cursor != null) {
 			myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
 			moveSelectionCursorTo(cursor, x, y);
 			return true;
@@ -151,7 +174,7 @@ public final class FBView extends ZLTextView {
 		if (myReader.MiscOptions.AllowScreenBrightnessAdjustment.getValue() && x < getContextWidth() / 10) {
 			myIsBrightnessAdjustmentInProgress = true;
 			myStartY = y;
-			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
+			myStartBrightness = myReader.getViewWidget().getScreenBrightness();
 			return true;
 		}
 
@@ -182,8 +205,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
 			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
@@ -195,7 +218,7 @@ public final class FBView extends ZLTextView {
 					startManualScrolling(x, y);
 				} else {
 					final int delta = (myStartBrightness + 30) * (myStartY - y) / getContextHeight();
-					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
+					myReader.getViewWidget().setScreenBrightness(myStartBrightness + delta);
 					return true;
 				}
 			}
@@ -212,8 +235,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
 			releaseSelectionCursor();
 			return true;
 		}
@@ -234,11 +257,13 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerLongPress(int x, int y) {
+		myReader.runAction(ActionCode.HIDE_TOAST);
+
 		if (super.onFingerLongPress(x, y)) {
 			return true;
 		}
 
-		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
+		final ZLTextRegion region = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.AnyRegionFilter);
 		if (region != null) {
 			final ZLTextRegion.Soul soul = region.getSoul();
 			boolean doSelectRegion = false;
@@ -247,8 +272,8 @@ public final class FBView extends ZLTextView {
 					case startSelecting:
 						myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
 						initSelection(x, y);
-						final ZLTextSelectionCursor cursor = findSelectionCursor(x, y);
-						if (cursor != ZLTextSelectionCursor.None) {
+						final SelectionCursor.Which cursor = findSelectionCursor(x, y);
+						if (cursor != null) {
 							moveSelectionCursorTo(cursor, x, y);
 						}
 						return true;
@@ -266,7 +291,7 @@ public final class FBView extends ZLTextView {
 			}
 
 			if (doSelectRegion) {
-				selectRegion(region);
+				outlineRegion(region);
 				myReader.getViewWidget().reset();
 				myReader.getViewWidget().repaint();
 				return true;
@@ -281,25 +306,25 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
 			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
 
-		ZLTextRegion region = getSelectedRegion();
+		ZLTextRegion region = getOutlinedRegion();
 		if (region != null) {
 			ZLTextRegion.Soul soul = region.getSoul();
 			if (soul instanceof ZLTextHyperlinkRegionSoul ||
 				soul instanceof ZLTextWordRegionSoul) {
 				if (myReader.MiscOptions.WordTappingAction.getValue() !=
 					MiscOptions.WordTappingActionEnum.doNothing) {
-					region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
+					region = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.AnyRegionFilter);
 					if (region != null) {
 						soul = region.getSoul();
 						if (soul instanceof ZLTextHyperlinkRegionSoul
 							 || soul instanceof ZLTextWordRegionSoul) {
-							selectRegion(region);
+							outlineRegion(region);
 							myReader.getViewWidget().reset();
 							myReader.getViewWidget().repaint();
 						}
@@ -315,13 +340,13 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != ZLTextSelectionCursor.None) {
+		final SelectionCursor.Which cursor = getSelectionCursorInMovement();
+		if (cursor != null) {
 			releaseSelectionCursor();
 			return true;
 		}
 
-		final ZLTextRegion region = getSelectedRegion();
+		final ZLTextRegion region = getOutlinedRegion();
 		if (region != null) {
 			final ZLTextRegion.Soul soul = region.getSoul();
 
@@ -442,6 +467,7 @@ public final class FBView extends ZLTextView {
 			case FBHyperlinkType.NONE:
 				return profile.RegularTextOption.getValue();
 			case FBHyperlinkType.INTERNAL:
+			case FBHyperlinkType.FOOTNOTE:
 				return myReader.Collection.isHyperlinkVisited(myReader.getCurrentBook(), hyperlink.Id)
 					? profile.VisitedHyperlinkTextOption.getValue()
 					: profile.HyperlinkTextOption.getValue();
@@ -738,12 +764,14 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
-	public String getSelectedText() {
+	public TextSnippet getSelectedSnippet() {
+		final ZLTextPosition start = getSelectionStartPosition();
+		final ZLTextPosition end = getSelectionEndPosition();
 		final TextBuildTraverser traverser = new TextBuildTraverser(this);
 		if (!isSelectionEmpty()) {
-			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
+			traverser.traverse(start, end);
 		}
-		return traverser.getText();
+		return new FixedTextSnippet(start, end, traverser.getText());
 	}
 
 	public int getCountOfSelectedWords() {

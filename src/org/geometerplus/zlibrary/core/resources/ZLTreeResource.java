@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,13 @@ package org.geometerplus.zlibrary.core.resources;
 
 import java.util.*;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.language.Language;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.util.XmlUtil;
 
 final class ZLTreeResource extends ZLResource {
 	private static interface Condition {
@@ -175,6 +178,7 @@ final class ZLTreeResource extends ZLResource {
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/zlibrary/" + fileName));
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/application/" + fileName));
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/lang.xml"));
+		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/application/neutral.xml"));
 	}
 
 	private static void loadData() {
@@ -229,25 +233,20 @@ final class ZLTreeResource extends ZLResource {
 		return ZLMissingResource.Instance;
 	}
 
-	private static class ResourceTreeReader extends ZLXMLReaderAdapter {
+	private static class ResourceTreeReader extends DefaultHandler {
 		private static final String NODE = "node";
 		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
 
 		public void readDocument(ZLTreeResource root, ZLFile file) {
 			myStack.clear();
 			myStack.add(root);
-			readQuietly(file);
+			XmlUtil.parseQuietly(file, this);
 		}
 
 		@Override
-		public boolean dontCacheAttributeValues() {
-			return true;
-		}
-
-		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			final ArrayList<ZLTreeResource> stack = myStack;
-			if (!stack.isEmpty() && (NODE.equals(tag))) {
+			if (!stack.isEmpty() && (NODE.equals(localName))) {
 				final String name = attributes.getValue("name");
 				final String condition = attributes.getValue("condition");
 				final String value = attributes.getValue("value");
@@ -283,16 +282,14 @@ final class ZLTreeResource extends ZLResource {
 					stack.add(peek);
 				}
 			}
-			return false;
 		}
 
 		@Override
-		public boolean endElementHandler(String tag) {
+		public void endElement(String uri, String localName, String qName) throws SAXException {
 			final ArrayList<ZLTreeResource> stack = myStack;
-			if (!stack.isEmpty() && (NODE.equals(tag))) {
+			if (!stack.isEmpty() && (NODE.equals(localName))) {
 				stack.remove(stack.size() - 1);
 			}
-			return false;
 		}
 	}
 }

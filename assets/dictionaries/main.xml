@@ -6,7 +6,6 @@
 		package="com.socialnmobile.colordict"
 		action="colordict.intent.action.SEARCH"
 		dataKey="EXTRA_QUERY"
-		pattern="%s"
 		list="always"
 	/>
 	<dictionary
@@ -16,7 +15,16 @@
 		class=".activity.Main"
 		action="android.intent.action.SEARCH"
 		dataKey="query"
-		pattern="%s"
+		list="always"
+	/>
+	<dictionary
+		id="dictan"
+		title="Dictan"
+		package="info.softex.dictan"
+		category="info.softex.dictan.EXTERNAL_DISPATCHER"
+		action="android.intent.action.VIEW"
+		dataKey="article.word"
+		role="dictionary"
 		list="always"
 	/>
 	<dictionary
@@ -25,7 +33,6 @@
 		class=".ForaDictionary"
 		action="android.intent.action.SEARCH"
 		dataKey="query"
-		pattern="%s"
 		list="always"
 	/>
 	<dictionary
@@ -34,7 +41,6 @@
 		package="org.freedictionary"
 		class=".MainActivity"
 		action="android.intent.action.VIEW"
-		pattern="%s"
 		list="always"
 	/>
 	<dictionary
@@ -43,9 +49,7 @@
 		package="com.abbyy.mobile.lingvo.market"
 		action="com.abbyy.mobile.lingvo.intent.action.TRANSLATE"
 		dataKey="com.abbyy.mobile.lingvo.intent.extra.TEXT"
-		pattern="%s"
 		role="dictionary"
-		supportsTargetLanguage="true"
 	/>
 	<dictionary
 		id="Lingo Quiz Lite"
@@ -53,7 +57,6 @@
 		class=".ExchangeActivity"
 		action="lingoquiz.intent.action.ADD_WORD"
 		dataKey="EXTRA_WORD"
-		pattern="%s"
 	/>
 	<dictionary
 		id="Lingo Quiz"
@@ -61,7 +64,6 @@
 		class=".ExchangeActivity"
 		action="lingoquiz.intent.action.ADD_WORD"
 		dataKey="EXTRA_WORD"
-		pattern="%s"
 	/>
 	<dictionary
 		id="Aard Dictionary"
@@ -69,7 +71,6 @@
 		class=".Article"
 		action="android.intent.action.SEARCH"
 		dataKey="query"
-		pattern="%s"
 	/>
 	<dictionary
 		id="Aard Dictionary Lookup"
@@ -77,7 +78,13 @@
 		class=".Lookup"
 		action="android.intent.action.SEARCH"
 		dataKey="query"
-		pattern="%s"
+	/>
+	<dictionary
+		id="Aard2 Dictionary"
+		package="itkach.aard2"
+		class=".ArticleCollectionActivity"
+		action="android.intent.action.SEND"
+		dataKey="query"
 	/>
 	<dictionary
 		id="LEO Dictionary"
@@ -85,13 +92,11 @@
 		class=".LeoDict"
 		action="android.intent.action.SEARCH"
 		dataKey="query"
-		pattern="%s"
 	/>
 	<dictionary
 		id="Popup Dictionary"
 		package="com.barisatamer.popupdictionary"
 		class=".MainActivity"
 		action="android.intent.action.VIEW"
-		pattern="%s"
 	/>
 </dictionaries>

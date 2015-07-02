@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -194,6 +194,21 @@ bool ZLXMLReader::SimpleNamePredicate::accepts(const ZLXMLReader&, const char *n
 
 bool ZLXMLReader::SimpleNamePredicate::accepts(const ZLXMLReader&, const std::string &name) const {
 	return myName == name;
+}
+
+ZLXMLReader::IgnoreCaseNamePredicate::IgnoreCaseNamePredicate(const std::string &lowerCaseName) : myLowerCaseName(lowerCaseName) {
+}
+
+bool ZLXMLReader::IgnoreCaseNamePredicate::accepts(const ZLXMLReader &reader, const char *name) const {
+	std::string lc = name;
+	ZLStringUtil::asciiToLowerInline(lc);
+	return myLowerCaseName == lc;
+}
+
+bool ZLXMLReader::IgnoreCaseNamePredicate::accepts(const ZLXMLReader&, const std::string &name) const {
+	std::string lc = name;
+	ZLStringUtil::asciiToLowerInline(lc);
+	return myLowerCaseName == lc;
 }
 
 ZLXMLReader::FullNamePredicate::FullNamePredicate(const std::string &ns, const std::string &name) : myNamespaceName(ns), myName(name) {

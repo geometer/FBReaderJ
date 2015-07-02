@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
+import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.UIUtil;
 
 class DisplayBookPopupAction extends FBAndroidAction {
@@ -98,7 +99,7 @@ class DisplayBookPopupAction extends FBAndroidAction {
 				? R.layout.book_popup_night : R.layout.book_popup,
 			null
 		);
-		FBReader.ensureFullscreen(bookView);
+		FBReaderUtil.ensureFullscreen(BaseActivity, bookView);
 		final int inch = (int)TypedValue.applyDimension(
 			TypedValue.COMPLEX_UNIT_IN, 1, BaseActivity.getResources().getDisplayMetrics()
 		);
@@ -173,7 +174,7 @@ class DisplayBookPopupAction extends FBAndroidAction {
 										new QuietNetworkContext().downloadToFile(bookInfo.Url, file);
 										openBook(popup, Reader.Collection.getBookByFile(fileName));
 									} catch (ZLNetworkException e) {
-										UIUtil.showErrorMessage(BaseActivity, "downloadFailed");
+										UIMessageUtil.showErrorMessage(BaseActivity, "downloadFailed");
 										e.printStackTrace();
 									}
 								}

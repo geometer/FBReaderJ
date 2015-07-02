@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,6 +55,7 @@ public abstract class ZLTextStyle {
 	public abstract int getFirstLineIndent(ZLTextMetrics metrics);
 	public abstract int getLineSpacePercent();
 	public abstract int getVerticalAlign(ZLTextMetrics metrics);
+	public abstract boolean isVerticallyAligned();
 	public abstract int getSpaceBefore(ZLTextMetrics metrics);
 	public abstract int getSpaceAfter(ZLTextMetrics metrics);
 	public abstract byte getAlignment();

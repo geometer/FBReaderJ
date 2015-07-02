@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,14 +33,14 @@ class MoveCursorAction extends FBAction {
 	@Override
 	protected void run(Object ... params) {
 		final FBView fbView = Reader.getTextView();
-		ZLTextRegion region = fbView.getSelectedRegion();
+		ZLTextRegion region = fbView.getOutlinedRegion();
 		final ZLTextRegion.Filter filter =
 			(region != null && region.getSoul() instanceof ZLTextWordRegionSoul)
 				|| Reader.MiscOptions.NavigateAllWords.getValue()
 					? ZLTextRegion.AnyRegionFilter : ZLTextRegion.ImageOrHyperlinkFilter;
 		region = fbView.nextRegion(myDirection, filter);
 		if (region != null) {
-			fbView.selectRegion(region);
+			fbView.outlineRegion(region);
 		} else {
 			switch (myDirection) {
 				case down:
