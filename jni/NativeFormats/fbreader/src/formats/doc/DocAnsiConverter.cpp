@@ -52,6 +52,8 @@ void DocAnsiConverter::convert(std::string &dst, const char *srcStart, const cha
 			dst.append(1, *ptr);
 		} else if (myCharMap.at((int)(*ptr)-0x82) != "") {
 			dst.append(myCharMap[(int)(*ptr)-0x82]);
+		} else {
+			dst.append("?");
 		}
 	}
 }
