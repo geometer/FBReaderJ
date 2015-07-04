@@ -19,43 +19,39 @@
 
 #include "DocAnsiConverter.h"
 
-DocAnsiConverter::DocAnsiConverter() : myCharMap(30) {
-	myCharMap[0x82-0x82] = "\u201A";
-	myCharMap[0x83-0x82] = "\u0192";
-	myCharMap[0x84-0x82] = "\u201E";
-	myCharMap[0x85-0x82] = "\u2026";
-	myCharMap[0x86-0x82] = "\u2020";
-	myCharMap[0x87-0x82] = "\u2021";
-	myCharMap[0x88-0x82] = "\u02C6";
-	myCharMap[0x89-0x82] = "\u2030";
-	myCharMap[0x8A-0x82] = "\u0160";
-	myCharMap[0x8B-0x82] = "\u2039";
-	myCharMap[0x8C-0x82] = "\u0152";
-	myCharMap[0x91-0x82] = "\u2018";
-	myCharMap[0x92-0x82] = "\u2019";
-	myCharMap[0x93-0x82] = "\u201C";
-	myCharMap[0x94-0x82] = "\u201D";
-	myCharMap[0x95-0x82] = "\u2022";
-	myCharMap[0x96-0x82] = "\u2013";
-	myCharMap[0x97-0x82] = "\u2014";
-	myCharMap[0x98-0x82] = "\u02DC";
-	myCharMap[0x99-0x82] = "\u2122";
-	myCharMap[0x9A-0x82] = "\u0161";
-	myCharMap[0x9B-0x82] = "\u203A";
-	myCharMap[0x9C-0x82] = "\u0153";
-	myCharMap[0x9F-0x82] = "\u0178";
+DocAnsiConverter::DocAnsiConverter() : myCharMap(128) {
+	myCharMap[0x02] = "\u201A";
+	myCharMap[0x03] = "\u0192";
+	myCharMap[0x04] = "\u201E";
+	myCharMap[0x05] = "\u2026";
+	myCharMap[0x06] = "\u2020";
+	myCharMap[0x07] = "\u2021";
+	myCharMap[0x08] = "\u02C6";
+	myCharMap[0x09] = "\u2030";
+	myCharMap[0x0A] = "\u0160";
+	myCharMap[0x0B] = "\u2039";
+	myCharMap[0x0C] = "\u0152";
+	myCharMap[0x11] = "\u2018";
+	myCharMap[0x12] = "\u2019";
+	myCharMap[0x13] = "\u201C";
+	myCharMap[0x14] = "\u201D";
+	myCharMap[0x15] = "\u2022";
+	myCharMap[0x16] = "\u2013";
+	myCharMap[0x17] = "\u2014";
+	myCharMap[0x18] = "\u02DC";
+	myCharMap[0x19] = "\u2122";
+	myCharMap[0x1A] = "\u0161";
+	myCharMap[0x1B] = "\u203A";
+	myCharMap[0x1C] = "\u0153";
+	myCharMap[0x1F] = "\u0178";
 }
 
 void DocAnsiConverter::convert(std::string &dst, const char *srcStart, const char *srcEnd) {
 	for (const char *ptr = srcStart; ptr < srcEnd; ++ptr) {
 		if ((*ptr & 0x80) == 0) {
 			dst.append(1, *ptr);
-		} else if (myCharMap.at((int)(*ptr)-0x82) != "") {
-			dst.append(myCharMap[(int)(*ptr)-0x82]);
 		} else {
-			dst.append("?");
+			dst.append(myCharMap[*ptr & 0x7F]);
 		}
 	}
 }
-
-

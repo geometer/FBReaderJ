@@ -24,8 +24,10 @@
 #include <vector>
 
 class DocAnsiConverter {
+
 private:
 	std::vector<std::string> myCharMap;
+
 public:
 	DocAnsiConverter();
 	void convert(std::string &dst, const char *srcStart, const char *srcEnd);
