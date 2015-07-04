@@ -1181,7 +1181,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		myFBReaderApp.getViewWidget().repaint();
 	}
 
-	private boolean avoidVersionConflict() {
+	private boolean resolveVersionConflict() {
 		final Intent intent = getIntent();
 		if (intent == null || !intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
 			return false;
@@ -1219,7 +1219,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 			return;
 		}
 
-		if (avoidVersionConflict()) {
+		if (resolveVersionConflict()) {
 			return;
 		}
 
