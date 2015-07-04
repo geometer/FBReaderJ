@@ -4,9 +4,11 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.5.3 (Jun ??, 2015) =====
+===== 2.5.3 (Jul 05, 2015) =====
 * Fixed large libraries scanning issue
 * Popups font size option
+* Fixed ANSI text processing in MsWord files
+* Ask what to run if both FBReader & FBReader Premium are installed
 * Updated Czech localisation (by Marek Pavelka)
 * Updated German localisation (by Matthias Dill)
 * Updated Romanian localization (by Girlea Alex)
