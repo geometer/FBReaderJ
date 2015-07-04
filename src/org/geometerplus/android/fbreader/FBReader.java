@@ -1181,10 +1181,48 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		myFBReaderApp.getViewWidget().repaint();
 	}
 
+	private boolean avoidVersionConflict() {
+		final Intent intent = getIntent();
+		if (intent == null || !intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+			return false;
+		}
+
+		final Intent premiumIntent = new Intent().setComponent(new ComponentName(
+			"com.fbreader",
+			"com.fbreader.android.fbreader.FBReader"
+		));
+		if (!PackageUtil.canBeStarted(this, premiumIntent, false)) {
+			return false;
+		}
+
+		final ZLResource resource = ZLResource.resource("premium");
+		new AlertDialog.Builder(this)
+			.setMessage(resource.getResource("conflict").getValue())
+			.setIcon(0)
+			.setPositiveButton(
+				resource.getResource("shortTitle").getValue(),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						startActivity(premiumIntent);
+						finish();
+					}
+				}
+			)
+			.setNegativeButton(getResources().getString(R.string.app_name), null)
+			.create()
+			.show();
+		return true;
+	}
+
 	private void showPremiumDialog() {
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			return;
 		}
+
+		if (avoidVersionConflict()) {
+			return;
+		}
+
 		final int currentTime = (int)(System.currentTimeMillis() / 1000 / 60 / 60);
 		final ZLIntegerOption lastCallOption = new ZLIntegerOption("Premium", "LastCall", 0);
 		final int lastCall = lastCallOption.getValue();
