@@ -1198,5 +1198,8 @@
 		<node name="cannotOpenDictionary" value="nelze otevřít slovník"/>
 		<node name="noDictionarySelected" value="není vybrán slovník; opravte to v nastavení Dictan"/>
 	</node>
-	<node name="premium" value="FBReader prémiová edice"/>
+	<node name="premium" value="FBReader prémiová edice">
+		<node name="shortTitle" value="FBReader Premium" toBeTranslated="true"/>
+		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+	</node>
 </resources>

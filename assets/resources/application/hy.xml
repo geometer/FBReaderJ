@@ -1195,5 +1195,8 @@
 		<node name="cannotOpenDictionary" value="չհաջողվեց բացել բառարանը"/>
 		<node name="noDictionarySelected" value="բառարան ընտրված չէ, ընտրեք այն Dictan  կարգավորումներում"/>
 	</node>
-	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true"/>
+	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true">
+		<node name="shortTitle" value="FBReader Premium" toBeTranslated="true"/>
+		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+	</node>
 </resources>

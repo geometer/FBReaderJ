@@ -1193,5 +1193,8 @@
 		<node name="cannotOpenDictionary" value="Não foi possível abrir dicionário"/>
 		<node name="noDictionarySelected" value="Dicionário não selecionado; por favor ajuste as definições Dictan"/>
 	</node>
-	<node name="premium" value="FBReader - Edição Premium"/>
+	<node name="premium" value="FBReader - Edição Premium">
+		<node name="shortTitle" value="FBReader Premium"/>
+		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+	</node>
 </resources>

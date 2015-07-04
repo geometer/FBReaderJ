@@ -1179,7 +1179,10 @@
 		<node name="cannotOpenDictionary" value="Cannot open dictionary" toBeTranslated="true"/>
 		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings" toBeTranslated="true"/>
 	</node>
-	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true"/>
+	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true">
+		<node name="shortTitle" value="FBReader Premium" toBeTranslated="true"/>
+		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+	</node>
 	<node name="dictionary">
 		<node name="Yandex.Translate" value="Яндекс.Перекладач"/>
 	</node>
