@@ -1200,7 +1200,7 @@
 	</node>
 	<node name="premium" value="FBReader Premium">
 		<node name="shortTitle" value="FBReader Premium"/>
-		<node name="conflict" value="Кажется, у вас установлены и FBReader, и FBReader Premium. Который из них вы хотите запустить?"/>
+		<node name="conflict" value="У вас установлены и FBReader, и FBReader Premium. Который из них вы хотите запустить?"/>
 	</node>
 	<node name="dictionary">
 		<node name="Yandex.Translate" value="Яндекс.Переводчик"/>
