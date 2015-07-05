@@ -254,7 +254,7 @@
 	<node name="cancelMenu">
 		<node name="library" value="Відкрити бібліотеку"/>
 		<node name="networkLibrary" value="Відкрити мережеву бібліотеку"/>
-		<node name="previousBook" value="Відкрити поперердню книгу"/>
+		<node name="previousBook" value="Відкрити попередню книгу"/>
 		<node name="returnTo" value="Повернутися до …"/>
 		<node name="back" value="Назад"/>
 		<node name="forward" value="Вперед"/>
