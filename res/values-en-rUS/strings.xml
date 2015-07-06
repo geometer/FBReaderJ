@@ -4,7 +4,7 @@
   <string name="of">of</string>
   <string name="pages_left">pages left</string>
   <string name="back_to_page">Back to page</string>
-  <string name="yota_book_description">Description</string>
+  <string name="yota_book_description">Tap to access your screenshots. Tap and hold Home button, then slide to YotaSnap icon to take a new screenshot.</string>
   <string name="yota_add_to_collection">ADD</string>
   <string name="yota_book_details">All</string>
   <string name="yota_book_language_tille">Language</string>
@@ -19,7 +19,7 @@
   <string name="translate">Translate</string>
   <string name="open_in_lingvo">Open article in Lingvo</string>
   <string name="did_you_mean">Did you mean</string>
-  <string name="lingvo_error">Error inside Lingvo, try once again</string>
+  <string name="lingvo_error">Error occurred in Lingvo. Try again.</string>
   <string name="nothing_to_translate">Select a word to translate</string>
   <string name="nothing_was_found">Nothing found</string>
   <string name="unknown_error">Unknown error occurred</string>
@@ -38,9 +38,9 @@
   <string name="download_book">DOWNLOAD</string>
   <string name="read_book">READ</string>
   <string name="network_library">Network library</string>
-  <string name="no_dictionaries">Please, install at least one dictionary in ABBYY Lingvo</string>
-  <string name="only_english">Sorry, definition available only for english language</string>
-  <string name="select_only_one_word">Please, select only one word</string>
+  <string name="no_dictionaries">Please install at least one dictionary to ABBYY Lingvo</string>
+  <string name="only_english">Sorry, definition available only for English words</string>
+  <string name="select_only_one_word">Please select only one word</string>
   <string name="bookmark">Bookmark</string>
   <string name="back">Back</string>
   <string name="contents">Contents</string>
