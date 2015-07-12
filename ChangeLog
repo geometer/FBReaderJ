@@ -1,8 +1,12 @@
-===== 2.5 (May ??, 2015) =====
+===== 2.7 (??? ??, 2015) =====
 * (planned) Tablet-oriented preferences dialog
 * (planned) Sync: single book upload
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
+
+===== 2.5.4 (Jul ??, 2015) =====
+* Fixed possible deadlocks
+* Fixed possible fb2 footnotes text trimming
 
 ===== 2.5.3 (Jul 05, 2015) =====
 * Fixed large libraries scanning issue
