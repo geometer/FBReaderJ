@@ -398,12 +398,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final SQLiteStatement statement = get(
 			"UPDATE OR IGNORE Books SET file_id=?, encoding=?, language=?, title=? WHERE book_id=?"
 		);
-		statement.bindLong(1, fileId);
-		SQLiteUtil.bindString(statement, 2, encoding);
-		SQLiteUtil.bindString(statement, 3, language);
-		statement.bindString(4, title);
-		statement.bindLong(5, bookId);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, fileId);
+			SQLiteUtil.bindString(statement, 2, encoding);
+			SQLiteUtil.bindString(statement, 3, language);
+			statement.bindString(4, title);
+			statement.bindLong(5, bookId);
+			statement.execute();
+		}
 	}
 
 	@Override
@@ -411,18 +413,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final SQLiteStatement statement = get(
 			"INSERT OR IGNORE INTO Books (encoding,language,title,file_id) VALUES (?,?,?,?)"
 		);
-		SQLiteUtil.bindString(statement, 1, encoding);
-		SQLiteUtil.bindString(statement, 2, language);
-		statement.bindString(3, title);
-		final FileInfoSet infoSet = new FileInfoSet(this, file);
-		statement.bindLong(4, infoSet.getId(file));
-		return statement.executeInsert();
+		synchronized (statement) {
+			SQLiteUtil.bindString(statement, 1, encoding);
+			SQLiteUtil.bindString(statement, 2, language);
+			statement.bindString(3, title);
+			final FileInfoSet infoSet = new FileInfoSet(this, file);
+			statement.bindLong(4, infoSet.getId(file));
+			return statement.executeInsert();
+		}
 	}
 
 	protected void deleteAllBookAuthors(long bookId) {
 		final SQLiteStatement statement = get("DELETE FROM BookAuthor WHERE book_id=?");
-		statement.bindLong(1, bookId);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.execute();
+		}
 	}
 
 	protected void saveBookAuthorInfo(long bookId, long index, Author author) {
@@ -504,17 +510,21 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected void deleteAllBookTags(long bookId) {
 		final SQLiteStatement statement = get("DELETE FROM BookTag WHERE book_id=?");
-		statement.bindLong(1, bookId);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.execute();
+		}
 	}
 
 	protected void saveBookTagInfo(long bookId, Tag tag) {
 		final SQLiteStatement statement = get(
 			"INSERT OR IGNORE INTO BookTag (book_id,tag_id) VALUES (?,?)"
 		);
-		statement.bindLong(1, bookId);
-		statement.bindLong(2, getTagId(tag));
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, getTagId(tag));
+			statement.execute();
+		}
 	}
 
 	private Tag getTagById(long id) {
@@ -581,8 +591,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected void deleteAllBookUids(long bookId) {
 		final SQLiteStatement statement = get("DELETE FROM BookUid WHERE book_id=?");
-		statement.bindLong(1, bookId);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.execute();
+		}
 	}
 
 	@Override
@@ -623,33 +635,41 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo) {
 		if (seriesInfo == null) {
 			final SQLiteStatement statement = get("DELETE FROM BookSeries WHERE book_id=?");
-			statement.bindLong(1, bookId);
-			statement.execute();
+			synchronized (statement) {
+				statement.bindLong(1, bookId);
+				statement.execute();
+			}
 		} else {
 			long seriesId;
 			try {
 				final SQLiteStatement getSeriesIdStatement = get(
 					"SELECT series_id FROM Series WHERE name = ?"
 				);
-				getSeriesIdStatement.bindString(1, seriesInfo.Series.getTitle());
-				seriesId = getSeriesIdStatement.simpleQueryForLong();
+				synchronized (getSeriesIdStatement) {
+					getSeriesIdStatement.bindString(1, seriesInfo.Series.getTitle());
+					seriesId = getSeriesIdStatement.simpleQueryForLong();
+				}
 			} catch (SQLException e) {
 				final SQLiteStatement insertSeriesStatement = get(
 					"INSERT OR IGNORE INTO Series (name) VALUES (?)"
 				);
-				insertSeriesStatement.bindString(1, seriesInfo.Series.getTitle());
-				seriesId = insertSeriesStatement.executeInsert();
+				synchronized (insertSeriesStatement) {
+					insertSeriesStatement.bindString(1, seriesInfo.Series.getTitle());
+					seriesId = insertSeriesStatement.executeInsert();
+				}
 			}
 			final SQLiteStatement insertBookSeriesStatement = get(
 				"INSERT OR REPLACE INTO BookSeries (book_id,series_id,book_index) VALUES (?,?,?)"
 			);
-			insertBookSeriesStatement.bindLong(1, bookId);
-			insertBookSeriesStatement.bindLong(2, seriesId);
-			SQLiteUtil.bindString(
-				insertBookSeriesStatement, 3,
-				seriesInfo.Index != null ? seriesInfo.Index.toPlainString() : null
-			);
-			insertBookSeriesStatement.execute();
+			synchronized (insertBookSeriesStatement) {
+				insertBookSeriesStatement.bindLong(1, bookId);
+				insertBookSeriesStatement.bindLong(2, seriesId);
+				SQLiteUtil.bindString(
+					insertBookSeriesStatement, 3,
+					seriesInfo.Index != null ? seriesInfo.Index.toPlainString() : null
+				);
+				insertBookSeriesStatement.execute();
+			}
 		}
 	}
 
@@ -668,8 +688,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			return;
 		}
 		final SQLiteStatement statement = get("DELETE FROM Files WHERE file_id=?");
-		statement.bindLong(1, fileId);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, fileId);
+			statement.execute();
+		}
 	}
 
 	protected void saveFileInfo(FileInfo fileInfo) {
@@ -684,24 +706,26 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"UPDATE Files SET name=?, parent_id=?, size=? WHERE file_id=?"
 			);
 		}
-		statement.bindString(1, fileInfo.Name);
-		final FileInfo parent = fileInfo.Parent;
-		if (parent != null) {
-			statement.bindLong(2, parent.Id);
-		} else {
-			statement.bindNull(2);
-		}
-		final long size = fileInfo.FileSize;
-		if (size != -1) {
-			statement.bindLong(3, size);
-		} else {
-			statement.bindNull(3);
-		}
-		if (id == -1) {
-			fileInfo.Id = statement.executeInsert();
-		} else {
-			statement.bindLong(4, id);
-			statement.execute();
+		synchronized (statement) {
+			statement.bindString(1, fileInfo.Name);
+			final FileInfo parent = fileInfo.Parent;
+			if (parent != null) {
+				statement.bindLong(2, parent.Id);
+			} else {
+				statement.bindNull(2);
+			}
+			final long size = fileInfo.FileSize;
+			if (size != -1) {
+				statement.bindLong(3, size);
+			} else {
+				statement.bindNull(3);
+			}
+			if (id == -1) {
+				fileInfo.Id = statement.executeInsert();
+			} else {
+				statement.bindLong(4, id);
+				statement.execute();
+			}
 		}
 	}
 
@@ -831,10 +855,12 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"INSERT OR IGNORE INTO BookLabel(label_id,book_id,timestamp)" +
 			" SELECT label_id,?,? FROM Labels WHERE name=?"
 		);
-		statement.bindLong(1, bookId);
-		statement.bindLong(2, System.currentTimeMillis());
-		statement.bindString(3, label);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, System.currentTimeMillis());
+			statement.bindString(3, label);
+			statement.execute();
+		}
 	}
 
 	@Override
@@ -843,9 +869,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"DELETE FROM BookLabel WHERE book_id=? AND label_id IN" +
 			" (SELECT label_id FROM Labels WHERE name=?)"
 		);
-		statement.bindLong(1, bookId);
-		statement.bindString(2, label);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.bindString(2, label);
+			statement.execute();
+		}
 	}
 
 	@Override
@@ -932,15 +960,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final SQLiteStatement statement = get(
 			"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color,fg_color,timestamp) VALUES (?,?,?,?,?)"
 		);
-		statement.bindLong(1, style.Id);
-		final String name = style.getNameOrNull();
-		statement.bindString(2, name != null ? name : "");
-		final ZLColor bgColor = style.getBackgroundColor();
-		statement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
-		final ZLColor fgColor = style.getForegroundColor();
-		statement.bindLong(4, fgColor != null ? fgColor.intValue() : -1);
-		statement.bindLong(5, System.currentTimeMillis());
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, style.Id);
+			final String name = style.getNameOrNull();
+			statement.bindString(2, name != null ? name : "");
+			final ZLColor bgColor = style.getBackgroundColor();
+			statement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
+			final ZLColor fgColor = style.getForegroundColor();
+			statement.bindLong(4, fgColor != null ? fgColor.intValue() : -1);
+			statement.bindLong(5, System.currentTimeMillis());
+			statement.execute();
+		}
 	}
 
 	// this is workaround for working with old format plugins;
@@ -982,38 +1012,40 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			);
 		}
 
-		int fieldCount = 0;
-		SQLiteUtil.bindString(statement, ++fieldCount, uid(bookmark));
-		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getVersionUid());
-		statement.bindLong(++fieldCount, bookmark.BookId);
-		statement.bindString(++fieldCount, bookmark.getText());
-		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getOriginalText());
-		SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Creation));
-		SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Modification));
-		SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Access));
-		SQLiteUtil.bindString(statement, ++fieldCount, bookmark.ModelId);
-		statement.bindLong(++fieldCount, bookmark.ParagraphIndex);
-		statement.bindLong(++fieldCount, bookmark.ElementIndex);
-		statement.bindLong(++fieldCount, bookmark.CharIndex);
-		final ZLTextPosition end = bookmark.getEnd();
-		if (end != null) {
-			statement.bindLong(++fieldCount, end.getParagraphIndex());
-			statement.bindLong(++fieldCount, end.getElementIndex());
-			statement.bindLong(++fieldCount, end.getCharIndex());
-		} else {
-			statement.bindLong(++fieldCount, bookmark.getLength());
-			statement.bindNull(++fieldCount);
-			statement.bindNull(++fieldCount);
-		}
-		statement.bindLong(++fieldCount, bookmark.IsVisible ? 1 : 0);
-		statement.bindLong(++fieldCount, bookmark.getStyleId());
+		synchronized (statement) {
+			int fieldCount = 0;
+			SQLiteUtil.bindString(statement, ++fieldCount, uid(bookmark));
+			SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getVersionUid());
+			statement.bindLong(++fieldCount, bookmark.BookId);
+			statement.bindString(++fieldCount, bookmark.getText());
+			SQLiteUtil.bindString(statement, ++fieldCount, bookmark.getOriginalText());
+			SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Creation));
+			SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Modification));
+			SQLiteUtil.bindLong(statement, ++fieldCount, bookmark.getTimestamp(Bookmark.DateType.Access));
+			SQLiteUtil.bindString(statement, ++fieldCount, bookmark.ModelId);
+			statement.bindLong(++fieldCount, bookmark.ParagraphIndex);
+			statement.bindLong(++fieldCount, bookmark.ElementIndex);
+			statement.bindLong(++fieldCount, bookmark.CharIndex);
+			final ZLTextPosition end = bookmark.getEnd();
+			if (end != null) {
+				statement.bindLong(++fieldCount, end.getParagraphIndex());
+				statement.bindLong(++fieldCount, end.getElementIndex());
+				statement.bindLong(++fieldCount, end.getCharIndex());
+			} else {
+				statement.bindLong(++fieldCount, bookmark.getLength());
+				statement.bindNull(++fieldCount);
+				statement.bindNull(++fieldCount);
+			}
+			statement.bindLong(++fieldCount, bookmark.IsVisible ? 1 : 0);
+			statement.bindLong(++fieldCount, bookmark.getStyleId());
 
-		if (bookmarkId == -1) {
-			return statement.executeInsert();
-		} else {
-			statement.bindLong(++fieldCount, bookmarkId);
-			statement.execute();
-			return bookmarkId;
+			if (bookmarkId == -1) {
+				return statement.executeInsert();
+			} else {
+				statement.bindLong(++fieldCount, bookmarkId);
+				statement.execute();
+				return bookmarkId;
+			}
 		}
 	}
 
@@ -1021,11 +1053,15 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void deleteBookmark(Bookmark bookmark) {
 		final String uuid = uid(bookmark);
 		SQLiteStatement statement = get("DELETE FROM Bookmarks WHERE uid=?");
-		statement.bindString(1, uuid);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindString(1, uuid);
+			statement.execute();
+		}
 		statement = get("INSERT OR IGNORE INTO DeletedBookmarkIds (uid) VALUES (?)");
-		statement.bindString(1, uuid);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindString(1, uuid);
+			statement.execute();
+		}
 	}
 
 	@Override
@@ -1042,9 +1078,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected void purgeBookmarks(List<String> uids) {
 		final SQLiteStatement statement = get("DELETE FROM DeletedBookmarkIds WHERE uid=?");
-		for (String u : uids) {
-			statement.bindString(1, u);
-			statement.execute();
+		synchronized (statement) {
+			for (String u : uids) {
+				statement.bindString(1, u);
+				statement.execute();
+			}
 		}
 	}
 
@@ -1069,36 +1107,42 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final SQLiteStatement statement = get(
 			"INSERT OR REPLACE INTO BookState (book_id,paragraph,word,char,timestamp) VALUES (?,?,?,?,?)"
 		);
-		statement.bindLong(1, bookId);
-		statement.bindLong(2, position.getParagraphIndex());
-		statement.bindLong(3, position.getElementIndex());
-		statement.bindLong(4, position.getCharIndex());
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, position.getParagraphIndex());
+			statement.bindLong(3, position.getElementIndex());
+			statement.bindLong(4, position.getCharIndex());
 
-		long timestamp = -1;
-		if (position instanceof ZLTextFixedPosition.WithTimestamp) {
-			timestamp = ((ZLTextFixedPosition.WithTimestamp)position).Timestamp;
-		}
-		if (timestamp == -1) {
-			timestamp = System.currentTimeMillis();
-		}
-		statement.bindLong(5, timestamp);
+			long timestamp = -1;
+			if (position instanceof ZLTextFixedPosition.WithTimestamp) {
+				timestamp = ((ZLTextFixedPosition.WithTimestamp)position).Timestamp;
+			}
+			if (timestamp == -1) {
+				timestamp = System.currentTimeMillis();
+			}
+			statement.bindLong(5, timestamp);
 
-		statement.execute();
+			statement.execute();
+		}
 	}
 
 	private void deleteVisitedHyperlinks(long bookId) {
 		final SQLiteStatement statement = get("DELETE FROM VisitedHyperlinks WHERE book_id=?");
-		statement.bindLong(1, bookId);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.execute();
+		}
 	}
 
 	protected void addVisitedHyperlink(long bookId, String hyperlinkId) {
 		final SQLiteStatement statement = get(
 			"INSERT OR IGNORE INTO VisitedHyperlinks(book_id,hyperlink_id) VALUES (?,?)"
 		);
-		statement.bindLong(1, bookId);
-		statement.bindString(2, hyperlinkId);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.bindString(2, hyperlinkId);
+			statement.execute();
+		}
 	}
 
 	protected Collection<String> loadVisitedHyperlinks(long bookId) {
@@ -1116,10 +1160,12 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final SQLiteStatement statement = get(
 			"INSERT OR REPLACE INTO BookReadingProgress (book_id,numerator,denominator) VALUES (?,?,?)"
 		);
-		statement.bindLong(1, bookId);
-		statement.bindLong(2, progress.Numerator);
-		statement.bindLong(3, progress.Denominator);
-		statement.execute();
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, progress.Numerator);
+			statement.bindLong(3, progress.Denominator);
+			statement.execute();
+		}
 	}
 
 	@Override
@@ -1143,12 +1189,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			final SQLiteStatement statement = get(
 				"SELECT hash FROM BookHash WHERE book_id=? AND timestamp>?"
 			);
-			statement.bindLong(1, bookId);
-			statement.bindLong(2, lastModified);
-			try {
-				return statement.simpleQueryForString();
-			} catch (SQLiteDoneException e) {
-				return null;
+			synchronized (statement) {
+				statement.bindLong(1, bookId);
+				statement.bindLong(2, lastModified);
+				try {
+					return statement.simpleQueryForString();
+				} catch (SQLiteDoneException e) {
+					return null;
+				}
 			}
 		} catch (Throwable t) {
 			throw new NotAvailable();
@@ -1161,10 +1209,12 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			final SQLiteStatement statement = get(
 				"INSERT OR REPLACE INTO BookHash (book_id,timestamp,hash) VALUES (?,?,?)"
 			);
-			statement.bindLong(1, bookId);
-			statement.bindLong(2, System.currentTimeMillis());
-			statement.bindString(3, hash);
-			statement.execute();
+			synchronized (statement) {
+				statement.bindLong(1, bookId);
+				statement.bindLong(2, System.currentTimeMillis());
+				statement.bindString(3, hash);
+				statement.execute();
+			}
 		} catch (Throwable t) {
 			throw new NotAvailable();
 		}
