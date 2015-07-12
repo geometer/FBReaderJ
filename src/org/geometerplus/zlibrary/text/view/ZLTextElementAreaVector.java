@@ -24,14 +24,15 @@ import java.util.*;
 final class ZLTextElementAreaVector {
 	private final List<ZLTextElementArea> myAreas =
 		Collections.synchronizedList(new ArrayList<ZLTextElementArea>());
-	private final List<ZLTextRegion> myElementRegions =
-		Collections.synchronizedList(new ArrayList<ZLTextRegion>());
+	private final List<ZLTextRegion> myElementRegions = new ArrayList<ZLTextRegion>();
 	private ZLTextRegion myCurrentElementRegion;
 
 	void clear() {
-		myElementRegions.clear();
-		myCurrentElementRegion = null;
-		myAreas.clear();
+		synchronized (myAreas) {
+			myElementRegions.clear();
+			myCurrentElementRegion = null;
+			myAreas.clear();
+		}
 	}
 
 	public int size() {
@@ -142,7 +143,7 @@ final class ZLTextElementAreaVector {
 		if (soul == null) {
 			return null;
 		}
-		synchronized (myElementRegions) {
+		synchronized (myAreas) {
 			for (ZLTextRegion region : myElementRegions) {
 				if (soul.equals(region.getSoul())) {
 					return region;
@@ -155,7 +156,7 @@ final class ZLTextElementAreaVector {
 	ZLTextRegion findRegion(int x, int y, int maxDistance, ZLTextRegion.Filter filter) {
 		ZLTextRegion bestRegion = null;
 		int distance = maxDistance + 1;
-		synchronized (myElementRegions) {
+		synchronized (myAreas) {
 			for (ZLTextRegion region : myElementRegions) {
 				if (filter.accepts(region)) {
 					final int d = region.distanceTo(x, y);
@@ -176,7 +177,7 @@ final class ZLTextElementAreaVector {
 
 	RegionPair findRegionsPair(int x, int y, int columnIndex, ZLTextRegion.Filter filter) {
 		RegionPair pair = new RegionPair();
-		synchronized (myElementRegions) {
+		synchronized (myAreas) {
 			for (ZLTextRegion region : myElementRegions) {
 				if (filter.accepts(region)) {
 					if (region.isBefore(x, y, columnIndex)) {
@@ -192,7 +193,7 @@ final class ZLTextElementAreaVector {
 	}
 
 	protected ZLTextRegion nextRegion(ZLTextRegion currentRegion, ZLTextView.Direction direction, ZLTextRegion.Filter filter) {
-		synchronized (myElementRegions) {
+		synchronized (myAreas) {
 			if (myElementRegions.isEmpty()) {
 				return null;
 			}
