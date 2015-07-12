@@ -40,6 +40,7 @@ private:
 	int mySectionDepth;
 	int myBodyCounter;
 	bool myReadMainText;
+	int myFootnoteTagDepth;
 	bool myInsideCoverpage;
 	std::size_t myParagraphsBeforeBodyNumber;
 	std::string myCoverImageReference;

@@ -37,6 +37,7 @@ FB2BookReader::FB2BookReader(BookModel &model) : myModelReader(model) {
 	mySectionDepth = 0;
 	myBodyCounter = 0;
 	myReadMainText = false;
+	myFootnoteTagDepth = 0;
 	myCurrentImageStart = -1;
 	mySectionStarted = false;
 	myInsideTitle = false;
@@ -64,10 +65,15 @@ bool FB2BookReader::processNamespaces() const {
 }
 
 void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
+	if (!myReadMainText && myFootnoteTagDepth > 0) {
+		++myFootnoteTagDepth;
+	}
+
 	const char *id = attributeValue(xmlattributes, "id");
 	if (id != 0 && tag != _BINARY) {
-		if (!myReadMainText) {
+		if (!myReadMainText && myFootnoteTagDepth == 0) {
 			myModelReader.setFootnoteTextModel(id);
+			myFootnoteTagDepth = 1;
 		}
 		myModelReader.addHyperlinkLabel(id);
 	}
@@ -255,6 +261,10 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 }
 
 void FB2BookReader::endElementHandler(int tag) {
+	if (!myReadMainText && myFootnoteTagDepth > 0) {
+		--myFootnoteTagDepth;
+	}
+
 	switch (tag) {
 		case _P:
 		case _LI:
