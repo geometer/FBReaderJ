@@ -68,7 +68,9 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 			return true;
 		} else {
 			if (onBindAction != null) {
-				myOnBindActions.add(onBindAction);
+				synchronized (myOnBindActions) {
+					myOnBindActions.add(onBindAction);
+				}
 			}
 			final boolean result = context.bindService(
 				FBReaderIntents.internalIntent(FBReaderIntents.Action.LIBRARY_SERVICE),
@@ -591,11 +593,20 @@ public class BookCollectionShadow extends AbstractBookCollection<Book> implement
 	}
 
 	// method from ServiceConnection interface
-	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
-		myInterface = LibraryInterface.Stub.asInterface(service);
-		while (!myOnBindActions.isEmpty()) {
-			Config.Instance().runOnConnect(myOnBindActions.remove(0));
+	public void onServiceConnected(ComponentName name, IBinder service) {
+		synchronized (this) {
+			myInterface = LibraryInterface.Stub.asInterface(service);
 		}
+
+		final List<Runnable> actions;
+		synchronized (myOnBindActions) {
+			actions = new ArrayList<Runnable>(myOnBindActions);
+			myOnBindActions.clear();
+		}
+		for (Runnable a : actions) {
+			Config.Instance().runOnConnect(a);
+		}
+
 		if (myContext != null) {
 			myContext.registerReceiver(myReceiver, new IntentFilter(FBReaderIntents.Event.LIBRARY_BOOK));
 			myContext.registerReceiver(myReceiver, new IntentFilter(FBReaderIntents.Event.LIBRARY_BUILD));
