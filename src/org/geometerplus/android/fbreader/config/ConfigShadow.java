@@ -68,7 +68,9 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 		if (myInterface != null) {
 			runnable.run();
 		} else {
-			myDeferredActions.add(runnable);
+			synchronized (myDeferredActions) {
+				myDeferredActions.add(runnable);
+			}
 		}
 	}
 
@@ -183,13 +185,21 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	// method from ServiceConnection interface
-	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
-		myInterface = ConfigInterface.Stub.asInterface(service);
-		myContext.registerReceiver(
-			myReceiver, new IntentFilter(FBReaderIntents.Event.CONFIG_OPTION_CHANGE)
-		);
-		while (!myDeferredActions.isEmpty()) {
-			myDeferredActions.remove(0).run();
+	public void onServiceConnected(ComponentName name, IBinder service) {
+		synchronized (this) {
+			myInterface = ConfigInterface.Stub.asInterface(service);
+			myContext.registerReceiver(
+				myReceiver, new IntentFilter(FBReaderIntents.Event.CONFIG_OPTION_CHANGE)
+			);
+		}
+
+		final List<Runnable> actions;
+		synchronized (myDeferredActions) {
+			actions = new ArrayList<Runnable>(myDeferredActions);
+			myDeferredActions.clear();
+		}
+		for (Runnable a : actions) {
+			a.run();
 		}
 	}
 
