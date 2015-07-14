@@ -25,6 +25,7 @@ import java.util.*;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.Preference;
 import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
@@ -48,6 +49,7 @@ import org.geometerplus.fbreader.network.sync.SyncUtil;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
@@ -105,6 +107,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		config.requestAllValuesForGroup("Scrolling");
 		config.requestAllValuesForGroup("Colors");
 		config.requestAllValuesForGroup("Sync");
+		config.requestAllValuesForGroup("Menu");
 		setResult(FBReader.RESULT_REPAINT);
 
 		final ViewOptions viewOptions = new ViewOptions();
@@ -716,6 +719,17 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(imageOptions.FitToScreen, "fitImagesToScreen");
 		imagesScreen.addOption(imageOptions.ImageViewBackground, "backgroundColor");
 		imagesScreen.addOption(imageOptions.MatchBackground, "matchBackground");
+
+		final Screen menuScreen = createPreferenceScreen("menu");
+		final ZLResource menuResource = ZLResource.resource("menu");
+		for (String code : MenuData.allCodes()) {
+			final Preference pref = menuScreen.addPreference(new ZLBooleanPreference(
+				this, MenuData.nodeOption(code), menuResource.getResource(code)
+			));
+			if (code == "preferences") {
+				pref.setEnabled(false);
+			}
+		}
 
 		final CancelMenuHelper cancelMenuHelper = new CancelMenuHelper();
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");

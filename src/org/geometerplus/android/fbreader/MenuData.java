@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
@@ -31,8 +32,10 @@ import org.geometerplus.android.util.DeviceType;
 
 public abstract class MenuData {
 	private static List<MenuNode> ourNodes;
+	private static final Map<String,ZLBooleanOption> ourNodeOptions =
+		new HashMap<String,ZLBooleanOption>();
 
-	public static synchronized List<MenuNode> topLevelNodes() {
+	private static synchronized List<MenuNode> allTopLevelNodes() {
 		if (ourNodes == null) {
 			ourNodes = new ArrayList<MenuNode>();
 			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library));
@@ -67,5 +70,47 @@ public abstract class MenuData {
 			ourNodes = Collections.unmodifiableList(ourNodes);
 		}
 		return ourNodes;
+	}
+
+	private static String code(MenuNode node) {
+		final String code = node.Code;
+		if ("day".equals(code) || "night".equals(code)) {
+			return "dayNight";
+		}
+		return code;
+	}
+
+	public static List<String> allCodes() {
+		final List<MenuNode> allNodes = allTopLevelNodes();
+		final List<String> codes = new ArrayList<String>(allNodes.size());
+		for (MenuNode node : allNodes) {
+			final String c = code(node);
+			if (codes.isEmpty() || !c.equals(codes.get(codes.size() - 1))) {
+				codes.add(c);
+			}
+		}
+		return codes;
+	}
+
+	public static synchronized List<MenuNode> topLevelNodes() {
+		final List<MenuNode> allNodes = allTopLevelNodes();
+		final List<MenuNode> activeNodes = new ArrayList<MenuNode>(allNodes.size());
+		for (MenuNode node : allNodes) {
+			if (nodeOption(code(node)).getValue()) {
+				activeNodes.add(node);
+			}
+		}
+		return activeNodes;
+	}
+
+	public static ZLBooleanOption nodeOption(String code) {
+		synchronized (ourNodeOptions) {
+			ZLBooleanOption option = ourNodeOptions.get(code);
+			if (option == null) {
+				option = new ZLBooleanOption("Menu", code, true);
+				ourNodeOptions.put(code, option);
+			}
+			return option;
+		}
 	}
 }
