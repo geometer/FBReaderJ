@@ -22,18 +22,18 @@ package org.geometerplus.android.fbreader;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.fbreader.fbreader.ActionCode;
-
 import org.geometerplus.android.fbreader.api.MenuNode;
 import org.geometerplus.android.util.DeviceType;
 
+import android.util.Log;
+
 public abstract class MenuData {
 	private static List<MenuNode> ourNodes;
-	private static final Map<String,ZLBooleanOption> ourNodeOptions =
-		new HashMap<String,ZLBooleanOption>();
+	private static final Map<String,ZLIntegerOption> ourNodeOptions =
+		new HashMap<String,ZLIntegerOption>();
 
 	private static synchronized List<MenuNode> allTopLevelNodes() {
 		if (ourNodes == null) {
@@ -80,34 +80,102 @@ public abstract class MenuData {
 		return code;
 	}
 
-	public static List<String> allCodes() {
+//	public static List<String> allCodes() {// TODO: never used - remove?
+//		final List<MenuNode> allNodes = allTopLevelNodes();
+//		final List<String> codes = new ArrayList<String>(allNodes.size());
+//		for (MenuNode node : allNodes) {
+//			final String c = code(node);
+//			if (codes.isEmpty() || !c.equals(codes.get(codes.size() - 1))) {
+//				codes.add(c);
+//			}
+//		}
+//		return codes;
+//	}
+	
+	private static class SortItem implements Comparable<SortItem> {
+		final MenuNode Node;
+		final Float Value;
+		 
+		SortItem(MenuNode node, float value) {
+			Node = node;
+			Value = value;
+		}
+
+		@Override
+		public int compareTo(SortItem another) {
+			return Value.compareTo(another.Value);
+		}
+	}
+	
+	public static ArrayList<String> enabledCodes() {
+		float i = 0;
 		final List<MenuNode> allNodes = allTopLevelNodes();
-		final List<String> codes = new ArrayList<String>(allNodes.size());
+		final ArrayList<String> codes = new ArrayList<String>();
+		TreeSet<SortItem> temp = new TreeSet<SortItem>();
 		for (MenuNode node : allNodes) {
-			final String c = code(node);
-			if (codes.isEmpty() || !c.equals(codes.get(codes.size() - 1))) {
-				codes.add(c);
+			if (node.Code.equals("night")) {
+				continue; //duplicate nodes
+			}
+			int v = nodeOption(code(node)).getValue();
+			if (v >= 0) {
+				SortItem s = new SortItem(node, v + i);//FIXME: not a best way to sort
+				temp.add(s);
+				i += 0.001;
+			}
+		}
+		for (SortItem s : temp) {
+			codes.add(code(s.Node));
+		}
+		return codes;
+	}
+	
+	public static ArrayList<String> disabledCodes() {
+		final List<MenuNode> allNodes = allTopLevelNodes();
+		final ArrayList<String> codes = new ArrayList<String>();
+		for (MenuNode node : allNodes) {
+			int v = nodeOption(code(node)).getValue();
+			if (v < 0) {
+				codes.add(code(node));
 			}
 		}
 		return codes;
+	}
+	
+	public static int iconId(String code) {
+		final List<MenuNode> allNodes = allTopLevelNodes();
+		for (MenuNode node : allNodes) {
+			final String c = code(node);
+			if (node instanceof MenuNode.Item && code.equals(c) && (((MenuNode.Item) node)).IconId != null) {
+				return (((MenuNode.Item) node)).IconId;
+			}
+		}
+		return -1;
 	}
 
 	public static synchronized List<MenuNode> topLevelNodes() {
 		final List<MenuNode> allNodes = allTopLevelNodes();
 		final List<MenuNode> activeNodes = new ArrayList<MenuNode>(allNodes.size());
+		TreeSet<SortItem> temp = new TreeSet<SortItem>();
+		float i = 0;
 		for (MenuNode node : allNodes) {
-			if (nodeOption(code(node)).getValue()) {
-				activeNodes.add(node);
+			int v = nodeOption(code(node)).getValue();
+			if (v >= 0) {
+				SortItem s = new SortItem(node, v + i);//FIXME: not a best way to sort
+				temp.add(s);
+				i += 0.001;
 			}
+		}
+		for (SortItem s : temp) {
+			activeNodes.add(s.Node);
 		}
 		return activeNodes;
 	}
 
-	public static ZLBooleanOption nodeOption(String code) {
+	public static ZLIntegerOption nodeOption(String code) {
 		synchronized (ourNodeOptions) {
-			ZLBooleanOption option = ourNodeOptions.get(code);
+			ZLIntegerOption option = ourNodeOptions.get(code);
 			if (option == null) {
-				option = new ZLBooleanOption("Menu", code, true);
+				option = new ZLIntegerOption("Menu", code, 0);
 				ourNodeOptions.put(code, option);
 			}
 			return option;

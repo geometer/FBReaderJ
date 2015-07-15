@@ -64,7 +64,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
 	private static final int BACKGROUND_REQUEST_CODE = 3000;
+	static final int MENU_REQUEST_CODE = 4000;
 	private BackgroundPreference myBackgroundPreference;
+	private MenuPreference myMenuPreference;
 
 	public PreferenceActivity() {
 		super("Preferences");
@@ -89,6 +91,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		if (BACKGROUND_REQUEST_CODE == requestCode) {
 			if (myBackgroundPreference != null) {
 				myBackgroundPreference.update(data);
+			}
+			return;
+		}
+		
+		if (MENU_REQUEST_CODE == requestCode) {
+			if (myMenuPreference != null) {
+				myMenuPreference.update(data);
 			}
 			return;
 		}
@@ -720,16 +729,19 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(imageOptions.ImageViewBackground, "backgroundColor");
 		imagesScreen.addOption(imageOptions.MatchBackground, "matchBackground");
 
-		final Screen menuScreen = createPreferenceScreen("menu");
-		final ZLResource menuResource = ZLResource.resource("menu");
-		for (String code : MenuData.allCodes()) {
-			final Preference pref = menuScreen.addPreference(new ZLBooleanPreference(
-				this, MenuData.nodeOption(code), menuResource.getResource(code)
-			));
-			if (code == "preferences") {
-				pref.setEnabled(false);
-			}
-		}
+//		final Screen menuScreen = createPreferenceScreen("menu");
+//		final ZLResource menuResource = ZLResource.resource("menu");
+//		for (String code : MenuData.allCodes()) {
+//			final Preference pref = menuScreen.addPreference(new ZLBooleanPreference(
+//				this, MenuData.nodeOption(code), menuResource.getResource(code)
+//			));
+//			if (code == "preferences") {
+//				pref.setEnabled(false);
+//			}
+//		}
+		
+		myMenuPreference = new MenuPreference(this);
+		addPreference(myMenuPreference);
 
 		final CancelMenuHelper cancelMenuHelper = new CancelMenuHelper();
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
