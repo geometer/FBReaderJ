@@ -254,7 +254,6 @@
 				<data android:pathPattern=".*\\.prc"/>
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
-				<data android:pathPattern=".*\\.pdf"/>
 				<data android:pathPattern=".*\\.djvu"/>
 				<data android:pathPattern=".*\\.cbr"/>
 				<data android:pathPattern=".*\\.cbz"/>
@@ -269,8 +268,6 @@
 				<data android:mimeType="application/x-mobipocket-ebook"/>
 				<data android:mimeType="application/x-fictionbook+xml"/>
 				<data android:mimeType="application/x-fictionbook"/>
-				<data android:mimeType="application/pdf"/>
-				<data android:mimeType="application/x-pdf"/>
 				<data android:mimeType="application/djvu"/>
 				<data android:mimeType="application/x-djvu"/>
 				<data android:mimeType="application/x-cbr"/>
