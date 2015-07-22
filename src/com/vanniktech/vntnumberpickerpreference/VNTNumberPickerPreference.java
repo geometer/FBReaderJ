@@ -27,21 +27,18 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.preference.DialogPreference;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
 public class VNTNumberPickerPreference extends DialogPreference {
 	private final ZLIntegerRangeOption myOption;
-	private int mySelectedValue;
 	private View myCentralView;
 
 	public VNTNumberPickerPreference(Context context, ZLResource resource, ZLIntegerRangeOption option) {
 		super(context, null);
 		myOption = option;
 		setTitle(resource.getValue());
-		mySelectedValue = option.getValue();
 		updateSummary();
 		
 	}
@@ -56,13 +53,13 @@ public class VNTNumberPickerPreference extends DialogPreference {
 		final NumberPicker picker = (NumberPicker)myCentralView;
 		picker.setMinValue(myOption.MinValue);
 		picker.setMaxValue(myOption.MaxValue);
-		picker.setValue(mySelectedValue);
+		picker.setValue(myOption.getValue());
 		picker.setWrapSelectorWheel(false);
 	}
 
 	private void setupSimpleEditor() {
 		final EditText text = (EditText)myCentralView;
-		text.setText(String.valueOf(mySelectedValue));
+		text.setText(String.valueOf(myOption.getValue()));
 	}
 
 	@Override
@@ -89,24 +86,25 @@ public class VNTNumberPickerPreference extends DialogPreference {
 
 	@Override
 	protected void onDialogClosed(boolean positiveResult) {
+		int value = myOption.getValue();
 		if (positiveResult) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-				mySelectedValue = getValueHoneycomb();
+				value = getValueHoneycomb();
 			} else {
 				try {
 					final String text = ((EditText)myCentralView).getText().toString();
-					mySelectedValue =
+					value =
 						Math.min(myOption.MaxValue, Math.max(myOption.MinValue, Integer.valueOf(text)));
 				} catch (Throwable t) {
 					// ignore
 				}
 			}
-			myOption.setValue(mySelectedValue);
+			myOption.setValue(value);
 			updateSummary();
 		}
 	}
 
 	private void updateSummary() {
-		setSummary(String.valueOf(mySelectedValue));
+		setSummary(String.valueOf(myOption.getValue()));
 	}
 }
