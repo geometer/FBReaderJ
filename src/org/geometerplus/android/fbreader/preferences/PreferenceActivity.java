@@ -34,12 +34,9 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.JsonRequest;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.zlibrary.text.view.style.*;
-
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
-
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.fbreader.*;
@@ -47,7 +44,6 @@ import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.sync.SyncUtil;
 import org.geometerplus.fbreader.tips.TipsManager;
-
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.fbreader.dict.DictionaryUtil;
@@ -56,9 +52,10 @@ import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 import org.geometerplus.android.fbreader.preferences.background.BackgroundPreference;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
-
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
+
+import com.vanniktech.vntnumberpickerpreference.VNTNumberPickerPreference;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
@@ -333,7 +330,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			});
 
-			final ZLIntegerRangePreference updateIntervalPreference = new ZLIntegerRangePreference(
+			final VNTNumberPickerPreference updateIntervalPreference = new VNTNumberPickerPreference(
 				this, einkScreen.Resource.getResource("interval"), einkOptions.UpdateInterval
 			);
 			einkScreen.addPreference(updateIntervalPreference);
@@ -359,7 +356,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, textScreen.Resource.getResource("font"),
 			baseStyle.FontFamilyOption, false
 		)));
-		textScreen.addPreference(new ZLIntegerRangePreference(
+		textScreen.addPreference(new VNTNumberPickerPreference(
 			this, textScreen.Resource.getResource("fontSize"),
 			baseStyle.FontSizeOption
 		));
@@ -569,7 +566,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 
-		footerPreferences.add(statusLineScreen.addPreference(new ZLIntegerRangePreference(
+		footerPreferences.add(statusLineScreen.addPreference(new VNTNumberPickerPreference(
 			this, statusLineScreen.Resource.getResource("footerHeight"),
 			viewOptions.FooterHeight
 		)));
