@@ -200,7 +200,7 @@ public class MenuEditActivity extends ListActivity {
 					coverView.setImageBitmap(Bitmap.createScaledBitmap(b, (int)(b.getWidth() * 0.8), (int)(b.getHeight() * 0.8), false));
 					b.recycle();
 				} else {
-					coverView.setImageResource(0);
+					coverView.setImageBitmap(null);
 				}
 
 				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.catalog_manager_item_checkbox);
