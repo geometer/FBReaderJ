@@ -96,8 +96,7 @@ void ZLZipInputStream::seek(int offset, bool absoluteOffset) {
 		read(0, offset);
 	} else if (offset < 0) {
 		offset += this->offset();
-		open();
-		if (offset >= 0) {
+		if (open() && offset > 0) {
 			read(0, offset);
 		}
 	}
