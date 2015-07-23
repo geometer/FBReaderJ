@@ -77,6 +77,9 @@ public abstract class MenuData {
 		if ("day".equals(code) || "night".equals(code)) {
 			return "dayNight";
 		}
+		if ("increaseFont".equals(code) || "decreaseFont".equals(code)) {
+			return "zoom";
+		}
 		return code;
 	}
 
@@ -113,7 +116,7 @@ public abstract class MenuData {
 		final ArrayList<String> codes = new ArrayList<String>();
 		TreeSet<SortItem> temp = new TreeSet<SortItem>();
 		for (MenuNode node : allNodes) {
-			if (node.Code.equals("night")) {
+			if (node.Code.equals("night") || node.Code.equals("decreaseFont")) {
 				continue; //duplicate nodes
 			}
 			int v = nodeOption(code(node)).getValue();

@@ -28,10 +28,10 @@ import android.preference.*;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
-
 import org.geometerplus.android.fbreader.OrientationUtil;
+
+import com.vanniktech.vntnumberpickerpreference.VNTNumberPickerPreference;
 
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
 	public static String SCREEN_KEY = "screen";
@@ -77,7 +77,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		}
 
 		public Preference addOption(ZLIntegerRangeOption option, String resourceKey) {
-			return addPreference(new ZLIntegerRangePreference(
+			return addPreference(new VNTNumberPickerPreference(
 				ZLPreferenceActivity.this, Resource.getResource(resourceKey), option
 			));
 		}
