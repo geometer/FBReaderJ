@@ -23,6 +23,9 @@ import java.util.*;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -190,9 +193,12 @@ public class MenuEditActivity extends ListActivity {
 				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_title, menuItem.getTitle());
 
 				final ImageView coverView = ViewUtil.findImageView(view, R.id.catalog_manager_item_icon);
+				coverView.setPadding(5, 20, 5, 20);
 				
 				if (MenuData.iconId(menuItem.Id) != -1) {
-					coverView.setImageResource(MenuData.iconId(menuItem.Id));
+					Bitmap b = BitmapFactory.decodeResource(getResources(), MenuData.iconId(menuItem.Id));
+					coverView.setImageBitmap(Bitmap.createScaledBitmap(b, (int)(b.getWidth() * 0.8), (int)(b.getHeight() * 0.8), false));
+					b.recycle();
 				} else {
 					coverView.setImageResource(0);
 				}
