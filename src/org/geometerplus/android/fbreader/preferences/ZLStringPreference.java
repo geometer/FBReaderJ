@@ -32,6 +32,7 @@ public abstract class ZLStringPreference extends EditTextPreference {
 
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
+		setDialogTitle(resource.getValue());
 	}
 
 	protected void setValue(String value) {
