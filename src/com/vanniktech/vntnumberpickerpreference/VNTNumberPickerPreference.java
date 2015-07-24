@@ -75,7 +75,7 @@ public class VNTNumberPickerPreference extends DialogPreference {
 		} else {
 			setupSimpleEditor();
 		}
-		builder.setTitle(getTitle());
+//		builder.setTitle(getTitle());
 		builder.setView(layout);
 	}
 
