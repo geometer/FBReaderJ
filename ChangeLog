@@ -4,7 +4,7 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
-===== 2.5.4 (Jul ??, 2015) =====
+===== 2.5.4 (Jul 24, 2015) =====
 * Fixed possible deadlocks
 * Fixed possible fb2 footnotes text trimming
 
