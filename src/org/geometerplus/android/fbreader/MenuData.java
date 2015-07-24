@@ -78,7 +78,7 @@ public abstract class MenuData {
 			return "dayNight";
 		}
 		if ("increaseFont".equals(code) || "decreaseFont".equals(code)) {
-			return "zoom";
+			return "changeFontSize";
 		}
 		return code;
 	}

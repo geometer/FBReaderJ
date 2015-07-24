@@ -324,7 +324,7 @@
 		<node name="screenOrientationReverseLandscape" value="Reverse landscape"/>
 		<node name="increaseFont" value="Zoom in"/>
 		<node name="decreaseFont" value="Zoom out"/>
-		<node name="zoom" value="Zoom"/>
+		<node name="changeFontSize" value="Zoom in/out"/>
 		<node name="toggleFullscreen" value="Fullscreen mode"/>
 		<node name="bookmarks" value="Bookmarks"/>
 		<node name="help" value="Help"/>
