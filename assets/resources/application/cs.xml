@@ -1193,13 +1193,13 @@
 		<node name="duration300" value="5 minut"/>
 	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="neznámá chyba"/>
-		<node name="noArticle" value="nenalezen žádný článek pro “%s”"/>
-		<node name="cannotOpenDictionary" value="nelze otevřít slovník"/>
-		<node name="noDictionarySelected" value="není vybrán slovník; opravte to v nastavení Dictan"/>
+		<node name="unknown" value="Neznámá chyba"/>
+		<node name="noArticle" value="Nenalezen žádný článek pro “%s”"/>
+		<node name="cannotOpenDictionary" value="Nelze otevřít slovník"/>
+		<node name="noDictionarySelected" value="Není vybrán slovník; opravte to v nastavení Dictanu"/>
 	</node>
 	<node name="premium" value="FBReader prémiová edice">
-		<node name="shortTitle" value="FBReader Premium" toBeTranslated="true"/>
-		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+		<node name="shortTitle" value="FBReader Premium"/>
+		<node name="conflict" value="Zdá se, že máte nainstalován FBReader a FBReader Premium. Který byste chtěli spustit?"/>
 	</node>
 </resources>
