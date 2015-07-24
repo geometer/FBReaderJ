@@ -303,6 +303,7 @@
 		<node name="toc" value="Բովանդակություն"/>
 		<node name="day" value="Ցերեկ"/>
 		<node name="night" value="Գիշեր"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Կարդալ դարձէկրանին"/>
 		<node name="yotaSwitchToFrontScreen" value="Կարդալ դիմէկրանին"/>
 		<node name="networkLibrary" value="Ցանցային գրադարան"/>
@@ -329,6 +330,7 @@
 		<node name="screenOrientationReverseLandscape" value="շրջված հորիզոնական"/>
 		<node name="increaseFont" value="Մեծացնել տառատեսակը"/>
 		<node name="decreaseFont" value="Փոքրացնել տառատեսակը"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Ամբողջ էկրանով"/>
 		<node name="bookmarks" value="Էջանիշեր"/>
 		<node name="help" value="Օգնություն"/>
@@ -811,6 +813,9 @@
 				<node name="summaryOn" value="Պատկերի գույնը հարմարեցնել ետնաշերտին"/>
 				<node name="summaryOff" value="Պատկերի գույնը չհարմարեցնել ետնաշերտին"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="«Ետ»-գործիքագոտի">
 			<node name="summary" value="Գործողություններ՝ «Ետ» ստեղնը սեղմելիս"/>

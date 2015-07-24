@@ -288,6 +288,7 @@
 		<node name="toc" value="Mục lục"/>
 		<node name="day" value="Sáng"/>
 		<node name="night" value="Tối"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
 		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Thư viện mạng"/>
@@ -314,6 +315,7 @@
 		<node name="screenOrientationReverseLandscape" value="Ngang: lộn đầu"/>
 		<node name="increaseFont" value="Chữ to hơn"/>
 		<node name="decreaseFont" value="Chữ nhỏ hơn"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Choán hết màn hình "/>
 		<node name="bookmarks" value="Đánh dấu"/>
 		<node name="help" value="Trợ giúp"/>
@@ -796,6 +798,9 @@
 				<node name="summaryOn" value="Điều chỉnh màu ảnh theo nền"/>
 				<node name="summaryOff" value="Không điều chỉnh ảnh"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Danh mục lệnh Hủy">
 			<node name="summary" value="Các lệnh trong Lệnh Hủy"/>
