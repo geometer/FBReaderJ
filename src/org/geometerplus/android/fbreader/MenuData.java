@@ -97,9 +97,9 @@ public abstract class MenuData {
 	
 	private static class SortItem implements Comparable<SortItem> {
 		final MenuNode Node;
-		final Float Value;
+		final Integer Value;
 		 
-		SortItem(MenuNode node, float value) {
+		SortItem(MenuNode node, int value) {
 			Node = node;
 			Value = value;
 		}
@@ -111,7 +111,7 @@ public abstract class MenuData {
 	}
 	
 	public static ArrayList<String> enabledCodes() {
-		float i = 0;
+		int i = 0;
 		final List<MenuNode> allNodes = allTopLevelNodes();
 		final ArrayList<String> codes = new ArrayList<String>();
 		TreeSet<SortItem> temp = new TreeSet<SortItem>();
@@ -121,9 +121,9 @@ public abstract class MenuData {
 			}
 			int v = nodeOption(code(node)).getValue();
 			if (v >= 0) {
-				SortItem s = new SortItem(node, v + i);//FIXME: not a best way to sort
+				SortItem s = new SortItem(node, v * 1000 + i);//FIXME: not a best way to sort
 				temp.add(s);
-				i += 0.001;
+				i += 1;
 			}
 		}
 		for (SortItem s : temp) {
@@ -159,13 +159,13 @@ public abstract class MenuData {
 		final List<MenuNode> allNodes = allTopLevelNodes();
 		final List<MenuNode> activeNodes = new ArrayList<MenuNode>(allNodes.size());
 		TreeSet<SortItem> temp = new TreeSet<SortItem>();
-		float i = 0;
+		int i = 0;
 		for (MenuNode node : allNodes) {
 			int v = nodeOption(code(node)).getValue();
 			if (v >= 0) {
-				SortItem s = new SortItem(node, v + i);//FIXME: not a best way to sort
+				SortItem s = new SortItem(node, v * 1000 + i);//FIXME: not a best way to sort
 				temp.add(s);
-				i += 0.001;
+				i += 1;
 			}
 		}
 		for (SortItem s : temp) {
