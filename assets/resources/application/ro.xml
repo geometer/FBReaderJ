@@ -290,6 +290,7 @@
 		<node name="toc" value="Cuprins"/>
 		<node name="day" value="Mod Zi"/>
 		<node name="night" value="Mod Noapte"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Treci la ecranul din spate"/>
 		<node name="yotaSwitchToFrontScreen" value="Treci la ecranul din fata"/>
 		<node name="networkLibrary" value="Biblioteca din retea"/>
@@ -316,6 +317,7 @@
 		<node name="screenOrientationReverseLandscape" value="Orizontal (Peisaj) inversat"/>
 		<node name="increaseFont" value="Mareste"/>
 		<node name="decreaseFont" value="Micsoreaza"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Pe intreg ecranul"/>
 		<node name="bookmarks" value="Favorite"/>
 		<node name="help" value="Ajutor"/>
@@ -798,6 +800,9 @@
 				<node name="summaryOn" value="Ajusteaza culoarea imaginii in functie de fundal"/>
 				<node name="summaryOff" value="Nu ajusta culoarea imaginii"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Anuleaza meniu">
 			<node name="summary" value="Lista actiunilor pentru butonul inapoi"/>
