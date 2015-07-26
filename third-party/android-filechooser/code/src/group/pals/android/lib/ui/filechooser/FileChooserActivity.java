@@ -1041,7 +1041,12 @@ public class FileChooserActivity extends Activity {
                             return;
                         }
 
-                        IFile dir = mFileProvider.fromPath(String
+						final IFileProvider fileProvider = mFileProvider;
+						if (fileProvider == null) {
+							return;
+						}
+
+                        IFile dir = fileProvider.fromPath(String
                                 .format("%s/%s", getLocation().getAbsolutePath(), name));
                         if (dir.mkdir()) {
                             Dlg.toast(FileChooserActivity.this, getString(R.string.afc_msg_done), Dlg._LengthShort);

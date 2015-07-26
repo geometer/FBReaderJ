@@ -85,6 +85,7 @@ private:
 	shared_ptr<ZLInputStream> myBaseStream;
 	std::string myBaseName;
 	std::string myEntryName;
+	bool myIsOpen;
 	bool myIsDeflated;
 
 	std::size_t myUncompressedSize;
