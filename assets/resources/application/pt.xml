@@ -301,6 +301,7 @@
 		<node name="toc" value="TOC"/>
 		<node name="day" value="Dia"/>
 		<node name="night" value="Noite"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Enviar para trás"/>
 		<node name="yotaSwitchToFrontScreen" value="Enviar para a frente"/>
 		<node name="networkLibrary" value="Rede de bibliotecas"/>
@@ -327,6 +328,7 @@
 		<node name="screenOrientationReverseLandscape" value="Reverter paisagem"/>
 		<node name="increaseFont" value="Aproximar o Zoom"/>
 		<node name="decreaseFont" value="Diminuir o zoom"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Ecrã Inteiro"/>
 		<node name="bookmarks" value="Favoritos"/>
 		<node name="help" value="Ajuda"/>
@@ -809,6 +811,9 @@
 				<node name="summaryOn" value="Ajustar a cor da imagen de acordo com o fundo"/>
 				<node name="summaryOff" value="Não ajustar a cor da imagem"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Menu Cancelar">
 			<node name="summary" value="Lista de ação da tecla Voltar"/>

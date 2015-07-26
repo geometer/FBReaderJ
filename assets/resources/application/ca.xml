@@ -303,6 +303,7 @@
 		<node name="toc" value="Índex"/>
 		<node name="day" value="Dia"/>
 		<node name="night" value="Nit"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
 		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Biblioteca en xarxa"/>
@@ -329,6 +330,7 @@
 		<node name="screenOrientationReverseLandscape" value="Horitzontal inversa"/>
 		<node name="increaseFont" value="Augmentar lletra"/>
 		<node name="decreaseFont" value="Disminuir lletra"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Pantalla completa"/>
 		<node name="bookmarks" value="Punts de llibre"/>
 		<node name="help" value="Ajuda"/>
@@ -811,6 +813,9 @@
 				<node name="summaryOn" value="Adjust image colour to background" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not adjust image colour" toBeTranslated="true"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Menú cancelar">
 			<node name="summary" value="Back button action list" toBeTranslated="true"/>

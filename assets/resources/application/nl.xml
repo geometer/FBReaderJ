@@ -297,6 +297,7 @@
 		<node name="toc" value="Inhoud"/>
 		<node name="day" value="Dag"/>
 		<node name="night" value="Nacht"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Schakel naar achter-scherm"/>
 		<node name="yotaSwitchToFrontScreen" value="Schakel naar voor-scherm"/>
 		<node name="networkLibrary" value="Netwerkbibliotheek"/>
@@ -323,6 +324,7 @@
 		<node name="screenOrientationReverseLandscape" value="Omgekeerd liggend"/>
 		<node name="increaseFont" value="Inzoomen"/>
 		<node name="decreaseFont" value="Uitzoomen"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Volledig scherm"/>
 		<node name="bookmarks" value="Bladwijzers"/>
 		<node name="help" value="Help"/>
@@ -805,6 +807,9 @@
 				<node name="summaryOn" value="Kleur afbeelding aanpassen aan achtergrond"/>
 				<node name="summaryOff" value="Kleur afbeelding niet aanpassen"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Afsluitmenu">
 			<node name="summary" value="Terugknop actie"/>

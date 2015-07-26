@@ -297,6 +297,7 @@
 		<node name="toc" value="TOC"/>
 		<node name="day" value="Day"/>
 		<node name="night" value="Night"/>
+		<node name="dayNight" value="Day/Night"/>
 		<node name="yotaSwitchToBackScreen" value="Switch to back screen"/>
 		<node name="yotaSwitchToFrontScreen" value="Switch to front screen"/>
 		<node name="networkLibrary" value="Network library"/>
@@ -323,6 +324,7 @@
 		<node name="screenOrientationReverseLandscape" value="Reverse landscape"/>
 		<node name="increaseFont" value="Zoom in"/>
 		<node name="decreaseFont" value="Zoom out"/>
+		<node name="changeFontSize" value="Zoom in/out"/>
 		<node name="toggleFullscreen" value="Fullscreen mode"/>
 		<node name="bookmarks" value="Bookmarks"/>
 		<node name="help" value="Help"/>
@@ -805,6 +807,9 @@
 				<node name="summaryOn" value="Adjust image colour to background"/>
 				<node name="summaryOff" value="Do not adjust image colour"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu">
+			<node name="summary" value="Main menu items"/>
 		</node>
 		<node name="cancelMenu" value="Cancel menu">
 			<node name="summary" value="Back button action list"/>

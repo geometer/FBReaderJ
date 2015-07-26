@@ -297,6 +297,7 @@
 		<node name="toc" value="Зьмест"/>
 		<node name="day" value="Дзень"/>
 		<node name="night" value="Ноч"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Пераключыцца на задні экран"/>
 		<node name="yotaSwitchToFrontScreen" value="Пераключыцца на пярэдні экран"/>
 		<node name="networkLibrary" value="Сеткавая бібліятэка"/>
@@ -323,6 +324,7 @@
 		<node name="screenOrientationReverseLandscape" value="Перавернутая гарызантальная"/>
 		<node name="increaseFont" value="Наблізіць"/>
 		<node name="decreaseFont" value="Падаліць"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Поўны экран"/>
 		<node name="bookmarks" value="Закладкі"/>
 		<node name="help" value="Дапамога"/>
@@ -805,6 +807,9 @@
 				<node name="summaryOn" value="Карэктаваць колер выявы адпаведна з фонам"/>
 				<node name="summaryOff" value="Не карэктаваць колер выявы"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Мэню касаваньня">
 			<node name="summary" value="Сьпіс дзеяньняў кнопкі «Назад»"/>

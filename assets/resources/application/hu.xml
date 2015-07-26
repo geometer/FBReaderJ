@@ -287,6 +287,7 @@
 		<node name="toc" value="Tartalom"/>
 		<node name="day" value="Nappali"/>
 		<node name="night" value="Éjjeli"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Váltás a hátsó képernyőre"/>
 		<node name="yotaSwitchToFrontScreen" value="Váltás az első képernyőre"/>
 		<node name="networkLibrary" value="Internetes könyvtár"/>
@@ -313,6 +314,7 @@
 		<node name="screenOrientationReverseLandscape" value="Fordított fekvő"/>
 		<node name="increaseFont" value="Nagyítás"/>
 		<node name="decreaseFont" value="Kicsinyítés"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Teljes kijelző"/>
 		<node name="bookmarks" value="Könyvjelzők"/>
 		<node name="help" value="Súgó"/>
@@ -795,6 +797,9 @@
 				<node name="summaryOn" value="Igazítsa a kép színeit a háttérhez"/>
 				<node name="summaryOff" value="Ne igazítsa a kép színeit"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Vissza menü">
 			<node name="summary" value="Vissza gomb műveletek"/>

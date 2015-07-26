@@ -306,6 +306,7 @@
 		<node name="toc" value="Obsah"/>
 		<node name="day" value="Den"/>
 		<node name="night" value="Noc"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Přepnout na zadní displej"/>
 		<node name="yotaSwitchToFrontScreen" value="Přepnout na přední displej"/>
 		<node name="networkLibrary" value="Síťová knihovna"/>
@@ -332,6 +333,7 @@
 		<node name="screenOrientationReverseLandscape" value="Převráceně na šířku"/>
 		<node name="increaseFont" value="Zvětšit"/>
 		<node name="decreaseFont" value="Zmenšit"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
 		<node name="bookmarks" value="Záložky"/>
 		<node name="help" value="Nápověda"/>
@@ -814,6 +816,9 @@
 				<node name="summaryOn" value="Přizpůsobit barvu obrázku podle pozadí"/>
 				<node name="summaryOff" value="Nepřizpůsobovat barvu obrázku"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu">
+			<node name="summary" value="Položky menu"/>
 		</node>
 		<node name="cancelMenu" value="Nabídka Zrušit">
 			<node name="summary" value="Seznam akcí tlačítka Zpět"/>

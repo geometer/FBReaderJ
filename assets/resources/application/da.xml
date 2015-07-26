@@ -296,6 +296,7 @@
 		<node name="toc" value="Indholdsfortegnelse"/>
 		<node name="day" value="Dag"/>
 		<node name="night" value="Nat"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
 		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Netværksbibliotek"/>
@@ -322,6 +323,7 @@
 		<node name="screenOrientationReverseLandscape" value="Omvendt liggende"/>
 		<node name="increaseFont" value="Zoom ind"/>
 		<node name="decreaseFont" value="Zoom ud"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Fuld skærm"/>
 		<node name="bookmarks" value="Bogmærker"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
@@ -804,6 +806,9 @@
 				<node name="summaryOn" value="Adjust image colour to background" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not adjust image colour" toBeTranslated="true"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Annulleringsmenu">
 			<node name="summary" value="Handlingsliste for knappen Tilbage"/>
