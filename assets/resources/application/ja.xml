@@ -297,6 +297,7 @@
 		<node name="toc" value="目次"/>
 		<node name="day" value="日中モード"/>
 		<node name="night" value="夜間モード"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="背面スクリーンに切替"/>
 		<node name="yotaSwitchToFrontScreen" value="前面スクリーンに切替"/>
 		<node name="networkLibrary" value="ネットワークライブラリ"/>
@@ -323,6 +324,7 @@
 		<node name="screenOrientationReverseLandscape" value="逆ヨコ向き"/>
 		<node name="increaseFont" value="拡大"/>
 		<node name="decreaseFont" value="縮小"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="全画面"/>
 		<node name="bookmarks" value="しおり"/>
 		<node name="help" value="ヘルプ"/>
@@ -805,6 +807,9 @@
 				<node name="summaryOn" value="画像の色を背景に合わせて調節"/>
 				<node name="summaryOff" value="画像の色を調節しない"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="キャンセルメニュー">
 			<node name="summary" value="戻るボタンの動作"/>

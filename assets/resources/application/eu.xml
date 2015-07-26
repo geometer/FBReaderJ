@@ -297,6 +297,7 @@
 		<node name="toc" value="Aurkibidea"/>
 		<node name="day" value="Eguna"/>
 		<node name="night" value="Gaua"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Aldatu atzeko pantailara"/>
 		<node name="yotaSwitchToFrontScreen" value="Aldatu aurreko pantailara"/>
 		<node name="networkLibrary" value="Sareko liburutegia"/>
@@ -323,6 +324,7 @@
 		<node name="screenOrientationReverseLandscape" value="Alderantzizko horizontala"/>
 		<node name="increaseFont" value="Handitu letra-tipoa"/>
 		<node name="decreaseFont" value="Txikitu letra-tipoa"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="Pantaila osoan"/>
 		<node name="bookmarks" value="Laster-markak"/>
 		<node name="help" value="Laguntza"/>
@@ -805,6 +807,9 @@
 				<node name="summaryOn" value="Doitu irudiaren kolorea atzeko planokoaren arabera"/>
 				<node name="summaryOff" value="Ez doitu irudiaren kolorea"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Utzi menua">
 			<node name="summary" value="Atzera botoiaren ekintza zerrenda"/>

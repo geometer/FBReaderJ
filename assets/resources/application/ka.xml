@@ -302,6 +302,7 @@
 		<node name="toc" value="სარჩევი"/>
 		<node name="day" value="დღე"/>
 		<node name="night" value="ღამე"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
 		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="ქსელური ბიბლიოთეკა"/>
@@ -328,6 +329,7 @@
 		<node name="screenOrientationReverseLandscape" value="შებრუნებული ჰორიზონტალური"/>
 		<node name="increaseFont" value="შრიფტის გაზრდა"/>
 		<node name="decreaseFont" value="შრიფტის შემცირება"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="მთლიან ეკრანზე"/>
 		<node name="bookmarks" value="სანიშნეები"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
@@ -810,6 +812,9 @@
 				<node name="summaryOn" value="Adjust image colour to background" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not adjust image colour" toBeTranslated="true"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="პროგრამიდან გასვლის მენიუ">
 			<node name="summary" value="ქმედებების ჩამონათვალი 'უკან' ღილაკზე დაჭერისას"/>
