@@ -302,6 +302,7 @@
 		<node name="toc" value="Оглавление"/>
 		<node name="day" value="День"/>
 		<node name="night" value="Ночь"/>
+		<node name="dayNight" value="День/ночь"/>
 		<node name="yotaSwitchToBackScreen" value="Читать на заднем экране"/>
 		<node name="yotaSwitchToFrontScreen" value="Читать на переднем экране"/>
 		<node name="networkLibrary" value="Сетевая библиотека"/>
@@ -328,6 +329,7 @@
 		<node name="screenOrientationReverseLandscape" value="перевёрнутая горизонтальная"/>
 		<node name="increaseFont" value="Увеличить шрифт"/>
 		<node name="decreaseFont" value="Уменьшить шрифт"/>
+		<node name="changeFontSize" value="Размер шрифта"/>
 		<node name="toggleFullscreen" value="На весь экран"/>
 		<node name="bookmarks" value="Закладки"/>
 		<node name="help" value="Помощь"/>
@@ -810,6 +812,9 @@
 				<node name="summaryOn" value="Подгонять цвет картинки под цвет фона"/>
 				<node name="summaryOff" value="Не подгонять цвет картинки"/>
 			</node>
+		</node>
+		<node name="menu" value="Меню">
+			<node name="summary" value="Пункты главного меню"/>
 		</node>
 		<node name="cancelMenu" value="Меню выхода из программы">
 			<node name="summary" value="Список действий при нажатии на кнопку 'Назад'"/>

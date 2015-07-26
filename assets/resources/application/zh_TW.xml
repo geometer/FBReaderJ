@@ -287,6 +287,7 @@
 		<node name="toc" value="目錄"/>
 		<node name="day" value="白底黑字"/>
 		<node name="night" value="黑底白字"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
 		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="網絡書庫"/>
@@ -313,6 +314,7 @@
 		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="放大"/>
 		<node name="decreaseFont" value="縮小"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="全屏"/>
 		<node name="bookmarks" value="書籤"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
@@ -795,6 +797,9 @@
 				<node name="summaryOn" value="Adjust image colour to background" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not adjust image colour" toBeTranslated="true"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="取消選單">
 			<node name="summary" value="返回鍵動作列表"/>

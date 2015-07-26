@@ -296,6 +296,7 @@
 		<node name="toc" value="فهرست مطالب"/>
 		<node name="day" value="حالت روز"/>
 		<node name="night" value="حالت شب"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="سویچ به پشت صفحه"/>
 		<node name="yotaSwitchToFrontScreen" value="سویچ به صفحه جلویی"/>
 		<node name="networkLibrary" value="کتابخانه شبکه"/>
@@ -322,6 +323,7 @@
 		<node name="screenOrientationReverseLandscape" value="حالت افقی برعکس"/>
 		<node name="increaseFont" value="بزرگنمایی"/>
 		<node name="decreaseFont" value="کوچکنمایی"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="تمام صفحه"/>
 		<node name="bookmarks" value="نشانه گذاری"/>
 		<node name="help" value="کمک"/>
@@ -804,6 +806,9 @@
 				<node name="summaryOn" value="تنظیم رنگ تصویر با توجه پس زمینه"/>
 				<node name="summaryOff" value="رنگ تصویر را تنظیم نکن"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="لغو منو">
 			<node name="summary" value="ليست اقدام دكمه برگشت"/>
