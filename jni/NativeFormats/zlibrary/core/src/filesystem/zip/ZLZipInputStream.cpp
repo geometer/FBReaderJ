@@ -24,7 +24,7 @@
 #include "ZLZDecompressor.h"
 #include "../ZLFSManager.h"
 
-ZLZipInputStream::ZLZipInputStream(shared_ptr<ZLInputStream> base, const std::string &baseName, const std::string &entryName) : myBaseStream(new ZLInputStreamDecorator(base)), myBaseName(baseName), myEntryName(entryName), myUncompressedSize(0) {
+ZLZipInputStream::ZLZipInputStream(shared_ptr<ZLInputStream> base, const std::string &baseName, const std::string &entryName) : myBaseStream(new ZLInputStreamDecorator(base)), myBaseName(baseName), myEntryName(entryName), myIsOpen(false), myUncompressedSize(0) {
 }
 
 ZLZipInputStream::~ZLZipInputStream() {
@@ -65,10 +65,15 @@ bool ZLZipInputStream::open() {
 	}
 
 	myOffset = 0;
+	myIsOpen = true;
 	return true;
 }
 
 std::size_t ZLZipInputStream::read(char *buffer, std::size_t maxSize) {
+	if (!myIsOpen) {
+		return 0;
+	}
+
 	std::size_t realSize = 0;
 	if (myIsDeflated) {
 		realSize = myDecompressor->decompress(*myBaseStream, buffer, maxSize);
@@ -82,6 +87,7 @@ std::size_t ZLZipInputStream::read(char *buffer, std::size_t maxSize) {
 }
 
 void ZLZipInputStream::close() {
+	myIsOpen = false;
 	myDecompressor = 0;
 	if (!myBaseStream.isNull()) {
 		myBaseStream->close();
