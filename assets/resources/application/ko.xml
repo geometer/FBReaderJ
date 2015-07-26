@@ -297,6 +297,7 @@
 		<node name="toc" value="TOC"/>
 		<node name="day" value="주간"/>
 		<node name="night" value="야간"/>
+		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
 		<node name="yotaSwitchToBackScreen" value="후면으로 전환"/>
 		<node name="yotaSwitchToFrontScreen" value="전면으로 전환"/>
 		<node name="networkLibrary" value="네트워크 라이브러리"/>
@@ -323,6 +324,7 @@
 		<node name="screenOrientationReverseLandscape" value="뒤집어진 가로"/>
 		<node name="increaseFont" value="확대"/>
 		<node name="decreaseFont" value="축소"/>
+		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
 		<node name="toggleFullscreen" value="전체화면"/>
 		<node name="bookmarks" value="책갈피"/>
 		<node name="help" value="도움말"/>
@@ -805,6 +807,9 @@
 				<node name="summaryOn" value="이미지 색상을 배경에 맞추어 조정합니다"/>
 				<node name="summaryOff" value="이미지 색상을 조정하지 않습니다"/>
 			</node>
+		</node>
+		<node name="menu" value="Menu" toBeTranslated="true">
+			<node name="summary" value="Main menu items" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="취소 메뉴">
 			<node name="summary" value="뒤로가기 버튼 동작 목록"/>
