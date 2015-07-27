@@ -258,8 +258,9 @@
 		<node name="saveText" value="Save text"/>
 		<node name="editStyle" value="Edit style…"/>
 	</node>
-	<node name="footnoteToast">
+	<node name="toast">
 		<node name="more" value="More"/>
+		<node name="offline" value="Offline"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open library"/>
