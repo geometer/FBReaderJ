@@ -251,8 +251,9 @@
 		<node name="saveText" value="Save text" toBeTranslated="true"/>
 		<node name="editStyle" value="Éditer style…"/>
 	</node>
-	<node name="footnoteToast">
+	<node name="toast">
 		<node name="more" value="More" toBeTranslated="true"/>
+		<node name="offline" value="Offline" toBeTranslated="true"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Bibliothèque"/>

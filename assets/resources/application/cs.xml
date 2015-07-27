@@ -267,8 +267,9 @@
 		<node name="saveText" value="Uložit text"/>
 		<node name="editStyle" value="Upravit styl…"/>
 	</node>
-	<node name="footnoteToast">
+	<node name="toast">
 		<node name="more" value="Více"/>
+		<node name="offline" value="Offline" toBeTranslated="true"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Otevřít knihovnu"/>

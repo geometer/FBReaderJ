@@ -258,8 +258,9 @@
 		<node name="saveText" value="メモを保存"/>
 		<node name="editStyle" value="書式を編集"/>
 	</node>
-	<node name="footnoteToast">
+	<node name="toast">
 		<node name="more" value="続き"/>
+		<node name="offline" value="Offline" toBeTranslated="true"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="ライブラリを開く"/>
