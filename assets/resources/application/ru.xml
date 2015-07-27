@@ -777,6 +777,12 @@
 			<node name="summary" value="Настройки перевода"/>
 			<node name="dictionary" value="Искать отдельное слово в"/>
 			<node name="translator" value="Переводить фразы с помощью"/>
+			<node name="translateOffline" value="Google Translate: использовать offline-переводчик (если он установлен)">
+				<node name="always" value="Всегда"/>
+				<node name="onError" value="Автоматически, если сетевой сервис не сработал"/>
+				<node name="ask" value="Показывать кнопку «offline», если сетевой сервис не сработал"/>
+				<node name="never" value="Никогда"/>
+			</node>
 			<node name="translationToastDuration" value="Как долго показывать окошко перевода"/>
 			<node name="errorToastDuration" value="Как долго показывать сообщение об ошибке"/>
 			<node name="sourceLanguage" value="Язык, с которого переводить">
