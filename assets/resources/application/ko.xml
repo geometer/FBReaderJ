@@ -258,8 +258,9 @@
 		<node name="saveText" value="텍스트 저장"/>
 		<node name="editStyle" value="형식 편집"/>
 	</node>
-	<node name="footnoteToast">
+	<node name="toast">
 		<node name="more" value="더 많이"/>
+		<node name="offline" value="Offline" toBeTranslated="true"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="라이브러리 열기"/>
