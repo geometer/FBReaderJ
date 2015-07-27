@@ -778,6 +778,12 @@
 			<node name="summary" value="Ajustes de traducción"/>
 			<node name="dictionary" value="Buscar palabra suelta en"/>
 			<node name="translator" value="Traducir frases vía"/>
+			<node name="translateOffline" value="Google Translate: use offline translator (if installed)" toBeTranslated="true">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="onError" value="Automatically, if online translation fails" toBeTranslated="true"/>
+				<node name="ask" value="Ask if online translation fails" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
 			<node name="translationToastDuration" value="Tiempo para mostrar el pop-up de traducción"/>
 			<node name="errorToastDuration" value="Tiempo para mostrar el mensaje de error"/>
 			<node name="sourceLanguage" value="Traducir desde">

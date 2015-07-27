@@ -778,6 +778,12 @@
 			<node name="summary" value="Translation settings" toBeTranslated="true"/>
 			<node name="dictionary" value="Փնտրել առանձին բառերով"/>
 			<node name="translator" value="Թարգմանել բառակապակցությունը"/>
+			<node name="translateOffline" value="Google Translate: use offline translator (if installed)" toBeTranslated="true">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="onError" value="Automatically, if online translation fails" toBeTranslated="true"/>
+				<node name="ask" value="Ask if online translation fails" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
 			<node name="translationToastDuration" value="How long to show translation popup" toBeTranslated="true"/>
 			<node name="errorToastDuration" value="How long to show error message" toBeTranslated="true"/>
 			<node name="sourceLanguage" value="Translate from" toBeTranslated="true">
