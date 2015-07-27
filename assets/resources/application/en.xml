@@ -258,8 +258,9 @@
 		<node name="saveText" value="Save text"/>
 		<node name="editStyle" value="Edit style…"/>
 	</node>
-	<node name="footnoteToast">
+	<node name="toast">
 		<node name="more" value="More"/>
+		<node name="offline" value="Offline"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open library"/>
@@ -771,6 +772,12 @@
 			<node name="summary" value="Translation settings"/>
 			<node name="dictionary" value="Look up single word in"/>
 			<node name="translator" value="Translate phrases via"/>
+			<node name="translateOffline" value="Google Translate: use offline translator (if installed)">
+				<node name="always" value="Always"/>
+				<node name="onError" value="Automatically, if online translation fails"/>
+				<node name="ask" value="Ask if online translation fails"/>
+				<node name="never" value="Never"/>
+			</node>
 			<node name="translationToastDuration" value="How long to show translation popup"/>
 			<node name="errorToastDuration" value="How long to show error message"/>
 			<node name="sourceLanguage" value="Translate from">

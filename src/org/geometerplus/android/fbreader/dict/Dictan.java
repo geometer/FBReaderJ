@@ -92,7 +92,7 @@ final class Dictan extends DictionaryUtil.PackageInfo {
 			toast = new SuperActivityToast(fbreader, SuperToast.Type.BUTTON);
 			toast.setButtonIcon(
 				android.R.drawable.ic_menu_more,
-				ZLResource.resource("footnoteToast").getResource("more").getValue()
+				ZLResource.resource("toast").getResource("more").getValue()
 			);
 			toast.setOnClickWrapper(new OnClickWrapper("dict", new SuperToast.OnClickListener() {
 				@Override
