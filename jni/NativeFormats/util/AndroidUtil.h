@@ -140,8 +140,6 @@ public:
 	//static shared_ptr<ObjectMethod> Method_JavaEncodingCollection_getEncoding_int;
 	static shared_ptr<BooleanMethod> Method_JavaEncodingCollection_providesConverterFor;
 
-	static shared_ptr<StaticObjectMethod> StaticMethod_Paths_tempDirectory;
-
 	static shared_ptr<StringMethod> Method_Book_getPath;
 	static shared_ptr<StringMethod> Method_Book_getTitle;
 	static shared_ptr<StringMethod> Method_Book_getLanguage;
