@@ -32,7 +32,6 @@ class ZLIntegerRangePreference extends ListPreference {
 		super(context);
 		myOption = option;
 		setTitle(resource.getValue());
-		setDialogTitle(resource.getValue());
 		String[] entries = new String[option.MaxValue - option.MinValue + 1];
 		for (int i = 0; i < entries.length; ++i) {
 			entries[i] = ((Integer)(i + option.MinValue)).toString();
