@@ -75,7 +75,7 @@ public class OpenCatalogAction extends Action {
 	}
 
 	private void doExpandCatalog(final NetworkCatalogTree tree) {
-		final NetworkItemsLoader loader = NetworkLibrary.Instance().getStoredLoader(tree);
+		final NetworkItemsLoader loader = myLibrary.getStoredLoader(tree);
 		if (loader != null && loader.canResumeLoading()) {
 			doOpenTree(tree);
 		} else if (loader != null) {

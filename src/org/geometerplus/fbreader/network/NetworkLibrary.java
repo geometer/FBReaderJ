@@ -231,9 +231,9 @@ public class NetworkLibrary {
 		return null;
 	}
 
-	private final RootTree myRootAllTree = new RootTree("@AllRoot", false);
-	private final RootTree myRootTree = new RootTree("@Root", false);
-	private final RootTree myFakeRootTree = new RootTree("@FakeRoot", true);
+	private final RootTree myRootAllTree = new RootTree(this, "@AllRoot", false);
+	private final RootTree myRootTree = new RootTree(this, "@Root", false);
+	private final RootTree myFakeRootTree = new RootTree(this, "@FakeRoot", true);
 
 	private boolean myChildrenAreInvalid = true;
 	private boolean myUpdateVisibility;

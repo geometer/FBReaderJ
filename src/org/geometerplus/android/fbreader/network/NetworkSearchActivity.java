@@ -45,7 +45,7 @@ public class NetworkSearchActivity extends Activity {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final Bundle data = intent.getBundleExtra(SearchManager.APP_DATA);
 			if (data != null) {
-				final NetworkLibrary library = NetworkLibrary.Instance();
+				final NetworkLibrary library = Util.networkLibrary(this);
 				final NetworkTree.Key key =
 					(NetworkTree.Key)data.getSerializable(NetworkLibraryActivity.TREE_KEY_KEY);
 				final NetworkTree tree = library.getTreeByKey(key);

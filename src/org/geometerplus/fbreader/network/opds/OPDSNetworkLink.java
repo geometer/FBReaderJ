@@ -86,8 +86,8 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		if (url == null) {
 			return null;
 		}
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkCatalogItem catalogItem = state.Loader.getTree().Item;
+		final NetworkLibrary library = state.Loader.Tree.Library;
+		final NetworkCatalogItem catalogItem = state.Loader.Tree.Item;
 		library.startLoading(catalogItem);
 		url = rewriteUrl(url, false);
 		return new ZLNetworkRequest.Get(url) {
@@ -105,7 +105,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 					// reset state to load current page from the beginning
 					state.LastLoadedId = null;
 				} else {
-					state.Loader.getTree().confirmAllItems();
+					state.Loader.Tree.confirmAllItems();
 				}
 			}
 

@@ -132,7 +132,7 @@ public class AddCustomCatalogActivity extends Activity {
 				if ("opds".equals(scheme)) {
 					uri = Uri.parse("http" + uri.toString().substring(scheme.length()));
 				}
-				final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
+				final INetworkLink link = Util.networkLibrary(this).getLinkByUrl(uri.toString());
 				if (link instanceof ICustomNetworkLink) {
 					myLink = (ICustomNetworkLink)link;
 				} else {
@@ -192,7 +192,7 @@ public class AddCustomCatalogActivity extends Activity {
 			myLink.setSummary(summary);
 			myLink.setUrl(UrlInfo.Type.Catalog, uri.toString(), MimeType.APP_ATOM_XML);
 
-			final NetworkLibrary library = NetworkLibrary.Instance();
+			final NetworkLibrary library = Util.networkLibrary(this);
 			library.addCustomLink(myLink);
 			library.synchronize();
 

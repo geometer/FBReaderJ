@@ -46,7 +46,7 @@ class OPDSBasketItem extends BasketItem {
 			for (String id : ids) {
 				loader.onNewItem(getBook(id));
 			}
-			loader.getTree().confirmAllItems();
+			loader.Tree.confirmAllItems();
 			return;
 		}
 

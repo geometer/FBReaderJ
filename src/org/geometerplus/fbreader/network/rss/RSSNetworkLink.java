@@ -51,8 +51,8 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 			return null;
 		}
 
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
+		final NetworkLibrary library = result.Loader.Tree.Library;
+		final NetworkCatalogItem catalogItem = result.Loader.Tree.Item;
 		library.startLoading(catalogItem);
 
 		return new ZLNetworkRequest.Get(url, false) {
@@ -68,7 +68,7 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
 					result.LastLoadedId = null;
 				} else {
-					result.Loader.getTree().confirmAllItems();
+					result.Loader.Tree.confirmAllItems();
 				}
 			}
 
