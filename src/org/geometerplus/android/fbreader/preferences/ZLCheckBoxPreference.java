@@ -32,7 +32,13 @@ public abstract class ZLCheckBoxPreference extends CheckBoxPreference {
 
 		Resource = resource;
 		setTitle(resource.getValue());
-		setSummaryOn(resource.getResource("summaryOn").getValue());
-		setSummaryOff(resource.getResource("summaryOff").getValue());
+		final ZLResource onResource = resource.getResource("summaryOn");
+		if (onResource.hasValue()) {
+			setSummaryOn(onResource.getValue());
+		}
+		final ZLResource offResource = resource.getResource("summaryOff");
+		if (offResource.hasValue()) {
+			setSummaryOff(offResource.getValue());
+		}
 	}
 }
