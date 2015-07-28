@@ -28,30 +28,37 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.android.fbreader.api.MenuNode;
 import org.geometerplus.android.util.DeviceType;
 
-import android.util.Log;
-
 public abstract class MenuData {
 	private static List<MenuNode> ourNodes;
 	private static final Map<String,ZLIntegerOption> ourNodeOptions =
 		new HashMap<String,ZLIntegerOption>();
+	private static final Map<String,Integer> ourDefaultValues =
+			new HashMap<String,Integer>();
+	
+	private static void addNode(MenuNode m) {
+		if (!ourDefaultValues.containsKey(code(m))) {
+			ourDefaultValues.put(code(m), ourDefaultValues.size());
+		}
+		ourNodes.add(m);
+	}
 
 	private static synchronized List<MenuNode> allTopLevelNodes() {
 		if (ourNodes == null) {
 			ourNodes = new ArrayList<MenuNode>();
-			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library));
+			addNode(new MenuNode.Item(ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library));
 			if (DeviceType.Instance() == DeviceType.YOTA_PHONE) {
-				ourNodes.add(new MenuNode.Item(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b));
+				addNode(new MenuNode.Item(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b));
 				//ourNodes.add(new MenuNode.Item(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b));
 			}
-			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
-			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
-			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks));
-			ourNodes.add(new MenuNode.Item(ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night));
-			ourNodes.add(new MenuNode.Item(ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day));
-			ourNodes.add(new MenuNode.Item(ActionCode.SEARCH, R.drawable.ic_menu_search));
-			ourNodes.add(new MenuNode.Item(ActionCode.SHARE_BOOK));
-			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_PREFERENCES));
-			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_BOOK_INFO));
+			addNode(new MenuNode.Item(ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
+			addNode(new MenuNode.Item(ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
+			addNode(new MenuNode.Item(ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks));
+			addNode(new MenuNode.Item(ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night));
+			addNode(new MenuNode.Item(ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day));
+			addNode(new MenuNode.Item(ActionCode.SEARCH, R.drawable.ic_menu_search));
+			addNode(new MenuNode.Item(ActionCode.SHARE_BOOK));
+			addNode(new MenuNode.Item(ActionCode.SHOW_PREFERENCES));
+			addNode(new MenuNode.Item(ActionCode.SHOW_BOOK_INFO));
 			final MenuNode.Submenu orientations = new MenuNode.Submenu("screenOrientation");
 			orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_SYSTEM));
 			orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_SENSOR));
@@ -61,12 +68,12 @@ public abstract class MenuData {
 				orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT));
 				orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 			}
-			ourNodes.add(orientations);
-			ourNodes.add(new MenuNode.Item(ActionCode.INCREASE_FONT));
-			ourNodes.add(new MenuNode.Item(ActionCode.DECREASE_FONT));
-			ourNodes.add(new MenuNode.Item(ActionCode.INSTALL_PLUGINS));
-			ourNodes.add(new MenuNode.Item(ActionCode.OPEN_WEB_HELP));
-			ourNodes.add(new MenuNode.Item(ActionCode.OPEN_START_SCREEN));
+			addNode(orientations);
+			addNode(new MenuNode.Item(ActionCode.INCREASE_FONT));
+			addNode(new MenuNode.Item(ActionCode.DECREASE_FONT));
+			addNode(new MenuNode.Item(ActionCode.INSTALL_PLUGINS));
+			addNode(new MenuNode.Item(ActionCode.OPEN_WEB_HELP));
+			addNode(new MenuNode.Item(ActionCode.OPEN_START_SCREEN));
 			ourNodes = Collections.unmodifiableList(ourNodes);
 		}
 		return ourNodes;
@@ -82,52 +89,23 @@ public abstract class MenuData {
 		}
 		return code;
 	}
-
-//	public static List<String> allCodes() {// TODO: never used - remove?
-//		final List<MenuNode> allNodes = allTopLevelNodes();
-//		final List<String> codes = new ArrayList<String>(allNodes.size());
-//		for (MenuNode node : allNodes) {
-//			final String c = code(node);
-//			if (codes.isEmpty() || !c.equals(codes.get(codes.size() - 1))) {
-//				codes.add(c);
-//			}
-//		}
-//		return codes;
-//	}
 	
-	private static class SortItem implements Comparable<SortItem> {
-		final MenuNode Node;
-		final Integer Value;
-		 
-		SortItem(MenuNode node, int value) {
-			Node = node;
-			Value = value;
-		}
-
+	private static class MenuComparator implements Comparator<MenuNode> {
 		@Override
-		public int compareTo(SortItem another) {
-			return Value.compareTo(another.Value);
+		public int compare(MenuNode lhs, MenuNode rhs) {
+			return nodeOption(code(lhs)).getValue() - nodeOption(code(rhs)).getValue();
 		}
 	}
-	
+
 	public static ArrayList<String> enabledCodes() {
-		int i = 0;
-		final List<MenuNode> allNodes = allTopLevelNodes();
+		final List<MenuNode> allNodes = new ArrayList<MenuNode>(allTopLevelNodes());
+		Collections.<MenuNode>sort(allNodes, new MenuComparator());
 		final ArrayList<String> codes = new ArrayList<String>();
-		TreeSet<SortItem> temp = new TreeSet<SortItem>();
-		for (MenuNode node : allNodes) {
-			if (node.Code.equals("night") || node.Code.equals("decreaseFont")) {
+		for (MenuNode m : allNodes) {
+			if (m.Code.equals("night") || m.Code.equals("decreaseFont")) {
 				continue; //duplicate nodes
 			}
-			int v = nodeOption(code(node)).getValue();
-			if (v >= 0) {
-				SortItem s = new SortItem(node, v * 1000 + i);//FIXME: not a best way to sort
-				temp.add(s);
-				i += 1;
-			}
-		}
-		for (SortItem s : temp) {
-			codes.add(code(s.Node));
+			codes.add(code(m));
 		}
 		return codes;
 	}
@@ -156,20 +134,14 @@ public abstract class MenuData {
 	}
 
 	public static synchronized List<MenuNode> topLevelNodes() {
-		final List<MenuNode> allNodes = allTopLevelNodes();
+		final List<MenuNode> allNodes = new ArrayList<MenuNode>(allTopLevelNodes());
+		Collections.<MenuNode>sort(allNodes, new MenuComparator());
 		final List<MenuNode> activeNodes = new ArrayList<MenuNode>(allNodes.size());
-		TreeSet<SortItem> temp = new TreeSet<SortItem>();
-		int i = 0;
-		for (MenuNode node : allNodes) {
-			int v = nodeOption(code(node)).getValue();
+		for (MenuNode m : allNodes) {
+			int v = nodeOption(code(m)).getValue();
 			if (v >= 0) {
-				SortItem s = new SortItem(node, v * 1000 + i);//FIXME: not a best way to sort
-				temp.add(s);
-				i += 1;
+				activeNodes.add(m);
 			}
-		}
-		for (SortItem s : temp) {
-			activeNodes.add(s.Node);
 		}
 		return activeNodes;
 	}
@@ -178,7 +150,7 @@ public abstract class MenuData {
 		synchronized (ourNodeOptions) {
 			ZLIntegerOption option = ourNodeOptions.get(code);
 			if (option == null) {
-				option = new ZLIntegerOption("Menu", code, 0);
+				option = new ZLIntegerOption("Menu", code, ourDefaultValues.get(code));
 				ourNodeOptions.put(code, option);
 			}
 			return option;
