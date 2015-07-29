@@ -105,8 +105,9 @@ public abstract class NetworkTree extends FBTree {
 			}
 			int key = url.indexOf("base64");
 			if (key != -1 && key < commaIndex) {
-				Base64EncodedImage img = new Base64EncodedImage(mimeType);
-				img.setData(url.substring(commaIndex + 1));
+				Base64EncodedImage img = new Base64EncodedImage(
+					library, url.substring(commaIndex + 1), mimeType
+				);
 				return img;
 			}
 		}
