@@ -30,13 +30,11 @@ import android.graphics.Typeface;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FileInfo;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
-import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
-import org.geometerplus.zlibrary.core.util.XmlUtil;
+import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.SystemInfo;
 
 public final class AndroidFontUtil {
 	private static volatile Map<String,String[]> ourFontAssetMap;

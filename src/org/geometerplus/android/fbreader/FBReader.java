@@ -229,7 +229,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
 		myFBReaderApp = (FBReaderApp)FBReaderApp.Instance();
 		if (myFBReaderApp == null) {
-			myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
+			myFBReaderApp = new FBReaderApp(Paths.systemInfo(this), new BookCollectionShadow());
 		}
 		getCollection().bindToService(this, null);
 		myBook = null;
@@ -238,7 +238,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		myFBReaderApp.initWindow();
 
 		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
-		myFBReaderApp.setSystemInfo(Paths.systemInfo(this));
 
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,

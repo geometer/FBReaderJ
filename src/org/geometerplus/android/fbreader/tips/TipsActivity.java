@@ -36,11 +36,13 @@ public class TipsActivity extends Activity {
 	public static final String INITIALIZE_ACTION = "android.fbreader.action.tips.INITIALIZE";
 	public static final String SHOW_TIP_ACTION = "android.fbreader.action.tips.SHOW_TIP";
 
-	private final TipsManager myManager = new TipsManager(Paths.systemInfo(this));
+	private TipsManager myManager;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+ 		myManager = new TipsManager(Paths.systemInfo(this));
 
 		final boolean doInitialize = INITIALIZE_ACTION.equals(getIntent().getAction());
 

@@ -29,8 +29,9 @@ import android.net.Uri;
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
-import org.geometerplus.fbreader.SystemInfo;
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
@@ -65,11 +66,11 @@ public abstract class Util implements UserRegistrationConstants {
 			public void run() {
 				UIUtil.wait("loadingNetworkLibrary", new Runnable() {
 					public void run() {
+						final NetworkLibrary library = networkLibrary(activity);
 						if (SQLiteNetworkDatabase.Instance() == null) {
-							new SQLiteNetworkDatabase(activity.getApplication());
+							new SQLiteNetworkDatabase(activity.getApplication(), library);
 						}
 
-						final NetworkLibrary library = networkLibrary(activity);
 						if (!library.isInitialized()) {
 							try {
 								library.initialize(nc);

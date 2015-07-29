@@ -29,13 +29,13 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.view.animation.*;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.SystemInfo;
 import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {

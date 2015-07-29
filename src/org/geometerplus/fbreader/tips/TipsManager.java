@@ -26,8 +26,9 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
-import org.geometerplus.fbreader.SystemInfo;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.atom.ATOMXMLReader;
 
 public class TipsManager {
@@ -66,7 +67,7 @@ public class TipsManager {
 			final ZLFile file = ZLFile.createFileByPath(getLocalFilePath());
 			if (file.exists()) {
 				final TipsFeedHandler handler = new TipsFeedHandler();
-				new ATOMXMLReader(handler, false).readQuietly(file);
+				new ATOMXMLReader(NetworkLibrary.Instance(mySystemInfo), handler, false).readQuietly(file);
 				final List<Tip> tips = Collections.unmodifiableList(handler.Tips);
 				if (tips.size() > 0) {
 					myTips = tips;

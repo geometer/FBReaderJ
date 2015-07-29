@@ -28,8 +28,7 @@ import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
-
-import org.geometerplus.fbreader.SystemInfo;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 public final class NetworkImage extends ZLImageSimpleProxy {
 	public final String Url;

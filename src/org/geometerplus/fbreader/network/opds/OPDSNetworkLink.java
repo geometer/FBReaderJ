@@ -35,15 +35,18 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class OPDSNetworkLink extends AbstractNetworkLink {
+	protected final NetworkLibrary myLibrary;
+
 	private TreeMap<RelationAlias,String> myRelationAliases;
 
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
 
-	OPDSNetworkLink(int id, String title, String summary, String language,
+	OPDSNetworkLink(NetworkLibrary library, int id, String title, String summary, String language,
 			UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, title, summary, language, infos);
+		myLibrary = library;
 	}
 
 	final void setRelationAliases(Map<RelationAlias,String> relationAliases) {
@@ -98,7 +101,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 				}
 
 				new OPDSXMLReader(
-					new OPDSFeedHandler(getURL(), state), false
+					library, new OPDSFeedHandler(getURL(), state), false
 				).read(inputStream);
 
 				if (state.Loader.confirmInterruption() && state.LastLoadedId != null) {
@@ -199,7 +202,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	public BasketItem getBasketItem() {
 		final String url = getUrl(UrlInfo.Type.ListBooks);
 		if (url != null && myBasketItem == null) {
-			myBasketItem = new OPDSBasketItem(this);
+			myBasketItem = new OPDSBasketItem(myLibrary, this);
 		}
 		return myBasketItem;
 	}

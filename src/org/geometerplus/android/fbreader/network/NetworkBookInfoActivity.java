@@ -43,7 +43,6 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
-import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
@@ -124,10 +123,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			final NetworkLibrary library = Util.networkLibrary(NetworkBookInfoActivity.this);
 			if (!library.isInitialized()) {
 				if (SQLiteNetworkDatabase.Instance() == null) {
-					new SQLiteNetworkDatabase(getApplication());
+					new SQLiteNetworkDatabase(getApplication(), library);
 				}
 				try {
-					library.initialize(Paths.systemInfo(NetworkBookInfoActivity.this), myNetworkContext);
+					library.initialize(myNetworkContext);
 				} catch (ZLNetworkException e) {
 				}
 			}
@@ -137,6 +136,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				if (uri != null && "litres-book".equals(uri.getScheme())) {
 					try {
 						myBook = OPDSBookItem.create(
+							library,
 							myNetworkContext,
 							library.getLinkByStringId("litres.ru"),
 							uri.toString().replace("litres-book://", "http://")

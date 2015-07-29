@@ -28,10 +28,8 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.fbreader.SystemInfo;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.opds.OPDSSyncNetworkLink;
@@ -80,7 +78,7 @@ public class NetworkLibrary {
 	public final ZLStringOption NetworkSearchPatternOption =
 		new ZLStringOption("NetworkSearch", "Pattern", "");
 
-	private final SystemInfo mySystemInfo;
+	public final SystemInfo SystemInfo;
 
 	// that's important to keep this list synchronized
 	// it can be used from background thread
@@ -170,7 +168,7 @@ public class NetworkLibrary {
 		final List<INetworkLink> result = new LinkedList<INetworkLink>();
 		INetworkLink syncLink = linksById.get(SyncOptions.DOMAIN);
 		if (syncLink == null) {
-			syncLink = new OPDSSyncNetworkLink();
+			syncLink = new OPDSSyncNetworkLink(this);
 		}
 		result.add(syncLink);
 		for (String id : activeIds()) {
@@ -242,16 +240,16 @@ public class NetworkLibrary {
 
 	private volatile boolean myIsInitialized;
 
-	private final SearchItem mySearchItem = new AllCatalogsSearchItem();
+	private final SearchItem mySearchItem = new AllCatalogsSearchItem(this);
 
 	private NetworkLibrary(SystemInfo systemInfo) {
-		mySystemInfo = systemInfo;
+		SystemInfo = systemInfo;
 	}
 
 	public void clearExpiredCache(int hours) {
 		final Queue<File> toVisit = new LinkedList<File>();
 		final Set<File> processedDirs = new HashSet<File>();
-		final File root = new File(mySystemInfo.networkCacheDirectory());
+		final File root = new File(SystemInfo.networkCacheDirectory());
 		toVisit.add(root);
 		processedDirs.add(root);
 
@@ -286,7 +284,7 @@ public class NetworkLibrary {
 		}
 
 		try {
-			myLinks.addAll(OPDSLinkReader.loadOPDSLinks(mySystemInfo, nc, OPDSLinkReader.CacheMode.LOAD));
+			myLinks.addAll(OPDSLinkReader.loadOPDSLinks(this, nc, OPDSLinkReader.CacheMode.LOAD));
 		} catch (ZLNetworkException e) {
 			removeAllLoadedLinks();
 			fireModelChangedEvent(ChangeListener.Code.InitializationFailed, e.getMessage());
@@ -358,7 +356,7 @@ public class NetworkLibrary {
 		synchronized (myUpdateLock) {
 			final OPDSLinkReader.CacheMode mode =
 				force ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
-			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(mySystemInfo, quietContext, mode);
+			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(this, quietContext, mode);
 			if (!loadedLinks.isEmpty()) {
 				removeAllLoadedLinks();
 				myLinks.addAll(loadedLinks);
@@ -691,7 +689,7 @@ public class NetworkLibrary {
 					return image;
 				}
 			}
-			final ZLImage image = new NetworkImage(url, mySystemInfo);
+			final ZLImage image = new NetworkImage(url, SystemInfo);
 			myImageMap.put(url, new WeakReference<ZLImage>(image));
 			return image;
 		}

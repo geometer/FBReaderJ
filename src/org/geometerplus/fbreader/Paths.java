@@ -29,6 +29,7 @@ import android.os.Environment;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 public abstract class Paths {
 	public static ZLStringListOption BookPathOption =
@@ -60,7 +61,7 @@ public abstract class Paths {
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	private static String getExternalCacheDirPath(Context context) {
-		final File d = context.getExternalCacheDir();
+		final File d = context != null ? context.getExternalCacheDir() : null;
 		if (d != null) {
 			d.mkdirs();
 			if (d.exists() && d.isDirectory()) {

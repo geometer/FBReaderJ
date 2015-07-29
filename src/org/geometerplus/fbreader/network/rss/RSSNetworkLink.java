@@ -63,7 +63,7 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 					return;
 				}
 
-				new RSSXMLReader(new RSSChannelHandler(getURL(), result), false).read(inputStream);
+				new RSSXMLReader(library, new RSSChannelHandler(getURL(), result), false).read(inputStream);
 
 				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
 					result.LastLoadedId = null;

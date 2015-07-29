@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
 
-import org.geometerplus.fbreader.SystemInfo;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
@@ -49,14 +48,9 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	private ExternalFileOpener myExternalFileOpener;
-	private SystemInfo mySystemInfo;
 
 	public void setExternalFileOpener(ExternalFileOpener o) {
 		myExternalFileOpener = o;
-	}
-
-	public void setSystemInfo(SystemInfo si) {
-		mySystemInfo = si;
 	}
 
 	public final MiscOptions MiscOptions = new MiscOptions();
@@ -81,7 +75,9 @@ public final class FBReaderApp extends ZLApplication {
 
 	private SyncData mySyncData = new SyncData();
 
-	public FBReaderApp(final IBookCollection<Book> collection) {
+	public FBReaderApp(SystemInfo systemInfo, final IBookCollection<Book> collection) {
+		super(systemInfo);
+
 		Collection = collection;
 
 		collection.addListener(new IBookCollection.Listener<Book>() {
@@ -359,7 +355,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		try {
-			Model = BookModel.createModel(book, mySystemInfo.tempDirectory());
+			Model = BookModel.createModel(book, SystemInfo.tempDirectory());
 			Collection.saveBook(book);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());

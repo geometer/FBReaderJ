@@ -178,12 +178,12 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		} else {
 			externalUrl = true;
 		}
-		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
+		final NetworkLibrary nLibrary = NetworkLibrary.Instance(Paths.systemInfo(BaseActivity));
 		new Thread(new Runnable() {
 			public void run() {
 				if (!url.startsWith("fbreader-action:")) {
 					try {
-						nLibrary.initialize(Paths.systemInfo(BaseActivity), new ActivityNetworkContext(BaseActivity));
+						nLibrary.initialize(new ActivityNetworkContext(BaseActivity));
 					} catch (ZLNetworkException e) {
 						e.printStackTrace();
 						UIMessageUtil.showMessageText(BaseActivity, e.getMessage());

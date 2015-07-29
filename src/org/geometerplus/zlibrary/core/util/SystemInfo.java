@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader;
+package org.geometerplus.zlibrary.core.util;
 
 public interface SystemInfo {
 	String tempDirectory();

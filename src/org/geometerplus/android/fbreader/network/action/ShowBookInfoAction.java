@@ -27,8 +27,8 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 import org.geometerplus.android.fbreader.network.NetworkBookInfoActivity;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -49,7 +49,7 @@ public class ShowBookInfoAction extends BookAction {
 		} else {
 			UIUtil.wait("loadInfo", new Runnable() {
 				public void run() {
-					getBook(tree).loadFullInformation(myNetworkContext);
+					getBook(tree).loadFullInformation(myLibrary, myNetworkContext);
 					myActivity.runOnUiThread(new Runnable() {
 						public void run() {
 							showBookInfo(tree);
