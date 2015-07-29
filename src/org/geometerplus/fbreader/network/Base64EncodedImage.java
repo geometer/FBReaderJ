@@ -32,17 +32,13 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 	private final MimeType myMimeType;
 	private String myDecodedFileName;
 
-	public Base64EncodedImage(MimeType mimeType) {
+	public Base64EncodedImage(NetworkLibrary library, String data, MimeType mimeType) {
 		myMimeType = mimeType;
-		new File(makeImagesDir()).mkdirs();
-	}
 
-	public static String makeImagesDir() {
-		return Paths.networkCacheDirectory() + "/base64";
-	}
+		final String dir = Paths.networkCacheDirectory() + "/base64";
+		new File(dir).mkdirs();
 
-	public void setData(String data) {
-		myDecodedFileName = makeImagesDir() + File.separator + Integer.toHexString(data.hashCode());
+		myDecodedFileName = dir + File.separator + Integer.toHexString(data.hashCode());
 		if (MimeType.IMAGE_PNG.equals(myMimeType)) {
 			myDecodedFileName += ".png";
 		} else if (MimeType.IMAGE_JPEG.equals(myMimeType)) {
