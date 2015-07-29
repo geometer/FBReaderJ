@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.options.Config;
 
+import org.geometerplus.fbreader.SystemInfo;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
@@ -56,7 +57,7 @@ public abstract class Util implements UserRegistrationConstants {
 	}
 
 	public static NetworkLibrary networkLibrary(Context context) {
-		return NetworkLibrary.Instance();
+		return NetworkLibrary.Instance(Paths.systemInfo(context));
 	}
 
 	static void initLibrary(final Activity activity, final ZLNetworkContext nc, final Runnable action) {

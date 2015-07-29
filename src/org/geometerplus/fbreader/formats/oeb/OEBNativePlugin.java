@@ -38,11 +38,11 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 	}
 
 	@Override
-	public void readModel(BookModel model) throws BookReadingException {
+	public void readModel(BookModel model, String cacheDir) throws BookReadingException {
 		final ZLFile file = BookUtil.fileByBook(model.Book);
 		file.setCached(true);
 		try {
-			super.readModel(model);
+			super.readModel(model, cacheDir);
 			model.setLabelResolver(new BookModel.LabelResolver() {
 				public List<String> getCandidates(String id) {
 					final int index = id.indexOf("#");

@@ -25,7 +25,7 @@ import java.io.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.network.*;
 
-import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.SystemInfo;
 import org.geometerplus.fbreader.network.*;
 
 public class OPDSLinkReader {
@@ -39,10 +39,10 @@ public class OPDSLinkReader {
 		CLEAR
 	};
 
-	public static List<INetworkLink> loadOPDSLinks(ZLNetworkContext nc, CacheMode cacheMode) throws ZLNetworkException {
+	public static List<INetworkLink> loadOPDSLinks(SystemInfo systemInfo, ZLNetworkContext nc, CacheMode cacheMode) throws ZLNetworkException {
 		final OPDSLinkXMLReader xmlReader = new OPDSLinkXMLReader();
 
-		final File dirFile = new File(Paths.networkCacheDirectory());
+		final File dirFile = new File(systemInfo.networkCacheDirectory());
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
 			nc.perform(new ZLNetworkRequest.Get(CATALOGS_URL) {
 				@Override

@@ -33,11 +33,15 @@ import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
+import org.geometerplus.fbreader.SystemInfo;
+
 public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public static ZLBooleanOption AntiAliasOption = new ZLBooleanOption("Fonts", "AntiAlias", true);
 	public static ZLBooleanOption DeviceKerningOption = new ZLBooleanOption("Fonts", "DeviceKerning", false);
 	public static ZLBooleanOption DitheringOption = new ZLBooleanOption("Fonts", "Dithering", false);
 	public static ZLBooleanOption SubpixelOption = new ZLBooleanOption("Fonts", "Subpixel", false);
+
+	private final SystemInfo mySystemInfo;
 
 	private final Canvas myCanvas;
 	private final Paint myTextPaint = new Paint();
@@ -64,7 +68,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
 
-	public ZLAndroidPaintContext(Canvas canvas, Geometry geometry, int scrollbarWidth) {
+	public ZLAndroidPaintContext(SystemInfo systemInfo, Canvas canvas, Geometry geometry, int scrollbarWidth) {
+		mySystemInfo = systemInfo;
 		myCanvas = canvas;
 		myGeometry = geometry;
 		myScrollbarWidth = scrollbarWidth;
@@ -283,7 +288,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	protected void setFontInternal(List<FontEntry> entries, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
 		Typeface typeface = null;
 		for (FontEntry e : entries) {
-			typeface = AndroidFontUtil.typeface(e, bold, italic);
+			typeface = AndroidFontUtil.typeface(mySystemInfo, e, bold, italic);
 			if (typeface != null) {
 				break;
 			}

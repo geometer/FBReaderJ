@@ -34,6 +34,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.*;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -182,7 +183,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 			public void run() {
 				if (!url.startsWith("fbreader-action:")) {
 					try {
-						nLibrary.initialize(new ActivityNetworkContext(BaseActivity));
+						nLibrary.initialize(Paths.systemInfo(BaseActivity), new ActivityNetworkContext(BaseActivity));
 					} catch (ZLNetworkException e) {
 						e.printStackTrace();
 						UIMessageUtil.showMessageText(BaseActivity, e.getMessage());

@@ -27,21 +27,16 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.SystemInfo;
 import org.geometerplus.fbreader.network.atom.ATOMXMLReader;
 
 public class TipsManager {
-	private static TipsManager ourInstance;
+	private final SystemInfo mySystemInfo;
 
-	public static TipsManager Instance() {
-		if (ourInstance == null) {
-			ourInstance = new TipsManager();
-		}
-		return ourInstance;
-	}
-
-	public final ZLBooleanOption TipsAreInitializedOption;
-	public final ZLBooleanOption ShowTipsOption;
+	public static final ZLBooleanOption TipsAreInitializedOption =
+		new ZLBooleanOption("tips", "tipsAreInitialized", false);
+	public static final ZLBooleanOption ShowTipsOption =
+		new ZLBooleanOption("tips", "showTips", false);
 
 	// time when last tip was shown, 2^16 milliseconds
 	private final ZLIntegerOption myLastShownOption;
@@ -50,9 +45,8 @@ public class TipsManager {
 
 	private volatile boolean myDownloadInProgress;
 
-	private TipsManager() {
-		TipsAreInitializedOption = new ZLBooleanOption("tips", "tipsAreInitialized", false);
-		ShowTipsOption = new ZLBooleanOption("tips", "showTips", false);
+	public TipsManager(SystemInfo systemInfo) {
+		mySystemInfo = systemInfo;
 
 		myLastShownOption = new ZLIntegerOption("tips", "shownAt", 0);
 		myIndexOption = new ZLIntegerOption("tips", "index", 0);
@@ -63,7 +57,7 @@ public class TipsManager {
 	}
 
 	private String getLocalFilePath() {
-		return Paths.networkCacheDirectory() + "/tips/tips.xml";
+		return mySystemInfo.networkCacheDirectory() + "/tips/tips.xml";
 	}
 
 	private List<Tip> myTips;

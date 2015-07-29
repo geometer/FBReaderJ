@@ -50,6 +50,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
@@ -237,6 +238,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		myFBReaderApp.initWindow();
 
 		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
+		myFBReaderApp.setSystemInfo(Paths.systemInfo(this));
 
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -477,7 +479,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		}
 
 		public void run() {
-			final TipsManager manager = TipsManager.Instance();
+			final TipsManager manager = new TipsManager(Paths.systemInfo(FBReader.this));
 			switch (manager.requiredAction()) {
 				case Initialize:
 					startActivity(new Intent(

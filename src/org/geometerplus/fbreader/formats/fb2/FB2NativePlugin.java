@@ -39,8 +39,8 @@ public class FB2NativePlugin extends NativeFormatPlugin {
 	}
 
 	@Override
-	public void readModel(BookModel model) throws BookReadingException {
-		super.readModel(model);
+	public void readModel(BookModel model, String cacheDir) throws BookReadingException {
+		super.readModel(model, cacheDir);
 		model.setLabelResolver(new BookModel.LabelResolver() {
 			public List<String> getCandidates(String id) {
 				final List<String> candidates = new ArrayList<String>();

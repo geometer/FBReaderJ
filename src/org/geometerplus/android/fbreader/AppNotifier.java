@@ -30,6 +30,7 @@ import android.support.v4.app.NotificationCompat;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.sync.SyncData;
@@ -79,7 +80,7 @@ class AppNotifier implements FBReaderApp.Notifier {
 
 		if (info.ThumbnailUrl != null) {
 			SQLiteCookieDatabase.init(myActivity);
-			final NetworkImage thumbnail = new NetworkImage(info.ThumbnailUrl);
+			final NetworkImage thumbnail = new NetworkImage(info.ThumbnailUrl, Paths.systemInfo(myActivity));
 			thumbnail.synchronize();
 			try {
 				builder.setLargeIcon(

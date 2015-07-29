@@ -103,13 +103,11 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	private native void detectLanguageAndEncodingNative(AbstractBook book);
 
 	@Override
-	synchronized public void readModel(BookModel model) throws BookReadingException {
-		//android.os.Debug.startMethodTracing("ep.trace", 32 * 1024 * 1024);
+	synchronized public void readModel(BookModel model, String cacheDir) throws BookReadingException {
 		final int code;
 		synchronized (ourNativeLock) {
-			code = readModelNative(model);
+			code = readModelNative(model, cacheDir);
 		}
-		//android.os.Debug.stopMethodTracing();
 		switch (code) {
 			case 0:
 				return;
@@ -124,7 +122,7 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 		}
 	}
 
-	private native int readModelNative(BookModel model);
+	private native int readModelNative(BookModel model, String cacheDir);
 
 	@Override
 	public final ZLFileImageProxy readCover(ZLFile file) {

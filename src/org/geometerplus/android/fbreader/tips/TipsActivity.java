@@ -29,13 +29,14 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.tips.*;
 
 public class TipsActivity extends Activity {
 	public static final String INITIALIZE_ACTION = "android.fbreader.action.tips.INITIALIZE";
 	public static final String SHOW_TIP_ACTION = "android.fbreader.action.tips.SHOW_TIP";
 
-	private final TipsManager myManager = TipsManager.Instance();
+	private final TipsManager myManager = new TipsManager(Paths.systemInfo(this));
 
 	@Override
 	public void onCreate(Bundle icicle) {

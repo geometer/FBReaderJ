@@ -43,6 +43,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
@@ -126,7 +127,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 					new SQLiteNetworkDatabase(getApplication());
 				}
 				try {
-					library.initialize(myNetworkContext);
+					library.initialize(Paths.systemInfo(NetworkBookInfoActivity.this), myNetworkContext);
 				} catch (ZLNetworkException e) {
 				}
 			}
