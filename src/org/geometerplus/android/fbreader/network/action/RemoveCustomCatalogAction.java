@@ -40,8 +40,7 @@ public class RemoveCustomCatalogAction extends CatalogAction {
 
 	@Override
 	public void run(NetworkTree tree) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		library.removeCustomLink((ICustomNetworkLink)tree.getLink());
-		library.synchronize();
+		myLibrary.removeCustomLink((ICustomNetworkLink)tree.getLink());
+		myLibrary.synchronize();
 	}
 }

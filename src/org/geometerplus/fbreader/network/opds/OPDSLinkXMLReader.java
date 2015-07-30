@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
@@ -34,12 +35,18 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 	private static class FeedHandler extends AbstractOPDSFeedHandler {
+		private final NetworkLibrary myLibrary;
+
 		private final List<INetworkLink> myLinks = new LinkedList<INetworkLink>();
 
 		private String myAuthenticationType;
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 		private final HashMap<RelationAlias,String> myRelationAliases = new HashMap<RelationAlias,String>();
 		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>();
+
+		FeedHandler(NetworkLibrary library) {
+			myLibrary = library;
+		}
 
 		List<INetworkLink> links() {
 			return myLinks;
@@ -143,6 +150,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 			if (MimeType.APP_ATOM_XML.weakEquals(catalogInfo.Mime)) {
 				final OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
+					myLibrary,
 					OPDSNetworkLink.INVALID_ID,
 					id,
 					titleString,
@@ -158,7 +166,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				if (myAuthenticationType == "litres") {
 					opdsLink.setAuthenticationManager(
 						NetworkAuthenticationManager.createManager(
-							opdsLink, LitResAuthenticationManager.class
+							myLibrary, opdsLink, LitResAuthenticationManager.class
 						)
 					);
 				}
@@ -188,8 +196,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 		}
 	}
 
-	public OPDSLinkXMLReader() {
-		super(new FeedHandler(), false);
+	public OPDSLinkXMLReader(NetworkLibrary library) {
+		super(library, new FeedHandler(library), false);
 	}
 
 	public List<INetworkLink> links() {

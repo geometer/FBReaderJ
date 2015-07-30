@@ -26,5 +26,5 @@ public abstract class BuiltinFormatPlugin extends FormatPlugin {
 		super(fileType);
 	}
 
-	public abstract void readModel(BookModel model) throws BookReadingException;
+	public abstract void readModel(BookModel model, String cacheDir) throws BookReadingException;
 }

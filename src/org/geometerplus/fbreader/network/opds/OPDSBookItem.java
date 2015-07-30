@@ -27,13 +27,12 @@ import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
-	public static OPDSBookItem create(ZLNetworkContext nc, INetworkLink link, String url) throws ZLNetworkException {
+	public static OPDSBookItem create(final NetworkLibrary library, ZLNetworkContext nc, INetworkLink link, String url) throws ZLNetworkException {
 		if (link == null || url == null) {
 			return null;
 		}
@@ -42,7 +41,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		nc.perform(new ZLNetworkRequest.Get(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				new OPDSXMLReader(handler, true).read(inputStream);
+				new OPDSXMLReader(library, handler, true).read(inputStream);
 			}
 		});
 		return handler.getBook();
@@ -231,7 +230,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	@Override
-	public synchronized boolean loadFullInformation(ZLNetworkContext nc) {
+	public synchronized boolean loadFullInformation(final NetworkLibrary library, ZLNetworkContext nc) {
 		if (myInformationIsFull) {
 			return true;
 		}
@@ -245,7 +244,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		return nc.performQuietly(new ZLNetworkRequest.Get(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				new OPDSXMLReader(new LoadInfoHandler(url), true).read(inputStream);
+				new OPDSXMLReader(library, new LoadInfoHandler(url), true).read(inputStream);
 				myInformationIsFull = true;
 			}
 		});

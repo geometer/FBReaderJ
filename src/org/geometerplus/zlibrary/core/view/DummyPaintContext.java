@@ -24,10 +24,20 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 final class DummyPaintContext extends ZLPaintContext {
 	DummyPaintContext() {
+		super(new SystemInfo() {
+			public String tempDirectory() {
+				return "";
+			}
+
+			public String networkCacheDirectory() {
+				return "";
+			}
+		});
 	}
 
 	@Override

@@ -33,11 +33,11 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 public abstract class NetworkAuthenticationManager {
 	private static final HashMap<String,NetworkAuthenticationManager> ourManagers = new HashMap<String,NetworkAuthenticationManager>();
 
-	public static NetworkAuthenticationManager createManager(INetworkLink link, Class<? extends NetworkAuthenticationManager> managerClass) {
+	public static NetworkAuthenticationManager createManager(NetworkLibrary library, INetworkLink link, Class<? extends NetworkAuthenticationManager> managerClass) {
 		NetworkAuthenticationManager mgr = ourManagers.get(link.getStringId());
 		if (mgr == null) {
 			if (managerClass == LitResAuthenticationManager.class) {
-				mgr = new LitResAuthenticationManager((OPDSNetworkLink)link);
+				mgr = new LitResAuthenticationManager(library, (OPDSNetworkLink)link);
 			}
 			if (mgr != null) {
 				ourManagers.put(link.getStringId(), mgr);

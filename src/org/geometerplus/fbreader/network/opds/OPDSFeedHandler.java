@@ -49,7 +49,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	 *                   that will be read using this instance of the reader.
 	 */
 	OPDSFeedHandler(String baseURL, OPDSCatalogItem.State result) {
-		myCatalog = result.Loader.getTree().Item;
+		myCatalog = result.Loader.Tree.Item;
 		myBaseURL = baseURL;
 		myData = result;
 		mySkipUntilId = myData.LastLoadedId;

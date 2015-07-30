@@ -75,7 +75,9 @@ public final class FBReaderApp extends ZLApplication {
 
 	private SyncData mySyncData = new SyncData();
 
-	public FBReaderApp(final IBookCollection<Book> collection) {
+	public FBReaderApp(SystemInfo systemInfo, final IBookCollection<Book> collection) {
+		super(systemInfo);
+
 		Collection = collection;
 
 		collection.addListener(new IBookCollection.Listener<Book>() {
@@ -191,7 +193,7 @@ public final class FBReaderApp extends ZLApplication {
 		}, postAction);
 	}
 
-	public void reloadBook() {
+	private void reloadBook() {
 		final Book book = getCurrentBook();
 		if (book != null) {
 			final SynchronousExecutor executor = createExecutor("loadingBook");
@@ -353,7 +355,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		try {
-			Model = BookModel.createModel(book);
+			Model = BookModel.createModel(book, SystemInfo.tempDirectory());
 			Collection.saveBook(book);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());

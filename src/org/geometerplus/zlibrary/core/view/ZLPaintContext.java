@@ -24,12 +24,15 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 abstract public class ZLPaintContext {
+	private final SystemInfo mySystemInfo;
 	private final ArrayList<String> myFamilies = new ArrayList<String>();
 
-	protected ZLPaintContext() {
+	protected ZLPaintContext(SystemInfo systemInfo) {
+		mySystemInfo = systemInfo;
 	}
 
 	public enum FillMode {
@@ -39,6 +42,10 @@ abstract public class ZLPaintContext {
 		stretch,
 		tileVertically,
 		tileHorizontally
+	}
+
+	protected final SystemInfo getSystemInfo() {
+		return mySystemInfo;
 	}
 
 	abstract public void clear(ZLFile wallpaperFile, FillMode mode);

@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -77,7 +78,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
 
-	public ZLAndroidPaintContext(Canvas canvas, Geometry geometry, int scrollbarWidth) {
+	public ZLAndroidPaintContext(SystemInfo systemInfo, Canvas canvas, Geometry geometry, int scrollbarWidth) {
+		super(systemInfo);
+
 		myCanvas = canvas;
 		myGeometry = geometry;
 		myScrollbarWidth = scrollbarWidth;
@@ -299,7 +302,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	protected void setFontInternal(List<FontEntry> entries, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
 		Typeface typeface = null;
 		for (FontEntry e : entries) {
-			typeface = AndroidFontUtil.typeface(e, bold, italic);
+			typeface = AndroidFontUtil.typeface(getSystemInfo(), e, bold, italic);
 			if (typeface != null) {
 				break;
 			}

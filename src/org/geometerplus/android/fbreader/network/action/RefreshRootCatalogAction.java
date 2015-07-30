@@ -33,12 +33,12 @@ public class RefreshRootCatalogAction extends RootAction {
 
 	@Override
 	public boolean isEnabled(NetworkTree tree) {
-		return !NetworkLibrary.Instance().isUpdateInProgress();
+		return !myLibrary.isUpdateInProgress();
 	}
 
 	@Override
 	public void run(NetworkTree tree) {
-		NetworkLibrary.Instance().runBackgroundUpdate(true);
+		myLibrary.runBackgroundUpdate(true);
 		((NetworkLibraryActivity)myActivity).requestCatalogPlugins();
 	}
 }
