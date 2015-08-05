@@ -35,7 +35,9 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -68,7 +70,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
 				showProgress(!myCollection.status().IsComplete);
-				myRootTree = new RootTree(myCollection);
+				myRootTree = new RootTree(myCollection, PluginCollection.Instance(Paths.systemInfo(LibraryActivity.this)));
 				myCollection.addListener(LibraryActivity.this);
 				init(getIntent());
 			}

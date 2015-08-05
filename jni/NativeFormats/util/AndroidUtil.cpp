@@ -75,7 +75,7 @@ shared_ptr<StringMethod> AndroidUtil::Method_ZLibrary_getVersionName;
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_NativeFormatPlugin_create;
 shared_ptr<StringMethod> AndroidUtil::Method_NativeFormatPlugin_supportedFileType;
 
-shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_PluginCollection_Instance;
+//shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_PluginCollection_Instance;
 
 shared_ptr<ObjectMethod> AndroidUtil::Method_Encoding_createConverter;
 
@@ -101,8 +101,6 @@ shared_ptr<Constructor> AndroidUtil::Constructor_FileInfo;
 shared_ptr<Constructor> AndroidUtil::Constructor_FileEncryptionInfo;
 
 shared_ptr<Constructor> AndroidUtil::Constructor_ZLFileImage;
-
-shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Paths_tempDirectory;
 
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getPath;
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getTitle;
@@ -156,10 +154,10 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	StaticMethod_ZLibrary_Instance = new StaticObjectMethod(Class_ZLibrary, "Instance", Class_ZLibrary, "()");
 	Method_ZLibrary_getVersionName = new StringMethod(Class_ZLibrary, "getVersionName", "()");
 
-	StaticMethod_NativeFormatPlugin_create = new StaticObjectMethod(Class_NativeFormatPlugin, "create", Class_NativeFormatPlugin, "(Ljava/lang/String;)");
+	StaticMethod_NativeFormatPlugin_create = new StaticObjectMethod(Class_NativeFormatPlugin, "create", Class_NativeFormatPlugin, "(Lorg/geometerplus/zlibrary/core/util/SystemInfo;Ljava/lang/String;)");
 	Method_NativeFormatPlugin_supportedFileType = new StringMethod(Class_NativeFormatPlugin, "supportedFileType", "()");
 
-	StaticMethod_PluginCollection_Instance = new StaticObjectMethod(Class_PluginCollection, "Instance", Class_PluginCollection, "()");
+	//StaticMethod_PluginCollection_Instance = new StaticObjectMethod(Class_PluginCollection, "Instance", Class_PluginCollection, "()");
 
 	Method_Encoding_createConverter = new ObjectMethod(Class_Encoding, "createConverter", Class_EncodingConverter, "()");
 	Field_EncodingConverter_Name = new ObjectField(Class_EncodingConverter, "Name", Class_java_lang_String);
@@ -184,8 +182,6 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Constructor_FileEncryptionInfo = new Constructor(Class_FileEncryptionInfo, "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 
 	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;[I[ILorg/geometerplus/zlibrary/core/drm/FileEncryptionInfo;)V");
-
-	StaticMethod_Paths_tempDirectory = new StaticObjectMethod(Class_Paths, "tempDirectory", Class_java_lang_String, "()");
 
 	Method_Book_getPath = new StringMethod(Class_AbstractBook, "getPath", "()");
 	Method_Book_getTitle = new StringMethod(Class_AbstractBook, "getTitle", "()");

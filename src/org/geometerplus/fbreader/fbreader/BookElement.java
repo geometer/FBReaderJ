@@ -52,7 +52,7 @@ public final class BookElement extends ExtensionElement {
 			myCover = null;
 		} else {
 			myItem = item;
-			myCover = new NetworkImage(coverUrl);
+			myCover = new NetworkImage(coverUrl, myView.Application.SystemInfo);
 			myCover.synchronize();
 		}
 	}

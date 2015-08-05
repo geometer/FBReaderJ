@@ -68,7 +68,7 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 		for (NetworkItem child : myChildren) {
 			loader.onNewItem(child);
 		}
-		loader.getTree().confirmAllItems();
+		loader.Tree.confirmAllItems();
 	}
 }
 
@@ -201,7 +201,7 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 					loader.onNewItem(bySeries);
 				}
 			}
-			loader.getTree().confirmAllItems();
+			loader.Tree.confirmAllItems();
 		}
 	}
 }

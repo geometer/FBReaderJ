@@ -32,7 +32,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticat
 public class ListenerCallback extends BroadcastReceiver implements UserRegistrationConstants {
 	@Override
 	public void onReceive(Context context, final Intent intent) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
+		final NetworkLibrary library = Util.networkLibrary(context);
 
 		if (Util.SIGNIN_ACTION.equals(intent.getAction())) {
 			final String url = intent.getStringExtra(CATALOG_URL);

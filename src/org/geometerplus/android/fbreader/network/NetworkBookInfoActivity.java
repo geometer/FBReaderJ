@@ -95,14 +95,14 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			}
 		});
 
-		NetworkLibrary.Instance().addChangeListener(this);
+		Util.networkLibrary(this).addChangeListener(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		myNetworkContext.onResume();
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		Util.networkLibrary(this).fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	@Override
@@ -120,10 +120,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				}
 				myInitializerStarted = true;
 			}
-			final NetworkLibrary library = NetworkLibrary.Instance();
+			final NetworkLibrary library = Util.networkLibrary(NetworkBookInfoActivity.this);
 			if (!library.isInitialized()) {
 				if (SQLiteNetworkDatabase.Instance() == null) {
-					new SQLiteNetworkDatabase(getApplication());
+					new SQLiteNetworkDatabase(getApplication(), library);
 				}
 				try {
 					library.initialize(myNetworkContext);
@@ -136,6 +136,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				if (uri != null && "litres-book".equals(uri.getScheme())) {
 					try {
 						myBook = OPDSBookItem.create(
+							library,
 							myNetworkContext,
 							library.getLinkByStringId("litres.ru"),
 							uri.toString().replace("litres-book://", "http://")
@@ -234,7 +235,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 							myBook.createRelatedCatalogItem(relatedInfo);
 						if (catalogItem != null) {
 							new OpenCatalogAction(NetworkBookInfoActivity.this, myNetworkContext)
-								.run(NetworkLibrary.Instance().getFakeCatalogTree(catalogItem));
+								.run(Util.networkLibrary(NetworkBookInfoActivity.this).getFakeCatalogTree(catalogItem));
 						} else if (MimeType.TEXT_HTML.equals(relatedInfo.Mime)) {
 							Util.openInBrowser(NetworkBookInfoActivity.this, relatedInfo.Url);
 						}
@@ -337,7 +338,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		final int maxHeight = metrics.heightPixels * 2 / 3;
 		final int maxWidth = maxHeight * 2 / 3;
 		Bitmap coverBitmap = null;
-		final ZLImage cover = NetworkTree.createCover(myBook, false);
+		final ZLImage cover = NetworkTree.createCoverForItem(Util.networkLibrary(this), myBook, false);
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
@@ -397,9 +398,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	@Override
 	protected void onStop() {
 		myConnection.unbind(this);
-
-		NetworkLibrary.Instance().removeChangeListener(this);
-
+		Util.networkLibrary(this).removeChangeListener(this);
 		super.onStop();
 	}
 

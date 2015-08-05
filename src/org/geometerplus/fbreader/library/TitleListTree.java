@@ -100,7 +100,7 @@ public class TitleListTree extends FirstLevelTree {
 		if (prefix == null) {
 			return false;
 		}
-		final TitleTree temp = new TitleTree(Collection, prefix);
+		final TitleTree temp = new TitleTree(Collection, PluginCollection, prefix);
 		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;

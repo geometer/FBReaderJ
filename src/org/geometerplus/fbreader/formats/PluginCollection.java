@@ -25,6 +25,7 @@ import android.os.Build;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 public class PluginCollection implements IFormatPluginCollection {
 	static {
@@ -38,20 +39,20 @@ public class PluginCollection implements IFormatPluginCollection {
 	private final List<ExternalFormatPlugin> myExternalPlugins =
 		new LinkedList<ExternalFormatPlugin>();
 
-	public static PluginCollection Instance() {
+	public static PluginCollection Instance(SystemInfo systemInfo) {
 		if (ourInstance == null) {
-			createInstance();
+			createInstance(systemInfo);
 		}
 		return ourInstance;
 	}
 
-	private static synchronized void createInstance() {
+	private static synchronized void createInstance(SystemInfo systemInfo) {
 		if (ourInstance == null) {
-			ourInstance = new PluginCollection();
+			ourInstance = new PluginCollection(systemInfo);
 
 			// This code cannot be moved to constructor
 			// because nativePlugins() is a native method
-			for (NativeFormatPlugin p : ourInstance.nativePlugins()) {
+			for (NativeFormatPlugin p : ourInstance.nativePlugins(systemInfo)) {
 				ourInstance.myBuiltinPlugins.add(p);
 				System.err.println("native plugin: " + p);
 			}
@@ -64,11 +65,11 @@ public class PluginCollection implements IFormatPluginCollection {
 		}
 	}
 
-	private PluginCollection() {
+	private PluginCollection(SystemInfo systemInfo) {
 		if (Build.VERSION.SDK_INT >= 8) {
-			myExternalPlugins.add(new DjVuPlugin());
-			myExternalPlugins.add(new PDFPlugin());
-			myExternalPlugins.add(new ComicBookPlugin());
+			myExternalPlugins.add(new DjVuPlugin(systemInfo));
+			myExternalPlugins.add(new PDFPlugin(systemInfo));
+			myExternalPlugins.add(new ComicBookPlugin(systemInfo));
 		}
 	}
 
@@ -115,7 +116,7 @@ public class PluginCollection implements IFormatPluginCollection {
 		return all;
 	}
 
-	private native NativeFormatPlugin[] nativePlugins();
+	private native NativeFormatPlugin[] nativePlugins(SystemInfo systemInfo);
 	private native void free();
 
 	protected void finalize() throws Throwable {

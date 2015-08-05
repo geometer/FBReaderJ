@@ -23,12 +23,14 @@ import org.pdfparse.model.PDFDocInfo;
 import org.pdfparse.model.PDFDocument;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
+
 import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
 
 public class PDFPlugin extends ExternalFormatPlugin {
-	public PDFPlugin() {
-		super("PDF");
+	public PDFPlugin(SystemInfo systemInfo) {
+		super(systemInfo, "PDF");
 	}
 
 	@Override

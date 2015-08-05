@@ -27,13 +27,16 @@ import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 import org.geometerplus.fbreader.book.AbstractBook;
 
 public abstract class FormatPlugin {
+	protected final SystemInfo SystemInfo;
 	private final String myFileType;
 
-	protected FormatPlugin(String fileType) {
+	protected FormatPlugin(SystemInfo systemInfo, String fileType) {
+		SystemInfo = systemInfo;
 		myFileType = fileType;
 	}
 
