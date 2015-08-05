@@ -36,8 +36,6 @@ import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 public class FB2NativePlugin extends NativeFormatPlugin {
 	public FB2NativePlugin(SystemInfo systemInfo) {
 		super(systemInfo, "fb2");
-		System.err.println("systemInfo fbc " + systemInfo);
-		new Exception("systemInfo fbc2").printStackTrace();
 	}
 
 	@Override
