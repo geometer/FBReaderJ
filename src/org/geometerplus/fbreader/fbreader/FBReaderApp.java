@@ -77,7 +77,6 @@ public final class FBReaderApp extends ZLApplication {
 
 	public FBReaderApp(SystemInfo systemInfo, final IBookCollection<Book> collection) {
 		super(systemInfo);
-		System.err.println("systemInfo 0 = " + systemInfo);
 
 		Collection = collection;
 
@@ -333,7 +332,6 @@ public final class FBReaderApp extends ZLApplication {
 		System.gc();
 		System.gc();
 
-		System.err.println("systemInfo 1 = " + SystemInfo);
 		final PluginCollection pluginCollection = PluginCollection.Instance(SystemInfo);
 		FormatPlugin plugin = null;
 		try {
@@ -358,7 +356,6 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		try {
-			System.err.println("systemInfo 2 = " + SystemInfo);
 			Model = BookModel.createModel(book, plugin);
 			Collection.saveBook(book);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
