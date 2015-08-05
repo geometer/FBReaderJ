@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
@@ -34,13 +35,16 @@ public abstract class ZLApplication {
 
 	public static final String NoAction = "none";
 
+	public final SystemInfo SystemInfo;
+
 	private volatile ZLApplicationWindow myWindow;
 	private volatile ZLView myView;
 	private volatile String myTitle;
 
 	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
 
-	protected ZLApplication() {
+	protected ZLApplication(SystemInfo systemInfo) {
+		SystemInfo = systemInfo;
 		ourInstance = this;
 	}
 

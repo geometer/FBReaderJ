@@ -69,9 +69,8 @@ public class SignOutAction extends Action {
 					mgr.logOut();
 					myActivity.runOnUiThread(new Runnable() {
 						public void run() {
-							final NetworkLibrary library = NetworkLibrary.Instance();
-							library.invalidateVisibility();
-							library.synchronize();
+							myLibrary.invalidateVisibility();
+							myLibrary.synchronize();
 						}
 					});
 				}

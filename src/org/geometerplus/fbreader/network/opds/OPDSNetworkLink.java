@@ -35,15 +35,18 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class OPDSNetworkLink extends AbstractNetworkLink {
+	protected final NetworkLibrary Library;
+
 	private TreeMap<RelationAlias,String> myRelationAliases;
 
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
 
-	OPDSNetworkLink(int id, String title, String summary, String language,
+	OPDSNetworkLink(NetworkLibrary library, int id, String title, String summary, String language,
 			UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, title, summary, language, infos);
+		Library = library;
 	}
 
 	final void setRelationAliases(Map<RelationAlias,String> relationAliases) {
@@ -86,8 +89,8 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		if (url == null) {
 			return null;
 		}
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkCatalogItem catalogItem = state.Loader.getTree().Item;
+		final NetworkLibrary library = state.Loader.Tree.Library;
+		final NetworkCatalogItem catalogItem = state.Loader.Tree.Item;
 		library.startLoading(catalogItem);
 		url = rewriteUrl(url, false);
 		return new ZLNetworkRequest.Get(url) {
@@ -98,14 +101,14 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 				}
 
 				new OPDSXMLReader(
-					new OPDSFeedHandler(getURL(), state), false
+					library, new OPDSFeedHandler(getURL(), state), false
 				).read(inputStream);
 
 				if (state.Loader.confirmInterruption() && state.LastLoadedId != null) {
 					// reset state to load current page from the beginning
 					state.LastLoadedId = null;
 				} else {
-					state.Loader.getTree().confirmAllItems();
+					state.Loader.Tree.confirmAllItems();
 				}
 			}
 
@@ -199,7 +202,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	public BasketItem getBasketItem() {
 		final String url = getUrl(UrlInfo.Type.ListBooks);
 		if (url != null && myBasketItem == null) {
-			myBasketItem = new OPDSBasketItem(this);
+			myBasketItem = new OPDSBasketItem(Library, this);
 		}
 		return myBasketItem;
 	}

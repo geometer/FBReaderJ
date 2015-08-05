@@ -30,9 +30,7 @@ import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.formats.*;
 
 public final class BookModel {
-	public static BookModel createModel(Book book) throws BookReadingException {
-		final FormatPlugin plugin = BookUtil.getPlugin(book);
-
+	public static BookModel createModel(Book book, FormatPlugin plugin) throws BookReadingException {
 		if (plugin instanceof BuiltinFormatPlugin) {
 			final BookModel model = new BookModel(book);
 			((BuiltinFormatPlugin)plugin).readModel(model);

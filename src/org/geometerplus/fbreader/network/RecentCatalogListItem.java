@@ -55,6 +55,6 @@ public class RecentCatalogListItem extends NetworkCatalogItem {
 		for (int i = 0; i < 5; ++i) {
 			loader.onNewItem(new RecentCatalogItem("Catalog " + i, "Visited ..."));
 		}
-		loader.getTree().confirmAllItems();
+		loader.Tree.confirmAllItems();
 	}
 }

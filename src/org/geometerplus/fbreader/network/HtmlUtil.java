@@ -23,7 +23,7 @@ import android.text.*;
 import android.text.style.URLSpan;
 
 public abstract class HtmlUtil {
-	public static CharSequence getHtmlText(String text) {
+	public static CharSequence getHtmlText(NetworkLibrary library, String text) {
 		final Spanned htmlText = Html.fromHtml(text);
 		if (htmlText.getSpans(0, htmlText.length(), URLSpan.class).length == 0) {
 			return htmlText;
@@ -33,7 +33,7 @@ public abstract class HtmlUtil {
 			final int start = newHtmlText.getSpanStart(span);
 			final int end = newHtmlText.getSpanEnd(span);
 			final int flags = newHtmlText.getSpanFlags(span);
-			final String url = NetworkLibrary.Instance().rewriteUrl(span.getURL(), true);
+			final String url = library.rewriteUrl(span.getURL(), true);
 			newHtmlText.removeSpan(span);
 			newHtmlText.setSpan(new URLSpan(url), start, end, flags);
 		}

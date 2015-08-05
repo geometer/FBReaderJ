@@ -21,13 +21,14 @@ package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
 
 public abstract class ExternalFormatPlugin extends FormatPlugin {
-	protected ExternalFormatPlugin(String fileType) {
-		super(fileType);
+	protected ExternalFormatPlugin(SystemInfo systemInfo, String fileType) {
+		super(systemInfo, fileType);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2015 FBReader.ORG Limited <contact@fbreader.org>
+ * Copyright (C) 2007-2015 FBReader.ORG Limited <contact@fbreader.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,28 +17,9 @@
  * 02110-1301, USA.
  */
 
-#ifndef __LIBRARY_H__
-#define __LIBRARY_H__
+package org.geometerplus.zlibrary.core.util;
 
-#include <string>
-
-#include <shared_ptr.h>
-
-class Library {
-
-public:
-	static Library &Instance();
-
-private:
-	static shared_ptr<Library> ourInstance;
-
-private:
-	Library();
-
-public:
-	~Library();
-
-	std::string cacheDirectory() const;
-};
-
-#endif /* __LIBRARY_H__ */
+public interface SystemInfo {
+	String tempDirectory();
+	String networkCacheDirectory();
+}

@@ -33,7 +33,10 @@ public abstract class NetworkDatabase {
 		return ourInstance;
 	}
 
-	protected NetworkDatabase() {
+	private final NetworkLibrary myLibrary;
+
+	protected NetworkDatabase(NetworkLibrary library) {
+		myLibrary = library;
 		ourInstance = this;
 	}
 
@@ -46,11 +49,11 @@ public abstract class NetworkDatabase {
 		switch (type) {
 			default:
 				return new OPDSCustomNetworkLink(
-					id, type, title, summary, language, infos
+					myLibrary, id, type, title, summary, language, infos
 				);
 			case Predefined:
 				return new OPDSPredefinedNetworkLink(
-					id, predefinedId, title, summary, language, infos
+					myLibrary, id, predefinedId, title, summary, language, infos
 				);
 		}
 	}

@@ -36,7 +36,8 @@ import org.geometerplus.android.util.SQLiteUtil;
 class SQLiteNetworkDatabase extends NetworkDatabase {
 	private final SQLiteDatabase myDatabase;
 
-	SQLiteNetworkDatabase(Application application) {
+	SQLiteNetworkDatabase(Application application, NetworkLibrary library) {
+		super(library);
 		myDatabase = application.openOrCreateDatabase("network.db", Context.MODE_PRIVATE, null);
 		migrate();
 	}

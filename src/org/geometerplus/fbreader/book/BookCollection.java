@@ -25,6 +25,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -34,6 +35,8 @@ import org.geometerplus.fbreader.formats.*;
 public class BookCollection extends AbstractBookCollection<DbBook> {
 	private static final String ZERO_HASH = String.format("%040d", 0);
 
+	private final SystemInfo mySystemInfo;
+	public final PluginCollection PluginCollection;
 	private final BooksDatabase myDatabase;
 	public final List<String> BookDirectories;
 	private Set<String> myActiveFormats;
@@ -51,7 +54,9 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 	private final Map<Integer,HighlightingStyle> myStyles =
 		Collections.synchronizedMap(new TreeMap<Integer,HighlightingStyle>());
 
-	public BookCollection(BooksDatabase db, List<String> bookDirectories) {
+	public BookCollection(SystemInfo systemInfo, BooksDatabase db, List<String> bookDirectories) {
+		mySystemInfo = systemInfo;
+		PluginCollection = org.geometerplus.fbreader.formats.PluginCollection.Instance(systemInfo);
 		myDatabase = db;
 		BookDirectories = Collections.unmodifiableList(new ArrayList<String>(bookDirectories));
 
@@ -74,7 +79,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 			return null;
 		}
 
-		return getBookByFile(bookFile, PluginCollection.Instance().getPlugin(bookFile));
+		return getBookByFile(bookFile, PluginCollection.getPlugin(bookFile));
 	}
 
 	private DbBook getBookByFile(ZLFile bookFile, final FormatPlugin plugin) {
@@ -110,7 +115,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 
 		book = myDatabase.loadBookByFile(fileInfos.getId(bookFile), bookFile);
 		if (book != null) {
-			book.loadLists(myDatabase);
+			book.loadLists(myDatabase, PluginCollection);
 		}
 
 		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
@@ -143,7 +148,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 		if (book == null || book.File == null || !book.File.exists() || !isBookFormatActive(book)) {
 			return null;
 		}
-		book.loadLists(myDatabase);
+		book.loadLists(myDatabase, PluginCollection);
 
 		final ZLFile bookFile = book.File;
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
@@ -165,7 +170,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 		fileInfos.save();
 
 		try {
-			BookUtil.readMetainfo(book);
+			BookUtil.readMetainfo(book, PluginCollection);
 			// loaded from db
 			addBook(book, false);
 			return book;
@@ -560,7 +565,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 				}
 				if (!fileInfos.check(file, true)) {
 					try {
-						BookUtil.readMetainfo(book);
+						BookUtil.readMetainfo(book, PluginCollection);
 						saveBook(book);
 					} catch (BookReadingException e) {
 						doAdd = false;
@@ -659,7 +664,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 			return;
 		}
 
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
+		final FormatPlugin plugin = PluginCollection.getPlugin(file);
 		if (plugin != null && !isFormatActive(plugin)) {
 			return;
 		}
@@ -668,7 +673,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 			final DbBook book = orphanedBooksByFileId.get(fileId);
 			if (book != null) {
 				if (doReadMetaInfo) {
-					BookUtil.readMetainfo(book);
+					BookUtil.readMetainfo(book, PluginCollection);
 				}
 				newBooks.add(book);
 				return;
@@ -834,7 +839,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 	}
 
 	public List<FormatDescriptor> formats() {
-		final List<FormatPlugin> plugins = PluginCollection.Instance().plugins();
+		final List<FormatPlugin> plugins = PluginCollection.plugins();
 		final List<FormatDescriptor> descriptors = new ArrayList<FormatDescriptor>(plugins.size());
 		for (FormatPlugin p : plugins) {
 			final FormatDescriptor d = new FormatDescriptor();
@@ -863,7 +868,7 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 
 	private boolean isBookFormatActive(DbBook book) {
 		try {
-			return isFormatActive(BookUtil.getPlugin(book));
+			return isFormatActive(BookUtil.getPlugin(PluginCollection, book));
 		} catch (BookReadingException e) {
 			return false;
 		}
