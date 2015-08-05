@@ -28,8 +28,8 @@ import org.geometerplus.fbreader.tree.FBTree;
 public class BookTree extends LibraryTree {
 	public final Book Book;
 
-	BookTree(IBookCollection<Book> collection, Book book) {
-		super(collection);
+	BookTree(IBookCollection<Book> collection, PluginCollection pluginCollection, Book book) {
+		super(collection, pluginCollection);
 		Book = book;
 	}
 
@@ -65,7 +65,7 @@ public class BookTree extends LibraryTree {
 
 	@Override
 	protected ZLImage createCover() {
-		return CoverUtil.getCover(Book, PluginCollection.Instance());
+		return CoverUtil.getCover(Book, PluginCollection);
 	}
 
 	@Override

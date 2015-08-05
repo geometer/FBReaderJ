@@ -92,7 +92,7 @@ public:
 private:
 	static PluginCollection *ourInstance;
 
-	jobject myJavaInstance;
+	//jobject myJavaInstance;
 
 	std::vector<shared_ptr<FormatPlugin> > myPlugins;
 };

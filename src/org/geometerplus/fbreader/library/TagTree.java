@@ -22,12 +22,13 @@ package org.geometerplus.fbreader.library;
 import java.util.List;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 public final class TagTree extends FilteredTree {
 	public final Tag Tag;
 
-	TagTree(IBookCollection collection, Tag tag) {
-		super(collection, new Filter.ByTag(tag));
+	TagTree(IBookCollection collection, PluginCollection pluginCollection, Tag tag) {
+		super(collection, pluginCollection, new Filter.ByTag(tag));
 		Tag = tag;
 	}
 

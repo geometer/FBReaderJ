@@ -76,8 +76,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 	}
 
-	public LitResAuthenticationManager(OPDSNetworkLink link) {
+	private final NetworkLibrary myLibrary;
+
+	public LitResAuthenticationManager(NetworkLibrary library, OPDSNetworkLink link) {
 		super(link);
+
+		myLibrary = library;
 
 		mySidOption = new ZLStringOption(LitResUtil.HOST_NAME, "sid", "");
 		myUserIdOption = new ZLStringOption(LitResUtil.HOST_NAME, "userId", "");
@@ -125,7 +129,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		changed |= !myPurchasedBooks.isEmpty();
 		myPurchasedBooks.clear();
 		if (changed) {
-			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
+			myLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
 		}
 	}
 
@@ -191,7 +195,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			request.addPostParameter("login", username);
 			request.addPostParameter("pwd", password);
 			myNetworkContext.perform(request);
-			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
+			myLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
 			initUser(null, xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 		} catch (ZLNetworkException e) {
 			logOut(false);
@@ -422,7 +426,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		final LitResNetworkRequest request = new LitResNetworkRequest(
 			LitResUtil.url(Link, query),
-			new LitResXMLReader((OPDSNetworkLink)Link)
+			new LitResXMLReader(myLibrary, (OPDSNetworkLink)Link)
 		);
 		request.addPostParameter("my", "1");
 		request.addPostParameter("sid", sid);

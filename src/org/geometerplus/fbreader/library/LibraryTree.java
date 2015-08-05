@@ -24,6 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
@@ -32,6 +33,7 @@ public abstract class LibraryTree extends FBTree {
 	}
 
 	public final IBookCollection<Book> Collection;
+	public final PluginCollection PluginCollection;
 
 	static final String ROOT_EXTERNAL_VIEW = "bookshelfView";
 	static final String ROOT_FOUND = "found";
@@ -44,19 +46,22 @@ public abstract class LibraryTree extends FBTree {
 	static final String ROOT_SYNC = "sync";
 	static final String ROOT_FILE = "fileTree";
 
-	protected LibraryTree(IBookCollection collection) {
+	protected LibraryTree(IBookCollection collection, PluginCollection pluginCollection) {
 		super();
 		Collection = collection;
+		PluginCollection = pluginCollection;
 	}
 
 	protected LibraryTree(LibraryTree parent) {
 		super(parent);
 		Collection = parent.Collection;
+		PluginCollection = parent.PluginCollection;
 	}
 
 	protected LibraryTree(LibraryTree parent, int position) {
 		super(parent, position);
 		Collection = parent.Collection;
+		PluginCollection = parent.PluginCollection;
 	}
 
 	public Book getBook() {
@@ -72,7 +77,7 @@ public abstract class LibraryTree extends FBTree {
 	}
 
 	boolean createTagSubtree(Tag tag) {
-		final TagTree temp = new TagTree(Collection, tag);
+		final TagTree temp = new TagTree(Collection, PluginCollection, tag);
 		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;
@@ -83,7 +88,7 @@ public abstract class LibraryTree extends FBTree {
 	}
 
 	boolean createBookWithAuthorsSubtree(Book book) {
-		final BookWithAuthorsTree temp = new BookWithAuthorsTree(Collection, book);
+		final BookWithAuthorsTree temp = new BookWithAuthorsTree(Collection, PluginCollection, book);
 		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;

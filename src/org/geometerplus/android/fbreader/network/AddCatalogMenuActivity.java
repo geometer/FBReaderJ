@@ -31,8 +31,7 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.api.PluginApi;
 
 public class AddCatalogMenuActivity extends MenuActivity {
-	private final ZLResource myResource =
-		NetworkLibrary.Instance().resource().getResource("addCatalog");
+	private final ZLResource myResource = NetworkLibrary.resource().getResource("addCatalog");
 
 	private void addItem(String id, int weight) {
 		myInfos.add(new PluginApi.MenuActionInfo(

@@ -27,11 +27,14 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public class AllCatalogsSearchItem extends SearchItem {
-	public AllCatalogsSearchItem() {
+	private final NetworkLibrary myLibrary;
+
+	public AllCatalogsSearchItem(NetworkLibrary library) {
 		super(
 			null,
 			NetworkLibrary.resource().getResource("search").getResource("summaryAllCatalogs").getValue()
 		);
+		myLibrary = library;
 	}
 
 	@Override
@@ -46,7 +49,7 @@ public class AllCatalogsSearchItem extends SearchItem {
 				break;
 			}
 		}
-		for (INetworkLink link : NetworkLibrary.Instance().activeLinks()) {
+		for (INetworkLink link : myLibrary.activeLinks()) {
 			if (containsCyrillicLetters) {
 				if ("ebooks.qumran.org".equals(link.getHostName())) {
 					continue;

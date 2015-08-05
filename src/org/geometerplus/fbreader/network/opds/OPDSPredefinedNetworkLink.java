@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.network.opds;
 
 import org.geometerplus.fbreader.network.IPredefinedNetworkLink;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPredefinedNetworkLink {
@@ -27,8 +28,8 @@ public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPrede
 
 	private final String myPredefinedId;
 
-	public OPDSPredefinedNetworkLink(int id, String predefinedId, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(id, title, summary, language, infos);
+	public OPDSPredefinedNetworkLink(NetworkLibrary library, int id, String predefinedId, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		super(library, id, title, summary, language, infos);
 		myPredefinedId = predefinedId;
 	}
 

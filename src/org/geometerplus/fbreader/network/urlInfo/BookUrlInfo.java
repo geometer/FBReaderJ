@@ -26,8 +26,7 @@ import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
-import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.formats.PluginCollection;
@@ -43,7 +42,7 @@ public class BookUrlInfo extends UrlInfo {
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static boolean isMimeSupported(MimeType mime) {
+	public static boolean isMimeSupported(MimeType mime, SystemInfo systemInfo) {
 		if (mime == null) {
 			return false;
 		}
@@ -51,7 +50,7 @@ public class BookUrlInfo extends UrlInfo {
 		if (type == null) {
 			return false;
 		}
-		return PluginCollection.Instance().getPlugin(type) != null;
+		return PluginCollection.Instance(systemInfo).getPlugin(type) != null;
 	}
 
 	private static int mimePriority(MimeType mime) {

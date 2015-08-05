@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.CoverUtil;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.formats.PluginImage;
@@ -60,7 +61,7 @@ public class DataServer extends NanoHTTPD {
 		try {
 			final ZLImage image = CoverUtil.getCover(
 				DataUtil.fileFromEncodedPath(uri.substring(7)),
-				PluginCollection.Instance()
+				PluginCollection.Instance(Paths.systemInfo(myService))
 			);
 			if (image instanceof ZLFileImageProxy) {
 				final ZLFileImageProxy proxy = (ZLFileImageProxy)image;

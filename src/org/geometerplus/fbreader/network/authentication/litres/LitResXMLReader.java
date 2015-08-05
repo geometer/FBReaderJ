@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.atom.FormattedBuffer;
@@ -54,10 +55,10 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	private LinkedList<String> myTags = new LinkedList<String>();
 
-	public LitResXMLReader(OPDSNetworkLink link) {
+	public LitResXMLReader(NetworkLibrary library, OPDSNetworkLink link) {
+		myAnnotationBuffer = new FormattedBuffer(library, FormattedBuffer.Type.XHtml);
 		Link = link;
 	}
-
 
 	private static final int START = 0;
 	private static final int CATALOG = 1;
@@ -93,7 +94,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	private int myState = START;
 	private final StringBuilder myBuffer = new StringBuilder();
-	private FormattedBuffer myAnnotationBuffer = new FormattedBuffer(FormattedBuffer.Type.XHtml);
+	private final FormattedBuffer myAnnotationBuffer;
 
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {

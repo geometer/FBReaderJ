@@ -28,9 +28,9 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.fbreader.formats.BookReadingException;
 
 class BookMergeHelper {
-	private final IBookCollection myCollection;
+	private final BookCollection myCollection;
 
-	BookMergeHelper(IBookCollection collection) {
+	BookMergeHelper(BookCollection collection) {
 		myCollection = collection;
 	}
 
@@ -55,7 +55,7 @@ class BookMergeHelper {
 		}
 		final DbBook vanilla;
 		try {
-			vanilla = new DbBook(base.File, BookUtil.getPlugin(base));
+			vanilla = new DbBook(base.File, BookUtil.getPlugin(myCollection.PluginCollection, base));
 		} catch (BookReadingException e) {
 			return false;
 		}

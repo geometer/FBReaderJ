@@ -19,33 +19,15 @@
 
 package org.geometerplus.zlibrary.ui.android.library;
 
-import java.io.File;
-
-import android.annotation.TargetApi;
 import android.app.Application;
-import android.os.Build;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
-import org.geometerplus.fbreader.Paths;
 
 import org.geometerplus.android.fbreader.config.ConfigShadow;
 
 public abstract class ZLAndroidApplication extends Application {
 	private ZLAndroidLibrary myLibrary;
 	private ConfigShadow myConfig;
-
-	@TargetApi(Build.VERSION_CODES.FROYO)
-	private String getExternalCacheDirPath() {
-		final File d = getExternalCacheDir();
-		if (d != null) {
-			d.mkdirs();
-			if (d.exists() && d.isDirectory()) {
-				return d.getPath();
-			}
-		}
-		return null;
-	}
 
 	@Override
 	public void onCreate() {
@@ -61,21 +43,6 @@ public abstract class ZLAndroidApplication extends Application {
 		myConfig = new ConfigShadow(this);
 		new ZLAndroidImageManager();
 		myLibrary = new ZLAndroidLibrary(this);
-
-		myConfig.runOnConnect(new Runnable() {
-			public void run() {
-				if ("".equals(Paths.TempDirectoryOption.getValue())) {
-					String dir = null;
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
-						dir = getExternalCacheDirPath();
-					}
-					if (dir == null) {
-						dir = Paths.mainBookDirectory() + "/.FBReader";
-					}
-					Paths.TempDirectoryOption.setValue(dir);
-				}
-			}
-		});
 	}
 
 	public final ZLAndroidLibrary library() {

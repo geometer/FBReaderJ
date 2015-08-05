@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.text.model.CachedCharStorageException;
 
 import org.geometerplus.fbreader.book.AbstractBook;
@@ -37,18 +38,18 @@ import org.geometerplus.fbreader.formats.oeb.OEBNativePlugin;
 public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	private static final Object ourNativeLock = new Object();
 
-	public static NativeFormatPlugin create(String fileType) {
+	public static NativeFormatPlugin create(SystemInfo systemInfo, String fileType) {
 		if ("fb2".equals(fileType)) {
-			return new FB2NativePlugin();
+			return new FB2NativePlugin(systemInfo);
 		} else if ("ePub".equals(fileType)) {
-			return new OEBNativePlugin();
+			return new OEBNativePlugin(systemInfo);
 		} else {
-			return new NativeFormatPlugin(fileType);
+			return new NativeFormatPlugin(systemInfo, fileType);
 		}
 	}
 
-	protected NativeFormatPlugin(String fileType) {
-		super(fileType);
+	protected NativeFormatPlugin(SystemInfo systemInfo, String fileType) {
+		super(systemInfo, fileType);
 	}
 
 	@Override
@@ -104,12 +105,10 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
-		//android.os.Debug.startMethodTracing("ep.trace", 32 * 1024 * 1024);
 		final int code;
 		synchronized (ourNativeLock) {
-			code = readModelNative(model);
+			code = readModelNative(model, SystemInfo.tempDirectory());
 		}
-		//android.os.Debug.stopMethodTracing();
 		switch (code) {
 			case 0:
 				return;
@@ -124,7 +123,7 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 		}
 	}
 
-	private native int readModelNative(BookModel model);
+	private native int readModelNative(BookModel model, String cacheDir);
 
 	@Override
 	public final ZLFileImageProxy readCover(ZLFile file) {

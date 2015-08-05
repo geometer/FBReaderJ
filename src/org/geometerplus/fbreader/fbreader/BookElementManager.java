@@ -26,6 +26,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.text.view.ExtensionElementManager;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.opds.*;
 
 class BookElementManager extends ExtensionElementManager {
@@ -69,6 +70,8 @@ class BookElementManager extends ExtensionElementManager {
 	}
 
 	private void startLoading(final String url, final List<BookElement> elements) {
+		final NetworkLibrary library = NetworkLibrary.Instance(myView.Application.SystemInfo);
+
 		new Thread() {
 			public void run() {
 				final SimpleOPDSFeedHandler handler = new SimpleOPDSFeedHandler(url);
@@ -76,7 +79,7 @@ class BookElementManager extends ExtensionElementManager {
 					new QuietNetworkContext().perform(new ZLNetworkRequest.Get(url, true) {
 						@Override
 						public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-							new OPDSXMLReader(handler, false).read(inputStream);
+							new OPDSXMLReader(library, handler, false).read(inputStream);
 						}
 					});
 					if (handler.books().isEmpty()) {

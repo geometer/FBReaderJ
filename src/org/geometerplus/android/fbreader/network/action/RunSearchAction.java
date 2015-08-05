@@ -65,7 +65,7 @@ public class RunSearchAction extends Action {
 
 	@Override
 	public boolean isEnabled(NetworkTree tree) {
-		return NetworkLibrary.Instance().getStoredLoader(getSearchTree(tree)) == null;
+		return myLibrary.getStoredLoader(getSearchTree(tree)) == null;
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class RunSearchAction extends Action {
 			NetworkLibraryActivity.TREE_KEY_KEY,
 			getSearchTree(tree).getUniqueKey()
 		);
-		final NetworkLibrary library = NetworkLibrary.Instance();
+		final NetworkLibrary library = myLibrary;
 		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			myActivity.startSearch(library.NetworkSearchPatternOption.getValue(), true, bundle, false);
 		} else {
