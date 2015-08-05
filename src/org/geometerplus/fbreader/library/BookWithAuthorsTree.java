@@ -20,10 +20,11 @@
 package org.geometerplus.fbreader.library;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 public class BookWithAuthorsTree extends BookTree {
-	BookWithAuthorsTree(IBookCollection collection, Book book) {
-		super(collection, book);
+	BookWithAuthorsTree(IBookCollection collection, PluginCollection pluginCollection, Book book) {
+		super(collection, pluginCollection, book);
 	}
 
 	BookWithAuthorsTree(LibraryTree parent, Book book) {

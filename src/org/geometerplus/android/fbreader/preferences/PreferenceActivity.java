@@ -155,7 +155,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			directoriesScreen.Resource, "fontPath", Paths.FontPathOption, fontReloader
 		));
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
-			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption, null
+			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption(this), null
 		));
 
 		final Screen syncScreen = createPreferenceScreen("sync");
@@ -760,7 +760,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 
 		final Screen tipsScreen = createPreferenceScreen("tips");
-		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
+		tipsScreen.addOption(TipsManager.ShowTipsOption, "showTips");
 
 		final Screen aboutScreen = createPreferenceScreen("about");
 		aboutScreen.addPreference(new InfoPreference(

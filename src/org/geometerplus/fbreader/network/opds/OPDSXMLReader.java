@@ -23,6 +23,7 @@ import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.money.Money;
 import org.geometerplus.zlibrary.core.xml.*;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.atom.*;
 
 public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata,OPDSEntry> {
@@ -31,8 +32,8 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata,OPDSEntry> {
 	private DCDate myDCIssued;
 	private String myPriceCurrency;
 
-	public OPDSXMLReader(ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> handler, boolean readEntryNotFeed) {
-		super(handler, readEntryNotFeed);
+	public OPDSXMLReader(NetworkLibrary library, ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> handler, boolean readEntryNotFeed) {
+		super(library, handler, readEntryNotFeed);
 	}
 
 	protected final OPDSFeedMetadata getOPDSFeed() {

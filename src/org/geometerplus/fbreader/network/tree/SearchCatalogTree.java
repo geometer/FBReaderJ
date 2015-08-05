@@ -54,7 +54,7 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 	@Override
 	public String getName() {
 		final String pattern = ((SearchItem)Item).getPattern();
-		if (pattern != null && NetworkLibrary.Instance().getStoredLoader(this) == null) {
+		if (pattern != null && Library.getStoredLoader(this) == null) {
 			return NetworkLibrary.resource().getResource("found").getValue();
 		}
 		return super.getName();
@@ -71,7 +71,7 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 		if (pattern != null) {
 			return NetworkLibrary.resource().getResource("found").getResource("summary").getValue().replace("%s", pattern);
 		}
-		if (NetworkLibrary.Instance().getStoredLoader(this) != null) {
+		if (Library.getStoredLoader(this) != null) {
 			return NetworkLibrary.resource().getResource("search").getResource("summaryInProgress").getValue();
 		}
 		return super.getSummary();
@@ -96,6 +96,6 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 			return null;
 		}
 		final UrlInfo info = link.getUrlInfo(UrlInfo.Type.SearchIcon);
-		return info != null ? createCover(info.Url, info.Mime) : null;
+		return info != null ? createCoverFromUrl(Library, info.Url, info.Mime) : null;
 	}
 }

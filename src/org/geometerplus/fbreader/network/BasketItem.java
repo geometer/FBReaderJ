@@ -27,13 +27,14 @@ import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public abstract class BasketItem extends NetworkCatalogItem {
+	private final NetworkLibrary myLibrary;
 	private long myGeneration = 0;
 
 	private final ZLStringListOption myBooksInBasketOption;
 	private final Map<String,NetworkBookItem> myBooks =
 		Collections.synchronizedMap(new HashMap<String,NetworkBookItem>());
 
-	protected BasketItem(INetworkLink link) {
+	protected BasketItem(NetworkLibrary library, INetworkLink link) {
 		super(
 			link,
 			NetworkLibrary.resource().getResource("basket").getValue(),
@@ -42,6 +43,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 			Accessibility.ALWAYS,
 			FLAGS_DEFAULT & ~FLAGS_GROUP
 		);
+		myLibrary = library;
 		myBooksInBasketOption = new ZLStringListOption(Link.getStringId(), "Basket", Collections.<String>emptyList(), ",");
 	}
 
@@ -88,7 +90,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 			myBooksInBasketOption.setValue(ids);
 			addItem(book);
 			++myGeneration;
-			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+			myLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 	}
 
@@ -100,7 +102,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 			myBooksInBasketOption.setValue(ids);
 			myBooks.remove(book);
 			++myGeneration;
-			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+			myLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 	}
 
@@ -108,7 +110,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 		myBooksInBasketOption.setValue(null);
 		myBooks.clear();
 		++myGeneration;
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		myLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	public final boolean contains(NetworkBookItem book) {

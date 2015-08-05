@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.library;
 import java.util.Collections;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 public final class SeriesTree extends FilteredTree {
 	public final Series Series;
@@ -31,8 +32,8 @@ public final class SeriesTree extends FilteredTree {
 		return author != null ? new Filter.And(f, new Filter.ByAuthor(author)) : f;
 	}
 
-	SeriesTree(IBookCollection collection, Series series, Author author) {
-		super(collection, filter(series, author));
+	SeriesTree(IBookCollection collection, PluginCollection pluginCollection, Series series, Author author) {
+		super(collection, pluginCollection, filter(series, author));
 		Series = series;
 	}
 
@@ -58,7 +59,7 @@ public final class SeriesTree extends FilteredTree {
 
 	@Override
 	protected boolean createSubtree(Book book) {
-		final BookInSeriesTree temp = new BookInSeriesTree(Collection, book);
+		final BookInSeriesTree temp = new BookInSeriesTree(Collection, PluginCollection, book);
 		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;

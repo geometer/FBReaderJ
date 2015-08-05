@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.atom;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 public class FormattedBuffer {
@@ -30,15 +31,17 @@ public class FormattedBuffer {
 		XHtml
 	};
 
+	private final NetworkLibrary myLibrary;
 	private Type myType;
 	private StringBuilder myBuffer = new StringBuilder();
 
-	public FormattedBuffer(Type type) {
+	public FormattedBuffer(NetworkLibrary library, Type type) {
+		myLibrary = library;
 		myType = type;
 	}
 
-	public FormattedBuffer() {
-		this(Type.Text);
+	public FormattedBuffer(NetworkLibrary library) {
+		this(library, Type.Text);
 	}
 
 	public void appendText(CharSequence text) {
@@ -84,7 +87,7 @@ public class FormattedBuffer {
 		switch (myType) {
 			case Html:
 			case XHtml:
-				return HtmlUtil.getHtmlText(text);
+				return HtmlUtil.getHtmlText(myLibrary, text);
 			default:
 				return text;
 		}

@@ -28,16 +28,21 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
-	protected NetworkTree() {
+	public final NetworkLibrary Library;
+
+	protected NetworkTree(NetworkLibrary library) {
 		super();
+		Library = library;
 	}
 
 	protected NetworkTree(NetworkTree parent) {
 		super(parent);
+		Library = parent.Library;
 	}
 
 	protected NetworkTree(NetworkTree parent, int position) {
 		super(parent, position);
+		Library = parent.Library;
 	}
 
 	@Override
@@ -61,7 +66,7 @@ public abstract class NetworkTree extends FBTree {
 		return parent != null ? parent.getLink() : null;
 	}
 
-	public static ZLImage createCover(NetworkItem item, boolean thumbnail) {
+	public static ZLImage createCoverForItem(NetworkLibrary library, NetworkItem item, boolean thumbnail) {
 		String coverUrl = item.getUrl(thumbnail ? UrlInfo.Type.Thumbnail : UrlInfo.Type.Image);
 		if (coverUrl == null) {
 			coverUrl = item.getUrl(thumbnail ? UrlInfo.Type.Image : UrlInfo.Type.Thumbnail);
@@ -69,12 +74,12 @@ public abstract class NetworkTree extends FBTree {
 		if (coverUrl == null) {
 			return null;
 		}
-		return createCover(coverUrl, null);
+		return createCoverFromUrl(library, coverUrl, null);
 	}
 
 	private static final String DATA_PREFIX = "data:";
 
-	public static ZLImage createCover(String url, MimeType mimeType) {
+	public static ZLImage createCoverFromUrl(NetworkLibrary library, String url, MimeType mimeType) {
 		if (url == null) {
 			return null;
 		}
@@ -82,7 +87,7 @@ public abstract class NetworkTree extends FBTree {
 			mimeType = MimeType.IMAGE_AUTO;
 		}
 		if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://")) {
-			return NetworkLibrary.Instance().getImageByUrl(url, mimeType);
+			return library.getImageByUrl(url, mimeType);
 		} else if (url.startsWith(DATA_PREFIX)) {
 			int commaIndex = url.indexOf(',');
 			if (commaIndex == -1) {
@@ -100,8 +105,9 @@ public abstract class NetworkTree extends FBTree {
 			}
 			int key = url.indexOf("base64");
 			if (key != -1 && key < commaIndex) {
-				Base64EncodedImage img = new Base64EncodedImage(mimeType);
-				img.setData(url.substring(commaIndex + 1));
+				Base64EncodedImage img = new Base64EncodedImage(
+					library, url.substring(commaIndex + 1), mimeType
+				);
 				return img;
 			}
 		}
