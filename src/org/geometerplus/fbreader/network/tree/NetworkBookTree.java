@@ -68,7 +68,7 @@ public class NetworkBookTree extends NetworkTree {
 
 	@Override
 	protected ZLImage createCover() {
-		return createCover(Book, true);
+		return createCoverForItem(Library, Book, true);
 	}
 
 	@Override

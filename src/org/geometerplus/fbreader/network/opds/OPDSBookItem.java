@@ -27,13 +27,12 @@ import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
-	public static OPDSBookItem create(ZLNetworkContext nc, INetworkLink link, String url) throws ZLNetworkException {
+	public static OPDSBookItem create(final NetworkLibrary library, ZLNetworkContext nc, INetworkLink link, String url) throws ZLNetworkException {
 		if (link == null || url == null) {
 			return null;
 		}
@@ -42,7 +41,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		nc.perform(new ZLNetworkRequest.Get(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				new OPDSXMLReader(handler, true).read(inputStream);
+				new OPDSXMLReader(library, handler, true).read(inputStream);
 			}
 		});
 		return handler.getBook();
@@ -133,11 +132,17 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 					}
 				}
 				if (MimeType.TEXT_HTML.equals(mime)) {
-					collectReferences(urls, opdsLink, href,
-							UrlInfo.Type.BookBuyInBrowser, price, true);
+					collectReferences(
+						networkLink.Library,
+						urls, opdsLink, href,
+						UrlInfo.Type.BookBuyInBrowser, price, true
+					);
 				} else {
-					collectReferences(urls, opdsLink, href,
-							UrlInfo.Type.BookBuy, price, false);
+					collectReferences(
+						networkLink.Library,
+						urls, opdsLink, href,
+						UrlInfo.Type.BookBuy, price, false
+					);
 				}
 			} else if (referenceType == UrlInfo.Type.Related) {
 				urls.addInfo(new RelatedUrlInfo(referenceType, link.getTitle(), href, mime));
@@ -146,7 +151,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			} else if (referenceType == UrlInfo.Type.TOC) {
 				urls.addInfo(new UrlInfo(referenceType, href, mime));
 			} else if (referenceType != null) {
-				if (BookUrlInfo.isMimeSupported(mime)) {
+				if (BookUrlInfo.isMimeSupported(mime, networkLink.Library.SystemInfo)) {
 					urls.addInfo(new BookUrlInfo(referenceType, href, mime));
 				}
 			}
@@ -177,6 +182,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	private static void collectReferences(
+		NetworkLibrary library,
 		UrlInfoCollection<UrlInfo> urls,
 		OPDSLink opdsLink,
 		String href,
@@ -187,7 +193,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		boolean added = false;
 		for (String f : opdsLink.Formats) {
 			final MimeType mime = MimeType.get(f);
-			if (BookUrlInfo.isMimeSupported(mime)) {
+			if (BookUrlInfo.isMimeSupported(mime, library.SystemInfo)) {
 				urls.addInfo(new BookBuyUrlInfo(type, href, mime, price));
 				added = true;
 			}
@@ -231,7 +237,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	@Override
-	public synchronized boolean loadFullInformation(ZLNetworkContext nc) {
+	public synchronized boolean loadFullInformation(final NetworkLibrary library, ZLNetworkContext nc) {
 		if (myInformationIsFull) {
 			return true;
 		}
@@ -245,7 +251,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		return nc.performQuietly(new ZLNetworkRequest.Get(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				new OPDSXMLReader(new LoadInfoHandler(url), true).read(inputStream);
+				new OPDSXMLReader(library, new LoadInfoHandler(url), true).read(inputStream);
 				myInformationIsFull = true;
 			}
 		});

@@ -49,12 +49,12 @@ public class ReloadCatalogAction extends CatalogAction {
 
 	@Override
 	public boolean isEnabled(NetworkTree tree) {
-		return NetworkLibrary.Instance().getStoredLoader(tree) == null;
+		return myLibrary.getStoredLoader(tree) == null;
 	}
 
 	@Override
 	public void run(NetworkTree tree) {
-		if (NetworkLibrary.Instance().getStoredLoader(tree) != null) {
+		if (myLibrary.getStoredLoader(tree) != null) {
 			return;
 		}
 		((NetworkCatalogTree)tree).clearCatalog();

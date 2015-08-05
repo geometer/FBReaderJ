@@ -127,7 +127,7 @@ public:
 	static shared_ptr<StaticObjectMethod> StaticMethod_NativeFormatPlugin_create;
 	static shared_ptr<StringMethod> Method_NativeFormatPlugin_supportedFileType;
 
-	static shared_ptr<StaticObjectMethod> StaticMethod_PluginCollection_Instance;
+	//static shared_ptr<StaticObjectMethod> StaticMethod_PluginCollection_Instance;
 
 	static shared_ptr<ObjectMethod> Method_Encoding_createConverter;
 
@@ -139,8 +139,6 @@ public:
 	static shared_ptr<ObjectMethod> Method_JavaEncodingCollection_getEncoding;
 	//static shared_ptr<ObjectMethod> Method_JavaEncodingCollection_getEncoding_int;
 	static shared_ptr<BooleanMethod> Method_JavaEncodingCollection_providesConverterFor;
-
-	static shared_ptr<StaticObjectMethod> StaticMethod_Paths_tempDirectory;
 
 	static shared_ptr<StringMethod> Method_Book_getPath;
 	static shared_ptr<StringMethod> Method_Book_getTitle;

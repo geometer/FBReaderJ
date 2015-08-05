@@ -22,10 +22,14 @@ package org.geometerplus.fbreader;
 import java.io.*;
 import java.util.*;
 
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 public abstract class Paths {
 	public static ZLStringListOption BookPathOption =
@@ -37,8 +41,35 @@ public abstract class Paths {
 	public static ZLStringListOption WallpaperPathOption =
 		pathOption("WallpapersDirectory", cardDirectory() + "/Wallpapers");
 
-	public static ZLStringOption TempDirectoryOption =
+	private static ZLStringOption ourTempDirectoryOption =
 		new ZLStringOption("Files", "TemporaryDirectory", "");
+
+	public static ZLStringOption TempDirectoryOption(Context context) {
+		if ("".equals(ourTempDirectoryOption.getValue())) {
+			ourTempDirectoryOption.setValue(internalTempDirectoryValue(context));
+		}
+		return ourTempDirectoryOption;
+	}
+
+	private static String internalTempDirectoryValue(Context context) {
+		String value = null;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+			value = getExternalCacheDirPath(context);
+		}
+		return value != null ? value : (mainBookDirectory() + "/.FBReader");
+	}
+
+	@TargetApi(Build.VERSION_CODES.FROYO)
+	private static String getExternalCacheDirPath(Context context) {
+		final File d = context != null ? context.getExternalCacheDir() : null;
+		if (d != null) {
+			d.mkdirs();
+			if (d.exists() && d.isDirectory()) {
+				return d.getPath();
+			}
+		}
+		return null;
+	}
 
 	public static ZLStringOption DownloadsDirectoryOption =
 		new ZLStringOption("Files", "DownloadsDirectory", "");
@@ -119,12 +150,21 @@ public abstract class Paths {
 		return bookPath.isEmpty() ? defaultBookDirectory() : bookPath.get(0);
 	}
 
-	public static String tempDirectory() {
-		return TempDirectoryOption.getValue();
-	}
+	public static SystemInfo systemInfo(Context context) {
+		final Context appContext = context.getApplicationContext();
+		return new SystemInfo() {
+			public String tempDirectory() {
+				final String value = ourTempDirectoryOption.getValue();
+				if (!"".equals(value)) {
+					return value;
+				}
+				return internalTempDirectoryValue(appContext);
+			}
 
-	public static String networkCacheDirectory() {
-		return tempDirectory() + "/cache";
+			public String networkCacheDirectory() {
+				return tempDirectory() + "/cache";
+			}
+		};
 	}
 
 	public static String systemShareDirectory() {

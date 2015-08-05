@@ -26,6 +26,8 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
+
 public class ATOMXMLReader<MetadataType extends ATOMFeedMetadata,EntryType extends ATOMEntry> extends ZLXMLReaderAdapter {
 	public static String intern(String str) {
 		if (str == null || str.length() == 0) {
@@ -96,12 +98,13 @@ public class ATOMXMLReader<MetadataType extends ATOMFeedMetadata,EntryType exten
 
 	protected int myState;
 	private final StringBuilder myBuffer = new StringBuilder();
-	protected final FormattedBuffer myFormattedBuffer = new FormattedBuffer();
+	protected final FormattedBuffer myFormattedBuffer;
 	protected boolean myFeedMetadataProcessed;
 
-	public ATOMXMLReader(ATOMFeedHandler<MetadataType,EntryType> handler, boolean readEntryNotFeed) {
+	public ATOMXMLReader(NetworkLibrary library, ATOMFeedHandler<MetadataType,EntryType> handler, boolean readEntryNotFeed) {
 		myFeedHandler = handler;
 		myState = readEntryNotFeed ? FEED : START;
+		myFormattedBuffer = new FormattedBuffer(library);
 	}
 
 	protected final ATOMFeedHandler<MetadataType,EntryType> getATOMFeedHandler() {

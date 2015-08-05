@@ -27,12 +27,13 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.network.BasketItem;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 class OPDSBasketItem extends BasketItem {
-	OPDSBasketItem(OPDSNetworkLink link) {
-		super(link);
+	OPDSBasketItem(NetworkLibrary library, OPDSNetworkLink link) {
+		super(library, link);
 	}
 
 	@Override
@@ -46,7 +47,7 @@ class OPDSBasketItem extends BasketItem {
 			for (String id : ids) {
 				loader.onNewItem(getBook(id));
 			}
-			loader.getTree().confirmAllItems();
+			loader.Tree.confirmAllItems();
 			return;
 		}
 

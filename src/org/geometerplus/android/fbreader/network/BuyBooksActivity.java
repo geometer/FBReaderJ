@@ -76,7 +76,7 @@ public class BuyBooksActivity extends SimpleDialogActivity implements NetworkLib
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
 		myBookCollection.bindToService(this, null);
-		myLibrary = NetworkLibrary.Instance();
+		myLibrary = Util.networkLibrary(this);
 
 		final List<NetworkTree.Key> keys =
 			(List<NetworkTree.Key>)getIntent().getSerializableExtra(
@@ -123,7 +123,7 @@ public class BuyBooksActivity extends SimpleDialogActivity implements NetworkLib
 
 		setupUI(AuthorisationState.Authorised);
 
-		NetworkLibrary.Instance().addChangeListener(this);
+		myLibrary.addChangeListener(this);
 	}
 
 	@Override
@@ -229,7 +229,7 @@ public class BuyBooksActivity extends SimpleDialogActivity implements NetworkLib
 
 	@Override
 	protected void onDestroy() {
-		NetworkLibrary.Instance().removeChangeListener(this);
+		myLibrary.removeChangeListener(this);
 		myBookCollection.unbind();
 		super.onDestroy();
 	}

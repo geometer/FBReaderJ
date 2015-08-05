@@ -34,6 +34,7 @@ import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
@@ -41,7 +42,9 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.animation.*;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
+
 import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
@@ -50,19 +53,23 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	private final Paint myPaint = new Paint();
 	private final BitmapManagerImpl myBitmapManager = new BitmapManagerImpl(this);
 	private Bitmap myFooterBitmap;
+	private final SystemInfo mySystemInfo;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		mySystemInfo = Paths.systemInfo(context);
 		init();
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		mySystemInfo = Paths.systemInfo(context);
 		init();
 	}
 
 	public ZLAndroidWidget(Context context) {
 		super(context);
+		mySystemInfo = Paths.systemInfo(context);
 		init();
 	}
 
@@ -331,6 +338,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 
 		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+			mySystemInfo,
 			new Canvas(bitmap),
 			new ZLAndroidPaintContext.Geometry(
 				getWidth(),
@@ -363,6 +371,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
 		}
 		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+			mySystemInfo,
 			new Canvas(myFooterBitmap),
 			new ZLAndroidPaintContext.Geometry(
 				getWidth(),
@@ -392,6 +401,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 					public void run() {
 						final ZLView view = ZLApplication.Instance().getCurrentView();
 						final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+							mySystemInfo,
 							canvas,
 							new ZLAndroidPaintContext.Geometry(
 								getWidth(),

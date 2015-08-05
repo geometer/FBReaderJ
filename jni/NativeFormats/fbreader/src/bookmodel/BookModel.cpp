@@ -27,13 +27,11 @@
 
 #include "../formats/FormatPlugin.h"
 #include "../library/Book.h"
-#include "../library/Library.h"
 
-BookModel::BookModel(const shared_ptr<Book> book, jobject javaModel) : myBook(book) {
+BookModel::BookModel(const shared_ptr<Book> book, jobject javaModel, const std::string &cacheDir) : CacheDir(cacheDir), myBook(book) {
 	myJavaModel = AndroidUtil::getEnv()->NewGlobalRef(javaModel);
 
-	const std::string cacheDirectory = Library::Instance().cacheDirectory();
-	myBookTextModel = new ZLTextPlainModel(std::string(), book->language(), 131072, cacheDirectory, "ncache", myFontManager);
+	myBookTextModel = new ZLTextPlainModel(std::string(), book->language(), 131072, CacheDir, "ncache", myFontManager);
 	myContentsTree = new ContentsTree();
 	/*shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(book->file(), false);
 	if (!plugin.isNull()) {

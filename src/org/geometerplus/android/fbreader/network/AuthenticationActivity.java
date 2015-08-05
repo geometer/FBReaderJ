@@ -116,7 +116,7 @@ public class AuthenticationActivity extends Activity {
 		myCustomAuthentication = intent.getBooleanExtra(CUSTOM_AUTH_KEY, false);
 
 		if (myCustomAuthentication) {
-			myLink = NetworkLibrary.Instance().getLinkByUrl(String.valueOf(intent.getData()));
+			myLink = Util.networkLibrary(this).getLinkByUrl(String.valueOf(intent.getData()));
 			if (myLink == null) {
 				finish();
 				return;
@@ -185,7 +185,7 @@ public class AuthenticationActivity extends Activity {
 								mgr.logOut();
 							}
 						}
-						final NetworkLibrary library = NetworkLibrary.Instance();
+						final NetworkLibrary library = Util.networkLibrary(AuthenticationActivity.this);
 						library.invalidateVisibility();
 						library.synchronize();
 					}
@@ -228,7 +228,7 @@ public class AuthenticationActivity extends Activity {
 					if (myOnSuccessRunnable != null) {
 						myOnSuccessRunnable.run();
 					}
-					final NetworkLibrary library = NetworkLibrary.Instance();
+					final NetworkLibrary library = Util.networkLibrary(AuthenticationActivity.this);
 					library.invalidateVisibility();
 					library.synchronize();
 				} catch (final ZLNetworkException e) {

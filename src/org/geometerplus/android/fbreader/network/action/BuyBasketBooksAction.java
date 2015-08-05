@@ -41,7 +41,7 @@ public class BuyBasketBooksAction extends CatalogAction {
 
 	@Override
 	public boolean isEnabled(NetworkTree tree) {
-		if (NetworkLibrary.Instance().getStoredLoader(tree) != null) {
+		if (myLibrary.getStoredLoader(tree) != null) {
 			return false;
 		}
 		final Set<String> bookIds = new HashSet<String>();
