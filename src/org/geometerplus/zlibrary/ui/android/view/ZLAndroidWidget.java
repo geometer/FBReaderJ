@@ -44,6 +44,7 @@ import org.geometerplus.zlibrary.ui.android.view.animation.*;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
+
 import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
