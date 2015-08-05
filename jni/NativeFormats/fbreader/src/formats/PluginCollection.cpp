@@ -69,15 +69,15 @@ void PluginCollection::deleteInstance() {
 }
 
 PluginCollection::PluginCollection() {
-	JNIEnv *env = AndroidUtil::getEnv();
-	jobject instance = AndroidUtil::StaticMethod_PluginCollection_Instance->call();
-	myJavaInstance = env->NewGlobalRef(instance);
-	env->DeleteLocalRef(instance);
+	//JNIEnv *env = AndroidUtil::getEnv();
+	//jobject instance = AndroidUtil::StaticMethod_PluginCollection_Instance->call();
+	//myJavaInstance = env->NewGlobalRef(instance);
+	//env->DeleteLocalRef(instance);
 }
 
 PluginCollection::~PluginCollection() {
-	JNIEnv *env = AndroidUtil::getEnv();
-	env->DeleteGlobalRef(myJavaInstance);
+	//JNIEnv *env = AndroidUtil::getEnv();
+	//env->DeleteGlobalRef(myJavaInstance);
 }
 
 shared_ptr<FormatPlugin> PluginCollection::pluginByType(const std::string &fileType) const {

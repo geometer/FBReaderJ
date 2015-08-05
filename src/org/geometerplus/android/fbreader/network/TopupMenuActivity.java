@@ -58,7 +58,7 @@ public class TopupMenuActivity extends MenuActivity {
 	protected void init() {
 		setTitle(NetworkLibrary.resource().getResource("topupTitle").getValue());
 		final String url = getIntent().getData().toString();
-		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
+		myLink = Util.networkLibrary(this).getLinkByUrl(url);
 		myAmount = (Money)getIntent().getSerializableExtra(AMOUNT_KEY);
 
 		if (myLink.getUrlInfo(UrlInfo.Type.TopUp) != null) {

@@ -27,16 +27,15 @@ import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
-import org.geometerplus.fbreader.network.ICustomNetworkLink;
-import org.geometerplus.fbreader.network.NetworkException;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private final Type myType;
 	private boolean myHasChanges;
 
-	public OPDSCustomNetworkLink(int id, Type type, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(id, title, summary, language, infos);
+	public OPDSCustomNetworkLink(NetworkLibrary library, int id, Type type, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		super(library, id, title, summary, language, infos);
 		myType = type;
 	}
 
@@ -99,7 +98,7 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					final OPDSCatalogInfoHandler info = new OPDSCatalogInfoHandler(getURL(), OPDSCustomNetworkLink.this, opensearchDescriptionURLs);
-					new OPDSXMLReader(info, false).read(inputStream);
+					new OPDSXMLReader(Library, info, false).read(inputStream);
 
 					if (!info.FeedStarted) {
 						throw ZLNetworkException.forCode(NetworkException.ERROR_NOT_AN_OPDS);

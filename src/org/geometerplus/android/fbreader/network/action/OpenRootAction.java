@@ -42,7 +42,7 @@ public class OpenRootAction extends Action {
 		}
 		for (; tree != null; tree = (NetworkTree)tree.Parent) {
 			if (tree instanceof RootTree) {
-				return tree == NetworkLibrary.Instance().getRootTree();
+				return tree == myLibrary.getRootTree();
 			}
 		}
 		return false;
@@ -51,7 +51,7 @@ public class OpenRootAction extends Action {
 	@Override
 	public void run(NetworkTree tree) {
 		final NetworkLibraryActivity activity = (NetworkLibraryActivity)myActivity;
-		activity.openTree(NetworkLibrary.Instance().getRootTree());
+		activity.openTree(myLibrary.getRootTree());
 		activity.clearHistory();
 	}
 }

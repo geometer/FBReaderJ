@@ -55,7 +55,7 @@ public class AuthorisationMenuActivity extends MenuActivity {
 		final ZLResource resource = NetworkLibrary.resource();
 
 		setTitle(resource.getResource("authorisationMenuTitle").getValue());
-		myLink = NetworkLibrary.Instance().getLinkByUrl(baseUrl);
+		myLink = Util.networkLibrary(this).getLinkByUrl(baseUrl);
 
 		if (myLink.getUrlInfo(UrlInfo.Type.SignIn) != null) {
 			myInfos.add(new PluginApi.MenuActionInfo(

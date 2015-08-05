@@ -38,8 +38,8 @@ public class DisableCatalogAction extends Action {
 
 	@Override
 	public void run(NetworkTree tree) {
-		NetworkLibrary.Instance().setLinkActive(tree.getLink(), false);
-		NetworkLibrary.Instance().synchronize();
+		myLibrary.setLinkActive(tree.getLink(), false);
+		myLibrary.synchronize();
 		// TODO: invalidate view
 	}
 }

@@ -23,11 +23,12 @@ import java.util.List;
 
 import org.geometerplus.fbreader.book.IBookCollection;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class RootTree extends LibraryTree {
-	public RootTree(IBookCollection collection) {
-		super(collection);
+	public RootTree(IBookCollection collection, PluginCollection pluginCollection) {
+		super(collection, pluginCollection);
 
 		new ExternalViewTree(this);
 		new FavoritesTree(this);

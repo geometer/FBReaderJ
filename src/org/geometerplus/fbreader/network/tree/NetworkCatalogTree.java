@@ -85,7 +85,7 @@ public class NetworkCatalogTree extends NetworkTree {
 			myChildrenItems.add((NetworkCatalogItem)item);
 		}
 		myUnconfirmedTrees.add(NetworkTreeFactory.createNetworkTree(this, item));
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		Library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	protected ZLImage createCover() {
-		return createCover(Item, true);
+		return createCoverForItem(Library, Item, true);
 	}
 
 	public boolean isContentValid() {
@@ -221,7 +221,7 @@ public class NetworkCatalogTree extends NetworkTree {
 		myChildrenItems.clear();
 		myLastTotalChildren = -1;
 		clear();
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		Library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	private final Set<NetworkTree> myUnconfirmedTrees =
@@ -240,7 +240,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	public synchronized void loadMoreChildren(int currentTotal) {
 		if (currentTotal == subtrees().size()
 			&& myLastTotalChildren < currentTotal
-			&& !NetworkLibrary.Instance().isLoadingInProgress(this)
+			&& !Library.isLoadingInProgress(this)
 			&& Item.canResumeLoading()) {
 			myLastTotalChildren = currentTotal;
 			startItemsLoader(new QuietNetworkContext(), false, true);

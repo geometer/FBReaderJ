@@ -22,13 +22,16 @@ package org.geometerplus.android.fbreader.network;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
@@ -54,16 +57,20 @@ public abstract class Util implements UserRegistrationConstants {
 		return intent;
 	}
 
+	public static NetworkLibrary networkLibrary(Context context) {
+		return NetworkLibrary.Instance(Paths.systemInfo(context));
+	}
+
 	static void initLibrary(final Activity activity, final ZLNetworkContext nc, final Runnable action) {
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				UIUtil.wait("loadingNetworkLibrary", new Runnable() {
 					public void run() {
+						final NetworkLibrary library = networkLibrary(activity);
 						if (SQLiteNetworkDatabase.Instance() == null) {
-							new SQLiteNetworkDatabase(activity.getApplication());
+							new SQLiteNetworkDatabase(activity.getApplication(), library);
 						}
 
-						final NetworkLibrary library = NetworkLibrary.Instance();
 						if (!library.isInitialized()) {
 							try {
 								library.initialize(nc);
@@ -109,7 +116,7 @@ public abstract class Util implements UserRegistrationConstants {
 
 	public static void openInBrowser(Activity activity, String url) {
 		if (url != null) {
-			url = NetworkLibrary.Instance().rewriteUrl(url, true);
+			url = networkLibrary(activity).rewriteUrl(url, true);
 			activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		}
 	}

@@ -44,10 +44,8 @@ public class ManageCatalogsAction extends RootAction {
 
 	@Override
 	public void run(NetworkTree tree) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-
-		final ArrayList<String> ids = new ArrayList<String>(library.activeIds());
-		final ArrayList<String> inactiveIds = new ArrayList<String>(library.allIds());
+		final ArrayList<String> ids = new ArrayList<String>(myLibrary.activeIds());
+		final ArrayList<String> inactiveIds = new ArrayList<String>(myLibrary.allIds());
 		inactiveIds.removeAll(ids);
 
 		OrientationUtil.startActivityForResult(

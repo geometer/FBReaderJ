@@ -46,8 +46,10 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
@@ -93,13 +95,16 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 
 		OrientationUtil.setOrientation(this, getIntent());
 
+		final PluginCollection pluginCollection =
+			PluginCollection.Instance(Paths.systemInfo(this));
+
 		if (myBook != null) {
 			// we force language & encoding detection
-			BookUtil.getEncoding(myBook);
+			BookUtil.getEncoding(myBook, pluginCollection);
 
 			setupCover(myBook);
 			setupBookInfo(myBook);
-			setupAnnotation(myBook);
+			setupAnnotation(myBook, pluginCollection);
 			setupFileInfo(myBook);
 		}
 
@@ -150,7 +155,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		final ZLImage image = CoverUtil.getCover(book, PluginCollection.Instance());
+		final ZLImage image = CoverUtil.getCover(book, PluginCollection.Instance(Paths.systemInfo(this)));
 
 		if (image == null) {
 			return;
@@ -237,16 +242,16 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		setupInfoPair(R.id.book_language, "language", new Language(language).Name);
 	}
 
-	private void setupAnnotation(Book book) {
+	private void setupAnnotation(Book book, PluginCollection pluginCollection) {
 		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
 		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
-		final String annotation = BookUtil.getAnnotation(book);
+		final String annotation = BookUtil.getAnnotation(book, pluginCollection);
 		if (annotation == null) {
 			titleView.setVisibility(View.GONE);
 			bodyView.setVisibility(View.GONE);
 		} else {
 			titleView.setText(myResource.getResource("annotation").getValue());
-			bodyView.setText(HtmlUtil.getHtmlText(annotation));
+			bodyView.setText(HtmlUtil.getHtmlText(NetworkLibrary.Instance(Paths.systemInfo(this)), annotation));
 			bodyView.setMovementMethod(new LinkMovementMethod());
 			bodyView.setTextColor(ColorStateList.valueOf(bodyView.getTextColors().getDefaultColor()));
 		}
@@ -362,7 +367,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				return true;
 			case RELOAD_INFO:
 				if (myBook != null) {
-					BookUtil.reloadInfoFromFile(myBook);
+					BookUtil.reloadInfoFromFile(
+						myBook, PluginCollection.Instance(Paths.systemInfo(this))
+					);
 					setupBookInfo(myBook);
 					saveBook();
 				}

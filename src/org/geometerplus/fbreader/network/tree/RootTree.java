@@ -26,7 +26,8 @@ public final class RootTree extends NetworkTree {
 
 	private final String myId;
 
-	public RootTree(String id, boolean isFake) {
+	public RootTree(NetworkLibrary library, String id, boolean isFake) {
+		super(library);
 		IsFake = isFake;
 		myId = id;
 	}
