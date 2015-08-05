@@ -25,6 +25,7 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
@@ -33,16 +34,16 @@ import org.geometerplus.fbreader.formats.BookReadingException;
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 
 public class OEBNativePlugin extends NativeFormatPlugin {
-	public OEBNativePlugin() {
-		super("ePub");
+	public OEBNativePlugin(SystemInfo systemInfo) {
+		super(systemInfo, "ePub");
 	}
 
 	@Override
-	public void readModel(BookModel model, String cacheDir) throws BookReadingException {
+	public void readModel(BookModel model) throws BookReadingException {
 		final ZLFile file = BookUtil.fileByBook(model.Book);
 		file.setCached(true);
 		try {
-			super.readModel(model, cacheDir);
+			super.readModel(model);
 			model.setLabelResolver(new BookModel.LabelResolver() {
 				public List<String> getCandidates(String id) {
 					final int index = id.indexOf("#");

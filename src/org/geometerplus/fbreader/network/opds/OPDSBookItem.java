@@ -132,11 +132,17 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 					}
 				}
 				if (MimeType.TEXT_HTML.equals(mime)) {
-					collectReferences(urls, opdsLink, href,
-							UrlInfo.Type.BookBuyInBrowser, price, true);
+					collectReferences(
+						networkLink.Library,
+						urls, opdsLink, href,
+						UrlInfo.Type.BookBuyInBrowser, price, true
+					);
 				} else {
-					collectReferences(urls, opdsLink, href,
-							UrlInfo.Type.BookBuy, price, false);
+					collectReferences(
+						networkLink.Library,
+						urls, opdsLink, href,
+						UrlInfo.Type.BookBuy, price, false
+					);
 				}
 			} else if (referenceType == UrlInfo.Type.Related) {
 				urls.addInfo(new RelatedUrlInfo(referenceType, link.getTitle(), href, mime));
@@ -145,7 +151,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			} else if (referenceType == UrlInfo.Type.TOC) {
 				urls.addInfo(new UrlInfo(referenceType, href, mime));
 			} else if (referenceType != null) {
-				if (BookUrlInfo.isMimeSupported(mime)) {
+				if (BookUrlInfo.isMimeSupported(mime, networkLink.Library.SystemInfo)) {
 					urls.addInfo(new BookUrlInfo(referenceType, href, mime));
 				}
 			}
@@ -176,6 +182,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	private static void collectReferences(
+		NetworkLibrary library,
 		UrlInfoCollection<UrlInfo> urls,
 		OPDSLink opdsLink,
 		String href,
@@ -186,7 +193,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		boolean added = false;
 		for (String f : opdsLink.Formats) {
 			final MimeType mime = MimeType.get(f);
-			if (BookUrlInfo.isMimeSupported(mime)) {
+			if (BookUrlInfo.isMimeSupported(mime, library.SystemInfo)) {
 				urls.addInfo(new BookBuyUrlInfo(type, href, mime, price));
 				added = true;
 			}

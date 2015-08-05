@@ -24,12 +24,13 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 abstract class FilteredTree extends LibraryTree {
 	private final Filter myFilter;
 
-	FilteredTree(IBookCollection collection, Filter filter) {
-		super(collection);
+	FilteredTree(IBookCollection collection, PluginCollection pluginCollection, Filter filter) {
+		super(collection, pluginCollection);
 		myFilter = filter;
 	}
 

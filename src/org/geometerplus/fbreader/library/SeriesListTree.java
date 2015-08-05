@@ -72,7 +72,7 @@ public class SeriesListTree extends FirstLevelTree {
 	private boolean createSeriesSubtree(String seriesTitle) {
 		// TODO: pass series as parameter
 		final Series series = new Series(seriesTitle);
-		final SeriesTree temp = new SeriesTree(Collection, series, null);
+		final SeriesTree temp = new SeriesTree(Collection, PluginCollection, series, null);
 		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;

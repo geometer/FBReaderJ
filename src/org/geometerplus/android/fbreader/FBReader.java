@@ -57,6 +57,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
@@ -375,7 +376,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 				if (!collection.sameBook(b, myFBReaderApp.ExternalBook)) {
 					try {
 						final ExternalFormatPlugin plugin =
-							(ExternalFormatPlugin)BookUtil.getPlugin(myFBReaderApp.ExternalBook);
+							(ExternalFormatPlugin)BookUtil.getPlugin(
+								PluginCollection.Instance(Paths.systemInfo(this)),
+								myFBReaderApp.ExternalBook
+							);
 						startActivity(PluginUtil.createIntent(plugin, FBReaderIntents.Action.PLUGIN_KILL));
 					} catch (Exception e) {
 						e.printStackTrace();

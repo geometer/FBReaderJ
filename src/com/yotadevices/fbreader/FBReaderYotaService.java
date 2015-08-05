@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.options.ViewOptions;
@@ -132,7 +133,10 @@ public class FBReaderYotaService extends BSActivity {
 
 			Bitmap coverBitmap = null;
 			if (currentBook != null) {
-				final ZLImage image = CoverUtil.getCover(currentBook, PluginCollection.Instance());
+				final ZLImage image = CoverUtil.getCover(
+					currentBook,
+					PluginCollection.Instance(Paths.systemInfo(FBReaderYotaService.this))
+				);
 
 				if (image != null) {
 					if (image instanceof ZLImageProxy) {
