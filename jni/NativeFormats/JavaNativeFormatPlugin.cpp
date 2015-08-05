@@ -24,7 +24,6 @@
 
 #include "fbreader/src/bookmodel/BookModel.h"
 #include "fbreader/src/formats/FormatPlugin.h"
-#include "fbreader/src/library/Library.h"
 #include "fbreader/src/library/Author.h"
 #include "fbreader/src/library/Book.h"
 #include "fbreader/src/library/Tag.h"
@@ -162,8 +161,8 @@ JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 	fillLanguageAndEncoding(env, javaBook, *book);
 }
 
-static bool initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &model) {
-	ZLCachedMemoryAllocator allocator(131072, Library::Instance().cacheDirectory(), "nlinks");
+static bool initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &model, const std::string &cacheDir) {
+	ZLCachedMemoryAllocator allocator(131072, cacheDir, "nlinks");
 
 	ZLUnicodeUtil::Ucs2String ucs2id;
 	ZLUnicodeUtil::Ucs2String ucs2modelId;
@@ -269,16 +268,18 @@ static jobject createJavaFileInfo(JNIEnv *env, shared_ptr<FileInfo> info) {
 }
 
 extern "C"
-JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModelNative(JNIEnv* env, jobject thiz, jobject javaModel) {
+JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModelNative(JNIEnv* env, jobject thiz, jobject javaModel, jstring javaCacheDir) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
 	if (plugin.isNull()) {
 		return 1;
 	}
 
+	const std::string cacheDir = AndroidUtil::fromJavaString(env, javaCacheDir);
+
 	jobject javaBook = AndroidUtil::Field_BookModel_Book->value(javaModel);
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
-	shared_ptr<BookModel> model = new BookModel(book, javaModel);
+	shared_ptr<BookModel> model = new BookModel(book, javaModel, cacheDir);
 	if (!plugin->readModel(*model)) {
 		return 2;
 	}
@@ -286,7 +287,7 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 		return 3;
 	}
 
-	if (!initInternalHyperlinks(env, javaModel, *model)) {
+	if (!initInternalHyperlinks(env, javaModel, *model, cacheDir)) {
 		return 4;
 	}
 

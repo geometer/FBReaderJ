@@ -30,8 +30,7 @@ import android.graphics.Typeface;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FileInfo;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
-import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
-import org.geometerplus.zlibrary.core.util.XmlUtil;
+import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
@@ -167,11 +166,11 @@ public final class AndroidFontUtil {
 		return null;
 	}
 
-	public static Typeface typeface(FontEntry entry, boolean bold, boolean italic) {
+	public static Typeface typeface(SystemInfo systemInfo, FontEntry entry, boolean bold, boolean italic) {
 		if (entry.isSystem()) {
 			return systemTypeface(entry.Family, bold, italic);
 		} else {
-			return embeddedTypeface(entry, bold, italic);
+			return embeddedTypeface(systemInfo, entry, bold, italic);
 		}
 	}
 
@@ -231,8 +230,8 @@ public final class AndroidFontUtil {
 	private static final Map<Spec,Object> ourCachedEmbeddedTypefaces = new HashMap<Spec,Object>();
 	private static final Object NULL_OBJECT = new Object();
 
-	private static String alias(String family, boolean bold, boolean italic) {
-		final StringBuilder builder = new StringBuilder(Paths.tempDirectory());
+	private static String alias(SystemInfo systemInfo, String family, boolean bold, boolean italic) {
+		final StringBuilder builder = new StringBuilder(systemInfo.tempDirectory());
 		builder.append("/");
 		builder.append(family);
 		if (bold) {
@@ -275,13 +274,13 @@ public final class AndroidFontUtil {
 		}
 	}
 
-	private static Typeface getOrCreateEmbeddedTypeface(FontEntry entry, boolean bold, boolean italic) {
+	private static Typeface getOrCreateEmbeddedTypeface(SystemInfo systemInfo, FontEntry entry, boolean bold, boolean italic) {
 		final Spec spec = new Spec(entry, bold, italic);
 		Object cached = ourCachedEmbeddedTypefaces.get(spec);
 		if (cached == null) {
 			final FileInfo fileInfo = entry.fileInfo(bold, italic);
 			if (fileInfo != null) {
-				final String realFileName = alias(entry.Family, bold, italic);
+				final String realFileName = alias(systemInfo, entry.Family, bold, italic);
 				if (copy(fileInfo, realFileName)) {
 					try {
 						cached = Typeface.createFromFile(realFileName);
@@ -296,16 +295,16 @@ public final class AndroidFontUtil {
 		return cached instanceof Typeface ? (Typeface)cached : null;
 	}
 
-	private static Typeface embeddedTypeface(FontEntry entry, boolean bold, boolean italic) {
+	private static Typeface embeddedTypeface(SystemInfo systemInfo, FontEntry entry, boolean bold, boolean italic) {
 		{
 			final int index = (bold ? 1 : 0) + (italic ? 2 : 0);
-			final Typeface tf = getOrCreateEmbeddedTypeface(entry, bold, italic);
+			final Typeface tf = getOrCreateEmbeddedTypeface(systemInfo, entry, bold, italic);
 			if (tf != null) {
 				return tf;
 			}
 		}
 		for (int i = 0; i < 4; ++i) {
-			final Typeface tf = getOrCreateEmbeddedTypeface(entry, (i & 1) == 1, (i & 2) == 2);
+			final Typeface tf = getOrCreateEmbeddedTypeface(systemInfo, entry, (i & 1) == 1, (i & 2) == 2);
 			if (tf != null) {
 				return tf;
 			}

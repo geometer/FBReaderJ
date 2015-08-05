@@ -31,7 +31,6 @@
 #include "BookModel.h"
 
 #include "../library/Book.h"
-#include "../library/Library.h"
 
 BookReader::BookReader(BookModel &model) : myModel(model) {
 	myCurrentTextModel = 0;
@@ -53,7 +52,7 @@ void BookReader::setFootnoteTextModel(const std::string &id) {
 		myCurrentTextModel = (*it).second;
 	} else {
 		if (myFootnotesAllocator.isNull()) {
-			myFootnotesAllocator = new ZLCachedMemoryAllocator(8192, Library::Instance().cacheDirectory(), "footnotes");
+			myFootnotesAllocator = new ZLCachedMemoryAllocator(8192, myModel.CacheDir, "footnotes");
 		}
 		myCurrentTextModel = new ZLTextPlainModel(id, myModel.myBookTextModel->language(), myFootnotesAllocator, myModel.myFontManager);
 		myModel.myFootnotes.insert(std::make_pair(id, myCurrentTextModel));

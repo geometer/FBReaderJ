@@ -58,7 +58,7 @@ public class TopUpTree extends NetworkTree {
 
 	@Override
 	protected ZLImage createCover() {
-		return createCover(Item, true);
+		return createCoverForItem(Library, Item, true);
 	}
 
 	@Override

@@ -24,8 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
-import org.geometerplus.fbreader.formats.BookReadingException;
-import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.*;
 
 public final class DbBook extends AbstractBook {
 	public final ZLFile File;
@@ -51,7 +50,7 @@ public final class DbBook extends AbstractBook {
 		return File.getPath();
 	}
 
-	void loadLists(BooksDatabase database) {
+	void loadLists(BooksDatabase database, PluginCollection pluginCollection) {
 		myAuthors = database.listAuthors(myId);
 		myTags = database.listTags(myId);
 		myLabels = database.listLabels(myId);
@@ -62,7 +61,7 @@ public final class DbBook extends AbstractBook {
 		myIsSaved = true;
 		if (myUids == null || myUids.isEmpty()) {
 			try {
-				BookUtil.getPlugin(this).readUids(this);
+				BookUtil.getPlugin(pluginCollection, this).readUids(this);
 				save(database, false);
 			} catch (BookReadingException e) {
 			}

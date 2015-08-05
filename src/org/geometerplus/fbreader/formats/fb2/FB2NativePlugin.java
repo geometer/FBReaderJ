@@ -25,8 +25,8 @@ import java.util.List;
 
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
-
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -34,8 +34,10 @@ import org.geometerplus.fbreader.formats.BookReadingException;
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 
 public class FB2NativePlugin extends NativeFormatPlugin {
-	public FB2NativePlugin() {
-		super("fb2");
+	public FB2NativePlugin(SystemInfo systemInfo) {
+		super(systemInfo, "fb2");
+		System.err.println("systemInfo fbc " + systemInfo);
+		new Exception("systemInfo fbc2").printStackTrace();
 	}
 
 	@Override

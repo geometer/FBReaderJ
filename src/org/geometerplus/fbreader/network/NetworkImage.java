@@ -28,23 +28,24 @@ import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
-
-import org.geometerplus.fbreader.Paths;
+import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 public final class NetworkImage extends ZLImageSimpleProxy {
 	public final String Url;
+	private final SystemInfo mySystemInfo;
 
-	public NetworkImage(String url) {
+	public NetworkImage(String url, SystemInfo systemInfo) {
 		Url = url;
-		new File(Paths.networkCacheDirectory()).mkdirs();
+		mySystemInfo = systemInfo;
+		new File(systemInfo.networkCacheDirectory()).mkdirs();
 	}
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static String makeImageFilePath(String url) {
+	private String makeImageFilePath(String url) {
 		final Uri uri = Uri.parse(url);
 
-		final StringBuilder path = new StringBuilder(Paths.networkCacheDirectory());
+		final StringBuilder path = new StringBuilder(mySystemInfo.networkCacheDirectory());
 		path.append(File.separator);
 
 		final String host = uri.getHost();

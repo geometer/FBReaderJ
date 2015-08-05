@@ -19,11 +19,13 @@
 
 package org.geometerplus.fbreader.formats;
 
+import org.geometerplus.zlibrary.core.util.SystemInfo;
+
 import org.geometerplus.fbreader.book.AbstractBook;
 
 public class ComicBookPlugin extends ExternalFormatPlugin {
-	public ComicBookPlugin() {
-		super("CBZ");
+	public ComicBookPlugin(SystemInfo systemInfo) {
+		super(systemInfo, "CBZ");
 	}
 
 	@Override

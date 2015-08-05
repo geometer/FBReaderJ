@@ -49,7 +49,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	 *                   that will be read using this instance of the reader.
 	 */
 	OPDSFeedHandler(String baseURL, OPDSCatalogItem.State result) {
-		myCatalog = result.Loader.getTree().Item;
+		myCatalog = result.Loader.Tree.Item;
 		myBaseURL = baseURL;
 		myData = result;
 		mySkipUntilId = myData.LastLoadedId;
@@ -124,7 +124,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			if (rel == null && MimeType.APP_ATOM_XML.weakEquals(mime)) {
 				return ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
-			if (!BookUrlInfo.isMimeSupported(mime)) {
+			if (!BookUrlInfo.isMimeSupported(mime, opdsLink.Library.SystemInfo)) {
 				continue;
 			}
 			if (rel != null
@@ -176,7 +176,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			final MimeType mime = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), mime);
 			if (rel == null
-					? (BookUrlInfo.isMimeSupported(mime))
+					? (BookUrlInfo.isMimeSupported(mime, opdsLink.Library.SystemInfo))
 					: (rel.equals(REL_RELATED)
 						|| rel.startsWith(REL_ACQUISITION_PREFIX)
 						|| rel.startsWith(REL_FBREADER_ACQUISITION_PREFIX))) {

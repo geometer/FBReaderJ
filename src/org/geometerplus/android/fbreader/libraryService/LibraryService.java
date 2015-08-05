@@ -100,7 +100,9 @@ public class LibraryService extends Service {
 
 		LibraryImplementation(BooksDatabase db) {
 			myDatabase = db;
-			myCollection = new BookCollection(myDatabase, Paths.bookPath());
+			myCollection = new BookCollection(
+				Paths.systemInfo(LibraryService.this), myDatabase, Paths.bookPath()
+			);
 			reset(true);
 		}
 
@@ -124,7 +126,9 @@ public class LibraryService extends Service {
 			deactivate();
 			myFileObservers.clear();
 
-			myCollection = new BookCollection(myDatabase, bookDirectories);
+			myCollection = new BookCollection(
+				Paths.systemInfo(LibraryService.this), myDatabase, bookDirectories
+			);
 			for (String dir : bookDirectories) {
 				final Observer observer = new Observer(dir, myCollection);
 				observer.startWatching();
@@ -293,7 +297,7 @@ public class LibraryService extends Service {
 
 		@Override
 		public String getDescription(String book) {
-			return BookUtil.getAnnotation(SerializerUtil.deserializeBook(book, myCollection));
+			return BookUtil.getAnnotation(SerializerUtil.deserializeBook(book, myCollection), myCollection.PluginCollection);
 		}
 
 		@Override
