@@ -23,11 +23,12 @@ import java.math.BigDecimal;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.IBookCollection;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public final class BookInSeriesTree extends BookTree {
-	BookInSeriesTree(IBookCollection collection, Book book) {
-		super(collection, book);
+	BookInSeriesTree(IBookCollection collection, PluginCollection pluginCollection, Book book) {
+		super(collection, pluginCollection, book);
 	}
 
 	BookInSeriesTree(LibraryTree parent, Book book, int position) {

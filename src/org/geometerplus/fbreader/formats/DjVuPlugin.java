@@ -19,11 +19,13 @@
 
 package org.geometerplus.fbreader.formats;
 
+import org.geometerplus.zlibrary.core.util.SystemInfo;
+
 import org.geometerplus.fbreader.book.AbstractBook;
 
 public class DjVuPlugin extends ExternalFormatPlugin {
-	public DjVuPlugin() {
-		super("DjVu");
+	public DjVuPlugin(SystemInfo systemInfo) {
+		super(systemInfo, "DjVu");
 	}
 
 	@Override

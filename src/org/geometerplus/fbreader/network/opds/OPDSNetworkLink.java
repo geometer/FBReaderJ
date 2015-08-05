@@ -35,7 +35,7 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class OPDSNetworkLink extends AbstractNetworkLink {
-	protected final NetworkLibrary myLibrary;
+	protected final NetworkLibrary Library;
 
 	private TreeMap<RelationAlias,String> myRelationAliases;
 
@@ -46,7 +46,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	OPDSNetworkLink(NetworkLibrary library, int id, String title, String summary, String language,
 			UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, title, summary, language, infos);
-		myLibrary = library;
+		Library = library;
 	}
 
 	final void setRelationAliases(Map<RelationAlias,String> relationAliases) {
@@ -202,7 +202,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	public BasketItem getBasketItem() {
 		final String url = getUrl(UrlInfo.Type.ListBooks);
 		if (url != null && myBasketItem == null) {
-			myBasketItem = new OPDSBasketItem(myLibrary, this);
+			myBasketItem = new OPDSBasketItem(Library, this);
 		}
 		return myBasketItem;
 	}

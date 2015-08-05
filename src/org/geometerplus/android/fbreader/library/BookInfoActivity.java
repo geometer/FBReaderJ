@@ -93,13 +93,16 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 
 		OrientationUtil.setOrientation(this, getIntent());
 
+		final PluginCollection pluginCollection =
+			PluginCollection.Instance(Paths.systemInfo(this));
+
 		if (myBook != null) {
 			// we force language & encoding detection
-			BookUtil.getEncoding(myBook);
+			BookUtil.getEncoding(myBook, pluginCollection);
 
 			setupCover(myBook);
 			setupBookInfo(myBook);
-			setupAnnotation(myBook);
+			setupAnnotation(myBook, pluginCollection);
 			setupFileInfo(myBook);
 		}
 
@@ -123,7 +126,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
 			public void onClick(View view) {
 				if (myBook != null) {
-					BookUtil.reloadInfoFromFile(myBook);
+					BookUtil.reloadInfoFromFile(myBook, pluginCollection);
 					setupBookInfo(myBook);
 					myDontReloadBook = false;
 					myCollection.bindToService(BookInfoActivity.this, new Runnable() {
@@ -189,7 +192,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		final ZLImage image = CoverUtil.getCover(book, PluginCollection.Instance());
+		final ZLImage image = CoverUtil.getCover(book, PluginCollection.Instance(Paths.systemInfo(this)));
 
 		if (image == null) {
 			return;
@@ -276,10 +279,10 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		setupInfoPair(R.id.book_language, "language", new Language(language).Name);
 	}
 
-	private void setupAnnotation(Book book) {
+	private void setupAnnotation(Book book, PluginCollection pluginCollection) {
 		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
 		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
-		final String annotation = BookUtil.getAnnotation(book);
+		final String annotation = BookUtil.getAnnotation(book, pluginCollection);
 		if (annotation == null) {
 			titleView.setVisibility(View.GONE);
 			bodyView.setVisibility(View.GONE);

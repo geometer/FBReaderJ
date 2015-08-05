@@ -30,9 +30,9 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.fbreader.formats.*;
 
 public abstract class BookUtil {
-	public static String getAnnotation(AbstractBook book) {
+	public static String getAnnotation(AbstractBook book, PluginCollection pluginCollection) {
 		try {
-			return getPlugin(book).readAnnotation(fileByBook(book));
+			return getPlugin(pluginCollection, book).readAnnotation(fileByBook(book));
 		} catch (BookReadingException e) {
 			return null;
 		}
@@ -97,19 +97,19 @@ public abstract class BookUtil {
 		}
 	}
 
-	public static FormatPlugin getPlugin(AbstractBook book) throws BookReadingException {
+	public static FormatPlugin getPlugin(PluginCollection pluginCollection, AbstractBook book) throws BookReadingException {
 		final ZLFile file = fileByBook(book);
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
+		final FormatPlugin plugin = pluginCollection.getPlugin(file);
 		if (plugin == null) {
 			throw new BookReadingException("pluginNotFound", file);
 		}
 		return plugin;
 	}
 
-	public static String getEncoding(AbstractBook book) {
+	public static String getEncoding(AbstractBook book, PluginCollection pluginCollection) {
 		if (book.getEncodingNoDetection() == null) {
 			try {
-				BookUtil.getPlugin(book).detectLanguageAndEncoding(book);
+				BookUtil.getPlugin(pluginCollection, book).detectLanguageAndEncoding(book);
 			} catch (BookReadingException e) {
 			}
 			if (book.getEncodingNoDetection() == null) {
@@ -119,16 +119,16 @@ public abstract class BookUtil {
 		return book.getEncodingNoDetection();
 	}
 
-	public static void reloadInfoFromFile(AbstractBook book) {
+	public static void reloadInfoFromFile(AbstractBook book, PluginCollection pluginCollection) {
 		try {
-			readMetainfo(book);
+			readMetainfo(book, pluginCollection);
 		} catch (BookReadingException e) {
 			// ignore
 		}
 	}
 
-	static void readMetainfo(AbstractBook book) throws BookReadingException {
-		readMetainfo(book, getPlugin(book));
+	static void readMetainfo(AbstractBook book, PluginCollection pluginCollection) throws BookReadingException {
+		readMetainfo(book, getPlugin(pluginCollection, book));
 	}
 
 	static void readMetainfo(AbstractBook book, FormatPlugin plugin) throws BookReadingException {

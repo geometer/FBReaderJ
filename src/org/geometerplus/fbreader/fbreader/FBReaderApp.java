@@ -77,6 +77,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public FBReaderApp(SystemInfo systemInfo, final IBookCollection<Book> collection) {
 		super(systemInfo);
+		System.err.println("systemInfo 0 = " + systemInfo);
 
 		Collection = collection;
 
@@ -313,7 +314,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
+	private synchronized void openBookInternal(final Book book, Bookmark bookmark, boolean force) {
 		if (!force && Model != null && Collection.sameBook(book, Model.Book)) {
 			if (bookmark != null) {
 				gotoBookmark(bookmark, false);
@@ -332,9 +333,11 @@ public final class FBReaderApp extends ZLApplication {
 		System.gc();
 		System.gc();
 
+		System.err.println("systemInfo 1 = " + SystemInfo);
+		final PluginCollection pluginCollection = PluginCollection.Instance(SystemInfo);
 		FormatPlugin plugin = null;
 		try {
-			plugin = BookUtil.getPlugin(book);
+			plugin = BookUtil.getPlugin(pluginCollection, book);
 		} catch (BookReadingException e) {
 			// ignore
 		}
@@ -355,7 +358,8 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		try {
-			Model = BookModel.createModel(book, SystemInfo.tempDirectory());
+			System.err.println("systemInfo 2 = " + SystemInfo);
+			Model = BookModel.createModel(book, plugin);
 			Collection.saveBook(book);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
@@ -385,15 +389,11 @@ public final class FBReaderApp extends ZLApplication {
 		getViewWidget().reset();
 		getViewWidget().repaint();
 
-		try {
-			for (FileEncryptionInfo info : BookUtil.getPlugin(book).readEncryptionInfos(book)) {
-				if (info != null && !EncryptionMethod.isSupported(info.Method)) {
-					showErrorMessage("unsupportedEncryptionMethod", book.getPath());
-					break;
-				}
+		for (FileEncryptionInfo info : plugin.readEncryptionInfos(book)) {
+			if (info != null && !EncryptionMethod.isSupported(info.Method)) {
+				showErrorMessage("unsupportedEncryptionMethod", book.getPath());
+				break;
 			}
-		} catch (BookReadingException e) {
-			// ignore
 		}
 	}
 
