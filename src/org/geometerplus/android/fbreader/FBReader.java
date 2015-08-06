@@ -73,10 +73,14 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
 
-	public static void openBookActivity(Context context, Book book, Bookmark bookmark) {
-		final Intent intent = new Intent(context, FBReader.class)
+	public static Intent defaultIntent(Context context) {
+		return new Intent(context, FBReader.class)
 			.setAction(FBReaderIntents.Action.VIEW)
 			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	}
+
+	public static void openBookActivity(Context context, Book book, Bookmark bookmark) {
+		final Intent intent = defaultIntent(context);
 		FBReaderIntents.putBookExtra(intent, book);
 		FBReaderIntents.putBookmarkExtra(intent, bookmark);
 		context.startActivity(intent);
