@@ -20,86 +20,38 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.os.Build;
 import android.preference.DialogPreference;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 
 public class VNTNumberPickerPreference extends DialogPreference {
 	private final ZLIntegerRangeOption myOption;
-	private View myCentralView;
+	private NumberPicker myPicker;
 
 	public VNTNumberPickerPreference(Context context, ZLResource resource, ZLIntegerRangeOption option) {
 		super(context, null);
 		myOption = option;
 		setTitle(resource.getValue());
 		updateSummary();
-		
+		setDialogLayoutResource(R.layout.picker_preference);
 	}
 
 	@Override
-	protected Object onGetDefaultValue(TypedArray a, int index) {
-		return a.getInteger(index, 0);
-	}
+	protected void onBindDialogView(View view) {
+		myPicker = (NumberPicker)view.findViewById(R.id.picker_preference_central);
+		myPicker.setMinValue(myOption.MinValue);
+		myPicker.setMaxValue(myOption.MaxValue);
+		myPicker.setValue(myOption.getValue());
+		myPicker.setWrapSelectorWheel(false);
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setupNumberPicker() {
-		final NumberPicker picker = (NumberPicker)myCentralView;
-		picker.setMinValue(myOption.MinValue);
-		picker.setMaxValue(myOption.MaxValue);
-		picker.setValue(myOption.getValue());
-		picker.setWrapSelectorWheel(false);
-	}
-
-	private void setupSimpleEditor() {
-		final EditText text = (EditText)myCentralView;
-		text.setText(String.valueOf(myOption.getValue()));
-	}
-
-	@Override
-	protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
-		super.onPrepareDialogBuilder(builder);
-
-		final View layout = ((Activity)getContext()).getLayoutInflater().inflate(
-			R.layout.picker_preference, null
-		);
-		myCentralView = layout.findViewById(R.id.picker_preference_central);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			setupNumberPicker();
-		} else {
-			setupSimpleEditor();
-		}
-//		builder.setTitle(getTitle());
-		builder.setView(layout);
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private int getValueHoneycomb() {
-		return ((NumberPicker)myCentralView).getValue();
+		super.onBindDialogView(view);
 	}
 
 	@Override
 	protected void onDialogClosed(boolean positiveResult) {
-		int value = myOption.getValue();
 		if (positiveResult) {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-				value = getValueHoneycomb();
-			} else {
-				try {
-					final String text = ((EditText)myCentralView).getText().toString();
-					value =
-						Math.min(myOption.MaxValue, Math.max(myOption.MinValue, Integer.valueOf(text)));
-				} catch (Throwable t) {
-					// ignore
-				}
-			}
-			myOption.setValue(value);
+			myOption.setValue(myPicker.getValue());
 			updateSummary();
 		}
 	}
