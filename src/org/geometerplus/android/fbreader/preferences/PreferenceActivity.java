@@ -55,8 +55,6 @@ import org.geometerplus.android.fbreader.sync.SyncOperations;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
 
-import com.vanniktech.vntnumberpickerpreference.VNTNumberPickerPreference;
-
 public class PreferenceActivity extends ZLPreferenceActivity {
 	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
@@ -91,7 +89,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 			return;
 		}
-		
+
 		if (MENU_REQUEST_CODE == requestCode) {
 			if (myMenuPreference != null) {
 				myMenuPreference.update(data);
@@ -330,7 +328,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			});
 
-			final VNTNumberPickerPreference updateIntervalPreference = new VNTNumberPickerPreference(
+			final ZLIntegerRangePreference updateIntervalPreference = new ZLIntegerRangePreference(
 				this, einkScreen.Resource.getResource("interval"), einkOptions.UpdateInterval
 			);
 			einkScreen.addPreference(updateIntervalPreference);
@@ -356,7 +354,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, textScreen.Resource.getResource("font"),
 			baseStyle.FontFamilyOption, false
 		)));
-		textScreen.addPreference(new VNTNumberPickerPreference(
+		textScreen.addPreference(new ZLIntegerRangePreference(
 			this, textScreen.Resource.getResource("fontSize"),
 			baseStyle.FontSizeOption
 		));
@@ -566,7 +564,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 
-		footerPreferences.add(statusLineScreen.addPreference(new VNTNumberPickerPreference(
+		footerPreferences.add(statusLineScreen.addPreference(new ZLIntegerRangePreference(
 			this, statusLineScreen.Resource.getResource("footerHeight"),
 			viewOptions.FooterHeight
 		)));
@@ -736,7 +734,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 //				pref.setEnabled(false);
 //			}
 //		}
-		
+
 		myMenuPreference = new MenuPreference(this);
 		addPreference(myMenuPreference);
 

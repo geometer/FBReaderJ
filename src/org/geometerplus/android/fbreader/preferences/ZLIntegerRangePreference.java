@@ -20,35 +20,46 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Context;
-import android.preference.ListPreference;
+import android.preference.DialogPreference;
+import android.view.View;
+import android.widget.NumberPicker;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.ui.android.R;
 
-class ZLIntegerRangePreference extends ListPreference {
+class ZLIntegerRangePreference extends DialogPreference {
 	private final ZLIntegerRangeOption myOption;
+	private NumberPicker myPicker;
 
-	ZLIntegerRangePreference(Context context, ZLResource resource, ZLIntegerRangeOption option) {
-		super(context);
+	public ZLIntegerRangePreference(Context context, ZLResource resource, ZLIntegerRangeOption option) {
+		super(context, null);
 		myOption = option;
 		setTitle(resource.getValue());
-		String[] entries = new String[option.MaxValue - option.MinValue + 1];
-		for (int i = 0; i < entries.length; ++i) {
-			entries[i] = ((Integer)(i + option.MinValue)).toString();
-		}
-		setEntries(entries);
-		setEntryValues(entries);
-		setValueIndex(option.getValue() - option.MinValue);
-		setSummary(getValue());
+		updateSummary();
+		setDialogLayoutResource(R.layout.picker_preference);
 	}
 
 	@Override
-	protected void onDialogClosed(boolean result) {
-		super.onDialogClosed(result);
-		if (result) {
-			final String value = getValue();
-			setSummary(value);
-			myOption.setValue(myOption.MinValue + findIndexOfValue(value));
+	protected void onBindDialogView(View view) {
+		myPicker = (NumberPicker)view.findViewById(R.id.picker_preference_central);
+		myPicker.setMinValue(myOption.MinValue);
+		myPicker.setMaxValue(myOption.MaxValue);
+		myPicker.setValue(myOption.getValue());
+		myPicker.setWrapSelectorWheel(false);
+
+		super.onBindDialogView(view);
+	}
+
+	@Override
+	protected void onDialogClosed(boolean positiveResult) {
+		if (positiveResult) {
+			myOption.setValue(myPicker.getValue());
+			updateSummary();
 		}
+	}
+
+	private void updateSummary() {
+		setSummary(String.valueOf(myOption.getValue()));
 	}
 }
