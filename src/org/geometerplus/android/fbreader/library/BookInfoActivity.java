@@ -102,7 +102,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			// we force language & encoding detection
 			BookUtil.getEncoding(myBook, pluginCollection);
 
-			setupCover(myBook);
+			setupCover(myBook, pluginCollection);
 			setupBookInfo(myBook);
 			setupAnnotation(myBook, pluginCollection);
 			setupFileInfo(myBook);
@@ -149,13 +149,13 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		((TextView)layout.findViewById(R.id.book_info_value)).setText(value);
 	}
 
-	private void setupCover(Book book) {
+	private void setupCover(Book book, PluginCollection pluginCollection) {
 		final ImageView coverView = (ImageView)findViewById(R.id.book_cover);
 
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		final ZLImage image = CoverUtil.getCover(book, PluginCollection.Instance(Paths.systemInfo(this)));
+		final ZLImage image = CoverUtil.getCover(book, pluginCollection);
 
 		if (image == null) {
 			return;

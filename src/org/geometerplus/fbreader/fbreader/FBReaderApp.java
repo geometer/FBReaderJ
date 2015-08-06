@@ -333,12 +333,14 @@ public final class FBReaderApp extends ZLApplication {
 		System.gc();
 
 		final PluginCollection pluginCollection = PluginCollection.Instance(SystemInfo);
-		FormatPlugin plugin = null;
+		final FormatPlugin plugin;
 		try {
 			plugin = BookUtil.getPlugin(pluginCollection, book);
 		} catch (BookReadingException e) {
-			// ignore
+			processException(e);
+			return;
 		}
+
 		if (plugin instanceof ExternalFormatPlugin) {
 			ExternalBook = book;
 			final Bookmark bm;
