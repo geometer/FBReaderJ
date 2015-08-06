@@ -35,11 +35,11 @@ public abstract class MenuData {
 	private static final Map<String,Integer> ourDefaultValues =
 			new HashMap<String,Integer>();
 	
-	private static void addToplevelNode(MenuNode m) {
-		if (!ourDefaultValues.containsKey(code(m))) {
-			ourDefaultValues.put(code(m), ourDefaultValues.size());
+	private static void addToplevelNode(MenuNode node) {
+		if (!ourDefaultValues.containsKey(code(node))) {
+			ourDefaultValues.put(code(node), ourDefaultValues.size());
 		}
-		ourNodes.add(m);
+		ourNodes.add(node);
 	}
 
 	private static synchronized List<MenuNode> allTopLevelNodes() {
@@ -48,7 +48,7 @@ public abstract class MenuData {
 			addToplevelNode(new MenuNode.Item(ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library));
 			if (DeviceType.Instance() == DeviceType.YOTA_PHONE) {
 				addToplevelNode(new MenuNode.Item(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b));
-				//ourNodes.add(new MenuNode.Item(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b));
+				//addToplevelNode(new MenuNode.Item(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b));
 			}
 			addToplevelNode(new MenuNode.Item(ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
 			addToplevelNode(new MenuNode.Item(ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
