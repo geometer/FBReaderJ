@@ -1178,7 +1178,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
 	private boolean resolveVersionConflict() {
 		final Intent intent = getIntent();
-		if (intent == null || !intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+		if (intent == null) {
 			return false;
 		}
 
@@ -1188,6 +1188,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		));
 		if (!PackageUtil.canBeStarted(this, premiumIntent, false)) {
 			return false;
+		}
+
+		if (!intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+			return true;
 		}
 
 		final ZLResource resource = ZLResource.resource("premium");
