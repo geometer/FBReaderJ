@@ -34,7 +34,7 @@ public abstract class MenuData {
 		new HashMap<String,ZLIntegerOption>();
 	private static final Map<String,Integer> ourDefaultValues =
 			new HashMap<String,Integer>();
-	
+
 	private static void addToplevelNode(MenuNode node) {
 		if (!ourDefaultValues.containsKey(code(node))) {
 			ourDefaultValues.put(code(node), ourDefaultValues.size());
@@ -89,7 +89,7 @@ public abstract class MenuData {
 		}
 		return code;
 	}
-	
+
 	private static class MenuComparator implements Comparator<MenuNode> {
 		@Override
 		public int compare(MenuNode lhs, MenuNode rhs) {
@@ -109,7 +109,7 @@ public abstract class MenuData {
 		}
 		return codes;
 	}
-	
+
 	public static ArrayList<String> disabledCodes() {
 		final List<MenuNode> allNodes = allTopLevelNodes();
 		final ArrayList<String> codes = new ArrayList<String>();
@@ -121,7 +121,7 @@ public abstract class MenuData {
 		}
 		return codes;
 	}
-	
+
 	public static int iconId(String code) {
 		final List<MenuNode> allNodes = allTopLevelNodes();
 		for (MenuNode node : allNodes) {
