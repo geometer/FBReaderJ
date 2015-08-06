@@ -2,7 +2,7 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
-		android:versionCode="2055110"
+		android:versionCode="2055120"
 		android:versionName="2.6 beta 1"
 		android:installLocation="auto"
 >
