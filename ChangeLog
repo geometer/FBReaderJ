@@ -7,6 +7,7 @@
 ===== 2.5.5 (??? ??, 2015) =====
 * Fixed possible crash in (native) zip decompression
 * Fized possible NPE in FileChooserActivity
+* New style number picker preference (Android 3+)
 
 ===== 2.5.4 (Jul 24, 2015) =====
 * Fixed possible deadlocks
