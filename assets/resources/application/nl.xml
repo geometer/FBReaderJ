@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 17-Jun-2015 -->
+<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 07-Aug-2015 -->
 <resources>
 	<node name="library" value="FBReader bibliotheek">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
@@ -23,7 +23,7 @@
 		<node name="favorites" value="Favorieten">
 			<node name="summary" value="Mijn geselecteerde boeken"/>
 		</node>
-		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
+		<node name="chooseView" value="Kies uiterlijk"/>
 		<node name="wideCardsView" value="Brede kaarten"/>
 		<node name="smallCardsView" value="Kleine kaarten"/>
 		<node name="tinyCardsView" value="Zeer kleine kaarten"/>
@@ -260,7 +260,7 @@
 	</node>
 	<node name="toast">
 		<node name="more" value="Meer"/>
-		<node name="offline" value="Offline" toBeTranslated="true"/>
+		<node name="offline" value="Offline"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open bibliotheek"/>
@@ -298,7 +298,7 @@
 		<node name="toc" value="Inhoud"/>
 		<node name="day" value="Dag"/>
 		<node name="night" value="Nacht"/>
-		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
+		<node name="dayNight" value="Dag/Nacht"/>
 		<node name="yotaSwitchToBackScreen" value="Schakel naar achter-scherm"/>
 		<node name="yotaSwitchToFrontScreen" value="Schakel naar voor-scherm"/>
 		<node name="networkLibrary" value="Netwerkbibliotheek"/>
@@ -325,7 +325,7 @@
 		<node name="screenOrientationReverseLandscape" value="Omgekeerd liggend"/>
 		<node name="increaseFont" value="Inzoomen"/>
 		<node name="decreaseFont" value="Uitzoomen"/>
-		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
+		<node name="changeFontSize" value="In- en uitzoomen"/>
 		<node name="toggleFullscreen" value="Volledig scherm"/>
 		<node name="bookmarks" value="Bladwijzers"/>
 		<node name="help" value="Help"/>
@@ -618,8 +618,8 @@
 				</node>
 			</node>
 		</node>
-		<node name="toast" value="Pop-ups" toBeTranslated="true">
-			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
+		<node name="toast" value="Pop-ups">
+			<node name="summary" value="Voetnootscherm, etc."/>
 			<node name="showFootnoteToast" value="Toon gelinkte tekst in een pop-up">
 				<node name="never" value="Nooit"/>
 				<node name="footnotesOnly" value="Alleen voor voetnoten"/>
@@ -627,7 +627,7 @@
 				<node name="allInternalLinks" value="Voor alle interne links"/>
 			</node>
 			<node name="footnoteToastDuration" value="Hoe lang de linkpop-up tonen"/>
-			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
+			<node name="fontSizePercent" value="Lettergrootte (percentage van normale tekst)"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Gebruik/Negeer waarden gedefinieerd in CSS"/>
@@ -772,11 +772,11 @@
 			<node name="summary" value="Vertaalinstellingen"/>
 			<node name="dictionary" value="Enkel woord opzoeken in"/>
 			<node name="translator" value="Vertaal Translate zinsdelen via"/>
-			<node name="translateOffline" value="Google Translate: use offline translator (if installed)" toBeTranslated="true">
-				<node name="always" value="Always" toBeTranslated="true"/>
-				<node name="onError" value="Automatically, if online translation fails" toBeTranslated="true"/>
-				<node name="ask" value="Ask if online translation fails" toBeTranslated="true"/>
-				<node name="never" value="Never" toBeTranslated="true"/>
+			<node name="translateOffline" value="Google Translate: gebruik offline vertaler (als geïnstalleerd)">
+				<node name="always" value="Altijd"/>
+				<node name="onError" value="Automatisch, als online vertaling mislukt"/>
+				<node name="ask" value="Vraag als online vertaling mislukt"/>
+				<node name="never" value="Nooit"/>
 			</node>
 			<node name="translationToastDuration" value="Hoe lang de vertaalpopup tonen"/>
 			<node name="errorToastDuration" value="Hoe lang de foutmelding tonen"/>
@@ -815,8 +815,8 @@
 				<node name="summaryOff" value="Kleur afbeelding niet aanpassen"/>
 			</node>
 		</node>
-		<node name="menu" value="Menu" toBeTranslated="true">
-			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+		<node name="menu" value="Menu">
+			<node name="summary" value="Hoofdmenuitems"/>
 		</node>
 		<node name="cancelMenu" value="Afsluitmenu">
 			<node name="summary" value="Terugknop actie"/>
@@ -886,7 +886,7 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="noThanks" value="No, thanks" toBeTranslated="true"/>
+			<node name="noThanks" value="Nee, dank je"/>
 			<node name="install" value="Installeren"/>
 			<node name="update" value="Bijwerken"/>
 			<node name="skip" value="Overslaan"/>
@@ -1031,7 +1031,7 @@
 		</node>
 		<node name="tips">
 			<node name="title" value="Tip van de dag"/>
-			<node name="initializationText" value="Wil je dagelijks een tip lezen over FBReader? Nieuwe tips worden gedownload van de FBReader-website. Dit levert ongeveer 1-2 kilobytes nerwerkverkeer per week op.&#10;&#10;Tips inschakelen?"/>
+			<node name="initializationText" value="Wil je dagelijks een tip lezen over FBReader? Nieuwe tips worden gedownload van de FBReader-website. Dit levert ongeveer 1-2 kilobytes netwerkverkeer per week op.&#10;&#10;Tips inschakelen?"/>
 			<node name="dontShowAgain" value="Niet opnieuw tonen"/>
 			<node name="more" value="Volgende tip"/>
 		</node>
@@ -1201,8 +1201,8 @@
 		<node name="cannotOpenDictionary" value="Kan woordenlijst niet openen"/>
 		<node name="noDictionarySelected" value="Geen woordenboek geselecteerd; lost dit op in de Dictan-instellingen"/>
 	</node>
-	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true">
-		<node name="shortTitle" value="FBReader Premium" toBeTranslated="true"/>
-		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+	<node name="premium" value="FBReader Premium Editie">
+		<node name="shortTitle" value="FBReader Premium"/>
+		<node name="conflict" value="Zowel FBReader als FBReader Premium lijken geïnstalleerd te zijn. Welke versie wil je starten?"/>
 	</node>
 </resources>
