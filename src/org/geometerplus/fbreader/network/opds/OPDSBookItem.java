@@ -37,7 +37,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			return null;
 		}
 
-		final CreateBookHandler handler = new CreateBookHandler(link, url);
+		final CreateBookHandler handler = new CreateBookHandler(library, link, url);
 		nc.perform(new ZLNetworkRequest.Get(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
@@ -104,7 +104,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		return tags;
 	}
 
-	private static UrlInfoCollection<UrlInfo> getUrls(OPDSNetworkLink networkLink, OPDSEntry entry, String baseUrl) {
+	private static UrlInfoCollection<UrlInfo> getUrls(NetworkLibrary library, OPDSNetworkLink networkLink, OPDSEntry entry, String baseUrl) {
 		final UrlInfoCollection<UrlInfo> urls = new UrlInfoCollection<UrlInfo>();
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(baseUrl, link.getHref());
@@ -133,13 +133,13 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				}
 				if (MimeType.TEXT_HTML.equals(mime)) {
 					collectReferences(
-						networkLink.Library,
+						library,
 						urls, opdsLink, href,
 						UrlInfo.Type.BookBuyInBrowser, price, true
 					);
 				} else {
 					collectReferences(
-						networkLink.Library,
+						library,
 						urls, opdsLink, href,
 						UrlInfo.Type.BookBuy, price, false
 					);
@@ -151,7 +151,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			} else if (referenceType == UrlInfo.Type.TOC) {
 				urls.addInfo(new UrlInfo(referenceType, href, mime));
 			} else if (referenceType != null) {
-				if (BookUrlInfo.isMimeSupported(mime, networkLink.Library.SystemInfo)) {
+				if (BookUrlInfo.isMimeSupported(mime, library.SystemInfo)) {
 					urls.addInfo(new BookUrlInfo(referenceType, href, mime));
 				}
 			}
@@ -203,7 +203,10 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		}
 	}
 
+	private final NetworkLibrary myLibrary;
+
 	public OPDSBookItem(
+		NetworkLibrary library,
 		OPDSNetworkLink link, String id, int index,
 		CharSequence title, CharSequence summary,
 		List<AuthorData> authors, List<String> tags,
@@ -217,15 +220,17 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			seriesTitle, indexInSeries,
 			urls
 		);
+		myLibrary = library;
 	}
 
-	OPDSBookItem(OPDSNetworkLink networkLink, OPDSEntry entry, String baseUrl, int index) {
+	OPDSBookItem(NetworkLibrary library, OPDSNetworkLink networkLink, OPDSEntry entry, String baseUrl, int index) {
 		this(
+			library,
 			networkLink, entry.Id.Uri, index,
 			entry.Title, getAnnotation(entry),
 			getAuthors(entry), getTags(entry),
 			entry.SeriesTitle, entry.SeriesIndex,
-			getUrls(networkLink, entry, baseUrl)
+			getUrls(library, networkLink, entry, baseUrl)
 		);
 	}
 
@@ -237,7 +242,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	@Override
-	public synchronized boolean loadFullInformation(final NetworkLibrary library, ZLNetworkContext nc) {
+	public synchronized boolean loadFullInformation(ZLNetworkContext nc) {
 		if (myInformationIsFull) {
 			return true;
 		}
@@ -251,7 +256,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		return nc.performQuietly(new ZLNetworkRequest.Get(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				new OPDSXMLReader(library, new LoadInfoHandler(url), true).read(inputStream);
+				new OPDSXMLReader(myLibrary, new LoadInfoHandler(url), true).read(inputStream);
 				myInformationIsFull = true;
 			}
 		});
@@ -289,7 +294,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		}
 
 		public boolean processFeedEntry(OPDSEntry entry) {
-			addUrls(getUrls((OPDSNetworkLink)Link, entry, myUrl));
+			addUrls(getUrls(myLibrary, (OPDSNetworkLink)Link, entry, myUrl));
 			final CharSequence summary = getAnnotation(entry);
 			if (summary != null) {
 				setSummary(summary);
@@ -299,11 +304,13 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	private static class CreateBookHandler extends SingleEntryFeedHandler {
+		private final NetworkLibrary myLibrary;
 		private final INetworkLink myLink;
 		private OPDSBookItem myBook;
 
-		CreateBookHandler(INetworkLink link, String url) {
+		CreateBookHandler(NetworkLibrary library, INetworkLink link, String url) {
 			super(url);
+			myLibrary = library;
 			myLink = link;
 		}
 
@@ -312,7 +319,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		}
 
 		public boolean processFeedEntry(OPDSEntry entry) {
-			myBook = new OPDSBookItem((OPDSNetworkLink)myLink, entry, myUrl, 0);
+			myBook = new OPDSBookItem(myLibrary, (OPDSNetworkLink)myLink, entry, myUrl, 0);
 			return false;
 		}
 	}

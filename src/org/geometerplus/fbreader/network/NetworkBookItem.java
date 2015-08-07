@@ -124,7 +124,7 @@ public class NetworkBookItem extends NetworkItem {
 		return true;
 	}
 
-	public boolean loadFullInformation(NetworkLibrary library, ZLNetworkContext nc) {
+	public boolean loadFullInformation(ZLNetworkContext nc) {
 		return true;
 	}
 
