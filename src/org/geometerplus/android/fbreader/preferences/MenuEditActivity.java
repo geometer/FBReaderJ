@@ -103,7 +103,7 @@ public class MenuEditActivity extends ListActivity {
 		}
 	}
 
-	private static class Menu_Item implements Item, Comparable<Menu_Item> {
+	private static class Menu_Item implements Item {
 		private final String Id;
 		private boolean IsChecked;
 		private final boolean IsEnabled;
@@ -116,15 +116,6 @@ public class MenuEditActivity extends ListActivity {
 
 		public String getTitle() {
 			return ZLResource.resource("menu").getResource(Id).getValue();
-		}
-
-		private String getTitleLower() {
-			return getTitle().toLowerCase(Locale.getDefault());
-		}
-
-		@Override
-		public int compareTo(Menu_Item another) {
-			return getTitleLower().compareTo(another.getTitleLower());
 		}
 	}
 
