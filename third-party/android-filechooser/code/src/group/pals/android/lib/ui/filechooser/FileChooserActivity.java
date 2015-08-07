@@ -456,6 +456,11 @@ public class FileChooserActivity extends Activity {
     @Override
     public void onBackPressed() {
         IFile currentLoc = getLocation();
+		if (currentLoc == null || myHistory == null) {
+			super.onBackPressed();
+			return;
+		}
+
         IFile preLoc = null;
         while (currentLoc.equalsToPath(preLoc = mHistory.prevOf(currentLoc)))
             mHistory.remove(preLoc);
