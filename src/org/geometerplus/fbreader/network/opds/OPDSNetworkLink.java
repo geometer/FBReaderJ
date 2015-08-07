@@ -35,7 +35,7 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class OPDSNetworkLink extends AbstractNetworkLink {
-	protected final NetworkLibrary Library;
+	protected final NetworkLibrary myLibrary;
 
 	private TreeMap<RelationAlias,String> myRelationAliases;
 
@@ -46,7 +46,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	OPDSNetworkLink(NetworkLibrary library, int id, String title, String summary, String language,
 			UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, title, summary, language, infos);
-		Library = library;
+		myLibrary = library;
 	}
 
 	final void setRelationAliases(Map<RelationAlias,String> relationAliases) {
@@ -89,9 +89,8 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		if (url == null) {
 			return null;
 		}
-		final NetworkLibrary library = state.Loader.Tree.Library;
 		final NetworkCatalogItem catalogItem = state.Loader.Tree.Item;
-		library.startLoading(catalogItem);
+		myLibrary.startLoading(catalogItem);
 		url = rewriteUrl(url, false);
 		return new ZLNetworkRequest.Get(url) {
 			@Override
@@ -101,7 +100,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 				}
 
 				new OPDSXMLReader(
-					library, new OPDSFeedHandler(getURL(), state), false
+					myLibrary, new OPDSFeedHandler(myLibrary, getURL(), state), false
 				).read(inputStream);
 
 				if (state.Loader.confirmInterruption() && state.LastLoadedId != null) {
@@ -114,7 +113,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 
 			@Override
 			public void doAfter(boolean success) {
-				library.stopLoading(catalogItem);
+				myLibrary.stopLoading(catalogItem);
 			}
 		};
 	}
@@ -202,7 +201,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	public BasketItem getBasketItem() {
 		final String url = getUrl(UrlInfo.Type.ListBooks);
 		if (url != null && myBasketItem == null) {
-			myBasketItem = new OPDSBasketItem(Library, this);
+			myBasketItem = new OPDSBasketItem(myLibrary, this);
 		}
 		return myBasketItem;
 	}
