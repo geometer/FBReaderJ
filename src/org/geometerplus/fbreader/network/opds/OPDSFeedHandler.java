@@ -29,6 +29,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendat
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
+	private final NetworkLibrary myLibrary;
 	private final NetworkCatalogItem myCatalog;
 	private final String myBaseURL;
 	private final OPDSCatalogItem.State myData;
@@ -57,6 +58,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		if (!(result.Link instanceof OPDSNetworkLink)) {
 			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of OPDSNetworkLink class.");
 		}
+		myLibrary = ((OPDSNetworkLink)result.Link).Library;
 	}
 
 	public void processFeedStart() {
@@ -124,7 +126,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			if (rel == null && MimeType.APP_ATOM_XML.weakEquals(mime)) {
 				return ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
-			if (!BookUrlInfo.isMimeSupported(mime, opdsLink.Library.SystemInfo)) {
+			if (!BookUrlInfo.isMimeSupported(mime, myLibrary.SystemInfo)) {
 				continue;
 			}
 			if (rel != null
@@ -176,7 +178,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			final MimeType mime = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), mime);
 			if (rel == null
-					? (BookUrlInfo.isMimeSupported(mime, opdsLink.Library.SystemInfo))
+					? (BookUrlInfo.isMimeSupported(mime, myLibrary.SystemInfo))
 					: (rel.equals(REL_RELATED)
 						|| rel.startsWith(REL_ACQUISITION_PREFIX)
 						|| rel.startsWith(REL_FBREADER_ACQUISITION_PREFIX))) {
@@ -187,7 +189,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 
 		NetworkItem item;
 		if (hasBookLink) {
-			item = new OPDSBookItem((OPDSNetworkLink)myData.Link, entry, myBaseURL, myIndex++);
+			item = new OPDSBookItem(myLibrary, (OPDSNetworkLink)myData.Link, entry, myBaseURL, myIndex++);
 			for (String identifier : entry.DCIdentifiers) {
 				((OPDSBookItem)item).Identifiers.add(identifier);
 			}

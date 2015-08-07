@@ -74,7 +74,7 @@ class BookElementManager extends ExtensionElementManager {
 
 		new Thread() {
 			public void run() {
-				final SimpleOPDSFeedHandler handler = new SimpleOPDSFeedHandler(url);
+				final SimpleOPDSFeedHandler handler = new SimpleOPDSFeedHandler(library, url);
 				try {
 					new QuietNetworkContext().perform(new ZLNetworkRequest.Get(url, true) {
 						@Override
