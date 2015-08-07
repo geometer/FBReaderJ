@@ -4,6 +4,10 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.6 (??? ??, 2015) =====
+* Customisable main menu
+* New (material design style) icon
+
 ===== 2.5.5 (??? ??, 2015) =====
 * Fixed possible crash in (native) zip decompression
 * Fized possible NPE in FileChooserActivity
