@@ -24,4 +24,14 @@ git merge yota2
 git checkout betayota
 git merge yota2
 
+git checkout 2.6
+git merge yota2
+
+git checkout 2.6noyota
+git merge ice-cream-sandwich
+
+git checkout y
+git merge 2.6noyota
+git merge yota2
+
 git checkout master
