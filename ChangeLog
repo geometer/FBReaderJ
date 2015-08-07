@@ -8,6 +8,8 @@
 * Fixed possible crash in (native) zip decompression
 * Fized possible NPE in FileChooserActivity
 * New style number picker preference (Android 3+)
+* Updated Czech localisation (by Marek Pavelka)
+* Updated Dutch localisation (by Frank Fesevur)
 
 ===== 2.5.4 (Jul 24, 2015) =====
 * Fixed possible deadlocks
