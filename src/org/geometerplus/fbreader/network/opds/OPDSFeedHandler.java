@@ -49,16 +49,17 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	 * @param result     network results buffer. Must be created using OPDSNetworkLink corresponding to the OPDS feed,
 	 *                   that will be read using this instance of the reader.
 	 */
-	OPDSFeedHandler(String baseURL, OPDSCatalogItem.State result) {
+	OPDSFeedHandler(NetworkLibrary library, String baseURL, OPDSCatalogItem.State result) {
+		if (!(result.Link instanceof OPDSNetworkLink)) {
+			throw new IllegalArgumentException(result.Link + " is not an instance of OPDSNetworkLink class");
+		}
+
+		myLibrary = library;
 		myCatalog = result.Loader.Tree.Item;
 		myBaseURL = baseURL;
 		myData = result;
 		mySkipUntilId = myData.LastLoadedId;
 		myFoundNewIds = mySkipUntilId != null;
-		if (!(result.Link instanceof OPDSNetworkLink)) {
-			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of OPDSNetworkLink class.");
-		}
-		myLibrary = ((OPDSNetworkLink)result.Link).Library;
 	}
 
 	public void processFeedStart() {
