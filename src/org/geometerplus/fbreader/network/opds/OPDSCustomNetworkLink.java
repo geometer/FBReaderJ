@@ -98,7 +98,7 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					final OPDSCatalogInfoHandler info = new OPDSCatalogInfoHandler(getURL(), OPDSCustomNetworkLink.this, opensearchDescriptionURLs);
-					new OPDSXMLReader(Library, info, false).read(inputStream);
+					new OPDSXMLReader(myLibrary, info, false).read(inputStream);
 
 					if (!info.FeedStarted) {
 						throw ZLNetworkException.forCode(NetworkException.ERROR_NOT_AN_OPDS);
