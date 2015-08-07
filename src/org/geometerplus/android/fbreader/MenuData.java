@@ -24,7 +24,9 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.ui.android.R;
+
 import org.geometerplus.fbreader.fbreader.ActionCode;
+
 import org.geometerplus.android.fbreader.api.MenuNode;
 import org.geometerplus.android.util.DeviceType;
 
