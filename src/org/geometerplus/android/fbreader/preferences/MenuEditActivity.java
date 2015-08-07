@@ -44,7 +44,7 @@ public class MenuEditActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		setContentView(R.layout.catalog_manager_view);
+		setContentView(R.layout.menu_manager_view);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class MenuEditActivity extends ListActivity {
 		private final String Title;
 
 		public SectionItem(String key) {
-			Title = ZLResource.resource("networkLibrary").getResource("manageCatalogs").getResource(key).getValue(); //FIXME: do we need here separate resources?
+			Title = ZLResource.resource("Preferences").getResource("menu").getResource(key).getValue();
 		}
 	}
 
@@ -131,7 +131,7 @@ public class MenuEditActivity extends ListActivity {
 	private class MenuListAdapter extends ArrayAdapter<Item> implements DragSortListView.DropListener, DragSortListView.RemoveListener {
 
 		public MenuListAdapter() {
-			super(MenuEditActivity.this, R.layout.catalog_manager_item, myAllItems);
+			super(MenuEditActivity.this, R.layout.menu_manager_item, myAllItems);
 		}
 
 		private int indexOfDisabledSectionItem() {
@@ -152,11 +152,11 @@ public class MenuEditActivity extends ListActivity {
 				if (item instanceof SectionItem) {
 					continue;
 				}
-				final Menu_Item catalogItem = (Menu_Item)item;
-				if (catalogItem.IsChecked) {
-					eIds.add(catalogItem.Id);
+				final Menu_Item menuItem = (Menu_Item)item;
+				if (menuItem.IsChecked) {
+					eIds.add(menuItem.Id);
 				} else {
-					dIds.add(catalogItem.Id);
+					dIds.add(menuItem.Id);
 				}
 			}
 			setResult(RESULT_OK, new Intent()
@@ -174,7 +174,7 @@ public class MenuEditActivity extends ListActivity {
 			} else {
 				view = getLayoutInflater().inflate(
 					item instanceof SectionItem
-						? R.layout.catalog_manager_section_head : R.layout.catalog_manager_item,
+						? R.layout.menu_manager_section_head : R.layout.menu_manager_item,
 					null
 				);
 				view.setTag(item.getClass());
@@ -182,15 +182,15 @@ public class MenuEditActivity extends ListActivity {
 
 			if (item instanceof SectionItem) {
 				ViewUtil.setSubviewText(
-					view, R.id.catalog_manager_section_head_title, ((SectionItem)item).Title
+					view, R.id.menu_manager_section_head_title, ((SectionItem)item).Title
 				);
 			} else /* if (item instanceof Menu_Item) */ {
 				final Menu_Item menuItem = (Menu_Item)item;
 
 
-				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_title, menuItem.getTitle());
+				ViewUtil.setSubviewText(view, R.id.menu_manager_item_title, menuItem.getTitle());
 
-				final ImageView coverView = ViewUtil.findImageView(view, R.id.catalog_manager_item_icon);
+				final ImageView coverView = ViewUtil.findImageView(view, R.id.menu_manager_item_icon);
 				coverView.setPadding(5, 20, 5, 20);
 
 				if (MenuData.iconId(menuItem.Id) != -1) {
@@ -201,7 +201,7 @@ public class MenuEditActivity extends ListActivity {
 					coverView.setImageBitmap(null);
 				}
 
-				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.catalog_manager_item_checkbox);
+				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.menu_manager_item_checkbox);
 				checkBox.setChecked(menuItem.IsChecked);
 				checkBox.setEnabled(menuItem.IsEnabled);
 				checkBox.setOnClickListener(new View.OnClickListener() {
