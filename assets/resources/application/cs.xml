@@ -269,7 +269,7 @@
 	</node>
 	<node name="toast">
 		<node name="more" value="Více"/>
-		<node name="offline" value="Offline" toBeTranslated="true"/>
+		<node name="offline" value="Offline"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Otevřít knihovnu"/>
@@ -307,7 +307,7 @@
 		<node name="toc" value="Obsah"/>
 		<node name="day" value="Den"/>
 		<node name="night" value="Noc"/>
-		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
+		<node name="dayNight" value="Den/Noc"/>
 		<node name="yotaSwitchToBackScreen" value="Přepnout na zadní displej"/>
 		<node name="yotaSwitchToFrontScreen" value="Přepnout na přední displej"/>
 		<node name="networkLibrary" value="Síťová knihovna"/>
@@ -334,7 +334,7 @@
 		<node name="screenOrientationReverseLandscape" value="Převráceně na šířku"/>
 		<node name="increaseFont" value="Zvětšit"/>
 		<node name="decreaseFont" value="Zmenšit"/>
-		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
+		<node name="changeFontSize" value="Zvětšit/Zmenšit"/>
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
 		<node name="bookmarks" value="Záložky"/>
 		<node name="help" value="Nápověda"/>
@@ -781,11 +781,11 @@
 			<node name="summary" value="Nastavení překladu"/>
 			<node name="dictionary" value="Vyhledat jedno slovo v"/>
 			<node name="translator" value="Přeložit fráze pomocí"/>
-			<node name="translateOffline" value="Google Translate: use offline translator (if installed)" toBeTranslated="true">
-				<node name="always" value="Always" toBeTranslated="true"/>
-				<node name="onError" value="Automatically, if online translation fails" toBeTranslated="true"/>
-				<node name="ask" value="Ask if online translation fails" toBeTranslated="true"/>
-				<node name="never" value="Never" toBeTranslated="true"/>
+			<node name="translateOffline" value="Překladač Google: použít offline překladač (pokud je nainstalovaný)">
+				<node name="always" value="Vždy"/>
+				<node name="onError" value="Automaticky, pokud online překladač selže"/>
+				<node name="ask" value="Zeptat se, pokud online překladač selže"/>
+				<node name="never" value="Nikdy"/>
 			</node>
 			<node name="translationToastDuration" value="Jak dlouho zobrazovat automaticky otevírané okno překladu"/>
 			<node name="errorToastDuration" value="Jak dlouho zobrazovat chybovou zprávu"/>
