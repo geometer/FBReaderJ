@@ -22,14 +22,17 @@ package org.geometerplus.fbreader.network.opds;
 import java.util.*;
 
 import org.geometerplus.fbreader.network.NetworkItem;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 
 public class SimpleOPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
+	private final NetworkLibrary myLibrary;
 	private final String myBaseURL;
 	private final List<OPDSBookItem> myBooks = new LinkedList<OPDSBookItem>();
 
 	private int myIndex;
 
-	public SimpleOPDSFeedHandler(String baseURL) {
+	public SimpleOPDSFeedHandler(NetworkLibrary library, String baseURL) {
+		myLibrary = library;
 		myBaseURL = baseURL;
 	}
 
@@ -48,7 +51,7 @@ public class SimpleOPDSFeedHandler extends AbstractOPDSFeedHandler implements OP
 
 	@Override
 	public boolean processFeedEntry(OPDSEntry entry) {
-		final OPDSBookItem item = new OPDSBookItem(null, entry, myBaseURL, myIndex++);
+		final OPDSBookItem item = new OPDSBookItem(myLibrary, null, entry, myBaseURL, myIndex++);
 		for (String identifier : entry.DCIdentifiers) {
 			((OPDSBookItem)item).Identifiers.add(identifier);
 		}
