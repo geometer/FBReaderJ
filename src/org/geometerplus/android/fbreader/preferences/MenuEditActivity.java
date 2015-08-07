@@ -38,10 +38,8 @@ import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.util.ViewUtil;
 
 public class MenuEditActivity extends ListActivity {
-
 	private final List<Item> myAllItems = new ArrayList<Item>();
 	private final List<Item> mySelectedItems = new ArrayList<Item>();
-	
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -194,7 +192,7 @@ public class MenuEditActivity extends ListActivity {
 
 				final ImageView coverView = ViewUtil.findImageView(view, R.id.catalog_manager_item_icon);
 				coverView.setPadding(5, 20, 5, 20);
-				
+
 				if (MenuData.iconId(menuItem.Id) != -1) {
 					Bitmap b = BitmapFactory.decodeResource(getResources(), MenuData.iconId(menuItem.Id));
 					coverView.setImageBitmap(Bitmap.createScaledBitmap(b, (int)(b.getWidth() * 0.8), (int)(b.getHeight() * 0.8), false));
