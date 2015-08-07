@@ -35,6 +35,8 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	public final OPDSNetworkLink Link;
 	public final List<NetworkBookItem> Books = new LinkedList<NetworkBookItem>();
 
+	private final NetworkLibrary myLibrary;
+
 	private int myIndex;
 
 	private String myBookId;
@@ -56,6 +58,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	private LinkedList<String> myTags = new LinkedList<String>();
 
 	public LitResXMLReader(NetworkLibrary library, OPDSNetworkLink link) {
+		myLibrary = library;
 		myAnnotationBuffer = new FormattedBuffer(library, FormattedBuffer.Type.XHtml);
 		Link = link;
 	}
@@ -202,6 +205,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 						MimeType.APP_ATOM_XML_ENTRY
 					));
 					Books.add(new OPDSBookItem(
+						myLibrary,
 						Link,
 						myBookId,
 						myIndex++,

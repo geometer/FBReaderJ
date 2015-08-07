@@ -49,7 +49,7 @@ public class ShowBookInfoAction extends BookAction {
 		} else {
 			UIUtil.wait("loadInfo", new Runnable() {
 				public void run() {
-					getBook(tree).loadFullInformation(myLibrary, myNetworkContext);
+					getBook(tree).loadFullInformation(myNetworkContext);
 					myActivity.runOnUiThread(new Runnable() {
 						public void run() {
 							showBookInfo(tree);
