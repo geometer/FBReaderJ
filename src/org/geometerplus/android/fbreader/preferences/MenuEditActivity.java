@@ -57,9 +57,9 @@ public class MenuEditActivity extends ListActivity {
 		final List<String> enabledIds =
 			intent.getStringArrayListExtra(MenuPreference.ENABLED_MENU_IDS_KEY);
 		if (enabledIds.size() > 0) {
-			final List<Menu_Item> cItems = new ArrayList<Menu_Item>();
+			final List<MenuNodeItem> cItems = new ArrayList<MenuNodeItem>();
 			for (String id : enabledIds) {
-				cItems.add(new Menu_Item(id, true));
+				cItems.add(new MenuNodeItem(id, true));
 			}
 			myAllItems.addAll(cItems);
 		}
@@ -68,9 +68,9 @@ public class MenuEditActivity extends ListActivity {
 		final List<String> disabledIds =
 			intent.getStringArrayListExtra(MenuPreference.DISABLED_MENU_IDS_KEY);
 		if (disabledIds.size() > 0) {
-			final List<Menu_Item> cItems = new ArrayList<Menu_Item>();
+			final List<MenuNodeItem> cItems = new ArrayList<MenuNodeItem>();
 			for (String id : disabledIds) {
-				cItems.add(new Menu_Item(id, false));
+				cItems.add(new MenuNodeItem(id, false));
 			}
 			myAllItems.addAll(cItems);
 		}
@@ -100,12 +100,12 @@ public class MenuEditActivity extends ListActivity {
 		}
 	}
 
-	private static class Menu_Item implements Item {
+	private static class MenuNodeItem implements Item {
 		private final String Id;
 		private boolean IsChecked;
 		private final boolean IsEnabled;
 
-		public Menu_Item(String id, boolean checked) {
+		public MenuNodeItem(String id, boolean checked) {
 			Id = id;
 			IsChecked = checked;
 			IsEnabled = !"preferences".equals(id); //never uncheck!
@@ -140,7 +140,7 @@ public class MenuEditActivity extends ListActivity {
 				if (item instanceof SectionItem) {
 					continue;
 				}
-				final Menu_Item menuItem = (Menu_Item)item;
+				final MenuNodeItem menuItem = (MenuNodeItem)item;
 				if (menuItem.IsChecked) {
 					eIds.add(menuItem.Id);
 				} else {
@@ -173,7 +173,7 @@ public class MenuEditActivity extends ListActivity {
 					view, R.id.menu_manager_section_head_title, ((SectionItem)item).Title
 				);
 			} else /* if (item instanceof Menu_Item) */ {
-				final Menu_Item menuItem = (Menu_Item)item;
+				final MenuNodeItem menuItem = (MenuNodeItem)item;
 
 
 				ViewUtil.setSubviewText(view, R.id.menu_manager_item_title, menuItem.getTitle());
@@ -209,11 +209,11 @@ public class MenuEditActivity extends ListActivity {
 				return;
 			}
 			final Item item = getItem(from);
-			if (item instanceof Menu_Item) {
+			if (item instanceof MenuNodeItem) {
 				remove(item);
 				insert(item, to);
-				if (((Menu_Item)item).IsEnabled) {
-					((Menu_Item)item).IsChecked = to < indexOfDisabledSectionItem();
+				if (((MenuNodeItem)item).IsEnabled) {
+					((MenuNodeItem)item).IsChecked = to < indexOfDisabledSectionItem();
 				}
 				getListView().moveCheckState(from, to);
 				setResultIds();
@@ -223,7 +223,7 @@ public class MenuEditActivity extends ListActivity {
 		// method from DragSortListView.RemoveListener
 		public void remove(int which) {
 			final Item item = getItem(which);
-			if (item instanceof Menu_Item) {
+			if (item instanceof MenuNodeItem) {
 				remove(item);
 				getListView().removeCheckState(which);
 			}
