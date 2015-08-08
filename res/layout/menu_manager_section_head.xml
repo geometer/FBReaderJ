@@ -13,7 +13,7 @@
 		android:layout_height="wrap_content"
 		android:paddingLeft="10dp"
 		android:singleLine="true"
-		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:ellipsize="marquee"
 		android:marqueeRepeatLimit="marquee_forever"
 	/>

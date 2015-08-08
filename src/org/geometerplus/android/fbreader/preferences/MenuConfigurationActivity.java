@@ -181,12 +181,11 @@ public class MenuConfigurationActivity extends ListActivity {
 				final ImageView coverView = ViewUtil.findImageView(view, R.id.menu_manager_item_icon);
 				coverView.setPadding(5, 20, 5, 20);
 
-				if (MenuData.iconId(menuItem.Id) != -1) {
-					Bitmap b = BitmapFactory.decodeResource(getResources(), MenuData.iconId(menuItem.Id));
-					coverView.setImageBitmap(Bitmap.createScaledBitmap(b, (int)(b.getWidth() * 0.8), (int)(b.getHeight() * 0.8), false));
-					b.recycle();
+				final int iconId = MenuData.iconId(menuItem.Id);
+				if (iconId != -1) {
+					coverView.setImageResource(iconId);
 				} else {
-					coverView.setImageBitmap(null);
+					coverView.setImageResource(R.drawable.ic_menu_none);
 				}
 
 				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.menu_manager_item_checkbox);
