@@ -38,7 +38,6 @@ import org.geometerplus.android.util.ViewUtil;
 
 public class MenuEditActivity extends ListActivity {
 	private final List<Item> myAllItems = new ArrayList<Item>();
-	private final List<Item> mySelectedItems = new ArrayList<Item>();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -63,7 +62,6 @@ public class MenuEditActivity extends ListActivity {
 				cItems.add(new Menu_Item(id, true));
 			}
 			myAllItems.addAll(cItems);
-			mySelectedItems.addAll(cItems);
 		}
 
 		myAllItems.add(new SectionItem("disabled"));
