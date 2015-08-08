@@ -25,7 +25,6 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -71,7 +70,7 @@ public class MenuEditActivity extends ListActivity {
 		final List<String> disabledIds =
 			intent.getStringArrayListExtra(MenuPreference.DISABLED_MENU_IDS_KEY);
 		if (disabledIds.size() > 0) {
-			final TreeSet<Menu_Item> cItems = new TreeSet<Menu_Item>();
+			final List<Menu_Item> cItems = new ArrayList<Menu_Item>();
 			for (String id : disabledIds) {
 				cItems.add(new Menu_Item(id, false));
 			}

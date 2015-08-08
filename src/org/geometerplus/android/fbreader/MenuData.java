@@ -103,11 +103,14 @@ public abstract class MenuData {
 		final List<MenuNode> allNodes = new ArrayList<MenuNode>(allTopLevelNodes());
 		Collections.<MenuNode>sort(allNodes, new MenuComparator());
 		final ArrayList<String> codes = new ArrayList<String>();
-		for (MenuNode m : allNodes) {
-			if (m.Code.equals("night") || m.Code.equals("decreaseFont")) {
+		for (MenuNode node : allNodes) {
+			if (node.Code.equals("night") || node.Code.equals("decreaseFont")) {
 				continue; //duplicate nodes
 			}
-			codes.add(code(m));
+			int v = nodeOption(code(node)).getValue();
+			if (v >= 0) {
+				codes.add(code(node));
+			}
 		}
 		return codes;
 	}
@@ -116,6 +119,9 @@ public abstract class MenuData {
 		final List<MenuNode> allNodes = allTopLevelNodes();
 		final ArrayList<String> codes = new ArrayList<String>();
 		for (MenuNode node : allNodes) {
+			if (node.Code.equals("night") || node.Code.equals("decreaseFont")) {
+				continue; //duplicate nodes
+			}
 			int v = nodeOption(code(node)).getValue();
 			if (v < 0) {
 				codes.add(code(node));
