@@ -28,7 +28,9 @@ import android.preference.*;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
+
 import org.geometerplus.android.fbreader.OrientationUtil;
 
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
