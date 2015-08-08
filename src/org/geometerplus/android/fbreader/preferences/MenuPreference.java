@@ -45,7 +45,7 @@ class MenuPreference extends Preference {
 	
 	@Override
 	protected void onClick() {
-		Intent intent = new Intent(myActivity, MenuEditActivity.class);
+		Intent intent = new Intent(myActivity, MenuConfigurationActivity.class);
 		intent.putStringArrayListExtra(ENABLED_MENU_IDS_KEY, MenuData.enabledCodes());
 		intent.putStringArrayListExtra(DISABLED_MENU_IDS_KEY, MenuData.disabledCodes());
 

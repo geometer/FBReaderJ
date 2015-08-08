@@ -36,7 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.util.ViewUtil;
 
-public class MenuEditActivity extends ListActivity {
+public class MenuConfigurationActivity extends ListActivity {
 	private final List<Item> myAllItems = new ArrayList<Item>();
 
 	@Override
@@ -119,7 +119,7 @@ public class MenuEditActivity extends ListActivity {
 	private class MenuListAdapter extends ArrayAdapter<Item> implements DragSortListView.DropListener, DragSortListView.RemoveListener {
 
 		public MenuListAdapter() {
-			super(MenuEditActivity.this, R.layout.menu_manager_item, myAllItems);
+			super(MenuConfigurationActivity.this, R.layout.menu_manager_item, myAllItems);
 		}
 
 		private int indexOfDisabledSectionItem() {
