@@ -34,9 +34,12 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.JsonRequest;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.zlibrary.text.view.style.*;
+
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
+
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.fbreader.*;
@@ -44,6 +47,7 @@ import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.sync.SyncUtil;
 import org.geometerplus.fbreader.tips.TipsManager;
+
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.fbreader.dict.DictionaryUtil;
@@ -52,6 +56,7 @@ import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 import org.geometerplus.android.fbreader.preferences.background.BackgroundPreference;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
+
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
 
@@ -723,17 +728,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(imageOptions.FitToScreen, "fitImagesToScreen");
 		imagesScreen.addOption(imageOptions.ImageViewBackground, "backgroundColor");
 		imagesScreen.addOption(imageOptions.MatchBackground, "matchBackground");
-
-//		final Screen menuScreen = createPreferenceScreen("menu");
-//		final ZLResource menuResource = ZLResource.resource("menu");
-//		for (String code : MenuData.allCodes()) {
-//			final Preference pref = menuScreen.addPreference(new ZLBooleanPreference(
-//				this, MenuData.nodeOption(code), menuResource.getResource(code)
-//			));
-//			if (code == "preferences") {
-//				pref.setEnabled(false);
-//			}
-//		}
 
 		myMenuPreference = new MenuPreference(this);
 		addPreference(myMenuPreference);

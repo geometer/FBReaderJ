@@ -32,6 +32,7 @@ import com.mobeta.android.dslv.DragSortListView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.util.ViewUtil;
 
@@ -56,22 +57,18 @@ public class MenuConfigurationActivity extends ListActivity {
 		final List<String> enabledIds =
 			intent.getStringArrayListExtra(MenuPreference.ENABLED_MENU_IDS_KEY);
 		if (enabledIds.size() > 0) {
-			final List<MenuNodeItem> cItems = new ArrayList<MenuNodeItem>();
 			for (String id : enabledIds) {
-				cItems.add(new MenuNodeItem(id, true));
+				myAllItems.add(new MenuNodeItem(id, true));
 			}
-			myAllItems.addAll(cItems);
 		}
 
 		myAllItems.add(new SectionItem("disabled"));
 		final List<String> disabledIds =
 			intent.getStringArrayListExtra(MenuPreference.DISABLED_MENU_IDS_KEY);
 		if (disabledIds.size() > 0) {
-			final List<MenuNodeItem> cItems = new ArrayList<MenuNodeItem>();
 			for (String id : disabledIds) {
-				cItems.add(new MenuNodeItem(id, false));
+				myAllItems.add(new MenuNodeItem(id, false));
 			}
-			myAllItems.addAll(cItems);
 		}
 
 		setListAdapter(new MenuListAdapter());
@@ -101,7 +98,7 @@ public class MenuConfigurationActivity extends ListActivity {
 		public MenuNodeItem(String id, boolean checked) {
 			Id = id;
 			IsChecked = checked;
-			IsEnabled = !"preferences".equals(id); //never uncheck!
+			IsEnabled = !ActionCode.SHOW_PREFERENCES.equals(id); //never uncheck!
 		}
 
 		public String getTitle() {
@@ -171,10 +168,8 @@ public class MenuConfigurationActivity extends ListActivity {
 				ViewUtil.setSubviewText(view, R.id.menu_configure_item_title, menuItem.getTitle());
 
 				final ImageView coverView = ViewUtil.findImageView(view, R.id.menu_configure_item_icon);
-				coverView.setPadding(5, 20, 5, 20);
-
-				final int iconId = MenuData.iconId(menuItem.Id);
-				coverView.setImageResource(iconId != -1 ? iconId : R.drawable.ic_menu_none);
+				final Integer iconId = MenuData.iconId(menuItem.Id);
+				coverView.setImageResource(iconId != null ? iconId : R.drawable.ic_menu_none);
 
 				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.menu_configure_item_checkbox);
 				checkBox.setChecked(menuItem.IsChecked);

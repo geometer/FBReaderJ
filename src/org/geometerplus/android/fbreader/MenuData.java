@@ -130,15 +130,14 @@ public abstract class MenuData {
 		return codes;
 	}
 
-	public static int iconId(String code) {
+	public static Integer iconId(String itemCode) {
 		final List<MenuNode> allNodes = allTopLevelNodes();
 		for (MenuNode node : allNodes) {
-			final String c = code(node);
-			if (node instanceof MenuNode.Item && code.equals(c) && (((MenuNode.Item) node)).IconId != null) {
-				return (((MenuNode.Item) node)).IconId;
+			if (node instanceof MenuNode.Item && itemCode.equals(code(node))) {
+				return ((MenuNode.Item)node).IconId;
 			}
 		}
-		return -1;
+		return null;
 	}
 
 	public static synchronized List<MenuNode> topLevelNodes() {

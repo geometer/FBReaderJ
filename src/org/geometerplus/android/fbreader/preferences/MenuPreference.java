@@ -29,10 +29,9 @@ import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 class MenuPreference extends Preference {
-	
 	public static final String ENABLED_MENU_IDS_KEY = "enabledMenuIds";
 	public static final String DISABLED_MENU_IDS_KEY = "disabledMenuIds";
-	
+
 	private Activity myActivity;
 
 	MenuPreference(Activity a) {
@@ -42,10 +41,10 @@ class MenuPreference extends Preference {
 		setTitle(ZLResource.resource("Preferences").getResource("menu").getValue());
 		setSummary(ZLResource.resource("Preferences").getResource("menu").getResource("summary").getValue());
 	}
-	
+
 	@Override
 	protected void onClick() {
-		Intent intent = new Intent(myActivity, MenuConfigurationActivity.class);
+		final Intent intent = new Intent(myActivity, MenuConfigurationActivity.class);
 		intent.putStringArrayListExtra(ENABLED_MENU_IDS_KEY, MenuData.enabledCodes());
 		intent.putStringArrayListExtra(DISABLED_MENU_IDS_KEY, MenuData.disabledCodes());
 
@@ -53,8 +52,8 @@ class MenuPreference extends Preference {
 	}
 
 	public void update(Intent data) {
-		List<String> eIds = data.getStringArrayListExtra(ENABLED_MENU_IDS_KEY);
-		List<String> dIds = data.getStringArrayListExtra(DISABLED_MENU_IDS_KEY);
+		final List<String> eIds = data.getStringArrayListExtra(ENABLED_MENU_IDS_KEY);
+		final List<String> dIds = data.getStringArrayListExtra(DISABLED_MENU_IDS_KEY);
 		int i = 0;
 		for (String s : eIds) {
 			MenuData.nodeOption(s).setValue(i);
@@ -64,5 +63,4 @@ class MenuPreference extends Preference {
 			MenuData.nodeOption(s).setValue(-1);
 		}
 	}
-
 }
