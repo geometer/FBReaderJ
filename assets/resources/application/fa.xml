@@ -816,6 +816,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="فعال شد"/>
+			<node name="disabled" value="غیرفعال شد"/>
 		</node>
 		<node name="cancelMenu" value="لغو منو">
 			<node name="summary" value="ليست اقدام دكمه برگشت"/>

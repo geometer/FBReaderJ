@@ -817,6 +817,8 @@
 		</node>
 		<node name="menu" value="Menu">
 			<node name="summary" value="Hoofdmenuitems"/>
+			<node name="enabled" value="Inschakelen"/>
+			<node name="disabled" value="Uitschakelen"/>
 		</node>
 		<node name="cancelMenu" value="Afsluitmenu">
 			<node name="summary" value="Terugknop actie"/>

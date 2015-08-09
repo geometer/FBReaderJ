@@ -822,6 +822,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="Aktiviert"/>
+			<node name="disabled" value="Deaktiviert"/>
 		</node>
 		<node name="cancelMenu" value="Zurück-Menü">
 			<node name="summary" value="Aktion beim Drücken der Zurück-Taste"/>

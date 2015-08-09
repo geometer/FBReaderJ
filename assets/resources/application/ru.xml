@@ -822,6 +822,8 @@
 		</node>
 		<node name="menu" value="Меню">
 			<node name="summary" value="Пункты главного меню"/>
+			<node name="enabled" value="Включены"/>
+			<node name="disabled" value="Выключены"/>
 		</node>
 		<node name="cancelMenu" value="Меню выхода из программы">
 			<node name="summary" value="Список действий при нажатии на кнопку 'Назад'"/>

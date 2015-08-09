@@ -823,6 +823,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="Activat"/>
+			<node name="disabled" value="Desactivat"/>
 		</node>
 		<node name="cancelMenu" value="Menú cancelar">
 			<node name="summary" value="Back button action list" toBeTranslated="true"/>

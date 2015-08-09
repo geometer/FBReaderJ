@@ -817,6 +817,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="Уключана"/>
+			<node name="disabled" value="Выключана"/>
 		</node>
 		<node name="cancelMenu" value="Мэню касаваньня">
 			<node name="summary" value="Сьпіс дзеяньняў кнопкі «Назад»"/>

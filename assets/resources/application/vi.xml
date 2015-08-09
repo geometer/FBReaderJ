@@ -808,6 +808,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="Có dùng"/>
+			<node name="disabled" value="Không dùng"/>
 		</node>
 		<node name="cancelMenu" value="Danh mục lệnh Hủy">
 			<node name="summary" value="Các lệnh trong Lệnh Hủy"/>
