@@ -1199,7 +1199,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		}
 
 		final ZLResource resource = ZLResource.resource("premium");
-		new AlertDialog.Builder(this)
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this)
 			.setMessage(resource.getResource("conflict").getValue())
 			.setIcon(0)
 			.setPositiveButton(
@@ -1211,9 +1211,9 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 					}
 				}
 			)
-			.setNegativeButton(getResources().getString(R.string.app_name), null)
-			.create()
-			.show();
+			.setNegativeButton(getResources().getString(R.string.app_name), null);
+		ensureFullscreenOnDismiss(builder);
+		builder.create().show();
 		return true;
 	}
 
@@ -1274,7 +1274,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 			}
 		}
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		new AlertDialog.Builder(this)
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this)
 			.setTitle(ZLResource.resource("premium").getValue())
 			.setMessage(Html.fromHtml(buffer.toString()))
 			.setIcon(0)
@@ -1289,8 +1289,18 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 					}
 				}
 			)
-			.setNegativeButton(buttonResource.getResource("noThanks").getValue(), null)
-			.create()
-			.show();
+			.setNegativeButton(buttonResource.getResource("noThanks").getValue(), null);
+		ensureFullscreenOnDismiss(builder);
+		builder.create().show();
+	}
+
+	private void ensureFullscreenOnDismiss(AlertDialog.Builder builder) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+				public void onDismiss(DialogInterface dialog) {
+					FBReaderUtil.ensureFullscreen(FBReader.this, myRootView);
+				}
+			});
+		}
 	}
 }
