@@ -154,14 +154,16 @@ public abstract class MenuData {
 		return codes;
 	}
 
-	public static Integer iconId(String itemCode) {
+	public static int configIconId(String itemCode) {
 		final List<MenuNode> allNodes = allTopLevelNodes();
+		Integer iconId = null;
 		for (MenuNode node : allNodes) {
 			if (node instanceof MenuNode.Item && itemCode.equals(code(node))) {
-				return ((MenuNode.Item)node).IconId;
+				iconId = ((MenuNode.Item)node).IconId;
+				break;
 			}
 		}
-		return null;
+		return iconId != null ? iconId : R.drawable.ic_menu_none;
 	}
 
 	public static synchronized List<MenuNode> topLevelNodes() {
@@ -180,7 +182,7 @@ public abstract class MenuData {
 		synchronized (ourNodeOptions) {
 			ZLIntegerOption option = ourNodeOptions.get(code);
 			if (option == null) {
-				option = new ZLIntegerOption("Menu", code, ourDefaultValues.get(code));
+				option = new ZLIntegerOption("MainMenu", code, ourDefaultValues.get(code));
 				ourNodeOptions.put(code, option);
 			}
 			return option;

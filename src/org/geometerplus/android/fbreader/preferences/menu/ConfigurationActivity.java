@@ -163,15 +163,12 @@ public class ConfigurationActivity extends ListActivity {
 				ViewUtil.setSubviewText(
 					view, R.id.menu_configure_section_head_title, ((SectionItem)item).Title
 				);
-			} else /* if (item instanceof Menu_Item) */ {
+			} else /* if (item instanceof MenuNodeItem) */ {
 				final MenuNodeItem menuItem = (MenuNodeItem)item;
 
-
 				ViewUtil.setSubviewText(view, R.id.menu_configure_item_title, menuItem.getTitle());
-
-				final ImageView coverView = ViewUtil.findImageView(view, R.id.menu_configure_item_icon);
-				final Integer iconId = MenuData.iconId(menuItem.Id);
-				coverView.setImageResource(iconId != null ? iconId : R.drawable.ic_menu_none);
+				ViewUtil.findImageView(view, R.id.menu_configure_item_icon)
+					.setImageResource(MenuData.configIconId(menuItem.Id));
 
 				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.menu_configure_item_checkbox);
 				checkBox.setChecked(menuItem.IsChecked);

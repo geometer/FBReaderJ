@@ -117,7 +117,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		config.requestAllValuesForGroup("Scrolling");
 		config.requestAllValuesForGroup("Colors");
 		config.requestAllValuesForGroup("Sync");
-		config.requestAllValuesForGroup("Menu");
+		config.requestAllValuesForGroup("MainMenu");
 		setResult(FBReader.RESULT_REPAINT);
 
 		final ViewOptions viewOptions = new ViewOptions();
