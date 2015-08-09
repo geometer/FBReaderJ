@@ -34,14 +34,26 @@ public abstract class MenuData {
 	private static List<MenuNode> ourNodes;
 	private static final Map<String,ZLIntegerOption> ourNodeOptions =
 		new HashMap<String,ZLIntegerOption>();
-	private static final Map<String,Integer> ourDefaultValues =
-			new HashMap<String,Integer>();
+	private static final Map<String,Integer> ourDefaultValues = new HashMap<String,Integer>();
+	private static final Map<String,String> ourConfigCodes = new HashMap<String,String>();
+	private static final Set<String> ourAlwaysEnabledCodes = new HashSet<String>();
+
+	private static final String CONFIG_CODE_DAY_NIGHT = "dayNight";
+	private static final String CONFIG_CODE_CHANGE_FONT_SIZE = "changeFontSize";
 
 	private static void addToplevelNode(MenuNode node) {
-		if (!ourDefaultValues.containsKey(code(node))) {
-			ourDefaultValues.put(code(node), ourDefaultValues.size());
+		addToplevelNode(node, node.Code, false);
+	}
+
+	private static void addToplevelNode(MenuNode node, String configCode, boolean alwaysEnabled) {
+		ourConfigCodes.put(node.Code, configCode);
+		if (!ourDefaultValues.containsKey(configCode)) {
+			ourDefaultValues.put(configCode, ourDefaultValues.size());
 		}
 		ourNodes.add(node);
+		if (alwaysEnabled) {
+			ourAlwaysEnabledCodes.add(configCode);
+		}
 	}
 
 	private static synchronized List<MenuNode> allTopLevelNodes() {
@@ -55,11 +67,23 @@ public abstract class MenuData {
 			addToplevelNode(new MenuNode.Item(ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
 			addToplevelNode(new MenuNode.Item(ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
 			addToplevelNode(new MenuNode.Item(ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks));
-			addToplevelNode(new MenuNode.Item(ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night));
-			addToplevelNode(new MenuNode.Item(ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day));
+			addToplevelNode(
+				new MenuNode.Item(ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night),
+				CONFIG_CODE_DAY_NIGHT,
+				false
+			);
+			addToplevelNode(
+				new MenuNode.Item(ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day),
+				CONFIG_CODE_DAY_NIGHT,
+				false
+			);
 			addToplevelNode(new MenuNode.Item(ActionCode.SEARCH, R.drawable.ic_menu_search));
 			addToplevelNode(new MenuNode.Item(ActionCode.SHARE_BOOK));
-			addToplevelNode(new MenuNode.Item(ActionCode.SHOW_PREFERENCES));
+			addToplevelNode(
+				new MenuNode.Item(ActionCode.SHOW_PREFERENCES),
+				ActionCode.SHOW_PREFERENCES,
+				true
+			);
 			addToplevelNode(new MenuNode.Item(ActionCode.SHOW_BOOK_INFO));
 			final MenuNode.Submenu orientations = new MenuNode.Submenu("screenOrientation");
 			orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_SYSTEM));
@@ -71,8 +95,16 @@ public abstract class MenuData {
 				orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 			}
 			addToplevelNode(orientations);
-			addToplevelNode(new MenuNode.Item(ActionCode.INCREASE_FONT));
-			addToplevelNode(new MenuNode.Item(ActionCode.DECREASE_FONT));
+			addToplevelNode(
+				new MenuNode.Item(ActionCode.INCREASE_FONT),
+				CONFIG_CODE_CHANGE_FONT_SIZE,
+				false
+			);
+			addToplevelNode(
+				new MenuNode.Item(ActionCode.DECREASE_FONT),
+				CONFIG_CODE_CHANGE_FONT_SIZE,
+				false
+			);
 			addToplevelNode(new MenuNode.Item(ActionCode.INSTALL_PLUGINS));
 			addToplevelNode(new MenuNode.Item(ActionCode.OPEN_WEB_HELP));
 			addToplevelNode(new MenuNode.Item(ActionCode.OPEN_START_SCREEN));
@@ -82,14 +114,7 @@ public abstract class MenuData {
 	}
 
 	private static String code(MenuNode node) {
-		final String code = node.Code;
-		if ("day".equals(code) || "night".equals(code)) {
-			return "dayNight";
-		}
-		if ("increaseFont".equals(code) || "decreaseFont".equals(code)) {
-			return "changeFontSize";
-		}
-		return code;
+		return ourConfigCodes.get(node.Code);
 	}
 
 	private static class MenuComparator implements Comparator<MenuNode> {
@@ -99,32 +124,31 @@ public abstract class MenuData {
 		}
 	}
 
+	private static class CodeComparator implements Comparator<String> {
+		@Override
+		public int compare(String lhs, String rhs) {
+			return nodeOption(lhs).getValue() - nodeOption(rhs).getValue();
+		}
+	}
+
 	public static ArrayList<String> enabledCodes() {
-		final List<MenuNode> allNodes = new ArrayList<MenuNode>(allTopLevelNodes());
-		Collections.<MenuNode>sort(allNodes, new MenuComparator());
 		final ArrayList<String> codes = new ArrayList<String>();
-		for (MenuNode node : allNodes) {
-			if (node.Code.equals("night") || node.Code.equals("decreaseFont")) {
-				continue; //duplicate nodes
-			}
-			int v = nodeOption(code(node)).getValue();
-			if (v >= 0) {
-				codes.add(code(node));
+		for (MenuNode node : allTopLevelNodes()) {
+			final String c = code(node);
+			if (!codes.contains(c) && isCodeEnabled(c)) {
+				codes.add(c);
 			}
 		}
+		Collections.sort(codes, new CodeComparator());
 		return codes;
 	}
 
 	public static ArrayList<String> disabledCodes() {
-		final List<MenuNode> allNodes = allTopLevelNodes();
 		final ArrayList<String> codes = new ArrayList<String>();
-		for (MenuNode node : allNodes) {
-			if (node.Code.equals("night") || node.Code.equals("decreaseFont")) {
-				continue; //duplicate nodes
-			}
-			int v = nodeOption(code(node)).getValue();
-			if (v < 0) {
-				codes.add(code(node));
+		for (MenuNode node : allTopLevelNodes()) {
+			final String c = code(node);
+			if (!codes.contains(c) && !isCodeEnabled(c)) {
+				codes.add(c);
 			}
 		}
 		return codes;
@@ -142,14 +166,13 @@ public abstract class MenuData {
 
 	public static synchronized List<MenuNode> topLevelNodes() {
 		final List<MenuNode> allNodes = new ArrayList<MenuNode>(allTopLevelNodes());
-		Collections.<MenuNode>sort(allNodes, new MenuComparator());
 		final List<MenuNode> activeNodes = new ArrayList<MenuNode>(allNodes.size());
-		for (MenuNode m : allNodes) {
-			int v = nodeOption(code(m)).getValue();
-			if (v >= 0) {
-				activeNodes.add(m);
+		for (MenuNode node : allNodes) {
+			if (isCodeEnabled(code(node))) {
+				activeNodes.add(node);
 			}
 		}
+		Collections.<MenuNode>sort(activeNodes, new MenuComparator());
 		return activeNodes;
 	}
 
@@ -162,5 +185,13 @@ public abstract class MenuData {
 			}
 			return option;
 		}
+	}
+
+	public static boolean isCodeAlwaysEnabled(String code) {
+		return ourAlwaysEnabledCodes.contains(code);
+	}
+
+	private static boolean isCodeEnabled(String code) {
+		return ourAlwaysEnabledCodes.contains(code) || nodeOption(code).getValue() >= 0;
 	}
 }

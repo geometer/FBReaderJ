@@ -32,7 +32,6 @@ import com.mobeta.android.dslv.DragSortListView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.util.ViewUtil;
 
@@ -98,7 +97,7 @@ public class MenuConfigurationActivity extends ListActivity {
 		public MenuNodeItem(String id, boolean checked) {
 			Id = id;
 			IsChecked = checked;
-			IsEnabled = !ActionCode.SHOW_PREFERENCES.equals(id); //never uncheck!
+			IsEnabled = !MenuData.isCodeAlwaysEnabled(id);
 		}
 
 		public String getTitle() {
