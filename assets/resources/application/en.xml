@@ -817,6 +817,8 @@
 		</node>
 		<node name="menu" value="Menu">
 			<node name="summary" value="Main menu items"/>
+			<node name="enabled" value="Enabled"/>
+			<node name="disabled" value="Disabled"/>
 		</node>
 		<node name="cancelMenu" value="Cancel menu">
 			<node name="summary" value="Back button action list"/>

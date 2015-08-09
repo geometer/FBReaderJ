@@ -823,6 +823,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="Активиран"/>
+			<node name="disabled" value="Деактивиран"/>
 		</node>
 		<node name="cancelMenu" value="Меню за изход">
 			<node name="summary" value="Списък на действия при натискане на бутона 'Назад'"/>
