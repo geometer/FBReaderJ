@@ -810,6 +810,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="Activat"/>
+			<node name="disabled" value="Dezactivat"/>
 		</node>
 		<node name="cancelMenu" value="Anuleaza meniu">
 			<node name="summary" value="Lista actiunilor pentru butonul inapoi"/>

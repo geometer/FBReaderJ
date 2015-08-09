@@ -807,6 +807,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="启用"/>
+			<node name="disabled" value="停用"/>
 		</node>
 		<node name="cancelMenu" value="取消菜单设定">
 			<node name="summary" value="设定回退按键动作"/>

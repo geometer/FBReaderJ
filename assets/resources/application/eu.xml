@@ -817,6 +817,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="Gaituta"/>
+			<node name="disabled" value="Ezgaituta"/>
 		</node>
 		<node name="cancelMenu" value="Utzi menua">
 			<node name="summary" value="Atzera botoiaren ekintza zerrenda"/>
