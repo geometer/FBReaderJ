@@ -817,6 +817,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="cancelMenu" value="Мени за отказивање">
 			<node name="summary" value="Списак радњи с дугметом „Назад“."/>
