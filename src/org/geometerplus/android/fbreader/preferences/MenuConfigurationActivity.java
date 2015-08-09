@@ -19,12 +19,11 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -79,12 +78,6 @@ public class MenuConfigurationActivity extends ListActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-
-		super.onDestroy();
-	}
-
-	@Override
 	public DragSortListView getListView() {
 		return (DragSortListView)super.getListView();
 	}
@@ -117,7 +110,6 @@ public class MenuConfigurationActivity extends ListActivity {
 	}
 
 	private class MenuListAdapter extends ArrayAdapter<Item> implements DragSortListView.DropListener, DragSortListView.RemoveListener {
-
 		public MenuListAdapter() {
 			super(MenuConfigurationActivity.this, R.layout.menu_configure_item, myAllItems);
 		}
@@ -182,11 +174,7 @@ public class MenuConfigurationActivity extends ListActivity {
 				coverView.setPadding(5, 20, 5, 20);
 
 				final int iconId = MenuData.iconId(menuItem.Id);
-				if (iconId != -1) {
-					coverView.setImageResource(iconId);
-				} else {
-					coverView.setImageResource(R.drawable.ic_menu_none);
-				}
+				coverView.setImageResource(iconId != -1 ? iconId : R.drawable.ic_menu_none);
 
 				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.menu_configure_item_checkbox);
 				checkBox.setChecked(menuItem.IsChecked);
