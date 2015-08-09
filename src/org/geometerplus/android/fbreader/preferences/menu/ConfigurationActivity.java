@@ -166,19 +166,33 @@ public class ConfigurationActivity extends ListActivity {
 			} else /* if (item instanceof MenuNodeItem) */ {
 				final MenuNodeItem menuItem = (MenuNodeItem)item;
 
-				ViewUtil.setSubviewText(view, R.id.menu_configure_item_title, menuItem.getTitle());
-				ViewUtil.findImageView(view, R.id.menu_configure_item_icon)
-					.setImageResource(MenuData.configIconId(menuItem.Id));
+				final TextView titleView =
+					ViewUtil.findTextView(view, R.id.menu_configure_item_title);
+				titleView.setText(menuItem.getTitle());
 
-				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.menu_configure_item_checkbox);
+				final ImageView iconView =
+					ViewUtil.findImageView(view, R.id.menu_configure_item_icon);
+				iconView.setImageResource(MenuData.configIconId(menuItem.Id));
+
+				final CheckBox checkBox =
+					(CheckBox)ViewUtil.findView(view, R.id.menu_configure_item_checkbox);
 				checkBox.setChecked(menuItem.IsChecked);
 				checkBox.setEnabled(menuItem.IsEnabled);
-				checkBox.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						menuItem.IsChecked = checkBox.isChecked();
-						setResultIds();
-					}
-				});
+
+				if (menuItem.IsEnabled) {
+					final View.OnClickListener updateCheckbox = new View.OnClickListener() {
+						public void onClick(View v) {
+							if (v != checkBox) {
+								checkBox.performClick();
+							}
+							menuItem.IsChecked = checkBox.isChecked();
+							setResultIds();
+						}
+					};
+					checkBox.setOnClickListener(updateCheckbox);
+					iconView.setOnClickListener(updateCheckbox);
+					titleView.setOnClickListener(updateCheckbox);
+				}
 			}
 			return view;
 		}
