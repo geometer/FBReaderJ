@@ -335,7 +335,11 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				showPremiumDialog();
+				if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
+					new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, true).run();
+				} else {
+					showPremiumDialog();
+				}
 			}
 		});
 
@@ -1042,6 +1046,11 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
 	@Override
 	public ZLViewWidget getViewWidget() {
+		if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
+			if (com.yotadevices.fbreader.FBReaderYotaService.Widget != null) {
+				return com.yotadevices.fbreader.FBReaderYotaService.Widget;
+			}
+		}
 		return myMainView;
 	}
 
@@ -1124,6 +1133,26 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 	}
 
 	public void refreshYotaScreen() {
+		if (DeviceType.Instance() != DeviceType.YOTA_PHONE) {
+			return;
+		}
+
+		if (!myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
+			boolean isServiceRunning = false;
+			final String serviceClassName = FBReaderYotaService.class.getName();
+			final ActivityManager manager =
+				(ActivityManager)getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+			for (ActivityManager.RunningServiceInfo info : manager.getRunningServices(Integer.MAX_VALUE)) {
+				if (serviceClassName.equals(info.service.getClassName())) {
+					isServiceRunning = true;
+					break;
+				}
+			}
+			if (!isServiceRunning) {
+				return;
+			}
+		}
+
 		final Intent intent = new Intent(this, FBReaderYotaService.class);
 		intent.putExtra(
 			FBReaderYotaService.KEY_BACK_SCREEN_IS_ACTIVE,

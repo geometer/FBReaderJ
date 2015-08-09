@@ -4,8 +4,6 @@
 	</style>
   <style name="FBReader.Activity.NoActionBar" parent="android:Theme.DeviceDefault.NoActionBar">
 	</style>
-  <style name="FBReader.Activity.NoActionBar" parent="android:Theme.DeviceDefault.NoActionBar">
-	</style>
   <style name="FBReader.Dialog" parent="android:Theme.DeviceDefault.Dialog">
 	</style>
 	<style name="FBReader.ActionBar" parent="@android:style/Widget.DeviceDefault.ActionBar">

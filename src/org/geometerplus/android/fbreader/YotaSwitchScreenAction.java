@@ -23,12 +23,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.yotadevices.sdk.utils.RotationAlgorithm;
 import com.yotadevices.fbreader.FBReaderYotaService;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
@@ -63,7 +63,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 			setupHiddenView(mainHiddenView);
 			mainView.setVisibility(View.GONE);
 			mainHiddenView.setVisibility(View.VISIBLE);
-			//RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).turnScreenOffIfRotated();
+			RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).turnScreenOffIfRotated();
 		} else {
 			mainView.setVisibility(View.VISIBLE);
 			mainHiddenView.setVisibility(View.GONE);
