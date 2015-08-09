@@ -8,21 +8,21 @@
 	android:orientation="horizontal"
 >
 	<CheckBox
-		android:id="@+id/menu_manager_item_checkbox"
+		android:id="@+id/menu_configure_item_checkbox"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
 		android:text=""
 		android:gravity="center|center_vertical"
 	/>
 	<ImageView
-		android:id="@+id/menu_manager_item_icon"
+		android:id="@+id/menu_configure_item_icon"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
 		android:adjustViewBounds="false"
 		android:padding="5dp"
 	/>
 	<TextView
-		android:id="@+id/menu_manager_item_title"
+		android:id="@+id/menu_configure_item_title"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
 		android:singleLine="true"
@@ -38,7 +38,7 @@
 		android:layout_height="fill_parent"
 	>
 		<ImageView
-			android:id="@+id/menu_manager_item_drag_icon"
+			android:id="@+id/menu_configure_item_drag_icon"
 			android:src="@drawable/drag_icon"
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"

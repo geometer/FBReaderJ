@@ -11,7 +11,7 @@
 	android:padding="3dp"
 	dslv:collapsed_height="1px"
 	dslv:drag_enabled="true"
-	dslv:drag_handle_id="@id/menu_manager_item_drag_icon"
+	dslv:drag_handle_id="@id/menu_configure_item_drag_icon"
 	dslv:drag_scroll_start="0.33"
 	dslv:drag_start_mode="onDown"
 	dslv:float_alpha="0.6"

@@ -42,7 +42,7 @@ public class MenuConfigurationActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		setContentView(R.layout.menu_manager_view);
+		setContentView(R.layout.menu_configure_view);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class MenuConfigurationActivity extends ListActivity {
 	private class MenuListAdapter extends ArrayAdapter<Item> implements DragSortListView.DropListener, DragSortListView.RemoveListener {
 
 		public MenuListAdapter() {
-			super(MenuConfigurationActivity.this, R.layout.menu_manager_item, myAllItems);
+			super(MenuConfigurationActivity.this, R.layout.menu_configure_item, myAllItems);
 		}
 
 		private int indexOfDisabledSectionItem() {
@@ -162,7 +162,7 @@ public class MenuConfigurationActivity extends ListActivity {
 			} else {
 				view = getLayoutInflater().inflate(
 					item instanceof SectionItem
-						? R.layout.menu_manager_section_head : R.layout.menu_manager_item,
+						? R.layout.menu_configure_section_head : R.layout.menu_configure_item,
 					null
 				);
 				view.setTag(item.getClass());
@@ -170,15 +170,15 @@ public class MenuConfigurationActivity extends ListActivity {
 
 			if (item instanceof SectionItem) {
 				ViewUtil.setSubviewText(
-					view, R.id.menu_manager_section_head_title, ((SectionItem)item).Title
+					view, R.id.menu_configure_section_head_title, ((SectionItem)item).Title
 				);
 			} else /* if (item instanceof Menu_Item) */ {
 				final MenuNodeItem menuItem = (MenuNodeItem)item;
 
 
-				ViewUtil.setSubviewText(view, R.id.menu_manager_item_title, menuItem.getTitle());
+				ViewUtil.setSubviewText(view, R.id.menu_configure_item_title, menuItem.getTitle());
 
-				final ImageView coverView = ViewUtil.findImageView(view, R.id.menu_manager_item_icon);
+				final ImageView coverView = ViewUtil.findImageView(view, R.id.menu_configure_item_icon);
 				coverView.setPadding(5, 20, 5, 20);
 
 				final int iconId = MenuData.iconId(menuItem.Id);
@@ -188,7 +188,7 @@ public class MenuConfigurationActivity extends ListActivity {
 					coverView.setImageResource(R.drawable.ic_menu_none);
 				}
 
-				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.menu_manager_item_checkbox);
+				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.menu_configure_item_checkbox);
 				checkBox.setChecked(menuItem.IsChecked);
 				checkBox.setEnabled(menuItem.IsEnabled);
 				checkBox.setOnClickListener(new View.OnClickListener() {
