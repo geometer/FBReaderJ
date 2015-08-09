@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.preferences;
+package org.geometerplus.android.fbreader.preferences.menu;
 
 import java.util.*;
 
@@ -28,38 +28,35 @@ import android.preference.Preference;
 import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-class MenuPreference extends Preference {
-	public static final String ENABLED_MENU_IDS_KEY = "enabledMenuIds";
-	public static final String DISABLED_MENU_IDS_KEY = "disabledMenuIds";
+public class MenuPreference extends Preference {
+	private final int myRequestCode;
 
-	private Activity myActivity;
+	public MenuPreference(Activity activity, ZLResource resource, int requestCode) {
+		super(activity);
 
-	MenuPreference(Activity a) {
-		super(a);
-		myActivity = a;
+		setTitle(resource.getValue());
+		setSummary(resource.getResource("summary").getValue());
 
-		setTitle(ZLResource.resource("Preferences").getResource("menu").getValue());
-		setSummary(ZLResource.resource("Preferences").getResource("menu").getResource("summary").getValue());
+		myRequestCode = requestCode;
 	}
 
 	@Override
 	protected void onClick() {
-		final Intent intent = new Intent(myActivity, MenuConfigurationActivity.class);
-		intent.putStringArrayListExtra(ENABLED_MENU_IDS_KEY, MenuData.enabledCodes());
-		intent.putStringArrayListExtra(DISABLED_MENU_IDS_KEY, MenuData.disabledCodes());
-
-		myActivity.startActivityForResult(intent, PreferenceActivity.MENU_REQUEST_CODE);
+		((Activity)getContext()).startActivityForResult(
+			new Intent(getContext(), ConfigurationActivity.class)
+				.putStringArrayListExtra(ConfigurationActivity.ENABLED_MENU_IDS_KEY, MenuData.enabledCodes())
+				.putStringArrayListExtra(ConfigurationActivity.DISABLED_MENU_IDS_KEY, MenuData.disabledCodes()),
+			myRequestCode
+		);
 	}
 
 	public void update(Intent data) {
-		final List<String> eIds = data.getStringArrayListExtra(ENABLED_MENU_IDS_KEY);
-		final List<String> dIds = data.getStringArrayListExtra(DISABLED_MENU_IDS_KEY);
 		int i = 0;
-		for (String s : eIds) {
+		for (String s : data.getStringArrayListExtra(ConfigurationActivity.ENABLED_MENU_IDS_KEY)) {
 			MenuData.nodeOption(s).setValue(i);
 			++i;
 		}
-		for (String s : dIds) {
+		for (String s : data.getStringArrayListExtra(ConfigurationActivity.DISABLED_MENU_IDS_KEY)) {
 			MenuData.nodeOption(s).setValue(-1);
 		}
 	}

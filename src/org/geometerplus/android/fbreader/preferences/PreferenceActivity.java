@@ -53,8 +53,9 @@ import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
-import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 import org.geometerplus.android.fbreader.preferences.background.BackgroundPreference;
+import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
+import org.geometerplus.android.fbreader.preferences.menu.MenuPreference;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
 
 import org.geometerplus.android.util.UIUtil;
@@ -64,7 +65,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
 	private static final int BACKGROUND_REQUEST_CODE = 3000;
-	static final int MENU_REQUEST_CODE = 4000;
+	private static final int MENU_REQUEST_CODE = 3001;
 	private BackgroundPreference myBackgroundPreference;
 	private MenuPreference myMenuPreference;
 
@@ -729,7 +730,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(imageOptions.ImageViewBackground, "backgroundColor");
 		imagesScreen.addOption(imageOptions.MatchBackground, "matchBackground");
 
-		myMenuPreference = new MenuPreference(this);
+		myMenuPreference = new MenuPreference(
+			this,
+			Resource.getResource("menu"),
+			MENU_REQUEST_CODE
+		);
 		addPreference(myMenuPreference);
 
 		final CancelMenuHelper cancelMenuHelper = new CancelMenuHelper();

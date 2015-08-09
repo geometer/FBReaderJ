@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.preferences;
+package org.geometerplus.android.fbreader.preferences.menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,10 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.util.ViewUtil;
 
-public class MenuConfigurationActivity extends ListActivity {
+public class ConfigurationActivity extends ListActivity {
+	static final String ENABLED_MENU_IDS_KEY = "enabledMenuIds";
+	static final String DISABLED_MENU_IDS_KEY = "disabledMenuIds";
+
 	private final List<Item> myAllItems = new ArrayList<Item>();
 
 	@Override
@@ -54,7 +57,7 @@ public class MenuConfigurationActivity extends ListActivity {
 
 		myAllItems.add(new SectionItem("enabled"));
 		final List<String> enabledIds =
-			intent.getStringArrayListExtra(MenuPreference.ENABLED_MENU_IDS_KEY);
+			intent.getStringArrayListExtra(ENABLED_MENU_IDS_KEY);
 		if (enabledIds.size() > 0) {
 			for (String id : enabledIds) {
 				myAllItems.add(new MenuNodeItem(id, true));
@@ -63,7 +66,7 @@ public class MenuConfigurationActivity extends ListActivity {
 
 		myAllItems.add(new SectionItem("disabled"));
 		final List<String> disabledIds =
-			intent.getStringArrayListExtra(MenuPreference.DISABLED_MENU_IDS_KEY);
+			intent.getStringArrayListExtra(DISABLED_MENU_IDS_KEY);
 		if (disabledIds.size() > 0) {
 			for (String id : disabledIds) {
 				myAllItems.add(new MenuNodeItem(id, false));
@@ -107,7 +110,7 @@ public class MenuConfigurationActivity extends ListActivity {
 
 	private class MenuListAdapter extends ArrayAdapter<Item> implements DragSortListView.DropListener, DragSortListView.RemoveListener {
 		public MenuListAdapter() {
-			super(MenuConfigurationActivity.this, R.layout.menu_configure_item, myAllItems);
+			super(ConfigurationActivity.this, R.layout.menu_configure_item, myAllItems);
 		}
 
 		private int indexOfDisabledSectionItem() {
@@ -136,8 +139,8 @@ public class MenuConfigurationActivity extends ListActivity {
 				}
 			}
 			setResult(RESULT_OK, new Intent()
-				.putStringArrayListExtra(MenuPreference.ENABLED_MENU_IDS_KEY, eIds)
-				.putStringArrayListExtra(MenuPreference.DISABLED_MENU_IDS_KEY, dIds));
+				.putStringArrayListExtra(ENABLED_MENU_IDS_KEY, eIds)
+				.putStringArrayListExtra(DISABLED_MENU_IDS_KEY, dIds));
 		}
 
 		@Override
