@@ -823,6 +823,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="Միացնել"/>
+			<node name="disabled" value="Անջատել"/>
 		</node>
 		<node name="cancelMenu" value="«Ետ»-գործիքագոտի">
 			<node name="summary" value="Գործողություններ՝ «Ետ» ստեղնը սեղմելիս"/>

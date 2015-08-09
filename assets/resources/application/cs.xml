@@ -826,6 +826,8 @@
 		</node>
 		<node name="menu" value="Menu">
 			<node name="summary" value="Položky menu"/>
+			<node name="enabled" value="Povoleno"/>
+			<node name="disabled" value="Zakázáno"/>
 		</node>
 		<node name="cancelMenu" value="Nabídka Zrušit">
 			<node name="summary" value="Seznam akcí tlačítka Zpět"/>

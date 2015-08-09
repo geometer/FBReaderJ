@@ -817,6 +817,8 @@
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
 			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+			<node name="enabled" value="사용"/>
+			<node name="disabled" value="사용 안함"/>
 		</node>
 		<node name="cancelMenu" value="취소 메뉴">
 			<node name="summary" value="뒤로가기 버튼 동작 목록"/>
