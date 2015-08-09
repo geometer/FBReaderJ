@@ -62,10 +62,11 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
-	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
-	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
 	private static final int BACKGROUND_REQUEST_CODE = 3000;
 	private static final int MENU_REQUEST_CODE = 3001;
+
+	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
 	private BackgroundPreference myBackgroundPreference;
 	private MenuPreference myMenuPreference;
 
