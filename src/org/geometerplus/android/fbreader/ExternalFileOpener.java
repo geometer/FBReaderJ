@@ -103,6 +103,7 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 					myDialog = null;
 				}
 			});
+		myReader.ensureFullscreenOnDismiss(builder);
 
 		final Runnable showDialog = new Runnable() {
 			public void run() {
