@@ -22,8 +22,7 @@ package org.geometerplus.android.fbreader.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.Context;
-import android.content.Intent;
+import android.content.*;
 import android.widget.RemoteViews;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -35,10 +34,23 @@ public class SimpleWidgetProvider extends AppWidgetProvider {
 		final Intent intent = FBReader.defaultIntent(context);
 		intent.addCategory(Intent.CATEGORY_LAUNCHER);
 		final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-		final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_simple);
-		views.setOnClickPendingIntent(R.id.widget_simple, pendingIntent);
+
 		for (int id : appWidgetIds) {
+			final SharedPreferences prefs = getSharedPreferences(context, id);
+			final RemoteViews views =
+				new RemoteViews(context.getPackageName(), R.layout.widget_simple);
+			final int iconId = prefs.getInt("icon", -1);
+			if (iconId != -1) {
+				views.setImageViewResource(R.id.widget_simple, iconId);
+			}
+			views.setOnClickPendingIntent(R.id.widget_simple, pendingIntent);
 			appWidgetManager.updateAppWidget(id, views);
 		}
+	}
+
+	static SharedPreferences getSharedPreferences(Context context, int widgetId) {
+		return context.getApplicationContext().getSharedPreferences(
+			"SimpleWidget" + widgetId, Context.MODE_PRIVATE
+		);
 	}
 }
