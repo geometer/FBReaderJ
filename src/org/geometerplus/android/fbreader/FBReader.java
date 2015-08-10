@@ -1305,7 +1305,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		builder.create().show();
 	}
 
-	private void ensureFullscreenOnDismiss(AlertDialog.Builder builder) {
+	void ensureFullscreenOnDismiss(AlertDialog.Builder builder) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
 				public void onDismiss(DialogInterface dialog) {
