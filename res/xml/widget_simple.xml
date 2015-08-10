@@ -7,9 +7,6 @@
 	android:previewImage="@drawable/fbreader"
 	android:initialLayout="@layout/widget_simple"
 	android:resizeMode="none"
-	android:widgetCategory="home_screen">
-</appwidget-provider>
-<!--
-	android:configure="com.example.android.ExampleAppWidgetConfigure" 
-	android:resizeMode="horizontal|vertical"
--->
+	android:widgetCategory="home_screen"
+	android:configure="org.geometerplus.android.fbreader.widget.SimpleWidgetConfigurationActivity"
+/>
