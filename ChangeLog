@@ -4,6 +4,10 @@
 * (planned) Fixed authors list/tags list editing
 * (planned) CSS selectors priority
 
+===== 2.6 (??? ??, 2015) =====
+* Customisable main menu
+* New (material design style) icon
+
 ===== 2.5.5 (??? ??, 2015) =====
 * Fixed possible crash in (native) zip decompression
 * Fized possible NPE in FileChooserActivity
@@ -222,7 +226,7 @@
 
 ===== 2.1.8.1 (Nov 12, 2014) =====
 * Bookshelf link disabled till 2.2 release
-* Synchronisation: fixed (rare) multiple uploads of the same book 
+* Synchronisation: fixed (rare) multiple uploads of the same book
 
 ===== 2.1.8 (Nov 11, 2014) =====
 * All changes from 2.2 beta 0,1,2,3
@@ -672,7 +676,7 @@
 
 ===== 1.4.5 (Apr 08, 2012) =====
 * book sharing via e-mail, skype, etc
-* 'Open library' and 'Open network library' items in back button menu 
+* 'Open library' and 'Open network library' items in back button menu
 * ePub reader does not fail if NCX file in referenced but missing
 * native plugin does not crash if cache file cannot be created
 * right and left margind depend on screen size
