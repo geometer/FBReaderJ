@@ -309,6 +309,7 @@ public class FileChooserActivity extends Activity {
          * THEME
          */
 
+		/*
         if (getIntent().hasExtra(_Theme)) {
             int theme;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -319,6 +320,7 @@ public class FileChooserActivity extends Activity {
                 theme = getIntent().getIntExtra(_Theme, android.R.style.Theme);
             setTheme(theme);
         }
+		*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.afc_file_chooser);
