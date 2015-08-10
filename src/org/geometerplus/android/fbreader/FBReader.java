@@ -1204,9 +1204,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		if (!PackageUtil.canBeStarted(this, premiumIntent, false)) {
 			return false;
 		}
-		if (!intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
-			return true;
-		}
 
 		if (!intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
 			return true;
