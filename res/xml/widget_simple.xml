@@ -8,5 +8,5 @@
 	android:initialLayout="@layout/widget_simple"
 	android:resizeMode="none"
 	android:widgetCategory="home_screen"
-	android:configure="org.geometerplus.android.fbreader.widget.SimpleWidgetConfigurationActivity"
+	android:configure="org.geometerplus.android.fbreader.widget.simple.ConfigurationActivity"
 />

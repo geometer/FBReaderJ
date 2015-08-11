@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.widget;
+package org.geometerplus.android.fbreader.widget.simple;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +31,7 @@ import android.widget.RemoteViews;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.fbreader.FBReader;
 
-public class SimpleWidgetProvider extends AppWidgetProvider {
+public class Provider extends AppWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		for (int id : appWidgetIds) {

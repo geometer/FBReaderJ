@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.widget;
+package org.geometerplus.android.fbreader.widget.simple;
 
 import java.util.*;
 
@@ -32,7 +32,7 @@ import android.widget.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class SimpleWidgetConfigurationActivity extends Activity {
+public class ConfigurationActivity extends Activity {
 	private int myWidgetId;
 	private SharedPreferences myPrefs;
 
@@ -47,15 +47,11 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 				return;
 			}
 			final int icon = (Integer)view.getTag();
-			myPrefs.edit().putInt(SimpleWidgetProvider.Key.ICON, icon).apply();
+			myPrefs.edit().putInt(Provider.Key.ICON, icon).apply();
 			for (View c : myIconContainers) {
 				findCheckbox(c).setChecked(c == view);
 			}
-			myActionsCombo.setSelection(
-				SimpleWidgetProvider.Action.ALL.indexOf(
-					SimpleWidgetProvider.defaultAction(icon)
-				)
-			);
+			myActionsCombo.setSelection(Provider.Action.ALL.indexOf(Provider.defaultAction(icon)));
 			updateOkButton();
 		}
 
@@ -84,7 +80,7 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 			finish();
 			return;
 		}
-		myPrefs = SimpleWidgetProvider.getSharedPreferences(this, myWidgetId);
+		myPrefs = Provider.getSharedPreferences(this, myWidgetId);
 		myPrefs.edit().clear().apply();
 
 		setResult(RESULT_CANCELED);
@@ -97,9 +93,9 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 		myOkButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				SimpleWidgetProvider.setupViews(
-					AppWidgetManager.getInstance(SimpleWidgetConfigurationActivity.this),
-					SimpleWidgetConfigurationActivity.this,
+				Provider.setupViews(
+					AppWidgetManager.getInstance(ConfigurationActivity.this),
+					ConfigurationActivity.this,
 					myWidgetId
 				);
 				setResult(
@@ -124,13 +120,13 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 		final TextView iconLabel = (TextView)findViewById(R.id.widget_simple_config_icon_label);
 		iconLabel.setText(widgetResource.getResource("selectIcon").getValue());
 		myIconContainers = new View[] {
-			iconContainer(R.id.widget_simple_config_fbreader, SimpleWidgetProvider.Icon.FBREADER),
-			iconContainer(R.id.widget_simple_config_classic, SimpleWidgetProvider.Icon.CLASSIC),
-			iconContainer(R.id.widget_simple_config_library, SimpleWidgetProvider.Icon.LIBRARY),
-			iconContainer(R.id.widget_simple_config_library_old, SimpleWidgetProvider.Icon.LIBRARY_OLD)
+			iconContainer(R.id.widget_simple_config_fbreader, Provider.Icon.FBREADER),
+			iconContainer(R.id.widget_simple_config_classic, Provider.Icon.CLASSIC),
+			iconContainer(R.id.widget_simple_config_library, Provider.Icon.LIBRARY),
+			iconContainer(R.id.widget_simple_config_library_old, Provider.Icon.LIBRARY_OLD)
 		};
 
-		final List<String> actionCodes = SimpleWidgetProvider.Action.ALL;
+		final List<String> actionCodes = Provider.Action.ALL;
 		final List<String> actionNames = new ArrayList<String>(actionCodes.size());
 		for (String code : actionCodes) {
 			actionNames.add(widgetResource.getResource(code).getValue());
@@ -144,7 +140,7 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 		myActionsCombo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				myPrefs.edit().putString(
-					SimpleWidgetProvider.Key.ACTION, actionCodes.get(position)
+					Provider.Key.ACTION, actionCodes.get(position)
 				).apply();
 			}
 			public void onNothingSelected(AdapterView<?> parent) {
@@ -155,8 +151,8 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 	private void updateOkButton() {
 		final Set<String> keys = myPrefs.getAll().keySet();
 		myOkButton.setEnabled(
-			keys.contains(SimpleWidgetProvider.Key.ICON) &&
-			keys.contains(SimpleWidgetProvider.Key.ACTION)
+			keys.contains(Provider.Key.ICON) &&
+			keys.contains(Provider.Key.ACTION)
 		);
 	}
 
@@ -164,7 +160,7 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 		final View container = findViewById(viewId);
 		container.setTag(icon);
 		((ImageView)container.findViewById(R.id.icon_checkbox_icon))
-			.setImageResource(SimpleWidgetProvider.iconId(icon));
+			.setImageResource(Provider.iconId(icon));
 		container.setOnClickListener(myIconCheckboxListener);
 		return container;
 	}
