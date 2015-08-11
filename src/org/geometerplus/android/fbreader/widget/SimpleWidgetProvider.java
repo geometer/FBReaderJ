@@ -19,6 +19,9 @@
 
 package org.geometerplus.android.fbreader.widget;
 
+import java.util.Arrays;
+import java.util.List;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -31,21 +34,80 @@ import org.geometerplus.android.fbreader.FBReader;
 public class SimpleWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		final Intent intent = FBReader.defaultIntent(context);
+		for (int id : appWidgetIds) {
+			setupViews(appWidgetManager, context, id);
+		}
+	}
+
+	// ++++ these constants are used for storing widget state persistently ++++
+	// ++++ never change them, just add new values ++++
+	interface Key {
+		String ICON = "icon";
+		String ACTION = "action";
+	}
+
+	interface Icon {
+		int FBREADER = 0;
+		int CLASSIC = 1;
+		int LIBRARY = 2;
+		int LIBRARY_OLD = 3;
+	}
+
+	interface Action {
+		String BOOK = "book";
+		String LIBRARY = "library";
+
+		List<String> ALL = Arrays.asList(BOOK, LIBRARY);
+	}
+	// ---- these constants are used for storing widget state persistently ----
+
+	static int iconId(int icon) {
+		switch (icon) {
+			default:
+			case Icon.FBREADER:
+				return R.drawable.fbreader;
+			case Icon.CLASSIC:
+				return R.drawable.classic;
+			case Icon.LIBRARY:
+				return R.drawable.library_old;
+			case Icon.LIBRARY_OLD:
+				return R.drawable.library_old;
+		}
+	}
+
+	static String defaultAction(int icon) {
+		switch (icon) {
+			default:
+			case Icon.FBREADER:
+			case Icon.CLASSIC:
+				return Action.BOOK;
+			case Icon.LIBRARY:
+			case Icon.LIBRARY_OLD:
+				return Action.LIBRARY;
+		}
+	}
+
+	static void setupViews(AppWidgetManager appWidgetManager, Context context, int widgetId) {
+		final SharedPreferences prefs = getSharedPreferences(context, widgetId);
+		final RemoteViews views =
+			new RemoteViews(context.getPackageName(), R.layout.widget_simple);
+
+		views.setImageViewResource(
+			R.id.widget_simple, iconId(prefs.getInt(Key.ICON, Icon.FBREADER))
+		);
+
+		final String action = prefs.getString(Key.ACTION, Action.BOOK);
+		final Intent intent;
+		if (Action.LIBRARY.equals(action)) {
+			intent = FBReader.defaultIntent(context);
+		} else /* if Action.BOOK.equals(action) */ {
+			intent = FBReader.defaultIntent(context);
+		}
 		intent.addCategory(Intent.CATEGORY_LAUNCHER);
 		final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+		views.setOnClickPendingIntent(R.id.widget_simple, pendingIntent);
 
-		for (int id : appWidgetIds) {
-			final SharedPreferences prefs = getSharedPreferences(context, id);
-			final RemoteViews views =
-				new RemoteViews(context.getPackageName(), R.layout.widget_simple);
-			final int iconId = prefs.getInt("icon", -1);
-			if (iconId != -1) {
-				views.setImageViewResource(R.id.widget_simple, iconId);
-			}
-			views.setOnClickPendingIntent(R.id.widget_simple, pendingIntent);
-			appWidgetManager.updateAppWidget(id, views);
-		}
+		appWidgetManager.updateAppWidget(widgetId, views);
 	}
 
 	static SharedPreferences getSharedPreferences(Context context, int widgetId) {

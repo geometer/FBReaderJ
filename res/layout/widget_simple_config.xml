@@ -7,10 +7,10 @@
 	android:padding="7dp"
 >
 	<TextView
+		android:id="@+id/widget_simple_config_icon_label"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:text="Select widget icon:"
 	/>
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -25,16 +25,31 @@
 			layout="@layout/icon_checkbox"
 			android:id="@+id/widget_simple_config_classic"
 		/>
+		<include
+			layout="@layout/icon_checkbox"
+			android:id="@+id/widget_simple_config_library"
+		/>
+		<include
+			layout="@layout/icon_checkbox"
+			android:id="@+id/widget_simple_config_library_old"
+		/>
 	</LinearLayout>
 	<TextView
+		android:id="@+id/widget_simple_config_action_label"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:text="Select action:"
 		android:paddingTop="12dp"
+	/>
+	<Spinner
+		android:id="@+id/widget_simple_config_actions"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:spinnerMode="dialog"
 	/>
 	<include
 		layout="@layout/ok_cancel_buttons"
 		android:id="@+id/widget_simple_config_buttons"
+		android:paddingTop="12dp"
 	/>
 </LinearLayout>

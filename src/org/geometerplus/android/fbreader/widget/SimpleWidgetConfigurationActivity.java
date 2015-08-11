@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.widget;
 
-import java.util.Set;
+import java.util.*;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class SimpleWidgetConfigurationActivity extends Activity {
@@ -37,11 +38,39 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 
 	private Button myOkButton;
 	private View[] myIconContainers;
+	private Spinner myActionsCombo;
+
+	private final View.OnClickListener myIconCheckboxListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View view) {
+			if (findCheckbox(view).isChecked()) {
+				return;
+			}
+			final int icon = (Integer)view.getTag();
+			myPrefs.edit().putInt(SimpleWidgetProvider.Key.ICON, icon).apply();
+			for (View c : myIconContainers) {
+				findCheckbox(c).setChecked(c == view);
+			}
+			myActionsCombo.setSelection(
+				SimpleWidgetProvider.Action.ALL.indexOf(
+					SimpleWidgetProvider.defaultAction(icon)
+				)
+			);
+			updateOkButton();
+		}
+
+		private CheckBox findCheckbox(View v) {
+			return (CheckBox)v.findViewById(R.id.icon_checkbox_checkbox);
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedState) {
 		super.onCreate(savedState);
 		setContentView(R.layout.widget_simple_config);
+
+		final ZLResource widgetResource = ZLResource.resource("widget").getResource("simple");
+		setTitle(widgetResource.getValue());
 
 		myWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 		final Bundle extras = getIntent().getExtras();
@@ -56,19 +85,23 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 			return;
 		}
 		myPrefs = SimpleWidgetProvider.getSharedPreferences(this, myWidgetId);
-		final SharedPreferences.Editor editor = myPrefs.edit();
-		editor.clear();
-		editor.apply();
+		myPrefs.edit().clear().apply();
 
 		setResult(RESULT_CANCELED);
 
 		final View buttons = findViewById(R.id.widget_simple_config_buttons);
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
 		myOkButton = (Button)buttons.findViewById(R.id.ok_button);
-		myOkButton.setText("Ok");
+		myOkButton.setText(buttonResource.getResource("ok").getValue());
 		myOkButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				SimpleWidgetProvider.setupViews(
+					AppWidgetManager.getInstance(SimpleWidgetConfigurationActivity.this),
+					SimpleWidgetConfigurationActivity.this,
+					myWidgetId
+				);
 				setResult(
 					RESULT_OK,
 					new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, myWidgetId)
@@ -79,59 +112,60 @@ public class SimpleWidgetConfigurationActivity extends Activity {
 		myOkButton.setEnabled(false);
 
 		final Button cancelButton = (Button)buttons.findViewById(R.id.cancel_button);
-		cancelButton.setText("Cancel");
+		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				final SharedPreferences.Editor editor = myPrefs.edit();
-				editor.clear();
-				editor.apply();
+				myPrefs.edit().clear().apply();
 				finish();
 			}
 		});
 
+		final TextView iconLabel = (TextView)findViewById(R.id.widget_simple_config_icon_label);
+		iconLabel.setText(widgetResource.getResource("selectIcon").getValue());
 		myIconContainers = new View[] {
-			iconContainer(R.id.widget_simple_config_fbreader, R.drawable.fbreader),
-			iconContainer(R.id.widget_simple_config_classic, R.drawable.classic)
+			iconContainer(R.id.widget_simple_config_fbreader, SimpleWidgetProvider.Icon.FBREADER),
+			iconContainer(R.id.widget_simple_config_classic, SimpleWidgetProvider.Icon.CLASSIC),
+			iconContainer(R.id.widget_simple_config_library, SimpleWidgetProvider.Icon.LIBRARY),
+			iconContainer(R.id.widget_simple_config_library_old, SimpleWidgetProvider.Icon.LIBRARY_OLD)
 		};
-		for (View container : myIconContainers) {
-			setupIconButton(container);
+
+		final List<String> actionCodes = SimpleWidgetProvider.Action.ALL;
+		final List<String> actionNames = new ArrayList<String>(actionCodes.size());
+		for (String code : actionCodes) {
+			actionNames.add(widgetResource.getResource(code).getValue());
 		}
+		final TextView actionLabel = (TextView)findViewById(R.id.widget_simple_config_action_label);
+		actionLabel.setText(widgetResource.getResource("selectAction").getValue());
+		myActionsCombo = (Spinner)findViewById(R.id.widget_simple_config_actions);
+		myActionsCombo.setAdapter(new ArrayAdapter<String>(
+			this, android.R.layout.select_dialog_item, actionNames
+		));
+		myActionsCombo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				myPrefs.edit().putString(
+					SimpleWidgetProvider.Key.ACTION, actionCodes.get(position)
+				).apply();
+			}
+			public void onNothingSelected(AdapterView<?> parent) {
+			}
+		});
 	}
 
 	private void updateOkButton() {
 		final Set<String> keys = myPrefs.getAll().keySet();
-		myOkButton.setEnabled(keys.contains("icon"));
+		myOkButton.setEnabled(
+			keys.contains(SimpleWidgetProvider.Key.ICON) &&
+			keys.contains(SimpleWidgetProvider.Key.ACTION)
+		);
 	}
 
-	private View iconContainer(final int viewId, final int iconId) {
+	private View iconContainer(final int viewId, final int icon) {
 		final View container = findViewById(viewId);
-		container.setTag(iconId);
-		((ImageView)container.findViewById(R.id.icon_checkbox_icon)).setImageResource(iconId);
+		container.setTag(icon);
+		((ImageView)container.findViewById(R.id.icon_checkbox_icon))
+			.setImageResource(SimpleWidgetProvider.iconId(icon));
+		container.setOnClickListener(myIconCheckboxListener);
 		return container;
-	}
-
-	private void setupIconButton(View container) {
-		final AppWidgetManager manager = AppWidgetManager.getInstance(this);
-		final RemoteViews views =
-			new RemoteViews(getPackageName(), R.layout.widget_simple);
-		final Integer iconId = (Integer)container.getTag();
-
-		container.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				final SharedPreferences.Editor editor = myPrefs.edit();
-				editor.putInt("icon", iconId);
-				editor.apply();
-				views.setImageViewResource(R.id.widget_simple, iconId);
-				manager.updateAppWidget(myWidgetId, views);
-				for (View c : myIconContainers) {
-					((CheckBox)c.findViewById(R.id.icon_checkbox_checkbox)).setChecked(
-						c.getTag() == iconId
-					);
-				}
-				updateOkButton();
-			}
-		});
 	}
 }
