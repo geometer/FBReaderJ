@@ -66,7 +66,6 @@ public class ConfigurationActivity extends Activity {
 		setContentView(R.layout.widget_simple_config);
 
 		final ZLResource widgetResource = ZLResource.resource("widget").getResource("simple");
-		setTitle(widgetResource.getValue());
 
 		myWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 		final Bundle extras = getIntent().getExtras();

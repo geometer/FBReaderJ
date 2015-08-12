@@ -5,6 +5,9 @@
   </style>
   <style name="FBReader.Dialog" parent="android:Theme.Dialog">
   </style>
+  <style name="FBReader.Dialog.NoTitle" parent="FBReader.Dialog">
+    <item name="android:windowNoTitle">true</item>
+  </style>
   <style name="FBReader.Transparent" parent="android:Theme.Translucent.NoTitleBar">
     <item name="android:windowBackground">@android:color/transparent</item>
   </style>
