@@ -58,7 +58,12 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		mySelectedBook = FBReaderIntents.getBookExtra(getIntent(), myCollection);
+		final Intent intent = getIntent();
+		if (intent != null && "android.fbreader.action.EXTERNAL_INTERNAL_LIBRARY".equals(intent.getAction())) {
+			runOrInstallExternalView(false);
+		}
+
+		mySelectedBook = FBReaderIntents.getBookExtra(intent, myCollection);
 
 		new LibraryTreeAdapter(this);
 
@@ -72,7 +77,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				showProgress(!myCollection.status().IsComplete);
 				myRootTree = new RootTree(myCollection, PluginCollection.Instance(Paths.systemInfo(LibraryActivity.this)));
 				myCollection.addListener(LibraryActivity.this);
-				init(getIntent());
+				init(intent);
 			}
 		});
 	}
@@ -119,7 +124,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
 		final LibraryTree tree = (LibraryTree)getListAdapter().getItem(position);
 		if (tree instanceof ExternalViewTree) {
-			runOrInstallExternalView();
+			runOrInstallExternalView(true);
 		} else {
 			final Book book = tree.getBook();
 			if (book != null) {
@@ -375,19 +380,21 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				return true;
 			}
 			case OptionsItemId.ExternalView:
-				runOrInstallExternalView();
+				runOrInstallExternalView(true);
 				return true;
 			default:
 				return true;
 		}
 	}
 
-	private void runOrInstallExternalView() {
+	private void runOrInstallExternalView(boolean install) {
 		try {
 			startActivity(new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY));
 			finish();
 		} catch (ActivityNotFoundException e) {
-			PackageUtil.installFromMarket(this, "org.fbreader.plugin.library");
+			if (install) {
+				PackageUtil.installFromMarket(this, "org.fbreader.plugin.library");
+			}
 		}
 	}
 

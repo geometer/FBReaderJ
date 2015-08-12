@@ -229,6 +229,10 @@
 				<action android:name="android.fbreader.action.LIBRARY"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
+			<intent-filter>
+				<action android:name="android.fbreader.action.EXTERNAL_INTERNAL_LIBRARY"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":preferences">

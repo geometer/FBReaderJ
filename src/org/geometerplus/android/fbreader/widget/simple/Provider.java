@@ -30,6 +30,7 @@ import android.widget.RemoteViews;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.library.LibraryActivity;
 
 public class Provider extends AppWidgetProvider {
 	@Override
@@ -99,7 +100,8 @@ public class Provider extends AppWidgetProvider {
 		final String action = prefs.getString(Key.ACTION, Action.BOOK);
 		final Intent intent;
 		if (Action.LIBRARY.equals(action)) {
-			intent = FBReader.defaultIntent(context);
+			intent = new Intent(context, LibraryActivity.class);
+			intent.setAction("android.fbreader.action.EXTERNAL_INTERNAL_LIBRARY");
 		} else /* if Action.BOOK.equals(action) */ {
 			intent = FBReader.defaultIntent(context);
 		}
