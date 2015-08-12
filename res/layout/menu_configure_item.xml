@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="fill_parent"
+	android:layout_height="?android:attr/listPreferredItemHeight"
+	android:minHeight="?android:attr/listPreferredItemHeight"
+	android:orientation="horizontal"
+>
+	<CheckBox
+		android:id="@+id/menu_configure_item_checkbox"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:text=""
+		android:gravity="center|center_vertical"
+	/>
+	<ImageView
+		android:id="@+id/menu_configure_item_icon"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:adjustViewBounds="false"
+		android:paddingLeft="5dp"
+		android:paddingRight="5dp"
+	/>
+	<TextView
+		android:id="@+id/menu_configure_item_title"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:singleLine="true"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="35dp"
+		android:gravity="center_vertical"
+	/>
+	<RelativeLayout
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+	>
+		<ImageView
+			android:id="@+id/menu_configure_item_drag_icon"
+			android:src="@drawable/drag_icon"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:layout_alignParentRight="true"
+			android:gravity="center_vertical"
+		/>
+	</RelativeLayout>
+</LinearLayout>
