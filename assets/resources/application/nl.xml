@@ -1207,4 +1207,12 @@
 		<node name="shortTitle" value="FBReader Premium"/>
 		<node name="conflict" value="Zowel FBReader als FBReader Premium lijken geïnstalleerd te zijn. Welke versie wil je starten?"/>
 	</node>
+	<node name="widget">
+		<node name="simple">
+			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
+			<node name="selectAction" value="Select action" toBeTranslated="true"/>
+			<node name="book" value="Read book" toBeTranslated="true"/>
+			<node name="library" value="Open library" toBeTranslated="true"/>
+		</node>
+	</node>
 </resources>

@@ -1216,4 +1216,12 @@
 		<node name="shortTitle" value="FBReader Premium"/>
 		<node name="conflict" value="Zdá se, že máte nainstalován FBReader a FBReader Premium. Který byste chtěli spustit?"/>
 	</node>
+	<node name="widget">
+		<node name="simple">
+			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
+			<node name="selectAction" value="Select action" toBeTranslated="true"/>
+			<node name="book" value="Read book" toBeTranslated="true"/>
+			<node name="library" value="Open library" toBeTranslated="true"/>
+		</node>
+	</node>
 </resources>

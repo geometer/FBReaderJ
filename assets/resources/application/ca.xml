@@ -1213,4 +1213,12 @@
 		<node name="shortTitle" value="FBReader Premium" toBeTranslated="true"/>
 		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
 	</node>
+	<node name="widget">
+		<node name="simple">
+			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
+			<node name="selectAction" value="Select action" toBeTranslated="true"/>
+			<node name="book" value="Read book" toBeTranslated="true"/>
+			<node name="library" value="Open library" toBeTranslated="true"/>
+		</node>
+	</node>
 </resources>

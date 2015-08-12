@@ -1216,6 +1216,14 @@
 		<node name="shortTitle" value="FBReader Premium"/>
 		<node name="conflict" value="У вас установлены и FBReader, и FBReader Premium. Который из них вы хотите запустить?"/>
 	</node>
+	<node name="widget">
+		<node name="simple">
+			<node name="selectIcon" value="Выберите иконку"/>
+			<node name="selectAction" value="Выберите действие"/>
+			<node name="book" value="Читать книгу"/>
+			<node name="library" value="Открыть библиотеку"/>
+		</node>
+	</node>
 	<node name="dictionary">
 		<node name="Yandex.Translate" value="Яндекс.Переводчик"/>
 	</node>
