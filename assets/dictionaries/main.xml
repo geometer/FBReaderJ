@@ -90,6 +90,12 @@
 		id="LEO Dictionary"
 		package="org.leo.android.dict"
 		class=".LeoDict"
+		action="android.intent.action.VIEW"
+	/>
+	<dictionary
+		id="LEO Dictionary (old versions)"
+		package="org.leo.android.dict"
+		class=".LeoDict"
 		action="android.intent.action.SEARCH"
 		dataKey="query"
 	/>
