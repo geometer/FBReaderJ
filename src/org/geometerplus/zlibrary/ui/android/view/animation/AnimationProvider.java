@@ -55,6 +55,7 @@ public abstract class AnimationProvider {
 
 	protected int myWidth;
 	protected int myHeight;
+	protected Integer myColorLevel;
 
 	protected AnimationProvider(BitmapManager bitmapManager) {
 		myBitmapManager = bitmapManager;
@@ -209,10 +210,11 @@ public abstract class AnimationProvider {
 		return myDirection.IsHorizontal ? myEndX - myStartX : myEndY - myStartY;
 	}
 
-	public final void setup(ZLViewEnums.Direction direction, int width, int height) {
+	public final void setup(ZLViewEnums.Direction direction, int width, int height, Integer colorLevel) {
 		myDirection = direction;
 		myWidth = width;
 		myHeight = height;
+		myColorLevel = colorLevel;
 	}
 
 	public abstract void doStep();
@@ -240,6 +242,7 @@ public abstract class AnimationProvider {
 
 	public final void draw(Canvas canvas) {
 		final long start = System.currentTimeMillis();
+		setFilter();
 		drawInternal(canvas);
 		myDrawInfos.add(new DrawInfo(myEndX, myEndY, start, System.currentTimeMillis()));
 		if (myDrawInfos.size() > 3) {
@@ -247,7 +250,14 @@ public abstract class AnimationProvider {
 		}
 	}
 
+	public final void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+		setFilter();
+		drawFooterBitmapInternal(canvas, footerBitmap, voffset);
+	}
+
+	protected abstract void setFilter();
 	protected abstract void drawInternal(Canvas canvas);
+	protected abstract void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset);
 
 	public abstract ZLViewEnums.PageIndex getPageToScrollTo(int x, int y);
 
@@ -270,6 +280,4 @@ public abstract class AnimationProvider {
 	protected void drawBitmapTo(Canvas canvas, int x, int y, Paint paint) {
 		myBitmapManager.drawBitmap(canvas, x, y, getPageToScrollTo(), paint);
 	}
-
-	public abstract void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset);
 }
