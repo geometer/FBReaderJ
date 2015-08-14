@@ -9,7 +9,7 @@
 * New (material design style) icon
 * Simple widgets
 
-===== 2.5.5 (??? ??, 2015) =====
+===== 2.5.5 (Aug 14, 2015) =====
 * Compatibility with new versions of LEO dictionary
 * Fixed possible crash in (native) zip decompression
 * Fized possible NPE in FileChooserActivity
