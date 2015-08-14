@@ -21,6 +21,8 @@ package org.geometerplus.zlibrary.ui.android.view.animation;
 
 import android.graphics.*;
 
+import org.geometerplus.zlibrary.ui.android.view.ViewUtil;
+
 public final class SlideOldStyleAnimationProvider extends SimpleAnimationProvider {
 	private final Paint myPaint = new Paint();
 
@@ -52,7 +54,7 @@ public final class SlideOldStyleAnimationProvider extends SimpleAnimationProvide
 	}
 
 	@Override
-	public void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+	protected void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
 		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
 		if (myDirection.IsHorizontal) {
 			final int dX = myEndX - myStartX;
@@ -62,5 +64,10 @@ public final class SlideOldStyleAnimationProvider extends SimpleAnimationProvide
 				canvas.drawLine(dX + myWidth, voffset, dX + myWidth, voffset + footerBitmap.getHeight(), myPaint);
 			}
 		}
+	}
+
+	@Override
+	protected void setFilter() {
+		ViewUtil.setColorLevel(myPaint, myColorLevel);
 	}
 }

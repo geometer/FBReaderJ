@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 
@@ -59,6 +60,31 @@ public abstract class FBReaderMainActivity extends Activity {
 	public ZLAndroidLibrary getZLibrary() {
 		return ((ZLAndroidApplication)getApplication()).library();
 	}
+
+	/* ++++++ SCREEN BRIGHTNESS ++++++ */
+	protected void setScreenBrightnessAuto() {
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.screenBrightness = -1.0f;
+		getWindow().setAttributes(attrs);
+	}
+
+	public void setScreenBrightnessSystem(int percent) {
+		if (percent < 2) {
+			percent = 2;
+		} else if (percent > 100) {
+			percent = 100;
+		}
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.screenBrightness = percent / 100.0f;
+		getWindow().setAttributes(attrs);
+		getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
+	}
+
+	public int getScreenBrightnessSystem() {
+		final int level = (int)(100 * getWindow().getAttributes().screenBrightness);
+		return level >= 0 ? level : 50;
+	}
+	/* ------ SCREEN BRIGHTNESS ------ */
 
 	/* ++++++ SUPER TOAST ++++++ */
 	public boolean isToastShown() {

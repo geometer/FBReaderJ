@@ -519,7 +519,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 				final int brightnessLevel =
 					getZLibrary().ScreenBrightnessLevelOption.getValue();
 				if (brightnessLevel != 0) {
-					setScreenBrightness(brightnessLevel);
+					getViewWidget().setScreenBrightness(brightnessLevel);
 				} else {
 					setScreenBrightnessAuto();
 				}
@@ -910,29 +910,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 			);
 		}
 	};
-
-	private void setScreenBrightnessAuto() {
-		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
-		attrs.screenBrightness = -1.0f;
-		getWindow().setAttributes(attrs);
-	}
-
-	public void setScreenBrightness(int percent) {
-		if (percent < 1) {
-			percent = 1;
-		} else if (percent > 100) {
-			percent = 100;
-		}
-		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
-		attrs.screenBrightness = percent / 100.0f;
-		getWindow().setAttributes(attrs);
-		getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
-	}
-
-	public int getScreenBrightness() {
-		final int level = (int)(100 * getWindow().getAttributes().screenBrightness);
-		return (level >= 0) ? level : 50;
-	}
 
 	private BookCollectionShadow getCollection() {
 		return (BookCollectionShadow)myFBReaderApp.Collection;
