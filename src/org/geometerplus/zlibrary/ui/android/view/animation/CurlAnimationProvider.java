@@ -24,7 +24,9 @@ import android.util.FloatMath;
 
 import org.geometerplus.zlibrary.core.util.BitmapUtil;
 import org.geometerplus.zlibrary.core.view.ZLViewEnums;
+
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
+import org.geometerplus.zlibrary.ui.android.view.ViewUtil;
 
 public final class CurlAnimationProvider extends AnimationProvider {
 	private final Paint myPaint = new Paint();
@@ -329,7 +331,14 @@ public final class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	public void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+	public void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
 		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+	}
+
+	@Override
+	protected void setFilter() {
+		ViewUtil.setColorLevel(myPaint, myColorLevel);
+		ViewUtil.setColorLevel(myBackPaint, myColorLevel);
+		ViewUtil.setColorLevel(myEdgePaint, myColorLevel);
 	}
 }
