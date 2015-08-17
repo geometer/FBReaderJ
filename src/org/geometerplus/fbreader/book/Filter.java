@@ -66,7 +66,7 @@ public abstract class Filter {
 		}
 
 		public boolean matches(AbstractBook book) {
-			return book.labels().contains(Label);
+			return book.hasLabel(Label);
 		}
 	}
 

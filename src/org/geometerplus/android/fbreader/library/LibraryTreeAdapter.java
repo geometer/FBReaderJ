@@ -48,7 +48,7 @@ class LibraryTreeAdapter extends TreeAdapter {
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
 		final boolean unread =
-			tree.getBook() != null && !tree.getBook().labels().contains(Book.READ_LABEL);
+			tree.getBook() != null && !tree.getBook().hasLabel(Book.READ_LABEL);
 
 		final TextView nameView = ViewUtil.findTextView(view, R.id.library_tree_item_name);
 		if (unread) {

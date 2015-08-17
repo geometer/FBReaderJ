@@ -321,12 +321,12 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		addMenuItem(menu, EDIT_INFO, "edit", true);
 		addMenuItem(menu, SHARE_BOOK, "shareBook", false);
 		addMenuItem(menu, RELOAD_INFO, "reloadInfo", false);
-		if (myBook.labels().contains(Book.FAVORITE_LABEL)) {
+		if (myBook.hasLabel(Book.FAVORITE_LABEL)) {
 			addMenuItem(menu, REMOVE_FROM_FAVORITES, "removeFromFavorites", false);
 		} else {
 			addMenuItem(menu, ADD_TO_FAVORITES, "addToFavorites", false);
 		}
-		if (myBook.labels().contains(Book.READ_LABEL)) {
+		if (myBook.hasLabel(Book.READ_LABEL)) {
 			addMenuItem(menu, MARK_AS_UNREAD, "markAsUnread", false);
 		} else {
 			addMenuItem(menu, MARK_AS_READ, "markAsRead", false);
@@ -376,7 +376,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				return true;
 			case ADD_TO_FAVORITES:
 				if (myBook != null) {
-					myBook.addLabel(Book.FAVORITE_LABEL);
+					myBook.addNewLabel(Book.FAVORITE_LABEL);
 					saveBook();
 					invalidateOptionsMenu();
 				}
@@ -390,7 +390,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				return true;
 			case MARK_AS_READ:
 				if (myBook != null) {
-					myBook.addLabel(Book.READ_LABEL);
+					myBook.addNewLabel(Book.READ_LABEL);
 					saveBook();
 					invalidateOptionsMenu();
 				}

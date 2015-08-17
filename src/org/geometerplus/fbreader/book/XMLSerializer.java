@@ -208,10 +208,11 @@ class XMLSerializer extends AbstractSerializer {
 			);
 		}
 
-		for (String label : book.labels()) {
+		for (Label label : book.labels()) {
 			appendTag(
 				buffer, "label", true,
-				"name", label
+				"uid", label.Uid,
+				"name", label.Name
 			);
 		}
 
@@ -543,7 +544,7 @@ class XMLSerializer extends AbstractSerializer {
 		private final ArrayList<UID> myUidList = new ArrayList<UID>();
 		private final ArrayList<Author> myAuthors = new ArrayList<Author>();
 		private final ArrayList<Tag> myTags = new ArrayList<Tag>();
-		private final ArrayList<String> myLabels = new ArrayList<String>();
+		private final ArrayList<Label> myLabels = new ArrayList<Label>();
 		private final StringBuilder myAuthorSortKey = new StringBuilder();
 		private final StringBuilder myAuthorName = new StringBuilder();
 		private final StringBuilder mySeriesTitle = new StringBuilder();
@@ -597,7 +598,7 @@ class XMLSerializer extends AbstractSerializer {
 			for (Tag tag : myTags) {
 				myBook.addTagWithNoCheck(tag);
 			}
-			for (String label : myLabels) {
+			for (Label label : myLabels) {
 				myBook.addLabelWithNoCheck(label);
 			}
 			for (UID uid : myUidList) {
@@ -641,7 +642,12 @@ class XMLSerializer extends AbstractSerializer {
 					} else if ("label".equals(localName)) {
 						final String name = attributes.getValue("name");
 						if (name != null) {
-							myLabels.add(name);
+							final String uid = attributes.getValue("uid");
+							if (uid != null) {
+								myLabels.add(new Label(uid, name));
+							} else {
+								myLabels.add(new Label(name));
+							}
 						}
 					} else if ("series".equals(localName) && XMLNamespaces.CalibreMetadata.equals(uri)) {
 						myState = State.READ_SERIES_TITLE;
