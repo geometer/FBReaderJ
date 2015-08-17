@@ -852,7 +852,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	@Override
 	protected void addLabel(long bookId, Label label) {
-		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES (?)", new Object[] { label });
+		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES (?)", new Object[] { label.Name });
 		final SQLiteStatement statement = get(
 			"INSERT OR IGNORE INTO BookLabel(label_id,book_id,uid,timestamp)" +
 			" SELECT label_id,?,?,? FROM Labels WHERE name=?"
@@ -1844,7 +1844,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"timestamp INTEGER NOT NULL DEFAULT -1," +
 				"uid TEXT(36) NOT NULL UNIQUE," +
 				"CONSTRAINT BookLabel_Unique UNIQUE (label_id,book_id))");
-		final Cursor cursor = myDatabase.rawQuery("SELECT book_id,label_id,timestamp FROM BookLabel", null);
+		final Cursor cursor = myDatabase.rawQuery("SELECT label_id,book_id,timestamp FROM BookLabel_Obsolete", null);
 		final SQLiteStatement statement = get("INSERT INTO BookLabel (label_id,book_id,timestamp,uid) VALUES (?,?,?,?)");
 		while (cursor.moveToNext()) {
 			statement.bindLong(1, cursor.getLong(0));
