@@ -193,19 +193,18 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	private void createBookContextMenu(ContextMenu menu, Book book) {
 		final ZLResource resource = LibraryTree.resource();
-		final List<String> labels = book.labels();
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, ContextItemId.OpenBook, 0, resource.getResource("openBook").getValue());
 		menu.add(0, ContextItemId.ShowBookInfo, 0, resource.getResource("showBookInfo").getValue());
 		if (BookUtil.fileByBook(book).getPhysicalFile() != null) {
 			menu.add(0, ContextItemId.ShareBook, 0, resource.getResource("shareBook").getValue());
 		}
-		if (labels.contains(Book.FAVORITE_LABEL)) {
+		if (book.hasLabel(Book.FAVORITE_LABEL)) {
 			menu.add(0, ContextItemId.RemoveFromFavorites, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
 			menu.add(0, ContextItemId.AddToFavorites, 0, resource.getResource("addToFavorites").getValue());
 		}
-		if (labels.contains(Book.READ_LABEL)) {
+		if (book.hasLabel(Book.READ_LABEL)) {
 			menu.add(0, ContextItemId.MarkAsUnread, 0, resource.getResource("markAsUnread").getValue());
 		} else {
 			menu.add(0, ContextItemId.MarkAsRead, 0, resource.getResource("markAsRead").getValue());
@@ -213,10 +212,10 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		if (myCollection.canRemoveBook(book, true)) {
 			menu.add(0, ContextItemId.DeleteBook, 0, resource.getResource("deleteBook").getValue());
 		}
-		if (labels.contains(Book.SYNC_DELETED_LABEL)) {
+		if (book.hasLabel(Book.SYNC_DELETED_LABEL)) {
 			menu.add(0, ContextItemId.UploadAgain, 0, resource.getResource("uploadAgain").getValue());
 		}
-		if (labels.contains(Book.SYNC_FAILURE_LABEL)) {
+		if (book.hasLabel(Book.SYNC_FAILURE_LABEL)) {
 			menu.add(0, ContextItemId.TryAgain, 0, resource.getResource("tryAgain").getValue());
 		}
 	}
@@ -234,7 +233,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	private void syncAgain(Book book) {
 		book.removeLabel(Book.SYNC_FAILURE_LABEL);
 		book.removeLabel(Book.SYNC_DELETED_LABEL);
-		book.addLabel(Book.SYNC_TOSYNC_LABEL);
+		book.addNewLabel(Book.SYNC_TOSYNC_LABEL);
 		myCollection.saveBook(book);
 	}
 
@@ -250,7 +249,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				FBUtil.shareBook(this, book);
 				return true;
 			case ContextItemId.AddToFavorites:
-				book.addLabel(Book.FAVORITE_LABEL);
+				book.addNewLabel(Book.FAVORITE_LABEL);
 				myCollection.saveBook(book);
 				return true;
 			case ContextItemId.RemoveFromFavorites:
@@ -261,7 +260,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				}
 				return true;
 			case ContextItemId.MarkAsRead:
-				book.addLabel(Book.READ_LABEL);
+				book.addNewLabel(Book.READ_LABEL);
 				myCollection.saveBook(book);
 				getListView().invalidateViews();
 				return true;

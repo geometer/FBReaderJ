@@ -251,7 +251,7 @@ public class SyncService extends Service implements IBookCollection.Listener<Boo
 								if (status.Label != null) {
 									for (String label : Status.AllLabels) {
 										if (status.Label.equals(label)) {
-											book.addLabel(label);
+											book.addNewLabel(label);
 										} else {
 											book.removeLabel(label);
 										}
@@ -376,14 +376,14 @@ public class SyncService extends Service implements IBookCollection.Listener<Boo
 	private Status uploadBookToServerInternal(Book book) {
 		final File file = BookUtil.fileByBook(book).getPhysicalFile().javaFile();
 		final String hash = myCollection.getHash(book, false);
-		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
+		final boolean force = book.hasLabel(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {
 			return Status.HashNotComputed;
 		} else if (myHashesFromServer.Actual.contains(hash)) {
 			return Status.AlreadyUploaded;
 		} else if (!force && myHashesFromServer.Actual.contains(hash)) {
 			return Status.ToBeDeleted;
-		} else if (!force && book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
+		} else if (!force && book.hasLabel(Book.SYNC_FAILURE_LABEL)) {
 			return Status.FailedPreviuousTime;
 		}
 		if (file.length() > 120 * 1024 * 1024) {

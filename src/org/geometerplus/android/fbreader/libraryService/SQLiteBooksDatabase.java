@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 39;
+		final int currentVersion = 40;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -161,6 +161,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables37();
 			case 38:
 				updateTables38();
+			case 39:
+				updateTables39();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -333,14 +335,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 
 		cursor = myDatabase.rawQuery(
-			"SELECT BookLabel.book_id,Labels.name FROM Labels" +
+			"SELECT BookLabel.book_id,Labels.name,BookLabel.uid FROM Labels" +
 			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id",
 			null
 		);
 		while (cursor.moveToNext()) {
 			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
-				book.addLabel(cursor.getString(1));
+				book.addLabel(new Label(cursor.getString(2), cursor.getString(1)));
 			}
 		}
 		cursor.close();
@@ -557,19 +559,19 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<String> listLabels(long bookId) {
+	protected List<Label> listLabels(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT Labels.name FROM Labels" +
+			"SELECT Labels.name,BookLabel.uid FROM Labels" +
 			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
 			" WHERE BookLabel.book_id=?",
 			new String[] { String.valueOf(bookId) }
 		);
-		final LinkedList<String> names = new LinkedList<String>();
+		final LinkedList<Label> labels = new LinkedList<Label>();
 		while (cursor.moveToNext()) {
-			names.add(cursor.getString(0));
+			labels.add(new Label(cursor.getString(1), cursor.getString(0)));
 		}
 		cursor.close();
-		return names;
+		return labels;
 	}
 
 	@Override
@@ -849,16 +851,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected void setLabel(long bookId, String label) {
+	protected void addLabel(long bookId, Label label) {
 		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES (?)", new Object[] { label });
 		final SQLiteStatement statement = get(
-			"INSERT OR IGNORE INTO BookLabel(label_id,book_id,timestamp)" +
-			" SELECT label_id,?,? FROM Labels WHERE name=?"
+			"INSERT OR IGNORE INTO BookLabel(label_id,book_id,uid,timestamp)" +
+			" SELECT label_id,?,?,? FROM Labels WHERE name=?"
 		);
 		synchronized (statement) {
 			statement.bindLong(1, bookId);
-			statement.bindLong(2, System.currentTimeMillis());
-			statement.bindString(3, label);
+			statement.bindString(2, label.Uid);
+			statement.bindLong(3, System.currentTimeMillis());
+			statement.bindString(4, label.Name);
 			statement.execute();
 		}
 	}
@@ -1718,7 +1721,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables31() {
 		myDatabase.execSQL("ALTER TABLE BookLabel ADD COLUMN timestamp INTEGER NOT NULL DEFAULT -1");
-		myDatabase.execSQL("ALTER TABLE BookLabel ADD COLUMN comment TEXT DEFAULT NULL");
 	}
 
 	private void updateTables32() {
@@ -1831,6 +1833,30 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables38() {
 		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN original_text TEXT DEFAULT NULL");
+	}
+
+	private void updateTables39() {
+		myDatabase.execSQL("ALTER TABLE BookLabel RENAME TO BookLabel_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookLabel(" +
+				"label_id INTEGER NOT NULL REFERENCES Labels(label_id)," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"timestamp INTEGER NOT NULL DEFAULT -1," +
+				"uid TEXT(36) NOT NULL UNIQUE," +
+				"CONSTRAINT BookLabel_Unique UNIQUE (label_id,book_id))");
+		final Cursor cursor = myDatabase.rawQuery("SELECT book_id,label_id,timestamp FROM BookLabel", null);
+		final SQLiteStatement statement = get("INSERT INTO BookLabel (label_id,book_id,timestamp,uid) VALUES (?,?,?,?)");
+		while (cursor.moveToNext()) {
+			statement.bindLong(1, cursor.getLong(0));
+			statement.bindLong(2, cursor.getLong(1));
+			statement.bindLong(3, cursor.getLong(2));
+			statement.bindString(4, UUID.randomUUID().toString());
+			statement.execute();
+		}
+		cursor.close();
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookLabel_Obsolete");
+
+		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS DeletedBookLabelIds(uid TEXT(36) PRIMARY KEY)");
 	}
 
 	private SQLiteStatement get(String sql) {
