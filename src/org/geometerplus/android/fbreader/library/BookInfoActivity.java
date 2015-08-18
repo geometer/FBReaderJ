@@ -376,7 +376,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				return true;
 			case ADD_TO_FAVORITES:
 				if (myBook != null) {
-					myBook.addLabel(Book.FAVORITE_LABEL);
+					myBook.addNewLabel(Book.FAVORITE_LABEL);
 					saveBook();
 					invalidateOptionsMenu();
 				}
@@ -390,7 +390,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				return true;
 			case MARK_AS_READ:
 				if (myBook != null) {
-					myBook.addLabel(Book.READ_LABEL);
+					myBook.addNewLabel(Book.READ_LABEL);
 					saveBook();
 					invalidateOptionsMenu();
 				}
