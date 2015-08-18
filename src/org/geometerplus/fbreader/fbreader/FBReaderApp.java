@@ -182,7 +182,7 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		}
 		final Book bookToOpen = book;
-		bookToOpen.addLabel(Book.READ_LABEL);
+		bookToOpen.addNewLabel(Book.READ_LABEL);
 		Collection.saveBook(bookToOpen);
 
 		final SynchronousExecutor executor = createExecutor("loadingBook");
