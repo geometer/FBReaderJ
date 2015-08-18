@@ -64,12 +64,12 @@ class BookMergeHelper {
 	}
 
 	private boolean mergeLabels(DbBook base, DbBook duplicate) {
-		final List<String> labels = duplicate.labels();
+		final List<Label> labels = duplicate.labels();
 		if (MiscUtil.listsEquals(labels, base.labels())) {
 			return false;
 		}
-		for (String l : labels) {
-			base.addLabel(l);
+		for (Label l : labels) {
+			base.addNewLabel(l.Name);
 		}
 		return true;
 	}
