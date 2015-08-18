@@ -105,7 +105,7 @@ public final class DbBook extends AbstractBook {
 				final List<Label> labelsInDb = database.listLabels(myId);
 				for (Label label : labelsInDb) {
 					if (myLabels == null || !myLabels.contains(label)) {
-						database.removeLabel(myId, label.Name);
+						database.removeLabel(myId, label);
 					}
 				}
 				if (myLabels != null) {
