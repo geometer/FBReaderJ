@@ -102,15 +102,15 @@ public final class DbBook extends AbstractBook {
 				for (Tag tag : tags()) {
 					database.saveBookTagInfo(myId, tag);
 				}
-				final List<String> labelsInDb = database.listLabels(myId);
-				for (String label : labelsInDb) {
+				final List<Label> labelsInDb = database.listLabels(myId);
+				for (Label label : labelsInDb) {
 					if (myLabels == null || !myLabels.contains(label)) {
-						database.removeLabel(myId, label);
+						database.removeLabel(myId, label.Name);
 					}
 				}
 				if (myLabels != null) {
-					for (String label : myLabels) {
-						database.setLabel(myId, label);
+					for (Label label : myLabels) {
+						database.addLabel(myId, label);
 					}
 				}
 				database.saveBookSeriesInfo(myId, mySeriesInfo);
