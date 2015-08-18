@@ -67,7 +67,7 @@ public abstract class BooksDatabase {
 
 	protected abstract List<Author> listAuthors(long bookId);
 	protected abstract List<Tag> listTags(long bookId);
-	protected abstract List<String> listLabels(long bookId);
+	protected abstract List<Label> listLabels(long bookId);
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 	protected abstract List<UID> listUids(long bookId);
 	protected abstract boolean hasVisibleBookmark(long bookId);
@@ -100,7 +100,7 @@ public abstract class BooksDatabase {
 	protected abstract void removeBookHistoryEvents(long bookId, int event);
 	protected abstract List<Long> loadRecentBookIds(int event, int limit);
 
-	protected abstract void setLabel(long bookId, String label);
+	protected abstract void addLabel(long bookId, Label label);
 	protected abstract void removeLabel(long bookId, String label);
 
 	protected Bookmark createBookmark(
