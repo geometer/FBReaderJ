@@ -867,15 +867,23 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected void removeLabel(long bookId, String label) {
-		final SQLiteStatement statement = get(
-			"DELETE FROM BookLabel WHERE book_id=? AND label_id IN" +
-			" (SELECT label_id FROM Labels WHERE name=?)"
+	protected void removeLabel(long bookId, Label label) {
+		SQLiteStatement statement = get(
+			"DELETE FROM BookLabel WHERE book_id=? AND uid=?"
 		);
+		final boolean deleted;
 		synchronized (statement) {
 			statement.bindLong(1, bookId);
-			statement.bindString(2, label);
-			statement.execute();
+			statement.bindString(2, label.Uid);
+			deleted = statement.executeUpdateDelete() > 0;
+		}
+
+		if (deleted) {
+			statement = get("INSERT OR IGNORE INTO DeletedBookLabelIds (uid) VALUES (?)");
+			synchronized (statement) {
+				statement.bindString(1, label.Uid);
+				statement.execute();
+			}
 		}
 	}
 

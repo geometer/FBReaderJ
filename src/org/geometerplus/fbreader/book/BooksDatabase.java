@@ -101,7 +101,7 @@ public abstract class BooksDatabase {
 	protected abstract List<Long> loadRecentBookIds(int event, int limit);
 
 	protected abstract void addLabel(long bookId, Label label);
-	protected abstract void removeLabel(long bookId, String label);
+	protected abstract void removeLabel(long bookId, Label label);
 
 	protected Bookmark createBookmark(
 		long id, String uid, String versionUid,
