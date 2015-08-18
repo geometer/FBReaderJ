@@ -41,7 +41,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	protected volatile String myLanguage;
 	protected volatile List<Author> myAuthors;
 	protected volatile List<Tag> myTags;
-	protected volatile List<String> myLabels;
+	protected volatile List<Label> myLabels;
 	protected volatile SeriesInfo mySeriesInfo;
 	protected volatile List<UID> myUids;
 	protected volatile RationalNumber myProgress;
@@ -76,7 +76,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			myIsSaved = false;
 		}
 		if (!MiscUtil.listsEquals(myLabels, book.myLabels)) {
-			myLabels = book.myLabels != null ? new ArrayList<String>(book.myLabels) : null;
+			myLabels = book.myLabels != null ? new ArrayList<Label>(book.myLabels) : null;
 			myIsSaved = false;
 		}
 		if (!MiscUtil.equals(mySeriesInfo, book.mySeriesInfo)) {
@@ -260,20 +260,33 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		addTag(Tag.getTag(null, tagName));
 	}
 
-	public List<String> labels() {
-		return myLabels != null ? Collections.unmodifiableList(myLabels) : Collections.<String>emptyList();
+	public boolean hasLabel(String name) {
+		for (Label l : labels()) {
+			if (name.equals(l.Name)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	void addLabelWithNoCheck(String label) {
+	public List<Label> labels() {
+		return myLabels != null ? Collections.unmodifiableList(myLabels) : Collections.<Label>emptyList();
+	}
+
+	void addLabelWithNoCheck(Label label) {
 		if (myLabels == null) {
-			myLabels = new ArrayList<String>();
+			myLabels = new ArrayList<Label>();
 		}
 		myLabels.add(label);
 	}
 
-	public void addLabel(String label) {
+	public void addNewLabel(String label) {
+		addLabel(new Label(label));
+	}
+
+	public void addLabel(Label label) {
 		if (myLabels == null) {
-			myLabels = new ArrayList<String>();
+			myLabels = new ArrayList<Label>();
 		}
 		if (!myLabels.contains(label)) {
 			myLabels.add(label);
@@ -282,7 +295,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public void removeLabel(String label) {
-		if (myLabels != null && myLabels.remove(label)) {
+		if (myLabels != null && myLabels.remove(new Label(label))) {
 			myIsSaved = false;
 		}
 	}
