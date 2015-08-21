@@ -1217,10 +1217,10 @@
 	</node>
 	<node name="widget">
 		<node name="simple">
-			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
-			<node name="selectAction" value="Select action" toBeTranslated="true"/>
-			<node name="book" value="Read book" toBeTranslated="true"/>
-			<node name="library" value="Open library" toBeTranslated="true"/>
+			<node name="selectIcon" value="Vyberte ikonu widgetu"/>
+			<node name="selectAction" value="Vyberte akci"/>
+			<node name="book" value="Číst knihu"/>
+			<node name="library" value="Otevřít knihovnu"/>
 		</node>
 	</node>
 </resources>
