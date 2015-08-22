@@ -2,8 +2,8 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
-		android:versionCode="2055520"
-		android:versionName="2.6 beta 5"
+		android:versionCode="2055420"
+		android:versionName="2.6 beta 4"
 		android:installLocation="auto"
 >
 	<uses-sdk
@@ -392,15 +392,5 @@
 			</intent-filter>
 		</activity>
 		<service android:name="com.yotadevices.fbreader.FBReaderYotaService" android:exported="false" android:launchMode="singleTask"/>
-		<uses-library android:required="false" android:name="com.yotadevices.platinum"/>
-		<meta-data android:name="com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
-		<meta-data android:name="com.yotadevices.BS_TITLE" android:value="@string/app_name"/>
-		<uses-library android:required="false" android:name="com.sec.android.app.multiwindow"/>
-		<meta-data android:name="com.sec.android.support.multiwindow" android:value="true"/>
-		<meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W" android:resource="@dimen/app_defaultsize_w"/>
-		<meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H" android:resource="@dimen/app_defaultsize_h"/>
-		<meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W" android:resource="@dimen/app_minimumsize_w"/>
-		<meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:resource="@dimen/app_minimumsize_h"/>
-		<meta-data android:name="com.samsung.android.sdk.multiwindow.penwindow.enable" android:value="true"/>
 	</application>
 </manifest>
