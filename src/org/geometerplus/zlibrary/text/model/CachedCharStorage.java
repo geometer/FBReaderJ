@@ -55,7 +55,7 @@ public final class CachedCharStorage {
 				File file = new File(fileName(index));
 				int size = (int)file.length();
 				if (size < 0) {
-					throw new CachedCharStorageException("Error during reading " + fileName(index));
+					throw new CachedCharStorageException("Error during reading " + fileName(index) + "; size = " + size);
 				}
 				block = new char[size / 2];
 				InputStreamReader reader =
@@ -63,12 +63,13 @@ public final class CachedCharStorage {
 						new FileInputStream(file),
 						"UTF-16LE"
 					);
-				if (reader.read(block) != block.length) {
-					throw new CachedCharStorageException("Error during reading " + fileName(index));
+				final int rd = reader.read(block);
+				if (rd != block.length) {
+					throw new CachedCharStorageException("Error during reading " + fileName(index) + "; " + rd + " != " + block.length);
 				}
 				reader.close();
 			} catch (IOException e) {
-				throw new CachedCharStorageException("Error during reading " + fileName(index));
+				throw new CachedCharStorageException("Error during reading " + fileName(index), e);
 			}
 			myArray.set(index, new WeakReference<char[]>(block));
 		}
