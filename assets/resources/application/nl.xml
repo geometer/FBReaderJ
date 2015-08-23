@@ -1208,10 +1208,10 @@
 	</node>
 	<node name="widget">
 		<node name="simple">
-			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
-			<node name="selectAction" value="Select action" toBeTranslated="true"/>
-			<node name="book" value="Read book" toBeTranslated="true"/>
-			<node name="library" value="Open library" toBeTranslated="true"/>
+			<node name="selectIcon" value="Selecteer icoon"/>
+			<node name="selectAction" value="Selecteer actie"/>
+			<node name="book" value="Lees boek"/>
+			<node name="library" value="Open bibliotheek"/>
 		</node>
 	</node>
 </resources>
