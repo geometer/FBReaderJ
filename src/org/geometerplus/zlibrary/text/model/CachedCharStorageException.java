@@ -25,4 +25,8 @@ public final class CachedCharStorageException extends RuntimeException {
 	public CachedCharStorageException(String message) {
 		super(message);
 	}
+
+	public CachedCharStorageException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }
