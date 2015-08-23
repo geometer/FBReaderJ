@@ -79,7 +79,7 @@
 				android:orientation="vertical"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp"
-				android:layout_marginBottom="6px"
+				android:layout_marginBottom="6dp"
 			>
 				<include layout="@layout/book_info_pair" android:id="@+id/book_title" />
 				<include layout="@layout/book_info_pair" android:id="@+id/book_authors" />
@@ -108,7 +108,7 @@
 				android:orientation="vertical"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp"
-				android:layout_marginBottom="6px"
+				android:layout_marginBottom="6dp"
 			>
 				<include layout="@layout/book_info_pair" android:id="@+id/file_name" />
 				<include layout="@layout/book_info_pair" android:id="@+id/file_type" />

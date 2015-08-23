@@ -21,13 +21,13 @@
 		android:singleLine="true"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:ellipsize="end"
-		android:paddingTop="4px"
+		android:paddingTop="4dp"
 	/>
 	<SeekBar
 		android:id="@+id/navigation_slider"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingTop="4px"
+		android:paddingTop="4dp"
 	/>
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -36,7 +36,7 @@
 		android:layout_below="@id/navigation_slider"
 		android:weightSum="1.0"
 		android:layout_alignParentBottom="true"
-		android:paddingTop="4px"
+		android:paddingTop="4dp"
 	>
 		<Button
 			android:id="@+id/navigation_ok"
