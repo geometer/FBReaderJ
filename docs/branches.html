@@ -1,0 +1,48 @@
+<html>
+<head>
+  <title>Branches</title>
+	<style>
+		td {
+			padding-right:1em;
+			padding-left:1em;
+		}
+		table.deps td {
+			text-align:center;
+		}
+	</style>
+</head>
+<body>
+<p>Branches logic in this repo is not too simple. So I write this text to explain
+which branches we use for builds and how we merge the branches.</p>
+
+<h2>Branches semantic</h2>
+
+<h3>Main branches</h3>
+
+<table>
+<tr><td>master</td><td>this branch is used for android 2.* builds</td></tr>
+<tr><td>ice-cream-sandwich</td><td>this branch contains all code for android 3/4/5 releases except yotaphone 1 code that requires a non-free (?) yota SDK</td></tr>
+<tr><td>yota2</td><td>ice-cream-sandwich + yotaphone 1 code; used for official android 3/4/5 builds</td></tr>
+<tr><td>nook</td><td>this branch is used for Nook Simple Touch version builds</td></tr>
+<tr><td>kindle</td><td>this branch is used for builds fo Amazon Android devices (Kindle *)</td></tr>
+</table>
+
+<h3>Beta branches</h3>
+
+We expect that FBReader 2.6 will be released for all Android versions starting from 2.*. However
+new UI features (configurable menu, widgets, etc.) will be included into build for Android 3
+and higher only.
+
+<table>
+<tr><td>2.6ics</td><td>ice-cream-sandwich + 2.6 features</td></tr>
+<tr><td>2.6</td><td>yota2 + 2.6 features</td></tr>
+<tr><td>2.6-kindle</td><td>kindle + 2.6 features</td></tr>
+</table>
+
+<h2>Merging order</h2>
+<table class='deps'>
+<tr><td>master</td><td>&#8594;</td><td>ice-cream-sandwich</td><td>&#8594;</td><td>yota2</td><td>&#8594;</td><td>kindle</td></tr>
+<tr><td></td><td></td><td>&#8595;</td><td></td><td>&#8595;</td><td></td><td>&#8595;</td></tr>
+<tr><td></td><td></td><td>2.6ics</td><td>&#8594;</td><td>2.6</td><td>&#8594;</td><td>2.6-kindle</td></tr>
+<tr><td>master</td><td>&#8594;</td><td>nook</td></tr>
+</table>
