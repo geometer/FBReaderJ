@@ -700,10 +700,6 @@
 				<node name="summaryOn" value="Mostra segnalibri in basso"/>
 				<node name="summaryOff" value="Non mostrare segnalibri in basso"/>
 			</node>
-			<node name="showProgress" value="Mostra numero di pagina">
-				<node name="summaryOn" value="Mostra numero di pagina in barra piè di pagina"/>
-				<node name="summaryOff" value="Non mostrare numero di pagina in barra piè di pagina"/>
-			</node>
 			<node name="showBattery" value="Mostra livello batteria">
 				<node name="summaryOn" value="Mostra livello batteria in barra piè di pagina"/>
 				<node name="summaryOff" value="Non mostrare livello batteria in barra piè di pagina"/>

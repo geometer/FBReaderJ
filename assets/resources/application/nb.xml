@@ -709,10 +709,6 @@
 				<node name="summaryOn" value="Vis merkene i innholdsfortegnelsen i bunntekstlinjen"/>
 				<node name="summaryOff" value="Ikke vis merkene i innholdsfortegnelsen i bunntekstlinjen"/>
 			</node>
-			<node name="showProgress" value="Vis sidetall">
-				<node name="summaryOn" value="Vis sidetall i bunnteksten"/>
-				<node name="summaryOff" value="Ikke vis sidetall i bunnteksten"/>
-			</node>
 			<node name="showBattery" value="Vis batterinivå">
 				<node name="summaryOn" value="Vis batterinivået i bunnteksten"/>
 				<node name="summaryOff" value="Ikke vis batterinivået i bunnteksten"/>

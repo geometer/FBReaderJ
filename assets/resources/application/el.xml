@@ -699,10 +699,6 @@
 				<node name="summaryOn" value="Εμφάνιση Κεφάλαιου στο υποσέλιδο."/>
 				<node name="summaryOff" value="Μη εμφάνιση Κεφάλαιου στο υποσέλιδο."/>
 			</node>
-			<node name="showProgress" value="Εμφάνιση αριθμού σελίδας">
-				<node name="summaryOn" value="Εμφάνιση αριθμού σελίδας στο υποσέλιδο."/>
-				<node name="summaryOff" value="Μη εμφάνιση αριθμού σελίδας στο υποσέλιδο."/>
-			</node>
 			<node name="showBattery" value="Εμφάνιση σύμβολου μπαταρίας">
 				<node name="summaryOn" value="Εμφάνιση σύμβολου μπαταρίας στο υποσέλιδο."/>
 				<node name="summaryOff" value="Μη εμφάνιση σύμβολου μπαταρίας στο υποσέλιδο."/>

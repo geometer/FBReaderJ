@@ -702,10 +702,6 @@
 				<node name="summaryOn" value="Arata favoritele curpinsului în bara de subsol"/>
 				<node name="summaryOff" value="Nu arata semne de cuprins în bara de subsol"/>
 			</node>
-			<node name="showProgress" value="Arata numarul paginii">
-				<node name="summaryOn" value="Afiseaza numarul paginii în subsol"/>
-				<node name="summaryOff" value="Nu arata numarul paginii în subsol"/>
-			</node>
 			<node name="showBattery" value="Afiseaza nivelul bateriei">
 				<node name="summaryOn" value="Afiseaza nivelul bateriei în subsol"/>
 				<node name="summaryOff" value="Nu afisa nivelul bateriei în subsol"/>

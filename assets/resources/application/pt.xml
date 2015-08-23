@@ -713,10 +713,6 @@
 				<node name="summaryOn" value="Mostrar marcas de TOC na barra de rodapé"/>
 				<node name="summaryOff" value="Não mostrar marcas de TOC na barra de rodapé"/>
 			</node>
-			<node name="showProgress" value="Mostrar número de página">
-				<node name="summaryOn" value="Mostrar número de página no rodapé"/>
-				<node name="summaryOff" value="Não mostrar o número da página no rodapé"/>
-			</node>
 			<node name="showBattery" value="Mostrar nível de bateria">
 				<node name="summaryOn" value="Mostrar nível de bateria no rodapé"/>
 				<node name="summaryOff" value="Não mostrar o nível da bateria no rodapé"/>

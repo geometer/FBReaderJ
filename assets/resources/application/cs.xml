@@ -718,10 +718,6 @@
 				<node name="summaryOn" value="Zobrazit značky obsahu v patičce"/>
 				<node name="summaryOff" value="Nezobrazovat značky obsahu v patičce"/>
 			</node>
-			<node name="showProgress" value="Zobrazit číslo stránky">
-				<node name="summaryOn" value="Zobrazit číslo stránky v patičce"/>
-				<node name="summaryOff" value="Nezobrazovat číslo stránky v patičce"/>
-			</node>
 			<node name="showBattery" value="Zobrazit úroveň baterie">
 				<node name="summaryOn" value="Zobrazit úroveň baterie v patičce"/>
 				<node name="summaryOff" value="Nezobrazovat úroveň baterie v patičce"/>

@@ -699,10 +699,6 @@
 				<node name="summaryOn" value="Показувати відмітки TOC в підвалі"/>
 				<node name="summaryOff" value="Не показувати відмітки TOC в підвалі"/>
 			</node>
-			<node name="showProgress" value="Показувати номер сторінки">
-				<node name="summaryOn" value="Показувати номер сторінки в підвалі"/>
-				<node name="summaryOff" value="Не показувати номер сторінки в підвалі"/>
-			</node>
 			<node name="showBattery" value="Показувати рівень заяду">
 				<node name="summaryOn" value="Показувати рівень заяду в підвалі"/>
 				<node name="summaryOff" value="Не показувати рівень заяду в підвалі"/>

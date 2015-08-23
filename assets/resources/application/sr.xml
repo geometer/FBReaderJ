@@ -709,10 +709,6 @@
 				<node name="summaryOn" value="Приказује ознаке садржаја у подножју."/>
 				<node name="summaryOff" value="Не приказује ознаке садржаја у подножју."/>
 			</node>
-			<node name="showProgress" value="Број странице">
-				<node name="summaryOn" value="Приказује број странице у подножју."/>
-				<node name="summaryOff" value="Не приказује број странице у подножју."/>
-			</node>
 			<node name="showBattery" value="Ниво батерије">
 				<node name="summaryOn" value="Приказује ниво батерије у подножју."/>
 				<node name="summaryOff" value="Не приказује ниво батерије у подножју."/>

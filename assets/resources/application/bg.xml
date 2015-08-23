@@ -715,10 +715,6 @@
 				<node name="summaryOn" value="Покажи съдържание по раздели в долния колонтитул"/>
 				<node name="summaryOff" value="Не показвай съдържание по раздели в долния колонтитул"/>
 			</node>
-			<node name="showProgress" value="Номер на страницата">
-				<node name="summaryOn" value="Покажи номер на страницата в долния колонтитул"/>
-				<node name="summaryOff" value="Не показвай номер на страницата в долния колонтитул"/>
-			</node>
 			<node name="showBattery" value="Състояние на батерията">
 				<node name="summaryOn" value="Покажи състояние на батерията в долния колонтитул"/>
 				<node name="summaryOff" value="Не показвай състояние на батерията в долния колонтитул"/>

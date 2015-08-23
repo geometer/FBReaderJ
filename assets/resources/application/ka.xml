@@ -714,10 +714,6 @@
 				<node name="summaryOn" value="სარდაფზე ნიშნულის დახატვა თავის დასაწყისში"/>
 				<node name="summaryOff" value="სარდაფი ნიშნულების გარეშე"/>
 			</node>
-			<node name="showProgress" value="გვერდების რაოდენობის ჩვენება">
-				<node name="summaryOn" value="გვერდების რაოდენობის ჩვენება სარდაფში"/>
-				<node name="summaryOff" value="არ აჩვენო გვერდების რაოდენობა სარდაფში"/>
-			</node>
 			<node name="showBattery" value="ელემენტის მუხტის ჩვენება">
 				<node name="summaryOn" value="ელემენტის მუხტის ჩვენება სარდაფში"/>
 				<node name="summaryOff" value="არ აჩვენო ელემენტის მუხტი სარდაფში"/>

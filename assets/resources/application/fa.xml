@@ -708,10 +708,6 @@
 				<node name="summaryOn" value="نمايش علائم در نوار زيربرگ فهرست مطالب"/>
 				<node name="summaryOff" value="عدم نمايش علائم در نوار زيربرگ فهرست مطالب"/>
 			</node>
-			<node name="showProgress" value="نمايش شماره صفحه">
-				<node name="summaryOn" value="نمايش شماره صفحه در زيربرگ"/>
-				<node name="summaryOff" value="عدم نمايش شماره صفحه در زيربرگ"/>
-			</node>
 			<node name="showBattery" value="نمايش سطح باتري">
 				<node name="summaryOn" value="نمايش سطح باتري در زيربرگ"/>
 				<node name="summaryOff" value="عدم نمايش سطح باتري در زيربرگ"/>

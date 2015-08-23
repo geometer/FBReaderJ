@@ -700,10 +700,6 @@
 				<node name="summaryOn" value="Hiện đánh dấu mục lục ở thanh cuối trang"/>
 				<node name="summaryOff" value="Không Hiện đánh dấu mục lục ở thanh cuối trang"/>
 			</node>
-			<node name="showProgress" value="Hiện số trang">
-				<node name="summaryOn" value="Hiện số trang ở dòng cuối"/>
-				<node name="summaryOff" value="Đừng hiện số trang ở dòng cuối"/>
-			</node>
 			<node name="showBattery" value="Hiện lượng pin">
 				<node name="summaryOn" value="Hiện lượng pin ở dòng cuối"/>
 				<node name="summaryOff" value="Đừng hiện lượng pin ở dòng cuối"/>
