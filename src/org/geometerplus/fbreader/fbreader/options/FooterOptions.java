@@ -26,6 +26,7 @@ public class FooterOptions {
 	public final ZLBooleanOption ShowClock;
 	public final ZLBooleanOption ShowBattery;
 	public final ZLBooleanOption ShowProgress;
+	public final ZLBooleanOption ShowProgressAsPercentage;
 	public final ZLStringOption Font;
 
 	public FooterOptions() {
@@ -33,6 +34,7 @@ public class FooterOptions {
 		ShowClock = new ZLBooleanOption("Options", "ShowClockInFooter", true);
 		ShowBattery = new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
 		ShowProgress = new ZLBooleanOption("Options", "ShowProgressInFooter", true);
+		ShowProgressAsPercentage = new ZLBooleanOption("Options", "ShowProgressInFooterAsPercentage", false);
 		Font = new ZLStringOption("Options", "FooterFont", "Droid Sans");
 	}
 }

@@ -713,6 +713,10 @@
 				<node name="summaryOn" value="Show page number in footer"/>
 				<node name="summaryOff" value="Don't show page number in footer"/>
 			</node>
+			<node name="showProgressAsPercentage" value="Show pages as percentage">
+				<node name="summaryOn" value="Show progress as percentage in footer"/>
+				<node name="summaryOff" value="Show page number in footer"/>
+			</node>
 			<node name="showBattery" value="Show battery level">
 				<node name="summaryOn" value="Show battery level in footer"/>
 				<node name="summaryOff" value="Don't show battery level in footer"/>

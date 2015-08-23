@@ -532,9 +532,13 @@ public final class FBView extends ZLTextView {
 			final StringBuilder info = new StringBuilder();
 			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
 			if (footerOptions.ShowProgress.getValue()) {
-				info.append(pagePosition.Current);
-				info.append("/");
-				info.append(pagePosition.Total);
+				if (footerOptions.ShowProgressAsPercentage.getValue()) {
+					info.append(pagePosition.getPercentageString());
+				} else {
+					info.append(pagePosition.Current);
+					info.append("/");
+					info.append(pagePosition.Total);
+				}
 			}
 			if (footerOptions.ShowClock.getValue()) {
 				if (info.length() > 0) {
@@ -546,6 +550,7 @@ public final class FBView extends ZLTextView {
 				if (info.length() > 0) {
 					info.append(separator);
 				}
+				info.append("⚡ ");
 				info.append(myReader.getBatteryLevel());
 				info.append("%");
 			}
