@@ -21,20 +21,20 @@
 		android:singleLine="true"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:ellipsize="end"
-		android:paddingTop="4px"
+		android:paddingTop="4dp"
 	/>
 	<SeekBar
 		android:id="@+id/navigation_slider"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingTop="4px"
+		android:paddingTop="4dp"
 	/>
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/navigation_slider"
 		android:layout_alignParentBottom="true"
-		android:paddingTop="4px"
+		android:paddingTop="4dp"
 	>
 		<Button
 			android:id="@+id/navigation_reset_button"
