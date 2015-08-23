@@ -189,7 +189,7 @@ class XMLSerializer extends AbstractSerializer {
 				buffer, "dc:identifier", false,
 				"scheme", uid.Type
 			);
-			buffer.append(uid.Id);
+			buffer.append(escapeForXml(uid.Id));
 			closeTag(buffer, "dc:identifier");
 		}
 
