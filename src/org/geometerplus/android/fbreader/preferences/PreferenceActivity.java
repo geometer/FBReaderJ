@@ -557,11 +557,17 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		newStyleFooterPreferences.add(statusLineScreen.addOption(profile.FooterNGForegroundUnreadOption, "footerForegroundUnreadColor"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowTOCMarks, "tocMarks"));
 
-
 		statusLineScreen.addPreference(new ZLChoicePreference(
 				this, statusLineScreen.Resource.getResource("showProgressTypes"),
 				footerOptions.ShowProgressType, footerOptions.getProgressValueResourceKeys()
-		));
+		) {
+			@Override
+			public boolean isEnabled() {
+				int scrollbarType = viewOptions.ScrollbarType.getValue();
+				return scrollbarType == FBView.SCROLLBAR_SHOW_AS_FOOTER ||
+						scrollbarType == FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE;
+			}
+		});
 
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowClock, "showClock"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowBattery, "showBattery"));
