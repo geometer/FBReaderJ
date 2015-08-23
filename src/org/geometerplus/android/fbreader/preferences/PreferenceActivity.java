@@ -557,8 +557,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		newStyleFooterPreferences.add(statusLineScreen.addOption(profile.FooterNGForegroundUnreadOption, "footerForegroundUnreadColor"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowTOCMarks, "tocMarks"));
 
-		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowProgress, "showProgress"));
-		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowProgressAsPercentage, "showProgressAsPercentage"));
+
+		statusLineScreen.addPreference(new ZLChoicePreference(
+				this, statusLineScreen.Resource.getResource("showProgressTypes"),
+				footerOptions.ShowProgressType, footerOptions.getProgressValueResourceKeys()
+		));
+
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowClock, "showClock"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowBattery, "showBattery"));
 		footerPreferences.add(statusLineScreen.addPreference(new FontPreference(

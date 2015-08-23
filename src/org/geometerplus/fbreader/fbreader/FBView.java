@@ -531,30 +531,35 @@ public final class FBView extends ZLTextView {
 		protected String buildInfoString(PagePosition pagePosition, String separator) {
 			final StringBuilder info = new StringBuilder();
 			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
-			if (footerOptions.ShowProgress.getValue()) {
-				if (footerOptions.ShowProgressAsPercentage.getValue()) {
-					info.append(pagePosition.getPercentageString());
-				} else {
-					info.append(pagePosition.Current);
-					info.append("/");
-					info.append(pagePosition.Total);
-				}
+
+			if (footerOptions.showProgressAsPages()) {
+				maybeAddSeparator(separator, info);
+				info.append(pagePosition.Current);
+				info.append("/");
+				info.append(pagePosition.Total);
 			}
+			if (footerOptions.showProgressAsPercentage()) {
+				maybeAddSeparator(separator, info);
+				info.append(pagePosition.getPercentageString());
+			}
+
 			if (footerOptions.ShowClock.getValue()) {
-				if (info.length() > 0) {
-					info.append(separator);
-				}
+				maybeAddSeparator(separator, info);
 				info.append(ZLibrary.Instance().getCurrentTimeString());
 			}
 			if (footerOptions.ShowBattery.getValue()) {
-				if (info.length() > 0) {
-					info.append(separator);
-				}
+				maybeAddSeparator(separator, info);
 				info.append("⚡ ");
 				info.append(myReader.getBatteryLevel());
 				info.append("%");
 			}
 			return info.toString();
+		}
+
+		private void maybeAddSeparator(String separator, StringBuilder info) {
+			if (info.length() > 0) {
+                info.append(separator);
+            }
 		}
 
 		private List<FontEntry> myFontEntry;
