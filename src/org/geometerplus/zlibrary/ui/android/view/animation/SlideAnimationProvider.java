@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.ui.android.view.animation;
 import android.graphics.*;
 import android.graphics.drawable.GradientDrawable;
 
+import org.geometerplus.zlibrary.ui.android.view.ViewUtil;
+
 public final class SlideAnimationProvider extends SimpleAnimationProvider {
 	private final Paint myDarkPaint = new Paint();
 	private final Paint myPaint = new Paint();
@@ -31,10 +33,16 @@ public final class SlideAnimationProvider extends SimpleAnimationProvider {
 	}
 
 	private void setDarkFilter(int visible, int full) {
-		final int color = 145 + 100 * Math.abs(visible) / full;
-		myDarkPaint.setColorFilter(new PorterDuffColorFilter(
-			Color.rgb(color, color, color), PorterDuff.Mode.MULTIPLY
-		));
+		int darkColorLevel = 145 + 100 * Math.abs(visible) / full;
+		if (myColorLevel != null) {
+			darkColorLevel = darkColorLevel * myColorLevel / 0xFF;
+		}
+		ViewUtil.setColorLevel(myDarkPaint, darkColorLevel);
+	}
+
+	@Override
+	protected void setFilter() {
+		ViewUtil.setColorLevel(myPaint, myColorLevel);
 	}
 
 	private void drawShadow(Canvas canvas, int top, int bottom, int dX) {
@@ -79,7 +87,7 @@ public final class SlideAnimationProvider extends SimpleAnimationProvider {
 	}
 
 	@Override
-	public void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+	protected void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
 		if (myDirection.IsHorizontal) {
 			final int dX = myEndX - myStartX;
 			setDarkFilter(dX, myWidth);
