@@ -42,7 +42,7 @@ import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
 	static final String AUTHORISATION_ACTION = "android.fbreader.action.network.AUTHORISATION";
-	static final String SIGNIN_ACTION = "android.fbreader.action.network.SIGNIN";
+	public static final String SIGNIN_ACTION = "android.fbreader.action.network.SIGNIN";
 	static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
 	static final String EXTRA_CATALOG_ACTION = "android.fbreader.action.network.EXTRA_CATALOG";
 

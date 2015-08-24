@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.authentication.litres.*;
 
+import org.geometerplus.android.fbreader.network.Util;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 
 abstract class RegistrationActivity extends Activity implements UserRegistrationConstants {
@@ -50,7 +51,7 @@ abstract class RegistrationActivity extends Activity implements UserRegistration
 	protected String myRecoverPasswordURL;
 
 	protected void reportSuccess(String username, String password, String sid) {
-		final Intent data = new Intent("android.fbreader.action.network.SIGNIN");
+		final Intent data = new Intent(Util.SIGNIN_ACTION);
 		data.putExtra(USER_REGISTRATION_USERNAME, username);
 		data.putExtra(USER_REGISTRATION_PASSWORD, password);
 		data.putExtra(USER_REGISTRATION_LITRES_SID, sid);
