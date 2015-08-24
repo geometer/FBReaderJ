@@ -47,10 +47,11 @@ import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 
 import org.geometerplus.android.fbreader.FBReader;
 
-public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
+public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLongClickListener {
 	public final ExecutorService PrepareService = Executors.newSingleThreadExecutor();
 
 	private final Paint myPaint = new Paint();
+
 	private final BitmapManagerImpl myBitmapManager = new BitmapManagerImpl(this);
 	private Bitmap myFooterBitmap;
 	private final SystemInfo mySystemInfo;
@@ -277,7 +278,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	@Override
 	public void startManualScrolling(int x, int y, ZLView.Direction direction) {
 		final AnimationProvider animator = getAnimationProvider();
-		animator.setup(direction, getWidth(), getMainAreaHeight());
+		animator.setup(direction, getWidth(), getMainAreaHeight(), myColorLevel);
 		animator.startManualScrolling(x, y);
 	}
 
@@ -298,7 +299,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			return;
 		}
 		final AnimationProvider animator = getAnimationProvider();
-		animator.setup(direction, getWidth(), getMainAreaHeight());
+		animator.setup(direction, getWidth(), getMainAreaHeight(), myColorLevel);
 		animator.startAnimatedScrolling(pageIndex, x, y, speed);
 		if (animator.getMode().Auto) {
 			postInvalidate();
@@ -312,7 +313,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			return;
 		}
 		final AnimationProvider animator = getAnimationProvider();
-		animator.setup(direction, getWidth(), getMainAreaHeight());
+		animator.setup(direction, getWidth(), getMainAreaHeight(), myColorLevel);
 		animator.startAnimatedScrolling(pageIndex, null, null, speed);
 		if (animator.getMode().Auto) {
 			postInvalidate();
@@ -667,19 +668,8 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		return resourceId > 0 ? res.getDimensionPixelSize(resourceId) : 0;
 	}
 
-	public void setScreenBrightness(int percent) {
-		final Context context = getContext();
-		if (!(context instanceof FBReader)) {
-			return;
-		}
-		((FBReader)context).setScreenBrightness(percent);
-	}
-
-	public int getScreenBrightness() {
-		final Context context = getContext();
-		if (!(context instanceof FBReader)) {
-			return 50;
-		}
-		return ((FBReader)context).getScreenBrightness();
+	@Override
+	protected void updateColorLevel() {
+		ViewUtil.setColorLevel(myPaint, myColorLevel);
 	}
 }
