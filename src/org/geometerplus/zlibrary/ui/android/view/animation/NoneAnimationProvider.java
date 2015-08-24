@@ -23,6 +23,8 @@ import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 
+import org.geometerplus.zlibrary.ui.android.view.ViewUtil;
+
 public final class NoneAnimationProvider extends AnimationProvider {
 	private final Paint myPaint = new Paint();
 
@@ -79,7 +81,12 @@ public final class NoneAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	public void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+	public void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
 		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+	}
+
+	@Override
+	protected void setFilter() {
+		ViewUtil.setColorLevel(myPaint, myColorLevel);
 	}
 }
