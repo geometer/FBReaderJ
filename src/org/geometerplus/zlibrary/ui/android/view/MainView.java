@@ -62,7 +62,7 @@ public abstract class MainView extends View {
 			myColorLevel = 0x60 + (0xFF - 0x60) * Math.max(percent, 0) / 25;
 			percent = 1;
 		}
-		activity.setScreenBrightnessSystem(percent);
+		activity.setScreenBrightnessSystem(percent / 100.0f);
 		updateColorLevel();
 		postInvalidate();
 	}
