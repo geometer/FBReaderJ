@@ -68,9 +68,9 @@ public abstract class FBReaderMainActivity extends Activity {
 		getWindow().setAttributes(attrs);
 	}
 
-	public void setScreenBrightnessSystem(int percent) {
+	public void setScreenBrightnessSystem(float level) {
 		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
-		attrs.screenBrightness = percent / 100.0f;
+		attrs.screenBrightness = level;
 		getWindow().setAttributes(attrs);
 	}
 
