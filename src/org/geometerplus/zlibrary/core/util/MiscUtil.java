@@ -53,18 +53,10 @@ public abstract class MiscUtil {
 		if (map1 == null) {
 			return map2 == null || map2.isEmpty();
 		}
-		if (map1.size() != map2.size()
-				|| !map1.keySet().containsAll(map2.keySet())) {
-			return false;
+		if (map2 == null) {
+			return map1.isEmpty();
 		}
-		for (KeyT key : map1.keySet()) {
-			final ValueT value1 = map1.get(key);
-			final ValueT value2 = map2.get(key);
-			if (!equals(value1, value2)) {
-				return false;
-			}
-		}
-		return true;
+		return map1.equals(map2);
 	}
 
 	public static boolean matchesIgnoreCase(String text, String lowerCasePattern) {

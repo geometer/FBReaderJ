@@ -188,6 +188,13 @@ public final class MimeType {
 		myParameters = parameters;
 	}
 
+	public MimeType clean() {
+		if (myParameters == null) {
+			return this;
+		}
+		return get(Name);
+	}
+
 	public String getParameter(String key) {
 		return myParameters != null ? myParameters.get(key) : null;
 	}

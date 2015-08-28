@@ -73,6 +73,7 @@ class FileTypeFB2 extends FileType {
 
 	@Override
 	public String defaultExtension(MimeType mime) {
+		mime = mime.clean();
 		if (MimeType.TYPES_FB2.contains(mime) || MimeType.TEXT_XML.equals(mime)) {
 			return "fb2";
 		}
