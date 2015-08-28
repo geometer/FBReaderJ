@@ -68,6 +68,7 @@ public class FileTypeCollection {
 		if (mime == null) {
 			return null;
 		}
+		mime = mime.clean();
 		for (FileType type : types()) {
 			if (type.mimeTypes().contains(mime)) {
 				return type;
