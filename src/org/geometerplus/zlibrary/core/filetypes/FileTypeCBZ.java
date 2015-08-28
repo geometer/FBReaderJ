@@ -66,6 +66,7 @@ class FileTypeCBZ extends FileType {
 
 	@Override
 	public String defaultExtension(MimeType mime) {
+		mime = mime.clean();
 		if (MimeType.APP_CBZ.equals(mime) || MimeType.APP_ZIP.equals(mime)) {
 			return "cbz";
 		}
