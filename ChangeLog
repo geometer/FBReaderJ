@@ -8,7 +8,11 @@
 * Customisable main menu
 * Simple widgets
 
-===== 2.5.6 (??? ??, 2015) =====
+===== 2.5.7 (Aug 28, 2015) =====
+* Better implementation of brighthess levels
+* Minor issues in book sync
+
+===== 2.5.6 (Aug 20, 2015) =====
 * New (material design style) icon
 * More brighthess levels in reading mode
 
