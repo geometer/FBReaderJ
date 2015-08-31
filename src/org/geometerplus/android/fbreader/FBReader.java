@@ -545,7 +545,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 				final int brightnessLevel =
 					getZLibrary().ScreenBrightnessLevelOption.getValue();
 				if (brightnessLevel != 0) {
-					getViewWidget().setScreenBrightness(brightnessLevel);
+					getViewWidget().setScreenBrightness(brightnessLevel, false);
 				} else {
 					setScreenBrightnessAuto();
 				}

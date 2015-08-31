@@ -218,7 +218,7 @@ public final class FBView extends ZLTextView {
 					startManualScrolling(x, y);
 				} else {
 					final int delta = (myStartBrightness + 30) * (myStartY - y) / getContextHeight();
-					myReader.getViewWidget().setScreenBrightness(myStartBrightness + delta);
+					myReader.getViewWidget().setScreenBrightness(myStartBrightness + delta, true);
 					return true;
 				}
 			}
