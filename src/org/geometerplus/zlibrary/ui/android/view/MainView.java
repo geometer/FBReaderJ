@@ -19,14 +19,23 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import org.geometerplus.android.fbreader.FBReaderMainActivity;
+import org.geometerplus.zlibrary.ui.android.R;
 
 public abstract class MainView extends View {
 	protected Integer myColorLevel;
+	private TextView myPercentView;
+	private final Timer myPercentTimer = new Timer();
+	private volatile TimerTask myPercentCancelTask;
 
 	public MainView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -40,7 +49,7 @@ public abstract class MainView extends View {
 		super(context);
 	}
 
-	public final void setScreenBrightness(int percent) {
+	public final void setScreenBrightness(int percent, boolean showPercent) {
 		if (percent < 1) {
 			percent = 1;
 		} else if (percent > 100) {
@@ -65,6 +74,34 @@ public abstract class MainView extends View {
 
 		final FBReaderMainActivity activity = (FBReaderMainActivity)context;
 		activity.getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
+		if (showPercent) {
+			if (myPercentView == null) {
+				myPercentView = (TextView)activity.findViewById(R.id.percent_view);
+			}
+			if (myPercentView != null) {
+				synchronized (myPercentTimer) {
+					if (myPercentCancelTask != null) {
+						myPercentCancelTask.cancel();
+					}
+					myPercentCancelTask = new TimerTask() {
+						public void run() {
+							synchronized (myPercentTimer) {
+								post(new Runnable() {
+									public void run() {
+										myPercentView.setVisibility(View.GONE);
+									}
+								});
+							}
+						}
+					};
+					myPercentTimer.schedule(myPercentCancelTask, 1000);
+				}
+				myPercentView.setVisibility(View.VISIBLE);
+				final int color = myColorLevel == null ? 0x80 : 0x80 * myColorLevel / 0xFF;
+				myPercentView.setTextColor(Color.argb(0xCC, color, color, color));
+				myPercentView.setText(percent + "%");
+			}
+		}
 		activity.setScreenBrightnessSystem(level);
 		if (oldColorLevel != myColorLevel) {
 			updateColorLevel();
