@@ -20,6 +20,20 @@
 			android:fadeScrollbars="false"
 		/>
 		<TextView
+			android:id="@+id/percent_view"
+			android:visibility="gone"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:focusable="false"
+			android:textSize="60sp"
+			android:textColor="#CC888888"
+			android:background="@android:color/transparent"
+			android:gravity="center|center_vertical"
+			android:paddingLeft="30dp"
+			android:paddingRight="30dp"
+			android:text="50%"
+		/>
+		<TextView
 			android:id="@+id/hint_view"
 			android:visibility="gone"
 			android:layout_width="fill_parent"
