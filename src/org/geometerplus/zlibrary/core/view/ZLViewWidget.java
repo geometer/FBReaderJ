@@ -29,6 +29,6 @@ public interface ZLViewWidget {
 	void startAnimatedScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed);
 	void startAnimatedScrolling(int x, int y, int speed);
 
-	void setScreenBrightness(int percent);
+	void setScreenBrightness(int percent, boolean showPercent);
 	int getScreenBrightness();
 }
