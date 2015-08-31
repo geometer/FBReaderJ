@@ -19,14 +19,23 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import org.geometerplus.android.fbreader.FBReaderMainActivity;
+import org.geometerplus.zlibrary.ui.android.R;
 
 public abstract class MainView extends View {
 	protected Integer myColorLevel;
+	private TextView myPercentView;
+	private final Timer myPercentTimer = new Timer();
+	private volatile TimerTask myPercentCancelTask;
 
 	public MainView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -40,7 +49,7 @@ public abstract class MainView extends View {
 		super(context);
 	}
 
-	public final void setScreenBrightness(int percent) {
+	public final void setScreenBrightness(int percent, boolean showPercent) {
 		if (percent < 1) {
 			percent = 1;
 		} else if (percent > 100) {
@@ -51,20 +60,53 @@ public abstract class MainView extends View {
 		if (!(context instanceof FBReaderMainActivity)) {
 			return;
 		}
+
+		final float level;
+		final Integer oldColorLevel = myColorLevel;
+		if (percent >= 25) {
+			// 100 => 1f; 25 => .01f
+			level = .01f + (percent - 25) * .99f / 75;
+			myColorLevel = null;
+		} else {
+			level = .01f;
+			myColorLevel = 0x60 + (0xFF - 0x60) * Math.max(percent, 0) / 25;
+		}
+
 		final FBReaderMainActivity activity = (FBReaderMainActivity)context;
 		activity.getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
-		if (percent >= 50) {
-			myColorLevel = null;
-		} else if (percent >= 25) {
-			myColorLevel = null;
-			percent = Math.max(2 * percent - 50, 1);
-		} else {
-			myColorLevel = 0x60 + (0xFF - 0x60) * Math.max(percent, 0) / 25;
-			percent = 1;
+		if (showPercent) {
+			if (myPercentView == null) {
+				myPercentView = (TextView)activity.findViewById(R.id.percent_view);
+			}
+			if (myPercentView != null) {
+				synchronized (myPercentTimer) {
+					if (myPercentCancelTask != null) {
+						myPercentCancelTask.cancel();
+					}
+					myPercentCancelTask = new TimerTask() {
+						public void run() {
+							synchronized (myPercentTimer) {
+								post(new Runnable() {
+									public void run() {
+										myPercentView.setVisibility(View.GONE);
+									}
+								});
+							}
+						}
+					};
+					myPercentTimer.schedule(myPercentCancelTask, 1000);
+				}
+				myPercentView.setVisibility(View.VISIBLE);
+				final int color = myColorLevel == null ? 0x80 : 0x80 * myColorLevel / 0xFF;
+				myPercentView.setTextColor(Color.argb(0xCC, color, color, color));
+				myPercentView.setText(percent + "%");
+			}
 		}
-		activity.setScreenBrightnessSystem(percent / 100.0f);
-		updateColorLevel();
-		postInvalidate();
+		activity.setScreenBrightnessSystem(level);
+		if (oldColorLevel != myColorLevel) {
+			updateColorLevel();
+			postInvalidate();
+		}
 	}
 
 	public final int getScreenBrightness() {
@@ -77,11 +119,8 @@ public abstract class MainView extends View {
 			return 50;
 		}
 		final float level = ((FBReaderMainActivity)context).getScreenBrightnessSystem();
-		if (level >= .5f) {
-			return (int)(100 * level);
-		} else {
-			return (int)(50 * level + 25);
-		}
+		// level = .01f + (percent - 25) * .99f / 75;
+		return 25 + (int)((level - .01f) * 75 / .99f);
 	}
 
 	protected abstract void updateColorLevel();
