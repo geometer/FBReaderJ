@@ -858,55 +858,57 @@ void OleMainStream::getStyleInfo(unsigned int papxOffset, const char *grpprlBuff
 }
 
 void OleMainStream::getCharInfo(unsigned int chpxOffset, unsigned int /*styleId*/, const char *grpprlBuffer, unsigned int bytes, CharInfo &charInfo) {
-	unsigned int sprm = 0; //single propery modifier
 	unsigned int offset = 0;
 	while (bytes >= offset + 2) {
 		switch (OleUtil::getU2Bytes(grpprlBuffer, chpxOffset + offset)) {
 			case 0x0835: //bold
-				sprm = OleUtil::getU1Byte(grpprlBuffer, chpxOffset + offset + 2);
-				switch (sprm) {
-					case UNSET:
-						charInfo.FontStyle &= ~CharInfo::FONT_BOLD;
-						break;
-					case SET:
-						charInfo.FontStyle |= CharInfo::FONT_BOLD;
-						break;
-					case UNCHANGED:
-						break;
-					case NEGATION:
-						charInfo.FontStyle ^= CharInfo::FONT_BOLD;
-						break;
-					default:
-						break;
+				if (bytes >= offset + 3) {
+					switch (OleUtil::getU1Byte(grpprlBuffer, chpxOffset + offset + 2)) {
+						case UNSET:
+							charInfo.FontStyle &= ~CharInfo::FONT_BOLD;
+							break;
+						case SET:
+							charInfo.FontStyle |= CharInfo::FONT_BOLD;
+							break;
+						case UNCHANGED:
+							break;
+						case NEGATION:
+							charInfo.FontStyle ^= CharInfo::FONT_BOLD;
+							break;
+						default:
+							break;
+					}
 				}
 				break;
 			case 0x0836: //italic
-				sprm = OleUtil::getU1Byte(grpprlBuffer, chpxOffset + offset + 2);
-				switch (sprm) {
-					case UNSET:
-						charInfo.FontStyle &= ~CharInfo::FONT_ITALIC;
-						break;
-					case SET:
-						charInfo.FontStyle |= CharInfo::FONT_ITALIC;
-						break;
-					case UNCHANGED:
-						break;
-					case NEGATION:
-						charInfo.FontStyle ^= CharInfo::FONT_ITALIC;
-						break;
-					default:
-						break;
+				if (bytes >= offset + 3) {
+					switch (OleUtil::getU1Byte(grpprlBuffer, chpxOffset + offset + 2)) {
+						case UNSET:
+							charInfo.FontStyle &= ~CharInfo::FONT_ITALIC;
+							break;
+						case SET:
+							charInfo.FontStyle |= CharInfo::FONT_ITALIC;
+							break;
+						case UNCHANGED:
+							break;
+						case NEGATION:
+							charInfo.FontStyle ^= CharInfo::FONT_ITALIC;
+							break;
+						default:
+							break;
 					}
+				}
 				break;
 			case 0x4a43: //size of font
-				charInfo.FontSize = OleUtil::getU2Bytes(grpprlBuffer, chpxOffset + offset + 2);
-			break;
+				if (bytes >= offset + 4) {
+					charInfo.FontSize = OleUtil::getU2Bytes(grpprlBuffer, chpxOffset + offset + 2);
+				}
+				break;
 			default:
 				break;
 		}
 		offset += getPrlLength(grpprlBuffer, chpxOffset + offset);
 	}
-
 }
 
 void OleMainStream::getSectionInfo(const char *grpprlBuffer, std::size_t bytes, SectionInfo &sectionInfo) {
@@ -1058,7 +1060,7 @@ unsigned int OleMainStream::calcCountOfPLC(unsigned int totalSize, unsigned int 
 unsigned int OleMainStream::getPrlLength(const char *grpprlBuffer, unsigned int byteNumber) {
 	unsigned int tmp;
 	unsigned int opCode = OleUtil::getU2Bytes(grpprlBuffer, byteNumber);
-	switch (opCode & 0xe000) {
+	switch (opCode & 0xE000) {
 		case 0x0000:
 		case 0x2000:
 			return 3;
@@ -1073,7 +1075,7 @@ unsigned int OleMainStream::getPrlLength(const char *grpprlBuffer, unsigned int 
 		case 0xC000:
 			//counting of info length
 			tmp = OleUtil::getU1Byte(grpprlBuffer, byteNumber + 2);
-			if (opCode == 0xc615 && tmp == 255) {
+			if (opCode == 0xC615 && tmp == 255) {
 				unsigned int del = OleUtil::getU1Byte(grpprlBuffer, byteNumber + 3);
 				unsigned int add = OleUtil::getU1Byte(grpprlBuffer, byteNumber + 4 + del * 4);
 				tmp = 2 + del * 4 + add * 3;

@@ -23,25 +23,25 @@ int OleUtil::get4Bytes(const char *buffer, unsigned int offset) {
 	const unsigned char *buf = (const unsigned char*)buffer;
 	return
 		   (int)buf[offset]
-		| ((int)buf[offset+1] << 8)
-		| ((int)buf[offset+2] << 16)
-		| ((int)buf[offset+3] << 24);
+		| ((int)buf[offset + 1] << 8)
+		| ((int)buf[offset + 2] << 16)
+		| ((int)buf[offset + 3] << 24);
 }
 
 unsigned int OleUtil::getU4Bytes(const char *buffer, unsigned int offset) {
 	const unsigned char *buf = (const unsigned char*)buffer;
 	return
 		   (unsigned int)buf[offset]
-		| ((unsigned int)buf[offset+1] << 8)
-		| ((unsigned int)buf[offset+2] << 16)
-		| ((unsigned int)buf[offset+3] << 24);
+		| ((unsigned int)buf[offset + 1] << 8)
+		| ((unsigned int)buf[offset + 2] << 16)
+		| ((unsigned int)buf[offset + 3] << 24);
 }
 
 unsigned int OleUtil::getU2Bytes(const char *buffer, unsigned int offset) {
 	const unsigned char *buf = (const unsigned char*)buffer;
 	return
 		   (unsigned int)buf[offset]
-		| ((unsigned int)buf[offset+1] << 8);
+		| ((unsigned int)buf[offset + 1] << 8);
 }
 
 unsigned int OleUtil::getU1Byte(const char *buffer, unsigned int offset) {
