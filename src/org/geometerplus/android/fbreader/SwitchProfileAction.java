@@ -17,13 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-class SwitchProfileAction extends FBAction {
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+class SwitchProfileAction extends FBAndroidAction {
 	private String myProfileName;
 
-	SwitchProfileAction(FBReaderApp fbreader, String profileName) {
-		super(fbreader);
+	SwitchProfileAction(FBReader baseActivity, FBReaderApp fbreader, String profileName) {
+		super(baseActivity, fbreader);
 		myProfileName = profileName;
 	}
 
