@@ -8,6 +8,10 @@
 * Customisable main menu
 * Simple widgets
 
+===== 2.5.8 (Sep 03, 2015) =====
+* Display brightness percent during adjustment (android 3 and higher)
+* Fixed MS Word docs support
+
 ===== 2.5.7 (Aug 28, 2015) =====
 * Better implementation of brighthess levels
 * Minor issues in book sync
