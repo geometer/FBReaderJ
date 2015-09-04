@@ -90,7 +90,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		Application.getViewWidget().reset();
 	}
 
-	public ZLTextModel getModel() {
+	public final ZLTextModel getModel() {
 		return myModel;
 	}
 
