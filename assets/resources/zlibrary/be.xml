@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Belarusian zlibrary resources by Usievaład Čorny -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -13,17 +12,17 @@
 			<node name="title" value="Памылка сеткі"/>
 			<node name="unknownErrorMessage" value="Невядомая памылка"/>
 			<node name="operationTimedOutMessage" value="Апэрацыя пратэрмінаваная"/>
-			<node name="somethingWrongMessage" value="Нешта ня так з «%s»"/>
-			<node name="couldntCreateDirectoryMessage" value="Немагчыма стварыць тэчку «%s»"/>
-			<node name="couldntCreateFileMessage" value="Немагчыма стварыць файл «%s»"/>
-			<node name="couldntConnectMessage" value="Немагчыма злучыцца з вузлом «%s»"/>
-			<node name="couldntResolveHostMessage" value="Немагчыма знайсьці вузел «%s»"/>
+			<node name="somethingWrongMessage" value="Нешта пайшло ня так з «%s»"/>
+			<node name="couldntCreateDirectoryMessage" value="Не ўдалося стварыць тэчку «%s»"/>
+			<node name="couldntCreateFileMessage" value="Не ўдалося стварыць файл «%s»"/>
+			<node name="couldntConnectMessage" value="Не ўдалося злучыцца з вузлом «%s»"/>
+			<node name="couldntResolveHostMessage" value="Не ўдалося знайсьці вузел «%s»"/>
 			<node name="authenticationFailed" value="Спраўджаньне няўдалае"/>
 			<node name="unsupportedProtocol" value="Непадтрыманы пратакол"/>
 			<node name="invalidURL" value="Хібны адрас"/>
 			<node name="hostCantBeReached" value="Вузел %s недаступны"/>
 			<node name="connectionRefused" value="Злучэньне скінутае %s"/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Сетка недаступная"/>
 		</node>
 	</node>
 	<node name="color">
@@ -39,7 +38,7 @@
 		<node name="cs" value="Чэская мова"/>
 		<node name="da" value="Дацкая мова"/>
 		<node name="de" value="Нямецкая мова"/>
-		<node name="de-traditional" value="Нямецкая мова (традыцыйная артаграфія)"/>
+		<node name="de-traditional" value="Нямецкая мова (традыцыйны правапіс)"/>
 		<node name="el" value="Грэцкая мова"/>
 		<node name="en" value="Ангельская мова"/>
 		<node name="eo" value="Эспэранта"/>
@@ -56,7 +55,7 @@
 		<node name="it" value="Італійская мова"/>
 		<node name="ja" value="Японская мова"/>
 		<node name="ka" value="Грузінская мова"/>
-		<node name="ko" value="Korean" toBeTranslated="true"/>
+		<node name="ko" value="Карэйская"/>
 		<node name="lt" value="Літоўская мова"/>
 		<node name="nb" value="Нарвэская мова"/>
 		<node name="nl" value="Галяндзкая мова"/>
@@ -79,9 +78,9 @@
 		<node name="system" value="Сыстэмная"/>
 	</node>
 	<node name="boolean3">
-		<node name="on" value="уключана"/>
-		<node name="off" value="выключана"/>
-		<node name="unchanged" value="ня зьменена"/>
+		<node name="on" value="Уключана"/>
+		<node name="off" value="Выключана"/>
+		<node name="unchanged" value="Ня зьменена"/>
 	</node>
 	<node name="keyOptionView">
 		<node name="actionFor" value="Дзеяньне клявішы"/>
