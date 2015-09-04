@@ -8,6 +8,9 @@
 * Customisable main menu
 * Simple widgets
 
+===== 2.5.9 (??? ??, 2015) =====
+* Updated Belarusian localization (by Usievaład Čorny)
+
 ===== 2.5.8 (Sep 04, 2015) =====
 * Display brightness percent during adjustment (android 3 and higher)
 * Fixed MS Word docs support
