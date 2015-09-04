@@ -624,27 +624,29 @@ public final class FBReaderApp extends ZLApplication {
 			return;
 		}
 
+		cursor = new ZLTextWordCursor(cursor);
+		if (cursor.isNull()) {
+			return;
+		}
+
 		final ZLTextView textView = getTextView();
+		final ZLTextModel textModel;
+		final Book book;
+		final AutoTextSnippet snippet;
 		// textView.model will not be changed inside synchronised block
 		synchronized (textView) {
+			textModel = textView.getModel();
 			final BookModel model = Model;
-			final Book book = model != null ? model.Book : null;
-			if (book == null || textView != BookTextView || textView.getModel() == null) {
+			book = model != null ? model.Book : null;
+			if (book == null || textView != BookTextView || textModel == null) {
 				return;
 			}
-			cursor = new ZLTextWordCursor(cursor);
-			if (cursor.isNull()) {
-				return;
-			}
-
-			updateInvisibleBookmarksList(new Bookmark(
-				Collection,
-				book,
-				textView.getModel().getId(),
-				new AutoTextSnippet(cursor, 30),
-				false
-			));
+			snippet = new AutoTextSnippet(cursor, 30);
 		}
+
+		updateInvisibleBookmarksList(new Bookmark(
+			Collection, book, textModel.getId(), snippet, false
+		));
 	}
 
 	public void addInvisibleBookmark() {
