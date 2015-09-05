@@ -330,6 +330,7 @@
 		<node name="bookmarks" value="Bookmarks"/>
 		<node name="help" value="Help"/>
 		<node name="plugins" value="Install plugins"/>
+		<node name="goToPage" value="Go to page"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="File name"/>
