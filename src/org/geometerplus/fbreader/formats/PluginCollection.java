@@ -28,10 +28,6 @@ import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 public class PluginCollection implements IFormatPluginCollection {
-	static {
-		System.loadLibrary("NativeFormats-v4");
-	}
-
 	private static volatile PluginCollection ourInstance;
 
 	private final List<BuiltinFormatPlugin> myBuiltinPlugins =

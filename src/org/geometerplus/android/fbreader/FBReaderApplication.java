@@ -21,5 +21,11 @@ package org.geometerplus.android.fbreader;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
+import org.geometerplus.android.util.NativeLibraryUtil;
+
 public class FBReaderApplication extends ZLAndroidApplication {
+	public void onCreate() {
+		super.onCreate();
+		NativeLibraryUtil.init(this, "NativeFormats-v4");
+	}
 }
