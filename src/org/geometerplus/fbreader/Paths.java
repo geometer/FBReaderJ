@@ -22,9 +22,7 @@ package org.geometerplus.fbreader;
 import java.io.*;
 import java.util.*;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.os.Environment;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -45,23 +43,17 @@ public abstract class Paths {
 		new ZLStringOption("Files", "TemporaryDirectory", "");
 
 	public static ZLStringOption TempDirectoryOption(Context context) {
-		if ("".equals(ourTempDirectoryOption.getValue())) {
+		final String current = ourTempDirectoryOption.getValue();
+		final File obsoleteDir = context != null ? context.getExternalCacheDir() : null;
+		final String obsoletePath = obsoleteDir != null ? obsoleteDir.getPath() : null;
+		if ("".equals(current) || (obsoletePath != null && obsoletePath.equals(current))) {
 			ourTempDirectoryOption.setValue(internalTempDirectoryValue(context));
 		}
 		return ourTempDirectoryOption;
 	}
 
-	private static String internalTempDirectoryValue(Context context) {
-		String value = null;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
-			value = getExternalCacheDirPath(context);
-		}
-		return value != null ? value : (mainBookDirectory() + "/.FBReader");
-	}
-
-	@TargetApi(Build.VERSION_CODES.FROYO)
 	private static String getExternalCacheDirPath(Context context) {
-		final File d = context != null ? context.getExternalCacheDir() : null;
+		final File d = context != null ? context.getExternalFilesDir(null) : null;
 		if (d != null) {
 			d.mkdirs();
 			if (d.exists() && d.isDirectory()) {
@@ -69,6 +61,11 @@ public abstract class Paths {
 			}
 		}
 		return null;
+	}
+
+	private static String internalTempDirectoryValue(Context context) {
+		final String dir = getExternalCacheDirPath(context);
+		return dir != null ? dir : mainBookDirectory() + "/.FBReader";
 	}
 
 	public static ZLStringOption DownloadsDirectoryOption =
@@ -137,7 +134,7 @@ public abstract class Paths {
 	}
 
 	public static List<String> bookPath() {
-		final List<String> path = new ArrayList<String>(Paths.BookPathOption.getValue());
+		final List<String> path = new ArrayList<String>(BookPathOption.getValue());
 		final String downloadsDirectory = DownloadsDirectoryOption.getValue();
 		if (!"".equals(downloadsDirectory) && !path.contains(downloadsDirectory)) {
 			path.add(downloadsDirectory);
