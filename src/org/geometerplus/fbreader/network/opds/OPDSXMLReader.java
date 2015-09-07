@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.opds;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.money.Money;
+import org.geometerplus.zlibrary.core.money.MoneyException;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -154,7 +155,12 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata,OPDSEntry> {
 			case FEL_PRICE:
 				if (ns == XMLNamespaces.Opds && tag == TAG_PRICE) {
 					if (bufferContent != null && myPriceCurrency != null) {
-						getOPDSLink().Prices.add(new Money(bufferContent, myPriceCurrency));
+						try {
+							final Money price = new Money(bufferContent, myPriceCurrency);
+							getOPDSLink().Prices.add(price);
+						} catch (MoneyException e) {
+							e.printStackTrace();
+						}
 						myPriceCurrency = null;
 					}
 					myState = FE_LINK;
