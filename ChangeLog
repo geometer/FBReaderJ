@@ -9,6 +9,8 @@
 * Simple widgets
 
 ===== 2.5.9 (??? ??, 2015) =====
+* Fixed cache access issue
+* Fixed native library loading issue
 * Updated Belarusian localization (by Usievaład Čorny)
 
 ===== 2.5.8 (Sep 04, 2015) =====
