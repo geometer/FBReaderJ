@@ -386,7 +386,7 @@
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_simple"/>
 		</receiver>
-		<activity android:name="org.geometerplus.android.fbreader.widget.simple.ConfigurationActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog.NoTitle" android:exported="false">
+		<activity android:name="org.geometerplus.android.fbreader.widget.simple.ConfigurationActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog.NoTitle" android:exported="true">
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
 			</intent-filter>
