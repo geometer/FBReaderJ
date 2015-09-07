@@ -108,6 +108,9 @@ public abstract class MenuData {
 			addToplevelNode(new MenuNode.Item(ActionCode.INSTALL_PLUGINS));
 			addToplevelNode(new MenuNode.Item(ActionCode.OPEN_WEB_HELP));
 			addToplevelNode(new MenuNode.Item(ActionCode.OPEN_START_SCREEN));
+			
+			addToplevelNode(new MenuNode.Item(ActionCode.GO_TO_PAGE));
+			
 			ourNodes = Collections.unmodifiableList(ourNodes);
 		}
 		return ourNodes;

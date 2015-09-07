@@ -337,6 +337,9 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
 		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
 
+		myFBReaderApp.addAction(ActionCode.GO_TO_PAGE, new GoToPageAction(this, myFBReaderApp));
+
+		
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				showPremiumDialog();
