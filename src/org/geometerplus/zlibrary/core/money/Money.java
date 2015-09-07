@@ -42,14 +42,19 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 
 	public Money(String amount, String currency) {
-		BigDecimal a = null;
 		try {
-			a = new BigDecimal(amount);
-		} catch (NumberFormatException e) {
-			a = new BigDecimal(amount.replace(",", "."));
+			BigDecimal a = null;
+			amount = amount.trim();
+			try {
+				a = new BigDecimal(amount);
+			} catch (NumberFormatException e) {
+				a = new BigDecimal(amount.replace(",", "."));
+			}
+			Amount = a;
+			Currency = currency.trim();
+		} catch (Throwable t) {
+			throw new MoneyException("Unknown money value: '" + amount + "'; '" + currency + "'");
 		}
-		Amount = a;
-		Currency = currency;
 	}
 
 	public Money(String text) {
