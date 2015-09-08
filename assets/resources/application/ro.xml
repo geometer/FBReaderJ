@@ -298,7 +298,6 @@
 		<node name="navigate" value="Navigati">
 			<node name="toc" value="Cuprins"/>
 			<node name="gotoHome" value="Du-te la Start a documentului"/>
-			<node name="gotoPageNumber" value="Du-te la pagina…"/>
 			<node name="gotoSectionStart" value="Du-te la Inceputul textului"/>
 			<node name="gotoSectionEnd" value="Du-te la Sfârsitul textului"/>
 			<node name="nextTOCSection" value="Du-te la urmatoarea intrare din cuprins"/>
@@ -323,6 +322,7 @@
 		<node name="bookmarks" value="Favorite"/>
 		<node name="help" value="Ajutor"/>
 		<node name="plugins" value="Instaleaza plugin-uri"/>
+		<node name="gotoPageNumber" value="Du-te la pagina…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nume de fisier"/>
