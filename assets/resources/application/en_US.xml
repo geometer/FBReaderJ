@@ -305,7 +305,6 @@
 		<node name="navigate" value="Navigate">
 			<node name="toc" value="Table of Contents"/>
 			<node name="gotoHome" value="Go to Start of Document"/>
-			<node name="gotoPageNumber" value="Go to page…"/>
 			<node name="gotoSectionStart" value="Go to start of text section"/>
 			<node name="gotoSectionEnd" value="Go to end of text section"/>
 			<node name="nextTOCSection" value="Go to next TOC item"/>
@@ -330,6 +329,7 @@
 		<node name="bookmarks" value="Bookmarks"/>
 		<node name="help" value="Help"/>
 		<node name="plugins" value="Install plugins"/>
+		<node name="gotoPageNumber" value="Go to page…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="File name"/>
