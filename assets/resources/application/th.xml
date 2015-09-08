@@ -295,7 +295,6 @@
 		<node name="navigate" value="ตัวนำทาง">
 			<node name="toc" value="สารบัญ"/>
 			<node name="gotoHome" value="ไปที่จุดเริ่มต้น"/>
-			<node name="gotoPageNumber" value="ไปที่หน้า…"/>
 			<node name="gotoSectionStart" value="ไปที่จุดเริ่มต้นของข้อความส่วนนี้"/>
 			<node name="gotoSectionEnd" value="ไปที่จุดสุดท้ายของข้อความส่วนนี้"/>
 			<node name="nextTOCSection" value="ไปที่บทถัดไปในสารบัญ"/>
@@ -320,6 +319,7 @@
 		<node name="bookmarks" value="บุ๊คมาร์ค"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
 		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="gotoPageNumber" value="ไปที่หน้า…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="ชื่อไฟล์"/>

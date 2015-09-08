@@ -305,7 +305,6 @@
 		<node name="navigate" value="Навигација">
 			<node name="toc" value="Садржај"/>
 			<node name="gotoHome" value="Иди на почетак документа"/>
-			<node name="gotoPageNumber" value="Иди на страницу…"/>
 			<node name="gotoSectionStart" value="Иди на почетак одељка с текстом"/>
 			<node name="gotoSectionEnd" value="Иди на крај одељка с текстом"/>
 			<node name="nextTOCSection" value="Иди на следећу ставку садржаја"/>
@@ -330,6 +329,7 @@
 		<node name="bookmarks" value="Обележивачи"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
 		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="gotoPageNumber" value="Иди на страницу…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Име датотеке"/>
