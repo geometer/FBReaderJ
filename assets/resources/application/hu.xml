@@ -295,7 +295,6 @@
 		<node name="navigate" value="Navigáció">
 			<node name="toc" value="Tartalomjegyzék"/>
 			<node name="gotoHome" value="A dokumentum elejére"/>
-			<node name="gotoPageNumber" value="Ugrás oldalszámra…"/>
 			<node name="gotoSectionStart" value="Ugrás a szövegrész elejére"/>
 			<node name="gotoSectionEnd" value="Ugrás a szövegrész végére"/>
 			<node name="nextTOCSection" value="Ugrás a tartalomjegyzék következő elemére"/>
@@ -320,6 +319,7 @@
 		<node name="bookmarks" value="Könyvjelzők"/>
 		<node name="help" value="Súgó"/>
 		<node name="plugins" value="Bővítmények telepítése"/>
+		<node name="gotoPageNumber" value="Ugrás oldalszámra…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Fájlnév"/>

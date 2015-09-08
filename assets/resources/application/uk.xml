@@ -295,7 +295,6 @@
 		<node name="navigate" value="Перехід">
 			<node name="toc" value="Зміст"/>
 			<node name="gotoHome" value="В початок книги"/>
-			<node name="gotoPageNumber" value="На сторінку…"/>
 			<node name="gotoSectionStart" value="В початок разділу"/>
 			<node name="gotoSectionEnd" value="В кінець розділу"/>
 			<node name="nextTOCSection" value="До наступної глави"/>
@@ -320,6 +319,7 @@
 		<node name="bookmarks" value="Закладки"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
 		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="gotoPageNumber" value="На сторінку…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Файл"/>
