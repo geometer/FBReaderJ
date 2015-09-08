@@ -304,7 +304,6 @@
 		<node name="navigate" value="Navigere">
 			<node name="toc" value="Indholdsfortegnelse"/>
 			<node name="gotoHome" value="Gå til starten af dokumentet"/>
-			<node name="gotoPageNumber" value="Gå til side...."/>
 			<node name="gotoSectionStart" value="Gå til starten af tekstafsnittet"/>
 			<node name="gotoSectionEnd" value="Gå til slutningen af tekstafsnittet"/>
 			<node name="nextTOCSection" value="Gå til næste punkt i indholdsfortegnelse"/>
@@ -329,6 +328,7 @@
 		<node name="bookmarks" value="Bogmærker"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
 		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="gotoPageNumber" value="Gå til side...."/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Filnavn"/>

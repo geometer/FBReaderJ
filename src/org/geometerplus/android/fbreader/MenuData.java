@@ -42,16 +42,22 @@ public abstract class MenuData {
 	private static final String CONFIG_CODE_CHANGE_FONT_SIZE = "changeFontSize";
 
 	private static void addToplevelNode(MenuNode node) {
-		addToplevelNode(node, node.Code, false);
+		addToplevelNode(node, node.Code, Status.EnabledByDefault);
 	}
 
-	private static void addToplevelNode(MenuNode node, String configCode, boolean alwaysEnabled) {
+	private enum Status {
+		AlwaysEnabled,
+		EnabledByDefault,
+		DisabledByDefault
+	}
+
+	private static void addToplevelNode(MenuNode node, String configCode, Status status) {
 		ourConfigCodes.put(node.Code, configCode);
-		if (!ourDefaultValues.containsKey(configCode)) {
+		if (status != Status.DisabledByDefault && !ourDefaultValues.containsKey(configCode)) {
 			ourDefaultValues.put(configCode, ourDefaultValues.size());
 		}
 		ourNodes.add(node);
-		if (alwaysEnabled) {
+		if (status == Status.AlwaysEnabled) {
 			ourAlwaysEnabledCodes.add(configCode);
 		}
 	}
@@ -70,19 +76,19 @@ public abstract class MenuData {
 			addToplevelNode(
 				new MenuNode.Item(ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night),
 				CONFIG_CODE_DAY_NIGHT,
-				false
+				Status.EnabledByDefault
 			);
 			addToplevelNode(
 				new MenuNode.Item(ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day),
 				CONFIG_CODE_DAY_NIGHT,
-				false
+				Status.EnabledByDefault
 			);
 			addToplevelNode(new MenuNode.Item(ActionCode.SEARCH, R.drawable.ic_menu_search));
 			addToplevelNode(new MenuNode.Item(ActionCode.SHARE_BOOK));
 			addToplevelNode(
 				new MenuNode.Item(ActionCode.SHOW_PREFERENCES),
 				ActionCode.SHOW_PREFERENCES,
-				true
+				Status.AlwaysEnabled
 			);
 			addToplevelNode(new MenuNode.Item(ActionCode.SHOW_BOOK_INFO));
 			final MenuNode.Submenu orientations = new MenuNode.Submenu("screenOrientation");
@@ -98,16 +104,21 @@ public abstract class MenuData {
 			addToplevelNode(
 				new MenuNode.Item(ActionCode.INCREASE_FONT),
 				CONFIG_CODE_CHANGE_FONT_SIZE,
-				false
+				Status.EnabledByDefault
 			);
 			addToplevelNode(
 				new MenuNode.Item(ActionCode.DECREASE_FONT),
 				CONFIG_CODE_CHANGE_FONT_SIZE,
-				false
+				Status.EnabledByDefault
 			);
 			addToplevelNode(new MenuNode.Item(ActionCode.INSTALL_PLUGINS));
 			addToplevelNode(new MenuNode.Item(ActionCode.OPEN_WEB_HELP));
 			addToplevelNode(new MenuNode.Item(ActionCode.OPEN_START_SCREEN));
+			addToplevelNode(
+				new MenuNode.Item(ActionCode.GOTO_PAGE_NUMBER),
+				ActionCode.GOTO_PAGE_NUMBER,
+				Status.DisabledByDefault
+			);
 			ourNodes = Collections.unmodifiableList(ourNodes);
 		}
 		return ourNodes;
@@ -182,7 +193,10 @@ public abstract class MenuData {
 		synchronized (ourNodeOptions) {
 			ZLIntegerOption option = ourNodeOptions.get(code);
 			if (option == null) {
-				option = new ZLIntegerOption("MainMenu", code, ourDefaultValues.get(code));
+				final Integer defaultValue = ourDefaultValues.get(code);
+				option = new ZLIntegerOption(
+					"MainMenu", code, defaultValue != null ? defaultValue : -1
+				);
 				ourNodeOptions.put(code, option);
 			}
 			return option;

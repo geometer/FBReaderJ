@@ -296,7 +296,6 @@
 		<node name="navigate" value="Định hướng">
 			<node name="toc" value="Mục Lục"/>
 			<node name="gotoHome" value="Đến đầu Tài liệu"/>
-			<node name="gotoPageNumber" value="Đến trang…"/>
 			<node name="gotoSectionStart" value="Đến Đầu Chương"/>
 			<node name="gotoSectionEnd" value="Đến Cuối Chương"/>
 			<node name="nextTOCSection" value="Đến Phần tiếp của ML"/>
@@ -321,6 +320,7 @@
 		<node name="bookmarks" value="Đánh dấu"/>
 		<node name="help" value="Trợ giúp"/>
 		<node name="plugins" value="Cài phần bổ sung"/>
+		<node name="gotoPageNumber" value="Đến trang…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Tên tập tin"/>
