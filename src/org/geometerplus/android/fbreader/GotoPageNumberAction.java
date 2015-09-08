@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -40,7 +39,7 @@ public class GotoPageNumberAction extends FBAndroidAction {
 	protected void run(Object ... params) {
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final View root = BaseActivity.getLayoutInflater().inflate(R.layout.goto_page_number, null);
-		final Dialog dialog = new AlertDialog.Builder(BaseActivity).setView(root).create();
+		final AlertDialog dialog = new AlertDialog.Builder(BaseActivity).setView(root).create();
 
 		final ZLTextView textView = Reader.getTextView();
 
