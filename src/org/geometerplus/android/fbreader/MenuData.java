@@ -41,14 +41,14 @@ public abstract class MenuData {
 	private static final String CONFIG_CODE_DAY_NIGHT = "dayNight";
 	private static final String CONFIG_CODE_CHANGE_FONT_SIZE = "changeFontSize";
 
-	private static void addToplevelNode(MenuNode node) {
-		addToplevelNode(node, node.Code, Status.EnabledByDefault);
-	}
-
 	private enum Status {
 		AlwaysEnabled,
 		EnabledByDefault,
 		DisabledByDefault
+	}
+
+	private static void addToplevelNode(MenuNode node) {
+		addToplevelNode(node, node.Code, Status.EnabledByDefault);
 	}
 
 	private static void addToplevelNode(MenuNode node, String configCode, Status status) {
