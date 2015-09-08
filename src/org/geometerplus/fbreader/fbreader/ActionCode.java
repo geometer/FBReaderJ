@@ -84,8 +84,8 @@ public interface ActionCode {
 	String OPEN_WEB_HELP = "help";
 	String INSTALL_PLUGINS = "plugins";
 
+	String GOTO_PAGE_NUMBER = "gotoPageNumber";
+
 	String YOTA_SWITCH_TO_BACK_SCREEN = "yotaSwitchToBackScreen";
 	String YOTA_SWITCH_TO_FRONT_SCREEN = "yotaSwitchToFrontScreen";
-	
-	String GO_TO_PAGE = "goToPage";
 }

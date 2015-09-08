@@ -19,10 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.R;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.util.Log;
@@ -31,44 +27,53 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
-public class GoToPageAction extends FBAndroidAction {
-	GoToPageAction(FBReader baseActivity, FBReaderApp fbreader) {
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
+import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+public class GotoPageNumberAction extends FBAndroidAction {
+	GotoPageNumberAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader);
 	}
 
 	@Override
 	protected void run(Object ... params) {
-		LayoutInflater inflater = BaseActivity.getLayoutInflater();
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity);
-		final View root = inflater.inflate(R.layout.goto_dialog, null);
-		builder.setView(root);
-		final Dialog d = builder.create();
-		final NumberPicker np = (NumberPicker)root.findViewById(R.id.page_picker);
-		np.setMinValue(0);
-		np.setMaxValue(Reader.getTextView().pagePosition().Total);
-		np.setValue(Reader.getTextView().pagePosition().Current);
+		final View root = BaseActivity.getLayoutInflater().inflate(R.layout.goto_dialog, null);
+		final Dialog dialog = new AlertDialog.Builder(BaseActivity).setView(root).create();
+
+		final ZLTextView textView = Reader.getTextView();
+
+		final NumberPicker picker = (NumberPicker)root.findViewById(R.id.page_picker);
+		picker.setMinValue(1);
+		picker.setMaxValue(textView.pagePosition().Total);
+		picker.setValue(textView.pagePosition().Current);
+
 		final View buttonsView = root.findViewById(R.id.goto_buttons);
 		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				np.clearFocus();
-				Reader.getTextView().gotoPage(np.getValue());
+				picker.clearFocus();
+				textView.gotoPage(picker.getValue());
 				Reader.getViewWidget().reset();
 				Reader.getViewWidget().repaint();
-				d.dismiss();
+				BaseActivity.hideBars();
+				dialog.dismiss();
 			}
 		});
 		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
+		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				d.dismiss();
+				dialog.dismiss();
 			}
 		});
-		cancelButton.setText(buttonResource.getResource("cancel").getValue());
-		d.show();
+
+		dialog.show();
 	}
 }
