@@ -304,7 +304,6 @@
 		<node name="navigate" value="هدایت کردن">
 			<node name="toc" value="فهرست مطالب"/>
 			<node name="gotoHome" value="برو به ابتدای سند"/>
-			<node name="gotoPageNumber" value="برو به صفحه..."/>
 			<node name="gotoSectionStart" value="برو به ابتدای متن"/>
 			<node name="gotoSectionEnd" value="برو به انتهای متن"/>
 			<node name="nextTOCSection" value="برو به فهرست"/>
@@ -329,6 +328,7 @@
 		<node name="bookmarks" value="نشانه گذاری"/>
 		<node name="help" value="کمک"/>
 		<node name="plugins" value="نصب افزونه ها"/>
+		<node name="gotoPageNumber" value="برو به صفحه..."/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="نام فایل"/>

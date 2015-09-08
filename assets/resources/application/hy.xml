@@ -311,7 +311,6 @@
 		<node name="navigate" value="Ընտրել էջը">
 			<node name="toc" value="Բովանդակություն"/>
 			<node name="gotoHome" value="Վերադառնալ գրքի սկիզբ"/>
-			<node name="gotoPageNumber" value="Գնալ էջ…"/>
 			<node name="gotoSectionStart" value="Վերադառնալ գլխի սկիզբ"/>
 			<node name="gotoSectionEnd" value="Գնալ գլխի վերջ"/>
 			<node name="nextTOCSection" value="Հաջորդ գլուխը"/>
@@ -336,6 +335,7 @@
 		<node name="bookmarks" value="Էջանիշեր"/>
 		<node name="help" value="Օգնություն"/>
 		<node name="plugins" value="Հավելվածքներ"/>
+		<node name="gotoPageNumber" value="Գնալ էջ…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Նիշք"/>

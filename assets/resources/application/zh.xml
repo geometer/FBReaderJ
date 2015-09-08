@@ -295,7 +295,6 @@
 		<node name="navigate" value="快速翻看">
 			<node name="toc" value="内容目录"/>
 			<node name="gotoHome" value="翻到图书开始"/>
-			<node name="gotoPageNumber" value="翻到页码"/>
 			<node name="gotoSectionStart" value="翻到章节开始"/>
 			<node name="gotoSectionEnd" value="翻到章节结束"/>
 			<node name="nextTOCSection" value="翻到下一章节 "/>
@@ -320,6 +319,7 @@
 		<node name="bookmarks" value="我的书签"/>
 		<node name="help" value="帮助"/>
 		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="gotoPageNumber" value="翻到页码"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="文件"/>

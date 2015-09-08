@@ -305,7 +305,6 @@
 		<node name="navigate" value="Git">
 			<node name="toc" value="İçindekiler Tablosu"/>
 			<node name="gotoHome" value="Kitabın başlangıcına git"/>
-			<node name="gotoPageNumber" value="Sayfa…"/>
 			<node name="gotoSectionStart" value="Metnin başladığı kısma git"/>
 			<node name="gotoSectionEnd" value="Metnin sonuna git"/>
 			<node name="nextTOCSection" value="Sonraki bölüme geç"/>
@@ -330,6 +329,7 @@
 		<node name="bookmarks" value="Yer imleri"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
 		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="gotoPageNumber" value="Sayfa…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Dosya adı"/>

@@ -314,7 +314,6 @@
 		<node name="navigate" value="Navigace">
 			<node name="toc" value="Obsah"/>
 			<node name="gotoHome" value="Přejít na začátek dokumentu"/>
-			<node name="gotoPageNumber" value="Přejít na stránku…"/>
 			<node name="gotoSectionStart" value="Přejít na začátek textové části"/>
 			<node name="gotoSectionEnd" value="Přejít na konec textové části"/>
 			<node name="nextTOCSection" value="Přejít na další položku obsahu"/>
@@ -339,6 +338,7 @@
 		<node name="bookmarks" value="Záložky"/>
 		<node name="help" value="Nápověda"/>
 		<node name="plugins" value="Doplňky"/>
+		<node name="gotoPageNumber" value="Přejít na stránku…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Název souboru"/>

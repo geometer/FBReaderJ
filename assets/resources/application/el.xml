@@ -295,7 +295,6 @@
 		<node name="navigate" value="Επιλογή σελίδας">
 			<node name="toc" value="Προβολή ευρετηρίου"/>
 			<node name="gotoHome" value="Μεταβιβασμός στην αρχή"/>
-			<node name="gotoPageNumber" value="Πήγαινε στην σελίδα…"/>
 			<node name="gotoSectionStart" value="Πήγαινε στην αρχή του αποσπάσματος"/>
 			<node name="gotoSectionEnd" value="Πήγαινε στο τέλος του αποσπάσματος"/>
 			<node name="nextTOCSection" value="Πήγαινε στο επόμενο κεφάλαιο"/>
@@ -320,6 +319,7 @@
 		<node name="bookmarks" value="Σελιδοδείκτες"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
 		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="gotoPageNumber" value="Πήγαινε στην σελίδα…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Όνομα αρχείου"/>

@@ -305,7 +305,6 @@
 		<node name="navigate" value="Navigeer">
 			<node name="toc" value="Inhoudsopgave"/>
 			<node name="gotoHome" value="Begin van document"/>
-			<node name="gotoPageNumber" value="Ga naar pagina…"/>
 			<node name="gotoSectionStart" value="Ga naar het begin van de sectie"/>
 			<node name="gotoSectionEnd" value="Ga naar het einde van de sectie"/>
 			<node name="nextTOCSection" value="Ga naar het volgende hoofdstuk"/>
@@ -330,6 +329,7 @@
 		<node name="bookmarks" value="Bladwijzers"/>
 		<node name="help" value="Help"/>
 		<node name="plugins" value="Plug-ins"/>
+		<node name="gotoPageNumber" value="Ga naar pagina…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Bestandsnaam"/>

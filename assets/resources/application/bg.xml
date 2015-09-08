@@ -311,7 +311,6 @@
 		<node name="navigate" value="Напред">
 			<node name="toc" value="Заглавие"/>
 			<node name="gotoHome" value="Начало на книгата"/>
-			<node name="gotoPageNumber" value="Страница…"/>
 			<node name="gotoSectionStart" value="Начало на раздела"/>
 			<node name="gotoSectionEnd" value="Край на раздела"/>
 			<node name="nextTOCSection" value="Следваща глава"/>
@@ -336,6 +335,7 @@
 		<node name="bookmarks" value="Отбелязани"/>
 		<node name="help" value="Помощ"/>
 		<node name="plugins" value="Допълнителни модули"/>
+		<node name="gotoPageNumber" value="Страница…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Файл"/>

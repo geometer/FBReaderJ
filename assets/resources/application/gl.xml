@@ -295,7 +295,6 @@
 		<node name="navigate" value="Navegar">
 			<node name="toc" value="Índice de contidos"/>
 			<node name="gotoHome" value="Ir ao inicio  do libro"/>
-			<node name="gotoPageNumber" value="Ir á páxina…"/>
 			<node name="gotoSectionStart" value="Ir ao inicio do capítulo"/>
 			<node name="gotoSectionEnd" value="Ir ao final do capítulo"/>
 			<node name="nextTOCSection" value="Ir ao capítulo seguinte"/>
@@ -320,6 +319,7 @@
 		<node name="bookmarks" value="Marcadores"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
 		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="gotoPageNumber" value="Ir á páxina…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nome de ficheiro"/>

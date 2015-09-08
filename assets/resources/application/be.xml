@@ -305,7 +305,6 @@
 		<node name="navigate" value="Перайсьці">
 			<node name="toc" value="Зьмест"/>
 			<node name="gotoHome" value="Перайсьці ў пачатак дакумэнта"/>
-			<node name="gotoPageNumber" value="Перайсьці да старонкі…"/>
 			<node name="gotoSectionStart" value="Перайсьці ў пачатак разьдзелу тэксту"/>
 			<node name="gotoSectionEnd" value="Перайсьці ў канец разьдзелу тэксту"/>
 			<node name="nextTOCSection" value="Да наступнага элемэнта зьместу"/>
@@ -330,6 +329,7 @@
 		<node name="bookmarks" value="Закладкі"/>
 		<node name="help" value="Дапамога"/>
 		<node name="plugins" value="Усталяваць убудовы"/>
+		<node name="gotoPageNumber" value="Перайсьці да старонкі…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Назва файла"/>

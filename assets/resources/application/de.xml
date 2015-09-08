@@ -310,7 +310,6 @@
 		<node name="navigate" value="Seite auswählen">
 			<node name="toc" value="Inhaltsverzeichnis zeigen"/>
 			<node name="gotoHome" value="Zum Anfang gehen"/>
-			<node name="gotoPageNumber" value="Gehe zur Seite…"/>
 			<node name="gotoSectionStart" value="Zum Anfang des Abschnitts gehen"/>
 			<node name="gotoSectionEnd" value="Zum Ende des Abschnitts gehen"/>
 			<node name="nextTOCSection" value="Zum nächsten Kapitel gehen"/>
@@ -335,6 +334,7 @@
 		<node name="bookmarks" value="Lesezeichen"/>
 		<node name="help" value="Hilfe"/>
 		<node name="plugins" value="Plugins"/>
+		<node name="gotoPageNumber" value="Gehe zur Seite…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Dateiname"/>

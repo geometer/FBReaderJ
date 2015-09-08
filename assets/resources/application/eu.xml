@@ -305,7 +305,6 @@
 		<node name="navigate" value="Nabigatu">
 			<node name="toc" value="Aurkibidea"/>
 			<node name="gotoHome" value="Joan Dokumentuaren Hasierara"/>
-			<node name="gotoPageNumber" value="Joan Orrira…"/>
 			<node name="gotoSectionStart" value="Joan Testu Atalaren Hasierara"/>
 			<node name="gotoSectionEnd" value="Joan Testu Atalaren Bukaerara"/>
 			<node name="nextTOCSection" value="Joan Aurkibidearen Hurrengo Elementura"/>
@@ -330,6 +329,7 @@
 		<node name="bookmarks" value="Laster-markak"/>
 		<node name="help" value="Laguntza"/>
 		<node name="plugins" value="Instalatu gehigarriak"/>
+		<node name="gotoPageNumber" value="Joan Orrira…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Fitxategiaren izena"/>
