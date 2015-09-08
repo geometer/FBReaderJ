@@ -305,7 +305,6 @@
 		<node name="navigate" value="移動">
 			<node name="toc" value="目次"/>
 			<node name="gotoHome" value="文書の冒頭"/>
-			<node name="gotoPageNumber" value="ページ番号を指定"/>
 			<node name="gotoSectionStart" value="セクションの冒頭"/>
 			<node name="gotoSectionEnd" value="セクションの末尾"/>
 			<node name="nextTOCSection" value="次の項目"/>
@@ -330,6 +329,7 @@
 		<node name="bookmarks" value="しおり"/>
 		<node name="help" value="ヘルプ"/>
 		<node name="plugins" value="プラグインをインストール"/>
+		<node name="gotoPageNumber" value="ページ番号を指定"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="ファイル名"/>

@@ -303,7 +303,6 @@
 		<node name="navigate" value="التنقل بين الصفحات">
 			<node name="toc" value="فهرس الكتاب"/>
 			<node name="gotoHome" value="انتقل الى البداية"/>
-			<node name="gotoPageNumber" value="انتقل الى الصفحة..."/>
 			<node name="gotoSectionStart" value="انتقل الى بداية الصفحة"/>
 			<node name="gotoSectionEnd" value="انتقل الى نهاية الصفحة"/>
 			<node name="nextTOCSection" value="Go to next TOC item" toBeTranslated="true"/>
@@ -328,6 +327,7 @@
 		<node name="bookmarks" value="العلامات المرجعية"/>
 		<node name="help" value="مساعدة"/>
 		<node name="plugins" value="تنصيب اضافة"/>
+		<node name="gotoPageNumber" value="انتقل الى الصفحة..."/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="اسم الملف"/>
