@@ -309,7 +309,6 @@
 		<node name="navigate" value="Navegar">
 			<node name="toc" value="Índice de Conteúdo"/>
 			<node name="gotoHome" value="Ir para o Início do Documento"/>
-			<node name="gotoPageNumber" value="Ir para a Página …"/>
 			<node name="gotoSectionStart" value="Ir para o Início do Texto da Seção"/>
 			<node name="gotoSectionEnd" value="Ir para o Fim do Texto da Seção"/>
 			<node name="nextTOCSection" value="Ir para o Próximo Item TOC"/>
@@ -334,6 +333,7 @@
 		<node name="bookmarks" value="Favoritos"/>
 		<node name="help" value="Ajuda"/>
 		<node name="plugins" value="Instalar plug-ins"/>
+		<node name="gotoPageNumber" value="Ir para a Página …"/>
 	</node>
 	<node name="BookInfo" value="Informação do lvro">
 		<node name="fileName" value="Nome do arquivo"/>
