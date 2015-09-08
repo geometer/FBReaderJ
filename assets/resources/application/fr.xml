@@ -298,7 +298,6 @@
 		<node name="navigate" value="Naviguer">
 			<node name="toc" value="Table des Matières"/>
 			<node name="gotoHome" value="Aller au début du document"/>
-			<node name="gotoPageNumber" value="Aller à la Page…"/>
 			<node name="gotoSectionStart" value="Aller au début de la section de texte"/>
 			<node name="gotoSectionEnd" value="Aller à la fin de la section de texte"/>
 			<node name="nextTOCSection" value="Aller au prochain élément de la table des matières"/>
@@ -323,6 +322,7 @@
 		<node name="bookmarks" value="Marque-pages"/>
 		<node name="help" value="Aide"/>
 		<node name="plugins" value="Installer des plugins"/>
+		<node name="gotoPageNumber" value="Aller à la Page…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nom du fichier"/>
