@@ -305,7 +305,6 @@
 		<node name="navigate" value="탐색">
 			<node name="toc" value="목차"/>
 			<node name="gotoHome" value="문서 처음으로 가기"/>
-			<node name="gotoPageNumber" value="페이지로 가기"/>
 			<node name="gotoSectionStart" value="텍스트 부분 처음으로 가기"/>
 			<node name="gotoSectionEnd" value="텍스트 부분 끝으로 가기"/>
 			<node name="nextTOCSection" value="다음 TOC 항목으로 가기"/>
@@ -330,6 +329,7 @@
 		<node name="bookmarks" value="책갈피"/>
 		<node name="help" value="도움말"/>
 		<node name="plugins" value="플러그인 설치"/>
+		<node name="gotoPageNumber" value="페이지로 가기"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="파일명"/>

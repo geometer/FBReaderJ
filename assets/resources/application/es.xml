@@ -311,7 +311,6 @@
 		<node name="navigate" value="Navegar">
 			<node name="toc" value="Tabla de contenido"/>
 			<node name="gotoHome" value="Ir al Inicio del documento"/>
-			<node name="gotoPageNumber" value="Ir a la página…"/>
 			<node name="gotoSectionStart" value="Ir al inicio de la sección de texto"/>
 			<node name="gotoSectionEnd" value="Ir al final de la sección de texto"/>
 			<node name="nextTOCSection" value="Ir al siguiente elemento de la TDC"/>
@@ -336,6 +335,7 @@
 		<node name="bookmarks" value="Marcadores"/>
 		<node name="help" value="Help"/>
 		<node name="plugins" value="Instalar plugins"/>
+		<node name="gotoPageNumber" value="Ir a la página…"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nombre de archivo"/>
