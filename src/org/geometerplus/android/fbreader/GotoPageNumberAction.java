@@ -42,11 +42,12 @@ public class GotoPageNumberAction extends FBAndroidAction {
 		final AlertDialog dialog = new AlertDialog.Builder(BaseActivity).setView(root).create();
 
 		final ZLTextView textView = Reader.getTextView();
+		final ZLTextView.PagePosition pagePosition = textView.pagePosition();
 
 		final NumberPicker picker = (NumberPicker)root.findViewById(R.id.goto_page_number_picker);
 		picker.setMinValue(1);
-		picker.setMaxValue(textView.pagePosition().Total);
-		picker.setValue(textView.pagePosition().Current);
+		picker.setMaxValue(pagePosition.Total);
+		picker.setValue(pagePosition.Current);
 
 		final View buttonsView = root.findViewById(R.id.goto_page_number_buttons);
 		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
