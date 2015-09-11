@@ -20,6 +20,8 @@
 package org.geometerplus.android.fbreader;
 
 import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.fbreader.util.TextSnippet;
+
 import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 
 public class SelectionTranslateAction extends FBAndroidAction {
@@ -30,10 +32,16 @@ public class SelectionTranslateAction extends FBAndroidAction {
 	@Override
 	protected void run(Object ... params) {
 		final FBView fbview = Reader.getTextView();
-		final DictionaryHighlighting dictionaryHilite = new DictionaryHighlighting(fbview);
+		final DictionaryHighlighting dictionaryHilite = DictionaryHighlighting.get(fbview);
+		final TextSnippet snippet = fbview.getSelectedSnippet();
+
+		if (dictionaryHilite == null || snippet == null) {
+			return;
+		}
+
 		DictionaryUtil.openTextInDictionary(
 			BaseActivity,
-			fbview.getSelectedSnippet().getText(),
+			snippet.getText(),
 			fbview.getCountOfSelectedWords() == 1,
 			fbview.getSelectionStartY(),
 			fbview.getSelectionEndY(),
