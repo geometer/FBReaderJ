@@ -9,7 +9,7 @@
 * Simple widgets
 * Goto page number dialog (in menu, disabled by default)
 
-===== 2.5.9 (Sep 12, 2015) =====
+===== 2.5.9 (Sep 11, 2015) =====
 * Fixed cache access issue
 * Fixed native library loading issue
 * Updated Belarusian localization (by Usievaład Čorny)
