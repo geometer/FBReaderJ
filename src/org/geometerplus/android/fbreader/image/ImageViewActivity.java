@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.*;
 import android.os.Bundle;
-import android.util.FloatMath;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.image.*;
@@ -257,7 +256,7 @@ public class ImageViewActivity extends Activity {
 						myStartPinchDistance2 = distance2;
 						myStartZoomFactor = myZoomFactor;
 					} else {
-						myZoomFactor = myStartZoomFactor * FloatMath.sqrt(distance2 / myStartPinchDistance2);
+						myZoomFactor = myStartZoomFactor * (float)Math.sqrt(distance2 / myStartPinchDistance2);
 						postInvalidate();
 					}
 				}

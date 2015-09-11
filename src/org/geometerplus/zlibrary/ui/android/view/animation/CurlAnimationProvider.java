@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.ui.android.view.animation;
 
 import android.graphics.*;
-import android.util.FloatMath;
 
 import org.geometerplus.zlibrary.core.util.BitmapUtil;
 import org.geometerplus.zlibrary.core.view.ZLViewEnums;
@@ -120,17 +119,17 @@ public final class CurlAnimationProvider extends AnimationProvider {
 
 		float sX, sY;
 		{
-			float d1 = x - x1;
-			float d2 = y - cornerY;
-			sX = FloatMath.sqrt(d1 * d1 + d2 * d2) / 2;
+			final float d1 = x - x1;
+			final float d2 = y - cornerY;
+			sX = (float)Math.sqrt(d1 * d1 + d2 * d2) / 2;
 			if (cornerX == 0) {
 				sX = -sX;
 			}
 		}
 		{
-			float d1 = x - cornerX;
-			float d2 = y - y1;
-			sY = FloatMath.sqrt(d1 * d1 + d2 * d2) / 2;
+			final float d1 = x - cornerX;
+			final float d2 = y - y1;
+			sY = (float)Math.sqrt(d1 * d1 + d2 * d2) / 2;
 			if (cornerY == 0) {
 				sY = -sY;
 			}
