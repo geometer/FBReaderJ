@@ -763,10 +763,11 @@ public final class FBView extends ZLTextView {
 	public TextSnippet getSelectedSnippet() {
 		final ZLTextPosition start = getSelectionStartPosition();
 		final ZLTextPosition end = getSelectionEndPosition();
-		final TextBuildTraverser traverser = new TextBuildTraverser(this);
-		if (!isSelectionEmpty()) {
-			traverser.traverse(start, end);
+		if (start == null || end == null) {
+			return null;
 		}
+		final TextBuildTraverser traverser = new TextBuildTraverser(this);
+		traverser.traverse(start, end);
 		return new FixedTextSnippet(start, end, traverser.getText());
 	}
 

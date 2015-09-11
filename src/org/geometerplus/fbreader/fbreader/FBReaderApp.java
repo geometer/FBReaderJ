@@ -35,8 +35,7 @@ import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.network.sync.SyncData;
-import org.geometerplus.fbreader.util.AutoTextSnippet;
-import org.geometerplus.fbreader.util.EmptyTextSnippet;
+import org.geometerplus.fbreader.util.*;
 
 public final class FBReaderApp extends ZLApplication {
 	public interface ExternalFileOpener {
@@ -269,12 +268,16 @@ public final class FBReaderApp extends ZLApplication {
 
 	public Bookmark addSelectionBookmark() {
 		final FBView fbView = getTextView();
+		final TextSnippet snippet = fbView.getSelectedSnippet();
+		if (snippet == null) {
+			return null;
+		}
 
 		final Bookmark bookmark = new Bookmark(
 			Collection,
 			Model.Book,
 			fbView.getModel().getId(),
-			fbView.getSelectedSnippet(),
+			snippet,
 			true
 		);
 		Collection.saveBookmark(bookmark);
