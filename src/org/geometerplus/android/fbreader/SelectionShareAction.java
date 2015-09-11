@@ -24,6 +24,8 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBView;
+import org.geometerplus.fbreader.util.TextSnippet;
 
 public class SelectionShareAction extends FBAndroidAction {
 	SelectionShareAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -32,9 +34,15 @@ public class SelectionShareAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final String text = Reader.getTextView().getSelectedSnippet().getText();
+		final FBView fbview = Reader.getTextView();
+		final TextSnippet snippet = fbview.getSelectedSnippet();
+		if (snippet == null) {
+			return;
+		}
+
+		final String text = snippet.getText();
 		final String title = Reader.getCurrentBook().getTitle();
-		Reader.getTextView().clearSelection();
+		fbview.clearSelection();
 
 		final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 		intent.setType("text/plain");
