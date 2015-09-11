@@ -23,12 +23,23 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.view.*;
 
 public final class DictionaryHighlighting extends ZLTextSimpleHighlighting {
-	public DictionaryHighlighting(ZLTextView view) {
-		this(view, view.getSelectionHighlighting());
+	public static DictionaryHighlighting get(ZLTextView view) {
+		final ZLTextHighlighting hilite = view.getSelectionHighlighting();
+		if (hilite == null) {
+			return null;
+		}
+
+		final ZLTextPosition start = hilite.getStartPosition();
+		final ZLTextPosition end = hilite.getEndPosition();
+		if (start == null || end == null) {
+			return null;
+		}
+
+		return new DictionaryHighlighting(view, start, end);
 	}
 
-	private DictionaryHighlighting(ZLTextView view, ZLTextHighlighting selection) {
-		super(view, selection.getStartPosition(), selection.getEndPosition());
+	private DictionaryHighlighting(ZLTextView view, ZLTextPosition start, ZLTextPosition end) {
+		super(view, start, end);
 	}
 
 	@Override
