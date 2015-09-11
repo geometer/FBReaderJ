@@ -48,6 +48,9 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 		} else {
 			bookmark = Reader.addSelectionBookmark();
 		}
+		if (bookmark == null) {
+			return;
+		}
 
 		final SuperActivityToast toast =
 			new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
