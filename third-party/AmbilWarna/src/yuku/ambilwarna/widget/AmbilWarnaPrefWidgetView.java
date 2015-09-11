@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
-import android.util.FloatMath;
 import android.view.View;
 
 public class AmbilWarnaPrefWidgetView extends View {
@@ -19,8 +18,8 @@ public class AmbilWarnaPrefWidgetView extends View {
 		super(context, attrs);
 		
 		float density = context.getResources().getDisplayMetrics().density;
-		rectSize = FloatMath.floor(24.f * density + 0.5f);
-		strokeWidth = FloatMath.floor(1.f * density + 0.5f);
+		rectSize = (int)(24.f * density + 0.5f);
+		strokeWidth = (int)(1.f * density + 0.5f);
 
 		paint = new Paint();
 		paint.setColor(0xffffffff);
