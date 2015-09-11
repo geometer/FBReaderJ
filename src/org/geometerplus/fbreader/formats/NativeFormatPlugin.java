@@ -106,14 +106,17 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
 		final int code;
+		final String tempDirectory = SystemInfo.tempDirectory();
 		synchronized (ourNativeLock) {
-			code = readModelNative(model, SystemInfo.tempDirectory());
+			code = readModelNative(model, tempDirectory);
 		}
 		switch (code) {
 			case 0:
 				return;
 			case 3:
-				throw new CachedCharStorageException("Cannot write file from native code");
+				throw new CachedCharStorageException(
+					"Cannot write file from native code to " + tempDirectory
+				);
 			default:
 				throw new BookReadingException(
 					"nativeCodeFailure",
