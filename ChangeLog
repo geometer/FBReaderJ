@@ -8,10 +8,11 @@
 * Customisable main menu
 * Simple widgets
 
-===== 2.5.9 (??? ??, 2015) =====
+===== 2.5.9 (Sep 12, 2015) =====
 * Fixed cache access issue
 * Fixed native library loading issue
 * Updated Belarusian localization (by Usievaład Čorny)
+* No FloatMath usages (class FloatMath removed in Android M)
 
 ===== 2.5.8 (Sep 04, 2015) =====
 * Display brightness percent during adjustment (android 3 and higher)
