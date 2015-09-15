@@ -285,6 +285,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		myFBReaderApp.addAction(ActionCode.HIDE_TOAST, new HideToastAction(this, myFBReaderApp));
 
 		myFBReaderApp.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, myFBReaderApp));
+		myFBReaderApp.addAction(ActionCode.GO_TO_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
+		myFBReaderApp.addAction(ActionCode.GO_TO_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
+		myFBReaderApp.addAction(ActionCode.GO_TO_NETWORK_LIBRARY, new ShowNetworkLibraryAction(this, myFBReaderApp));
+		myFBReaderApp.addAction(ActionCode.GO_TO_PREVIOUS_BOOK, new GoToPreviousBookAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.OPEN_START_SCREEN, new StartScreenAction(this, myFBReaderApp));
 
 		myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_SYSTEM, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_SYSTEM));

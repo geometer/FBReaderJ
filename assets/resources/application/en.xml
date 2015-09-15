@@ -840,11 +840,20 @@
 			</node>
 			<node name="backKeyAction" value="Back key action">
 				<node name="exit" value="Close FBReader"/>
+				<node name="goToPreferences" value="Go directly to your preferences"/>
+				<node name="goToPreviousBook" value="Go directly to your previously opened book"/>
+				<node name="goToLibrary" value="Go directly to your library"/>
+				<node name="goToNetworkLibrary" value="Go directly to your network library"/>
 				<node name="goBack" value="Navigate back"/>
 				<node name="cancelMenu" value="Show cancel menu"/>
+				<node name="none" value="No action"/>
 			</node>
 			<node name="backKeyLongPressAction" value="Back key long press action">
 				<node name="exit" value="Close FBReader"/>
+				<node name="goToPreferences" value="Go directly to your preferences"/>
+				<node name="goToPreviousBook" value="Go directly to your previously opened book"/>
+				<node name="goToLibrary" value="Go directly to your library"/>
+				<node name="goToNetworkLibrary" value="Go directly to your network library"/>
 				<node name="goBack" value="Navigate back"/>
 				<node name="cancelMenu" value="Show cancel menu"/>
 				<node name="none" value="No action"/>

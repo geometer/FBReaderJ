@@ -464,7 +464,13 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 			bindings.hasBinding(keyCode, false)) {
 			if (myKeyUnderTracking != -1) {
 				if (myKeyUnderTracking == keyCode) {
-					return true;
+					final boolean longPress = System.currentTimeMillis() >
+							myTrackingStartTime + ViewConfiguration.getLongPressTimeout()/3;
+					if(longPress) {
+						application.runActionByKey(keyCode, longPress);
+						myKeyUnderTracking = -1;
+					}
+					return longPress;
 				} else {
 					myKeyUnderTracking = -1;
 				}
@@ -485,9 +491,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (myKeyUnderTracking != -1) {
 			if (myKeyUnderTracking == keyCode) {
-				final boolean longPress = System.currentTimeMillis() >
-					myTrackingStartTime + ViewConfiguration.getLongPressTimeout();
-				ZLApplication.Instance().runActionByKey(keyCode, longPress);
+				ZLApplication.Instance().runActionByKey(keyCode, false);
 			}
 			myKeyUnderTracking = -1;
 			return true;
