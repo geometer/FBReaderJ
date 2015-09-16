@@ -24,10 +24,16 @@ public final class Author implements Comparable<Author> {
 
 	public final String DisplayName;
 	public final String SortKey;
+	public final AuthorRole Role;
 
-	public Author(String displayName, String sortKey) {
+	public Author(String displayName, String sortKey, AuthorRole role) {
 		DisplayName = displayName;
 		SortKey = sortKey.toLowerCase();
+		Role = role;
+	}
+	
+	public Author(String displayName, String sortKey) {
+		this(displayName, sortKey, new AuthorRole(null));
 	}
 
 	public static int hashCode(Author author) {
