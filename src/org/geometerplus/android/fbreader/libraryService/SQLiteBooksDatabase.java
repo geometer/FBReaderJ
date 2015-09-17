@@ -271,7 +271,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		initTagCache();
 
 		cursor = myDatabase.rawQuery(
-			"SELECT author_id,name,sort_key FROM Authors", null //TODO:
+			"SELECT author_id,name,sort_key FROM Authors", null
 		);
 		final HashMap<Long,Author> authorById = new HashMap<Long,Author>();
 		while (cursor.moveToNext()) {
@@ -280,7 +280,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 
 		cursor = myDatabase.rawQuery(
-			"SELECT book_id,author_id FROM BookAuthor ORDER BY author_index", null
+			"SELECT book_id,author_id FROM BookAuthor ORDER BY author_index", null //TODO
 		);
 		while (cursor.moveToNext()) {
 			final DbBook book = booksById.get(cursor.getLong(0));
@@ -437,42 +437,33 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected void saveBookAuthorInfo(long bookId, long index, Author author) {
 		final SQLiteStatement getAuthorIdStatement = get(
-			"SELECT author_id FROM Authors WHERE name=? AND sort_key=? AND role_id=?"
+			"SELECT author_id FROM Authors WHERE name=? AND sort_key=?"
 		);
 		final SQLiteStatement insertAuthorStatement = get(
-			"INSERT OR IGNORE INTO Authors (name,sort_key,role_id) VALUES (?,?,?)"
+			"INSERT OR IGNORE INTO Authors (name,sort_key) VALUES (?,?)"
 		);
 		final SQLiteStatement insertBookAuthorStatement = get(
-			"INSERT OR REPLACE INTO BookAuthor (book_id,author_id,author_index) VALUES (?,?,?)"
+			"INSERT OR REPLACE INTO BookAuthor (book_id,author_id,author_index,role_id) VALUES (?,?,?,?)"
 		);
 
 		long authorId;
 		try {
 			getAuthorIdStatement.bindString(1, author.DisplayName);
 			getAuthorIdStatement.bindString(2, author.SortKey);
-			if (author.Role.getCode() != null)   {
-				getAuthorIdStatement.bindString(3, author.Role.getCode());
-			} else {
-				getAuthorIdStatement.bindNull(3);
-			}
 			authorId = getAuthorIdStatement.simpleQueryForLong();
 		} catch (SQLException e) {
 			insertAuthorStatement.bindString(1, author.DisplayName);
 			insertAuthorStatement.bindString(2, author.SortKey);
-			if (author.Role.getCode() != null)   {
-				insertAuthorStatement.bindString(3, author.Role.getCode());
-			} else {
-				insertAuthorStatement.bindNull(3);
-			}
 			authorId = insertAuthorStatement.executeInsert();
 		}
 		insertBookAuthorStatement.bindLong(1, bookId);
 		insertBookAuthorStatement.bindLong(2, authorId);
 		insertBookAuthorStatement.bindLong(3, index);
+		insertBookAuthorStatement.bindNull(4);//TODO
 		insertBookAuthorStatement.execute();
 	}
 
-	protected List<Author> listAuthors(long bookId) {// TODO:
+	protected List<Author> listAuthors(long bookId) {//TODO
 		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { String.valueOf(bookId) });
 		if (!cursor.moveToNext()) {
 			cursor.close();
@@ -1878,31 +1869,32 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 	
 	private void updateTables40() {
-		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS AuthorRole(" +
+		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Role(" +
 				"role_id INTEGER  PRIMARY KEY," +
 				"code TEXT)");
-		myDatabase.execSQL("ALTER TABLE Authors RENAME TO Authors_Obsolete");
+		myDatabase.execSQL("DROP INDEX BookAuthor_BookIndex");
+		myDatabase.execSQL("ALTER TABLE BookAuthor RENAME TO BookAuthor_Obsolete");
 		myDatabase.execSQL(
-				"CREATE TABLE IF NOT EXISTS Authors(" +
-					"author_id INTEGER PRIMARY KEY," +
-					"name TEXT NOT NULL," +
-					"sort_key TEXT NOT NULL," +
-					"role_id INTEGER REFERENCES AuthorRole(role_id)," +
-					"CONSTRAINT Authors_Unique UNIQUE (name, sort_key, role_id))");
-		final Cursor cursor = myDatabase.rawQuery("SELECT author_id,name,sort_key FROM Authors_Obsolete", null);
-		final SQLiteStatement statement = get("INSERT INTO Authors (author_id,name,sort_key,role_id) VALUES (?,?,?,?)");
+				"CREATE TABLE IF NOT EXISTS BookAuthor(" +
+					"author_id INTEGER NOT NULL REFERENCES Authors(author_id)," +
+					"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+					"author_index INTEGER NOT NULL," +
+					"role_id INTEGER REFERENCES Role(role_id)," +
+					"CONSTRAINT BookAuthor_Unique0 UNIQUE (author_id, book_id, role_id)," +
+					"CONSTRAINT BookAuthor_Unique1 UNIQUE (book_id, author_index))");
+		final Cursor cursor = myDatabase.rawQuery("SELECT author_id,book_id,author_index FROM BookAuthor_Obsolete", null);
+		final SQLiteStatement statement = get("INSERT INTO BookAuthor (author_id,book_id,author_index,role_id) VALUES (?,?,?,?)");
 		while (cursor.moveToNext()) {
 			statement.bindLong(1, cursor.getLong(0));
-			statement.bindString(2, cursor.getString(1));
-			statement.bindString(3, cursor.getString(2));
+			statement.bindLong(2, cursor.getLong(1));
+			statement.bindLong(3, cursor.getLong(2));
 			statement.bindNull(4);
 			statement.execute();
 		}
 		cursor.close();
-		myDatabase.execSQL("DROP TABLE IF EXISTS Authors_Obsolete");
-		
-	}
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookAuthor_Obsolete");
 
+	}
 
 	private SQLiteStatement get(String sql) {
 		SQLiteStatement statement = myStatements.get(sql);
