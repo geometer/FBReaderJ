@@ -43,6 +43,7 @@
 		<node name="de-traditional" value="немски (традиционен)"/>
 		<node name="el" value="гръцки"/>
 		<node name="en" value="английски"/>
+		<node name="en_US" value="English (US)" toBeTranslated="true"/>
 		<node name="eo" value="есперанто"/>
 		<node name="es" value="испански"/>
 		<node name="eu" value="баскски"/>
