@@ -1181,9 +1181,9 @@
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
-		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%" toBeTranslated="true"/>
 	</node>
 	<node name="duration">
 		<node name="duration1" value="1 second" toBeTranslated="true"/>

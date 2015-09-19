@@ -1182,9 +1182,9 @@
 		<node name="frontScreenButton" value="Switch to this screen"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
-		<node name="percent" value="E.g.: 125%%"/>
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
+		<node name="percent" value="E.g.: 125%"/>
 	</node>
 	<node name="duration">
 		<node name="duration1" value="1 second"/>

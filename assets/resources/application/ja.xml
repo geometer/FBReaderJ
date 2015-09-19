@@ -1182,9 +1182,9 @@
 		<node name="frontScreenButton" value="この画面に切替"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="例: 20px, 10pt, 0.8em, 1ex, 120%%"/>
-		<node name="length" value="例: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
-		<node name="percent" value="例: 125%%"/>
+		<node name="positiveLength" value="例: 20px, 10pt, 0.8em, 1ex, 120%"/>
+		<node name="length" value="例: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
+		<node name="percent" value="例: 125%"/>
 	</node>
 	<node name="duration">
 		<node name="duration1" value="1 秒"/>
