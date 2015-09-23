@@ -42,6 +42,7 @@
 		<node name="de-traditional" value="德语 (传统正字法)"/>
 		<node name="el" value="希腊语"/>
 		<node name="en" value="英语"/>
+		<node name="en_US" value="English (US)" toBeTranslated="true"/>
 		<node name="eo" value="世界语"/>
 		<node name="es" value="西班牙语"/>
 		<node name="eu" value="巴斯克语"/>

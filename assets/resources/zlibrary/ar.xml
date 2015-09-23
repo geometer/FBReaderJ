@@ -41,6 +41,7 @@
 		<node name="de-traditional" value="الألماني (كتابة تقليدية)"/>
 		<node name="el" value="اليونانية"/>
 		<node name="en" value="الإنجليزية"/>
+		<node name="en_US" value="English (US)" toBeTranslated="true"/>
 		<node name="eo" value="الإسبرانتو"/>
 		<node name="es" value="الإسبانية"/>
 		<node name="eu" value="Basque" toBeTranslated="true"/>
