@@ -41,6 +41,7 @@
 		<node name="de-traditional" value="Tysk (traditionel retskrivning)"/>
 		<node name="el" value="Græsk"/>
 		<node name="en" value="Engelsk"/>
+		<node name="en_US" value="English (US)" toBeTranslated="true"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spansk"/>
 		<node name="eu" value="Basque" toBeTranslated="true"/>

@@ -60,6 +60,7 @@
 			<node name="summary" value="Intregul sistem de fisiere a dispozitivului"/>
 		</node>
 		<node name="fileTreeCard" value="Cardul de memorie">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Cardul de memorie introdus în aparat"/>
 		</node>
 		<node name="fileTreeLibrary" value="Biblioteca">
@@ -1175,9 +1176,9 @@
 		<node name="frontScreenButton" value="Comutare la acest ecran"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
-		<node name="percent" value="E.g.: 125%%"/>
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
+		<node name="percent" value="E.g.: 125%"/>
 	</node>
 	<node name="duration">
 		<node name="duration1" value="1 secunda"/>
