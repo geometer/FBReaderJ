@@ -41,6 +41,7 @@
 		<node name="de-traditional" value="German (traditional spelling)"/>
 		<node name="el" value="Greek"/>
 		<node name="en" value="English"/>
+		<node name="en_US" value="English (US)"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spanish"/>
 		<node name="eu" value="Basque"/>
