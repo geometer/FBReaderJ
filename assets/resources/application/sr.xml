@@ -57,6 +57,7 @@
 			<node name="summary" value="Пун систем датотека уређаја."/>
 		</node>
 		<node name="fileTreeCard" value="Меморијска картица">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Меморијска картица која је убачена."/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader библиотека">

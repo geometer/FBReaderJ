@@ -57,6 +57,7 @@
 			<node name="summary" value="Todo o sistema de ficheiros do dispositivo"/>
 		</node>
 		<node name="fileTreeCard" value="Tarxeta de memoria">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Tarxeta de memoria inserida no dispositivo"/>
 		</node>
 		<node name="fileTreeLibrary" value="Biblioteca FBReader">

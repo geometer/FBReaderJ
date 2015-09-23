@@ -60,6 +60,7 @@
 			<node name="summary" value="Intregul sistem de fisiere a dispozitivului"/>
 		</node>
 		<node name="fileTreeCard" value="Cardul de memorie">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Cardul de memorie introdus în aparat"/>
 		</node>
 		<node name="fileTreeLibrary" value="Biblioteca">

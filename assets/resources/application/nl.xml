@@ -57,6 +57,7 @@
 			<node name="summary" value="Volledige bestandssysteem van het apparaat"/>
 		</node>
 		<node name="fileTreeCard" value="Geheugenkaart">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Geheugenkaart geplaatst in het apparaat"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader bibliotheek">

@@ -57,6 +57,7 @@
 			<node name="summary" value="Αρχείο συστήματος της συσκευής"/>
 		</node>
 		<node name="fileTreeCard" value="Κάρτα μνήμης">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Κάρτα μνήμης (εσωτερική μνήμε σε ορισμένες συσκευές)"/>
 		</node>
 		<node name="fileTreeLibrary" value="βιβλιοθήκη FBReader">

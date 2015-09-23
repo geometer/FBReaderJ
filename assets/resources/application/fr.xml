@@ -60,6 +60,7 @@
 			<node name="summary" value="Système de fichier complet du périphérique"/>
 		</node>
 		<node name="fileTreeCard" value="Carte mémoire">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Carte mémoire insérée dans le périphérique"/>
 		</node>
 		<node name="fileTreeLibrary" value="Bibliothèque FBReader">

@@ -57,6 +57,7 @@
 			<node name="summary" value="Файлова система пристрою"/>
 		</node>
 		<node name="fileTreeCard" value="Карта пам'яті">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Підключена карта пам'яті"/>
 		</node>
 		<node name="fileTreeLibrary" value="Бібліотека FBReader">

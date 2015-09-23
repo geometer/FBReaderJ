@@ -59,6 +59,7 @@
 			<node name="summary" value="Sistema de arquivos completo"/>
 		</node>
 		<node name="fileTreeCard" value="Cartão de memória">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Arquivos na memória do cartão, externa ou interna"/>
 		</node>
 		<node name="fileTreeLibrary" value="Biblioteca FBReader">

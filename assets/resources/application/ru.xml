@@ -57,6 +57,7 @@
 			<node name="summary" value="Просмотр всех файлов на устройстве"/>
 		</node>
 		<node name="fileTreeCard" value="Карта памяти">
+			<node name="withIndex" value="Карта памяти №%s"/>
 			<node name="summary" value="Просмотр карты памяти"/>
 		</node>
 		<node name="fileTreeLibrary" value="Библиотека FBReader">

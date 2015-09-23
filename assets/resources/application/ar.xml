@@ -57,6 +57,7 @@
 			<node name="summary" value="جميع ملفات الجهاز"/>
 		</node>
 		<node name="fileTreeCard" value="بطاقة الذاكرة">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="بطاقة الذاكرة الموضوعة في الجهاز"/>
 		</node>
 		<node name="fileTreeLibrary" value="مجلد المكتبة">

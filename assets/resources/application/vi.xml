@@ -58,6 +58,7 @@
 			<node name="summary" value="Toàn bộ tập tin hệ thống"/>
 		</node>
 		<node name="fileTreeCard" value="Thẻ nhớ">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Có thể thêm thẻ nhớ vào máy"/>
 		</node>
 		<node name="fileTreeLibrary" value="Thư viện FBReader">

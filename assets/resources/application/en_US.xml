@@ -57,6 +57,7 @@
 			<node name="summary" value="Entire file system"/>
 		</node>
 		<node name="fileTreeCard" value="Memory card">
+			<node name="withIndex" value="Memory card #%s"/>
 			<node name="summary" value="Files on memory card, external or built-in"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader library">

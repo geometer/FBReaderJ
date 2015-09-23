@@ -57,6 +57,7 @@
 			<node name="summary" value="ყველა ფაილის დათვალიერება ჩემს მოწყობილობაზე"/>
 		</node>
 		<node name="fileTreeCard" value="მეხსიერების ბარათი">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="მეხსიერების ბარათის დათვალიერება"/>
 		</node>
 		<node name="fileTreeLibrary" value="ბიბლიოთეკა FBReader">

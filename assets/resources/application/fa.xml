@@ -56,6 +56,7 @@
 			<node name="summary" value="تمامی فایل های سیستم دستگاه"/>
 		</node>
 		<node name="fileTreeCard" value="کارت حافظه">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="کارت حافظه وارد شد"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader کتابخانه">

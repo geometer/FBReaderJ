@@ -57,6 +57,7 @@
 			<node name="summary" value="전체적인 파일 시스템"/>
 		</node>
 		<node name="fileTreeCard" value="메모리 카드">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="메모리 카드, 외부 저장소 혹은 내부 저장소에 있는 파일들"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader 라이브러리">

@@ -63,6 +63,7 @@
 			<node name="summary" value="Tot el sistema de fitxers del dispositiu"/>
 		</node>
 		<node name="fileTreeCard" value="Tarja de memòria">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Tarja de memòria inserida al dispositiu"/>
 		</node>
 		<node name="fileTreeLibrary" value="Biblioteca FBReader">

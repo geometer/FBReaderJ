@@ -57,6 +57,7 @@
 			<node name="summary" value="System plików urządzenia"/>
 		</node>
 		<node name="fileTreeCard" value="Karta pamięci">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Karta pamięci umieszczona w urządzeniu"/>
 		</node>
 		<node name="fileTreeLibrary" value="Biblioteka FBReadera">

@@ -57,6 +57,7 @@
 			<node name="summary" value="Fitxategi-sistema osoa"/>
 		</node>
 		<node name="fileTreeCard" value="Memoria txartela">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Gailuan txertaturiko memoria txartela"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader liburutegia">

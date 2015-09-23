@@ -58,6 +58,7 @@
 			<node name="summary" value="Տեսնել բոլոր նիշքերը սարքավորումում"/>
 		</node>
 		<node name="fileTreeCard" value="Հիշողության քարտ">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Տեսնել հիշողության քարտը"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader գրադարան">

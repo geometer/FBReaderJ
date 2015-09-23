@@ -57,6 +57,7 @@
 			<node name="summary" value="ไฟล์ทั้งหมดที่อยู่ในตัวเครื่อง"/>
 		</node>
 		<node name="fileTreeCard" value="การ์ดหน่วยความจำ">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="การ์ดหน่วยความจำที่พบในตัวเครื่อง"/>
 		</node>
 		<node name="fileTreeLibrary" value="คลังหนังสือของ FBReader">

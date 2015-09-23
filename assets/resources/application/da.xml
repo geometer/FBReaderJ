@@ -56,6 +56,7 @@
 			<node name="summary" value="Hele enhedens filsystem"/>
 		</node>
 		<node name="fileTreeCard" value="Hukommelseskort">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Hukommelseskort indsat i enheden"/>
 		</node>
 		<node name="fileTreeLibrary" value="FB-læser bibliotek">

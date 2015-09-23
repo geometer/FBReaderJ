@@ -57,6 +57,7 @@
 			<node name="summary" value="Plný systém souborů zařízení"/>
 		</node>
 		<node name="fileTreeCard" value="Paměťová karta">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Paměťová karta vložena do zařízení"/>
 		</node>
 		<node name="fileTreeLibrary" value="Knihovna FBReaderu">
