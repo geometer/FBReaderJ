@@ -41,6 +41,7 @@
 		<node name="de-traditional" value="ドイツ語 (旧正書法)"/>
 		<node name="el" value="ギリシャ語"/>
 		<node name="en" value="英語"/>
+		<node name="en_US" value="English (US)" toBeTranslated="true"/>
 		<node name="eo" value="エスペラント"/>
 		<node name="es" value="スペイン語"/>
 		<node name="eu" value="バスク語"/>

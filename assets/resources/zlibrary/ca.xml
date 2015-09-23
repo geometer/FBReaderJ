@@ -47,6 +47,7 @@
 		<node name="de-traditional" value="Alemany (ortografia tradicional)"/>
 		<node name="el" value="Grec"/>
 		<node name="en" value="Anglès"/>
+		<node name="en_US" value="English (US)" toBeTranslated="true"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Castellà"/>
 		<node name="eu" value="Euskera"/>
