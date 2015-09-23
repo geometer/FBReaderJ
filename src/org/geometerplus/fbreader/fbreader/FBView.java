@@ -499,7 +499,7 @@ public final class FBView extends ZLTextView {
 			myTOCMarks = null;
 		}
 
-		private final int MAX_TOC_MARKS_NUMBER = 100;
+		private final int MAX_TOC_MARKS_NUMBER = 1000;
 		protected synchronized void updateTOCMarks(BookModel model) {
 			myTOCMarks = new ArrayList<TOCTree>();
 			TOCTree toc = model.TOCTree;
