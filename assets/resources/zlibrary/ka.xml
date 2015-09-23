@@ -41,6 +41,7 @@
 		<node name="de-traditional" value="გერმანული (ძველი ორთოგრაფია)"/>
 		<node name="el" value="ბერძნული"/>
 		<node name="en" value="ინგლისური"/>
+		<node name="en_US" value="English (US)" toBeTranslated="true"/>
 		<node name="eo" value="ესპერანტო"/>
 		<node name="es" value="ესპანური"/>
 		<node name="eu" value="Basque" toBeTranslated="true"/>

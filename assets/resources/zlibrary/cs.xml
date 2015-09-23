@@ -42,6 +42,7 @@
 		<node name="de-traditional" value="Německy (tradiční pravopis)"/>
 		<node name="el" value="Řecky"/>
 		<node name="en" value="Anglicky"/>
+		<node name="en_US" value="English (US)" toBeTranslated="true"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Španělsky"/>
 		<node name="eu" value="Baskicky"/>
