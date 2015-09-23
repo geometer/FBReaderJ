@@ -62,6 +62,7 @@
 			<node name="summary" value="Dateisystem des Geräts"/>
 		</node>
 		<node name="fileTreeCard" value="Speicherkarte">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Speicherkarte (bei einigen Geräten der interne Speicher)"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader Bibliothek">
@@ -1188,9 +1189,9 @@
 		<node name="frontScreenButton" value="Auf diesen Bildschirm wechseln"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="z.B.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
-		<node name="length" value="z.B.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
-		<node name="percent" value="z.B.: 125%%"/>
+		<node name="positiveLength" value="z.B.: 20px, 10pt, 0.8em, 1ex, 120%"/>
+		<node name="length" value="z.B.: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
+		<node name="percent" value="z.B.: 125%"/>
 	</node>
 	<node name="duration">
 		<node name="duration1" value="1 Sekunde"/>
