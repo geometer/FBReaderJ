@@ -22,11 +22,18 @@ package org.geometerplus.fbreader.fbreader.options;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class FooterOptions {
+	enum ProgressDisplayType {
+		dontDisplay,
+		asPages,
+		asPercentage,
+		asPagesAndPercentage
+	}
+
 	public final ZLBooleanOption ShowTOCMarks;
 	public final ZLBooleanOption ShowClock;
 	public final ZLBooleanOption ShowBattery;
 
-	public final ZLIntegerRangeOption ShowProgressType;
+	public final ZLEnumOption<ProgressDisplayType> ShowProgress;
 
 	public final ZLStringOption Font;
 
@@ -36,35 +43,28 @@ public class FooterOptions {
 		ShowBattery = new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
 		Font = new ZLStringOption("Options", "FooterFont", "Droid Sans");
 
-		ShowProgressType = new ZLIntegerRangeOption("Options", "ShowProgressType", 0, 4, ProgressTypes.showProgressAsPages.ordinal());
+		ShowProgress = new ZLEnumOption<ProgressDisplayType>(
+			"Options", "ShowProgress", ProgressDisplayType.asPages
+		);
 	}
 
 	public boolean showProgressAsPercentage() {
-		return ShowProgressType.getValue() == ProgressTypes.showProgressAsPercentage.ordinal() ||
-				ShowProgressType.getValue() == ProgressTypes.showProgressAsBoth.ordinal();
+		switch (ShowProgress.getValue()) {
+			case asPercentage:
+			case asPagesAndPercentage:
+				return true;
+			default:
+				return false;
+		}
 	}
 
 	public boolean showProgressAsPages() {
-		return ShowProgressType.getValue() == ProgressTypes.showProgressAsPages.ordinal() ||
-				ShowProgressType.getValue() == ProgressTypes.showProgressAsBoth.ordinal();
-	}
-
-
-	public String[] getProgressValueResourceKeys() {
-		ProgressTypes[] progressTypes = ProgressTypes.values();
-		String[] resourceKeys = new String[progressTypes.length];
-
-		for (int i = 0; i < progressTypes.length; i++) {
-			resourceKeys[i] = progressTypes[i].name();
+		switch (ShowProgress.getValue()) {
+			case asPages:
+			case asPagesAndPercentage:
+				return true;
+			default:
+				return false;
 		}
-
-		return resourceKeys;
 	}
-}
-
-enum ProgressTypes {
-	hide,
-	showProgressAsPages,
-	showProgressAsPercentage,
-	showProgressAsBoth
 }
