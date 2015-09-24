@@ -332,7 +332,7 @@
 		<node name="tags" value="Từ khóa"/>
 		<node name="series" value="Bộ sách"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="Đồng bộ">
 			<node name="summary" value="Thông số mạng cho kho sách"/>
 			<node name="site" value="Đọc thêm về đồng bộ sách">

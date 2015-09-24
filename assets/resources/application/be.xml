@@ -341,7 +341,7 @@
 		<node name="tags" value="Цэтлік(і)"/>
 		<node name="series" value="Сэрыі"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="Сынхранізацыя">
 			<node name="summary" value="Налады кніжнай сеткі"/>
 			<node name="site" value="Больш пра сынхранізацыю">

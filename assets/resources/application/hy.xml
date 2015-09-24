@@ -347,7 +347,7 @@
 		<node name="tags" value="Կատեգորիա(ներ)"/>
 		<node name="series" value="Մատենաշար"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="Սինքրոնացում">
 			<node name="summary" value="Գրադարակների կարգավորումներ"/>
 			<node name="site" value="Ավելին սինքրոնացման մասին">
