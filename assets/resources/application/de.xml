@@ -346,7 +346,7 @@
 		<node name="tags" value="Schlagwörter (Tags)"/>
 		<node name="series" value="Serie"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader Einstellungen">
 		<node name="sync" value="Synchronisation">
 			<node name="summary" value="Bücher Netzwerk Einstellungen"/>
 			<node name="site" value="Mehr über die Synchronisation erfahren">
