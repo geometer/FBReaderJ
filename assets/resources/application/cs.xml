@@ -719,9 +719,11 @@
 				<node name="summaryOn" value="Zobrazit značky obsahu v patičce"/>
 				<node name="summaryOff" value="Nezobrazovat značky obsahu v patičce"/>
 			</node>
-			<node name="showProgress" value="Zobrazit číslo stránky">
-				<node name="summaryOn" value="Zobrazit číslo stránky v patičce"/>
-				<node name="summaryOff" value="Nezobrazovat číslo stránky v patičce"/>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
 			</node>
 			<node name="showBattery" value="Zobrazit úroveň baterie">
 				<node name="summaryOn" value="Zobrazit úroveň baterie v patičce"/>
