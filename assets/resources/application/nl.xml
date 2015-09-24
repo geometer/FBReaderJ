@@ -341,7 +341,7 @@
 		<node name="tags" value="Trefwoorden"/>
 		<node name="series" value="Serie"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="Synchronisatie">
 			<node name="summary" value="Boekennetwerk"/>
 			<node name="site" value="Lees verder over synchronisatie">
