@@ -22,12 +22,19 @@ package org.geometerplus.fbreader.fbreader.options;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class FooterOptions {
+	enum ProgressDisplayType {
+		dontDisplay,
+		asPages,
+		asPercentage,
+		asPagesAndPercentage
+	}
+
 	public final String Screen;
 
 	public final ZLBooleanOption ShowTOCMarks;
 	public final ZLBooleanOption ShowClock;
 	public final ZLBooleanOption ShowBattery;
-	public final ZLBooleanOption ShowProgress;
+	public final ZLEnumOption<ProgressDisplayType> ShowProgress;
 	public final ZLStringOption Font;
 
 	public FooterOptions(String screen) {
@@ -38,6 +45,35 @@ public class FooterOptions {
 		ShowClock = new ZLBooleanOption("Options", prefix + "ShowClockInFooter", true);
 		ShowBattery = new ZLBooleanOption("Options", prefix + "ShowBatteryInFooter", true);
 		ShowProgress = new ZLBooleanOption("Options", prefix + "ShowProgressInFooter", true);
+		ShowProgress = new ZLEnumOption<ProgressDisplayType>(
+			"Options", prefix + "DisplayProgressInFooter", ProgressDisplayType.asPages
+		);
+		final ZLBooleanOption oldShowProgress =
+			new ZLBooleanOption("Options", prefix + "ShowProgressInFooter", true);
+		if (!oldShowProgress.getValue()) {
+			oldShowProgress.setValue(true);
+			ShowProgress.setValue(ProgressDisplayType.dontDisplay);
+		}
 		Font = new ZLStringOption("Options", prefix + "FooterFont", "Droid Sans");
+	}
+
+	public boolean showProgressAsPercentage() {
+		switch (ShowProgress.getValue()) {
+			case asPercentage:
+			case asPagesAndPercentage:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	public boolean showProgressAsPages() {
+		switch (ShowProgress.getValue()) {
+			case asPages:
+			case asPagesAndPercentage:
+				return true;
+			default:
+				return false;
+		}
 	}
 }
