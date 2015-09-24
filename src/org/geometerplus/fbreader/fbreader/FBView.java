@@ -533,22 +533,23 @@ public final class FBView extends ZLTextView {
 			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
 
 			if (footerOptions.showProgressAsPages()) {
-				maybeAddSeparator(separator, info);
+				maybeAddSeparator(info, separator);
 				info.append(pagePosition.Current);
 				info.append("/");
 				info.append(pagePosition.Total);
 			}
-			if (footerOptions.showProgressAsPercentage()) {
-				maybeAddSeparator(separator, info);
-				info.append(pagePosition.getPercentageString());
+			if (footerOptions.showProgressAsPercentage() && pagePosition.Total != 0) {
+				maybeAddSeparator(info, separator);
+				info.append(String.valueOf((100 * pagePosition.Current + 49) / pagePosition.Total));
+				info.append("%");
 			}
 
 			if (footerOptions.ShowClock.getValue()) {
-				maybeAddSeparator(separator, info);
+				maybeAddSeparator(info, separator);
 				info.append(ZLibrary.Instance().getCurrentTimeString());
 			}
 			if (footerOptions.ShowBattery.getValue()) {
-				maybeAddSeparator(separator, info);
+				maybeAddSeparator(info, separator);
 				info.append("⚡ ");
 				info.append(myReader.getBatteryLevel());
 				info.append("%");
@@ -556,7 +557,7 @@ public final class FBView extends ZLTextView {
 			return info.toString();
 		}
 
-		private void maybeAddSeparator(String separator, StringBuilder info) {
+		private void maybeAddSeparator(StringBuilder info, String separator) {
 			if (info.length() > 0) {
 				info.append(separator);
 			}

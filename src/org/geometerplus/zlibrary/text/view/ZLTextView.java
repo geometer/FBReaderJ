@@ -706,11 +706,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			Current = current;
 			Total = total;
 		}
-
-		public String getPercentageString() {
-			float percentage = ((float) Current / Total) * 100;
-			return String.format("%.0f%%", percentage);
-		}
 	}
 
 	public final synchronized PagePosition pagePosition() {
