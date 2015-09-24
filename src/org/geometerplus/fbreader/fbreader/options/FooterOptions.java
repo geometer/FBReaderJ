@@ -44,7 +44,6 @@ public class FooterOptions {
 		ShowTOCMarks = new ZLBooleanOption("Options", prefix + "FooterShowTOCMarks", "Base".equals(screen));
 		ShowClock = new ZLBooleanOption("Options", prefix + "ShowClockInFooter", true);
 		ShowBattery = new ZLBooleanOption("Options", prefix + "ShowBatteryInFooter", true);
-		ShowProgress = new ZLBooleanOption("Options", prefix + "ShowProgressInFooter", true);
 		ShowProgress = new ZLEnumOption<ProgressDisplayType>(
 			"Options", prefix + "DisplayProgressInFooter", ProgressDisplayType.asPages
 		);
