@@ -340,7 +340,7 @@
 		<node name="tags" value="برچسب ها"/>
 		<node name="series" value="ردیف ها"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="همگام سازی">
 			<node name="summary" value="تنظیمات شبکه کتاب"/>
 			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
