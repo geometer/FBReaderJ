@@ -558,8 +558,8 @@ public final class FBView extends ZLTextView {
 
 		private void maybeAddSeparator(String separator, StringBuilder info) {
 			if (info.length() > 0) {
-                info.append(separator);
-            }
+				info.append(separator);
+			}
 		}
 
 		private List<FontEntry> myFontEntry;
