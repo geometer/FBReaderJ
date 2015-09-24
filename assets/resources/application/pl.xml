@@ -700,6 +700,12 @@
 				<node name="summaryOn" value="Pokazuj znaczniki w stopce"/>
 				<node name="summaryOff" value="Nie pokazuj znaczników w stopce"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="Pokazywanie poziomu baterii">
 				<node name="summaryOn" value="Pokazuj poziom baterii w stopce"/>
 				<node name="summaryOff" value="Nie pokazuj poziomu baterii w stopce"/>

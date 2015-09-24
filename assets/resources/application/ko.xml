@@ -710,6 +710,12 @@
 				<node name="summaryOn" value="꼬리말 바에 TOC 표시 보이기"/>
 				<node name="summaryOff" value="꼬리말 바에 TOC 표시 보이지 않음"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="배터리 잔량 표시">
 				<node name="summaryOn" value="꼬리말 바에 배터리 잔량을 표시합니다"/>
 				<node name="summaryOff" value="꼬리말 바에 배터리 잔량을 표시하지 않습니다"/>

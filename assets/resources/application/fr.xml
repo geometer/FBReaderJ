@@ -703,6 +703,12 @@
 				<node name="summaryOn" value="Afficher les repères dans la barre du pied de page"/>
 				<node name="summaryOff" value="Ne pas afficher les repères dans la barre du pied de page"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="Afficher le niveau de batterie">
 				<node name="summaryOn" value="Affiche le niveau de batterie dans le pied de page"/>
 				<node name="summaryOff" value="N'affiche pas le niveau de batterie"/>

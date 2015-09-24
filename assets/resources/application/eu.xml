@@ -710,6 +710,12 @@
 				<node name="summaryOn" value="Erakutsi aurkibidearen laster-markak oin-barran"/>
 				<node name="summaryOff" value="Ez erakutsi aurkibidearen laster-markak oin-barran"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="Erakutsi bateriaren karga">
 				<node name="summaryOn" value="Erakutsi bateriaren karga oinean"/>
 				<node name="summaryOff" value="Ez erakutsi bateriaren karga oinean"/>

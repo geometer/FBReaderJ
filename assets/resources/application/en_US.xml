@@ -261,7 +261,7 @@
 	</node>
 	<node name="toast">
 		<node name="more" value="More"/>
-		<node name="offline" value="Offline" toBeTranslated="true"/>
+		<node name="offline" value="Offline"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Open library"/>
@@ -299,7 +299,7 @@
 		<node name="toc" value="TOC"/>
 		<node name="day" value="Day"/>
 		<node name="night" value="Night"/>
-		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
+		<node name="dayNight" value="Day/Night"/>
 		<node name="yotaSwitchToBackScreen" value="Switch to back screen"/>
 		<node name="yotaSwitchToFrontScreen" value="Switch to front screen"/>
 		<node name="networkLibrary" value="Network library"/>
@@ -325,7 +325,7 @@
 		<node name="screenOrientationReverseLandscape" value="Reverse landscape"/>
 		<node name="increaseFont" value="Zoom in"/>
 		<node name="decreaseFont" value="Zoom out"/>
-		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
+		<node name="changeFontSize" value="Zoom in/out"/>
 		<node name="toggleFullscreen" value="Fullscreen mode"/>
 		<node name="bookmarks" value="Bookmarks"/>
 		<node name="help" value="Help"/>
@@ -619,8 +619,8 @@
 				</node>
 			</node>
 		</node>
-		<node name="toast" value="Pop-ups" toBeTranslated="true">
-			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
+		<node name="toast" value="Pop-ups">
+			<node name="summary" value="Footnote windows, etc."/>
 			<node name="showFootnoteToast" value="Show linked text in a popup">
 				<node name="never" value="Never"/>
 				<node name="footnotesOnly" value="For footnotes only"/>
@@ -628,7 +628,7 @@
 				<node name="allInternalLinks" value="For all internal links"/>
 			</node>
 			<node name="footnoteToastDuration" value="How long to display link popup"/>
-			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
+			<node name="fontSizePercent" value="Font size (percent from regular text)"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Apply/ignore values defined in CSS"/>
@@ -710,11 +710,11 @@
 				<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 				<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>
 			</node>
-			<node name="showProgressTypes" value="Show Progress">
-				<node name="hide" value="Do not show progress"/>
-				<node name="showProgressAsPages" value="As page numbers"/>
-				<node name="showProgressAsPercentage" value="As percentage"/>
-				<node name="showProgressAsBoth" value="As pages and percentage"/>
+			<node name="showProgress" value="Show reading progress">
+				<node name="dontDisplay" value="Do not show"/>
+				<node name="asPages" value="As page numbers"/>
+				<node name="asPercentage" value="As percentage"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage"/>
 			</node>
 			<node name="showBattery" value="Show battery level">
 				<node name="summaryOn" value="Show battery level in footer"/>
@@ -775,11 +775,11 @@
 			<node name="summary" value="Translation settings"/>
 			<node name="dictionary" value="Look up single word in"/>
 			<node name="translator" value="Translate phrases via"/>
-			<node name="translateOffline" value="Google Translate: use offline translator (if installed)" toBeTranslated="true">
-				<node name="always" value="Always" toBeTranslated="true"/>
-				<node name="onError" value="Automatically, if online translation fails" toBeTranslated="true"/>
-				<node name="ask" value="Ask if online translation fails" toBeTranslated="true"/>
-				<node name="never" value="Never" toBeTranslated="true"/>
+			<node name="translateOffline" value="Google Translate: use offline translator (if installed)">
+				<node name="always" value="Always"/>
+				<node name="onError" value="Automatically, if online translation fails"/>
+				<node name="ask" value="Ask if online translation fails"/>
+				<node name="never" value="Never"/>
 			</node>
 			<node name="translationToastDuration" value="How long to show translation popup"/>
 			<node name="errorToastDuration" value="How long to show error message"/>
@@ -818,8 +818,8 @@
 				<node name="summaryOff" value="Do not adjust image color"/>
 			</node>
 		</node>
-		<node name="menu" value="Menu" toBeTranslated="true">
-			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+		<node name="menu" value="Menu">
+			<node name="summary" value="Main menu items"/>
 			<node name="enabled" value="Enabled"/>
 			<node name="disabled" value="Disabled"/>
 		</node>
@@ -1206,15 +1206,15 @@
 		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings"/>
 	</node>
 	<node name="premium" value="FBReader Premium Edition">
-		<node name="shortTitle" value="FBReader Premium" toBeTranslated="true"/>
-		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+		<node name="shortTitle" value="FBReader Premium"/>
+		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?"/>
 	</node>
 	<node name="widget">
 		<node name="simple">
-			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
-			<node name="selectAction" value="Select action" toBeTranslated="true"/>
-			<node name="book" value="Read book" toBeTranslated="true"/>
-			<node name="library" value="Open library" toBeTranslated="true"/>
+			<node name="selectIcon" value="Select widget icon"/>
+			<node name="selectAction" value="Select action"/>
+			<node name="book" value="Read book"/>
+			<node name="library" value="Open library"/>
 		</node>
 	</node>
 </resources>

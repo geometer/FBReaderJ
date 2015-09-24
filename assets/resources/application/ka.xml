@@ -715,6 +715,12 @@
 				<node name="summaryOn" value="სარდაფზე ნიშნულის დახატვა თავის დასაწყისში"/>
 				<node name="summaryOff" value="სარდაფი ნიშნულების გარეშე"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="ელემენტის მუხტის ჩვენება">
 				<node name="summaryOn" value="ელემენტის მუხტის ჩვენება სარდაფში"/>
 				<node name="summaryOff" value="არ აჩვენო ელემენტის მუხტი სარდაფში"/>

@@ -710,6 +710,12 @@
 				<node name="summaryOn" value="Toon inhoudsmarkeringen in onderbalk"/>
 				<node name="summaryOff" value="Verberg inhoudsmarkeringen in onderbalk"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="Toon batterijniveau">
 				<node name="summaryOn" value="Toon batterijniveau in onderbalk"/>
 				<node name="summaryOff" value="Verberg batterijniveau in onderbalk"/>

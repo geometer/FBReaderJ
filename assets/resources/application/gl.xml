@@ -700,6 +700,12 @@
 				<node name="summaryOn" value="Mostrar as marcas do índice na barra do rodapé"/>
 				<node name="summaryOff" value="Non mostrar as marcas do índice na barra do rodapé"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="Mostrar a carga da batería">
 				<node name="summaryOn" value="Mostrar a carga da batería no rodapé"/>
 				<node name="summaryOff" value="Non mostrar a carga da batería no rodapé"/>

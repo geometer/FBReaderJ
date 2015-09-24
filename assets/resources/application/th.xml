@@ -700,6 +700,12 @@
 				<node name="summaryOn" value="แสดงสารบัญท้ายหน้า"/>
 				<node name="summaryOff" value="ไม่แสดงสัญลักษณ์สารบัญท้ายหน้า"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="แสดงระดับแบตเตอรี่">
 				<node name="summaryOn" value="แสดงระดับแบตเตอรี่ที่ท้ายหน้า"/>
 				<node name="summaryOff" value="ไม่แสดงระดับแบตเตอรี่ที่ท้ายหน้า"/>

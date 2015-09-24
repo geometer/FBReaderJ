@@ -710,6 +710,12 @@
 				<node name="summaryOn" value="Приказује ознаке садржаја у подножју."/>
 				<node name="summaryOff" value="Не приказује ознаке садржаја у подножју."/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="Ниво батерије">
 				<node name="summaryOn" value="Приказује ниво батерије у подножју."/>
 				<node name="summaryOff" value="Не приказује ниво батерије у подножју."/>

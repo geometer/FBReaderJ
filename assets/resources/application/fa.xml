@@ -709,6 +709,12 @@
 				<node name="summaryOn" value="نمايش علائم در نوار زيربرگ فهرست مطالب"/>
 				<node name="summaryOff" value="عدم نمايش علائم در نوار زيربرگ فهرست مطالب"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="نمايش سطح باتري">
 				<node name="summaryOn" value="نمايش سطح باتري در زيربرگ"/>
 				<node name="summaryOff" value="عدم نمايش سطح باتري در زيربرگ"/>

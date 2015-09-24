@@ -715,6 +715,12 @@
 				<node name="summaryOn" value="Рисовать пометку на подвале в начале главы"/>
 				<node name="summaryOff" value="Подвал без пометок"/>
 			</node>
+			<node name="showProgress" value="Показывать, сколько прочитано">
+				<node name="dontDisplay" value="Не показывать"/>
+				<node name="asPages" value="В виде номеров страниц"/>
+				<node name="asPercentage" value="В виде процентов"/>
+				<node name="asPagesAndPercentage" value="В виде номеров страниц и процентов"/>
+			</node>
 			<node name="showBattery" value="Показать заряд батареи">
 				<node name="summaryOn" value="Показывать заряд батареи в подвале"/>
 				<node name="summaryOff" value="Не показывать заряд батареи в подвале"/>

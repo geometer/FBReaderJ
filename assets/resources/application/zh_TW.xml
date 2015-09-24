@@ -700,6 +700,12 @@
 				<node name="summaryOn" value="在頁尾顯示目錄標示"/>
 				<node name="summaryOff" value="不要在頁尾顯示目錄標示"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="顯示電量">
 				<node name="summaryOn" value="在頁尾顯示電量"/>
 				<node name="summaryOff" value="不要在頁尾顯示電量"/>

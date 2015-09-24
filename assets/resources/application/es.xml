@@ -716,6 +716,12 @@
 				<node name="summaryOn" value="Mostrar las marcas de la TDC en la barra del pie de página"/>
 				<node name="summaryOff" value="No mostrar las marcas de la TDC en la barra del pie de página"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="Mostrar carga de batería">
 				<node name="summaryOn" value="Mostrar la carga de la batería en el pie de página"/>
 				<node name="summaryOff" value="No mostrar la carga de la batería en el pie de página"/>

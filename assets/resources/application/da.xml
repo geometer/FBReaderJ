@@ -709,6 +709,12 @@
 				<node name="summaryOn" value="Vis indholdsfortegnelse-mærker i sidefoden"/>
 				<node name="summaryOff" value="Vis ikke indholdsfortegnelse-mærker i sidefoden"/>
 			</node>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page numbers" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As pages and percentage" toBeTranslated="true"/>
+			</node>
 			<node name="showBattery" value="Vis batteriniveau">
 				<node name="summaryOn" value="Vis batteriniveau i sidefoden"/>
 				<node name="summaryOff" value="Vis ikke batteriniveau i sidefoden"/>
