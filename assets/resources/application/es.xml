@@ -716,10 +716,6 @@
 				<node name="summaryOn" value="Mostrar las marcas de la TDC en la barra del pie de página"/>
 				<node name="summaryOff" value="No mostrar las marcas de la TDC en la barra del pie de página"/>
 			</node>
-			<node name="showProgress" value="Mostrar número de página">
-				<node name="summaryOn" value="Mostrar número de página en el pie de página"/>
-				<node name="summaryOff" value="No mostrar número de página en el pie de página"/>
-			</node>
 			<node name="showBattery" value="Mostrar carga de batería">
 				<node name="summaryOn" value="Mostrar la carga de la batería en el pie de página"/>
 				<node name="summaryOff" value="No mostrar la carga de la batería en el pie de página"/>

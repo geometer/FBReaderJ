@@ -700,10 +700,6 @@
 				<node name="summaryOn" value="Pokazuj znaczniki w stopce"/>
 				<node name="summaryOff" value="Nie pokazuj znaczników w stopce"/>
 			</node>
-			<node name="showProgress" value="Pokazywanie numeru strony">
-				<node name="summaryOn" value="Pokzuj numer strony w stopce"/>
-				<node name="summaryOff" value="Nie pokazuj numeru strony w stopce"/>
-			</node>
 			<node name="showBattery" value="Pokazywanie poziomu baterii">
 				<node name="summaryOn" value="Pokazuj poziom baterii w stopce"/>
 				<node name="summaryOff" value="Nie pokazuj poziomu baterii w stopce"/>

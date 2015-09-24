@@ -25,14 +25,46 @@ public class FooterOptions {
 	public final ZLBooleanOption ShowTOCMarks;
 	public final ZLBooleanOption ShowClock;
 	public final ZLBooleanOption ShowBattery;
-	public final ZLBooleanOption ShowProgress;
+
+	public final ZLIntegerRangeOption ShowProgressType;
+
 	public final ZLStringOption Font;
 
 	public FooterOptions() {
 		ShowTOCMarks = new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
 		ShowClock = new ZLBooleanOption("Options", "ShowClockInFooter", true);
 		ShowBattery = new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
-		ShowProgress = new ZLBooleanOption("Options", "ShowProgressInFooter", true);
 		Font = new ZLStringOption("Options", "FooterFont", "Droid Sans");
+
+		ShowProgressType = new ZLIntegerRangeOption("Options", "ShowProgressType", 0, 4, ProgressTypes.showProgressAsPages.ordinal());
 	}
+
+	public boolean showProgressAsPercentage() {
+		return ShowProgressType.getValue() == ProgressTypes.showProgressAsPercentage.ordinal() ||
+				ShowProgressType.getValue() == ProgressTypes.showProgressAsBoth.ordinal();
+	}
+
+	public boolean showProgressAsPages() {
+		return ShowProgressType.getValue() == ProgressTypes.showProgressAsPages.ordinal() ||
+				ShowProgressType.getValue() == ProgressTypes.showProgressAsBoth.ordinal();
+	}
+
+
+	public String[] getProgressValueResourceKeys() {
+		ProgressTypes[] progressTypes = ProgressTypes.values();
+		String[] resourceKeys = new String[progressTypes.length];
+
+		for (int i = 0; i < progressTypes.length; i++) {
+			resourceKeys[i] = progressTypes[i].name();
+		}
+
+		return resourceKeys;
+	}
+}
+
+enum ProgressTypes {
+	hide,
+	showProgressAsPages,
+	showProgressAsPercentage,
+	showProgressAsBoth
 }

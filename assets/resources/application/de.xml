@@ -715,10 +715,6 @@
 				<node name="summaryOn" value="Kapitelmarken in der Fußzeile anzeigen"/>
 				<node name="summaryOff" value="Keine Kapitelmarken in der Fußzeile anzeigen"/>
 			</node>
-			<node name="showProgress" value="Seitennummer anzeigen">
-				<node name="summaryOn" value="Seitennummer in der Fußleiste anzeigen"/>
-				<node name="summaryOff" value="Keine Seitennummer in der Fußzeile anzeigen"/>
-			</node>
 			<node name="showBattery" value="Akkustatus">
 				<node name="summaryOn" value="Akkustatus in der Fußleiste anzeigen"/>
 				<node name="summaryOff" value="Keinen Akkustatus in der Fußleiste anzeigen"/>

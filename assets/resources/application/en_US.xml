@@ -710,9 +710,11 @@
 				<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 				<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>
 			</node>
-			<node name="showProgress" value="Show page number">
-				<node name="summaryOn" value="Show page number in footer"/>
-				<node name="summaryOff" value="Don't show page number in footer"/>
+			<node name="showProgressTypes" value="Show Progress">
+				<node name="hide" value="Do not show progress"/>
+				<node name="showProgressAsPages" value="As page numbers"/>
+				<node name="showProgressAsPercentage" value="As percentage"/>
+				<node name="showProgressAsBoth" value="As pages and percentage"/>
 			</node>
 			<node name="showBattery" value="Show battery level">
 				<node name="summaryOn" value="Show battery level in footer"/>

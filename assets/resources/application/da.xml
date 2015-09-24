@@ -709,10 +709,6 @@
 				<node name="summaryOn" value="Vis indholdsfortegnelse-mærker i sidefoden"/>
 				<node name="summaryOff" value="Vis ikke indholdsfortegnelse-mærker i sidefoden"/>
 			</node>
-			<node name="showProgress" value="Vis sidetal">
-				<node name="summaryOn" value="Vis sidetal i sidefoden"/>
-				<node name="summaryOff" value="Vis ikke sidetal i sidefoden"/>
-			</node>
 			<node name="showBattery" value="Vis batteriniveau">
 				<node name="summaryOn" value="Vis batteriniveau i sidefoden"/>
 				<node name="summaryOff" value="Vis ikke batteriniveau i sidefoden"/>

@@ -700,10 +700,6 @@
 				<node name="summaryOn" value="在页脚栏显示内容目录标志"/>
 				<node name="summaryOff" value="不在页脚栏显示内容目录标志"/>
 			</node>
-			<node name="showProgress" value="显示页码">
-				<node name="summaryOn" value="在页脚显示页码"/>
-				<node name="summaryOff" value="不在页脚显示页码"/>
-			</node>
 			<node name="showBattery" value="显示电量百分比">
 				<node name="summaryOn" value="在页脚显示电量百分比"/>
 				<node name="summaryOff" value="不在页脚显示电量百分比"/>

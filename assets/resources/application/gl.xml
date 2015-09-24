@@ -700,10 +700,6 @@
 				<node name="summaryOn" value="Mostrar as marcas do índice na barra do rodapé"/>
 				<node name="summaryOff" value="Non mostrar as marcas do índice na barra do rodapé"/>
 			</node>
-			<node name="showProgress" value="Mostrar número de páxina">
-				<node name="summaryOn" value="Mostrar número de páxina no rodapé"/>
-				<node name="summaryOff" value="Non mostrar número de páxina no rodapé"/>
-			</node>
 			<node name="showBattery" value="Mostrar a carga da batería">
 				<node name="summaryOn" value="Mostrar a carga da batería no rodapé"/>
 				<node name="summaryOff" value="Non mostrar a carga da batería no rodapé"/>

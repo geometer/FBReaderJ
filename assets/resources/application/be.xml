@@ -710,10 +710,6 @@
 				<node name="summaryOn" value="Паказваць пазнакі зьместу ў прыпятку"/>
 				<node name="summaryOff" value="Не паказваць пазнакі зьместу ў прыпятку"/>
 			</node>
-			<node name="showProgress" value="Паказваць нумар старонкі">
-				<node name="summaryOn" value="Паказваць нумар старонкі ў прыпятку"/>
-				<node name="summaryOff" value="Не паказваць нумар старонкі ў прыпятку"/>
-			</node>
 			<node name="showBattery" value="Паказваць узровень батарэі">
 				<node name="summaryOn" value="Паказваць узровень батарэі ў прыпятку"/>
 				<node name="summaryOff" value="Не паказваць узровень батарэі ў прыпятку"/>

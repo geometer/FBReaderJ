@@ -708,10 +708,6 @@
 				<node name="summaryOn" value="عرض علامات الفهرس على شريط التقدم"/>
 				<node name="summaryOff" value="لا تعرض علامات الفهرس على شريط التقدم"/>
 			</node>
-			<node name="showProgress" value="عرض رقم الصفحة">
-				<node name="summaryOn" value="عرض رقم الصفحة في الحاشية"/>
-				<node name="summaryOff" value="لا تعرض رقم الصفحة في الحاشية"/>
-			</node>
 			<node name="showBattery" value="عرض مستوى شحن البطارية">
 				<node name="summaryOn" value="عرض مستوى شحن البطارية في الحاشية"/>
 				<node name="summaryOff" value="لا تعرض مستوى شحن البطارية في الحاشية"/>

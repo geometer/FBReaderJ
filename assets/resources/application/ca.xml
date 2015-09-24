@@ -716,10 +716,6 @@
 				<node name="summaryOn" value="Mostra les marques de contingut a la barra del peu de pàgina"/>
 				<node name="summaryOff" value="No mostris les marques de contingut a la barra del peu de pàgina"/>
 			</node>
-			<node name="showProgress" value="Mostra el número de la pàgina">
-				<node name="summaryOn" value="Mostra el número de la pàgina al peu de pàgina"/>
-				<node name="summaryOff" value="No mostrar número de página en el pie de página"/>
-			</node>
 			<node name="showBattery" value="Mostra la càrrega de la bateria">
 				<node name="summaryOn" value="Mostra la càrrega de la bateria al peu de pàgina"/>
 				<node name="summaryOff" value="No mostris la càrrega de la bateria al peu de pàgina"/>

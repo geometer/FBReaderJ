@@ -700,10 +700,6 @@
 				<node name="summaryOn" value="แสดงสารบัญท้ายหน้า"/>
 				<node name="summaryOff" value="ไม่แสดงสัญลักษณ์สารบัญท้ายหน้า"/>
 			</node>
-			<node name="showProgress" value="แสดงเลขหน้า">
-				<node name="summaryOn" value="แสดงเลขหน้าที่ท้ายหน้า"/>
-				<node name="summaryOff" value="ไม่แสดงเลขหน้าที่ท้ายหน้า"/>
-			</node>
 			<node name="showBattery" value="แสดงระดับแบตเตอรี่">
 				<node name="summaryOn" value="แสดงระดับแบตเตอรี่ที่ท้ายหน้า"/>
 				<node name="summaryOff" value="ไม่แสดงระดับแบตเตอรี่ที่ท้ายหน้า"/>

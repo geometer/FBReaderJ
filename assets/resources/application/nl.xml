@@ -710,10 +710,6 @@
 				<node name="summaryOn" value="Toon inhoudsmarkeringen in onderbalk"/>
 				<node name="summaryOff" value="Verberg inhoudsmarkeringen in onderbalk"/>
 			</node>
-			<node name="showProgress" value="Toon paginanummer">
-				<node name="summaryOn" value="Toon paginanummer in onderbalk"/>
-				<node name="summaryOff" value="Verberg paginanummer in onderbalk"/>
-			</node>
 			<node name="showBattery" value="Toon batterijniveau">
 				<node name="summaryOn" value="Toon batterijniveau in onderbalk"/>
 				<node name="summaryOff" value="Verberg batterijniveau in onderbalk"/>

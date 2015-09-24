@@ -710,10 +710,6 @@
 				<node name="summaryOn" value="Erakutsi aurkibidearen laster-markak oin-barran"/>
 				<node name="summaryOff" value="Ez erakutsi aurkibidearen laster-markak oin-barran"/>
 			</node>
-			<node name="showProgress" value="Erakutsi orri zenbakia">
-				<node name="summaryOn" value="Erakutsi orri zenbakia oinean"/>
-				<node name="summaryOff" value="Ez erakutsi orri zenbakia oinean"/>
-			</node>
 			<node name="showBattery" value="Erakutsi bateriaren karga">
 				<node name="summaryOn" value="Erakutsi bateriaren karga oinean"/>
 				<node name="summaryOff" value="Ez erakutsi bateriaren karga oinean"/>

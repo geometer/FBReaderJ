@@ -710,10 +710,6 @@
 				<node name="summaryOn" value="フッタのバーに目次項目の印を表示する"/>
 				<node name="summaryOff" value="フッタのバーに目次項目の印を表示しない"/>
 			</node>
-			<node name="showProgress" value="ページ番号を表示">
-				<node name="summaryOn" value="フッタにページ番号を表示する"/>
-				<node name="summaryOff" value="フッタにページ番号を表示しない"/>
-			</node>
 			<node name="showBattery" value="電池残量を表示">
 				<node name="summaryOn" value="フッタに電池残量を表示する"/>
 				<node name="summaryOff" value="フッタに電池残量を表示しない"/>

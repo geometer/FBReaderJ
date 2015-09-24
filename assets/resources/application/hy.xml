@@ -716,10 +716,6 @@
 				<node name="summaryOn" value="Դրոշմները ցուցադրել էջատակում, գլխի սկզբում"/>
 				<node name="summaryOff" value="Էջատակերը առանց դրոշմների"/>
 			</node>
-			<node name="showProgress" value="Էջերի համարակալում">
-				<node name="summaryOn" value="Էջի համարը ցուցադրել էջատակում"/>
-				<node name="summaryOff" value="Թաքցնել էջի համարը"/>
-			</node>
 			<node name="showBattery" value="Ցուցադրել մարտկոցի լիացքավորումը">
 				<node name="summaryOn" value="Մարտկոցի լիցքավորումը ցուցադրել էջատակում"/>
 				<node name="summaryOff" value="Թաքցնել մարտկոցի լիցքավորումը"/>
