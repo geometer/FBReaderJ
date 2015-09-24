@@ -22,8 +22,8 @@ package org.geometerplus.android.fbreader;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.DeviceType;
 
-abstract class DeviceUtil {
-	static final int titleViewId() {
+public abstract class DeviceUtil {
+	public static final int titleViewId() {
 		return DeviceType.Instance() == DeviceType.LENOVO_TAB
 			? R.layout.title_view_lenovo_fix
 			: R.layout.title_view;

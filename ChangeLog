@@ -8,6 +8,9 @@
 * Customisable main menu
 * Simple widgets
 
+===== 2.5.10 (Sep ??, 2015) =====
+* Options for displaying current reading progress as percentage (by Danie Roux, danieroux@github)
+
 ===== 2.5.9 (Sep 11, 2015) =====
 * Fixed cache access issue
 * Fixed native library loading issue

@@ -31,10 +31,6 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 		super(systemInfo, fileType);
 	}
 
-	public boolean isYotaSupported() {
-		return false;
-	}
-
 	@Override
 	public int priority() {
 		return 10;

@@ -544,25 +544,35 @@ public final class FBView extends ZLTextView {
 		protected String buildInfoString(PagePosition pagePosition, String separator) {
 			final StringBuilder info = new StringBuilder();
 			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
-			if (footerOptions.ShowProgress.getValue()) {
+
+			if (footerOptions.showProgressAsPages()) {
+				maybeAddSeparator(info, separator);
 				info.append(pagePosition.Current);
 				info.append("/");
 				info.append(pagePosition.Total);
 			}
+			if (footerOptions.showProgressAsPercentage() && pagePosition.Total != 0) {
+				maybeAddSeparator(info, separator);
+				info.append(String.valueOf((100 * pagePosition.Current + 49) / pagePosition.Total));
+				info.append("%");
+			}
+
 			if (footerOptions.ShowClock.getValue()) {
-				if (info.length() > 0) {
-					info.append(separator);
-				}
+				maybeAddSeparator(info, separator);
 				info.append(ZLibrary.Instance().getCurrentTimeString());
 			}
 			if (footerOptions.ShowBattery.getValue()) {
-				if (info.length() > 0) {
-					info.append(separator);
-				}
+				maybeAddSeparator(info, separator);
 				info.append(myReader.getBatteryLevel());
 				info.append("%");
 			}
 			return info.toString();
+		}
+
+		private void maybeAddSeparator(StringBuilder info, String separator) {
+			if (info.length() > 0) {
+				info.append(separator);
+			}
 		}
 
 		private List<FontEntry> myFontEntry;

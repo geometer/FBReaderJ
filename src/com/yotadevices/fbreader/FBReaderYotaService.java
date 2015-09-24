@@ -30,11 +30,14 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.options.ViewOptions;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 /**
@@ -72,7 +75,7 @@ public class FBReaderYotaService extends BSActivity {
 		myImageSynchronizer.clear();
 		super.onBSDestroy();
 	}
-	
+
 	private static byte[] MD5(Bitmap image) {
 		// TODO: possible too large array(s)?
 		final int bytesNum = image.getWidth() * image.getHeight() * 2;
@@ -95,7 +98,7 @@ public class FBReaderYotaService extends BSActivity {
 		YotaBackScreenWidget(Context context) {
 			super(context);
 		}
-		
+
 		private volatile byte[] myStoredMD5 = null;
 
 		@Override
@@ -130,7 +133,10 @@ public class FBReaderYotaService extends BSActivity {
 
 			Bitmap coverBitmap = null;
 			if (currentBook != null) {
-				final ZLImage image = BookUtil.getCover(currentBook);
+				final ZLImage image = CoverUtil.getCover(
+					currentBook,
+					PluginCollection.Instance(Paths.systemInfo(FBReaderYotaService.this))
+				);
 
 				if (image != null) {
 					if (image instanceof ZLImageProxy) {
@@ -226,7 +232,7 @@ public class FBReaderYotaService extends BSActivity {
 		} else {
 			myBackScreenIsActive = new ViewOptions().YotaDrawOnBackScreen.getValue();
 		}
-		myCurrentBook = FBReaderIntents.getBookExtra(intent);
+		myCurrentBook = FBReaderIntents.getBookExtra(intent, new BookCollectionShadow());
 
 		initBookView(true);
 		setYotaGesturesEnabled(myBackScreenIsActive);
