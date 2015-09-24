@@ -712,9 +712,9 @@
 			</node>
 			<node name="showProgress" value="Show reading progress">
 				<node name="dontDisplay" value="Do not show"/>
-				<node name="asPages" value="As page numbers"/>
+				<node name="asPages" value="As page number"/>
 				<node name="asPercentage" value="As percentage"/>
-				<node name="asPagesAndPercentage" value="As pages and percentage"/>
+				<node name="asPagesAndPercentage" value="As page number and percentage"/>
 			</node>
 			<node name="showBattery" value="Show battery level">
 				<node name="summaryOn" value="Show battery level in footer"/>
