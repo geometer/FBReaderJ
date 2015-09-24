@@ -550,7 +550,6 @@ public final class FBView extends ZLTextView {
 			}
 			if (footerOptions.ShowBattery.getValue()) {
 				maybeAddSeparator(info, separator);
-				info.append("⚡ ");
 				info.append(myReader.getBatteryLevel());
 				info.append("%");
 			}
