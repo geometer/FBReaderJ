@@ -32,20 +32,23 @@ public class FooterOptions {
 	public final ZLBooleanOption ShowTOCMarks;
 	public final ZLBooleanOption ShowClock;
 	public final ZLBooleanOption ShowBattery;
-
 	public final ZLEnumOption<ProgressDisplayType> ShowProgress;
-
 	public final ZLStringOption Font;
 
 	public FooterOptions() {
 		ShowTOCMarks = new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
 		ShowClock = new ZLBooleanOption("Options", "ShowClockInFooter", true);
 		ShowBattery = new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
-		Font = new ZLStringOption("Options", "FooterFont", "Droid Sans");
-
 		ShowProgress = new ZLEnumOption<ProgressDisplayType>(
-			"Options", "ShowProgress", ProgressDisplayType.asPages
+			"Options", "DisplayProgressInFooter", ProgressDisplayType.asPages
 		);
+		final ZLBooleanOption oldShowProgress =
+			new ZLBooleanOption("Options", "ShowProgressInFooter", true);
+		if (!oldShowProgress.getValue()) {
+			oldShowProgress.setValue(true);
+			ShowProgress.setValue(ProgressDisplayType.dontDisplay);
+		}
+		Font = new ZLStringOption("Options", "FooterFont", "Droid Sans");
 	}
 
 	public boolean showProgressAsPercentage() {
