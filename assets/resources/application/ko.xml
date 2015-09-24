@@ -341,7 +341,7 @@
 		<node name="tags" value="태그"/>
 		<node name="series" value="시리즈"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="동기화">
 			<node name="summary" value="책 네트워크 설정"/>
 			<node name="site" value="동기화에 대해 더 알아보기">

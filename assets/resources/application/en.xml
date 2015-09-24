@@ -341,7 +341,7 @@
 		<node name="tags" value="Tag(s)"/>
 		<node name="series" value="Series"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings">
 		<node name="sync" value="Synchronisation">
 			<node name="summary" value="Book network settings"/>
 			<node name="site" value="Read more about synchronisation">

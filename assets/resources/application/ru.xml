@@ -346,7 +346,7 @@
 		<node name="tags" value="Категории"/>
 		<node name="series" value="Серия"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="Настройки FBReader">
 		<node name="sync" value="Синхронизация">
 			<node name="summary" value="Настройки книжной сети"/>
 			<node name="site" value="Как работает синхронизация FBReader">

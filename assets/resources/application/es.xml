@@ -347,7 +347,7 @@
 		<node name="tags" value="Etiqueta(s)"/>
 		<node name="series" value="Serie"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="Sincronización">
 			<node name="summary" value="Ajustes de la Biblioteca en red"/>
 			<node name="site" value="Leer más sobre Sincronización">
