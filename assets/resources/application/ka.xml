@@ -346,7 +346,7 @@
 		<node name="tags" value="კატეგორიები"/>
 		<node name="series" value="სერია"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="Synchronisation" toBeTranslated="true">
 			<node name="summary" value="Book network settings" toBeTranslated="true"/>
 			<node name="site" value="Read more about synchronisation" toBeTranslated="true">

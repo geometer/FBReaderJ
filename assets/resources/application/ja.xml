@@ -341,7 +341,7 @@
 		<node name="tags" value="タグ"/>
 		<node name="series" value="シリーズ"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="シンクロ">
 			<node name="summary" value="ブックネットワークの設定"/>
 			<node name="site" value="シンクロについて詳しく読む">
