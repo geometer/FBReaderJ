@@ -32,6 +32,7 @@ public class FooterOptions {
 	public final String Screen;
 
 	public final ZLBooleanOption ShowTOCMarks;
+	public final ZLIntegerRangeOption MaxTOCMarks;
 	public final ZLBooleanOption ShowClock;
 	public final ZLBooleanOption ShowBattery;
 	public final ZLEnumOption<ProgressDisplayType> ShowProgress;
@@ -42,6 +43,7 @@ public class FooterOptions {
 		final String prefix = "Base".equals(screen) ? "" : screen + ":";
 
 		ShowTOCMarks = new ZLBooleanOption("Options", prefix + "FooterShowTOCMarks", "Base".equals(screen));
+		MaxTOCMarks = new ZLIntegerRangeOption("Options", prefix + "FooterMaxTOCMarks", 10, 1000, 100);
 		ShowClock = new ZLBooleanOption("Options", prefix + "ShowClockInFooter", true);
 		ShowBattery = new ZLBooleanOption("Options", prefix + "ShowBatteryInFooter", true);
 		ShowProgress = new ZLEnumOption<ProgressDisplayType>(

@@ -710,6 +710,7 @@
 				<node name="summaryOn" value="Приказује ознаке садржаја у подножју."/>
 				<node name="summaryOff" value="Не приказује ознаке садржаја у подножју."/>
 			</node>
+			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
 			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
 				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
 				<node name="asPages" value="As page number" toBeTranslated="true"/>
