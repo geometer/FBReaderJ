@@ -494,6 +494,7 @@ public final class FBView extends ZLTextView {
 		};
 
 		protected ArrayList<TOCTree> myTOCMarks;
+		private int myMaxTOCMarksNumber = -1;
 
 		public int getHeight() {
 			return myViewOptions.FooterHeight.getValue();
@@ -504,7 +505,13 @@ public final class FBView extends ZLTextView {
 		}
 
 		protected synchronized void updateTOCMarks(BookModel model, int maxNumber) {
+			if (myTOCMarks != null && myMaxTOCMarksNumber == maxNumber) {
+				return;
+			}
+
 			myTOCMarks = new ArrayList<TOCTree>();
+			myMaxTOCMarksNumber = maxNumber;
+
 			TOCTree toc = model.TOCTree;
 			if (toc == null) {
 				return;
@@ -650,9 +657,7 @@ public final class FBView extends ZLTextView {
 
 			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
 			if (footerOptions.ShowTOCMarks.getValue()) {
-				if (myTOCMarks == null) {
-					updateTOCMarks(model, footerOptions.MaxTOCMarks.getValue());
-				}
+				updateTOCMarks(model, footerOptions.MaxTOCMarks.getValue());
 				final int fullLength = sizeOfFullText();
 				for (TOCTree tocItem : myTOCMarks) {
 					TOCTree.Reference reference = tocItem.getReference();
@@ -715,9 +720,7 @@ public final class FBView extends ZLTextView {
 				final TreeSet<Integer> labels = new TreeSet<Integer>();
 				labels.add(left);
 				labels.add(gaugeRight);
-				if (myTOCMarks == null) {
-					updateTOCMarks(model, footerOptions.MaxTOCMarks.getValue());
-				}
+				updateTOCMarks(model, footerOptions.MaxTOCMarks.getValue());
 				final int fullLength = sizeOfFullText();
 				for (TOCTree tocItem : myTOCMarks) {
 					TOCTree.Reference reference = tocItem.getReference();
