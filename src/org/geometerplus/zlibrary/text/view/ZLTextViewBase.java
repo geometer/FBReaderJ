@@ -227,7 +227,8 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	final int getElementHeight(ZLTextElement element) {
-		if (element instanceof ZLTextWord ||
+		if (element == ZLTextElement.NBSpace ||
+			element instanceof ZLTextWord ||
 			element instanceof ZLTextFixedHSpaceElement) {
 			return getWordHeight();
 		} else if (element instanceof ZLTextImageElement) {
