@@ -9,7 +9,8 @@
 * Simple widgets
 
 ===== 2.5.10 (Sep ??, 2015) =====
-* Options for displaying current reading progress as percentage (by Danie Roux, danieroux@github)
+* Option for displaying current reading progress as percentage (by Danie Roux, danieroux@github)
+* Option for max number of TOC marks on progress indicator
 
 ===== 2.5.9 (Sep 11, 2015) =====
 * Fixed cache access issue

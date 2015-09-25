@@ -499,15 +499,14 @@ public final class FBView extends ZLTextView {
 			myTOCMarks = null;
 		}
 
-		private final int MAX_TOC_MARKS_NUMBER = 100;
-		protected synchronized void updateTOCMarks(BookModel model) {
+		protected synchronized void updateTOCMarks(BookModel model, int maxNumber) {
 			myTOCMarks = new ArrayList<TOCTree>();
 			TOCTree toc = model.TOCTree;
 			if (toc == null) {
 				return;
 			}
 			int maxLevel = Integer.MAX_VALUE;
-			if (toc.getSize() >= MAX_TOC_MARKS_NUMBER) {
+			if (toc.getSize() >= maxNumber) {
 				final int[] sizes = new int[10];
 				for (TOCTree tocItem : toc) {
 					if (tocItem.Level < 10) {
@@ -518,7 +517,7 @@ public final class FBView extends ZLTextView {
 					sizes[i] += sizes[i - 1];
 				}
 				for (maxLevel = sizes.length - 1; maxLevel >= 0; --maxLevel) {
-					if (sizes[maxLevel] < MAX_TOC_MARKS_NUMBER) {
+					if (sizes[maxLevel] < maxNumber) {
 						break;
 					}
 				}
@@ -645,9 +644,10 @@ public final class FBView extends ZLTextView {
 			context.setFillColor(fillColor);
 			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);
 
-			if (myViewOptions.getFooterOptions().ShowTOCMarks.getValue()) {
+			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
+			if (footerOptions.ShowTOCMarks.getValue()) {
 				if (myTOCMarks == null) {
-					updateTOCMarks(model);
+					updateTOCMarks(model, footerOptions.MaxTOCMarks.getValue());
 				}
 				final int fullLength = sizeOfFullText();
 				for (TOCTree tocItem : myTOCMarks) {
@@ -706,12 +706,13 @@ public final class FBView extends ZLTextView {
 			}
 
 			// draw labels
-			if (myViewOptions.getFooterOptions().ShowTOCMarks.getValue()) {
+			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
+			if (footerOptions.ShowTOCMarks.getValue()) {
 				final TreeSet<Integer> labels = new TreeSet<Integer>();
 				labels.add(left);
 				labels.add(gaugeRight);
 				if (myTOCMarks == null) {
-					updateTOCMarks(model);
+					updateTOCMarks(model, footerOptions.MaxTOCMarks.getValue());
 				}
 				final int fullLength = sizeOfFullText();
 				for (TOCTree tocItem : myTOCMarks) {
