@@ -703,6 +703,7 @@
 				<node name="summaryOn" value="Arata favoritele curpinsului în bara de subsol"/>
 				<node name="summaryOff" value="Nu arata semne de cuprins în bara de subsol"/>
 			</node>
+			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
 			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
 				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
 				<node name="asPages" value="As page number" toBeTranslated="true"/>

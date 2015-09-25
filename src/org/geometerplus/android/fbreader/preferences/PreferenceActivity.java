@@ -509,6 +509,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			}
 		};
+		final PreferenceSet tocPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				switch (viewOptions.ScrollbarType.getValue()) {
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER:
+					case FBView.SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE:
+						return footerOptions.ShowTOCMarks.getValue();
+					default:
+						return false;
+				}
+			}
+		};
 		final PreferenceSet oldStyleFooterPreferences = new PreferenceSet.Enabler() {
 			@Override
 			protected Boolean detectState() {
@@ -542,6 +554,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			protected void onDialogClosed(boolean result) {
 				super.onDialogClosed(result);
 				footerPreferences.run();
+				tocPreferences.run();
 				oldStyleFooterPreferences.run();
 				newStyleFooterPreferences.run();
 			}
@@ -555,7 +568,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		newStyleFooterPreferences.add(statusLineScreen.addOption(profile.FooterNGBackgroundOption, "footerBackgroundColor"));
 		newStyleFooterPreferences.add(statusLineScreen.addOption(profile.FooterNGForegroundOption, "footerForegroundColor"));
 		newStyleFooterPreferences.add(statusLineScreen.addOption(profile.FooterNGForegroundUnreadOption, "footerForegroundUnreadColor"));
-		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowTOCMarks, "tocMarks"));
+		footerPreferences.add(statusLineScreen.addPreference(new ZLBooleanPreference(
+			PreferenceActivity.this,
+			footerOptions.ShowTOCMarks,
+			statusLineScreen.Resource.getResource("tocMarks")
+		) {
+			@Override
+			protected void onClick() {
+				super.onClick();
+				tocPreferences.run();
+			}
+		}));
+		tocPreferences.add(statusLineScreen.addOption(footerOptions.MaxTOCMarks, "tocMarksMaxNumber"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowProgress, "showProgress"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowClock, "showClock"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowBattery, "showBattery"));
@@ -564,6 +588,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			footerOptions.Font, false
 		)));
 		footerPreferences.run();
+		tocPreferences.run();
 		oldStyleFooterPreferences.run();
 		newStyleFooterPreferences.run();
 
