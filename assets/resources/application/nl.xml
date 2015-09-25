@@ -710,6 +710,7 @@
 				<node name="summaryOn" value="Toon inhoudsmarkeringen in onderbalk"/>
 				<node name="summaryOff" value="Verberg inhoudsmarkeringen in onderbalk"/>
 			</node>
+			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
 			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
 				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
 				<node name="asPages" value="As page number" toBeTranslated="true"/>

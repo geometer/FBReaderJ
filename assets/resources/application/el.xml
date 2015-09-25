@@ -700,6 +700,7 @@
 				<node name="summaryOn" value="Εμφάνιση Κεφάλαιου στο υποσέλιδο."/>
 				<node name="summaryOff" value="Μη εμφάνιση Κεφάλαιου στο υποσέλιδο."/>
 			</node>
+			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
 			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
 				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
 				<node name="asPages" value="As page number" toBeTranslated="true"/>

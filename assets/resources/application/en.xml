@@ -710,6 +710,7 @@
 				<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 				<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>
 			</node>
+			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display"/>
 			<node name="showProgress" value="Show reading progress">
 				<node name="dontDisplay" value="Do not show"/>
 				<node name="asPages" value="As page number"/>

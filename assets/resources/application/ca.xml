@@ -716,6 +716,7 @@
 				<node name="summaryOn" value="Mostra les marques de contingut a la barra del peu de pàgina"/>
 				<node name="summaryOff" value="No mostris les marques de contingut a la barra del peu de pàgina"/>
 			</node>
+			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
 			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
 				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
 				<node name="asPages" value="As page number" toBeTranslated="true"/>
