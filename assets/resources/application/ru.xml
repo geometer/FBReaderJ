@@ -715,6 +715,7 @@
 				<node name="summaryOn" value="Рисовать пометку на подвале в начале главы"/>
 				<node name="summaryOff" value="Подвал без пометок"/>
 			</node>
+			<node name="tocMarksMaxNumber" value="Максимальное число меток"/>
 			<node name="showProgress" value="Показывать, сколько прочитано">
 				<node name="dontDisplay" value="Не показывать"/>
 				<node name="asPages" value="В виде номеров страниц"/>
