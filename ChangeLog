@@ -12,6 +12,7 @@
 * Second (external) SD card entry in the library (classic view)
 * Option for displaying current reading progress as percentage (by Danie Roux, danieroux@github)
 * Option for max number of TOC marks on progress indicator
+* Does not close file chooser dialog on long item click if item is not selectable
 
 ===== 2.5.9 (Sep 11, 2015) =====
 * Fixed cache access issue
