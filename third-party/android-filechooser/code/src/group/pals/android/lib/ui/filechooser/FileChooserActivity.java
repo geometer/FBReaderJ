@@ -1527,15 +1527,23 @@ public class FileChooserActivity extends Activity {
                 break;
         }
         
+		boolean hasData = false;
         Intent intent = new Intent();
-        if(returnPath != null)
+        if (returnPath != null) {
             intent.putExtra(_FolderPath, returnPath);
+			hasData = true;
+		}
         
-        if(files != null){
+        if (files != null) {
             intent.putExtra(_Results, files);
-        }else{
+			hasData = true;
+        } else {
             intent.putExtra(_Results, new ArrayList<IFile>());
         }
+
+		if (!hasData) {
+			return;
+		}
 
         // return flags for further use (in case the caller needs)
         intent.putExtra(_FilterMode, mFileProvider.getFilterMode());
