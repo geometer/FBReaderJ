@@ -72,7 +72,14 @@ public class GotoPageNumberAction extends FBAndroidAction {
 			}
 		});
 
-		dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+		dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+			@Override
+			public void onShow(DialogInterface dialog) {
+				picker.setFocusable(true);
+				picker.setFocusableInTouchMode(true);
+				picker.requestFocus();
+			}
+		});
 		dialog.show();
 	}
 }
