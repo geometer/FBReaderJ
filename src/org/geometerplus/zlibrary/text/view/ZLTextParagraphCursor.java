@@ -158,6 +158,7 @@ public final class ZLTextParagraphCursor {
 						if (index > 0 && spaceState == NO_SPACE) {
 							addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart, hyperlink);
 						}
+						elements.add(nbSpace);
 						if (spaceState != SPACE) {
 							spaceState = NON_BREAKABLE_SPACE;
 						}
@@ -170,7 +171,6 @@ public final class ZLTextParagraphCursor {
 								wordStart = index;
 								break;
 							case NON_BREAKABLE_SPACE:
-								elements.add(nbSpace);
 								wordStart = index;
 								break;
 							case NO_SPACE:
