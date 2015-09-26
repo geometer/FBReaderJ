@@ -1871,7 +1871,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private void updateTables40() {
 		myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Role(" +
 				"role_id INTEGER  PRIMARY KEY," +
-				"code TEXT)");
+				"code TEXT UNIQUE)");
 		myDatabase.execSQL("DROP INDEX BookAuthor_BookIndex");
 		myDatabase.execSQL("ALTER TABLE BookAuthor RENAME TO BookAuthor_Obsolete");
 		myDatabase.execSQL(
