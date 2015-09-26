@@ -19,11 +19,11 @@
 
 package org.geometerplus.fbreader.book;
 
-public final class AuthorRole {
+public final class Role {
 
 	public final String Code;
 
-	public AuthorRole(String code) {
+	public Role(String code) {
 		Code = code;
 	}
 	
