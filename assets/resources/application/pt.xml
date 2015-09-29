@@ -59,6 +59,7 @@
 			<node name="summary" value="Sistema de arquivos completo"/>
 		</node>
 		<node name="fileTreeCard" value="Cartão de memória">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Arquivos na memória do cartão, externa ou interna"/>
 		</node>
 		<node name="fileTreeLibrary" value="Biblioteca FBReader">
@@ -713,9 +714,12 @@
 				<node name="summaryOn" value="Mostrar marcas de TOC na barra de rodapé"/>
 				<node name="summaryOff" value="Não mostrar marcas de TOC na barra de rodapé"/>
 			</node>
-			<node name="showProgress" value="Mostrar número de página">
-				<node name="summaryOn" value="Mostrar número de página no rodapé"/>
-				<node name="summaryOff" value="Não mostrar o número da página no rodapé"/>
+			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page number" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As page number and percentage" toBeTranslated="true"/>
 			</node>
 			<node name="showBattery" value="Mostrar nível de bateria">
 				<node name="summaryOn" value="Mostrar nível de bateria no rodapé"/>
@@ -1186,9 +1190,9 @@
 		<node name="frontScreenButton" value="Mudar para este ecrã"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="Exemplo: 20px, 10pt, 0.8em, 1ex, 120%%"/>
-		<node name="length" value="Exemplo: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
-		<node name="percent" value="Exemplo: 125%%"/>
+		<node name="positiveLength" value="Exemplo: 20px, 10pt, 0.8em, 1ex, 120%"/>
+		<node name="length" value="Exemplo: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
+		<node name="percent" value="Exemplo: 125%"/>
 	</node>
 	<node name="duration">
 		<node name="duration1" value="1 segundo"/>

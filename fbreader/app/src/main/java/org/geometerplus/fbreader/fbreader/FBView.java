@@ -490,6 +490,7 @@ public final class FBView extends ZLTextView {
 		};
 
 		protected ArrayList<TOCTree> myTOCMarks;
+		private int myMaxTOCMarksNumber = -1;
 
 		public int getHeight() {
 			return myViewOptions.FooterHeight.getValue();
@@ -499,15 +500,20 @@ public final class FBView extends ZLTextView {
 			myTOCMarks = null;
 		}
 
-		private final int MAX_TOC_MARKS_NUMBER = 100;
-		protected synchronized void updateTOCMarks(BookModel model) {
+		protected synchronized void updateTOCMarks(BookModel model, int maxNumber) {
+			if (myTOCMarks != null && myMaxTOCMarksNumber == maxNumber) {
+				return;
+			}
+
 			myTOCMarks = new ArrayList<TOCTree>();
+			myMaxTOCMarksNumber = maxNumber;
+
 			TOCTree toc = model.TOCTree;
 			if (toc == null) {
 				return;
 			}
 			int maxLevel = Integer.MAX_VALUE;
-			if (toc.getSize() >= MAX_TOC_MARKS_NUMBER) {
+			if (toc.getSize() >= maxNumber) {
 				final int[] sizes = new int[10];
 				for (TOCTree tocItem : toc) {
 					if (tocItem.Level < 10) {
@@ -518,7 +524,7 @@ public final class FBView extends ZLTextView {
 					sizes[i] += sizes[i - 1];
 				}
 				for (maxLevel = sizes.length - 1; maxLevel >= 0; --maxLevel) {
-					if (sizes[maxLevel] < MAX_TOC_MARKS_NUMBER) {
+					if (sizes[maxLevel] < maxNumber) {
 						break;
 					}
 				}
@@ -531,25 +537,35 @@ public final class FBView extends ZLTextView {
 		protected String buildInfoString(PagePosition pagePosition, String separator) {
 			final StringBuilder info = new StringBuilder();
 			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
-			if (footerOptions.ShowProgress.getValue()) {
+
+			if (footerOptions.showProgressAsPages()) {
+				maybeAddSeparator(info, separator);
 				info.append(pagePosition.Current);
 				info.append("/");
 				info.append(pagePosition.Total);
 			}
+			if (footerOptions.showProgressAsPercentage() && pagePosition.Total != 0) {
+				maybeAddSeparator(info, separator);
+				info.append(String.valueOf((100 * pagePosition.Current + 49) / pagePosition.Total));
+				info.append("%");
+			}
+
 			if (footerOptions.ShowClock.getValue()) {
-				if (info.length() > 0) {
-					info.append(separator);
-				}
+				maybeAddSeparator(info, separator);
 				info.append(ZLibrary.Instance().getCurrentTimeString());
 			}
 			if (footerOptions.ShowBattery.getValue()) {
-				if (info.length() > 0) {
-					info.append(separator);
-				}
+				maybeAddSeparator(info, separator);
 				info.append(myReader.getBatteryLevel());
 				info.append("%");
 			}
 			return info.toString();
+		}
+
+		private void maybeAddSeparator(StringBuilder info, String separator) {
+			if (info.length() > 0) {
+				info.append(separator);
+			}
 		}
 
 		private List<FontEntry> myFontEntry;
@@ -635,10 +651,9 @@ public final class FBView extends ZLTextView {
 			context.setFillColor(fillColor);
 			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);
 
-			if (myViewOptions.getFooterOptions().ShowTOCMarks.getValue()) {
-				if (myTOCMarks == null) {
-					updateTOCMarks(model);
-				}
+			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
+			if (footerOptions.ShowTOCMarks.getValue()) {
+				updateTOCMarks(model, footerOptions.MaxTOCMarks.getValue());
 				final int fullLength = sizeOfFullText();
 				for (TOCTree tocItem : myTOCMarks) {
 					TOCTree.Reference reference = tocItem.getReference();
@@ -696,13 +711,12 @@ public final class FBView extends ZLTextView {
 			}
 
 			// draw labels
-			if (myViewOptions.getFooterOptions().ShowTOCMarks.getValue()) {
+			final FooterOptions footerOptions = myViewOptions.getFooterOptions();
+			if (footerOptions.ShowTOCMarks.getValue()) {
 				final TreeSet<Integer> labels = new TreeSet<Integer>();
 				labels.add(left);
 				labels.add(gaugeRight);
-				if (myTOCMarks == null) {
-					updateTOCMarks(model);
-				}
+				updateTOCMarks(model, footerOptions.MaxTOCMarks.getValue());
 				final int fullLength = sizeOfFullText();
 				for (TOCTree tocItem : myTOCMarks) {
 					TOCTree.Reference reference = tocItem.getReference();

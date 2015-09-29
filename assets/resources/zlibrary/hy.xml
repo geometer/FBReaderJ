@@ -43,6 +43,7 @@
 		<node name="de-traditional" value="գերմաներեն (հին ուղղագրությամբ)"/>
 		<node name="el" value="հունարեն"/>
 		<node name="en" value="անգլերեն"/>
+		<node name="en_US" value="English (US)" toBeTranslated="true"/>
 		<node name="eo" value="էսպերանտո"/>
 		<node name="es" value="իսպաներեն"/>
 		<node name="eu" value="բասկերեն"/>

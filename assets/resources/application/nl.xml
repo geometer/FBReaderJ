@@ -57,6 +57,7 @@
 			<node name="summary" value="Volledige bestandssysteem van het apparaat"/>
 		</node>
 		<node name="fileTreeCard" value="Geheugenkaart">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Geheugenkaart geplaatst in het apparaat"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader bibliotheek">
@@ -340,7 +341,7 @@
 		<node name="tags" value="Trefwoorden"/>
 		<node name="series" value="Serie"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="Synchronisatie">
 			<node name="summary" value="Boekennetwerk"/>
 			<node name="site" value="Lees verder over synchronisatie">
@@ -709,9 +710,12 @@
 				<node name="summaryOn" value="Toon inhoudsmarkeringen in onderbalk"/>
 				<node name="summaryOff" value="Verberg inhoudsmarkeringen in onderbalk"/>
 			</node>
-			<node name="showProgress" value="Toon paginanummer">
-				<node name="summaryOn" value="Toon paginanummer in onderbalk"/>
-				<node name="summaryOff" value="Verberg paginanummer in onderbalk"/>
+			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page number" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As page number and percentage" toBeTranslated="true"/>
 			</node>
 			<node name="showBattery" value="Toon batterijniveau">
 				<node name="summaryOn" value="Toon batterijniveau in onderbalk"/>
@@ -1182,9 +1186,9 @@
 		<node name="frontScreenButton" value="Schakel naar dit scherm"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="Bijv.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
-		<node name="length" value="Bijv.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
-		<node name="percent" value="Bijv.: 125%%"/>
+		<node name="positiveLength" value="Bijv.: 20px, 10pt, 0.8em, 1ex, 120%"/>
+		<node name="length" value="Bijv.: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
+		<node name="percent" value="Bijv.: 125%"/>
 	</node>
 	<node name="duration">
 		<node name="duration1" value="1 seconde"/>

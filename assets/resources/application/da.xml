@@ -56,6 +56,7 @@
 			<node name="summary" value="Hele enhedens filsystem"/>
 		</node>
 		<node name="fileTreeCard" value="Hukommelseskort">
+			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
 			<node name="summary" value="Hukommelseskort indsat i enheden"/>
 		</node>
 		<node name="fileTreeLibrary" value="FB-læser bibliotek">
@@ -339,7 +340,7 @@
 		<node name="tags" value="Mærke(r)"/>
 		<node name="series" value="Serie"/>
 	</node>
-	<node name="Preferences">
+	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
 		<node name="sync" value="Synchronisation" toBeTranslated="true">
 			<node name="summary" value="Book network settings" toBeTranslated="true"/>
 			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
@@ -708,9 +709,12 @@
 				<node name="summaryOn" value="Vis indholdsfortegnelse-mærker i sidefoden"/>
 				<node name="summaryOff" value="Vis ikke indholdsfortegnelse-mærker i sidefoden"/>
 			</node>
-			<node name="showProgress" value="Vis sidetal">
-				<node name="summaryOn" value="Vis sidetal i sidefoden"/>
-				<node name="summaryOff" value="Vis ikke sidetal i sidefoden"/>
+			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
+			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
+				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
+				<node name="asPages" value="As page number" toBeTranslated="true"/>
+				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="As page number and percentage" toBeTranslated="true"/>
 			</node>
 			<node name="showBattery" value="Vis batteriniveau">
 				<node name="summaryOn" value="Vis batteriniveau i sidefoden"/>
@@ -1181,9 +1185,9 @@
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
-		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%" toBeTranslated="true"/>
 	</node>
 	<node name="duration">
 		<node name="duration1" value="1 second" toBeTranslated="true"/>

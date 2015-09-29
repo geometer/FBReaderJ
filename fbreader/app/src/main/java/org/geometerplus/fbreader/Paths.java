@@ -79,6 +79,63 @@ public abstract class Paths {
 		}
 	}
 
+	private static void addDirToList(List<String> list, String candidate) {
+		if (candidate == null || !candidate.startsWith("/")) {
+			return;
+		}
+		for (int count = 0; count < 5; ++count) {
+			while (candidate.endsWith("/")) {
+				candidate = candidate.substring(0, candidate.length() - 1);
+			}
+			final File f = new File(candidate);
+			try {
+				final String canonical = f.getCanonicalPath();
+				if (canonical.equals(candidate)) {
+					break;
+				}
+				candidate = canonical;
+			} catch (Throwable t) {
+				return;
+			}
+		}
+		while (candidate.endsWith("/")) {
+			candidate = candidate.substring(0, candidate.length() - 1);
+		}
+		if (!"".equals(candidate) && !list.contains(candidate) && new File(candidate).canRead()) {
+			list.add(candidate);
+		}
+	}
+
+	public static List<String> allCardDirectories() {
+		final List<String> dirs = new LinkedList<String>();
+		dirs.add(cardDirectory());
+		addDirToList(dirs, System.getenv("SECONDARY_STORAGE"));
+		/*
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader("/system/etc/vold.fstab"));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				final int hashIndex = line.indexOf("#");
+				if (hashIndex >= 0) {
+					line = line.substring(0, hashIndex);
+				}
+				final String[] parts = line.split("\\s+");
+				if (parts.length >= 5) {
+					addDirToList(dirs, parts[2]);
+				}
+			}
+		} catch (Throwable e) {
+		} finally {
+			try {
+				reader.close();
+			} catch (Throwable t) {
+			}
+		}
+		*/
+		return dirs;
+	}
+
 	public static String cardDirectory() {
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 			return Environment.getExternalStorageDirectory().getPath();
@@ -102,11 +159,9 @@ public abstract class Paths {
 			}
 		} catch (Throwable e) {
 		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-				}
+			try {
+				reader.close();
+			} catch (Throwable t) {
 			}
 		}
 
@@ -137,7 +192,7 @@ public abstract class Paths {
 	}
 
 	public static List<String> bookPath() {
-		final List<String> path = new ArrayList<String>(Paths.BookPathOption.getValue());
+		final List<String> path = new ArrayList<String>(BookPathOption.getValue());
 		final String downloadsDirectory = DownloadsDirectoryOption.getValue();
 		if (!"".equals(downloadsDirectory) && !path.contains(downloadsDirectory)) {
 			path.add(downloadsDirectory);

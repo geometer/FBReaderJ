@@ -22,8 +22,12 @@ def process_nodes(base, custom):
                     new_node.setAttribute('value', value)
                     new_node.setAttribute('toBeTranslated', 'true')
                 custom_child = custom.insertBefore(new_node, custom_child)
-            elif custom_child and custom_child.getAttribute('toBeTranslated') == 'true':
-                custom_child.setAttribute('value', base_child.getAttribute('value'))
+            elif custom_child:
+                if base_child.getAttribute('value') and not custom_child.getAttribute('value'):
+                    custom_child.setAttribute('value', base_child.getAttribute('value'))
+                    custom_child.setAttribute('toBeTranslated', 'true')
+                elif custom_child.getAttribute('toBeTranslated') == 'true':
+                    custom_child.setAttribute('value', base_child.getAttribute('value'))
         if custom_child is not None:
             process_nodes(base_child, custom_child)
             custom_child = first_after(custom_child.nextSibling)
