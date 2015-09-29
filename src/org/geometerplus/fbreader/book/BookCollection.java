@@ -359,11 +359,13 @@ public class BookCollection extends AbstractBookCollection<DbBook> {
 		final Set<Author> authors = new TreeSet<Author>();
 		synchronized (myBooksByFile) {
 			for (DbBook book : myBooksByFile.values()) {
-				final List<Author> bookAuthors = book.authors();
-				if (bookAuthors.isEmpty()) {
+				final Set<Role> roles = book.authorRoles();
+				if (roles.isEmpty()) {
 					authors.add(Author.NULL);
 				} else {
-					authors.addAll(bookAuthors);
+					for (Role r : roles) {
+						authors.addAll(book.authors(r));
+					}
 				}
 			}
 		}

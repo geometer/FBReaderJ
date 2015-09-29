@@ -95,7 +95,7 @@ public final class DbBook extends AbstractBook {
 
 				long index = 0;
 				database.deleteAllBookAuthors(myId);
-				for (Author author : authors()) {
+				for (BookAuthor author : allAuthors()) {
 					database.saveBookAuthorInfo(myId, index++, author);
 				}
 				database.deleteAllBookTags(myId);

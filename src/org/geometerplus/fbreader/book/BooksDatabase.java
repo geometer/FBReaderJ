@@ -44,8 +44,8 @@ public abstract class BooksDatabase {
 	protected DbBook createBook(long id, ZLFile file, String title, String encoding, String language) {
 		return file != null ? new DbBook(id, file, title, encoding, language) : null;
 	}
-	protected void addAuthor(DbBook book, Author author) {
-		book.addAuthorWithNoCheck(author);
+	protected void addAuthor(DbBook book, Author author, Role role) {
+		book.addAuthorWithNoCheck(author, role);
 	}
 	protected void addTag(DbBook book, Tag tag) {
 		book.addTagWithNoCheck(tag);
@@ -65,7 +65,7 @@ public abstract class BooksDatabase {
 
 	protected abstract List<String> listLabels();
 
-	protected abstract List<Author> listAuthors(long bookId);
+	protected abstract List<BookAuthor> listAuthors(long bookId);
 	protected abstract List<Tag> listTags(long bookId);
 	protected abstract List<Label> listLabels(long bookId);
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
@@ -78,7 +78,7 @@ public abstract class BooksDatabase {
 	protected abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
 	protected abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
 	protected abstract void deleteAllBookAuthors(long bookId);
-	protected abstract void saveBookAuthorInfo(long bookId, long index, Author author);
+	protected abstract void saveBookAuthorInfo(long bookId, long index, BookAuthor author);
 	protected abstract void deleteAllBookTags(long bookId);
 	protected abstract void saveBookTagInfo(long bookId, Tag tag);
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);

@@ -39,11 +39,11 @@ public class BookWithAuthorsTree extends BookTree {
 	public String getSummary() {
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
-		for (Author author : Book.authors()) {
+		for (BookAuthor author : Book.allAuthors()) {//FIXME
 			if (count++ > 0) {
 				builder.append(",  ");
 			}
-			builder.append(author.DisplayName);
+			builder.append(author.Author.DisplayName);
 			if (count == 5) {
 				break;
 			}

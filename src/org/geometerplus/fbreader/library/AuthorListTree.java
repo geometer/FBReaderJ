@@ -49,12 +49,12 @@ public class AuthorListTree extends FirstLevelTree {
 			case Updated:
 			{
 				// TODO: remove empty authors tree after update (?)
-				final List<Author> bookAuthors = book.authors();
+				final List<BookAuthor> bookAuthors = book.allAuthors();
 				boolean changed = false;
 				if (bookAuthors.isEmpty()) {
 					changed &= createAuthorSubtree(Author.NULL);
-				} else for (Author a : bookAuthors) {
-					changed &= createAuthorSubtree(a);
+				} else for (BookAuthor a : bookAuthors) {
+					changed &= createAuthorSubtree(a.Author);
 				}
 				return changed;
 			}

@@ -371,11 +371,11 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			Collection.addToRecentlyOpened(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
-			if (!book.authors().isEmpty()) {
+			if (!book.allAuthors().isEmpty()) {
 				boolean first = true;
-				for (Author a : book.authors()) {
+				for (BookAuthor a : book.allAuthors()) {//FIXME
 					title.append(first ? " (" : ", ");
-					title.append(a.DisplayName);
+					title.append(a.Author.DisplayName);
 					first = false;
 				}
 				title.append(")");

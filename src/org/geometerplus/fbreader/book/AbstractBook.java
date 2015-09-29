@@ -39,7 +39,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 
 	protected volatile String myEncoding;
 	protected volatile String myLanguage;
-	protected volatile List<Author> myAuthors;
+	protected volatile List<BookAuthor> myAuthors;
 	protected volatile List<Tag> myTags;
 	protected volatile List<Label> myLabels;
 	protected volatile SeriesInfo mySeriesInfo;
@@ -68,7 +68,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		setEncoding(book.myEncoding);
 		setLanguage(book.myLanguage);
 		if (!MiscUtil.equals(myAuthors, book.myAuthors)) {
-			myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
+			myAuthors = book.myAuthors != null ? new ArrayList<BookAuthor>(book.myAuthors) : null;
 			myIsSaved = false;
 		}
 		if (!MiscUtil.equals(myTags, book.myTags)) {
@@ -94,15 +94,33 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		}
 	}
 
-	public List<Author> authors() {
-		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
+	public List<BookAuthor> allAuthors() {
+		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<BookAuthor>emptyList();
+	}
+	
+	public Set<Role> authorRoles() {
+		HashSet<Role> res = new HashSet<Role>();
+		for (BookAuthor b : myAuthors) {
+			res.add(b.Role);
+		}
+		return res;
+	}
+	
+	public List<Author> authors(Role role) {
+		ArrayList<Author> res = new ArrayList<Author>();
+		for (BookAuthor b : myAuthors) {
+			if (role.equals(b.Role)) {
+				res.add(b.Author);
+			}
+		}
+		return res;
 	}
 
-	void addAuthorWithNoCheck(Author author) {
+	void addAuthorWithNoCheck(Author author, Role role) {
 		if (myAuthors == null) {
-			myAuthors = new ArrayList<Author>();
+			myAuthors = new ArrayList<BookAuthor>();
 		}
-		myAuthors.add(author);
+		myAuthors.add(new BookAuthor(author, role));
 	}
 
 	public void removeAllAuthors() {
@@ -112,25 +130,26 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		}
 	}
 
-	public void addAuthor(Author author) {
+	public void addAuthor(Author author, Role role) {
 		if (author == null) {
 			return;
 		}
+		BookAuthor b = new BookAuthor(author, role);
 		if (myAuthors == null) {
-			myAuthors = new ArrayList<Author>();
-			myAuthors.add(author);
+			myAuthors = new ArrayList<BookAuthor>();
+			myAuthors.add(b);
 			myIsSaved = false;
-		} else if (!myAuthors.contains(author)) {
-			myAuthors.add(author);
+		} else if (!myAuthors.contains(b)) {
+			myAuthors.add(b);
 			myIsSaved = false;
 		}
 	}
 
 	public void addAuthor(String name) {
-		addAuthor(name, "");
+		addAuthor(name, "", Role.NULL);
 	}
 
-	public void addAuthor(String name, String sortKey) {
+	public void addAuthor(String name, String sortKey, Role role) {
 		if (name == null) {
 			return;
 		}
@@ -153,7 +172,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			}
 		}
 
-		addAuthor(new Author(strippedName, strippedKey));
+		addAuthor(new Author(strippedName, strippedKey), role);
 	}
 
 	public long getId() {
@@ -358,8 +377,8 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			return true;
 		}
 		if (myAuthors != null) {
-			for (Author author : myAuthors) {
-				if (MiscUtil.matchesIgnoreCase(author.DisplayName, pattern)) {
+			for (BookAuthor author : myAuthors) {
+				if (MiscUtil.matchesIgnoreCase(author.Author.DisplayName, pattern)) {
 					return true;
 				}
 			}

@@ -243,12 +243,17 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		setupInfoPair(R.id.book_title, "title", book.getTitle());
 
 		final StringBuilder buffer = new StringBuilder();
-		final List<Author> authors = book.authors();
-		for (Author a : authors) {
+		final List<BookAuthor> authors = book.allAuthors();
+		for (BookAuthor a : authors) {
 			if (buffer.length() > 0) {
 				buffer.append(", ");
 			}
-			buffer.append(a.DisplayName);
+			buffer.append(a.Author.DisplayName);
+			if (!a.Role.Code.equals(Role.NULL)) {
+				buffer.append(" (");
+				buffer.append(a.Role.Code);
+				buffer.append(")");
+			}
 		}
 		setupInfoPair(R.id.book_authors, "authors", buffer, authors.size());
 

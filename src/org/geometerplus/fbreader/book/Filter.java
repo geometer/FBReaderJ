@@ -38,9 +38,17 @@ public abstract class Filter {
 		}
 
 		public boolean matches(AbstractBook book) {
-			final List<Author> bookAuthors = book.authors();
-			return
-				Author.NULL.equals(Author) ? bookAuthors.isEmpty() : bookAuthors.contains(Author);
+			final List<BookAuthor> bookAuthors = book.allAuthors();
+			if (Author.NULL.equals(Author)) {
+				return bookAuthors.isEmpty();
+			} else {
+				for (BookAuthor a : bookAuthors) {
+					if (Author.equals(a.Author)) {
+							return true;
+					}
+				}
+				return false;
+			}
 		}
 	}
 

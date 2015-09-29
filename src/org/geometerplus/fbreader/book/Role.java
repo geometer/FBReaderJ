@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.book;
 
 public final class Role {
+	public static final Role NULL = new Role("");
 
 	public final String Code;
 
@@ -29,5 +30,22 @@ public final class Role {
 	
 	public String getCode() {
 		return Code;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Code.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof Role)) {
+			return false;
+		}
+		Role r = (Role)o;
+		return Code.equals(r.Code);
 	}
 }

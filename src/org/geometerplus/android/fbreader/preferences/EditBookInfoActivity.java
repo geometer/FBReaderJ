@@ -203,7 +203,7 @@ class EditAuthorsPreference extends Preference {
 
 		myBook.removeAllAuthors();
 		for (String a : authors) {
-			myBook.addAuthor(a);
+//			myBook.addAuthor(a);//FIXME
 		}
 		((EditBookInfoActivity)getContext()).saveBook();
 	}
@@ -213,8 +213,8 @@ class EditAuthorsPreference extends Preference {
 		final Intent intent = new Intent(getContext(), EditAuthorsDialogActivity.class);
 		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
 		final ArrayList<String> authors = new ArrayList<String>();
-		for (Author author : myBook.authors()) {
-			authors.add(author.DisplayName);
+		for (BookAuthor author : myBook.allAuthors()) {
+			authors.add(author.Author.DisplayName);//TODO edit roles
 		}
 		((EditBookInfoActivity)getContext()).saveBook();
 		final ArrayList<String> allAuthors = new ArrayList<String>();

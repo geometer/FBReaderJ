@@ -278,16 +278,26 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			authorById.put(cursor.getLong(0), new Author(cursor.getString(1), cursor.getString(2)));
 		}
 		cursor.close();
+		
+		cursor = myDatabase.rawQuery(
+				"SELECT role_id,code FROM Role", null
+			);
+		final HashMap<Long,Role> roleById = new HashMap<Long,Role>();
+		while (cursor.moveToNext()) {
+			roleById.put(cursor.getLong(0), new Role(cursor.getString(1)));
+		}
+		cursor.close();
 
 		cursor = myDatabase.rawQuery(
-			"SELECT book_id,author_id FROM BookAuthor ORDER BY author_index", null //TODO
+			"SELECT book_id,author_id,role_id FROM BookAuthor ORDER BY author_index", null
 		);
 		while (cursor.moveToNext()) {
 			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				Author author = authorById.get(cursor.getLong(1));
+				Role role = roleById.get(cursor.getLong(2));
 				if (author != null) {
-					addAuthor(book, author);
+					addAuthor(book, author, role);
 				}
 			}
 		}
@@ -435,7 +445,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
-	protected void saveBookAuthorInfo(long bookId, long index, Author author) {
+	protected void saveBookAuthorInfo(long bookId, long index, BookAuthor author) {
 		final SQLiteStatement getAuthorIdStatement = get(
 			"SELECT author_id FROM Authors WHERE name=? AND sort_key=?"
 		);
@@ -448,23 +458,32 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 		long authorId;
 		try {
-			getAuthorIdStatement.bindString(1, author.DisplayName);
-			getAuthorIdStatement.bindString(2, author.SortKey);
+			getAuthorIdStatement.bindString(1, author.Author.DisplayName);
+			getAuthorIdStatement.bindString(2, author.Author.SortKey);
 			authorId = getAuthorIdStatement.simpleQueryForLong();
 		} catch (SQLException e) {
-			insertAuthorStatement.bindString(1, author.DisplayName);
-			insertAuthorStatement.bindString(2, author.SortKey);
+			insertAuthorStatement.bindString(1, author.Author.DisplayName);
+			insertAuthorStatement.bindString(2, author.Author.SortKey);
 			authorId = insertAuthorStatement.executeInsert();
 		}
 		insertBookAuthorStatement.bindLong(1, bookId);
 		insertBookAuthorStatement.bindLong(2, authorId);
 		insertBookAuthorStatement.bindLong(3, index);
-		insertBookAuthorStatement.bindNull(4);//TODO
+		insertBookAuthorStatement.bindString(4, author.Role.Code);
 		insertBookAuthorStatement.execute();
 	}
 
-	protected List<Author> listAuthors(long bookId) {//TODO
-		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { String.valueOf(bookId) });
+	protected List<BookAuthor> listAuthors(long bookId) {//TODO
+		Cursor cursor = myDatabase.rawQuery(
+				"SELECT role_id,code FROM Role", null
+			);
+		final HashMap<Long,Role> roleById = new HashMap<Long,Role>();
+		while (cursor.moveToNext()) {
+			roleById.put(cursor.getLong(0), new Role(cursor.getString(1)));
+		}
+		cursor.close();
+		
+		cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { String.valueOf(bookId) });
 		if (!cursor.moveToNext()) {
 			cursor.close();
 			return null;
