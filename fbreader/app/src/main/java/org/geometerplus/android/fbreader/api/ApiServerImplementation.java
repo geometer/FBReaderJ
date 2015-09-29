@@ -263,8 +263,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					));
 				case LIST_BOOK_TAGS:
 					return ApiObject.envelopeStringList(getBookTags());
-				case LIST_BOOK_AUTHORS:
-					return ApiObject.envelopeStringList(getBookAuthors());
+//				case LIST_BOOK_AUTHORS:
+//					return ApiObject.envelopeStringList(getBookAuthors());
 				case LIST_ACTIONS:
 					return ApiObject.envelopeStringList(listActions());
 				case LIST_ACTION_NAMES:
@@ -356,18 +356,18 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return progress != null ? progress.toFloat() : -1.0f;
 	}
 
-	public List<String> getBookAuthors() {
-		final Book book = getReader().getCurrentBook();
-		if (book == null) {
-			return null;
-		}
-		final List<Author> authors = book.authors();
-		final List<String> authorNames = new ArrayList<String>(authors.size());
-		for (Author a : authors) {
-			authorNames.add(a.DisplayName);
-		}
-		return authorNames;
-	}
+//	public List<String> getBookAuthors() {
+//		final Book book = getReader().getCurrentBook();
+//		if (book == null) {
+//			return null;
+//		}
+//		final List<Author> authors = book.authors();
+//		final List<String> authorNames = new ArrayList<String>(authors.size());
+//		for (Author a : authors) {
+//			authorNames.add(a.DisplayName);
+//		}
+//		return authorNames;
+//	}
 
 	public String getBookFilePath() {
 		final Book book = getReader().getCurrentBook();

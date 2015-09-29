@@ -22,7 +22,7 @@ public interface Api {
 	// book information for current book
 	String getBookLanguage() throws ApiException;
 	String getBookTitle() throws ApiException;
-	List<String> getBookAuthors() throws ApiException;
+//	List<String> getBookAuthors() throws ApiException;
 	List<String> getBookTags() throws ApiException;
 	String getBookFilePath() throws ApiException;
 	String getBookHash() throws ApiException;

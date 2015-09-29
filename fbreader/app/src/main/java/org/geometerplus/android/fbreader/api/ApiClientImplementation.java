@@ -300,9 +300,9 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return requestString(GET_BOOK_HASH, EMPTY_PARAMETERS);
 	}
 
-	public List<String> getBookAuthors() throws ApiException {
-		return requestStringList(LIST_BOOK_AUTHORS, EMPTY_PARAMETERS);
-	}
+//	public List<String> getBookAuthors() throws ApiException {
+//		return requestStringList(LIST_BOOK_AUTHORS, EMPTY_PARAMETERS);
+//	}
 
 	public float getBookProgress() throws ApiException {
 		return requestFloat(GET_BOOK_PROGRESS, EMPTY_PARAMETERS);
