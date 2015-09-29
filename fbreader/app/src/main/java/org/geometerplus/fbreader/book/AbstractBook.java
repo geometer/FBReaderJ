@@ -25,6 +25,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 
+import android.util.Pair;
+
 import org.geometerplus.fbreader.sort.TitledEntity;
 
 public abstract class AbstractBook extends TitledEntity<AbstractBook> {
@@ -39,7 +41,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 
 	protected volatile String myEncoding;
 	protected volatile String myLanguage;
-	protected volatile List<BookAuthor> myAuthors;
+	protected volatile List<Pair<Author, Role>> myAuthors;
 	protected volatile List<Tag> myTags;
 	protected volatile List<Label> myLabels;
 	protected volatile SeriesInfo mySeriesInfo;
