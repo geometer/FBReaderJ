@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 
 import android.content.Context;
 import android.database.sqlite.*;
+import android.util.Pair;
 import android.database.SQLException;
 import android.database.Cursor;
 
@@ -445,52 +446,57 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
-	protected void saveBookAuthorInfo(long bookId, long index, BookAuthor author) {
+	protected void saveBookAuthorInfo(long bookId, long index, Pair<Author, Role> author) {
 		final SQLiteStatement getAuthorIdStatement = get(
 			"SELECT author_id FROM Authors WHERE name=? AND sort_key=?"
 		);
+		final SQLiteStatement getRoleIdStatement = get(
+				"SELECT role_id FROM Role WHERE code=?"
+			);
 		final SQLiteStatement insertAuthorStatement = get(
 			"INSERT OR IGNORE INTO Authors (name,sort_key) VALUES (?,?)"
 		);
+		final SQLiteStatement insertRoleStatement = get(
+				"INSERT OR IGNORE INTO Role (code) VALUES (?)"
+			);
 		final SQLiteStatement insertBookAuthorStatement = get(
 			"INSERT OR REPLACE INTO BookAuthor (book_id,author_id,author_index,role_id) VALUES (?,?,?,?)"
 		);
 
 		long authorId;
+		long roleId;
 		try {
-			getAuthorIdStatement.bindString(1, author.Author.DisplayName);
-			getAuthorIdStatement.bindString(2, author.Author.SortKey);
+			getAuthorIdStatement.bindString(1, author.first.DisplayName);
+			getAuthorIdStatement.bindString(2, author.first.SortKey);
 			authorId = getAuthorIdStatement.simpleQueryForLong();
 		} catch (SQLException e) {
-			insertAuthorStatement.bindString(1, author.Author.DisplayName);
-			insertAuthorStatement.bindString(2, author.Author.SortKey);
+			insertAuthorStatement.bindString(1, author.first.DisplayName);
+			insertAuthorStatement.bindString(2, author.first.SortKey);
 			authorId = insertAuthorStatement.executeInsert();
+		}
+		try {
+			getRoleIdStatement.bindString(1, author.second.Code);
+			roleId = getRoleIdStatement.simpleQueryForLong();
+		} catch (SQLException e) {
+			insertRoleStatement.bindString(1, author.second.Code);
+			roleId = insertRoleStatement.executeInsert();
 		}
 		insertBookAuthorStatement.bindLong(1, bookId);
 		insertBookAuthorStatement.bindLong(2, authorId);
 		insertBookAuthorStatement.bindLong(3, index);
-		insertBookAuthorStatement.bindString(4, author.Role.Code);
+		insertBookAuthorStatement.bindLong(4, roleId);
 		insertBookAuthorStatement.execute();
 	}
 
-	protected List<BookAuthor> listAuthors(long bookId) {//TODO
-		Cursor cursor = myDatabase.rawQuery(
-				"SELECT role_id,code FROM Role", null
-			);
-		final HashMap<Long,Role> roleById = new HashMap<Long,Role>();
-		while (cursor.moveToNext()) {
-			roleById.put(cursor.getLong(0), new Role(cursor.getString(1)));
-		}
-		cursor.close();
-		
-		cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { String.valueOf(bookId) });
+	protected List<Pair<Author, Role>> listAuthors(long bookId) {//TODO
+		Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key,Role.code FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id LEFT JOIN Role ON Role.role_id = BookAuthor.role_id  WHERE BookAuthor.book_id = ?", new String[] { String.valueOf(bookId) });
 		if (!cursor.moveToNext()) {
 			cursor.close();
 			return null;
 		}
-		final ArrayList<Author> list = new ArrayList<Author>();
+		final ArrayList<Pair<Author, Role>> list = new ArrayList<Pair<Author, Role>>();
 		do {
-			list.add(new Author(cursor.getString(0), cursor.getString(1)));
+			list.add(new Pair<Author, Role>(new Author(cursor.getString(0), cursor.getString(1)), new Role(cursor.getString(2))));
 		} while (cursor.moveToNext());
 		cursor.close();
 		return list;

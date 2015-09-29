@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.book;
 
 public final class Role {
-	public static final Role NULL = new Role("");
+	public static final Role NULL = new Role(null);
 
 	public final String Code;
 
@@ -46,6 +46,6 @@ public final class Role {
 			return false;
 		}
 		Role r = (Role)o;
-		return Code.equals(r.Code);
+		return Code == null? r.Code == null : Code.equals(r.Code);
 	}
 }
