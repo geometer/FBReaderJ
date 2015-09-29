@@ -30,4 +30,8 @@ git checkout 2.6-kindle
 git merge 2.6-yota2
 git merge kindle
 
+git checkout 2.6-nook
+git merge 2.6-master
+git merge nook
+
 git checkout master
