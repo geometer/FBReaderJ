@@ -35,7 +35,6 @@ OEBMetaInfoReader::OEBMetaInfoReader(Book &book) : myBook(book) {
 }
 
 static const std::string META = "meta";
-static const std::string AUTHOR_ROLE = "aut";
 
 void OEBMetaInfoReader::characterDataHandler(const char *text, std::size_t len) {
 	switch (myReadState) {
@@ -69,7 +68,7 @@ void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attrib
 				const char *role = attributeValue(attributes, "opf:role");
 				if (role == 0) {
 					myLastRole = "";
-				} else if (AUTHOR_ROLE == role) {
+				} else {
 					myLastRole = role;
 				}
 				myReadState = READ_AUTHOR;
