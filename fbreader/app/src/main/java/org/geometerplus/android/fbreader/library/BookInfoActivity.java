@@ -30,6 +30,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
+import android.util.Pair;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
@@ -243,15 +244,15 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		setupInfoPair(R.id.book_title, "title", book.getTitle());
 
 		final StringBuilder buffer = new StringBuilder();
-		final List<BookAuthor> authors = book.allAuthors();
-		for (BookAuthor a : authors) {
+		final List<Pair<Author, Role>> authors = book.allAuthors();
+		for (Pair<Author, Role> a : authors) {
 			if (buffer.length() > 0) {
 				buffer.append(", ");
 			}
-			buffer.append(a.Author.DisplayName);
-			if (!a.Role.Code.equals(Role.NULL)) {
+			buffer.append(a.first.DisplayName);
+			if (!a.second.Code.equals(Role.NULL)) {
 				buffer.append(" (");
-				buffer.append(a.Role.Code);
+				buffer.append(a.second.Code);
 				buffer.append(")");
 			}
 		}
