@@ -250,9 +250,9 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 				buffer.append(", ");
 			}
 			buffer.append(a.first.DisplayName);
-			if (!a.second.Code.equals(Role.NULL)) {
+			if (!a.second.getCode().equals(Role.NULL)) {
 				buffer.append(" (");
-				buffer.append(a.second.Code);
+				buffer.append(a.second.getCode());
 				buffer.append(")");
 			}
 		}

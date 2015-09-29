@@ -464,7 +464,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		);
 
 		long authorId;
-		long roleId;
+		Long roleId = null;
 		try {
 			getAuthorIdStatement.bindString(1, author.first.DisplayName);
 			getAuthorIdStatement.bindString(2, author.first.SortKey);
@@ -474,21 +474,27 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			insertAuthorStatement.bindString(2, author.first.SortKey);
 			authorId = insertAuthorStatement.executeInsert();
 		}
-		try {
-			getRoleIdStatement.bindString(1, author.second.Code);
-			roleId = getRoleIdStatement.simpleQueryForLong();
-		} catch (SQLException e) {
-			insertRoleStatement.bindString(1, author.second.Code);
-			roleId = insertRoleStatement.executeInsert();
+		if (!author.second.equals(Role.NULL)) {
+			try {
+				getRoleIdStatement.bindString(1, author.second.getCode());
+				roleId = getRoleIdStatement.simpleQueryForLong();
+			} catch (SQLException e) {
+				insertRoleStatement.bindString(1, author.second.getCode());
+				roleId = insertRoleStatement.executeInsert();
+			}
 		}
 		insertBookAuthorStatement.bindLong(1, bookId);
 		insertBookAuthorStatement.bindLong(2, authorId);
 		insertBookAuthorStatement.bindLong(3, index);
-		insertBookAuthorStatement.bindLong(4, roleId);
+		if (roleId != null) {
+			insertBookAuthorStatement.bindLong(4, roleId);
+		} else {
+			insertBookAuthorStatement.bindNull(4);
+		}
 		insertBookAuthorStatement.execute();
 	}
 
-	protected List<Pair<Author, Role>> listAuthors(long bookId) {//TODO
+	protected List<Pair<Author, Role>> listAuthors(long bookId) {
 		Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key,Role.code FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id LEFT JOIN Role ON Role.role_id = BookAuthor.role_id  WHERE BookAuthor.book_id = ?", new String[] { String.valueOf(bookId) });
 		if (!cursor.moveToNext()) {
 			cursor.close();

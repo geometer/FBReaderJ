@@ -25,6 +25,8 @@ import java.text.DateFormat;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import android.util.Pair;
 import android.util.Xml;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
@@ -193,10 +195,11 @@ class XMLSerializer extends AbstractSerializer {
 			closeTag(buffer, "dc:identifier");
 		}
 
-		for (Author author : book.authors()) {
+		for (Pair<Author, Role> pair : book.allAuthors()) {
 			appendTag(buffer, "author", false);
-			appendTagWithContent(buffer, "uri", author.SortKey);
-			appendTagWithContent(buffer, "name", author.DisplayName);
+			appendTagWithContent(buffer, "uri", pair.first.SortKey);
+			appendTagWithContent(buffer, "name", pair.first.DisplayName);
+			appendTagWithContent(buffer, "role", pair.second.getCode());
 			closeTag(buffer, "author");
 		}
 
@@ -527,6 +530,7 @@ class XMLSerializer extends AbstractSerializer {
 			READ_AUTHOR,
 			READ_AUTHOR_URI,
 			READ_AUTHOR_NAME,
+			READ_AUTHOR_ROLE,
 			READ_SERIES_TITLE,
 			READ_SERIES_INDEX,
 		}
@@ -542,11 +546,12 @@ class XMLSerializer extends AbstractSerializer {
 		private String myScheme;
 		private final StringBuilder myUid = new StringBuilder();
 		private final ArrayList<UID> myUidList = new ArrayList<UID>();
-		private final ArrayList<Author> myAuthors = new ArrayList<Author>();
+		private final ArrayList<Pair<Author, Role>> myAuthors = new ArrayList<Pair<Author, Role>>();
 		private final ArrayList<Tag> myTags = new ArrayList<Tag>();
 		private final ArrayList<Label> myLabels = new ArrayList<Label>();
 		private final StringBuilder myAuthorSortKey = new StringBuilder();
 		private final StringBuilder myAuthorName = new StringBuilder();
+		private final StringBuilder myAuthorRole = new StringBuilder();
 		private final StringBuilder mySeriesTitle = new StringBuilder();
 		private final StringBuilder mySeriesIndex = new StringBuilder();
 		private boolean myHasBookmark;
@@ -592,8 +597,8 @@ class XMLSerializer extends AbstractSerializer {
 			myBook = myBookCreator.createBook(
 				myId, myUrl, string(myTitle), string(myEncoding), string(myLanguage)
 			);
-			for (Author author : myAuthors) {
-				myBook.addAuthorWithNoCheck(author);
+			for (Pair<Author, Role> pair : myAuthors) {
+				myBook.addAuthorWithNoCheck(pair.first, pair.second);
 			}
 			for (Tag tag : myTags) {
 				myBook.addTagWithNoCheck(tag);
@@ -634,6 +639,7 @@ class XMLSerializer extends AbstractSerializer {
 						myState = State.READ_AUTHOR;
 						clear(myAuthorName);
 						clear(myAuthorSortKey);
+						clear(myAuthorRole);
 					} else if ("category".equals(localName)) {
 						final String term = attributes.getValue("term");
 						if (term != null) {
@@ -672,6 +678,8 @@ class XMLSerializer extends AbstractSerializer {
 						myState = State.READ_AUTHOR_URI;
 					} else if ("name".equals(localName)) {
 						myState = State.READ_AUTHOR_NAME;
+					} else if ("role".equals(localName)) {
+						myState = State.READ_AUTHOR_ROLE;
 					} else {
 						throw new SAXException("Unexpected tag " + localName);
 					}
@@ -691,12 +699,14 @@ class XMLSerializer extends AbstractSerializer {
 					break;
 				case READ_AUTHOR_URI:
 				case READ_AUTHOR_NAME:
+				case READ_AUTHOR_ROLE:
 					myState = State.READ_AUTHOR;
 					break;
 				case READ_AUTHOR:
 					if (myAuthorSortKey.length() > 0 && myAuthorName.length() > 0) {
-						myAuthors.add(
-							new Author(myAuthorName.toString(), myAuthorSortKey.toString())
+						myAuthors.add(new Pair<Author,Role> (
+							new Author(myAuthorName.toString(), myAuthorSortKey.toString()),
+							new Role(myAuthorRole.toString()))
 						);
 					}
 					myState = State.READ_ENTRY;
@@ -735,6 +745,9 @@ class XMLSerializer extends AbstractSerializer {
 					break;
 				case READ_AUTHOR_NAME:
 					myAuthorName.append(ch, start, length);
+					break;
+				case READ_AUTHOR_ROLE:
+					myAuthorRole.append(ch, start, length);
 					break;
 				case READ_SERIES_TITLE:
 					mySeriesTitle.append(ch, start, length);
