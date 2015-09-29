@@ -43,7 +43,6 @@ private:
 		READ_NONE,
 		READ_METADATA,
 		READ_AUTHOR,
-		READ_AUTHOR2,
 		READ_TITLE,
 		READ_SUBJECT,
 		READ_LANGUAGE,
@@ -52,8 +51,8 @@ private:
 
 	std::string myIdentifierScheme;
 	std::string myBuffer;
-	std::vector<std::string> myAuthorList;
-	std::vector<std::string> myAuthorList2;
+	std::string myLastRole;
+	std::vector<std::pair<std::string, std::string> > myAuthorList;
 };
 
 #endif /* __OEBMETAINFOREADER_H__ */

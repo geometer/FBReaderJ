@@ -43,7 +43,6 @@ void OEBMetaInfoReader::characterDataHandler(const char *text, std::size_t len) 
 		case READ_METADATA:
 			break;
 		case READ_AUTHOR:
-		case READ_AUTHOR2:
 		case READ_SUBJECT:
 		case READ_LANGUAGE:
 		case READ_TITLE:
@@ -67,12 +66,13 @@ void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attrib
 			if (testDCTag("title", tagString)) {
 				myReadState = READ_TITLE;
 			} else if (testDCTag("creator", tagString)) {
-				const char *role = attributeValue(attributes, "role");
+				const char *role = attributeValue(attributes, "opf:role");
 				if (role == 0) {
-					myReadState = READ_AUTHOR2;
+					myLastRole = "";
 				} else if (AUTHOR_ROLE == role) {
-					myReadState = READ_AUTHOR;
+					myLastRole = role;
 				}
+				myReadState = READ_AUTHOR;
 			} else if (testDCTag("subject", tagString)) {
 				myReadState = READ_SUBJECT;
 			} else if (testDCTag("language", tagString)) {
@@ -113,12 +113,7 @@ void OEBMetaInfoReader::endElementHandler(const char *tag) {
 			break;
 		case READ_AUTHOR:
 			if (!myBuffer.empty()) {
-				myAuthorList.push_back(myBuffer);
-			}
-			break;
-		case READ_AUTHOR2:
-			if (!myBuffer.empty()) {
-				myAuthorList2.push_back(myBuffer);
+				myAuthorList.push_back(std::pair<std::string, std::string>(myBuffer, myLastRole));
 			}
 			break;
 		case READ_SUBJECT:
@@ -161,14 +156,8 @@ bool OEBMetaInfoReader::readMetainfo(const ZLFile &file) {
 		return false;
 	}
 
-	if (!myAuthorList.empty()) {
-		for (std::vector<std::string>::const_iterator it = myAuthorList.begin(); it != myAuthorList.end(); ++it) {
-			myBook.addAuthor(*it, "");
-		}
-	} else {
-		for (std::vector<std::string>::const_iterator it = myAuthorList2.begin(); it != myAuthorList2.end(); ++it) {
-			myBook.addAuthor(*it, "");
-		}
+	for (std::vector<std::pair<std::string, std::string> >::const_iterator it = myAuthorList.begin(); it != myAuthorList.end(); ++it) {
+		myBook.addAuthor(it->first, "", it->second);
 	}
 	return true;
 }
