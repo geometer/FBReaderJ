@@ -15,15 +15,19 @@ git merge master
 git checkout microtypography
 git merge yota2
 
-git checkout 2.6ics
+git checkout 2.6-master
+git merge master
+
+git checkout 2.6-ics
+git merge 2.6-master
 git merge ice-cream-sandwich
 
-git checkout 2.6
-git merge 2.6ics
+git checkout 2.6-yota2
+git merge 2.6-ics
 git merge yota2
 
 git checkout 2.6-kindle
-git merge 2.6
+git merge 2.6-yota2
 git merge kindle
 
 git checkout master
