@@ -24,6 +24,7 @@ import java.util.*;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.Preference;
+import android.util.Pair;
 
 import org.geometerplus.zlibrary.core.encodings.Encoding;
 import org.geometerplus.zlibrary.core.language.Language;
@@ -213,8 +214,8 @@ class EditAuthorsPreference extends Preference {
 		final Intent intent = new Intent(getContext(), EditAuthorsDialogActivity.class);
 		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
 		final ArrayList<String> authors = new ArrayList<String>();
-		for (BookAuthor author : myBook.allAuthors()) {
-			authors.add(author.Author.DisplayName);//TODO edit roles
+		for (Pair<Author, Role> author : myBook.allAuthors()) {
+			authors.add(author.first.DisplayName);//TODO edit roles
 		}
 		((EditBookInfoActivity)getContext()).saveBook();
 		final ArrayList<String> allAuthors = new ArrayList<String>();

@@ -28,6 +28,8 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
+import android.util.Pair;
+
 public abstract class BooksDatabase {
 	protected interface HistoryEvent {
 		int Added = 0;
@@ -65,7 +67,7 @@ public abstract class BooksDatabase {
 
 	protected abstract List<String> listLabels();
 
-	protected abstract List<BookAuthor> listAuthors(long bookId);
+	protected abstract List<Pair<Author, Role>> listAuthors(long bookId);
 	protected abstract List<Tag> listTags(long bookId);
 	protected abstract List<Label> listLabels(long bookId);
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
@@ -78,7 +80,7 @@ public abstract class BooksDatabase {
 	protected abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
 	protected abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
 	protected abstract void deleteAllBookAuthors(long bookId);
-	protected abstract void saveBookAuthorInfo(long bookId, long index, BookAuthor author);
+	protected abstract void saveBookAuthorInfo(long bookId, long index, Pair<Author, Role> author);
 	protected abstract void deleteAllBookTags(long bookId);
 	protected abstract void saveBookTagInfo(long bookId, Tag tag);
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);

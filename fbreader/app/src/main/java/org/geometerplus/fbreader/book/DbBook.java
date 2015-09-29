@@ -24,6 +24,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
+import android.util.Pair;
+
 import org.geometerplus.fbreader.formats.*;
 
 public final class DbBook extends AbstractBook {
@@ -95,7 +97,7 @@ public final class DbBook extends AbstractBook {
 
 				long index = 0;
 				database.deleteAllBookAuthors(myId);
-				for (BookAuthor author : allAuthors()) {
+				for (Pair<Author, Role> author : allAuthors()) {
 					database.saveBookAuthorInfo(myId, index++, author);
 				}
 				database.deleteAllBookTags(myId);

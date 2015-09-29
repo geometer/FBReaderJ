@@ -30,6 +30,8 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
 
+import android.util.Pair;
+
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
@@ -371,11 +373,11 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			Collection.addToRecentlyOpened(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
-			if (!book.allAuthors().isEmpty()) {
+			if (book.hasAuthors()) {
 				boolean first = true;
-				for (BookAuthor a : book.allAuthors()) {//FIXME
+				for (Pair<Author, Role> a : book.allAuthors()) {//FIXME: what should we display here
 					title.append(first ? " (" : ", ");
-					title.append(a.Author.DisplayName);
+					title.append(a.first.DisplayName);
 					first = false;
 				}
 				title.append(")");

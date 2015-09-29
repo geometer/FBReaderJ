@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.book;
 
 import java.util.List;
 
+import android.util.Pair;
+
 public abstract class Filter {
 	public abstract boolean matches(AbstractBook book);
 
@@ -38,12 +40,12 @@ public abstract class Filter {
 		}
 
 		public boolean matches(AbstractBook book) {
-			final List<BookAuthor> bookAuthors = book.allAuthors();
+			final List<Pair<Author, Role>> bookAuthors = book.allAuthors();
 			if (Author.NULL.equals(Author)) {
 				return bookAuthors.isEmpty();
 			} else {
-				for (BookAuthor a : bookAuthors) {
-					if (Author.equals(a.Author)) {
+				for (Pair<Author, Role> a : bookAuthors) {
+					if (Author.equals(a.first)) {
 							return true;
 					}
 				}
