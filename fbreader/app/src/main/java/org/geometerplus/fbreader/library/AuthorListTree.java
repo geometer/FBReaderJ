@@ -24,6 +24,8 @@ import java.util.List;
 
 import org.geometerplus.fbreader.book.*;
 
+import android.util.Pair;
+
 public class AuthorListTree extends FirstLevelTree {
 	AuthorListTree(RootTree root) {
 		super(root, ROOT_BY_AUTHOR);
@@ -49,12 +51,12 @@ public class AuthorListTree extends FirstLevelTree {
 			case Updated:
 			{
 				// TODO: remove empty authors tree after update (?)
-				final List<BookAuthor> bookAuthors = book.allAuthors();
+				final List<Pair<Author, Role>> bookAuthors = book.allAuthors();
 				boolean changed = false;
 				if (bookAuthors.isEmpty()) {
 					changed &= createAuthorSubtree(Author.NULL);
-				} else for (BookAuthor a : bookAuthors) {
-					changed &= createAuthorSubtree(a.Author);
+				} else for (Pair<Author, Role> a : bookAuthors) {
+					changed &= createAuthorSubtree(a.first);
 				}
 				return changed;
 			}

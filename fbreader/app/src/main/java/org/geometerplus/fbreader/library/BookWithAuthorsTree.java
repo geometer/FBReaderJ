@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
+import android.util.Pair;
+
 public class BookWithAuthorsTree extends BookTree {
 	BookWithAuthorsTree(IBookCollection collection, PluginCollection pluginCollection, Book book) {
 		super(collection, pluginCollection, book);
@@ -39,11 +41,11 @@ public class BookWithAuthorsTree extends BookTree {
 	public String getSummary() {
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
-		for (BookAuthor author : Book.allAuthors()) {//FIXME
+		for (Pair<Author, Role> author : Book.allAuthors()) {//FIXME
 			if (count++ > 0) {
 				builder.append(",  ");
 			}
-			builder.append(author.Author.DisplayName);
+			builder.append(author.first.DisplayName);
 			if (count == 5) {
 				break;
 			}
