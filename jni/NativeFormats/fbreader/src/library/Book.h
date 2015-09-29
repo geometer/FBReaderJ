@@ -83,8 +83,8 @@ public:
 	bool cloneTag(shared_ptr<Tag> from, shared_ptr<Tag> to, bool includeSubTags);
 	void removeAllTags();
 
-	void addAuthor(shared_ptr<Author> author);
-	void addAuthor(const std::string &displayName, const std::string &sortKey = std::string());
+	void addAuthor(shared_ptr<Author> author, const std::string &role);
+	void addAuthor(const std::string &displayName, const std::string &sortKey = std::string(), const std::string &role = std::string());
 	bool replaceAuthor(shared_ptr<Author> from, shared_ptr<Author> to);
 	void removeAllAuthors();
 

@@ -152,10 +152,10 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public void addAuthor(String name) {
-		addAuthor(name, "", Role.NULL);
+		addAuthor(name, "", null);
 	}
 
-	public void addAuthor(String name, String sortKey, Role role) {
+	public void addAuthor(String name, String sortKey, String role) {
 		if (name == null) {
 			return;
 		}
@@ -178,7 +178,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			}
 		}
 
-		addAuthor(new Author(strippedName, strippedKey), role);
+		addAuthor(new Author(strippedName, strippedKey), new Role(role));
 	}
 
 	public long getId() {

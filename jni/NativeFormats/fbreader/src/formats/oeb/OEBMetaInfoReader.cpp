@@ -163,11 +163,11 @@ bool OEBMetaInfoReader::readMetainfo(const ZLFile &file) {
 
 	if (!myAuthorList.empty()) {
 		for (std::vector<std::string>::const_iterator it = myAuthorList.begin(); it != myAuthorList.end(); ++it) {
-			myBook.addAuthor(*it);
+			myBook.addAuthor(*it, "");
 		}
 	} else {
 		for (std::vector<std::string>::const_iterator it = myAuthorList2.begin(); it != myAuthorList2.end(); ++it) {
-			myBook.addAuthor(*it);
+			myBook.addAuthor(*it, "");
 		}
 	}
 	return true;

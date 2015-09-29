@@ -65,10 +65,11 @@ static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 
 	const AuthorList &authors = book.authors();
 	for (std::size_t i = 0; i < authors.size(); ++i) {
-		const Author &author = *authors[i];
+		const Author &author = *authors[i].first;
 		JString name(env, author.name(), false);
 		JString key(env, author.sortKey(), false);
-		AndroidUtil::Method_Book_addAuthor->call(javaBook, name.j(), key.j());
+		JString role(env, authors[i].second, false);
+		AndroidUtil::Method_Book_addAuthor->call(javaBook, name.j(), key.j(), role.j());
 	}
 
 	const TagList &tags = book.tags();

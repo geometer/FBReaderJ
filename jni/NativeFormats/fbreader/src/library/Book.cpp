@@ -236,18 +236,18 @@ bool Book::cloneTag(shared_ptr<Tag> from, shared_ptr<Tag> to, bool includeSubTag
 	return book;
 }*/
 
-bool Book::replaceAuthor(shared_ptr<Author> from, shared_ptr<Author> to) {
-	AuthorList::iterator it = std::find(myAuthors.begin(), myAuthors.end(), from);
-	if (it == myAuthors.end()) {
-		return false;
-	}
-	if (to.isNull()) {
-		myAuthors.erase(it);
-	} else {
-		*it = to;
-	}
-	return true;
-}
+//bool Book::replaceAuthor(shared_ptr<Author> from, shared_ptr<Author> to) {
+//	AuthorList::iterator it = std::find(myAuthors.begin(), myAuthors.end(), from);
+//	if (it == myAuthors.end()) {
+//		return false;
+//	}
+//	if (to.isNull()) {
+//		myAuthors.erase(it);
+//	} else {
+//		*it = to;
+//	}
+//	return true;
+//}
 
 void Book::setTitle(const std::string &title) {
 	myTitle = title;
@@ -280,13 +280,13 @@ void Book::removeAllTags() {
 	myTags.clear();
 }
 
-void Book::addAuthor(const std::string &displayName, const std::string &sortKey) {
-	addAuthor(Author::getAuthor(displayName, sortKey));
+void Book::addAuthor(const std::string &displayName, const std::string &sortKey, const std::string &role) {
+	addAuthor(Author::getAuthor(displayName, sortKey), role);
 }
 
-void Book::addAuthor(shared_ptr<Author> author) {
+void Book::addAuthor(shared_ptr<Author> author, const std::string &role) {
 	if (!author.isNull()) {
-		myAuthors.push_back(author);
+		myAuthors.push_back(std::pair<shared_ptr<Author>, std::string>(author, role));
 	}
 }
 

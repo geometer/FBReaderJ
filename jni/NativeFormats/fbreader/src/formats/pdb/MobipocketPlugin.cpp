@@ -134,7 +134,7 @@ bool MobipocketPlugin::readMetainfo(Book &book) const {
 							} else {
 								ZLStringUtil::stripWhiteSpaces(value);
 							}
-							book.addAuthor(value);
+							book.addAuthor(value, "");
 							break;
 						}
 						case 105: // subject

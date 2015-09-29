@@ -191,7 +191,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_Book_setSeriesInfo = new VoidMethod(Class_AbstractBook, "setSeriesInfo", "(Ljava/lang/String;Ljava/lang/String;)");
 	Method_Book_setLanguage = new VoidMethod(Class_AbstractBook, "setLanguage", "(Ljava/lang/String;)");
 	Method_Book_setEncoding = new VoidMethod(Class_AbstractBook, "setEncoding", "(Ljava/lang/String;)");
-	Method_Book_addAuthor = new VoidMethod(Class_AbstractBook, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
+	Method_Book_addAuthor = new VoidMethod(Class_AbstractBook, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)");
 	Method_Book_addTag = new VoidMethod(Class_AbstractBook, "addTag", "(Lorg/geometerplus/fbreader/book/Tag;)");
 	Method_Book_addUid = new VoidMethod(Class_AbstractBook, "addUid", "(Ljava/lang/String;Ljava/lang/String;)");
 

@@ -70,7 +70,7 @@ void RtfDescriptionReader::switchDestination(DestinationType destination, bool o
 		case DESTINATION_AUTHOR:
 			myDoRead = on;
 			if (!on) {
-				myBook.addAuthor(myBuffer);
+				myBook.addAuthor(myBuffer, "");
 				myBuffer.erase();
 			}
 			break;

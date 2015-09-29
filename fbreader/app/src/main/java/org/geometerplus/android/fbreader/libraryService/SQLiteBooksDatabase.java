@@ -283,9 +283,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor = myDatabase.rawQuery(
 				"SELECT role_id,code FROM Role", null
 			);
-		final HashMap<Long,Role> roleById = new HashMap<Long,Role>();
+		final HashMap<Long,String> roleById = new HashMap<Long,String>();
 		while (cursor.moveToNext()) {
-			roleById.put(cursor.getLong(0), new Role(cursor.getString(1)));
+			roleById.put(cursor.getLong(0), cursor.getString(1));
 		}
 		cursor.close();
 
@@ -296,7 +296,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			final DbBook book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				Author author = authorById.get(cursor.getLong(1));
-				Role role = roleById.get(cursor.getLong(2));
+				Role role = new Role(roleById.get(cursor.getLong(2)));
 				if (author != null) {
 					addAuthor(book, author, role);
 				}

@@ -172,7 +172,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 					fullName += ' ';
 				}
 				fullName += myAuthorNames[2];
-				myBook.addAuthor(fullName, myAuthorNames[2]);
+				myBook.addAuthor(fullName, myAuthorNames[2], "");
 				myAuthorNames[0].erase();
 				myAuthorNames[1].erase();
 				myAuthorNames[2].erase();

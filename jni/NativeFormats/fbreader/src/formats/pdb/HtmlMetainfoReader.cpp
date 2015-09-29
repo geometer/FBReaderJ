@@ -54,7 +54,7 @@ bool HtmlMetainfoReader::tagHandler(const HtmlReader::HtmlTag &tag) {
 		} else {
 			myReadAuthor = false;
 			if (!myBuffer.empty()) {
-				myBook.addAuthor(myBuffer);
+				myBook.addAuthor(myBuffer, "");
 			}
 			myBuffer.erase();
 		}
