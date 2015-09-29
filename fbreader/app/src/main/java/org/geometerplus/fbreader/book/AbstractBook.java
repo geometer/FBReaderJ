@@ -70,7 +70,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		setEncoding(book.myEncoding);
 		setLanguage(book.myLanguage);
 		if (!MiscUtil.equals(myAuthors, book.myAuthors)) {
-			myAuthors = book.myAuthors != null ? new ArrayList<BookAuthor>(book.myAuthors) : null;
+			myAuthors = book.myAuthors != null ? new ArrayList<Pair<Author, Role>>(book.myAuthors) : null;
 			myIsSaved = false;
 		}
 		if (!MiscUtil.equals(myTags, book.myTags)) {
@@ -96,23 +96,27 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		}
 	}
 
-	public List<BookAuthor> allAuthors() {
-		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<BookAuthor>emptyList();
+	public List<Pair<Author, Role>> allAuthors() {
+		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Pair<Author, Role>>emptyList();
+	}
+	
+	public boolean hasAuthors() {
+		return (myAuthors != null) ? !myAuthors.isEmpty() : false;
 	}
 	
 	public Set<Role> authorRoles() {
 		HashSet<Role> res = new HashSet<Role>();
-		for (BookAuthor b : myAuthors) {
-			res.add(b.Role);
+		for (Pair<Author, Role> b : myAuthors) {
+			res.add(b.second);
 		}
 		return res;
 	}
 	
 	public List<Author> authors(Role role) {
 		ArrayList<Author> res = new ArrayList<Author>();
-		for (BookAuthor b : myAuthors) {
-			if (role.equals(b.Role)) {
-				res.add(b.Author);
+		for (Pair<Author, Role> b : myAuthors) {
+			if (role.equals(b.second)) {
+				res.add(b.first);
 			}
 		}
 		return res;
@@ -120,9 +124,9 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 
 	void addAuthorWithNoCheck(Author author, Role role) {
 		if (myAuthors == null) {
-			myAuthors = new ArrayList<BookAuthor>();
+			myAuthors = new ArrayList<Pair<Author, Role>>();
 		}
-		myAuthors.add(new BookAuthor(author, role));
+		myAuthors.add(new Pair<Author, Role>(author, role));
 	}
 
 	public void removeAllAuthors() {
@@ -136,9 +140,9 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		if (author == null) {
 			return;
 		}
-		BookAuthor b = new BookAuthor(author, role);
+		Pair<Author, Role> b = new Pair<Author, Role>(author, role);
 		if (myAuthors == null) {
-			myAuthors = new ArrayList<BookAuthor>();
+			myAuthors = new ArrayList<Pair<Author, Role>>();
 			myAuthors.add(b);
 			myIsSaved = false;
 		} else if (!myAuthors.contains(b)) {
@@ -379,8 +383,8 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			return true;
 		}
 		if (myAuthors != null) {
-			for (BookAuthor author : myAuthors) {
-				if (MiscUtil.matchesIgnoreCase(author.Author.DisplayName, pattern)) {
+			for (Pair<Author, Role> author : myAuthors) {
+				if (MiscUtil.matchesIgnoreCase(author.first.DisplayName, pattern)) {
 					return true;
 				}
 			}
