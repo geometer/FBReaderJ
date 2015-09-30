@@ -36,7 +36,7 @@ import org.apache.http.impl.cookie.BasicClientCookie2;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
-import org.geometerplus.android.fbreader.OrientationUtil;
+import org.geometerplus.android.util.OrientationUtil;
 
 public class WebAuthorisationScreen extends Activity {
 	public static final String COMPLETE_URL_KEY = "android.fbreader.data.complete.url";
