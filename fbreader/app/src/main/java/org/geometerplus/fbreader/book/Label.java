@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.book;
 import java.util.UUID;
 
 public class Label {
-	public final String	Uid;
+	public final String Uid;
 	public final String Name;
 
 	public Label(String uid, String name) {

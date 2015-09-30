@@ -30,8 +30,8 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
-import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.network.*;
+import org.geometerplus.android.util.OrientationUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public class OpenCatalogAction extends Action {

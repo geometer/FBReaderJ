@@ -30,8 +30,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import org.geometerplus.zlibrary.core.network.*;
-import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
+import org.geometerplus.android.util.OrientationUtil;
 
 public final class ActivityNetworkContext extends AndroidNetworkContext {
 	private final Activity myActivity;

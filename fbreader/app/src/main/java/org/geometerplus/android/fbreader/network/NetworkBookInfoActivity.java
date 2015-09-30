@@ -49,14 +49,12 @@ import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.RelatedUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
-import org.geometerplus.android.util.UIMessageUtil;
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.*;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
 	private NetworkBookTree myTree;
