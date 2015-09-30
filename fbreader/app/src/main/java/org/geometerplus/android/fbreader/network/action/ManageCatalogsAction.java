@@ -28,9 +28,9 @@ import org.geometerplus.fbreader.network.tree.RootTree;
 import org.geometerplus.fbreader.network.tree.ManageCatalogsItemTree;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.network.CatalogManagerActivity;
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
+import org.geometerplus.android.util.OrientationUtil;
 
 public class ManageCatalogsAction extends RootAction {
 	public ManageCatalogsAction(Activity activity) {
