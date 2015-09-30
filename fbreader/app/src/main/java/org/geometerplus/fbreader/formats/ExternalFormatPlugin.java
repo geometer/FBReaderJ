@@ -24,7 +24,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 
 import org.geometerplus.fbreader.book.AbstractBook;
-import org.geometerplus.fbreader.book.BookUtil;
 
 public abstract class ExternalFormatPlugin extends FormatPlugin {
 	protected ExternalFormatPlugin(SystemInfo systemInfo, String fileType) {
@@ -55,13 +54,6 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 	@Override
 	public String readAnnotation(ZLFile file) {
 		return null;
-	}
-
-	@Override
-	public void readUids(AbstractBook book) {
-		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createUid(book, "SHA-256"));
-		}
 	}
 
 	@Override
