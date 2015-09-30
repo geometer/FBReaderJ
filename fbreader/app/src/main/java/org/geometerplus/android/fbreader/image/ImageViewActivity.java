@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
-import org.geometerplus.android.fbreader.OrientationUtil;
+import org.geometerplus.android.util.OrientationUtil;
 
 public class ImageViewActivity extends Activity {
 	public static final String URL_KEY = "fbreader.imageview.url";
