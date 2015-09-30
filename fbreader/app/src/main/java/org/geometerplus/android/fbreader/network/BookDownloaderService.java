@@ -214,16 +214,17 @@ public class BookDownloaderService extends Service {
 		final String contentText = success ?
 			resource.getResource("downloadComplete").getValue() :
 			resource.getResource("downloadFailed").getValue();
-		final Notification notification = new Notification(
-			android.R.drawable.stat_sys_download_done,
-			tickerText,
-			System.currentTimeMillis()
-		);
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		final Intent intent = success ? getFBReaderIntent(file) : new Intent();
-		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
-		notification.setLatestEventInfo(getApplicationContext(), title, contentText, contentIntent);
-		return notification;
+
+		return new Notification.Builder(getApplicationContext())
+			.setSmallIcon(R.drawable.fbreader)
+			.setTicker(tickerText)
+			.setWhen(System.currentTimeMillis())
+			.setAutoCancel(true)
+			.setContentTitle(title)
+			.setContentText(contentText)
+			.setContentIntent(PendingIntent.getActivity(this, 0, intent, 0))
+			.build();
 	}
 
 	private Notification createDownloadProgressNotification(String title) {
