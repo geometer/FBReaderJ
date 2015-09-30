@@ -24,6 +24,7 @@ import android.content.Intent;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.preferences.PreferenceActivity;
+import org.geometerplus.android.util.OrientationUtil;
 
 class ShowPreferencesAction extends FBAndroidAction {
 	ShowPreferencesAction(FBReader baseActivity, FBReaderApp fbreader) {
