@@ -33,9 +33,9 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 public abstract class MainView extends View {
 	protected Integer myColorLevel;
-	private TextView myPercentView;
-	private final Timer myPercentTimer = new Timer();
-	private volatile TimerTask myPercentCancelTask;
+	private TextView myInfoView;
+	private final Timer myInfoTimer = new Timer();
+	private volatile TimerTask myInfoCancelTask;
 
 	public MainView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -75,31 +75,31 @@ public abstract class MainView extends View {
 		final FBReaderMainActivity activity = (FBReaderMainActivity)context;
 		activity.getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
 		if (showPercent) {
-			if (myPercentView == null) {
-				myPercentView = (TextView)activity.findViewById(R.id.percent_view);
+			if (myInfoView == null) {
+				myInfoView = (TextView)activity.findViewById(R.id.percent_view);
 			}
-			if (myPercentView != null) {
-				synchronized (myPercentTimer) {
-					if (myPercentCancelTask != null) {
-						myPercentCancelTask.cancel();
+			if (myInfoView != null) {
+				synchronized (myInfoTimer) {
+					if (myInfoCancelTask != null) {
+						myInfoCancelTask.cancel();
 					}
-					myPercentCancelTask = new TimerTask() {
+					myInfoCancelTask = new TimerTask() {
 						public void run() {
-							synchronized (myPercentTimer) {
+							synchronized (myInfoTimer) {
 								post(new Runnable() {
 									public void run() {
-										myPercentView.setVisibility(View.GONE);
+										myInfoView.setVisibility(View.GONE);
 									}
 								});
 							}
 						}
 					};
-					myPercentTimer.schedule(myPercentCancelTask, 1000);
+					myInfoTimer.schedule(myInfoCancelTask, 1000);
 				}
-				myPercentView.setVisibility(View.VISIBLE);
+				myInfoView.setVisibility(View.VISIBLE);
 				final int color = myColorLevel == null ? 0x80 : 0x80 * myColorLevel / 0xFF;
-				myPercentView.setTextColor(Color.argb(0xCC, color, color, color));
-				myPercentView.setText(percent + "%");
+				myInfoView.setTextColor(Color.argb(0xCC, color, color, color));
+				myInfoView.setText(percent + "%");
 			}
 		}
 		activity.setScreenBrightnessSystem(level);
