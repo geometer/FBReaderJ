@@ -84,7 +84,7 @@ public:
 	void removeAllTags();
 
 	void addAuthor(shared_ptr<Author> author, const std::string &role);
-	void addAuthor(const std::string &displayName, const std::string &sortKey = std::string(), const std::string &role = std::string());
+	void addAuthor(const std::string &displayName, const std::string &sortKey, const std::string &role);
 	bool replaceAuthor(shared_ptr<Author> from, shared_ptr<Author> to);
 	void removeAllAuthors();
 
