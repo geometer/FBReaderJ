@@ -94,8 +94,28 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		}
 	}
 
-	public List<Author> authors() {
-		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
+	public final List<Author> authors() {
+		return myAuthors != null
+			? Collections.unmodifiableList(myAuthors)
+			: Collections.<Author>emptyList();
+	}
+
+	public final String authorsString(String separator) {
+		final List<Author> authors = myAuthors;
+		if (authors == null || authors.isEmpty()) {
+			return null;
+		}
+
+		final StringBuilder buffer = new StringBuilder();
+		boolean first = true;
+		for (Author a : authors) {
+			if (!first) {
+				buffer.append(separator);
+			}
+			buffer.append(a.DisplayName);
+			first = false;
+		}
+		return buffer.toString();
 	}
 
 	void addAuthorWithNoCheck(Author author) {
@@ -227,7 +247,31 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public List<Tag> tags() {
-		return myTags != null ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
+		return myTags != null
+			? Collections.unmodifiableList(myTags)
+			: Collections.<Tag>emptyList();
+	}
+
+	public final String tagsString(String separator) {
+		final List<Tag> tags = myTags;
+		if (tags == null || tags.isEmpty()) {
+			return null;
+		}
+
+		final HashSet<String> tagNames = new HashSet<String>();
+		final StringBuilder buffer = new StringBuilder();
+		boolean first = true;
+		for (Tag t : tags) {
+			if (!first) {
+				buffer.append(separator);
+			}
+			if (!tagNames.contains(t.Name)) {
+				tagNames.add(t.Name);
+				buffer.append(t.Name);
+				first = false;
+			}
+		}
+		return buffer.toString();
 	}
 
 	void addTagWithNoCheck(Tag tag) {
