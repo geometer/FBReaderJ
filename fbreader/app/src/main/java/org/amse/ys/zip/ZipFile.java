@@ -19,6 +19,22 @@ public final class ZipFile {
 
 	private boolean myAllFilesAreRead;
 
+	public ZipFile(final String fileName) {
+		this(new InputStreamHolder() {
+			public InputStream getInputStream() throws IOException {
+				return new FileInputStream(fileName);
+			}
+		});
+	}
+
+	public ZipFile(final File file) {
+		this(new InputStreamHolder() {
+			public InputStream getInputStream() throws IOException {
+				return new FileInputStream(file);
+			}
+		});
+	}
+
 	public ZipFile(InputStreamHolder streamHolder) {
 		myStreamHolder = streamHolder;
 	}
