@@ -58,4 +58,11 @@ public class PDFPlugin extends ExternalFormatPlugin {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void readUids(AbstractBook book) {
+		if (book.uids().isEmpty()) {
+			book.addUid(BookUtil.createUid(book, "SHA-256"));
+		}
+	}
 }
