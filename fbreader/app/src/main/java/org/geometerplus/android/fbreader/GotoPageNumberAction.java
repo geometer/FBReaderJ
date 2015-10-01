@@ -19,17 +19,11 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.view.View;
-import android.widget.Button;
-import android.widget.NumberPicker;
-
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+import org.geometerplus.android.util.GotoPageDialogUtil;
 
 public class GotoPageNumberAction extends FBAndroidAction {
 	GotoPageNumberAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -38,49 +32,22 @@ public class GotoPageNumberAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final View root = BaseActivity.getLayoutInflater().inflate(R.layout.goto_page_number, null);
-		final AlertDialog dialog = new AlertDialog.Builder(BaseActivity).setView(root).create();
-
 		final ZLTextView textView = Reader.getTextView();
 		final ZLTextView.PagePosition pagePosition = textView.pagePosition();
 
-		final NumberPicker picker = (NumberPicker)root.findViewById(R.id.goto_page_number_picker);
-		picker.setMinValue(1);
-		picker.setMaxValue(pagePosition.Total);
-		picker.setValue(pagePosition.Current);
-
-		final View buttonsView = root.findViewById(R.id.goto_page_number_buttons);
-		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
-		okButton.setText(buttonResource.getResource("ok").getValue());
-		okButton.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				picker.clearFocus();
-				textView.gotoPage(picker.getValue());
-				Reader.getViewWidget().reset();
-				Reader.getViewWidget().repaint();
-				BaseActivity.hideBars();
-				dialog.dismiss();
-			}
-		});
-		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
-		cancelButton.setText(buttonResource.getResource("cancel").getValue());
-		cancelButton.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-
-		dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-			@Override
-			public void onShow(DialogInterface dialog) {
-				picker.setFocusable(true);
-				picker.setFocusableInTouchMode(true);
-				picker.requestFocus();
-			}
-		});
-		dialog.show();
+		GotoPageDialogUtil.showDialog(
+			BaseActivity,
+			new GotoPageDialogUtil.PageSelector() {
+				@Override
+				public void gotoPage(int page) {
+					textView.gotoPage(page);
+					Reader.getViewWidget().reset();
+					Reader.getViewWidget().repaint();
+					BaseActivity.hideBars();
+				}
+			},
+			pagePosition.Current,
+			pagePosition.Total
+		);
 	}
 }
