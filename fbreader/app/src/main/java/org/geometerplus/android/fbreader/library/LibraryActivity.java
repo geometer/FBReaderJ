@@ -74,7 +74,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				showProgress(!myCollection.status().IsComplete);
+				showProgressIndicator(!myCollection.status().IsComplete);
 				myRootTree = new RootTree(myCollection, PluginCollection.Instance(Paths.systemInfo(LibraryActivity.this)));
 				myCollection.addListener(LibraryActivity.this);
 				init(intent);
@@ -501,6 +501,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	public void onBuildEvent(IBookCollection.Status status) {
-		showProgress(!status.IsComplete);
+		showProgressIndicator(!status.IsComplete);
 	}
 }
