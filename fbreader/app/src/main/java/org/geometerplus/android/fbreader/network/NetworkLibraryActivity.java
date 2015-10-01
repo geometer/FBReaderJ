@@ -72,9 +72,10 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		final NetworkLibrary library = Util.networkLibrary(this);
 		BookCollection.bindToService(this, new Runnable() {
 			public void run() {
-				Util.networkLibrary(NetworkLibraryActivity.this).clearExpiredCache(25);
+				library.clearExpiredCache(25);
 			}
 		});
 
@@ -89,7 +90,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		BookCollection.bindToService(this, new Runnable() {
 			public void run() {
 				init(intent);
-				final NetworkLibrary library = Util.networkLibrary(NetworkLibraryActivity.this);
 				library.addChangeListener(NetworkLibraryActivity.this);
 
 				if (getCurrentTree() instanceof RootTree) {
@@ -397,7 +397,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		final NetworkTree tree = getCurrentTree();
 		final NetworkTree lTree = getLoadableNetworkTree(tree);
 		final NetworkTree sTree = RunSearchAction.getSearchTree(tree);
-		showProgress(
+		showProgressIndicator(
 			library.isUpdateInProgress() ||
 			library.isLoadingInProgress(lTree) ||
 			library.isLoadingInProgress(sTree)

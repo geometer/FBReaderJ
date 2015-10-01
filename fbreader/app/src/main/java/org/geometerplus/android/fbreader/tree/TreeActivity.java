@@ -112,24 +112,21 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	}
 
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			FBTree parent = null;
-			synchronized (myHistory) {
-				while (parent == null && !myHistory.isEmpty()) {
-					parent = getTreeByKey(myHistory.remove(myHistory.size() - 1));
-				}
-			}
-			if (parent == null && myCurrentTree != null) {
-				parent = myCurrentTree.Parent;
-			}
-			if (parent != null && !isTreeInvisible(parent)) {
-				openTree(parent, myCurrentTree, false);
-				return true;
+	public void onBackPressed() {
+		FBTree parent = null;
+		synchronized (myHistory) {
+			while (parent == null && !myHistory.isEmpty()) {
+				parent = getTreeByKey(myHistory.remove(myHistory.size() - 1));
 			}
 		}
-
-		return super.onKeyDown(keyCode, event);
+		if (parent == null && myCurrentTree != null) {
+			parent = myCurrentTree.Parent;
+		}
+		if (parent != null && !isTreeInvisible(parent)) {
+			openTree(parent, myCurrentTree, false);
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 	// TODO: change to protected
@@ -231,7 +228,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		}
 	}
 
-	protected final void showProgress(boolean show) {
+	protected final void showProgressIndicator(boolean show) {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 			setProgressBarIndeterminateVisibility(show);
 		} else if (myProgressBar != null) {
