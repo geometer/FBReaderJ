@@ -76,7 +76,7 @@ public abstract class MainView extends View {
 		activity.getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
 		if (showPercent) {
 			if (myInfoView == null) {
-				myInfoView = (TextView)activity.findViewById(R.id.percent_view);
+				myInfoView = (TextView)activity.findViewById(R.id.main_view_info);
 			}
 			if (myInfoView != null) {
 				synchronized (myInfoTimer) {
