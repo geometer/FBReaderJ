@@ -70,8 +70,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		super.onDestroy();
 	}
 
-	@Override
-	public TreeAdapter getListAdapter() {
+	public TreeAdapter getTreeAdapter() {
 		return (TreeAdapter)super.getListAdapter();
 	}
 
@@ -173,7 +172,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		// not myCurrentKey = key
 		// because key might be null
 		myCurrentKey = myCurrentTree.getUniqueKey();
-		final TreeAdapter adapter = getListAdapter();
+		final TreeAdapter adapter = getTreeAdapter();
 		adapter.replaceAll(myCurrentTree.subtrees(), false);
 		setTitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
