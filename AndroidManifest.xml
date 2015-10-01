@@ -214,7 +214,12 @@
 				<action android:name="android.fbreader.action.sync.QUICK_SYNC"/>
 			</intent-filter>
 		</service>
-		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:theme="@style/FBReader.Activity" android:process=":library" android:configChanges="orientation|keyboardHidden|screenSize">
+		<activity
+			android:name="org.geometerplus.android.fbreader.library.BookInfoActivity"
+			android:theme="@style/FBReader.Activity"
+			android:process=":library"
+			android:configChanges="orientation|keyboardHidden|screenSize"
+		>
 			<intent-filter>
 				<action android:name="android.fbreader.action.BOOK_INFO"/>
 				<category android:name="android.intent.category.DEFAULT"/>
