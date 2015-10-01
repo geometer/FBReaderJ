@@ -45,7 +45,23 @@ public final class SlideAnimationProvider extends SimpleAnimationProvider {
 		ViewUtil.setColorLevel(myPaint, myColorLevel);
 	}
 
-	private void drawShadow(Canvas canvas, int top, int bottom, int dX) {
+	private void drawShadowHorizontal(Canvas canvas, int left, int right, int dY) {
+		final GradientDrawable.Orientation orientation = dY > 0
+			? GradientDrawable.Orientation.BOTTOM_TOP
+			: GradientDrawable.Orientation.TOP_BOTTOM;
+		final int[] colors = new int[] { 0x46000000, 0x00000000 };
+		final GradientDrawable gradient = new GradientDrawable(orientation, colors);
+		gradient.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+		gradient.setDither(true);
+		if (dY > 0) {
+			gradient.setBounds(left, dY - 16, right, dY);
+		} else {
+			gradient.setBounds(left, myHeight + dY, right, myHeight + dY + 16);
+		}
+		gradient.draw(canvas);
+	}
+
+	private void drawShadowVertical(Canvas canvas, int top, int bottom, int dX) {
 		final GradientDrawable.Orientation orientation = dX > 0
 			? GradientDrawable.Orientation.RIGHT_LEFT
 			: GradientDrawable.Orientation.LEFT_RIGHT;
@@ -68,12 +84,13 @@ public final class SlideAnimationProvider extends SimpleAnimationProvider {
 			setDarkFilter(dX, myWidth);
 			drawBitmapTo(canvas, 0, 0, myDarkPaint);
 			drawBitmapFrom(canvas, dX, 0, myPaint);
-			drawShadow(canvas, 0, myHeight, dX);
+			drawShadowVertical(canvas, 0, myHeight, dX);
 		} else {
 			final int dY = myEndY - myStartY;
 			setDarkFilter(dY, myHeight);
 			drawBitmapTo(canvas, 0, 0, myDarkPaint);
 			drawBitmapFrom(canvas, 0, dY, myPaint);
+			drawShadowHorizontal(canvas, 0, myWidth, dY);
 		}
 	}
 
@@ -99,7 +116,7 @@ public final class SlideAnimationProvider extends SimpleAnimationProvider {
 				drawBitmapInternal(canvas, footerBitmap, myWidth + dX, myWidth, h, voffset, myDarkPaint);
 				drawBitmapInternal(canvas, footerBitmap, 0, myWidth + dX, h, voffset, myPaint);
 			}
-			drawShadow(canvas, voffset, voffset + h, dX);
+			drawShadowVertical(canvas, voffset, voffset + h, dX);
 		} else {
 			canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
 		}
