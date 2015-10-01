@@ -43,7 +43,7 @@ public class TOCActivity extends ListActivity {
 	private ZLTree<?> mySelectedItem;
 
 	@Override
-	public void onCreate(Bundle bundle) {
+	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));

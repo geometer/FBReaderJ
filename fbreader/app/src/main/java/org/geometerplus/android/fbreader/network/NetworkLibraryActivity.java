@@ -302,7 +302,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		}
 
 		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+		final NetworkTree tree = (NetworkTree)getTreeAdapter().getItem(position);
 		if (tree != null) {
 			menu.setHeaderTitle(tree.getName());
 			for (Action a : getContextMenuActions(tree)) {
@@ -316,7 +316,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+		final NetworkTree tree = (NetworkTree)getTreeAdapter().getItem(position);
 		if (tree != null) {
 			for (Action a : getContextMenuActions(tree)) {
 				if (a.Code == item.getItemId()) {
@@ -334,7 +334,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 			fillListClickList();
 		}
 
-		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+		final NetworkTree tree = (NetworkTree)getTreeAdapter().getItem(position);
 		for (Action a : myListClickActions) {
 			if (a.isVisible(tree) && a.isEnabled(tree)) {
 				checkAndRun(a, tree);
@@ -411,7 +411,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				switch (code) {
 					default:
 						updateLoadingProgress();
-						getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
+						getTreeAdapter().replaceAll(getCurrentTree().subtrees(), true);
 						break;
 					case InitializationFailed:
 						showInitLibraryDialog((String)params[0]);
