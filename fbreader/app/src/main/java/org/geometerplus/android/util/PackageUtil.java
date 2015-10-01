@@ -22,11 +22,7 @@ package org.geometerplus.android.util;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.ActivityNotFoundException;
+import android.content.*;
 import android.content.pm.*;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
