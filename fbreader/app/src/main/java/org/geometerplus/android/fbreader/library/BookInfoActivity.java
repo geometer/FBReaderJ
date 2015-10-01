@@ -241,16 +241,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		((TextView)findViewById(R.id.book_info_title)).setText(myResource.getResource("bookInfo").getValue());
 
 		setupInfoPair(R.id.book_title, "title", book.getTitle());
-
-		final StringBuilder buffer = new StringBuilder();
-		final List<Author> authors = book.authors();
-		for (Author a : authors) {
-			if (buffer.length() > 0) {
-				buffer.append(", ");
-			}
-			buffer.append(a.DisplayName);
-		}
-		setupInfoPair(R.id.book_authors, "authors", buffer, authors.size());
+		setupInfoPair(R.id.book_authors, "authors", book.authorsString(", "), book.authors().size());
 
 		final SeriesInfo series = book.getSeriesInfo();
 		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Series.getTitle());
@@ -259,19 +250,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 			seriesIndexString = series.Index.toPlainString();
 		}
 		setupInfoPair(R.id.book_series_index, "indexInSeries", seriesIndexString);
-
-		buffer.delete(0, buffer.length());
-		final HashSet<String> tagNames = new HashSet<String>();
-		for (Tag tag : book.tags()) {
-			if (!tagNames.contains(tag.Name)) {
-				if (buffer.length() > 0) {
-					buffer.append(", ");
-				}
-				buffer.append(tag.Name);
-				tagNames.add(tag.Name);
-			}
-		}
-		setupInfoPair(R.id.book_tags, "tags", buffer, tagNames.size());
+		setupInfoPair(R.id.book_tags, "tags", book.tagsString(", "), book.tags().size());
 		String language = book.getLanguage();
 		if (!ZLLanguageUtil.languageCodes().contains(language)) {
 			language = Language.OTHER_CODE;
