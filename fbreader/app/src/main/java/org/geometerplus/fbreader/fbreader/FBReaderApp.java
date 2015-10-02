@@ -72,7 +72,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public final IBookCollection<Book> Collection;
 
-	private SyncData mySyncData = new SyncData();
+	private final SyncData mySyncData = new SyncData();
 
 	public FBReaderApp(SystemInfo systemInfo, final IBookCollection<Book> collection) {
 		super(systemInfo);
