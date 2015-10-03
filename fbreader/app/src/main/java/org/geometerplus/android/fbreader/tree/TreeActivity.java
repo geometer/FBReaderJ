@@ -167,7 +167,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		}
 	}
 
-	private setTitleAndSubtitle(Pair<String,String> pair) {
+	private void setTitleAndSubtitle(Pair<String,String> pair) {
 		if (pair.Second != null) {
 			setTitle(pair.First + " - " + pair.Second);
 		} else {
