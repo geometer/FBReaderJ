@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.fbreader.util.Pair;
+
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 
@@ -32,8 +34,8 @@ public class NetworkCatalogRootTree extends NetworkCatalogTree {
 	}
 
 	@Override
-	public String getTreeTitle() {
-		return getName();
+	public Pair<String,String> getTreeTitle() {
+		return new Pair(getName(), null);
 	}
 
 	@Override
