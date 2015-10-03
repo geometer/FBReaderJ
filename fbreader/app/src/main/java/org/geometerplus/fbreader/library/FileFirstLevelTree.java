@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.library;
 
 import java.util.List;
 
+import org.fbreader.util.Pair;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -32,8 +34,8 @@ public class FileFirstLevelTree extends FirstLevelTree {
 	}
 
 	@Override
-	public String getTreeTitle() {
-		return getName();
+	public Pair<String,String> getTreeTitle() {
+		return new Pair(getName(), null);
 	}
 
 	@Override
