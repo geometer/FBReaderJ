@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.fbreader.util.Pair;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.*;
@@ -41,8 +43,8 @@ public class SearchResultsTree extends FilteredTree {
 	}
 
 	@Override
-	public String getTreeTitle() {
-		return getSummary();
+	public Pair<String,String> getTreeTitle() {
+		return new Pair(getSummary(), null);
 	}
 
 	@Override
