@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.library;
 import java.util.Arrays;
 import java.util.List;
 
+import org.fbreader.util.Pair;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.Book;
@@ -39,8 +41,8 @@ public class SyncTree extends FirstLevelTree {
 	}
 
 	@Override
-	public String getTreeTitle() {
-		return getName();
+	public Pair<String,String> getTreeTitle() {
+		return new Pair(getName(), null);
 	}
 
 	@Override

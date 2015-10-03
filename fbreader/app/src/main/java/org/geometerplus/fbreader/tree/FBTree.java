@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.tree;
 
 import java.io.Serializable;
 
+import org.fbreader.util.Pair;
+
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
@@ -114,8 +116,8 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 
 	public abstract String getName();
 
-	public String getTreeTitle() {
-		return getName();
+	public Pair<String,String> getTreeTitle() {
+		return new Pair(getName(), null);
 	}
 
 	protected String getSortKey() {
