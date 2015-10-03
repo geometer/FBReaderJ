@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
+import org.fbreader.util.Pair;
+
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
@@ -101,9 +103,9 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	@Override
-	public String getTreeTitle() {
+	public Pair<String,String> getTreeTitle() {
 		final INetworkLink link = getLink();
-		return link != null ? getName() + " - " + link.getTitle() : getName();
+		return new Pair(getName(), link != null ? link.getTitle() : null);
 	}
 
 	@Override
