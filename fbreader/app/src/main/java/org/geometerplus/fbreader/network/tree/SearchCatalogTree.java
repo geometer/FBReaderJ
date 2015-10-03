@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.fbreader.util.Pair;
+
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.util.MimeType;
@@ -61,8 +63,8 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 	}
 
 	@Override
-	public String getTreeTitle() {
-		return getSummary();
+	public Pair<String,String> getTreeTitle() {
+		return new Pair(getSummary(), null);
 	}
 
 	@Override

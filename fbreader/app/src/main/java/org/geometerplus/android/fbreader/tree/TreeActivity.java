@@ -21,6 +21,8 @@ package org.geometerplus.android.fbreader.tree;
 
 import java.util.*;
 
+import org.fbreader.util.Pair;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -165,6 +167,14 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		}
 	}
 
+	private setTitleAndSubtitle(Pair<String,String> pair) {
+		if (pair.Second != null) {
+			setTitle(pair.First + " - " + pair.Second);
+		} else {
+			setTitle(pair.First);
+		}
+	}
+
 	protected void init(Intent intent) {
 		final FBTree.Key key = (FBTree.Key)intent.getSerializableExtra(TREE_KEY_KEY);
 		final FBTree.Key selectedKey = (FBTree.Key)intent.getSerializableExtra(SELECTED_TREE_KEY_KEY);
@@ -174,7 +184,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		myCurrentKey = myCurrentTree.getUniqueKey();
 		final TreeAdapter adapter = getTreeAdapter();
 		adapter.replaceAll(myCurrentTree.subtrees(), false);
-		setTitle(myCurrentTree.getTreeTitle());
+		setTitleAndSubtitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
 			selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();
 		final int index = adapter.getIndex(selectedTree);

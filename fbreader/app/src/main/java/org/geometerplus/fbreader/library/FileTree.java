@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
+import org.fbreader.util.Pair;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
@@ -55,8 +57,8 @@ public class FileTree extends LibraryTree {
 	}
 
 	@Override
-	public String getTreeTitle() {
-		return myFile.getPath();
+	public Pair<String,String> getTreeTitle() {
+		return new Pair(myFile.getPath(), null);
 	}
 
 	@Override
