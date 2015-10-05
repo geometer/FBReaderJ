@@ -57,7 +57,7 @@
 			<node name="summary" value="Volledige bestandssysteem van het apparaat"/>
 		</node>
 		<node name="fileTreeCard" value="Geheugenkaart">
-			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
+			<node name="withIndex" value="Geheugenkaart Nr %s"/>
 			<node name="summary" value="Geheugenkaart geplaatst in het apparaat"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader bibliotheek">
@@ -341,7 +341,7 @@
 		<node name="tags" value="Trefwoorden"/>
 		<node name="series" value="Serie"/>
 	</node>
-	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
+	<node name="Preferences" value="FBReader-instellingen">
 		<node name="sync" value="Synchronisatie">
 			<node name="summary" value="Boekennetwerk"/>
 			<node name="site" value="Lees verder over synchronisatie">
@@ -710,12 +710,12 @@
 				<node name="summaryOn" value="Toon inhoudsmarkeringen in onderbalk"/>
 				<node name="summaryOff" value="Verberg inhoudsmarkeringen in onderbalk"/>
 			</node>
-			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
-			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
-				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
-				<node name="asPages" value="As page number" toBeTranslated="true"/>
-				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
-				<node name="asPagesAndPercentage" value="As page number and percentage" toBeTranslated="true"/>
+			<node name="tocMarksMaxNumber" value="Maximaal aantal weer te geven inhoudsmarkeringen"/>
+			<node name="showProgress" value="Toon leesvoortgang">
+				<node name="dontDisplay" value="Verberg leesvoortgang"/>
+				<node name="asPages" value="Als paginanummer"/>
+				<node name="asPercentage" value="Als percentage"/>
+				<node name="asPagesAndPercentage" value="Als paginanummer en percentage"/>
 			</node>
 			<node name="showBattery" value="Toon batterijniveau">
 				<node name="summaryOn" value="Toon batterijniveau in onderbalk"/>
