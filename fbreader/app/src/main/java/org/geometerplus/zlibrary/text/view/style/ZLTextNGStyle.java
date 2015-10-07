@@ -22,8 +22,9 @@ package org.geometerplus.zlibrary.text.view.style;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fbreader.util.Boolean3;
+
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
@@ -62,9 +63,9 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 	@Override
 	protected boolean isBoldInternal() {
 		switch (myDescription.isBold()) {
-			case B3_TRUE:
+			case TRUE:
 				return true;
-			case B3_FALSE:
+			case FALSE:
 				return false;
 			default:
 				return Parent.isBold();
@@ -73,9 +74,9 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 	@Override
 	protected boolean isItalicInternal() {
 		switch (myDescription.isItalic()) {
-			case B3_TRUE:
+			case TRUE:
 				return true;
-			case B3_FALSE:
+			case FALSE:
 				return false;
 			default:
 				return Parent.isItalic();
@@ -84,9 +85,9 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 	@Override
 	protected boolean isUnderlineInternal() {
 		switch (myDescription.isUnderlined()) {
-			case B3_TRUE:
+			case TRUE:
 				return true;
-			case B3_FALSE:
+			case FALSE:
 				return false;
 			default:
 				return Parent.isUnderline();
@@ -95,9 +96,9 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 	@Override
 	protected boolean isStrikeThroughInternal() {
 		switch (myDescription.isStrikedThrough()) {
-			case B3_TRUE:
+			case TRUE:
 				return true;
-			case B3_FALSE:
+			case FALSE:
 				return false;
 			default:
 				return Parent.isStrikeThrough();
@@ -161,9 +162,9 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 	@Override
 	public boolean allowHyphenations() {
 		switch (myDescription.allowHyphenations()) {
-			case B3_TRUE:
+			case TRUE:
 				return true;
-			case B3_FALSE:
+			case FALSE:
 				return false;
 			default:
 				return Parent.allowHyphenations();
