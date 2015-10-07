@@ -21,12 +21,12 @@ package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
+import org.fbreader.util.Boolean3;
 import org.fbreader.util.Pair;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
@@ -56,7 +56,7 @@ public class NetworkCatalogTree extends NetworkTree {
 		return myLink;
 	}
 
-	public ZLBoolean3 getVisibility() {
+	public Boolean3 getVisibility() {
 		return Item.getVisibility();
 	}
 
@@ -147,13 +147,13 @@ public class NetworkCatalogTree extends NetworkTree {
 				NetworkCatalogTree child = (NetworkCatalogTree)currentTree;
 				if (child.Item == currentItem) {
 					switch (child.Item.getVisibility()) {
-						case B3_TRUE:
+						case TRUE:
 							child.updateVisibility();
 							break;
-						case B3_FALSE:
+						case FALSE:
 							toRemove.add(child);
 							break;
-						case B3_UNDEFINED:
+						case UNDEFINED:
 							child.clearCatalog();
 							break;
 					}

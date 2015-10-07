@@ -973,15 +973,15 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 					final MenuItem menuItem = entry.getKey();
 					menuItem.setVisible(myFBReaderApp.isActionVisible(actionId) && myFBReaderApp.isActionEnabled(actionId));
 					switch (myFBReaderApp.isActionChecked(actionId)) {
-						case B3_TRUE:
+						case TRUE:
 							menuItem.setCheckable(true);
 							menuItem.setChecked(true);
 							break;
-						case B3_FALSE:
+						case FALSE:
 							menuItem.setCheckable(true);
 							menuItem.setChecked(false);
 							break;
-						case B3_UNDEFINED:
+						case UNDEFINED:
 							menuItem.setCheckable(false);
 							break;
 					}
