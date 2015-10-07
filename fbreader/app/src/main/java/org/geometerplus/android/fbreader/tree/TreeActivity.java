@@ -21,13 +21,12 @@ package org.geometerplus.android.fbreader.tree;
 
 import java.util.*;
 
-import org.fbreader.util.Pair;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.util.Pair;
 import android.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -177,10 +176,10 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	}
 
 	private void setTitleAndSubtitle(Pair<String,String> pair) {
-		if (pair.Second != null) {
-			setTitle(pair.First + " - " + pair.Second);
+		if (pair.second != null) {
+			setTitle(pair.first + " - " + pair.second);
 		} else {
-			setTitle(pair.First);
+			setTitle(pair.first);
 		}
 	}
 
