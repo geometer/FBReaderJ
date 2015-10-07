@@ -21,7 +21,8 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.fbreader.util.Boolean3;
+
 import org.geometerplus.zlibrary.core.network.*;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -101,30 +102,30 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 		myFlags = flags;
 	}
 
-	public ZLBoolean3 getVisibility() {
+	public Boolean3 getVisibility() {
 		if (Link == null) {
-			return ZLBoolean3.B3_TRUE;
+			return Boolean3.TRUE;
 		}
 
 		final NetworkAuthenticationManager mgr = Link.authenticationManager();
 		switch (myAccessibility) {
 			default:
-				return ZLBoolean3.B3_FALSE;
+				return Boolean3.FALSE;
 			case ALWAYS:
-				return ZLBoolean3.B3_TRUE;
+				return Boolean3.TRUE;
 			case HAS_BOOKS:
 				if (Link.getBasketItem() != null && Link.getBasketItem().bookIds().size() > 0) {
-					return ZLBoolean3.B3_TRUE;
+					return Boolean3.TRUE;
 				}
 				// go through!
 			case SIGNED_IN:
 				if (mgr == null) {
-					return ZLBoolean3.B3_FALSE;
+					return Boolean3.FALSE;
 				}
 				try {
-					return mgr.isAuthorised(false) ?  ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
+					return mgr.isAuthorised(false) ?  Boolean3.TRUE : Boolean3.UNDEFINED;
 				} catch (ZLNetworkException e) {
-					return ZLBoolean3.B3_UNDEFINED;
+					return Boolean3.UNDEFINED;
 				}
 		}
 	}

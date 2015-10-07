@@ -21,8 +21,9 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
+import org.fbreader.util.Boolean3;
+
 import org.geometerplus.zlibrary.core.util.SystemInfo;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
@@ -164,9 +165,9 @@ public abstract class ZLApplication {
 		return action != null && action.isEnabled();
 	}
 
-	public final ZLBoolean3 isActionChecked(String actionId) {
+	public final Boolean3 isActionChecked(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
-		return action != null ? action.isChecked() : ZLBoolean3.B3_UNDEFINED;
+		return action != null ? action.isChecked() : Boolean3.UNDEFINED;
 	}
 
 	public final void runAction(String actionId, Object ... params) {
@@ -209,8 +210,8 @@ public abstract class ZLApplication {
 			return isVisible();
 		}
 
-		public ZLBoolean3 isChecked() {
-			return ZLBoolean3.B3_UNDEFINED;
+		public Boolean3 isChecked() {
+			return Boolean3.UNDEFINED;
 		}
 
 		public final boolean checkAndRun(Object ... params) {
