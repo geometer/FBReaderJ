@@ -28,11 +28,12 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import org.fbreader.util.Boolean3;
+
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
@@ -488,15 +489,15 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		if (tree instanceof NetworkCatalogTree) {
 			final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 			switch (catalogTree.getVisibility()) {
-				case B3_FALSE:
+				case FALSE:
 					break;
-				case B3_TRUE:
+				case TRUE:
 					action.run(tree);
 					break;
-				case B3_UNDEFINED:
+				case UNDEFINED:
 					Util.runAuthenticationDialog(this, tree.getLink(), new Runnable() {
 						public void run() {
-							if (catalogTree.getVisibility() != ZLBoolean3.B3_TRUE) {
+							if (catalogTree.getVisibility() != Boolean3.TRUE) {
 								return;
 							}
 							if (action.Code != ActionCode.SIGNIN) {

@@ -22,9 +22,9 @@ package org.geometerplus.android.fbreader;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.fbreader.util.Boolean3;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class SetScreenOrientationAction extends FBAndroidAction {
@@ -52,9 +52,9 @@ class SetScreenOrientationAction extends FBAndroidAction {
 	}
 
 	@Override
-	public ZLBoolean3 isChecked() {
+	public Boolean3 isChecked() {
 		return myOptionValue.equals(ZLibrary.Instance().getOrientationOption().getValue())
-			? ZLBoolean3.B3_TRUE : ZLBoolean3.B3_FALSE;
+			? Boolean3.TRUE : Boolean3.FALSE;
 	}
 
 	@Override

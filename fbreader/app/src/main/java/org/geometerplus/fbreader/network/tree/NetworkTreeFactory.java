@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.fbreader.util.Boolean3;
 
 import org.geometerplus.fbreader.network.*;
 
@@ -38,7 +38,7 @@ class NetworkTreeFactory {
 
 		if (item instanceof NetworkCatalogItem) {
 			final NetworkCatalogItem catalogItem = (NetworkCatalogItem)item;
-			if (catalogItem.getVisibility() == ZLBoolean3.B3_FALSE) {
+			if (catalogItem.getVisibility() == Boolean3.FALSE) {
 				return null;
 			}
 			return new NetworkCatalogTree(parent, parent.getLink(), catalogItem, position);
