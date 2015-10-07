@@ -22,8 +22,9 @@ package org.geometerplus.zlibrary.text.view.style;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.fbreader.util.Boolean3;
+
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.text.model.*;
 
 public class ZLTextNGStyleDescription {
@@ -151,44 +152,44 @@ public class ZLTextNGStyleDescription {
 		);
 	}
 
-	ZLBoolean3 isBold() {
+	Boolean3 isBold() {
 		final String fontWeight = FontWeightOption.getValue();
 		if ("bold".equals(fontWeight)) {
-			return ZLBoolean3.B3_TRUE;
+			return Boolean3.TRUE;
 		} else if ("normal".equals(fontWeight)) {
-			return ZLBoolean3.B3_FALSE;
+			return Boolean3.FALSE;
 		} else {
-			return ZLBoolean3.B3_UNDEFINED;
+			return Boolean3.UNDEFINED;
 		}
 	}
-	ZLBoolean3 isItalic() {
+	Boolean3 isItalic() {
 		final String fontStyle = FontStyleOption.getValue();
 		if ("italic".equals(fontStyle) || "oblique".equals(fontStyle)) {
-			return ZLBoolean3.B3_TRUE;
+			return Boolean3.TRUE;
 		} else if ("normal".equals(fontStyle)) {
-			return ZLBoolean3.B3_FALSE;
+			return Boolean3.FALSE;
 		} else {
-			return ZLBoolean3.B3_UNDEFINED;
+			return Boolean3.UNDEFINED;
 		}
 	}
-	ZLBoolean3 isUnderlined() {
+	Boolean3 isUnderlined() {
 		final String textDecoration = TextDecorationOption.getValue();
 		if ("underline".equals(textDecoration)) {
-			return ZLBoolean3.B3_TRUE;
+			return Boolean3.TRUE;
 		} else if ("".equals(textDecoration) || "inherit".equals(textDecoration)) {
-			return ZLBoolean3.B3_UNDEFINED;
+			return Boolean3.UNDEFINED;
 		} else {
-			return ZLBoolean3.B3_FALSE;
+			return Boolean3.FALSE;
 		}
 	}
-	ZLBoolean3 isStrikedThrough() {
+	Boolean3 isStrikedThrough() {
 		final String textDecoration = TextDecorationOption.getValue();
 		if ("line-through".equals(textDecoration)) {
-			return ZLBoolean3.B3_TRUE;
+			return Boolean3.TRUE;
 		} else if ("".equals(textDecoration) || "inherit".equals(textDecoration)) {
-			return ZLBoolean3.B3_UNDEFINED;
+			return Boolean3.UNDEFINED;
 		} else {
-			return ZLBoolean3.B3_FALSE;
+			return Boolean3.FALSE;
 		}
 	}
 
@@ -209,14 +210,14 @@ public class ZLTextNGStyleDescription {
 		}
 	}
 
-	ZLBoolean3 allowHyphenations() {
+	Boolean3 allowHyphenations() {
 		final String hyphen = HyphenationOption.getValue();
 		if ("auto".equals(hyphen)) {
-			return ZLBoolean3.B3_TRUE;
+			return Boolean3.TRUE;
 		} else if ("none".equals(hyphen)) {
-			return ZLBoolean3.B3_FALSE;
+			return Boolean3.FALSE;
 		} else {
-			return ZLBoolean3.B3_UNDEFINED;
+			return Boolean3.UNDEFINED;
 		}
 	}
 
