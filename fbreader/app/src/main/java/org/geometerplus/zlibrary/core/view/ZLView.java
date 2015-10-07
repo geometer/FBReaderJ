@@ -58,37 +58,15 @@ abstract public class ZLView implements ZLViewEnums {
 	abstract public void paint(ZLPaintContext context, PageIndex pageIndex);
 	abstract public void onScrollingFinished(PageIndex pageIndex);
 
-	public boolean onFingerPress(int x, int y) {
-		return false;
-	}
-
-	public boolean onFingerRelease(int x, int y) {
-		return false;
-	}
-
-	public boolean onFingerMove(int x, int y) {
-		return false;
-	}
-
-	public boolean onFingerLongPress(int x, int y) {
-		return false;
-	}
-
-	public boolean onFingerReleaseAfterLongPress(int x, int y) {
-		return false;
-	}
-
-	public boolean onFingerMoveAfterLongPress(int x, int y) {
-		return false;
-	}
-
-	public boolean onFingerSingleTap(int x, int y) {
-		return false;
-	}
-
-	public boolean onFingerDoubleTap(int x, int y) {
-		return false;
-	}
+	public abstract void onFingerPress(int x, int y);
+	public abstract void onFingerRelease(int x, int y);
+	public abstract void onFingerMove(int x, int y);
+	public abstract boolean onFingerLongPress(int x, int y);
+	public abstract void onFingerReleaseAfterLongPress(int x, int y);
+	public abstract void onFingerMoveAfterLongPress(int x, int y);
+	public abstract void onFingerSingleTap(int x, int y);
+	public abstract void onFingerDoubleTap(int x, int y);
+	public abstract void onFingerEventCancelled();
 
 	public boolean isDoubleTapSupported() {
 		return false;
