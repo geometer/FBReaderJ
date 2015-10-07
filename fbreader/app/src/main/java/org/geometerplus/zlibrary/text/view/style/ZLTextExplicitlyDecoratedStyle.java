@@ -22,8 +22,9 @@ package org.geometerplus.zlibrary.text.view.style;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fbreader.util.Boolean3;
+
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
@@ -98,13 +99,13 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 
 		final int baseFontSize = getTreeParent().getFontSize(metrics);
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
-			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
+			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == Boolean3.TRUE) {
 				return baseFontSize;
 			}
-			if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == ZLBoolean3.B3_TRUE) {
+			if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == Boolean3.TRUE) {
 				return baseFontSize * 120 / 100;
 			}
-			if (myEntry.getFontModifier(FONT_MODIFIER_SMALLER) == ZLBoolean3.B3_TRUE) {
+			if (myEntry.getFontModifier(FONT_MODIFIER_SMALLER) == Boolean3.TRUE) {
 				return baseFontSize * 100 / 120;
 			}
 		}
@@ -117,9 +118,9 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	@Override
 	protected boolean isBoldInternal() {
 		switch (myEntry.getFontModifier(FONT_MODIFIER_BOLD)) {
-			case B3_TRUE:
+			case TRUE:
 				return true;
-			case B3_FALSE:
+			case FALSE:
 				return false;
 			default:
 				return Parent.isBold();
@@ -128,9 +129,9 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	@Override
 	protected boolean isItalicInternal() {
 		switch (myEntry.getFontModifier(FONT_MODIFIER_ITALIC)) {
-			case B3_TRUE:
+			case TRUE:
 				return true;
-			case B3_FALSE:
+			case FALSE:
 				return false;
 			default:
 				return Parent.isItalic();
@@ -139,9 +140,9 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	@Override
 	protected boolean isUnderlineInternal() {
 		switch (myEntry.getFontModifier(FONT_MODIFIER_UNDERLINED)) {
-			case B3_TRUE:
+			case TRUE:
 				return true;
-			case B3_FALSE:
+			case FALSE:
 				return false;
 			default:
 				return Parent.isUnderline();
@@ -150,9 +151,9 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	@Override
 	protected boolean isStrikeThroughInternal() {
 		switch (myEntry.getFontModifier(FONT_MODIFIER_STRIKEDTHROUGH)) {
-			case B3_TRUE:
+			case TRUE:
 				return true;
-			case B3_FALSE:
+			case FALSE:
 				return false;
 			default:
 				return Parent.isStrikeThrough();

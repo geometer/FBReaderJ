@@ -22,9 +22,10 @@ package org.geometerplus.zlibrary.text.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fbreader.util.Boolean3;
+
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.fonts.FontManager;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 public abstract class ZLTextStyleEntry {
 	public interface Feature {
@@ -188,11 +189,11 @@ public abstract class ZLTextStyleEntry {
 		}
 	}
 
-	public final ZLBoolean3 getFontModifier(byte modifier) {
+	public final Boolean3 getFontModifier(byte modifier) {
 		if ((mySupportedFontModifiers & modifier) == 0) {
-			return ZLBoolean3.B3_UNDEFINED;
+			return Boolean3.UNDEFINED;
 		}
-		return (myFontModifiers & modifier) == 0 ? ZLBoolean3.B3_FALSE : ZLBoolean3.B3_TRUE;
+		return (myFontModifiers & modifier) == 0 ? Boolean3.FALSE : Boolean3.TRUE;
 	}
 
 	public final void setVerticalAlignCode(byte code) {
