@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.fbreader.util.Pair;
+import android.util.Pair;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
