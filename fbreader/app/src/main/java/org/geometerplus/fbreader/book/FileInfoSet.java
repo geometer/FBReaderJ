@@ -21,40 +21,15 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.MiscUtil;
+import android.util.Pair;
+
 import org.geometerplus.zlibrary.core.filesystem.*;
 
 public final class FileInfoSet {
-	private static final class Pair {
-		private final String myName;
-		private final FileInfo myParent;
-
-		Pair(String name, FileInfo parent) {
-			myName = name;
-			myParent = parent;
-		}
-
-		@Override
-		public int hashCode() {
-			return (myParent == null) ? myName.hashCode() : myParent.hashCode() + myName.hashCode();
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) {
-				return true;
-			}
-			if (!(o instanceof Pair)) {
-				return false;
-			}
-			Pair p = (Pair)o;
-			return myName.equals(p.myName) && MiscUtil.equals(myParent, p.myParent);
-		}
-	}
-
 	private final HashMap<ZLFile,FileInfo> myInfosByFile = new HashMap<ZLFile,FileInfo>();
 	private final HashMap<FileInfo,ZLFile> myFilesByInfo = new HashMap<FileInfo,ZLFile>();
-	private final HashMap<Pair,FileInfo> myInfosByPair = new HashMap<Pair,FileInfo>();
+	private final HashMap<Pair<String,FileInfo>,FileInfo> myInfosByPair =
+		new HashMap<Pair<String,FileInfo>,FileInfo>();
 	private final HashMap<Long,FileInfo> myInfosById = new HashMap<Long,FileInfo>();
 
 	private final LinkedHashSet<FileInfo> myInfosToSave = new LinkedHashSet<FileInfo>();
