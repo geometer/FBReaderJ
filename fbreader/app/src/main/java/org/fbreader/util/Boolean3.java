@@ -17,25 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.util;
+package org.fbreader.util;
 
-public enum ZLBoolean3 {
-	B3_FALSE("false"),
-	B3_TRUE("true"),
-	B3_UNDEFINED("undefined");
-
-	public final String Name;
-
-	private ZLBoolean3(String name) {
-		Name = name;
-	}
-
-	public static ZLBoolean3 getByName(String name) {
-		for (ZLBoolean3 b3 : values()) {
-			if (b3.Name.equals(name)) {
-				return b3;
-			}
-		}
-		return B3_UNDEFINED;
-	}
+public enum Boolean3 {
+	FALSE,
+	TRUE,
+	UNDEFINED
 }
