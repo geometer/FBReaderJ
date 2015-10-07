@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.tree;
 
 import java.io.Serializable;
 
-import org.fbreader.util.Pair;
+import android.util.Pair;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.tree.ZLTree;

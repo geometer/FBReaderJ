@@ -27,6 +27,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Pair;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -34,16 +35,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 public abstract class UIUtil {
 	private static final Object ourMonitor = new Object();
 	private static ProgressDialog ourProgress;
-	private static class Pair {
-		final Runnable Action;
-		final String Message;
-
-		Pair(Runnable action, String message) {
-			Action = action;
-			Message = message;
-		}
-	};
-	private static final Queue<Pair> ourTaskQueue = new LinkedList<Pair>();
+	private static final Queue<Pair<Runnable,String>> ourTaskQueue = new LinkedList<Pair<Runnable,String>>();
 	private static volatile Handler ourProgressHandler;
 
 	private static boolean init() {
@@ -59,7 +51,7 @@ public abstract class UIUtil {
 								ourProgress.dismiss();
 								ourProgress = null;
 							} else {
-								ourProgress.setMessage(ourTaskQueue.peek().Message);
+								ourProgress.setMessage(ourTaskQueue.peek().second);
 							}
 							ourMonitor.notify();
 						}
@@ -106,8 +98,8 @@ public abstract class UIUtil {
 		new Thread(new Runnable() {
 			public void run() {
 				while (ourProgress == currentProgress && !ourTaskQueue.isEmpty()) {
-					Pair p = ourTaskQueue.poll();
-					p.Action.run();
+					final Pair<Runnable,String> p = ourTaskQueue.poll();
+					p.first.run();
 					synchronized (ourMonitor) {
 						ourProgressHandler.sendEmptyMessage(0);
 						try {
