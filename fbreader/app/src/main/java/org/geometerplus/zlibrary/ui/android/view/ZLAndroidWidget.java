@@ -371,6 +371,21 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		switch (event.getAction()) {
+			case MotionEvent.ACTION_CANCEL:
+				myPendingDoubleTap = false;
+				myPendingPress = false;
+				myScreenIsTouched = false;
+				myLongClickPerformed = false;
+				if (myPendingShortClickRunnable != null) {
+					removeCallbacks(myPendingShortClickRunnable);
+					myPendingShortClickRunnable = null;
+				}
+				if (myPendingLongClickRunnable != null) {
+					removeCallbacks(myPendingLongClickRunnable);
+					myPendingLongClickRunnable = null;
+				}
+				view.onFingerEventCancelled();
+				break;
 			case MotionEvent.ACTION_UP:
 				if (myPendingDoubleTap) {
 					view.onFingerDoubleTap(x, y);
