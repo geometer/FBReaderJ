@@ -296,7 +296,7 @@
 		<node name="preferences" value="설정"/>
 		<node name="bookInfo" value="책 정보"/>
 		<node name="library" value="라이브러리"/>
-		<node name="toc" value="TOC"/>
+		<node name="toc" value="Table of contents" toBeTranslated="true"/>
 		<node name="day" value="주간"/>
 		<node name="night" value="야간"/>
 		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
