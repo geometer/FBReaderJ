@@ -7,6 +7,10 @@
 ===== 2.6 (??? ??, 2015) =====
 * Customisable main menu
 * Simple widgets
+* Goto page number dialog (in menu, disabled by default)
+* Updated Belarusian localization (by Usievaład Čorny)
+* Updated Dutch localisation (by Frank Fesevur)
+* Updated Italian localization (by Michelangelo Della Camera)
 
 ===== 2.5.10 (Sep ??, 2015) =====
 * Second (external) SD card entry in the library (classic view)
