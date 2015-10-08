@@ -261,7 +261,7 @@
 	</node>
 	<node name="toast">
 		<node name="more" value="Больш"/>
-		<node name="offline" value="Offline" toBeTranslated="true"/>
+		<node name="offline" value="Па-за сеткай"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Адчыніць бібліятэку"/>
@@ -299,7 +299,7 @@
 		<node name="toc" value="Зьмест"/>
 		<node name="day" value="Дзень"/>
 		<node name="night" value="Ноч"/>
-		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
+		<node name="dayNight" value="Дзень/ноч"/>
 		<node name="yotaSwitchToBackScreen" value="Пераключыцца на задні экран"/>
 		<node name="yotaSwitchToFrontScreen" value="Пераключыцца на пярэдні экран"/>
 		<node name="networkLibrary" value="Сеткавая бібліятэка"/>
@@ -325,7 +325,7 @@
 		<node name="screenOrientationReverseLandscape" value="Перавернутая гарызантальная"/>
 		<node name="increaseFont" value="Наблізіць"/>
 		<node name="decreaseFont" value="Падаліць"/>
-		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
+		<node name="changeFontSize" value="Набліжэньне"/>
 		<node name="toggleFullscreen" value="Поўнаэкранны рэжым"/>
 		<node name="bookmarks" value="Закладкі"/>
 		<node name="help" value="Дапамога"/>
@@ -776,11 +776,11 @@
 			<node name="summary" value="налады перакладу"/>
 			<node name="dictionary" value="Паглядзець слова ў"/>
 			<node name="translator" value="Перакласьці фразу праз"/>
-			<node name="translateOffline" value="Google Translate: use offline translator (if installed)" toBeTranslated="true">
-				<node name="always" value="Always" toBeTranslated="true"/>
-				<node name="onError" value="Automatically, if online translation fails" toBeTranslated="true"/>
-				<node name="ask" value="Ask if online translation fails" toBeTranslated="true"/>
-				<node name="never" value="Never" toBeTranslated="true"/>
+			<node name="translateOffline" value="Google Translate: карыстаць пазасеткавы пераклад, калі ўсталяваны">
+				<node name="always" value="Заўсёды"/>
+				<node name="onError" value="Самарушна, калі сеткавы пераклад няўдалы"/>
+				<node name="ask" value="Спытаць, калі сеткавы пераклад няўдалы"/>
+				<node name="never" value="Ніколі"/>
 			</node>
 			<node name="translationToastDuration" value="Колькі паказваць вакно перакладу"/>
 			<node name="errorToastDuration" value="Колькі паказваць паведамленьне пра памылку"/>
@@ -819,8 +819,8 @@
 				<node name="summaryOff" value="Не карэктаваць колер выявы"/>
 			</node>
 		</node>
-		<node name="menu" value="Menu" toBeTranslated="true">
-			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+		<node name="menu" value="Мэню">
+			<node name="summary" value="Элемэнты галоўнага мэню"/>
 			<node name="enabled" value="Уключана"/>
 			<node name="disabled" value="Выключана"/>
 		</node>
@@ -955,14 +955,14 @@
 			<node name="title" value="Уваход"/>
 			<node name="email" value="Электронны адрас"/>
 			<node name="actions">
-				<node name="title" value="Немагчыма ўвайсьці з электронным адрасам&#10;%s"/>
+				<node name="title" value="Немагчыма ўвайсьці з электронным адрасам %s"/>
 				<node name="recover" value="Аднавіць інфармацыю конту"/>
 				<node name="signIn" value="Увайсьці ўручную"/>
 				<node name="anotherEmail" value="Выбраць іншы электронны адрас"/>
 			</node>
 			<node name="signedIn" value="Вы ўвайшлі з электронным адрасам %s."/>
 			<node name="registrationSuccessful" value="Мы стварылі конт ЛітРэс для Вас. Падрабязная інфармацыя выслана на %s"/>
-			<node name="passwordSent" value="Інфармацыя пра ваш конт даслана на %s. Калі ласка, праверце Вашую пошту."/>
+			<node name="passwordSent" value="Інфармацыя пра Ваш конт даслана на %s. Калі ласка, праверце Вашую пошту."/>
 		</node>
 		<node name="waitMessage">
 			<node name="translating" value="Перакладаньне…"/>
@@ -995,7 +995,7 @@
 			<node name="purchaseAlreadyPurchased" value="Ужо набыта"/>
 			<node name="bookNotPurchased" value="Кніга не набытая"/>
 			<node name="downloadLimitExceeded" value="Перавышаная мяжа зладаваньня"/>
-			<node name="noUserForEmail" value="Няма зарэгістраванага&#10;карыстальніка з такім адрасам"/>
+			<node name="noUserForEmail" value="Няма зарэгістраванага карыстальніка з такім адрасам"/>
 			<node name="unsupportedOperation" value="Непадтрыманая апэрацыя"/>
 			<node name="notAnOPDS" value="Гэта не каталёг OPDS (адкрытай сыстэмы дастаўленьня публікацыяў)"/>
 			<node name="noRequiredInformation" value="Патрэбная інфармацыя не азначаная ў каталёгу"/>
@@ -1007,7 +1007,7 @@
 			<node name="emailNotSpecified" value="Электронны адрас пусты"/>
 			<node name="emailAlreadyInUse" value="Электронны адрас ужо выкарыстоўваецца"/>
 			<node name="invalidEMail" value="Хібны электронны адрас"/>
-			<node name="tooManyRegistrations" value="Зашмат рэгсітрацый з вашага адраса IP;&#10;калі ласка, паспрабуйце пра пару хвілін"/>
+			<node name="tooManyRegistrations" value="Зашмат рэгсітрацый з Вашага адраса IP;&#10;калі ласка, паспрабуйце пра пару хвілін"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Спраўджаньне"/>
@@ -1154,7 +1154,7 @@
 			<node name="summary" value="Чытайце ўголас"/>
 		</node>
 		<node name="calibre_server_integration" value="Злучэньне з Calibre">
-			<node name="summary" value="Злучыцца з сэрвэрам Calibre ў вашай лякальнай сетцы"/>
+			<node name="summary" value="Злучыцца з сэрвэрам Calibre ў Вашай лякальнай сетцы"/>
 		</node>
 		<node name="local_opds_scanner" value="Лякальны праглядальнік OPDS">
 			<node name="summary" value="Пошук кніг у лякальнай сетцы"/>
@@ -1212,10 +1212,10 @@
 	</node>
 	<node name="widget">
 		<node name="simple">
-			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
-			<node name="selectAction" value="Select action" toBeTranslated="true"/>
-			<node name="book" value="Read book" toBeTranslated="true"/>
-			<node name="library" value="Open library" toBeTranslated="true"/>
+			<node name="selectIcon" value="Выбраць значок віджэта"/>
+			<node name="selectAction" value="Абраць дзеяньне"/>
+			<node name="book" value="Чытаць кнігу"/>
+			<node name="library" value="Адчыніць бібліятэку"/>
 		</node>
 	</node>
 </resources>
