@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Italian FBReaderJ resources, by Vytek, Neoxx and OlapGirl from AndDev.it Translate Team -->
-<!--21.02 25/08/2011-->
+<!-- 21.02 25/08/2011 -->
+<!-- Updated by Michelangelo Della Camera, 8 Oct 2015 -->
 <resources>
 	<node name="library" value="Libreria FBReader">
 		<node name="unknownAuthor" value="Autore sconosciuto"/>
@@ -24,19 +25,19 @@
 		<node name="favorites" value="Preferiti">
 			<node name="summary" value="I miei libri preferiti"/>
 		</node>
-		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
-		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
-		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
-		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
+		<node name="chooseView" value="Scegli la vista"/>
+		<node name="wideCardsView" value="Copertina larga"/>
+		<node name="smallCardsView" value="Copertina piccola"/>
+		<node name="tinyCardsView" value="Copertina stretta"/>
 		<node name="coversView" value="Covers" toBeTranslated="true"/>
-		<node name="oldView" value="Classic" toBeTranslated="true"/>
-		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
-			<node name="summary" value="Switch to thumbnail view" toBeTranslated="true"/>
+		<node name="oldView" value="Classica"/>
+		<node name="bookshelfView" value="Vista scaffale">
+			<node name="summary" value="Cambia l'anteprima"/>
 		</node>
 		<node name="found" value="Trovato">
 			<node name="summary" value="Cerca risultati per: %s"/>
 		</node>
-		<node name="sync" value="Synchronisation" toBeTranslated="true">
+		<node name="sync" value="Sincronizzazione">
 			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
 			<node name="sync-success" value="Synchronised" toBeTranslated="true">
 				<node name="summary" value="Books successfully uploaded to the server" toBeTranslated="true"/>
