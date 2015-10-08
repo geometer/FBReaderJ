@@ -300,7 +300,7 @@
 		<node name="preferences" value="Definições"/>
 		<node name="bookInfo" value="Informações do livro"/>
 		<node name="library" value="Biblioteca"/>
-		<node name="toc" value="TOC"/>
+		<node name="toc" value="Table of contents" toBeTranslated="true"/>
 		<node name="day" value="Dia"/>
 		<node name="night" value="Noite"/>
 		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>

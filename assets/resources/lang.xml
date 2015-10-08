@@ -9,7 +9,8 @@
 		<node name="da" value="Dansk"/>
 		<node name="de" value="Deutsch"/>
 		<node name="el" value="Ελληνικά"/>
-		<node name="en" value="English"/>
+		<node name="en" value="English (UK)"/>
+		<node name="en_US" value="English (US)"/>
 		<node name="es" value="Español"/>
 		<node name="eu" value="Euskara"/>
 		<node name="fa" value="فارسی"/>
