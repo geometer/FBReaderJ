@@ -263,7 +263,7 @@
 		<node name="close" value="FBReader bezárása"/>
 	</node>
 	<node name="style" value="Stílus %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Stílus neve"/>
 		<node name="invisible" value="Láthatatlan">
 			<node name="summaryOn" value="Ne emelje ki a könyvjelzőket"/>

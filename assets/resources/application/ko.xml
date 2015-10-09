@@ -273,7 +273,7 @@
 		<node name="close" value="FBReader 닫기"/>
 	</node>
 	<node name="style" value="%s 형식"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="형식 이름"/>
 		<node name="invisible" value="보이지 않음">
 			<node name="summaryOn" value="책갈피 강조하지 않음"/>
