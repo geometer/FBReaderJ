@@ -279,7 +279,7 @@
 		<node name="close" value="Затвори FBReader"/>
 	</node>
 	<node name="style" value="Стил %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Име на стил"/>
 		<node name="invisible" value="Невидим">
 			<node name="summaryOn" value="Не осветявай белязки"/>
