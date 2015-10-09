@@ -272,7 +272,7 @@
 		<node name="close" value="Luk FB-Læser"/>
 	</node>
 	<node name="style" value="Stil %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
 			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
