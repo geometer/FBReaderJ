@@ -271,7 +271,7 @@
 		<node name="close" value="اغلاق البرنامج"/>
 	</node>
 	<node name="style" value="الستايل %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="اسم الستايل"/>
 		<node name="invisible" value="غير مرئي">
 			<node name="summaryOn" value="لا تميز العلامة المرجعية"/>

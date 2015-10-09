@@ -266,7 +266,7 @@
 		<node name="close" value="Fermer FBReader"/>
 	</node>
 	<node name="style" value="Style %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Nom du style"/>
 		<node name="invisible" value="Invisible">
 			<node name="summaryOn" value="Ne pas mettre les signets en évidence"/>

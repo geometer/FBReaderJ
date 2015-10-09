@@ -273,7 +273,7 @@
 		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="style" value="Style %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style">
 		<node name="name" value="Style name"/>
 		<node name="invisible" value="Invisible">
 			<node name="summaryOn" value="Do not highlight bookmarks"/>

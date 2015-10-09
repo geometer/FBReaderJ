@@ -273,7 +273,7 @@
 		<node name="close" value="Зачыніць FBReader"/>
 	</node>
 	<node name="style" value="Стыль «%s»"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Назва стылю"/>
 		<node name="invisible" value="Нябачны">
 			<node name="summaryOn" value="Не вылучаць закладкі"/>

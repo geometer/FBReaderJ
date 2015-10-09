@@ -278,8 +278,8 @@
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
 	<node name="style" value="Стиль №%s"/>
-	<node name="editStyle">
-		<node name="name" value="Название стиля"/>
+	<node name="editStyle" value="Настройка стиля">
+		<node name="name" value="Название"/>
 		<node name="invisible" value="Невидимый">
 			<node name="summaryOn" value="Не выделять закладки"/>
 			<node name="summaryOff" value="Выделять закладки цветом"/>
