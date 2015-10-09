@@ -273,7 +273,7 @@
 		<node name="close" value="FBReader を閉じる"/>
 	</node>
 	<node name="style" value="書式 %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="書式の名前を変更"/>
 		<node name="invisible" value="透明">
 			<node name="summaryOn" value="しおり位置を目立たせない"/>

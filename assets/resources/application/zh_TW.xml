@@ -263,7 +263,7 @@
 		<node name="close" value="開閉 FBReader"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
 			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
