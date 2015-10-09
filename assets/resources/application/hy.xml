@@ -279,7 +279,7 @@
 		<node name="close" value="Փակել FBReader-ը"/>
 	</node>
 	<node name="style" value="Ոճ %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Ոճի անունը"/>
 		<node name="invisible" value="Անտեսանելի">
 			<node name="summaryOn" value="Չգունանշել Էջանիշերը"/>

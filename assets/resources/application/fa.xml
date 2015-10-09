@@ -272,7 +272,7 @@
 		<node name="close" value="بستن اف بی ریدر"/>
 	</node>
 	<node name="style" value="سبک %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="نام سبک"/>
 		<node name="invisible" value="مخفی">
 			<node name="summaryOn" value="نشانه ها را برجسته نکن"/>
