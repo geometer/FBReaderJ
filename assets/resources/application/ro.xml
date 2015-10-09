@@ -266,7 +266,7 @@
 		<node name="close" value="Inchide Aplicatia"/>
 	</node>
 	<node name="style" value="Stilul %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Numele stilului"/>
 		<node name="invisible" value="Invizibil">
 			<node name="summaryOn" value="Nu scoate in evidenta semnele de carte"/>

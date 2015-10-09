@@ -273,7 +273,7 @@
 		<node name="close" value="FBReader afsluiten"/>
 	</node>
 	<node name="style" value="Stijl %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Stijlnaam"/>
 		<node name="invisible" value="Onzichtbaar">
 			<node name="summaryOn" value="Bladwijzers niet benadrukken"/>
