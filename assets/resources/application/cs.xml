@@ -282,7 +282,7 @@
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
 	<node name="style" value="Styl %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Název stylu"/>
 		<node name="invisible" value="Skrytý">
 			<node name="summaryOn" value="Nezvýrazňovat záložky"/>

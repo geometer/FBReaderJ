@@ -278,7 +278,7 @@
 		<node name="close" value="FBReader schließen"/>
 	</node>
 	<node name="style" value="Stil %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Stilname"/>
 		<node name="invisible" value="Unsichtbar">
 			<node name="summaryOn" value="Lesezeichen nicht hervorheben"/>
