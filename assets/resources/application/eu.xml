@@ -273,7 +273,7 @@
 		<node name="close" value="Itxi FBReader"/>
 	</node>
 	<node name="style" value="%s estiloa"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Estiloaren izena"/>
 		<node name="invisible" value="Ikusezin">
 			<node name="summaryOn" value="Ez nabarmendu laster-markak"/>

@@ -263,7 +263,7 @@
 		<node name="close" value="关闭FBReader"/>
 	</node>
 	<node name="style" value="样式 %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="样式名称"/>
 		<node name="invisible" value="不可见">
 			<node name="summaryOn" value="不要高亮书签"/>
