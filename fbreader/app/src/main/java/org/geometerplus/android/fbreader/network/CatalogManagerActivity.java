@@ -29,12 +29,13 @@ import android.widget.*;
 
 import com.mobeta.android.dslv.DragSortListView;
 
+import org.fbreader.util.android.ViewUtil;
+
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.covers.CoverManager;
 
-import org.geometerplus.android.util.ViewUtil;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class CatalogManagerActivity extends ListActivity {
