@@ -34,13 +34,14 @@ import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
 
+import org.fbreader.util.android.ViewUtil;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.XmlUtil;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.PackageUtil;
-import org.geometerplus.android.util.ViewUtil;
 
 public class PluginListActivity extends ListActivity {
 	private final ZLResource myResource = ZLResource.resource("plugins");

@@ -17,20 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.util;
+package org.fbreader.util.android;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ViewUtil {
+	private static final Object NULL_VIEW = new Object();
+
 	public static View findView(View container, int id) {
-		View view = (View)container.getTag(id);
+		Object view = container.getTag(id);
 		if (view == null) {
 			view = container.findViewById(id);
-			container.setTag(id, view);
+			container.setTag(id, view != null ? view : NULL_VIEW);
 		}
-		return view;
+		return view != NULL_VIEW ? (View)view : null;
 	}
 
 	public static TextView findTextView(View container, int id) {
@@ -42,6 +44,9 @@ public class ViewUtil {
 	}
 
 	public static void setSubviewText(View view, int resourceId, String text) {
-		findTextView(view, resourceId).setText(text);
+		final TextView textView = findTextView(view, resourceId);
+		if (textView != null) {
+			textView.setText(text);
+		}
 	}
 }
