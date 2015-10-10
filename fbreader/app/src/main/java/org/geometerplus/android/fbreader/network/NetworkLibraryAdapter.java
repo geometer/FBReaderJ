@@ -34,7 +34,7 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
-import org.geometerplus.android.util.ViewUtil;
+import org.fbreader.util.android.ViewUtil;
 
 class NetworkLibraryAdapter extends TreeAdapter {
 	NetworkLibraryAdapter(NetworkLibraryActivity activity) {
