@@ -112,20 +112,7 @@ class AppNotifier implements FBReaderApp.Notifier {
 		}
 		builder.setAutoCancel(uri == null);
 		if (uri != null) {
-			final boolean useBigNotification =
-				Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
-
-			final Intent downloadIntent = useBigNotification
-				? new Intent(myActivity, BookDownloaderService.class)
-				: new Intent(myActivity, MissingBookActivity.class);
-			downloadIntent
-				.setData(uri)
-				.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
-				.putExtra(BookDownloaderService.Key.BOOK_MIME, info.Mimetype)
-				.putExtra(BookDownloaderService.Key.BOOK_KIND, UrlInfo.Type.Book)
-				.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title)
-				.putExtra(BookDownloaderService.Key.NOTIFICATION_TO_DISMISS_ID, notificationId);
-			if (useBigNotification) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 				final String errorMessage = MissingBookActivity.errorMessage(info.Title);
 				builder.setStyle(new NotificationCompat.BigTextStyle().bigText(errorMessage));
 				final ZLResource buttonResource =
@@ -133,8 +120,7 @@ class AppNotifier implements FBReaderApp.Notifier {
 				final Intent intent = downloadIntent(
 					BookDownloaderService.class, info, uri, notificationId
 				);
-				final PendingIntent pending =
-					PendingIntent.getService(myActivity, 0, downloadIntent, 0);
+				final PendingIntent pending = PendingIntent.getService(myActivity, 0, intent, 0);
 				builder.addAction(
 					android.R.drawable.stat_sys_download_done,
 					buttonResource.getResource("download").getValue(),
