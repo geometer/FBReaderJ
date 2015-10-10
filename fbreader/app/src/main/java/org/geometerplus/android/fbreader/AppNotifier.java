@@ -75,8 +75,7 @@ class AppNotifier implements FBReaderApp.Notifier {
 			.setSmallIcon(R.drawable.fbreader)
 			.setTicker(errorTitle)
 			.setContentTitle(errorTitle)
-			.setContentText(info.Title)
-			.setAutoCancel(false);
+			.setContentText(info.Title);
 
 		if (info.ThumbnailUrl != null) {
 			SQLiteCookieDatabase.init(myActivity);
@@ -91,11 +90,15 @@ class AppNotifier implements FBReaderApp.Notifier {
 			}
 		}
 
+		final int notificationId = info.Hashes.size() > 0
+			? info.Hashes.get(0).hashCode() : NotificationUtil.MISSING_BOOK_ID;
+
 		Uri uri = null;
 		try {
 			uri = Uri.parse(info.DownloadUrl);
 		} catch (Exception e) {
 		}
+		builder.setAutoCancel(uri == null);
 		if (uri != null) {
 			final Intent downloadIntent = new Intent(myActivity, MissingBookActivity.class);
 			downloadIntent
@@ -103,13 +106,12 @@ class AppNotifier implements FBReaderApp.Notifier {
 				.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
 				.putExtra(BookDownloaderService.Key.BOOK_MIME, info.Mimetype)
 				.putExtra(BookDownloaderService.Key.BOOK_KIND, UrlInfo.Type.Book)
-				.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title);
+				.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title)
+				.putExtra(BookDownloaderService.Key.NOTIFICATION_TO_DISMISS_ID, notificationId);
 			builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, downloadIntent, 0));
 		} else {
 			builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, new Intent(), 0));
 		}
-		final int bookId = info.Hashes.size() > 0
-			? info.Hashes.get(0).hashCode() : NotificationUtil.MISSING_BOOK_ID;
-		notificationManager.notify(bookId, builder.build());
+		notificationManager.notify(notificationId, builder.build());
 	}
 }

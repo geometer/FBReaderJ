@@ -53,6 +53,7 @@ public class BookDownloaderService extends Service {
 		String BOOK_MIME = "fbreader.downloader.book.mime";
 		String CLEAN_URL = "fbreader.downloader.clean.url";
 		String SHOW_NOTIFICATIONS = "fbreader.downloader.show.notifications";
+		String NOTIFICATION_TO_DISMISS_ID = "fbreader.downloader.notification.id";
 	}
 
 	public interface Notifications {
@@ -112,7 +113,11 @@ public class BookDownloaderService extends Service {
 		intent.setData(null);
 
 		if (intent.getBooleanExtra(Key.FROM_SYNC, false)) {
-			NotificationUtil.drop(this, NotificationUtil.MISSING_BOOK_ID);
+			final int notificationId = intent.getIntExtra(
+				Key.NOTIFICATION_TO_DISMISS_ID,
+				NotificationUtil.MISSING_BOOK_ID
+			);
+			NotificationUtil.drop(this, notificationId);
 		}
 
 		final int notifications = intent.getIntExtra(Key.SHOW_NOTIFICATIONS, 0);
