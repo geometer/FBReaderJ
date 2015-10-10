@@ -54,7 +54,6 @@ public class MissingBookActivity extends SimpleDialogActivity {
 				finish();
 			}
 		});
-		cancelButton().setOnClickListener(finishListener());
-		setButtonTexts("download", "cancel");
+		setButtonTexts("download", null);
 	}
 }
