@@ -35,6 +35,8 @@ import android.widget.*;
 
 import yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView;
 
+import org.fbreader.util.android.ViewUtil;
+
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLColor;
@@ -46,7 +48,6 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.OrientationUtil;
-import org.geometerplus.android.util.ViewUtil;
 
 public class EditBookmarkActivity extends Activity implements IBookCollection.Listener<Book> {
 	private final ZLResource myResource = ZLResource.resource("editBookmark");
