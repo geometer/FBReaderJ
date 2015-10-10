@@ -30,10 +30,11 @@ import android.widget.*;
 
 import com.mobeta.android.dslv.DragSortListView;
 
+import org.fbreader.util.android.ViewUtil;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.fbreader.MenuData;
-import org.geometerplus.android.util.ViewUtil;
 
 public class ConfigurationActivity extends ListActivity {
 	static final String ENABLED_MENU_IDS_KEY = "enabledMenuIds";
