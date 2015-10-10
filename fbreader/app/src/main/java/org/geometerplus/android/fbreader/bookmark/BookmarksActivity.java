@@ -29,6 +29,8 @@ import android.content.*;
 
 import yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView;
 
+import org.fbreader.util.android.ViewUtil;
+
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
