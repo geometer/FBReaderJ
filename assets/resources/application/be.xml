@@ -1055,17 +1055,13 @@
 			<node name="edit" value="Рэдагаваць"/>
 			<node name="remove" value="Прыбраць"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Дадаць цэтлік"/>
-			<node name="removeDialog" value="Прыбраць цэтлік">
-				<node name="message" value="Прыбраць цэтлік «%s» са сьпісу?"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Дадаць аўтара"/>
-			<node name="removeDialog" value="Прыбраць аўтара">
-				<node name="message" value="Прыбраць аўтара «%s» са сьпісу?"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Корань"/>
