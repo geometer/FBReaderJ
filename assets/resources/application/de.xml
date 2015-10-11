@@ -1060,17 +1060,13 @@
 			<node name="edit" value="Bearbeiten"/>
 			<node name="remove" value="Entfernen"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Schlagwörter">
 			<node name="addTag" value="Schlagwort hinzufügen"/>
-			<node name="removeDialog" value="Schlagwort entfernen">
-				<node name="message" value="Schlagwort “%s” aus der Liste entfernen?"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Autoren">
 			<node name="addAuthor" value="Autor hinzufügen"/>
-			<node name="removeDialog" value="Autor entfernen">
-				<node name="message" value="Autor “%s” aus der Liste entfernen?"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Ursprung"/>
