@@ -1055,17 +1055,13 @@
 			<node name="edit" value="編集"/>
 			<node name="remove" value="削除"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="タグを追加"/>
-			<node name="removeDialog" value="タグを削除">
-				<node name="message" value="タグ“%s”をリストから削除しますか?"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="著者を追加"/>
-			<node name="removeDialog" value="著者を削除">
-				<node name="message" value="著者“%s”をリストから削除しますか?"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="(最上位)"/>

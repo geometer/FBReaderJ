@@ -1061,17 +1061,13 @@
 			<node name="edit" value="Խմբագրել"/>
 			<node name="remove" value="Ջնջել"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Ավելացնել կատեգորիա"/>
-			<node name="removeDialog" value="Ջնջել կատեգորիան">
-				<node name="message" value="Ջնջե՞լ «%s» կատեգորիան ցանկից"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Ավելացնել հեղինակ"/>
-			<node name="removeDialog" value="Ջնջել հեղինակին">
-				<node name="message" value="Ջնջե՞լ %s-ը ցանկից"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Սկիզբ"/>

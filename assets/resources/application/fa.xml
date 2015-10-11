@@ -1054,17 +1054,13 @@
 			<node name="edit" value="ویرایش"/>
 			<node name="remove" value="حذف"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="افزودن برچسب"/>
-			<node name="removeDialog" value="حذف برچسب">
-				<node name="message" value="حذف برچسب “%s” از لیست؟"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="افزودن نویسنده"/>
-			<node name="removeDialog" value="حذف نویسنده">
-				<node name="message" value="حذف نویسنده “%s” از لیست؟"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="ریشه"/>
