@@ -47,7 +47,7 @@
 		<node name="de-traditional" value="Deutsch (alte Schreibweise)"/>
 		<node name="el" value="Ελληνικά | Griechisch"/>
 		<node name="en" value="English | Englisch"/>
-		<node name="en_US" value="English (US)" toBeTranslated="true"/>
+		<node name="en_US" value="English (US) | Englisch (US)"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Español | Spanisch"/>
 		<node name="eu" value="Euskara | Baskisch"/>
