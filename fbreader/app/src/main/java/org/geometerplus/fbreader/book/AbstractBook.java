@@ -147,33 +147,11 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public void addAuthor(String name) {
-		addAuthor(name, "");
+		addAuthor(name, null);
 	}
 
 	public void addAuthor(String name, String sortKey) {
-		if (name == null) {
-			return;
-		}
-		String strippedName = name.trim();
-		if (strippedName.length() == 0) {
-			return;
-		}
-
-		String strippedKey = sortKey != null ? sortKey.trim() : "";
-		if (strippedKey.length() == 0) {
-			int index = strippedName.lastIndexOf(' ');
-			if (index == -1) {
-				strippedKey = strippedName;
-			} else {
-				strippedKey = strippedName.substring(index + 1);
-				while ((index >= 0) && (strippedName.charAt(index) == ' ')) {
-					--index;
-				}
-				strippedName = strippedName.substring(0, index + 1) + ' ' + strippedKey;
-			}
-		}
-
-		addAuthor(new Author(strippedName, strippedKey));
+		addAuthor(Author.create(name, sortKey));
 	}
 
 	public long getId() {
