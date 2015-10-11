@@ -1058,7 +1058,13 @@
 		<node name="editTags" value="Tags">
 			<node name="addTag" value="Add tag"/>
 			<node name="editTag" value="Edit tag"/>
+		</node>
+		<node name="editAuthors" value="Authors">
+			<node name="addAuthor" value="Add author"/>
 			<node name="editAuthor" value="Edit author"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root"/>
 			<node name="newFolder" value="New folder"/>
 			<node name="folderNameHint" value="Folder name"/>
 			<node name="menu">
