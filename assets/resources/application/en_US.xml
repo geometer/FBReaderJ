@@ -1055,13 +1055,13 @@
 			<node name="edit" value="Edit"/>
 			<node name="remove" value="Remove"/>
 		</node>
-		<node name="editTags" value="Tags" toBeTranslated="true">
+		<node name="editTags" value="Tags">
 			<node name="addTag" value="Add tag"/>
-			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="editTag" value="Edit tag"/>
 		</node>
-		<node name="editAuthors" value="Authors" toBeTranslated="true">
+		<node name="editAuthors" value="Authors">
 			<node name="addAuthor" value="Add author"/>
-			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="editAuthor" value="Edit author"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root"/>
