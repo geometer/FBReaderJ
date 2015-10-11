@@ -1064,17 +1064,13 @@
 			<node name="edit" value="Upravit"/>
 			<node name="remove" value="Odebrat"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Přidat štítek"/>
-			<node name="removeDialog" value="Odebrat štítek">
-				<node name="message" value="Odebrat štítek “%s” ze seznamu?"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Přidat autora"/>
-			<node name="removeDialog" value="Odebrat autora">
-				<node name="message" value="Odebrat autora “%s” ze seznamu?"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Kořenová složka"/>

@@ -1048,17 +1048,13 @@
 			<node name="edit" value="Editare"/>
 			<node name="remove" value="Sterge"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Adauga eticheta"/>
-			<node name="removeDialog" value="Sterge eticheta">
-				<node name="message" value="Sa sterg eticheta “%s” din lista?"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Adauga autor"/>
-			<node name="removeDialog" value="Sterge autor">
-				<node name="message" value="Sa sterg autorul “%s” din lista?"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Radacina"/>
