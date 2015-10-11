@@ -1061,17 +1061,13 @@
 			<node name="edit" value="Редактирай"/>
 			<node name="remove" value="Премахни"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Добави категория"/>
-			<node name="removeDialog" value="Премахни категория">
-				<node name="message" value="Премахване “%s” от списъка?"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Добави автор"/>
-			<node name="removeDialog" value="Премахни автор">
-				<node name="message" value="Премахване автор “%s” от списъка?"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Основна"/>

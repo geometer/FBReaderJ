@@ -62,7 +62,7 @@
 			<node name="summary" value="Dateisystem des Geräts"/>
 		</node>
 		<node name="fileTreeCard" value="Speicherkarte">
-			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
+			<node name="withIndex" value="Speicherkarte Nummer %s"/>
 			<node name="summary" value="Speicherkarte (bei einigen Geräten der interne Speicher)"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader Bibliothek">
@@ -266,7 +266,7 @@
 	</node>
 	<node name="toast">
 		<node name="more" value="Mehr"/>
-		<node name="offline" value="Offline" toBeTranslated="true"/>
+		<node name="offline" value="Offline"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Bibliothek öffnen"/>
@@ -278,7 +278,7 @@
 		<node name="close" value="FBReader schließen"/>
 	</node>
 	<node name="style" value="Stil %s"/>
-	<node name="editStyle" value="Edit style" toBeTranslated="true">
+	<node name="editStyle" value="Stil bearbeiten">
 		<node name="name" value="Stilname"/>
 		<node name="invisible" value="Unsichtbar">
 			<node name="summaryOn" value="Lesezeichen nicht hervorheben"/>
@@ -304,7 +304,7 @@
 		<node name="toc" value="Inhaltsverzeichnis"/>
 		<node name="day" value="Tag Modus"/>
 		<node name="night" value="Nacht Modus"/>
-		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
+		<node name="dayNight" value="Tag/Nacht"/>
 		<node name="yotaSwitchToBackScreen" value="Auf den Rückseitenbildschirm umschalten"/>
 		<node name="yotaSwitchToFrontScreen" value="Auf den Frontseitenbildschirm umschalten"/>
 		<node name="networkLibrary" value="Netzwerk-Bibliothek"/>
@@ -328,9 +328,9 @@
 		<node name="screenOrientationLandscape" value="Querformat"/>
 		<node name="screenOrientationReversePortrait" value="Hochkant kopfüber"/>
 		<node name="screenOrientationReverseLandscape" value="Querformat kopfüber"/>
-		<node name="increaseFont" value="Schriftgröße erhöhen"/>
-		<node name="decreaseFont" value="Schriftgröße verringern"/>
-		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
+		<node name="increaseFont" value="Schriftgröße vergrößern"/>
+		<node name="decreaseFont" value="Schriftgröße verkleinern"/>
+		<node name="changeFontSize" value="Zoom vergrößern/verkleinern"/>
 		<node name="toggleFullscreen" value="Vollbildmodus umschalten"/>
 		<node name="bookmarks" value="Lesezeichen"/>
 		<node name="help" value="Hilfe"/>
@@ -716,11 +716,11 @@
 				<node name="summaryOff" value="Keine Kapitelmarken in der Fußzeile anzeigen"/>
 			</node>
 			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
-			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
-				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
-				<node name="asPages" value="As page number" toBeTranslated="true"/>
-				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
-				<node name="asPagesAndPercentage" value="As page number and percentage" toBeTranslated="true"/>
+			<node name="showProgress" value="Lesefortschritt">
+				<node name="dontDisplay" value="Nicht anzeigen"/>
+				<node name="asPages" value="Als Seitenummer"/>
+				<node name="asPercentage" value="Als Prozentsatz"/>
+				<node name="asPagesAndPercentage" value="Als Seitennummer und Prozentsatz"/>
 			</node>
 			<node name="showBattery" value="Akkustatus">
 				<node name="summaryOn" value="Akkustatus in der Fußleiste anzeigen"/>
@@ -781,11 +781,11 @@
 			<node name="summary" value="Wörterbucheinstellungen"/>
 			<node name="dictionary" value="Einzelne Wörter nachschlagen in"/>
 			<node name="translator" value="Komplette Passagen übersetzen mit"/>
-			<node name="translateOffline" value="Google Translate: use offline translator (if installed)" toBeTranslated="true">
-				<node name="always" value="Always" toBeTranslated="true"/>
-				<node name="onError" value="Automatically, if online translation fails" toBeTranslated="true"/>
-				<node name="ask" value="Ask if online translation fails" toBeTranslated="true"/>
-				<node name="never" value="Never" toBeTranslated="true"/>
+			<node name="translateOffline" value="Google Übersetzer: Verwende offline Übersetzer (wenn installiert)">
+				<node name="always" value="Immer"/>
+				<node name="onError" value="Automatisch, wenn online Übersetzung fehlschlägt"/>
+				<node name="ask" value="Fragen wenn online Übersetzung fehlschlägt"/>
+				<node name="never" value="Niemals"/>
 			</node>
 			<node name="translationToastDuration" value="Anzeigedauer des Übersetzungs-Popups"/>
 			<node name="errorToastDuration" value="Anzeigedauer des Fehler-Popups"/>
@@ -824,8 +824,8 @@
 				<node name="summaryOff" value="Bildfarbe nicht anpassen"/>
 			</node>
 		</node>
-		<node name="menu" value="Menu" toBeTranslated="true">
-			<node name="summary" value="Main menu items" toBeTranslated="true"/>
+		<node name="menu" value="Menü">
+			<node name="summary" value="Hauptmenüpunkte"/>
 			<node name="enabled" value="Aktiviert"/>
 			<node name="disabled" value="Deaktiviert"/>
 		</node>
@@ -1060,17 +1060,13 @@
 			<node name="edit" value="Bearbeiten"/>
 			<node name="remove" value="Entfernen"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Schlagwörter">
 			<node name="addTag" value="Schlagwort hinzufügen"/>
-			<node name="removeDialog" value="Schlagwort entfernen">
-				<node name="message" value="Schlagwort “%s” aus der Liste entfernen?"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Autoren">
 			<node name="addAuthor" value="Autor hinzufügen"/>
-			<node name="removeDialog" value="Autor entfernen">
-				<node name="message" value="Autor “%s” aus der Liste entfernen?"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Ursprung"/>
@@ -1213,14 +1209,14 @@
 	</node>
 	<node name="premium" value="FBReader Premium Edition">
 		<node name="shortTitle" value="FBReader Premium"/>
-		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+		<node name="conflict" value="FBReader und FBReader Premium ist installiert. Welchen möchten sie starten?"/>
 	</node>
 	<node name="widget">
 		<node name="simple">
-			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
-			<node name="selectAction" value="Select action" toBeTranslated="true"/>
-			<node name="book" value="Read book" toBeTranslated="true"/>
-			<node name="library" value="Open library" toBeTranslated="true"/>
+			<node name="selectIcon" value="Widget Icon auswählen"/>
+			<node name="selectAction" value="Auktion auswählen"/>
+			<node name="book" value="Buch lesen"/>
+			<node name="library" value="Bibliothek öffnen"/>
 		</node>
 	</node>
 </resources>

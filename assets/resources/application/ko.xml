@@ -1055,17 +1055,13 @@
 			<node name="edit" value="편집"/>
 			<node name="remove" value="제거"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="태그 추가"/>
-			<node name="removeDialog" value="태그 제거">
-				<node name="message" value="목록에서 태그를 제거할까요?"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="저자 추가"/>
-			<node name="removeDialog" value="저자 제거">
-				<node name="message" value="목록에서 저자를 제거할까요?"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="최상위"/>
