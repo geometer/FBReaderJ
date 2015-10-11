@@ -1061,17 +1061,13 @@
 			<node name="edit" value="Editar"/>
 			<node name="remove" value="Eliminar"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Añadir etiqueta"/>
-			<node name="removeDialog" value="Borrar etiqueta">
-				<node name="message" value="¿Eliminar etiqueta “%s” de la lista?"/>
-			</node>
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Añadir autor"/>
-			<node name="removeDialog" value="Borrar autor">
-				<node name="message" value="¿Eliminar autor “%s” de la lista?"/>
-			</node>
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Raíz"/>
