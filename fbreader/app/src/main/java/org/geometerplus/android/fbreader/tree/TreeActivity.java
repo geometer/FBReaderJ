@@ -26,8 +26,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.util.Pair;
 import android.view.*;
+
+import org.fbreader.util.Pair;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -176,10 +177,10 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	}
 
 	private void setTitleAndSubtitle(Pair<String,String> pair) {
-		if (pair.second != null) {
-			setTitle(pair.first + " - " + pair.second);
+		if (pair.Second != null) {
+			setTitle(pair.First + " - " + pair.Second);
 		} else {
-			setTitle(pair.first);
+			setTitle(pair.First);
 		}
 	}
 

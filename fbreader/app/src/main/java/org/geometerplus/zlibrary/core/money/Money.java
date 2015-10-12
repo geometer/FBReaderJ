@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Locale;
 
-import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.fbreader.util.ComparisonUtil;
 
 public class Money implements Comparable<Money>, Serializable {
 	public static final Money ZERO = new Money();
@@ -138,12 +138,12 @@ public class Money implements Comparable<Money>, Serializable {
 		if (Amount.equals(ZERO.Amount)) {
 			return m.Amount.equals(ZERO.Amount);
 		}
-		return Amount.equals(m.Amount) && MiscUtil.equals(Currency, m.Currency);
+		return Amount.equals(m.Amount) && ComparisonUtil.equal(Currency, m.Currency);
 	}
 
 	@Override
 	public int hashCode() {
-		return Amount.hashCode() + MiscUtil.hashCode(Currency);
+		return Amount.hashCode() + ComparisonUtil.hashCode(Currency);
 	}
 
 	@Override
