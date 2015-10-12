@@ -24,8 +24,9 @@ import java.util.*;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.*;
+
+import org.fbreader.util.Pair;
 
 import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.UIUtil;
@@ -167,10 +168,10 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	}
 
 	private void setTitleAndSubtitle(Pair<String,String> pair) {
-		if (pair.second != null) {
-			setTitle(pair.first + " - " + pair.second);
+		if (pair.Second != null) {
+			setTitle(pair.First + " - " + pair.Second);
 		} else {
-			setTitle(pair.first);
+			setTitle(pair.First);
 		}
 	}
 

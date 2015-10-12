@@ -23,9 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
@@ -52,12 +53,12 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 	}
 
 	public final void setSummary(String summary) {
-		myHasChanges = myHasChanges || !MiscUtil.equals(mySummary, summary);
+		myHasChanges = myHasChanges || !ComparisonUtil.equal(mySummary, summary);
 		mySummary = summary;
 	}
 
 	public final void setTitle(String title) {
-		myHasChanges = myHasChanges || !MiscUtil.equals(myTitle, title);
+		myHasChanges = myHasChanges || !ComparisonUtil.equal(myTitle, title);
 		myTitle = title;
 	}
 

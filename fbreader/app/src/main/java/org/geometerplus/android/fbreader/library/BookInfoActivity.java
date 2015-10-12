@@ -188,6 +188,11 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 
 	private void setupCover(Book book, PluginCollection pluginCollection) {
 		final ImageView coverView = (ImageView)findViewById(R.id.book_cover);
+		final Object oldBook = coverView.getTag();
+		if (oldBook instanceof Book && book.getId() == ((Book)oldBook).getId()) {
+			return;
+		}
+		coverView.setTag(book);
 
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
