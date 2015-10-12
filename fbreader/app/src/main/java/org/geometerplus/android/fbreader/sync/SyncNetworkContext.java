@@ -23,10 +23,11 @@ import android.app.Service;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.options.ZLEnumOption;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.fbreader.network.sync.SyncUtil;
@@ -51,7 +52,7 @@ class SyncNetworkContext extends ServiceNetworkContext {
 			throw new SynchronizationDisabledException();
 		}
 		final String accountName = SyncUtil.getAccountName(this);
-		if (!MiscUtil.equals(myAccountName, accountName)) {
+		if (!ComparisonUtil.equal(myAccountName, accountName)) {
 			reloadCookie();
 			myAccountName = accountName;
 		}

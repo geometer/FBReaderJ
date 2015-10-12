@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.util;
 
+import org.fbreader.util.ComparisonUtil;
+
 import java.util.*;
 
 public final class MimeType {
@@ -209,17 +211,17 @@ public final class MimeType {
 		}
 		final MimeType type = (MimeType)o;
 		return
-			MiscUtil.equals(Name, type.Name) &&
+			ComparisonUtil.equal(Name, type.Name) &&
 			MiscUtil.mapsEquals(myParameters, type.myParameters);
 	}
 
 	public boolean weakEquals(MimeType type) {
-		return MiscUtil.equals(Name, type.Name);
+		return ComparisonUtil.equal(Name, type.Name);
 	}
 
 	@Override
 	public int hashCode() {
-		return MiscUtil.hashCode(Name);
+		return ComparisonUtil.hashCode(Name);
 	}
 
 	@Override
