@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.core.fonts;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.fbreader.util.ComparisonUtil;
 
 public final class FontEntry {
 	private static Map<String,FontEntry> ourSystemEntries = new HashMap<String,FontEntry>();
@@ -85,7 +85,7 @@ public final class FontEntry {
 			return false;
 		}
 		final FontEntry entry = (FontEntry)other;
-		if (!MiscUtil.equals(Family, entry.Family)) {
+		if (!ComparisonUtil.equal(Family, entry.Family)) {
 			return false;
 		}
 		if (myFileInfos == null) {
@@ -95,7 +95,7 @@ public final class FontEntry {
 			return false;
 		}
 		for (int i = 0; i < myFileInfos.length; ++i) {
-			if (!MiscUtil.equals(myFileInfos[i], entry.myFileInfos[i])) {
+			if (!ComparisonUtil.equal(myFileInfos[i], entry.myFileInfos[i])) {
 				return false;
 			}
 		}
@@ -104,6 +104,6 @@ public final class FontEntry {
 
 	@Override
 	public int hashCode() {
-		return MiscUtil.hashCode(Family);
+		return ComparisonUtil.hashCode(Family);
 	}
 }

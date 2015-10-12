@@ -21,8 +21,9 @@ package org.geometerplus.fbreader.network.urlInfo;
 
 import java.util.Date;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 public final class UrlInfoWithDate extends UrlInfo {
 	private static final long serialVersionUID = -896768978957787222L;
@@ -52,13 +53,13 @@ public final class UrlInfoWithDate extends UrlInfo {
 		final UrlInfoWithDate info = (UrlInfoWithDate)o;
 		return
 			InfoType == info.InfoType &&
-			MiscUtil.equals(Url, info.Url) &&
-			MiscUtil.equals(Mime, info.Mime) &&
-			MiscUtil.equals(Updated, info.Updated);
+			ComparisonUtil.equal(Url, info.Url) &&
+			ComparisonUtil.equal(Mime, info.Mime) &&
+			ComparisonUtil.equal(Updated, info.Updated);
 	}
 
 	@Override
 	public int hashCode() {
-		return InfoType.hashCode() + MiscUtil.hashCode(Url) + MiscUtil.hashCode(Mime) + MiscUtil.hashCode(Updated);
+		return InfoType.hashCode() + ComparisonUtil.hashCode(Url) + ComparisonUtil.hashCode(Mime) + ComparisonUtil.hashCode(Updated);
 	}
 }

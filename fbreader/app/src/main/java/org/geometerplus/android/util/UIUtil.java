@@ -27,7 +27,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Pair;
+
+import org.fbreader.util.Pair;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -51,7 +52,7 @@ public abstract class UIUtil {
 								ourProgress.dismiss();
 								ourProgress = null;
 							} else {
-								ourProgress.setMessage(ourTaskQueue.peek().second);
+								ourProgress.setMessage(ourTaskQueue.peek().Second);
 							}
 							ourMonitor.notify();
 						}
@@ -99,7 +100,7 @@ public abstract class UIUtil {
 			public void run() {
 				while (ourProgress == currentProgress && !ourTaskQueue.isEmpty()) {
 					final Pair<Runnable,String> p = ourTaskQueue.poll();
-					p.first.run();
+					p.First.run();
 					synchronized (ourMonitor) {
 						ourProgressHandler.sendEmptyMessage(0);
 						try {

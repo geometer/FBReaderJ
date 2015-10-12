@@ -24,16 +24,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class MiscUtil {
-	public static <T> boolean equals(T o0, T o1) {
-		return o0 == null ? o1 == null : o0.equals(o1);
-	}
-
 	public static boolean isEmptyString(String s) {
 		return s == null || "".equals(s);
-	}
-
-	public static int hashCode(Object o) {
-		return o != null ? o.hashCode() : 0;
 	}
 
 	public static <T> boolean listsEquals(List<T> list1, List<T> list2) {

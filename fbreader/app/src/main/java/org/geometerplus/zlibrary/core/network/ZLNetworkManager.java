@@ -42,9 +42,10 @@ import org.apache.http.params.*;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 public class ZLNetworkManager {
@@ -86,9 +87,9 @@ public class ZLNetworkManager {
 			}
 			return
 				myScope.getPort() == scope.getPort() &&
-				MiscUtil.equals(myScope.getHost(), scope.getHost()) &&
-				MiscUtil.equals(myScope.getScheme(), scope.getScheme()) &&
-				MiscUtil.equals(myScope.getRealm(), scope.getRealm());
+				ComparisonUtil.equal(myScope.getHost(), scope.getHost()) &&
+				ComparisonUtil.equal(myScope.getScheme(), scope.getScheme()) &&
+				ComparisonUtil.equal(myScope.getRealm(), scope.getRealm());
 		}
 
 		public int hashCode() {
@@ -97,9 +98,9 @@ public class ZLNetworkManager {
 			}
 			return
 				myScope.getPort() +
-				MiscUtil.hashCode(myScope.getHost()) +
-				MiscUtil.hashCode(myScope.getScheme()) +
-				MiscUtil.hashCode(myScope.getRealm());
+				ComparisonUtil.hashCode(myScope.getHost()) +
+				ComparisonUtil.hashCode(myScope.getScheme()) +
+				ComparisonUtil.hashCode(myScope.getRealm());
 		}
 	}
 
@@ -216,17 +217,17 @@ public class ZLNetworkManager {
 			}
 			final Key k = (Key)o;
 			return
-				MiscUtil.equals(Domain, k.Domain) &&
-				MiscUtil.equals(Path, k.Path) &&
-				MiscUtil.equals(Name, k.Name);
+				ComparisonUtil.equal(Domain, k.Domain) &&
+				ComparisonUtil.equal(Path, k.Path) &&
+				ComparisonUtil.equal(Name, k.Name);
 		}
 
 		@Override
 		public int hashCode() {
 			return
-				MiscUtil.hashCode(Domain) +
-				MiscUtil.hashCode(Path) +
-				MiscUtil.hashCode(Name);
+				ComparisonUtil.hashCode(Domain) +
+				ComparisonUtil.hashCode(Path) +
+				ComparisonUtil.hashCode(Name);
 		}
 	};
 
