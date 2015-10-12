@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
@@ -297,7 +299,7 @@ public final class FBReaderApp extends ZLApplication {
 				if (b.getEnd() == null) {
 					BookmarkUtil.findEnd(b, view);
 				}
-				if (MiscUtil.equals(modelId, b.ModelId)) {
+				if (ComparisonUtil.equal(modelId, b.ModelId)) {
 					view.addHighlighting(new BookmarkHighlighting(view, Collection, b));
 				}
 			}
