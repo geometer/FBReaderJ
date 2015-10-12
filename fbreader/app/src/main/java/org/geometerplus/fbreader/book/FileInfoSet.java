@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
-import android.util.Pair;
+import org.fbreader.util.Pair;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 

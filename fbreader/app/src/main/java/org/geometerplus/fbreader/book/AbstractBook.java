@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.book;
 import java.math.BigDecimal;
 import java.util.*;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 
@@ -67,11 +69,11 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		setTitle(book.getTitle());
 		setEncoding(book.myEncoding);
 		setLanguage(book.myLanguage);
-		if (!MiscUtil.equals(myAuthors, book.myAuthors)) {
+		if (!ComparisonUtil.equal(myAuthors, book.myAuthors)) {
 			myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
 			myIsSaved = false;
 		}
-		if (!MiscUtil.equals(myTags, book.myTags)) {
+		if (!ComparisonUtil.equal(myTags, book.myTags)) {
 			myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
 			myIsSaved = false;
 		}
@@ -79,7 +81,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			myLabels = book.myLabels != null ? new ArrayList<Label>(book.myLabels) : null;
 			myIsSaved = false;
 		}
-		if (!MiscUtil.equals(mySeriesInfo, book.mySeriesInfo)) {
+		if (!ComparisonUtil.equal(mySeriesInfo, book.mySeriesInfo)) {
 			mySeriesInfo = book.mySeriesInfo;
 			myIsSaved = false;
 		}
@@ -206,7 +208,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public void setLanguage(String language) {
-		if (!MiscUtil.equals(myLanguage, language)) {
+		if (!ComparisonUtil.equal(myLanguage, language)) {
 			myLanguage = language;
 			resetSortKey();
 			myIsSaved = false;
@@ -218,7 +220,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public void setEncoding(String encoding) {
-		if (!MiscUtil.equals(myEncoding, encoding)) {
+		if (!ComparisonUtil.equal(myEncoding, encoding)) {
 			myEncoding = encoding;
 			myIsSaved = false;
 		}
@@ -362,7 +364,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public void setProgress(RationalNumber progress) {
-		if (!MiscUtil.equals(myProgress, progress)) {
+		if (!ComparisonUtil.equal(myProgress, progress)) {
 			myProgress = progress;
 			myIsSaved = false;
 		}

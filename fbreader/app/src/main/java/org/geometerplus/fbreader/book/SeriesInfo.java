@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.book;
 
 import java.math.BigDecimal;
 
-import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.fbreader.util.ComparisonUtil;
 
 public final class SeriesInfo implements Comparable<SeriesInfo> {
 	public static SeriesInfo createSeriesInfo(String title, String index) {
@@ -56,12 +56,12 @@ public final class SeriesInfo implements Comparable<SeriesInfo> {
 			return false;
 		}
 		final SeriesInfo info = (SeriesInfo)other;
-		return MiscUtil.equals(Series, info.Series) && MiscUtil.equals(Index, info.Index);
+		return ComparisonUtil.equal(Series, info.Series) && ComparisonUtil.equal(Index, info.Index);
 	}
 
 	@Override
 	public int hashCode() {
-		return 23 * MiscUtil.hashCode(Series) + 31 * MiscUtil.hashCode(Index);
+		return 23 * ComparisonUtil.hashCode(Series) + 31 * ComparisonUtil.hashCode(Index);
 	}
 
 	@Override
