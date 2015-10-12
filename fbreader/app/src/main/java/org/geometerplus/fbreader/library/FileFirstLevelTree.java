@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.library;
 
 import java.util.List;
 
-import android.util.Pair;
+import org.fbreader.util.Pair;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
