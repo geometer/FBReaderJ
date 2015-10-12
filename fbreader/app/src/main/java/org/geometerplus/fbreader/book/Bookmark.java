@@ -21,7 +21,8 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.util.TextSnippet;
@@ -242,7 +243,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 			ParagraphIndex == other.ParagraphIndex &&
 			ElementIndex == other.ElementIndex &&
 			CharIndex == other.CharIndex &&
-			MiscUtil.equals(myText, other.myText);
+			ComparisonUtil.equal(myText, other.myText);
 	}
 
 	private static String newUUID() {
