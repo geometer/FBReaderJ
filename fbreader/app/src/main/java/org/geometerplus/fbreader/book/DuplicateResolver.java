@@ -21,9 +21,10 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 class DuplicateResolver {
 	private final Map<String,List<ZLFile>> myMap =
@@ -85,7 +86,7 @@ class DuplicateResolver {
 			}
 			final ZLPhysicalFile pCandidate = candidate.getPhysicalFile();
 			if (pCandidate != null &&
-				MiscUtil.equals(entryName, entryName(candidate)) &&
+				ComparisonUtil.equal(entryName, entryName(candidate)) &&
 				shortName.equals(pCandidate.getShortName()) &&
 				size == pCandidate.size() &&
 				lastModified == pCandidate.javaFile().lastModified()

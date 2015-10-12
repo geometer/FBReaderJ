@@ -17,21 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.drm;
+package org.fbreader.util;
 
-import org.fbreader.util.ComparisonUtil;
+public class Pair<T1,T2> {
+	public final T1 First;
+	public final T2 Second;
 
-public class FileEncryptionInfo {
-	public final String Uri;
-	public final String Method;
-	public final String Algorithm;
-	public final String ContentId;
-
-	public FileEncryptionInfo(String uri, String method, String algorithm, String contentId) {
-		Uri = uri;
-		Method = method;
-		Algorithm = algorithm;
-		ContentId = contentId;
+	public Pair(T1 first, T2 second) {
+		First = first;
+		Second = second;
 	}
 
 	@Override
@@ -39,23 +33,17 @@ public class FileEncryptionInfo {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof FileEncryptionInfo)) {
+		if (!(other instanceof Pair)) {
 			return false;
 		}
-		final FileEncryptionInfo oInfo = (FileEncryptionInfo)other;
+		final Pair pair = (Pair)other;
 		return
-			ComparisonUtil.equal(Uri, oInfo.Uri) &&
-			ComparisonUtil.equal(Method, oInfo.Method) &&
-			ComparisonUtil.equal(Algorithm, oInfo.Algorithm) &&
-			ComparisonUtil.equal(ContentId, oInfo.ContentId);
+			ComparisonUtil.equal(First, pair.First) &&
+			ComparisonUtil.equal(Second, pair.Second);
 	}
 
 	@Override
 	public int hashCode() {
-		return
-			ComparisonUtil.hashCode(Uri) +
-			23 * (ComparisonUtil.hashCode(Method) +
-				  23 * (ComparisonUtil.hashCode(Algorithm) +
-						23 * ComparisonUtil.hashCode(ContentId)));
+		return ComparisonUtil.hashCode(First) + 23 * ComparisonUtil.hashCode(Second);
 	}
 }
