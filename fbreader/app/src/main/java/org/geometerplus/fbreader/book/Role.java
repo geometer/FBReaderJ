@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.book;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 public final class Role {
 	public static final Role NULL = new Role("");//null and empty string are same
 
@@ -30,6 +32,11 @@ public final class Role {
 	
 	public String getCode() {
 		return "".equals(Code) ? null : Code;
+	}
+	
+	public String getName() {
+		ZLResource resource = ZLResource.resource("authorRoles").getResource(Code);
+		return resource.getValue();
 	}
 	
 	@Override

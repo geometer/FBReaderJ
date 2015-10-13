@@ -252,7 +252,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 			buffer.append(a.first.DisplayName);
 			if (!a.second.equals(Role.NULL)) {
 				buffer.append(" (");
-				buffer.append(a.second.getCode());
+				buffer.append(a.second.getName());
 				buffer.append(")");
 			}
 		}
