@@ -1051,7 +1051,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		final int maxWidth = page.getTextWidth() - storedStyle.getRightIndent(metrics());
 		info.LeftIndent = storedStyle.getLeftIndent(metrics());
-		if (isFirstLine) {
+		if (isFirstLine && storedStyle.getAlignment() != ZLTextAlignmentType.ALIGN_CENTER) {
 			info.LeftIndent += storedStyle.getFirstLineIndent(metrics());
 		}
 		if (info.LeftIndent > maxWidth - 20) {
