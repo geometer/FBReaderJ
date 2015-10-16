@@ -917,6 +917,7 @@
 			<node name="markAsRead" value="既読にする"/>
 			<node name="markAsUnread" value="未読にする"/>
 		</node>
+		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">
 			<node name="installTitle" value="プラグインをインストール"/>
 			<node name="updateTitle" value="プラグインをアップデート"/>

@@ -922,6 +922,7 @@
 			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
+		<node name="gotoPage" value="გვერდზე"/>
 		<node name="plugin">
 			<node name="installTitle" value="დანამატების დაინსტალირება"/>
 			<node name="updateTitle" value="ახალი ვერსია"/>

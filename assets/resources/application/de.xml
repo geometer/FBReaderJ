@@ -922,6 +922,7 @@
 			<node name="markAsRead" value="Als gelesen markieren"/>
 			<node name="markAsUnread" value="Als ungelesen markieren"/>
 		</node>
+		<node name="gotoPage" value="Gehe zur Seite"/>
 		<node name="plugin">
 			<node name="installTitle" value="Plugin installieren"/>
 			<node name="updateTitle" value="Plugin aktualisieren"/>

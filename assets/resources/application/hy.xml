@@ -923,6 +923,7 @@
 			<node name="markAsRead" value="Նշել որպես ընթերցված"/>
 			<node name="markAsUnread" value="Նշել որպես չընթերցված"/>
 		</node>
+		<node name="gotoPage" value="Գնալ էջ"/>
 		<node name="plugin">
 			<node name="installTitle" value="Տեղադրել հավելվածքներ"/>
 			<node name="updateTitle" value="Նոր տարբերակ"/>

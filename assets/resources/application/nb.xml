@@ -917,6 +917,7 @@
 			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
+		<node name="gotoPage" value="Gå til side"/>
 		<node name="plugin">
 			<node name="installTitle" value="Installer tillegg"/>
 			<node name="updateTitle" value="Oppdater tillegg"/>

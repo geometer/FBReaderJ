@@ -917,6 +917,7 @@
 			<node name="markAsRead" value="Markeer als gelezen"/>
 			<node name="markAsUnread" value="Markeer als ongelezen"/>
 		</node>
+		<node name="gotoPage" value="Ga naar pagina"/>
 		<node name="plugin">
 			<node name="installTitle" value="Plug-in installeren"/>
 			<node name="updateTitle" value="Plug-in bijwerken"/>

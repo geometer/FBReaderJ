@@ -926,6 +926,7 @@
 			<node name="markAsRead" value="Označit jako přečtené"/>
 			<node name="markAsUnread" value="Označit jako nepřečtené"/>
 		</node>
+		<node name="gotoPage" value="Přejít na stránku"/>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk"/>
 			<node name="updateTitle" value="Aktualizovat doplněk"/>

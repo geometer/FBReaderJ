@@ -910,6 +910,7 @@
 			<node name="markAsRead" value="Marcati ca citit"/>
 			<node name="markAsUnread" value="Marcati ca necitit"/>
 		</node>
+		<node name="gotoPage" value="Du-te la pagina"/>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
 			<node name="updateTitle" value="Actualizare plugin"/>

@@ -922,6 +922,7 @@
 			<node name="markAsRead" value="Пометить как прочтённое"/>
 			<node name="markAsUnread" value="Пометить как непрочтённое"/>
 		</node>
+		<node name="gotoPage" value="На страницу"/>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
 			<node name="updateTitle" value="Новая версия"/>

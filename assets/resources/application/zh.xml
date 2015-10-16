@@ -907,6 +907,7 @@
 			<node name="markAsRead" value="标记为已读"/>
 			<node name="markAsUnread" value="标记为未读"/>
 		</node>
+		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">
 			<node name="installTitle" value="安装插件"/>
 			<node name="updateTitle" value="更新插件"/>

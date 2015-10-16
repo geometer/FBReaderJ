@@ -917,6 +917,7 @@
 			<node name="markAsRead" value="Пазначыць як прачытаную"/>
 			<node name="markAsUnread" value="Пазначыць як непрачытаную"/>
 		</node>
+		<node name="gotoPage" value="Перайсьці да старонкі"/>
 		<node name="plugin">
 			<node name="installTitle" value="Усталяваць убудову"/>
 			<node name="updateTitle" value="Абнавіць убудову"/>

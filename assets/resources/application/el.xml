@@ -915,6 +915,7 @@
 			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
+		<node name="gotoPage" value="Πήγαινε στην σελίδα"/>
 		<node name="plugin">
 			<node name="installTitle" value="εγκατάσταση Plug-In"/>
 			<node name="updateTitle" value="ενημέρωση Plug-In"/>

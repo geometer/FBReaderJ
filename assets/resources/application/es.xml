@@ -923,6 +923,7 @@
 			<node name="markAsRead" value="Marcar como leído"/>
 			<node name="markAsUnread" value="Marcar como no leído"/>
 		</node>
+		<node name="gotoPage" value="Ir a la página"/>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar plugin"/>
 			<node name="updateTitle" value="Actualizar plugin"/>

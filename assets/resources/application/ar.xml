@@ -915,6 +915,7 @@
 			<node name="markAsRead" value="تعليم كمقروء"/>
 			<node name="markAsUnread" value="تعليم كغير مقروء"/>
 		</node>
+		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">
 			<node name="installTitle" value="تنصيب الإضافة"/>
 			<node name="updateTitle" value="تحديث الإضافة"/>

@@ -923,6 +923,7 @@
 			<node name="markAsRead" value="Отбележи като прочетено"/>
 			<node name="markAsUnread" value="Отбележи като непрочетено"/>
 		</node>
+		<node name="gotoPage" value="Страница"/>
 		<node name="plugin">
 			<node name="installTitle" value="Инсталиране на програма"/>
 			<node name="updateTitle" value="Нова версия"/>

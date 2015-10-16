@@ -916,6 +916,7 @@
 			<node name="markAsRead" value="Marker som læst"/>
 			<node name="markAsUnread" value="Marker som ikke læst"/>
 		</node>
+		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">
 			<node name="installTitle" value="Installer plug-in"/>
 			<node name="updateTitle" value="Opdater plug-in"/>

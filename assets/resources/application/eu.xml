@@ -918,6 +918,7 @@
 			<node name="markAsUnread" value="Markatu ez irakurria bezala"/>
 			<node name="enterPosition" value="Idatzi orri zenbakia"/>
 		</node>
+		<node name="gotoPage" value="Joan Orrira"/>
 		<node name="plugin">
 			<node name="installTitle" value="Instalatu gehigarria"/>
 			<node name="updateTitle" value="Eguneratu gehigarria"/>

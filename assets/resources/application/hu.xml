@@ -907,6 +907,7 @@
 			<node name="markAsRead" value="Megjelölés olvasottként"/>
 			<node name="markAsUnread" value="Megjelölés olvasatlanként"/>
 		</node>
+		<node name="gotoPage" value="Ugrás oldalszámra"/>
 		<node name="plugin">
 			<node name="installTitle" value="Bővítmény telepítése"/>
 			<node name="updateTitle" value="Bővítmény frissítése"/>

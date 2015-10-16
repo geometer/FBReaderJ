@@ -916,6 +916,7 @@
 			<node name="markAsRead" value="علامت بعنوان خوانده شده"/>
 			<node name="markAsUnread" value="علامت بعنوان خوانده نشده "/>
 		</node>
+		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">
 			<node name="installTitle" value="نصب پلاگين"/>
 			<node name="updateTitle" value="برورساني پلاگين"/>

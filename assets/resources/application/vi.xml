@@ -908,6 +908,7 @@
 			<node name="markAsRead" value="Đánh dấu đã đọc"/>
 			<node name="markAsUnread" value="Đánh dấu chưa đọc"/>
 		</node>
+		<node name="gotoPage" value="Đến trang"/>
 		<node name="plugin">
 			<node name="installTitle" value="Cài phần bổ trợ"/>
 			<node name="updateTitle" value="Cập nhật phần bổ trợ"/>

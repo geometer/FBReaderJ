@@ -923,6 +923,7 @@
 			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
+		<node name="gotoPage" value="Ir a la Página"/>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin" toBeTranslated="true"/>
 			<node name="updateTitle" value="Update plugin" toBeTranslated="true"/>
