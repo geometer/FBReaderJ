@@ -1064,10 +1064,16 @@
 		<node name="editTags" value="Schlagwörter">
 			<node name="addTag" value="Schlagwort hinzufügen"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Schlagwort entfernen">
+				<node name="message" value="Schlagwort “%s” aus der Liste entfernen?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Autoren">
 			<node name="addAuthor" value="Autor hinzufügen"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Autor entfernen">
+				<node name="message" value="Autor “%s” aus der Liste entfernen?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Ursprung"/>

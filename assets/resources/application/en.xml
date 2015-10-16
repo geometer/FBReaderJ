@@ -1059,10 +1059,16 @@
 		<node name="editTags" value="Tags">
 			<node name="addTag" value="Add tag"/>
 			<node name="editTag" value="Edit tag"/>
+			<node name="removeTag" value="Remove tag">
+				<node name="message" value="Remove tag “%s” from the list?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors">
 			<node name="addAuthor" value="Add author"/>
 			<node name="editAuthor" value="Edit author"/>
+			<node name="removeAuthor" value="Remove author">
+				<node name="message" value="Remove author “%s” from the list?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root"/>

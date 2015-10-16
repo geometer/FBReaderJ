@@ -1068,10 +1068,16 @@
 		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Přidat štítek"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Odebrat štítek">
+				<node name="message" value="Odebrat štítek “%s” ze seznamu?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Přidat autora"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Odebrat autora">
+				<node name="message" value="Odebrat autora “%s” ze seznamu?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Kořenová složka"/>

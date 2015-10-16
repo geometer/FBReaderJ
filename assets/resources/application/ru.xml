@@ -1068,10 +1068,16 @@
 		<node name="editTags" value="Категории">
 			<node name="addTag" value="Добавить категорию"/>
 			<node name="editTag" value="Изменить категорию"/>
+			<node name="removeTag" value="Убрать категорию">
+				<node name="message" value="Убрать «%s» из списка?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Авторы">
 			<node name="addAuthor" value="Добавить автора"/>
 			<node name="editAuthor" value="Изменить автора"/>
+			<node name="removeAuthor" value="Убрать автора">
+				<node name="message" value="Убрать %s из списка?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Корень"/>

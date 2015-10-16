@@ -1065,10 +1065,16 @@
 		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Добави категория"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Премахни категория">
+				<node name="message" value="Премахване “%s” от списъка?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Добави автор"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Премахни автор">
+				<node name="message" value="Премахване автор “%s” от списъка?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Основна"/>

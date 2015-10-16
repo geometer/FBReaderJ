@@ -1065,10 +1065,16 @@
 		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Add tag" toBeTranslated="true"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Remove tag" toBeTranslated="true">
+				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Remove author" toBeTranslated="true">
+				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>

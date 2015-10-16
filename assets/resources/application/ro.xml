@@ -1052,10 +1052,16 @@
 		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Adauga eticheta"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Sterge eticheta">
+				<node name="message" value="Sa sterg eticheta “%s” din lista?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Adauga autor"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Sterge autor">
+				<node name="message" value="Sa sterg autorul “%s” din lista?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Radacina"/>
