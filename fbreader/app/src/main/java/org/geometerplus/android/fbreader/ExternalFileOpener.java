@@ -74,14 +74,12 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 	}
 
 	private void showErrorDialog(final ExternalFormatPlugin plugin, final Book book) {
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		final String title =
-			dialogResource.getResource("missingPlugin").getResource("title").getValue()
-				.replace("%s", plugin.supportedFileType());
+		final ZLResource rootResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = rootResource.getResource("button");
+		final ZLResource dialogResource = rootResource.getResource("missingPlugin");
 		final AlertDialog.Builder builder = new AlertDialog.Builder(myReader)
-			.setTitle(title)
-			.setIcon(0)
+			.setTitle(dialogResource.getValue())
+			.setMessage(dialogResource.getResource("message").getValue().replace("%s", plugin.supportedFileType()))
 			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
