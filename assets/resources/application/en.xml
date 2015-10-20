@@ -1227,6 +1227,7 @@
 		<node name="edt" value="Editor"/>
 		<node name="ill" value="Illustrator"/>
 		<node name="oth" value="Other"/>
+		<node name="trl" value="Translator"/>
 <!-- 		FOR CB: writer, penciller, coverDesigner, letterer, inker,  -->
 	</node>
 </resources>
