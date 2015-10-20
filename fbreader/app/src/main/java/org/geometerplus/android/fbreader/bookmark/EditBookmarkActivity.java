@@ -43,9 +43,9 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 import org.geometerplus.fbreader.book.*;
 
-import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.util.OrientationUtil;
 import org.geometerplus.android.util.ViewUtil;
 
 public class EditBookmarkActivity extends Activity implements IBookCollection.Listener<Book> {

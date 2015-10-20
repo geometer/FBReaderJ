@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.core.drm;
 
-import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.fbreader.util.ComparisonUtil;
 
 public class FileEncryptionInfo {
 	public final String Uri;
@@ -44,18 +44,18 @@ public class FileEncryptionInfo {
 		}
 		final FileEncryptionInfo oInfo = (FileEncryptionInfo)other;
 		return
-			MiscUtil.equals(Uri, oInfo.Uri) &&
-			MiscUtil.equals(Method, oInfo.Method) &&
-			MiscUtil.equals(Algorithm, oInfo.Algorithm) &&
-			MiscUtil.equals(ContentId, oInfo.ContentId);
+			ComparisonUtil.equal(Uri, oInfo.Uri) &&
+			ComparisonUtil.equal(Method, oInfo.Method) &&
+			ComparisonUtil.equal(Algorithm, oInfo.Algorithm) &&
+			ComparisonUtil.equal(ContentId, oInfo.ContentId);
 	}
 
 	@Override
 	public int hashCode() {
 		return
-			MiscUtil.hashCode(Uri) +
-			23 * (MiscUtil.hashCode(Method) +
-				  23 * (MiscUtil.hashCode(Algorithm) +
-						23 * MiscUtil.hashCode(ContentId)));
+			ComparisonUtil.hashCode(Uri) +
+			23 * (ComparisonUtil.hashCode(Method) +
+				  23 * (ComparisonUtil.hashCode(Algorithm) +
+						23 * ComparisonUtil.hashCode(ContentId)));
 	}
 }

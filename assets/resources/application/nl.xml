@@ -57,7 +57,7 @@
 			<node name="summary" value="Volledige bestandssysteem van het apparaat"/>
 		</node>
 		<node name="fileTreeCard" value="Geheugenkaart">
-			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
+			<node name="withIndex" value="Geheugenkaart Nr %s"/>
 			<node name="summary" value="Geheugenkaart geplaatst in het apparaat"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader bibliotheek">
@@ -273,7 +273,7 @@
 		<node name="close" value="FBReader afsluiten"/>
 	</node>
 	<node name="style" value="Stijl %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Stijlnaam"/>
 		<node name="invisible" value="Onzichtbaar">
 			<node name="summaryOn" value="Bladwijzers niet benadrukken"/>
@@ -341,7 +341,7 @@
 		<node name="tags" value="Trefwoorden"/>
 		<node name="series" value="Serie"/>
 	</node>
-	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
+	<node name="Preferences" value="FBReader-instellingen">
 		<node name="sync" value="Synchronisatie">
 			<node name="summary" value="Boekennetwerk"/>
 			<node name="site" value="Lees verder over synchronisatie">
@@ -710,12 +710,12 @@
 				<node name="summaryOn" value="Toon inhoudsmarkeringen in onderbalk"/>
 				<node name="summaryOff" value="Verberg inhoudsmarkeringen in onderbalk"/>
 			</node>
-			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
-			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
-				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
-				<node name="asPages" value="As page number" toBeTranslated="true"/>
-				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
-				<node name="asPagesAndPercentage" value="As page number and percentage" toBeTranslated="true"/>
+			<node name="tocMarksMaxNumber" value="Maximaal aantal weer te geven inhoudsmarkeringen"/>
+			<node name="showProgress" value="Toon leesvoortgang">
+				<node name="dontDisplay" value="Verberg leesvoortgang"/>
+				<node name="asPages" value="Als paginanummer"/>
+				<node name="asPercentage" value="Als percentage"/>
+				<node name="asPagesAndPercentage" value="Als paginanummer en percentage"/>
 			</node>
 			<node name="showBattery" value="Toon batterijniveau">
 				<node name="summaryOn" value="Toon batterijniveau in onderbalk"/>
@@ -917,6 +917,7 @@
 			<node name="markAsRead" value="Markeer als gelezen"/>
 			<node name="markAsUnread" value="Markeer als ongelezen"/>
 		</node>
+		<node name="gotoPage" value="Ga naar pagina"/>
 		<node name="plugin">
 			<node name="installTitle" value="Plug-in installeren"/>
 			<node name="updateTitle" value="Plug-in bijwerken"/>
@@ -1055,15 +1056,17 @@
 			<node name="edit" value="Bewerken"/>
 			<node name="remove" value="Verwijderen"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Trefwoord toevoegen"/>
-			<node name="removeDialog" value="Verwijder trefwoord">
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Verwijder trefwoord">
 				<node name="message" value="Verwijder trefwoord “%s” uit de lijst?"/>
 			</node>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Auteur toevoegen"/>
-			<node name="removeDialog" value="Verwijder auteur">
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Verwijder auteur">
 				<node name="message" value="Verwijder auteur “%s” uit de lijst?"/>
 			</node>
 		</node>
@@ -1082,16 +1085,14 @@
 			</node>
 			<node name="permissionDenied" value="Toegang geweigerd"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Geen plug-in voor %s-bestanden geïnstalleerd. Nu installeren?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Geen plug-in voor %s-bestanden geïnstalleerd. Nu installeren?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="Geen licentie voor %s"/>
-			<node name="message" value="Nu op Google Play kopen?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="Geen licentie voor %s. Nu op Google Play kopen?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Kan licentie voor %s niet controleren."/>
-			<node name="message" value="Nogmaals proberen?"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Kan licentie voor %s niet controleren. Nogmaals proberen?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

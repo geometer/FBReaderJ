@@ -282,7 +282,7 @@
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
 	<node name="style" value="Styl %s"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Název stylu"/>
 		<node name="invisible" value="Skrytý">
 			<node name="summaryOn" value="Nezvýrazňovat záložky"/>
@@ -926,6 +926,7 @@
 			<node name="markAsRead" value="Označit jako přečtené"/>
 			<node name="markAsUnread" value="Označit jako nepřečtené"/>
 		</node>
+		<node name="gotoPage" value="Přejít na stránku"/>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk"/>
 			<node name="updateTitle" value="Aktualizovat doplněk"/>
@@ -1064,15 +1065,17 @@
 			<node name="edit" value="Upravit"/>
 			<node name="remove" value="Odebrat"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Přidat štítek"/>
-			<node name="removeDialog" value="Odebrat štítek">
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Odebrat štítek">
 				<node name="message" value="Odebrat štítek “%s” ze seznamu?"/>
 			</node>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Přidat autora"/>
-			<node name="removeDialog" value="Odebrat autora">
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Odebrat autora">
 				<node name="message" value="Odebrat autora “%s” ze seznamu?"/>
 			</node>
 		</node>
@@ -1091,16 +1094,14 @@
 			</node>
 			<node name="permissionDenied" value="Přístup byl odepřen"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Doplněk pro soubory %s není nainstalován. Nainstalovat ho nyní?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Doplněk pro soubory %s není nainstalován. Nainstalovat ho nyní?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s není licencovaný"/>
-			<node name="message" value="Zakoupit nyní na Google Play?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s není licencovaný. Zakoupit nyní na Google Play?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Nelze ověřit licenci %s"/>
-			<node name="message" value="Zkusit znovu?"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Nelze ověřit licenci %s. Zkusit znovu?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

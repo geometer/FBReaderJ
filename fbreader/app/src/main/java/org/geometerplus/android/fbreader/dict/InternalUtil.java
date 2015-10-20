@@ -55,6 +55,11 @@ abstract class InternalUtil {
 	}
 
 	static void showToast(SuperActivityToast toast, final FBReaderMainActivity fbreader) {
+		if (toast == null) {
+			fbreader.hideDictionarySelection();
+			return;
+		}
+
 		toast.setOnDismissWrapper(new OnDismissWrapper("dict", new SuperToast.OnDismissListener() {
 			@Override
 			public void onDismiss(View view) {

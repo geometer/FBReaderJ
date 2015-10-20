@@ -26,13 +26,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 
+import org.fbreader.util.Pair;
+
 import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
+import org.geometerplus.android.util.OrientationUtil;
 
 public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	private static final String OPEN_TREE_ACTION = "android.fbreader.action.OPEN_TREE";
@@ -70,8 +72,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		super.onDestroy();
 	}
 
-	@Override
-	public TreeAdapter getListAdapter() {
+	public TreeAdapter getTreeAdapter() {
 		return (TreeAdapter)super.getListAdapter();
 	}
 
@@ -166,6 +167,14 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		}
 	}
 
+	private void setTitleAndSubtitle(Pair<String,String> pair) {
+		if (pair.Second != null) {
+			setTitle(pair.First + " - " + pair.Second);
+		} else {
+			setTitle(pair.First);
+		}
+	}
+
 	protected void init(Intent intent) {
 		final FBTree.Key key = (FBTree.Key)intent.getSerializableExtra(TREE_KEY_KEY);
 		final FBTree.Key selectedKey = (FBTree.Key)intent.getSerializableExtra(SELECTED_TREE_KEY_KEY);
@@ -173,9 +182,9 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		// not myCurrentKey = key
 		// because key might be null
 		myCurrentKey = myCurrentTree.getUniqueKey();
-		final TreeAdapter adapter = getListAdapter();
+		final TreeAdapter adapter = getTreeAdapter();
 		adapter.replaceAll(myCurrentTree.subtrees(), false);
-		setTitle(myCurrentTree.getTreeTitle());
+		setTitleAndSubtitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
 			selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();
 		final int index = adapter.getIndex(selectedTree);

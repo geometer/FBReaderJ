@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.book;
 import java.math.BigDecimal;
 import java.util.*;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 
@@ -69,11 +71,11 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		setTitle(book.getTitle());
 		setEncoding(book.myEncoding);
 		setLanguage(book.myLanguage);
-		if (!MiscUtil.equals(myAuthors, book.myAuthors)) {
+		if (!ComparisonUtil.equal(myAuthors, book.myAuthors)) {
 			myAuthors = book.myAuthors != null ? new ArrayList<Pair<Author, Role>>(book.myAuthors) : null;
 			myIsSaved = false;
 		}
-		if (!MiscUtil.equals(myTags, book.myTags)) {
+		if (!ComparisonUtil.equal(myTags, book.myTags)) {
 			myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
 			myIsSaved = false;
 		}
@@ -81,7 +83,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			myLabels = book.myLabels != null ? new ArrayList<Label>(book.myLabels) : null;
 			myIsSaved = false;
 		}
-		if (!MiscUtil.equals(mySeriesInfo, book.mySeriesInfo)) {
+		if (!ComparisonUtil.equal(mySeriesInfo, book.mySeriesInfo)) {
 			mySeriesInfo = book.mySeriesInfo;
 			myIsSaved = false;
 		}
@@ -233,7 +235,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public void setLanguage(String language) {
-		if (!MiscUtil.equals(myLanguage, language)) {
+		if (!ComparisonUtil.equal(myLanguage, language)) {
 			myLanguage = language;
 			resetSortKey();
 			myIsSaved = false;
@@ -245,14 +247,38 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public void setEncoding(String encoding) {
-		if (!MiscUtil.equals(myEncoding, encoding)) {
+		if (!ComparisonUtil.equal(myEncoding, encoding)) {
 			myEncoding = encoding;
 			myIsSaved = false;
 		}
 	}
 
 	public List<Tag> tags() {
-		return myTags != null ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
+		return myTags != null
+			? Collections.unmodifiableList(myTags)
+			: Collections.<Tag>emptyList();
+	}
+
+	public final String tagsString(String separator) {
+		final List<Tag> tags = myTags;
+		if (tags == null || tags.isEmpty()) {
+			return null;
+		}
+
+		final HashSet<String> tagNames = new HashSet<String>();
+		final StringBuilder buffer = new StringBuilder();
+		boolean first = true;
+		for (Tag t : tags) {
+			if (!first) {
+				buffer.append(separator);
+			}
+			if (!tagNames.contains(t.Name)) {
+				tagNames.add(t.Name);
+				buffer.append(t.Name);
+				first = false;
+			}
+		}
+		return buffer.toString();
 	}
 
 	void addTagWithNoCheck(Tag tag) {
@@ -365,7 +391,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	}
 
 	public void setProgress(RationalNumber progress) {
-		if (!MiscUtil.equals(myProgress, progress)) {
+		if (!ComparisonUtil.equal(myProgress, progress)) {
 			myProgress = progress;
 			myIsSaved = false;
 		}

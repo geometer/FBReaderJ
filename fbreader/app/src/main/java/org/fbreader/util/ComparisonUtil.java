@@ -17,23 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.options;
+package org.fbreader.util;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-
-public final class ZLBoolean3Option extends ZLOption {
-	public ZLBoolean3Option(String group, String optionName, ZLBoolean3 defaultValue) {
-		super(group, optionName, defaultValue.Name);
+public class ComparisonUtil {
+	public static boolean equal(Object o1, Object o2) {
+		return o1 == null ? o2 == null : o1.equals(o2);
 	}
 
-	public ZLBoolean3 getValue() {
-		return ZLBoolean3.getByName(getConfigValue());
-	}
-
-	public void setValue(ZLBoolean3 value) {
-		if (value == null) {
-			return;
-		}
-		setConfigValue(value.Name);
+	public static int hashCode(Object o) {
+		return o != null ? o.hashCode() : 0;
 	}
 }

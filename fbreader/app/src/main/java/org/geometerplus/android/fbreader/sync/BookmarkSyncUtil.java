@@ -21,8 +21,9 @@ package org.geometerplus.android.fbreader.sync;
 
 import java.util.*;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.network.JsonRequest2;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.fbreader.book.*;
@@ -161,7 +162,7 @@ class BookmarkSyncUtil {
 					final Long serverBgCode = (Long)serverInfo.get("bg_color");
 					final ZLColor serverBg = serverBgCode != null
 						? new ZLColor((int)(long)serverBgCode) : null;
-					if (!MiscUtil.equals(clientBg, serverBg)) {
+					if (!ComparisonUtil.equal(clientBg, serverBg)) {
 						doUpdate = true;
 					}
 
@@ -169,7 +170,7 @@ class BookmarkSyncUtil {
 					final Long serverFgCode = (Long)serverInfo.get("fg_color");
 					final ZLColor serverFg = serverFgCode != null
 						? new ZLColor((int)(long)serverFgCode) : null;
-					if (!MiscUtil.equals(clientFg, serverFg)) {
+					if (!ComparisonUtil.equal(clientFg, serverFg)) {
 						doUpdate = true;
 					}
 

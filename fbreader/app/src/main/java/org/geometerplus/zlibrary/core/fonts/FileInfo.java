@@ -19,8 +19,9 @@
 
 package org.geometerplus.zlibrary.core.fonts;
 
+import org.fbreader.util.ComparisonUtil;
+
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 public final class FileInfo {
 	public final String Path;
@@ -40,11 +41,11 @@ public final class FileInfo {
 			return false;
 		}
 		final FileInfo oInfo = (FileInfo)other;
-		return Path.equals(oInfo.Path) && MiscUtil.equals(EncryptionInfo, oInfo.EncryptionInfo);
+		return Path.equals(oInfo.Path) && ComparisonUtil.equal(EncryptionInfo, oInfo.EncryptionInfo);
 	}
 
 	@Override
 	public int hashCode() {
-		return Path.hashCode() + 23 * MiscUtil.hashCode(EncryptionInfo);
+		return Path.hashCode() + 23 * ComparisonUtil.hashCode(EncryptionInfo);
 	}
 }

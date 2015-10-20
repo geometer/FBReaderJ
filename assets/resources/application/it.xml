@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Italian FBReaderJ resources, by Vytek, Neoxx and OlapGirl from AndDev.it Translate Team -->
-<!--21.02 25/08/2011-->
+<!-- 21.02 25/08/2011 -->
+<!-- Updated by Michelangelo Della Camera, 8 Oct 2015 -->
 <resources>
 	<node name="library" value="Libreria FBReader">
 		<node name="unknownAuthor" value="Autore sconosciuto"/>
@@ -24,19 +25,19 @@
 		<node name="favorites" value="Preferiti">
 			<node name="summary" value="I miei libri preferiti"/>
 		</node>
-		<node name="chooseView" value="Choose view" toBeTranslated="true"/>
-		<node name="wideCardsView" value="Wide cards" toBeTranslated="true"/>
-		<node name="smallCardsView" value="Small cards" toBeTranslated="true"/>
-		<node name="tinyCardsView" value="Tiny cards" toBeTranslated="true"/>
+		<node name="chooseView" value="Scegli la vista"/>
+		<node name="wideCardsView" value="Copertina larga"/>
+		<node name="smallCardsView" value="Copertina piccola"/>
+		<node name="tinyCardsView" value="Copertina stretta"/>
 		<node name="coversView" value="Covers" toBeTranslated="true"/>
-		<node name="oldView" value="Classic" toBeTranslated="true"/>
-		<node name="bookshelfView" value="Bookshelf view" toBeTranslated="true">
-			<node name="summary" value="Switch to thumbnail view" toBeTranslated="true"/>
+		<node name="oldView" value="Classica"/>
+		<node name="bookshelfView" value="Vista scaffale">
+			<node name="summary" value="Cambia l'anteprima"/>
 		</node>
 		<node name="found" value="Trovato">
 			<node name="summary" value="Cerca risultati per: %s"/>
 		</node>
-		<node name="sync" value="Synchronisation" toBeTranslated="true">
+		<node name="sync" value="Sincronizzazione">
 			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
 			<node name="sync-success" value="Synchronised" toBeTranslated="true">
 				<node name="summary" value="Books successfully uploaded to the server" toBeTranslated="true"/>
@@ -264,7 +265,7 @@
 		<node name="close" value="Chiudi FBReader"/>
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
-	<node name="editStyle">
+	<node name="editStyle" value="Edit style" toBeTranslated="true">
 		<node name="name" value="Style name" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
 			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
@@ -908,6 +909,7 @@
 			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
+		<node name="gotoPage" value="Vai a Pagine"/>
 		<node name="plugin">
 			<node name="installTitle" value="Installa plugin"/>
 			<node name="updateTitle" value="Aggiorna plugin"/>
@@ -1046,15 +1048,17 @@
 			<node name="edit" value="Edit" toBeTranslated="true"/>
 			<node name="remove" value="Remove" toBeTranslated="true"/>
 		</node>
-		<node name="editTags">
+		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Add tag" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
+			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Remove tag" toBeTranslated="true">
 				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
 			</node>
 		</node>
-		<node name="editAuthors">
+		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove author" toBeTranslated="true">
+			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Remove author" toBeTranslated="true">
 				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
 			</node>
 		</node>
@@ -1073,16 +1077,14 @@
 			</node>
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Plugin for %s files is not installed. Install now?" toBeTranslated="true"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Plugin for %s files is not installed. Install now?" toBeTranslated="true"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s is not licensed. Purchase on Google Play now?" toBeTranslated="true"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
-			<node name="message" value="Try again?" toBeTranslated="true"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Cannot verify %s licence. Try again?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

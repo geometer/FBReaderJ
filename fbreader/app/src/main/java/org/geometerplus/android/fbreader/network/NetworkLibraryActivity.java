@@ -28,11 +28,12 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import org.fbreader.util.Boolean3;
+
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
@@ -302,7 +303,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		}
 
 		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+		final NetworkTree tree = (NetworkTree)getTreeAdapter().getItem(position);
 		if (tree != null) {
 			menu.setHeaderTitle(tree.getName());
 			for (Action a : getContextMenuActions(tree)) {
@@ -316,7 +317,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+		final NetworkTree tree = (NetworkTree)getTreeAdapter().getItem(position);
 		if (tree != null) {
 			for (Action a : getContextMenuActions(tree)) {
 				if (a.Code == item.getItemId()) {
@@ -334,7 +335,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 			fillListClickList();
 		}
 
-		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+		final NetworkTree tree = (NetworkTree)getTreeAdapter().getItem(position);
 		for (Action a : myListClickActions) {
 			if (a.isVisible(tree) && a.isEnabled(tree)) {
 				checkAndRun(a, tree);
@@ -411,7 +412,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				switch (code) {
 					default:
 						updateLoadingProgress();
-						getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
+						getTreeAdapter().replaceAll(getCurrentTree().subtrees(), true);
 						break;
 					case InitializationFailed:
 						showInitLibraryDialog((String)params[0]);
@@ -488,15 +489,15 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		if (tree instanceof NetworkCatalogTree) {
 			final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 			switch (catalogTree.getVisibility()) {
-				case B3_FALSE:
+				case FALSE:
 					break;
-				case B3_TRUE:
+				case TRUE:
 					action.run(tree);
 					break;
-				case B3_UNDEFINED:
+				case UNDEFINED:
 					Util.runAuthenticationDialog(this, tree.getLink(), new Runnable() {
 						public void run() {
-							if (catalogTree.getVisibility() != ZLBoolean3.B3_TRUE) {
+							if (catalogTree.getVisibility() != Boolean3.TRUE) {
 								return;
 							}
 							if (action.Code != ActionCode.SIGNIN) {
