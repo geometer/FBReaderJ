@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
+import org.fbreader.util.NaturalOrderComparator;
 import org.fbreader.util.Pair;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -30,6 +31,19 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class FileTree extends LibraryTree {
+	private static final NaturalOrderComparator ourNaturalOrderComparator =
+		new NaturalOrderComparator();
+
+	private static final Comparator<ZLFile> ourFileComparator = new Comparator<ZLFile>() {
+		public int compare(ZLFile file0, ZLFile file1) {
+			final boolean isDir = file0.isDirectory();
+			if (isDir != file1.isDirectory()) {
+				return isDir ? -1 : 1;
+			}
+			return ourNaturalOrderComparator.compare(file0.getShortName(), file1.getShortName());
+		}
+	};
+
 	private final ZLFile myFile;
 	private final String myName;
 	private final String mySummary;
@@ -167,16 +181,6 @@ public class FileTree extends LibraryTree {
 		}
 		return myFile.equals(((FileTree)o).myFile);
 	}
-
-	private static final Comparator<ZLFile> ourFileComparator = new Comparator<ZLFile>() {
-		public int compare(ZLFile file0, ZLFile file1) {
-			final boolean isDir = file0.isDirectory();
-			if (isDir != file1.isDirectory()) {
-				return isDir ? -1 : 1;
-			}
-			return file0.getShortName().compareToIgnoreCase(file1.getShortName());
-		}
-	};
 
 	@Override
 	public int compareTo(FBTree tree) {
