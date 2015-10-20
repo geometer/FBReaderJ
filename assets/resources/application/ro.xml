@@ -910,6 +910,7 @@
 			<node name="markAsRead" value="Marcati ca citit"/>
 			<node name="markAsUnread" value="Marcati ca necitit"/>
 		</node>
+		<node name="gotoPage" value="Du-te la pagina"/>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
 			<node name="updateTitle" value="Actualizare plugin"/>
@@ -1051,10 +1052,16 @@
 		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Adauga eticheta"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Sterge eticheta">
+				<node name="message" value="Sa sterg eticheta “%s” din lista?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Adauga autor"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Sterge autor">
+				<node name="message" value="Sa sterg autorul “%s” din lista?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Radacina"/>
@@ -1071,16 +1078,14 @@
 			</node>
 			<node name="permissionDenied" value="Acces interzis"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Plugin-ul pentru fisierele e tip %s nu este instalat. Sa-l instalez acum?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Plugin-ul pentru fisierele e tip %s nu este instalat. Sa-l instalez acum?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s nu este licențiat"/>
-			<node name="message" value="Cumpărati acum pe Google Play?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s nu este licențiat. Cumpărati acum pe Google Play?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Nu se poate verifica %s licenta"/>
-			<node name="message" value="Incercati din nou?"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Nu se poate verifica %s licenta. Incercati din nou?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
