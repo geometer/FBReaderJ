@@ -921,6 +921,7 @@
 			<node name="markAsRead" value="Marcar como lido"/>
 			<node name="markAsUnread" value="Marcar como não lido"/>
 		</node>
+		<node name="gotoPage" value="Ir para a Página "/>
 		<node name="plugin" value="Plug-in">
 			<node name="installTitle" value="Instalar o plugin"/>
 			<node name="updateTitle" value="Atualizar Plugin"/>
@@ -1062,10 +1063,16 @@
 		<node name="editTags" value="Editar etiquetas">
 			<node name="addTag" value="Adicionar etiqueta"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Remover etiqueta">
+				<node name="message" value="Remover etiqueta “%s” da lista?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Editar autores">
 			<node name="addAuthor" value="Adicionar autor"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Remover autor">
+				<node name="message" value="Remover autor “%s” da lista?"/>
+			</node>
 		</node>
 		<node name="fileChooser" value="Escolher ficheiro">
 			<node name="root" value="Raíz"/>
@@ -1083,15 +1090,13 @@
 			<node name="permissionDenied" value="Permissão negada"/>
 		</node>
 		<node name="missingPlugin" value="Plug-in em falta">
-			<node name="title" value="Plug-in %s para ficheiros não instalado. Instalar agora?"/>
+			<node name="message" value="Plug-in %s para ficheiros não instalado. Instalar agora?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s não está licenciado"/>
-			<node name="message" value="Comprar no Google Play agora?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s não está licenciado. Comprar no Google Play agora?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Não foi possível verificar a licença %s"/>
-			<node name="message" value="Tentar novamente?"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Não foi possível verificar a licença %s. Tentar novamente?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

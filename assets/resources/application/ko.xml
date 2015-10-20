@@ -917,6 +917,7 @@
 			<node name="markAsRead" value="읽음으로 표시"/>
 			<node name="markAsUnread" value="읽지 않음으로 표시"/>
 		</node>
+		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">
 			<node name="installTitle" value="플러그인 설치"/>
 			<node name="updateTitle" value="플러그인 업데이트"/>
@@ -1058,10 +1059,16 @@
 		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="태그 추가"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="태그 제거">
+				<node name="message" value="목록에서 태그를 제거할까요?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="저자 추가"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="저자 제거">
+				<node name="message" value="목록에서 저자를 제거할까요?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="최상위"/>
@@ -1078,16 +1085,14 @@
 			</node>
 			<node name="permissionDenied" value="퍼미션 거부됨"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="%s 파일에 사용할 플러그인이 설치되지 않았습니다. 지금 설치할까요?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="%s 파일에 사용할 플러그인이 설치되지 않았습니다. 지금 설치할까요?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s is not licensed. Purchase on Google Play now?" toBeTranslated="true"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
-			<node name="message" value="Try again?" toBeTranslated="true"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Cannot verify %s licence. Try again?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">
