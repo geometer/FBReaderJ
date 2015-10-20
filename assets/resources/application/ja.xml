@@ -917,6 +917,7 @@
 			<node name="markAsRead" value="既読にする"/>
 			<node name="markAsUnread" value="未読にする"/>
 		</node>
+		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">
 			<node name="installTitle" value="プラグインをインストール"/>
 			<node name="updateTitle" value="プラグインをアップデート"/>
@@ -1058,10 +1059,16 @@
 		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="タグを追加"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="タグを削除">
+				<node name="message" value="タグ“%s”をリストから削除しますか?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="著者を追加"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="著者を削除">
+				<node name="message" value="著者“%s”をリストから削除しますか?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="(最上位)"/>
@@ -1078,16 +1085,14 @@
 			</node>
 			<node name="permissionDenied" value="許可がありません"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="ファイル形式 %s 用のプラグインがインストールされていません。今すぐインストールしますか?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="ファイル形式 %s 用のプラグインがインストールされていません。今すぐインストールしますか?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s is not licensed. Purchase on Google Play now?" toBeTranslated="true"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
-			<node name="message" value="Try again?" toBeTranslated="true"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Cannot verify %s licence. Try again?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

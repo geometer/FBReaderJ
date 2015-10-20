@@ -26,7 +26,11 @@ import java.util.Map;
 import android.annotation.TargetApi;
 import android.os.Build;
 
+import org.fbreader.util.NaturalOrderComparator;
+
 public abstract class TitledEntity<T extends TitledEntity<T>> implements Comparable<T> {
+	private static final NaturalOrderComparator ourComparator = new NaturalOrderComparator();
+
 	private String myTitle;
 	private String mySortKey;
 
@@ -66,7 +70,7 @@ public abstract class TitledEntity<T extends TitledEntity<T>> implements Compara
 
 	@Override
 	public int compareTo(T other) {
-		return getSortKey().compareTo(other.getSortKey());
+		return ourComparator.compare(getSortKey(), other.getSortKey());
 	}
 
 	private final static Map<String, String[]> ARTICLES = new HashMap<String, String[]>();

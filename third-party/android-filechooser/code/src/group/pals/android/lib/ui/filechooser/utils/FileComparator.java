@@ -13,6 +13,8 @@ import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 
 import java.util.Comparator;
 
+import org.fbreader.util.NaturalOrderComparator;
+
 /**
  * {@link IFile} comparator.<br>
  * Rules:<br>
@@ -24,6 +26,8 @@ import java.util.Comparator;
  * @since v1.91
  */
 public class FileComparator implements Comparator<IFile> {
+	private static final NaturalOrderComparator ourNaturalOrderComparator =
+		new NaturalOrderComparator();
 
     private final IFileProvider.SortType mSortType;
     private final IFileProvider.SortOrder mSortOrder;
@@ -45,7 +49,7 @@ public class FileComparator implements Comparator<IFile> {
     public int compare(IFile lhs, IFile rhs) {
         if ((lhs.isDirectory() && rhs.isDirectory()) || (lhs.isFile() && rhs.isFile())) {
             // default is to compare by name (case insensitive)
-            int res = lhs.getSecondName().compareToIgnoreCase(rhs.getSecondName());
+            int res = ourNaturalOrderComparator.compare(lhs.getSecondName(), rhs.getSecondName());
             
             switch (mSortType) {
             case SortByName:
