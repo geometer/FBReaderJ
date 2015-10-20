@@ -724,8 +724,8 @@
 			<node name="summary" value="Modalités de défilement du texte"/>
 			<node name="fingerScrolling" value="Défilement à l'écran">
 				<node name="byTap" value="Changer de page par appui du doigt"/>
-				<node name="byFlick" value="Changer de page par petit coup du doigt"/>
-				<node name="byTapAndFlick" value="Changer de page lors d'un appui ou petit coup"/>
+				<node name="byFlick" value="Changer de page par glissement du doigt"/>
+				<node name="byTapAndFlick" value="Changer de page par appui ou glissement"/>
 			</node>
 			<node name="enableDoubleTapDetection" value="Détection appui double">
 				<node name="summaryOn" value="Appui double pour afficher le menu de navigation"/>
