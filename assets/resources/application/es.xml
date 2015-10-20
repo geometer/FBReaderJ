@@ -923,6 +923,7 @@
 			<node name="markAsRead" value="Marcar como leído"/>
 			<node name="markAsUnread" value="Marcar como no leído"/>
 		</node>
+		<node name="gotoPage" value="Ir a la página"/>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar plugin"/>
 			<node name="updateTitle" value="Actualizar plugin"/>
@@ -1064,10 +1065,16 @@
 		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Añadir etiqueta"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Borrar etiqueta">
+				<node name="message" value="¿Eliminar etiqueta “%s” de la lista?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Añadir autor"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Borrar autor">
+				<node name="message" value="¿Eliminar autor “%s” de la lista?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Raíz"/>
@@ -1084,16 +1091,14 @@
 			</node>
 			<node name="permissionDenied" value="Permiso denegado"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="El plugin para archivos %s no está instalado. ¿Quiere instalarlo ahora?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="El plugin para archivos %s no está instalado. ¿Quiere instalarlo ahora?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s no tiene licencia"/>
-			<node name="message" value="¿Comprar ahora en Google Play?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s no tiene licencia. ¿Comprar ahora en Google Play?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="No se puede verificar la licencia %s"/>
-			<node name="message" value="¿Probar de nuevo?"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="No se puede verificar la licencia %s. ¿Probar de nuevo?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

@@ -910,6 +910,7 @@
 			<node name="markAsRead" value="Marquer comme lu"/>
 			<node name="markAsUnread" value="Marquer comme non lu"/>
 		</node>
+		<node name="gotoPage" value="Aller à la Page"/>
 		<node name="plugin">
 			<node name="installTitle" value="Installer plugin"/>
 			<node name="updateTitle" value="Mettre à jour plugin"/>
@@ -1051,10 +1052,16 @@
 		<node name="editTags" value="Tags" toBeTranslated="true">
 			<node name="addTag" value="Ajouter une étiquette"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Supprimer l'étiquette">
+				<node name="message" value="Supprimer l'étiquette “%s” de la liste ?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Authors" toBeTranslated="true">
 			<node name="addAuthor" value="Ajouter un auteur"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Supprimer un auteur">
+				<node name="message" value="Supprimer l'auteur “%s” de la liste ?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Racine"/>
@@ -1071,16 +1078,14 @@
 			</node>
 			<node name="permissionDenied" value="Accès refusé"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Le plugin pour les fichier %s n'est pas installé. Installer maintenant ?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Le plugin pour les fichier %s n'est pas installé. Installer maintenant ?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s is not licensed. Purchase on Google Play now?" toBeTranslated="true"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
-			<node name="message" value="Try again?" toBeTranslated="true"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Cannot verify %s licence. Try again?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">
