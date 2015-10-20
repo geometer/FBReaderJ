@@ -1078,16 +1078,14 @@
 			</node>
 			<node name="permissionDenied" value="Acces interzis"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Plugin-ul pentru fisierele e tip %s nu este instalat. Sa-l instalez acum?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Plugin-ul pentru fisierele e tip %s nu este instalat. Sa-l instalez acum?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s nu este licențiat"/>
-			<node name="message" value="Cumpărati acum pe Google Play?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s nu este licențiat. Cumpărati acum pe Google Play?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Nu se poate verifica %s licenta"/>
-			<node name="message" value="Incercati din nou?"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Nu se poate verifica %s licenta. Incercati din nou?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

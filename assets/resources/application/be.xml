@@ -1085,16 +1085,14 @@
 			</node>
 			<node name="permissionDenied" value="Не дазволена"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Няма ўбудовы для файлаў «%s». Усталяваць яе?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Няма ўбудовы для файлаў «%s». Усталяваць яе?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s не ліцэнзавана"/>
-			<node name="message" value="Купіць зараз на Google Play?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s не ліцэнзавана. Купіць зараз на Google Play?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Немагчыма праверыць ліцэнзію %s"/>
-			<node name="message" value="Паспрабаваць зноў?"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Немагчыма праверыць ліцэнзію %s. Паспрабаваць зноў?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

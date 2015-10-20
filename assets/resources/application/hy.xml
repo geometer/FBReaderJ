@@ -1091,16 +1091,14 @@
 			</node>
 			<node name="permissionDenied" value="Մուտքը մերժվեց"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="%s նիշքերի ընթերցման խրվակը տեղադրված չէ, տեղադրե՞լ այն։"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="%s նիշքերի ընթերցման խրվակը տեղադրված չէ, տեղադրե՞լ այն։"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s is not licensed" toBeTranslated="true"/>
-			<node name="message" value="Purchase on Google Play now?" toBeTranslated="true"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s is not licensed. Purchase on Google Play now?" toBeTranslated="true"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Cannot verify %s licence" toBeTranslated="true"/>
-			<node name="message" value="Try again?" toBeTranslated="true"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Cannot verify %s licence. Try again?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

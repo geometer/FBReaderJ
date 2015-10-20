@@ -1085,16 +1085,14 @@
 			</node>
 			<node name="permissionDenied" value="Permission denied"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Plugin for %s files is not installed. Install now?"/>
+		<node name="missingPlugin" value="Missing plugin">
+			<node name="message" value="Plugin for %s files is not installed. Install now?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s is not licensed"/>
-			<node name="message" value="Purchase on Google Play now?"/>
+		<node name="licensing" value="Not licensed">
+			<node name="message" value="%s is not licensed. Purchase on Google Play now?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Cannot verify %s licence"/>
-			<node name="message" value="Try again?"/>
+		<node name="retryLicensing" value="Licence verification">
+			<node name="message" value="Cannot verify %s licence. Try again?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

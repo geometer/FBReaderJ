@@ -1094,16 +1094,14 @@
 			</node>
 			<node name="permissionDenied" value="Přístup byl odepřen"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Doplněk pro soubory %s není nainstalován. Nainstalovat ho nyní?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Doplněk pro soubory %s není nainstalován. Nainstalovat ho nyní?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s není licencovaný"/>
-			<node name="message" value="Zakoupit nyní na Google Play?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s není licencovaný. Zakoupit nyní na Google Play?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Nelze ověřit licenci %s"/>
-			<node name="message" value="Zkusit znovu?"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Nelze ověřit licenci %s. Zkusit znovu?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

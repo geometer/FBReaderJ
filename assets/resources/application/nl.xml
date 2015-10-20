@@ -1085,16 +1085,14 @@
 			</node>
 			<node name="permissionDenied" value="Toegang geweigerd"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Geen plug-in voor %s-bestanden geïnstalleerd. Nu installeren?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Geen plug-in voor %s-bestanden geïnstalleerd. Nu installeren?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="Geen licentie voor %s"/>
-			<node name="message" value="Nu op Google Play kopen?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="Geen licentie voor %s. Nu op Google Play kopen?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Kan licentie voor %s niet controleren."/>
-			<node name="message" value="Nogmaals proberen?"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Kan licentie voor %s niet controleren. Nogmaals proberen?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
