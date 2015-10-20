@@ -922,6 +922,7 @@
 			<node name="markAsRead" value="Пометить как прочтённое"/>
 			<node name="markAsUnread" value="Пометить как непрочтённое"/>
 		</node>
+		<node name="gotoPage" value="На страницу"/>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
 			<node name="updateTitle" value="Новая версия"/>
@@ -1067,10 +1068,16 @@
 		<node name="editTags" value="Категории">
 			<node name="addTag" value="Добавить категорию"/>
 			<node name="editTag" value="Изменить категорию"/>
+			<node name="removeTag" value="Убрать категорию">
+				<node name="message" value="Убрать «%s» из списка?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Авторы">
 			<node name="addAuthor" value="Добавить автора"/>
 			<node name="editAuthor" value="Изменить автора"/>
+			<node name="removeAuthor" value="Убрать автора">
+				<node name="message" value="Убрать %s из списка?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Корень"/>
@@ -1087,16 +1094,14 @@
 			</node>
 			<node name="permissionDenied" value="Нет доступа"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Модуль для чтения файлов %s не установлен. Установить прямо сейчас?"/>
+		<node name="missingPlugin" value="Отсутсвует модуль">
+			<node name="message" value="Модуль для чтения файлов %s не установлен. Установить прямо сейчас?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s не лицензирован"/>
-			<node name="message" value="Купить на Google Play?"/>
+		<node name="licensing" value="Нет лицензии">
+			<node name="message" value="%s не лицензирован. Купить на Google Play?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Не удалось проверить лицензию %s"/>
-			<node name="message" value="Попробовать ещё раз?"/>
+		<node name="retryLicensing" value="Проверка лицензии">
+			<node name="message" value="Не удалось проверить лицензию %s. Попробовать ещё раз?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

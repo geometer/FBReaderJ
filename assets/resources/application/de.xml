@@ -922,6 +922,7 @@
 			<node name="markAsRead" value="Als gelesen markieren"/>
 			<node name="markAsUnread" value="Als ungelesen markieren"/>
 		</node>
+		<node name="gotoPage" value="Gehe zur Seite"/>
 		<node name="plugin">
 			<node name="installTitle" value="Plugin installieren"/>
 			<node name="updateTitle" value="Plugin aktualisieren"/>
@@ -1063,10 +1064,16 @@
 		<node name="editTags" value="Schlagwörter">
 			<node name="addTag" value="Schlagwort hinzufügen"/>
 			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="removeTag" value="Schlagwort entfernen">
+				<node name="message" value="Schlagwort “%s” aus der Liste entfernen?"/>
+			</node>
 		</node>
 		<node name="editAuthors" value="Autoren">
 			<node name="addAuthor" value="Autor hinzufügen"/>
 			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="removeAuthor" value="Autor entfernen">
+				<node name="message" value="Autor “%s” aus der Liste entfernen?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Ursprung"/>
@@ -1083,16 +1090,14 @@
 			</node>
 			<node name="permissionDenied" value="Zugriff verweigert"/>
 		</node>
-		<node name="missingPlugin">
-			<node name="title" value="Plugin für %s Dateien ist nicht installiert. Jetzt installieren?"/>
+		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+			<node name="message" value="Plugin für %s Dateien ist nicht installiert. Jetzt installieren?"/>
 		</node>
-		<node name="licensing">
-			<node name="title" value="%s ist nicht lizenziert"/>
-			<node name="message" value="Jetzt im Google Play Store kaufen?"/>
+		<node name="licensing" value="Not licensed" toBeTranslated="true">
+			<node name="message" value="%s ist nicht lizenziert. Jetzt im Google Play Store kaufen?"/>
 		</node>
-		<node name="retryLicensing">
-			<node name="title" value="Die Lizenz %s kann nicht überprüft werden"/>
-			<node name="message" value="Wieder versuchen"/>
+		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+			<node name="message" value="Die Lizenz %s kann nicht überprüft werden. Wieder versuchen?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
