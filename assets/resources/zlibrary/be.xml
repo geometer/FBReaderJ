@@ -40,8 +40,8 @@
 		<node name="de" value="Нямецкая мова"/>
 		<node name="de-traditional" value="Нямецкая мова (традыцыйны правапіс)"/>
 		<node name="el" value="Грэцкая мова"/>
-		<node name="en" value="Ангельская мова"/>
-		<node name="en_US" value="English (US)" toBeTranslated="true"/>
+		<node name="en" value="Ангельская (Вялікая Брытанія)"/>
+		<node name="en_US" value="Ангельская мова"/>
 		<node name="eo" value="Эспэранта"/>
 		<node name="es" value="Гішпанская мова"/>
 		<node name="eu" value="Басконская мова"/>
