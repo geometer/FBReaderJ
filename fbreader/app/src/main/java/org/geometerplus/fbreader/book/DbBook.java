@@ -44,7 +44,7 @@ public final class DbBook extends AbstractBook {
 	DbBook(ZLFile file, FormatPlugin plugin) throws BookReadingException {
 		this(-1, plugin.realBookFile(file), null, null, null);
 		BookUtil.readMetainfo(this, plugin);
-		myIsSaved = false;
+		mySaveState = SaveState.NotSaved;
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public final class DbBook extends AbstractBook {
 		myUids = database.listUids(myId);
 		myProgress = database.getProgress(myId);
 		HasBookmark = database.hasVisibleBookmark(myId);
-		myIsSaved = true;
+		mySaveState = SaveState.Saved;
 		if (myUids == null || myUids.isEmpty()) {
 			try {
 				BookUtil.getPlugin(pluginCollection, this).readUids(this);
@@ -70,11 +70,48 @@ public final class DbBook extends AbstractBook {
 		}
 	}
 
-	boolean save(final BooksDatabase database, boolean force) {
-		if (!force && myId != -1 && myIsSaved) {
-			return false;
+	enum WhatIsSaved {
+		Nothing,
+		Progress,
+		Everything;
+	}
+
+	WhatIsSaved save(BooksDatabase database, boolean force) {
+		if (force || myId == -1) {
+			mySaveState = SaveState.NotSaved;
 		}
 
+		switch (mySaveState) {
+			case Saved:
+				return WhatIsSaved.Nothing;
+			case ProgressNotSaved:
+				return saveProgress(database) ? WhatIsSaved.Progress : WhatIsSaved.Nothing;
+			default:
+			case NotSaved:	
+				return saveFull(database) ? WhatIsSaved.Everything : WhatIsSaved.Nothing;
+		}
+	}
+
+	private boolean saveProgress(final BooksDatabase database) {
+		final boolean[] result = new boolean[] { false };
+		database.executeAsTransaction(new Runnable() {
+			public void run() {
+				if (myId != -1 && myProgress != null) {
+					database.saveBookProgress(myId, myProgress);
+					result[0] = true;
+				}
+			}
+		});
+
+		if (result[0]) {
+			mySaveState = SaveState.Saved;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean saveFull(final BooksDatabase database) {
 		final boolean[] result = new boolean[] { true };
 		database.executeAsTransaction(new Runnable() {
 			public void run() {
@@ -127,7 +164,7 @@ public final class DbBook extends AbstractBook {
 		});
 
 		if (result[0]) {
-			myIsSaved = true;
+			mySaveState = SaveState.Saved;
 			return true;
 		} else {
 			return false;
@@ -185,17 +222,17 @@ public final class DbBook extends AbstractBook {
 		if (!MiscUtil.listsEquals(myTags, other.myTags) &&
 			MiscUtil.listsEquals(myTags, base.myTags)) {
 			myTags = other.myTags != null ? new ArrayList<Tag>(other.myTags) : null;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 		if (!ComparisonUtil.equal(mySeriesInfo, other.mySeriesInfo) &&
 			ComparisonUtil.equal(mySeriesInfo, base.mySeriesInfo)) {
 			mySeriesInfo = other.mySeriesInfo;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 		if (!MiscUtil.listsEquals(myUids, other.myUids) &&
 			MiscUtil.listsEquals(myUids, base.myUids)) {
 			myUids = other.myUids != null ? new ArrayList<UID>(other.myUids) : null;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
