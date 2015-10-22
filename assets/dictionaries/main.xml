@@ -36,6 +36,13 @@
 		list="always"
 	/>
 	<dictionary
+		id="Fora Dictionary Pro"
+		package="com.ngc.fora.android"
+		class=".ForaActivity"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+	/>
+	<dictionary
 		id="Free Dictionary . org"
 		title="Free&#160;Dictionary&#160;.&#160;org"
 		package="org.freedictionary"
