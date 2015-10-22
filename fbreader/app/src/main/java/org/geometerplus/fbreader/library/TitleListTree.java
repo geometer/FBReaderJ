@@ -83,7 +83,6 @@ public class TitleListTree extends FirstLevelTree {
 				} else {
 					return super.onBookEvent(event, book);
 				}
-			default:
 			case Updated:
 				if (myGroupByFirstLetter) {
 					// TODO: remove old tree (?)
@@ -93,6 +92,8 @@ public class TitleListTree extends FirstLevelTree {
 					changed |= createBookWithAuthorsSubtree(book);
 					return changed;
 				}
+			default:
+				return super.onBookEvent(event, book);
 		}
 	}
 
