@@ -140,7 +140,7 @@ public abstract class BookUtil {
 		book.mySeriesInfo = null;
 		book.myUids = null;
 
-		book.myIsSaved = false;
+		book.mySaveState = AbstractBook.SaveState.NotSaved;
 
 		plugin.readMetainfo(book);
 		if (book.myUids == null || book.myUids.isEmpty()) {
