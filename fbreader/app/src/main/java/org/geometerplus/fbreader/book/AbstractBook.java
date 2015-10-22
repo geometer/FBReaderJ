@@ -50,14 +50,19 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 
 	public volatile boolean HasBookmark;
 
-	protected volatile boolean myIsSaved;
+	protected enum SaveState {
+		Saved,
+		ProgressNotSaved,
+		NotSaved;
+	};
+	protected volatile SaveState mySaveState = SaveState.NotSaved;
 
 	AbstractBook(long id, String title, String encoding, String language) {
 		super(title);
 		myId = id;
 		myEncoding = encoding;
 		myLanguage = language;
-		myIsSaved = true;
+		mySaveState = SaveState.Saved;
 	}
 
 	public abstract String getPath();
@@ -71,28 +76,28 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		setLanguage(book.myLanguage);
 		if (!ComparisonUtil.equal(myAuthors, book.myAuthors)) {
 			myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 		if (!ComparisonUtil.equal(myTags, book.myTags)) {
 			myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 		if (!MiscUtil.listsEquals(myLabels, book.myLabels)) {
 			myLabels = book.myLabels != null ? new ArrayList<Label>(book.myLabels) : null;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 		if (!ComparisonUtil.equal(mySeriesInfo, book.mySeriesInfo)) {
 			mySeriesInfo = book.mySeriesInfo;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 		if (!MiscUtil.listsEquals(myUids, book.myUids)) {
 			myUids = book.myUids != null ? new ArrayList<UID>(book.myUids) : null;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 		setProgress(book.myProgress);
 		if (HasBookmark != book.HasBookmark) {
 			HasBookmark = book.HasBookmark;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -130,7 +135,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	public void removeAllAuthors() {
 		if (myAuthors != null) {
 			myAuthors = null;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -141,10 +146,10 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		if (myAuthors == null) {
 			myAuthors = new ArrayList<Author>();
 			myAuthors.add(author);
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		} else if (!myAuthors.contains(author)) {
 			myAuthors.add(author);
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -171,7 +176,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		}
 		if (!getTitle().equals(title)) {
 			super.setTitle(title);
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -191,14 +196,14 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		if (mySeriesInfo == null) {
 			if (name != null) {
 				mySeriesInfo = new SeriesInfo(name, index);
-				myIsSaved = false;
+				mySaveState = SaveState.NotSaved;
 			}
 		} else if (name == null) {
 			mySeriesInfo = null;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		} else if (!name.equals(mySeriesInfo.Series.getTitle()) || mySeriesInfo.Index != index) {
 			mySeriesInfo = new SeriesInfo(name, index);
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -211,7 +216,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		if (!ComparisonUtil.equal(myLanguage, language)) {
 			myLanguage = language;
 			resetSortKey();
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -222,7 +227,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	public void setEncoding(String encoding) {
 		if (!ComparisonUtil.equal(myEncoding, encoding)) {
 			myEncoding = encoding;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -264,7 +269,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	public void removeAllTags() {
 		if (myTags != null) {
 			myTags = null;
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -275,7 +280,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 			}
 			if (!myTags.contains(tag)) {
 				myTags.add(tag);
-				myIsSaved = false;
+				mySaveState = SaveState.NotSaved;
 			}
 		}
 	}
@@ -314,13 +319,13 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		}
 		if (!myLabels.contains(label)) {
 			myLabels.add(label);
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
 	public void removeLabel(String label) {
 		if (myLabels != null && myLabels.remove(new Label(label))) {
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -351,7 +356,7 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 		}
 		if (!myUids.contains(uid)) {
 			myUids.add(uid);
-			myIsSaved = false;
+			mySaveState = SaveState.NotSaved;
 		}
 	}
 
@@ -366,7 +371,9 @@ public abstract class AbstractBook extends TitledEntity<AbstractBook> {
 	public void setProgress(RationalNumber progress) {
 		if (!ComparisonUtil.equal(myProgress, progress)) {
 			myProgress = progress;
-			myIsSaved = false;
+			if (mySaveState == SaveState.Saved) {
+				mySaveState = SaveState.ProgressNotSaved;
+			}
 		}
 	}
 
