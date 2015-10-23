@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
@@ -54,13 +55,16 @@ final class TextSearchPopup extends PopupPanel implements View.OnClickListener {
 		activity.getLayoutInflater().inflate(R.layout.search_panel, root);
 		myWindow = (SimplePopupWindow)root.findViewById(R.id.search_panel);
 
-		setupButton(R.id.search_panel_previous);
-		setupButton(R.id.search_panel_next);
-		setupButton(R.id.search_panel_close);
+		final ZLResource resource = ZLResource.resource("textSearchPopup");
+		setupButton(R.id.search_panel_previous, resource.getResource("findPrevious").getValue());
+		setupButton(R.id.search_panel_next, resource.getResource("findNext").getValue());
+		setupButton(R.id.search_panel_close, resource.getResource("close").getValue());
 	}
 
-	private void setupButton(int buttonId) {
-		myWindow.findViewById(buttonId).setOnClickListener(this);
+	private void setupButton(int buttonId, String description) {
+		final View button = myWindow.findViewById(buttonId);
+		button.setOnClickListener(this);
+		button.setContentDescription(description);
 	}
 
 	@Override

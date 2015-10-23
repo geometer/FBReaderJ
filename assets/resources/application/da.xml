@@ -281,11 +281,8 @@
 		<node name="bgColor" value="Background colour" toBeTranslated="true"/>
 	</node>
 	<node name="selection" value="Valg">
-		<node name="copyToClipboard" value="Kopier til udklipsholder"/>
-		<node name="openInDictionary" value="Åbn i ordbog"/>
 		<node name="quoteFrom" value="Citat fra %s"/>
 		<node name="textInBuffer" value="Kopieret til udklipsholder:&#10;%s"/>
-		<node name="clearSelection" value="Slet"/>
 	</node>
 	<node name="sharing">
 		<node name="sharedFrom" value="Fælles fra FB-Læser&#10;  "/>
@@ -1199,6 +1196,20 @@
 		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
 		<node name="duration60" value="1 minute" toBeTranslated="true"/>
 		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+	</node>
+	<node name="textSearchPopup">
+		<node name="findPrevious" value="Previous occurence" toBeTranslated="true"/>
+		<node name="findNext" value="Next occurence" toBeTranslated="true"/>
+		<node name="close" value="Close" toBeTranslated="true"/>
+	</node>
+	<node name="selectionPopup">
+		<node name="copyToClipboard" value="Kopier til udklipsholder"/>
+		<node name="share" value="Share text" toBeTranslated="true"/>
+		<node name="openInDictionary" value="Åbn i ordbog"/>
+		<node name="translate" value="Translate" toBeTranslated="true"/>
+		<!-- this is a verb: make a bookmark -->
+		<node name="bookmark" value="Bookmark" toBeTranslated="true"/>
+		<node name="close" value="Close" toBeTranslated="true"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
