@@ -89,12 +89,43 @@ final class MyBufferedInputStream extends InputStream {
 		return (fourthByte << 24) + (thirdByte << 16) + (secondByte << 8) + firstByte;
 	}
 
-	String readString(int stringLength) throws IOException {
-		char[] array = new char[stringLength];
-		for (int i = 0; i < stringLength; i++) {
-			array[i] = (char)read();
+	private static final boolean isUtf8String(byte[] array) {
+		int nonLeadingCharsCounter = 0;
+		for (byte b : array) {
+			if (nonLeadingCharsCounter == 0) {
+				if ((b & 0x80) != 0) {
+					if ((b & 0xE0) == 0xC0) {
+						nonLeadingCharsCounter = 1;
+					} else if ((b & 0xF0) == 0xE0) {
+						nonLeadingCharsCounter = 2;
+					} else if ((b & 0xF8) == 0xF0) {
+						nonLeadingCharsCounter = 3;
+					} else {
+						return false;
+					}
+				}
+			} else {
+				if ((b & 0xC0) != 0x80) {
+					return false;
+				}
+				--nonLeadingCharsCounter;
+			}
 		}
-		return new String(array);
+		return nonLeadingCharsCounter == 0;
+	}
+
+	String readString(int stringLength) throws IOException {
+		final byte[] array = new byte[stringLength];
+		read(array);
+		if (isUtf8String(array)) {
+			return new String(array, "utf-8");
+		}
+
+		final char[] chars = new char[stringLength];
+		for (int i = 0; i < stringLength; i++) {
+			chars[i] = (char)(array[i] & 0xFF);
+		}
+		return new String(chars);
 	}
 
 	@Override
