@@ -287,11 +287,8 @@
 		<node name="bgColor" value="Цвет фона"/>
 	</node>
 	<node name="selection" value="Пометка">
-		<node name="copyToClipboard" value="Скопировать в буфер"/>
-		<node name="openInDictionary" value="Посмотреть в словаре"/>
 		<node name="quoteFrom" value="Цитата из %s"/>
 		<node name="textInBuffer" value="Текст в буфере обмена:&#10;%s"/>
-		<node name="clearSelection" value="Убрать пометку"/>
 	</node>
 	<node name="sharing">
 		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;https://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
@@ -1209,6 +1206,19 @@
 		<node name="duration40" value="40 секунд"/>
 		<node name="duration60" value="1 минута"/>
 		<node name="duration300" value="5 минут"/>
+	</node>
+	<node name="textSearchPopup">
+		<node name="findPrevious" value="Найти раньше"/>
+		<node name="findNext" value="Найти дальше"/>
+		<node name="close" value="Закрыть"/>
+	</node>
+	<node name="selectionPopup">
+		<node name="copyToClipboard" value="Скопировать в буфер"/>
+		<node name="share" value="Поделиться"/>
+		<node name="openInDictionary" value="Посмотреть в словаре"/>
+		<node name="translate" value="Перевести"/>
+		<node name="bookmark" value="Оставить закладку"/>
+		<node name="close" value="Закрыть"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="неизвестная ошибка"/>

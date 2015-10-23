@@ -272,11 +272,8 @@
 		<node name="bgColor" value="Háttérszín"/>
 	</node>
 	<node name="selection" value="Kijelölés">
-		<node name="copyToClipboard" value="Vágólapra másol"/>
-		<node name="openInDictionary" value="Megnyitás szótárban"/>
 		<node name="quoteFrom" value="Idézet innen: %s"/>
 		<node name="textInBuffer" value="Vágólapra másolva:&#10;%s"/>
-		<node name="clearSelection" value="Kijelölés eltávolítása"/>
 	</node>
 	<node name="sharing">
 		<node name="sharedFrom" value="Megosztva az &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;ből"/>
@@ -1190,6 +1187,20 @@
 		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
 		<node name="duration60" value="1 minute" toBeTranslated="true"/>
 		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+	</node>
+	<node name="textSearchPopup">
+		<node name="findPrevious" value="Previous occurence" toBeTranslated="true"/>
+		<node name="findNext" value="Next occurence" toBeTranslated="true"/>
+		<node name="close" value="Close" toBeTranslated="true"/>
+	</node>
+	<node name="selectionPopup">
+		<node name="copyToClipboard" value="Vágólapra másol"/>
+		<node name="share" value="Share text" toBeTranslated="true"/>
+		<node name="openInDictionary" value="Megnyitás szótárban"/>
+		<node name="translate" value="Translate" toBeTranslated="true"/>
+		<!-- this is a verb: make a bookmark -->
+		<node name="bookmark" value="Bookmark" toBeTranslated="true"/>
+		<node name="close" value="Close" toBeTranslated="true"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
