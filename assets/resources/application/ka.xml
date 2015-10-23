@@ -287,11 +287,8 @@
 		<node name="bgColor" value="Background colour" toBeTranslated="true"/>
 	</node>
 	<node name="selection" value="ნიშნული">
-		<node name="copyToClipboard" value="ბუფერში დაკოპირება"/>
-		<node name="openInDictionary" value="ლექსიკონში ნახვა"/>
 		<node name="quoteFrom" value="ციტატა %sდან"/>
 		<node name="textInBuffer" value="ტექსტი გაცვლის ბუფერში:&#10;%s"/>
-		<node name="clearSelection" value="ნიშნულის მოხსნა"/>
 	</node>
 	<node name="sharing">
 		<node name="sharedFrom" value="გამოგზავნილია &lt;a href=&quot;https://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;-დან"/>
@@ -1205,6 +1202,20 @@
 		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
 		<node name="duration60" value="1 minute" toBeTranslated="true"/>
 		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+	</node>
+	<node name="textSearchPopup">
+		<node name="findPrevious" value="Previous occurence" toBeTranslated="true"/>
+		<node name="findNext" value="Next occurence" toBeTranslated="true"/>
+		<node name="close" value="Close" toBeTranslated="true"/>
+	</node>
+	<node name="selectionPopup">
+		<node name="copyToClipboard" value="ბუფერში დაკოპირება"/>
+		<node name="share" value="Share text" toBeTranslated="true"/>
+		<node name="openInDictionary" value="ლექსიკონში ნახვა"/>
+		<node name="translate" value="Translate" toBeTranslated="true"/>
+		<!-- this is a verb: make a bookmark -->
+		<node name="bookmark" value="Bookmark" toBeTranslated="true"/>
+		<node name="close" value="Close" toBeTranslated="true"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="Unknown error" toBeTranslated="true"/>

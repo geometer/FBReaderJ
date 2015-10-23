@@ -291,11 +291,8 @@
 		<node name="bgColor" value="Barva pozadí"/>
 	</node>
 	<node name="selection" value="Výběr">
-		<node name="copyToClipboard" value="Kopírovat do schránky"/>
-		<node name="openInDictionary" value="Otevřít ve slovníku"/>
 		<node name="quoteFrom" value="Citovat z %s"/>
 		<node name="textInBuffer" value="Zkopírováno do schránky:&#10;%s"/>
-		<node name="clearSelection" value="Vymazat"/>
 	</node>
 	<node name="sharing">
 		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
@@ -1209,6 +1206,20 @@
 		<node name="duration40" value="40 sekund"/>
 		<node name="duration60" value="1 minutu"/>
 		<node name="duration300" value="5 minut"/>
+	</node>
+	<node name="textSearchPopup">
+		<node name="findPrevious" value="Previous occurence" toBeTranslated="true"/>
+		<node name="findNext" value="Next occurence" toBeTranslated="true"/>
+		<node name="close" value="Close" toBeTranslated="true"/>
+	</node>
+	<node name="selectionPopup">
+		<node name="copyToClipboard" value="Kopírovat do schránky"/>
+		<node name="share" value="Share text" toBeTranslated="true"/>
+		<node name="openInDictionary" value="Otevřít ve slovníku"/>
+		<node name="translate" value="Translate" toBeTranslated="true"/>
+		<!-- this is a verb: make a bookmark -->
+		<node name="bookmark" value="Bookmark" toBeTranslated="true"/>
+		<node name="close" value="Close" toBeTranslated="true"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="Neznámá chyba"/>
