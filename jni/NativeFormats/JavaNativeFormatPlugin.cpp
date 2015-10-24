@@ -237,8 +237,13 @@ static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &mode
 	return env->PopLocalFrame(textModel);
 }
 
+static bool ct_compare(const shared_ptr<ContentsTree> &first, const shared_ptr<ContentsTree> &second) {
+	return first->reference() < second->reference();
+}
+
 static void initTOC(JNIEnv *env, jobject javaModel, const ContentsTree &tree) {
-	const std::vector<shared_ptr<ContentsTree> > &children = tree.children();
+	std::vector<shared_ptr<ContentsTree> > children = tree.children();
+	std::sort(children.begin(), children.end(), ct_compare);
 	for (std::vector<shared_ptr<ContentsTree> >::const_iterator it = children.begin(); it != children.end(); ++it) {
 		const ContentsTree &child = **it;
 		JString text(env, child.text());
