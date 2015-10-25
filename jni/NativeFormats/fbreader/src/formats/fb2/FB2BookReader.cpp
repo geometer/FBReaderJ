@@ -45,7 +45,7 @@ FB2BookReader::FB2BookReader(BookModel &model) : myModelReader(model) {
 }
 
 void FB2BookReader::characterDataHandler(const char *text, std::size_t len) {
-	if ((len > 0) && (!myCurrentImageId.empty() || myModelReader.paragraphIsOpen())) {
+	if (len > 0 && (!myCurrentImageId.empty() || myModelReader.paragraphIsOpen())) {
 		std::string str(text, len);
 		if (!myCurrentImageId.empty()) {
 			if (myCurrentImageStart == -1) {
@@ -237,7 +237,7 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 		{
 			static const std::string STRANGE_MIME_TYPE = "text/xml";
 			const char *contentType = attributeValue(xmlattributes, "content-type");
-			if ((contentType != 0) && (id != 0) && (STRANGE_MIME_TYPE != contentType)) {
+			if (contentType != 0 && id != 0 && STRANGE_MIME_TYPE != contentType) {
 				myCurrentImageId.assign(id);
 			}
 			break;
