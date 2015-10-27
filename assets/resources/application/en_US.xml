@@ -817,7 +817,11 @@
 			</node>
 		</node>
 		<node name="menu" value="Menu">
-			<node name="summary" value="Main menu items"/>
+			<node name="summary" value="Configure menu items"/>
+			<node name="bookMenuUpperSection" value="Book menu (upper section)"/>
+			<node name="bookMenuLowerSection" value="Book menu (lower section)"/>
+			<node name="toolbarOrMainMenu" value="Toolbar or main menu"/>
+			<node name="mainMenu" value="Main menu"/>
 			<node name="enabled" value="Enabled"/>
 			<node name="disabled" value="Disabled"/>
 		</node>
