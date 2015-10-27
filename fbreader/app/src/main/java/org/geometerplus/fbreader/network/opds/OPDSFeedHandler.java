@@ -71,9 +71,13 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			myIndex = feed.OpensearchStartIndex - 1;
 			if (feed.OpensearchItemsPerPage > 0) {
 				myItemsToLoad = feed.OpensearchItemsPerPage;
-				final int len = feed.OpensearchTotalResults - myIndex;
-				if (len > 0 && len < myItemsToLoad) {
-					myItemsToLoad = len;
+				if (feed.OpensearchTotalResults >= 0) {
+					myItemsToLoad =
+						Math.min(Math.max(0, feed.OpensearchTotalResults - myIndex), myItemsToLoad);
+				}
+				if (myItemsToLoad == 0) {
+					myData.ResumeURI = null;
+					return true;
 				}
 			}
 			if ("series".equals(feed.ViewType)) {
