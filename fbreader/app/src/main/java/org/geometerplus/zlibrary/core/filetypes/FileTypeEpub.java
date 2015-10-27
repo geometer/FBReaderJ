@@ -35,7 +35,7 @@ class FileTypeEpub extends FileType {
 		return
 			"epub".equalsIgnoreCase(extension) ||
 			"oebzip".equalsIgnoreCase(extension) ||
-			"opf".equalsIgnoreCase(extension);
+			("opf".equalsIgnoreCase(extension) && file != file.getPhysicalFile());
 	}
 
 	@Override
