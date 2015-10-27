@@ -822,7 +822,11 @@
 			</node>
 		</node>
 		<node name="menu" value="Menü">
-			<node name="summary" value="Hauptmenüpunkte"/>
+			<node name="summary" value="Configure menu items" toBeTranslated="true"/>
+			<node name="bookMenuUpperSection" value="Book menu (upper section)" toBeTranslated="true"/>
+			<node name="bookMenuLowerSection" value="Book menu (lower section)" toBeTranslated="true"/>
+			<node name="toolbarOrMainMenu" value="Toolbar or main menu" toBeTranslated="true"/>
+			<node name="mainMenu" value="Main menu" toBeTranslated="true"/>
 			<node name="enabled" value="Aktiviert"/>
 			<node name="disabled" value="Deaktiviert"/>
 		</node>

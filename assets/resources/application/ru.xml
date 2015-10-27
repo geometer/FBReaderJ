@@ -822,7 +822,11 @@
 			</node>
 		</node>
 		<node name="menu" value="Меню">
-			<node name="summary" value="Пункты главного меню"/>
+			<node name="summary" value="Порядок пунктов меню"/>
+			<node name="bookMenuUpperSection" value="Меню книги (верхняя часть)"/>
+			<node name="bookMenuLowerSection" value="Меню книги (нижняя часть)"/>
+			<node name="toolbarOrMainMenu" value="Тулбар или главное меню"/>
+			<node name="mainMenu" value="Главное меню"/>
 			<node name="enabled" value="Включены"/>
 			<node name="disabled" value="Выключены"/>
 		</node>
