@@ -145,26 +145,31 @@ public class ConfigurationActivity extends ListActivity {
 		}
 
 		@Override
-		public View getView(int position, View convertView, final ViewGroup parent) {
+		public int getViewTypeCount() {
+			return 2;
+		}
+
+		@Override
+		public int getItemViewType(int position) {
+			return getItem(position) instanceof SectionItem ? 0 : 1;
+		}
+
+		@Override
+		public View getView(int position, View view, final ViewGroup parent) {
 			final Item item = getItem(position);
 
-			final View view;
-			if (convertView != null && item.getClass().equals(convertView.getTag())) {
-				view = convertView;
-			} else {
-				view = getLayoutInflater().inflate(
-					item instanceof SectionItem
-						? R.layout.menu_configure_section_head : R.layout.menu_configure_item,
-					null
-				);
-				view.setTag(item.getClass());
-			}
-
 			if (item instanceof SectionItem) {
+				if (view == null) {
+					view = getLayoutInflater().inflate(R.layout.menu_configure_section_head, null);
+				}
 				ViewUtil.setSubviewText(
 					view, R.id.menu_configure_section_head_title, ((SectionItem)item).Title
 				);
 			} else /* if (item instanceof MenuNodeItem) */ {
+				if (view == null) {
+					view = getLayoutInflater().inflate(R.layout.menu_configure_item, null);
+				}
+
 				final MenuNodeItem menuItem = (MenuNodeItem)item;
 
 				final TextView titleView =
