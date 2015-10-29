@@ -295,6 +295,7 @@
 		<node name="sharedFrom" value="Ուղարկվել է &lt;a href=&quot;https://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;-ից"/>
 	</node>
 	<node name="menu">
+		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
 		<node name="openStartScreen" value="Հիմնական էկրան"/>
 		<node name="preferences" value="Կարգավորումներ"/>
 		<node name="bookInfo" value="Գրքի մասին"/>
