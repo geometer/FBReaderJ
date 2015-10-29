@@ -282,6 +282,7 @@
 		<node name="sharedFrom" value="Impartasit de la &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
 		<node name="openStartScreen" value="Ecranul de start"/>
 		<node name="preferences" value="Setari"/>
 		<node name="bookInfo" value="Informatii despre carte"/>
