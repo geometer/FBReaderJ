@@ -295,6 +295,7 @@
 		<node name="sharedFrom" value="Изпратено от &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
 		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="За книгата"/>
