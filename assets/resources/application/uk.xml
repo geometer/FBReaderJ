@@ -279,6 +279,7 @@
 		<node name="sharedFrom" value="Поширено з &lt;a href=&quot;https://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
 		<node name="openStartScreen" value="Стартовий екран"/>
 		<node name="preferences" value="Налаштування"/>
 		<node name="bookInfo" value="Про книгу"/>
