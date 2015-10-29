@@ -294,6 +294,7 @@
 		<node name="sharedFrom" value="გამოგზავნილია &lt;a href=&quot;https://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;-დან"/>
 	</node>
 	<node name="menu">
+		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
 		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="პარამეტრები"/>
 		<node name="bookInfo" value="წიგნის შესახებ"/>

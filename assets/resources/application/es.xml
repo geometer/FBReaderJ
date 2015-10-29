@@ -295,6 +295,7 @@
 		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="whatsnew" value="Qué hay de nuevo"/>
 		<node name="openStartScreen" value="Pantalla de inicio"/>
 		<node name="preferences" value="Ajustes"/>
 		<node name="bookInfo" value="Información del libro"/>
