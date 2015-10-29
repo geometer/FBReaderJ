@@ -288,6 +288,7 @@
 		<node name="sharedFrom" value="Fælles fra FB-Læser&#10;  "/>
 	</node>
 	<node name="menu">
+		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
 		<node name="openStartScreen" value="Start screen" toBeTranslated="true"/>
 		<node name="preferences" value="Indstillinger"/>
 		<node name="bookInfo" value="Bogoplysninger"/>
