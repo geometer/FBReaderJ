@@ -288,6 +288,7 @@
 		<node name="sharedFrom" value="به اشتراک گذاري شده توسط &lt;a href=&quot;https://fbreader.org/&quot;&gt;parsireader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
 		<node name="openStartScreen" value="صفحه شروع"/>
 		<node name="preferences" value="تنظیمات"/>
 		<node name="bookInfo" value="اطلاعات کتاب"/>
