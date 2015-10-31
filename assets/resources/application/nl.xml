@@ -360,6 +360,7 @@
 			<node name="downloadCurrentBook" value="Download huidige boek van de server"/>
 			<node name="positions" value="Synchroniseer leesposities"/>
 			<node name="bookmarks" value="Synchroniseer bladwijzers"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchroniseer metadata (titel, trefwoorden, etc.)"/>
 			<node name="changeCurrentBook" value="Verander huidige boek">
 				<node name="summaryOn" value="Open hetzelfde boek op alle apparaten"/>

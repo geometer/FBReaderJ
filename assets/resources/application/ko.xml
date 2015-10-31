@@ -360,6 +360,7 @@
 			<node name="downloadCurrentBook" value="현재 책을 서버로부터 다운로드"/>
 			<node name="positions" value="독서 위치 동기화"/>
 			<node name="bookmarks" value="책갈피 동기화"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="메타 정보 동기화 (제목, 태그 및 기타)"/>
 			<node name="changeCurrentBook" value="현재 책 변경">
 				<node name="summaryOn" value="모든 기기에서 같은 책 열기"/>
