@@ -360,6 +360,7 @@
 			<node name="downloadCurrentBook" value="Зладаваць гэтую кнігу з сэрвэра"/>
 			<node name="positions" value="Сынхранізаваць месцы чытаньня"/>
 			<node name="bookmarks" value="Сынхранізаваць закладкі"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="Сынхранізаваць мэтазьвесткі (назву, цэтлікі, інш.)"/>
 			<node name="changeCurrentBook" value="Зьмяніць гэтую кнігу">
 				<node name="summaryOn" value="Адчыніць гэтую кнігу на ўсіх прыладах"/>
