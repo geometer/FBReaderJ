@@ -366,6 +366,7 @@
 			<node name="downloadCurrentBook" value="Բեռնել ընթերցվող գիրքը սպասարկչից"/>
 			<node name="positions" value="Սինքրոնացնել վերջին էջը"/>
 			<node name="bookmarks" value="Սինքրոնացնել էջանիշերը"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="Սինքրոնացնել մատենագիտական տվյալները (վերնագիր, կատեգորիաներ և այլն)"/>
 			<node name="changeCurrentBook" value="Փոխել ընթերցվող գիրքը">
 				<node name="summaryOn" value="Բացել նույն գիրքը բոլոր սարքավորումներում"/>

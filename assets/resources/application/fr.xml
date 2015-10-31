@@ -353,6 +353,7 @@
 			<node name="downloadCurrentBook" value="Télécharger le livre courant du serveur"/>
 			<node name="positions" value="Synchroniser positions de lecture"/>
 			<node name="bookmarks" value="Synchroniser les marques-pages"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchroniser les méta-données (titre, repères, etc.)"/>
 			<node name="changeCurrentBook" value="Changer le livre courant">
 				<node name="summaryOn" value="Ouvrir le même libre sur tous les périphériques"/>

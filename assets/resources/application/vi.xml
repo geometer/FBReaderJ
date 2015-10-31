@@ -351,6 +351,7 @@
 			<node name="downloadCurrentBook" value="Tải sách hiện tại từ máy chủ về"/>
 			<node name="positions" value="Đồng bộ vị trí đọc trong sách"/>
 			<node name="bookmarks" value="Đồng bộ dánh dấu trang sách"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="Đồng bộ thông tin sách (tựa, thể loại, v.v.)"/>
 			<node name="changeCurrentBook" value="Thay đổi sách đang đọc">
 				<node name="summaryOn" value="Mở cùng cuốn sách trên mọi thiết bị"/>
