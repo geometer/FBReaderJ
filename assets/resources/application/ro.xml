@@ -353,6 +353,7 @@
 			<node name="downloadCurrentBook" value="Descarca cartea curenta de pe server"/>
 			<node name="positions" value="Sincronizeaza pozitia ramasa la citit"/>
 			<node name="bookmarks" value="Sincronizeaza semnele de carte"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchronise metainfo (titlu, tag-uri, etc.)"/>
 			<node name="changeCurrentBook" value="Schimba cartea curenta">
 				<node name="summaryOn" value="Deschide aceeasi carte pe toate dispozitivele"/>

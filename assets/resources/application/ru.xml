@@ -365,6 +365,7 @@
 			<node name="downloadCurrentBook" value="Автоматически скачивать с сервера текущую книгу"/>
 			<node name="positions" value="Синхронизировать позиции"/>
 			<node name="bookmarks" value="Синхронизировать закладки"/>
+			<node name="customShelves" value="Синхронизировать мои полки"/>
 			<node name="metainfo" value="Синхронизировать информацию о книге (название, категории, и т.п.)"/>
 			<node name="changeCurrentBook" value="Менять книгу">
 				<node name="summaryOn" value="Держать открытой одну и ту же книгу на всех устройствах"/>
