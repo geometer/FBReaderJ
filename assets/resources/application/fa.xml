@@ -359,6 +359,7 @@
 			<node name="downloadCurrentBook" value="دانلود همین کتاب از سرور"/>
 			<node name="positions" value="همگام سازی مکان مطالعه"/>
 			<node name="bookmarks" value="همگام سازی نشانه ها"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="همگامسازی متا اینفو (عنوان, تگ ها,... .)"/>
 			<node name="changeCurrentBook" value="تغییر همین کتاب">
 				<node name="summaryOn" value="باز کردن یک کتاب روی چند دستگاه"/>

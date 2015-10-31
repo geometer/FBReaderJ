@@ -369,6 +369,7 @@
 			<node name="downloadCurrentBook" value="Stáhnout aktuální knihu ze serveru"/>
 			<node name="positions" value="Synchronizovat pozice čtení"/>
 			<node name="bookmarks" value="Synchronizovat záložky"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchronizovat metainformace (název, štítky atd.)"/>
 			<node name="changeCurrentBook" value="Změnit aktuální knihu">
 				<node name="summaryOn" value="Otevřít stejnou knihu ve všech zařízeních"/>

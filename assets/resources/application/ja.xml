@@ -360,6 +360,7 @@
 			<node name="downloadCurrentBook" value="現在の本をサーバからダウンロード"/>
 			<node name="positions" value="読んでいる位置をシンクロ"/>
 			<node name="bookmarks" value="しおりをシンクロ"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="メタ情報 (タイトル、タグなど) をシンクロ"/>
 			<node name="changeCurrentBook" value="読む本を変更">
 				<node name="summaryOn" value="すべてのデバイスで同じ本を読む"/>
