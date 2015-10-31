@@ -365,6 +365,7 @@
 			<node name="downloadCurrentBook" value="Aktuelles Buch vom Server laden"/>
 			<node name="positions" value="Synchronisiere Leseposition"/>
 			<node name="bookmarks" value="Synchronisiere Lesezeichen"/>
+			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchronisiere Meta Informationen (Titel, Tags, usw.)"/>
 			<node name="changeCurrentBook" value="Aktuelles Buch wechseln">
 				<node name="summaryOn" value="Dieses Buch auf allen Geräten öffnen"/>
