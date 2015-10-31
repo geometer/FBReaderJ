@@ -360,6 +360,7 @@
 			<node name="downloadCurrentBook" value="Download current book from server"/>
 			<node name="positions" value="Synchronize reading positions"/>
 			<node name="bookmarks" value="Synchronize bookmarks"/>
+			<node name="customShelves" value="Synchronize custom shelves"/>
 			<node name="metainfo" value="Synchronize metainfo (title, tags, etc.)"/>
 			<node name="changeCurrentBook" value="Change current book">
 				<node name="summaryOn" value="Open same book on all devices"/>
