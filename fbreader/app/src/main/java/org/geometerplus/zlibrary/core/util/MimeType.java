@@ -72,8 +72,10 @@ public final class MimeType {
 	public static final MimeType APP_MOBIPOCKET = get("application/x-mobipocket-ebook");
 	// ???
 	//public static final MimeType APP_MOBI = get("application/mobi");
+	// unofficial, used by Calibre server
+	public static final MimeType APP_FB2 = get("application/fb2");
 	// ???
-	//public static final MimeType APP_FB2 = get("application/fb2");
+	public static final MimeType APP_XFB2 = get("application/x-fb2");
 	// ???
 	public static final MimeType APP_FICTIONBOOK = get("application/x-fictionbook");
 	// ???
@@ -159,7 +161,7 @@ public final class MimeType {
 		 = Arrays.asList(VIDEO_WEBM, VIDEO_OGG, VIDEO_MP4);
 
 	public static final List<MimeType> TYPES_FB2
-		 = Arrays.asList(APP_FICTIONBOOK, APP_FICTIONBOOK_XML, APP_FB2_XML, TEXT_FB2);
+		 = Arrays.asList(APP_FICTIONBOOK, APP_FICTIONBOOK_XML, APP_FB2, APP_XFB2, APP_FB2_XML, TEXT_FB2);
 	public static final List<MimeType> TYPES_EPUB
 		 = Arrays.asList(APP_EPUB_ZIP, APP_EPUB);
 	public static final List<MimeType> TYPES_MOBIPOCKET
