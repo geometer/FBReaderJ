@@ -509,7 +509,8 @@ public final class FBView extends ZLTextView {
 			}
 			if (footerOptions.showProgressAsPercentage() && pagePosition.Total != 0) {
 				maybeAddSeparator(info, separator);
-				info.append(String.valueOf((100 * pagePosition.Current + 49) / pagePosition.Total));
+				final int percent = (int)(100f * pagePosition.Current / pagePosition.Total + .5f);
+				info.append(String.valueOf(percent));
 				info.append("%");
 			}
 
