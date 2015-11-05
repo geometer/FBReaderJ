@@ -809,13 +809,24 @@
 			</node>
 		</node>
 		<node name="menu" value="Menu" toBeTranslated="true">
-			<node name="summary" value="Configure menu items" toBeTranslated="true"/>
-			<node name="bookMenuUpperSection" value="Book menu (upper section)" toBeTranslated="true"/>
-			<node name="bookMenuLowerSection" value="Book menu (lower section)" toBeTranslated="true"/>
-			<node name="toolbarOrMainMenu" value="Toolbar or main menu" toBeTranslated="true"/>
-			<node name="mainMenu" value="Main menu" toBeTranslated="true"/>
-			<node name="enabled" value="Enabled" toBeTranslated="true"/>
-			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+			<node name="summary" value="Configure main screen menu" toBeTranslated="true"/>
+			<node name="backgroundCover" value="Use book cover as background" toBeTranslated="true">
+				<node name="summaryOn" value="Show cover in the book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Keep background clear" toBeTranslated="true"/>
+			</node>
+			<node name="bookMenuStatusItem" value="Status item" toBeTranslated="true">
+				<node name="summaryOn" value="Show status item in the book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Hide status item" toBeTranslated="true"/>
+			</node>
+			<node name="items" value="Menu items" toBeTranslated="true">
+				<node name="summary" value="Change items order" toBeTranslated="true"/>
+				<node name="bookMenuUpperSection" value="Book menu (upper section)" toBeTranslated="true"/>
+				<node name="bookMenuLowerSection" value="Book menu (lower section)" toBeTranslated="true"/>
+				<node name="toolbarOrMainMenu" value="Toolbar or main menu" toBeTranslated="true"/>
+				<node name="mainMenu" value="Main menu" toBeTranslated="true"/>
+				<node name="enabled" value="Enabled" toBeTranslated="true"/>
+				<node name="disabled" value="Disabled" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
 			<node name="summary" value="Back button action list" toBeTranslated="true"/>
