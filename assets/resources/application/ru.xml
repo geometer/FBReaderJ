@@ -824,13 +824,24 @@
 			</node>
 		</node>
 		<node name="menu" value="Меню">
-			<node name="summary" value="Порядок пунктов меню"/>
-			<node name="bookMenuUpperSection" value="Меню книги (верхняя часть)"/>
-			<node name="bookMenuLowerSection" value="Меню книги (нижняя часть)"/>
-			<node name="toolbarOrMainMenu" value="Тулбар или главное меню"/>
-			<node name="mainMenu" value="Главное меню"/>
-			<node name="enabled" value="Включены"/>
-			<node name="disabled" value="Выключены"/>
+			<node name="summary" value="Настройки меню главного экрана"/>
+			<node name="backgroundCover" value="Использовать обложку в качестве фона">
+				<node name="summaryOn" value="Показывать обложку в меню книги"/>
+				<node name="summaryOff" value="Выключить фон в меню"/>
+			</node>
+			<node name="bookMenuStatusItem" value="Status item" toBeTranslated="true">
+				<node name="summaryOn" value="Show status item in the book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Hide status item" toBeTranslated="true"/>
+			</node>
+			<node name="items" value="Пункты меню">
+				<node name="summary" value="Изменить порядок пунктов"/>
+				<node name="bookMenuUpperSection" value="Меню книги (верхняя часть)"/>
+				<node name="bookMenuLowerSection" value="Меню книги (нижняя часть)"/>
+				<node name="toolbarOrMainMenu" value="Тулбар или главное меню"/>
+				<node name="mainMenu" value="Главное меню"/>
+				<node name="enabled" value="Включены"/>
+				<node name="disabled" value="Выключены"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Меню выхода из программы">
 			<node name="summary" value="Список действий при нажатии на кнопку 'Назад'"/>
