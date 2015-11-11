@@ -293,6 +293,9 @@
 		<node name="sharedFrom" value="Partilhado de &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu" value="Menu">
+		<node name="installPremium" value="Upgrade to Premium" toBeTranslated="true"/>
+		<node name="openPremium" value="Open FBReader Premium" toBeTranslated="true"/>
+		<node name="premium" value="FBReader Premium dialog" toBeTranslated="true"/>
 		<node name="whatsnew" value="O que há de novo"/>
 		<node name="openStartScreen" value="Tela inicial"/>
 		<node name="preferences" value="Definições"/>
