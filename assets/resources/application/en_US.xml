@@ -289,6 +289,9 @@
 		<node name="sharedFrom" value="Shared from &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="installPremium" value="Upgrade to Premium"/>
+		<node name="openPremium" value="Open FBReader Premium"/>
+		<node name="premium" value="FBReader Premium dialog"/>
 		<node name="whatsnew" value="What's new"/>
 		<node name="openStartScreen" value="Start screen"/>
 		<node name="preferences" value="Settings"/>
