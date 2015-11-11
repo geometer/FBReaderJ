@@ -58,7 +58,12 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		mySelectedBook = FBReaderIntents.getBookExtra(getIntent(), myCollection);
+		final Intent intent = getIntent();
+		if (intent != null && "android.fbreader.action.EXTERNAL_INTERNAL_LIBRARY".equals(intent.getAction())) {
+			runOrInstallExternalView(false);
+		}
+
+		mySelectedBook = FBReaderIntents.getBookExtra(intent, myCollection);
 
 		new LibraryTreeAdapter(this);
 
@@ -72,7 +77,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				showProgressIndicator(!myCollection.status().IsComplete);
 				myRootTree = new RootTree(myCollection, PluginCollection.Instance(Paths.systemInfo(LibraryActivity.this)));
 				myCollection.addListener(LibraryActivity.this);
-				init(getIntent());
+				init(intent);
 			}
 		});
 	}

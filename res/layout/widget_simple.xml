@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/widget_simple"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="@dimen/widget_margin"
+	android:background="?android:attr/selectableItemBackground"
+	android:src="@drawable/fbreader"
+/>

@@ -48,21 +48,26 @@ import org.geometerplus.fbreader.network.sync.SyncUtil;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.MenuData;
 import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
-import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 import org.geometerplus.android.fbreader.preferences.background.BackgroundPreference;
+import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
+import org.geometerplus.android.fbreader.preferences.menu.MenuPreference;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
+	private static final int BACKGROUND_REQUEST_CODE = 3000;
+	private static final int MENU_REQUEST_CODE = 3001;
+
 	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
-	private static final int BACKGROUND_REQUEST_CODE = 3000;
 	private BackgroundPreference myBackgroundPreference;
+	private MenuPreference myMenuPreference;
 
 	public PreferenceActivity() {
 		super("Preferences");
@@ -91,6 +96,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			return;
 		}
 
+		if (MENU_REQUEST_CODE == requestCode) {
+			if (myMenuPreference != null) {
+				myMenuPreference.update(data);
+			}
+			return;
+		}
+
 		myChooserCollection.update(requestCode, data);
 	}
 
@@ -105,6 +117,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		config.requestAllValuesForGroup("Scrolling");
 		config.requestAllValuesForGroup("Colors");
 		config.requestAllValuesForGroup("Sync");
+		config.requestAllValuesForGroup("MainMenu");
 		setResult(FBReader.RESULT_REPAINT);
 
 		final ViewOptions viewOptions = new ViewOptions();
@@ -740,6 +753,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(imageOptions.FitToScreen, "fitImagesToScreen");
 		imagesScreen.addOption(imageOptions.ImageViewBackground, "backgroundColor");
 		imagesScreen.addOption(imageOptions.MatchBackground, "matchBackground");
+
+		myMenuPreference = new MenuPreference(
+			this,
+			Resource.getResource("menu"),
+			MENU_REQUEST_CODE
+		);
+		addPreference(myMenuPreference);
 
 		final CancelMenuHelper cancelMenuHelper = new CancelMenuHelper();
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
