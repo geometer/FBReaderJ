@@ -294,6 +294,9 @@
 		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;https://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
+		<node name="installPremium" value="Установить FBReader Premium"/>
+		<node name="openPremium" value="Открыть FBReader Premium"/>
+		<node name="premium" value="FBReader Premium"/>
 		<node name="whatsnew" value="Что нового"/>
 		<node name="openStartScreen" value="Стартовый экран"/>
 		<node name="preferences" value="Настройки"/>
