@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Italian zlibrary resources, by Vytek and Neoxx from AndDev.it Translate Team -->
-<!-- Updated by Michelangelo Della Camera, 8 Oct 2015 -->
+<!-- Updated by Michelangelo Della Camera, last update: 13 Nov 2015 -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -78,14 +78,14 @@
 		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Altro"/>
 		<node name="multi" value="Multilingua"/>
-		<node name="system" value="System"/>
+		<node name="system" value="Sistema"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="on"/>
 		<node name="off" value="off"/>
-		<node name="unchanged" value="immutato"/>
+		<node name="unchanged" value="Immutato"/>
 	</node>
 	<node name="keyOptionView">
-		<node name="actionFor" value="Azione per Tasto"/>
+		<node name="actionFor" value="Azione per tasto"/>
 	</node>
 </resources>
