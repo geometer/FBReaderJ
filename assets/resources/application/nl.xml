@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 07-Aug-2015 -->
+<!-- Dutch FBReader resources, by Frank Fesevur since 12-Jan-2011. Last update 02-Dec-2015 -->
 <resources>
 	<node name="library" value="FBReader bibliotheek">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
@@ -257,7 +257,7 @@
 		<node name="delete" value="Verwijderen"/>
 		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
 		<node name="saveText" value="Tekst opslaan"/>
-		<node name="editStyle" value="Stijl aanpassen…"/>
+		<node name="editStyle" value="Stijl bewerken…"/>
 	</node>
 	<node name="toast">
 		<node name="more" value="Meer"/>
@@ -273,7 +273,7 @@
 		<node name="close" value="FBReader afsluiten"/>
 	</node>
 	<node name="style" value="Stijl %s"/>
-	<node name="editStyle" value="Edit style" toBeTranslated="true">
+	<node name="editStyle" value="Stijl bewerken">
 		<node name="name" value="Stijlnaam"/>
 		<node name="invisible" value="Onzichtbaar">
 			<node name="summaryOn" value="Bladwijzers niet benadrukken"/>
@@ -289,10 +289,10 @@
 		<node name="sharedFrom" value="Gedeeld van &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
-		<node name="installPremium" value="Upgrade to Premium" toBeTranslated="true"/>
-		<node name="openPremium" value="Open FBReader Premium" toBeTranslated="true"/>
-		<node name="premium" value="FBReader Premium dialog" toBeTranslated="true"/>
-		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
+		<node name="installPremium" value="Upgrade naar Premium"/>
+		<node name="openPremium" value="FBReader Premium openen"/>
+		<node name="premium" value="FBReader Premium scherm"/>
+		<node name="whatsnew" value="Wat is er nieuw"/>
 		<node name="openStartScreen" value="Startscherm"/>
 		<node name="preferences" value="Instellingen"/>
 		<node name="bookInfo" value="Boekinformatie"/>
@@ -363,7 +363,7 @@
 			<node name="downloadCurrentBook" value="Download huidige boek van de server"/>
 			<node name="positions" value="Synchroniseer leesposities"/>
 			<node name="bookmarks" value="Synchroniseer bladwijzers"/>
-			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
+			<node name="customShelves" value="Synchroniseer aangepaste boekenplanken"/>
 			<node name="metainfo" value="Synchroniseer metadata (titel, trefwoorden, etc.)"/>
 			<node name="changeCurrentBook" value="Verander huidige boek">
 				<node name="summaryOn" value="Open hetzelfde boek op alle apparaten"/>
@@ -822,23 +822,23 @@
 			</node>
 		</node>
 		<node name="menu" value="Menu">
-			<node name="summary" value="Configure main screen menu" toBeTranslated="true"/>
-			<node name="backgroundCover" value="Use book cover as background" toBeTranslated="true">
-				<node name="summaryOn" value="Show cover in the book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Keep background clear" toBeTranslated="true"/>
+			<node name="summary" value="Configureer hoofdmenu"/>
+			<node name="backgroundCover" value="Gebruik cover als achtergrond">
+				<node name="summaryOn" value="Toon cover in het boekenmenu"/>
+				<node name="summaryOff" value="Houd achtergrond effen"/>
 			</node>
-			<node name="bookMenuStatusItem" value="Status item" toBeTranslated="true">
-				<node name="summaryOn" value="Show status item in the book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Hide status item" toBeTranslated="true"/>
+			<node name="bookMenuStatusItem" value="Statusitem">
+				<node name="summaryOn" value="Toon statusitem in het boekenmenu"/>
+				<node name="summaryOff" value="Verberg statusitem in het boekenmenu"/>
 			</node>
-			<node name="items" value="Menu items" toBeTranslated="true">
-				<node name="summary" value="Change items order" toBeTranslated="true"/>
-				<node name="bookMenuUpperSection" value="Book menu (upper section)" toBeTranslated="true"/>
-				<node name="bookMenuLowerSection" value="Book menu (lower section)" toBeTranslated="true"/>
-				<node name="toolbarOrMainMenu" value="Toolbar or main menu" toBeTranslated="true"/>
-				<node name="mainMenu" value="Main menu" toBeTranslated="true"/>
-				<node name="enabled" value="Enabled" toBeTranslated="true"/>
-				<node name="disabled" value="Disabled" toBeTranslated="true"/>
+			<node name="items" value="Menuitems">
+				<node name="summary" value="Pas volgorde aan"/>
+				<node name="bookMenuUpperSection" value="Boekenmenu (bovenste sectie)"/>
+				<node name="bookMenuLowerSection" value="Boekenmenu (onderste sectie)"/>
+				<node name="toolbarOrMainMenu" value="Knoppenbalk of hoofdmenu"/>
+				<node name="mainMenu" value="Hoofdmenu"/>
+				<node name="enabled" value="Ingeschakeld"/>
+				<node name="disabled" value="Uitgeschakeld"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Afsluitmenu">
@@ -1073,16 +1073,16 @@
 			<node name="edit" value="Bewerken"/>
 			<node name="remove" value="Verwijderen"/>
 		</node>
-		<node name="editTags" value="Tags" toBeTranslated="true">
+		<node name="editTags" value="Trefwoorden">
 			<node name="addTag" value="Trefwoord toevoegen"/>
-			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="editTag" value="Trefwoord bewerken"/>
 			<node name="removeTag" value="Verwijder trefwoord">
 				<node name="message" value="Verwijder trefwoord “%s” uit de lijst?"/>
 			</node>
 		</node>
-		<node name="editAuthors" value="Authors" toBeTranslated="true">
+		<node name="editAuthors" value="Auteurs">
 			<node name="addAuthor" value="Auteur toevoegen"/>
-			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="editAuthor" value="Auteur bewerken"/>
 			<node name="removeAuthor" value="Verwijder auteur">
 				<node name="message" value="Verwijder auteur “%s” uit de lijst?"/>
 			</node>
@@ -1102,13 +1102,13 @@
 			</node>
 			<node name="permissionDenied" value="Toegang geweigerd"/>
 		</node>
-		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+		<node name="missingPlugin" value="Ontbrekende plug-in">
 			<node name="message" value="Geen plug-in voor %s-bestanden geïnstalleerd. Nu installeren?"/>
 		</node>
-		<node name="licensing" value="Not licensed" toBeTranslated="true">
+		<node name="licensing" value="Geen licentie">
 			<node name="message" value="Geen licentie voor %s. Nu op Google Play kopen?"/>
 		</node>
-		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+		<node name="retryLicensing" value="Licentieverificatie">
 			<node name="message" value="Kan licentie voor %s niet controleren. Nogmaals proberen?"/>
 		</node>
 	</node>
@@ -1219,24 +1219,24 @@
 		<node name="duration300" value="5 minuten"/>
 	</node>
 	<node name="textSearchPopup">
-		<node name="findPrevious" value="Previous occurence" toBeTranslated="true"/>
-		<node name="findNext" value="Next occurence" toBeTranslated="true"/>
-		<node name="close" value="Close" toBeTranslated="true"/>
+		<node name="findPrevious" value="Vorige"/>
+		<node name="findNext" value="Volgende"/>
+		<node name="close" value="Sluiten"/>
 	</node>
 	<node name="selectionPopup">
 		<node name="copyToClipboard" value="Kopieer naar klembord"/>
-		<node name="share" value="Share text" toBeTranslated="true"/>
+		<node name="share" value="Deel tekst"/>
 		<node name="openInDictionary" value="Openen in woordenboek"/>
-		<node name="translate" value="Translate" toBeTranslated="true"/>
+		<node name="translate" value="Vertalen"/>
 		<!-- this is a verb: make a bookmark -->
-		<node name="bookmark" value="Bookmark" toBeTranslated="true"/>
-		<node name="close" value="Close" toBeTranslated="true"/>
+		<node name="bookmark" value="Bladwijzer maken"/>
+		<node name="close" value="Sluiten"/>
 	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="onbekende fout"/>
-		<node name="noArticle" value="geen artikel gevonden voor “%s”"/>
+		<node name="unknown" value="Onbekende fout"/>
+		<node name="noArticle" value="Geen artikel gevonden voor “%s”"/>
 		<node name="cannotOpenDictionary" value="Kan woordenlijst niet openen"/>
-		<node name="noDictionarySelected" value="Geen woordenboek geselecteerd; lost dit op in de Dictan-instellingen"/>
+		<node name="noDictionarySelected" value="Geen woordenboek geselecteerd; los dit op in de Dictan-instellingen"/>
 	</node>
 	<node name="premium" value="FBReader Premium Editie">
 		<node name="shortTitle" value="FBReader Premium"/>
