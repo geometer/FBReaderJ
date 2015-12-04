@@ -410,9 +410,9 @@
 				<node name="summaryOn" value="Вимкнути підсвічування (не для всіх пристроїв)"/>
 				<node name="summaryOff" value="Не намагатись вимикати підсвічування"/>
 			</node>
-			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
-				<node name="summaryOn" value="Display text in two columns when viewed horizontally" toBeTranslated="true"/>
-				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			<node name="twoColumnView" value="Вигляд двома колонками">
+				<node name="summaryOn" value="Розбивати текст на дві колонки під час ландшафтної орієнтації"/>
+				<node name="summaryOff" value="Завжди відображати текст однією колонкою"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Керування яскравістю екрану">
 				<node name="summaryOn" value="Жестом догори-донизу в лівій частині екрану"/>
@@ -474,9 +474,9 @@
 				<node name="normal" value="звичайний"/>
 				<node name="inherit" value="&lt;не міняти&gt;"/>
 			</node>
-			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
-				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
-				<node name="none" value="no decorations" toBeTranslated="true"/>
+			<node name="textDecoration" value="Виділення тексту">
+				<node name="inherit" value="&lt;не міняти&gt;"/>
+				<node name="none" value="жодного"/>
 				<node name="underline" value="підкреслений"/>
 				<node name="line-through" value="закреслений"/>
 			</node>
@@ -484,8 +484,8 @@
 				<node name="inherit" value="&lt;не міняти&gt;"/>
 			</node>
 			<node name="alignment" value="Вирівнювання">
-				<node name="left" value="ліве"/>
-				<node name="right" value="праве"/>
+				<node name="left" value="ліворуч"/>
+				<node name="right" value="праворуч"/>
 				<node name="center" value="по центру"/>
 				<node name="justify" value="по краях"/>
 				<node name="inherit" value="&lt;не міняти&gt;"/>
@@ -504,157 +504,157 @@
 			<node name="spaceAfter" value="Пропуск після"/>
 			<node name="leftIndent" value="Відступ зліва"/>
 			<node name="rightIndent" value="Відступ зправа"/>
-			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
+			<node name="verticalAlignment" value="Вертикальне розміщення"/>
 			<node name="more" value="Більше стилів">
-				<node name="summary" value="Окремі налаштування для заголовків, епіграфів, інше"/>
-				<node name="Regular Paragraph" value="звичайного тексту">
+				<node name="summary" value="Окремі налаштування для заголовків, епіграфів, тощо"/>
+				<node name="Regular Paragraph" value="Звичайного параграфу тексту">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
-					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
+				<node name="xhtml-tag-p" value="Параграфу EPub">
+					<node name="summary" value="Вміст XHTML-тегу &lt;p&gt;"/>
 				</node>
-				<node name="Title" value="заголовку">
+				<node name="Title" value="Заголовку">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Section Title" value="назви глави">
+				<node name="Section Title" value="Назви глави">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Poem Title" value="назви вірша">
+				<node name="Poem Title" value="Назви вірша">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Subtitle" value="підзаголовку">
+				<node name="Subtitle" value="Підзаголовку">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Annotation" value="анотації">
+				<node name="Annotation" value="Анотації">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Epigraph" value="епіграфа">
+				<node name="Epigraph" value="Епіграфу">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Stanza" value="строфи">
+				<node name="Stanza" value="Строфи">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Verse" value="віршів">
+				<node name="Verse" value="Віршів">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Preformatted text" value="тексту всередині &lt;pre&gt;">
+				<node name="Preformatted text" value="Тексту всередині &lt;pre&gt;">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Image" value="малюнка">
+				<node name="Image" value="Малюнка">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Cite" value="цитати">
+				<node name="Cite" value="Цитати">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Author" value="імені автора">
+				<node name="Author" value="Імені автора">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Date" value="дати">
+				<node name="Date" value="Дати">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Internal Hyperlink" value="посилання">
+				<node name="Internal Hyperlink" value="Посилання">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Footnote" value="виноски">
+				<node name="Footnote" value="Виноски">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Emphasis" value="виділення (emphasis)">
+				<node name="Emphasis" value="Виділення (emphasis)">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Strong" value="виділення (strong)">
+				<node name="Strong" value="Виділення (strong)">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Subscript" value="нижнього індекса">
+				<node name="Subscript" value="Нижнього індексу">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Superscript" value="верхнього індекса">
+				<node name="Superscript" value="Верхнього індексу">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Code" value="тексту програми">
+				<node name="Code" value="Тексту програми">
 					<node name="summary" value=""/>
 				</node>
-				<node name="StrikeThrough" value="закресленого тексту">
+				<node name="StrikeThrough" value="Закресленого тексту">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Italic" value="курсиву">
+				<node name="Italic" value="Курсиву">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Bold" value="жирного тексту">
+				<node name="Bold" value="Жирного тексту">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Definition" value="визначення">
+				<node name="Definition" value="Визначення">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Definition Description" value="тексту визначення">
+				<node name="Definition Description" value="Тексту визначення">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 1" value="тексу всередині &lt;h1&gt;">
+				<node name="Header 1" value="Тексу всередині &lt;h1&gt;">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 2" value="тексту всередині &lt;h2&gt;">
+				<node name="Header 2" value="Тексту всередині &lt;h2&gt;">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 3" value="тексту всередині &lt;h3&gt;">
+				<node name="Header 3" value="Тексту всередині &lt;h3&gt;">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 4" value="тексту всередині &lt;h4&gt;">
+				<node name="Header 4" value="Тексту всередині &lt;h4&gt;">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 5" value="тексту всередині &lt;h5&gt;">
+				<node name="Header 5" value="Тексту всередині &lt;h5&gt;">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 6" value="тексту всередині &lt;h6&gt;">
+				<node name="Header 6" value="Тексту всередині &lt;h6&gt;">
 					<node name="summary" value=""/>
 				</node>
-				<node name="External Hyperlink" value="зовнішнього посилання">
+				<node name="External Hyperlink" value="Зовнішнього посилання">
 					<node name="summary" value=""/>
 				</node>
 			</node>
 		</node>
-		<node name="toast" value="Pop-ups" toBeTranslated="true">
-			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
-			<node name="showFootnoteToast" value="Show linked text in a popup" toBeTranslated="true">
-				<node name="never" value="Never" toBeTranslated="true"/>
-				<node name="footnotesOnly" value="For footnotes only" toBeTranslated="true"/>
-				<node name="footnotesAndSuperscripts" value="For footnotes and superscript links" toBeTranslated="true"/>
-				<node name="allInternalLinks" value="For all internal links" toBeTranslated="true"/>
+		<node name="toast" value="Зринаючі вікна">
+			<node name="summary" value="Вікна приміток, тощо."/>
+			<node name="showFootnoteToast" value="Показувати пов'язаний текст у зринаючому вікні">
+				<node name="never" value="Ніколи"/>
+				<node name="footnotesOnly" value="Тільки для приміток"/>
+				<node name="footnotesAndSuperscripts" value="Для приміток та виносок"/>
+				<node name="allInternalLinks" value="Для всіх внутрішніх посилань"/>
 			</node>
-			<node name="footnoteToastDuration" value="How long to display link popup" toBeTranslated="true"/>
-			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
+			<node name="footnoteToastDuration" value="Час показу зринаючого вікна"/>
+			<node name="fontSizePercent" value="Розмір шрифту (відсоток від звичайного)"/>
 		</node>
-		<node name="css" value="CSS" toBeTranslated="true">
-			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
-			<node name="fontFamily" value="Font family" toBeTranslated="true">
-				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+		<node name="css" value="CSS">
+			<node name="summary" value="Застосування/ігнорування параметрів зазначених у CSS"/>
+			<node name="fontFamily" value="Родина шрифта">
+				<node name="summaryOn" value="Використовувати зазначену у CSS"/>
+				<node name="summaryOff" value="Ігнорувати зазначену у CSS"/>
 			</node>
-			<node name="fontSize" value="Font size" toBeTranslated="true">
-				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Розмір шрифту">
+				<node name="summaryOn" value="Застосувати розмір шрифту з CSS"/>
+				<node name="summaryOff" value="Ігнорувати зазначений у CSS розмір шрифту"/>
 			</node>
-			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
-				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			<node name="textAlignment" value="Вирівнування тексту">
+				<node name="summaryOn" value="Застосувати вирівнювання тексту з CSS"/>
+				<node name="summaryOff" value="Ігнорувати вирівнювання тексту зазначене у CSS"/>
 			</node>
-			<node name="margins" value="Margins" toBeTranslated="true">
-				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			<node name="margins" value="Відступи">
+				<node name="summaryOn" value="Застосувати відступи з CSS"/>
+				<node name="summaryOff" value="Ігнорувати відступи з CSS"/>
 			</node>
 		</node>
-		<node name="colors" value="Кольори &amp; шпалери">
+		<node name="colors" value="Кольори та шпалери">
 			<node name="summary" value="Налаштування кольору"/>
-			<node name="background" value="Фон">
+			<node name="background" value="Тло">
 				<node name="chooser">
-					<node name="solidColor" value="Solid colour…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
-					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+					<node name="solidColor" value="Cуцільний колір…"/>
+					<node name="predefined" value="Текстура…"/>
+					<node name="selectFile" value="Оберіть файл…"/>
 				</node>
 				<node name="solidColor" value="Суцільний колір"/>
 				<node name="leather" value="Шкіра"/>
 				<node name="sepia" value="Сепія"/>
 				<node name="wood" value="Деревина"/>
-				<node name="sand" value="Sand" toBeTranslated="true"/>
-				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+				<node name="sand" value="Пісок"/>
+				<node name="hardpaper" value="Картон"/>
 			</node>
 			<node name="fillMode" value="Fill mode" toBeTranslated="true">
 				<node name="tile" value="Tile" toBeTranslated="true"/>
