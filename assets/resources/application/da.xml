@@ -285,7 +285,7 @@
 		<node name="textInBuffer" value="Kopieret til udklipsholder:&#10;%s"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Fælles fra FB-Læser&#10;  "/>
+		<node name="sharedFrom" value="Fælles fra &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="installPremium" value="Upgrade to Premium" toBeTranslated="true"/>
