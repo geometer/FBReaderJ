@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch zlibrary resources, by Frank Fesevur 07-Jan-2011, Last update 16-Nov-2014 -->
+<!-- Dutch zlibrary resources, by Frank Fesevur 07-Jan-2011, Last update 02-Dec-2015 -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -42,7 +42,7 @@
 		<node name="de-traditional" value="Duits (traditionele spelling)"/>
 		<node name="el" value="Grieks"/>
 		<node name="en" value="Engels"/>
-		<node name="en_US" value="English (US)" toBeTranslated="true"/>
+		<node name="en_US" value="Engels (VS)"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spaans"/>
 		<node name="eu" value="Baskisch"/>
