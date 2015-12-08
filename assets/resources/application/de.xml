@@ -294,10 +294,10 @@
 		<node name="sharedFrom" value="Bereitgestellt von &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
-		<node name="installPremium" value="Upgrade to Premium" toBeTranslated="true"/>
-		<node name="openPremium" value="Open FBReader Premium" toBeTranslated="true"/>
-		<node name="premium" value="FBReader Premium dialog" toBeTranslated="true"/>
-		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
+		<node name="installPremium" value="Upgrade auf Premium"/>
+		<node name="openPremium" value="FBReader Premium öffnen"/>
+		<node name="premium" value="FBReader Premium"/>
+		<node name="whatsnew" value="Was ist neu"/>
 		<node name="openStartScreen" value="Startbildschirm"/>
 		<node name="preferences" value="Einstellungen"/>
 		<node name="bookInfo" value="Buchinformation"/>
@@ -368,7 +368,7 @@
 			<node name="downloadCurrentBook" value="Aktuelles Buch vom Server laden"/>
 			<node name="positions" value="Synchronisiere Leseposition"/>
 			<node name="bookmarks" value="Synchronisiere Lesezeichen"/>
-			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
+			<node name="customShelves" value="Synchronisiere benutzerdefinierte Bücherregale"/>
 			<node name="metainfo" value="Synchronisiere Meta Informationen (Titel, Tags, usw.)"/>
 			<node name="changeCurrentBook" value="Aktuelles Buch wechseln">
 				<node name="summaryOn" value="Dieses Buch auf allen Geräten öffnen"/>
@@ -827,23 +827,23 @@
 			</node>
 		</node>
 		<node name="menu" value="Menü">
-			<node name="summary" value="Configure main screen menu" toBeTranslated="true"/>
-			<node name="backgroundCover" value="Use book cover as background" toBeTranslated="true">
-				<node name="summaryOn" value="Show cover in the book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Keep background clear" toBeTranslated="true"/>
+			<node name="summary" value="Konfiguriere Hauptmenü"/>
+			<node name="backgroundCover" value="Titelseite als Hintergrund verwenden">
+				<node name="summaryOn" value="Titelseite im Buchmenü anzeigen"/>
+				<node name="summaryOff" value="Keinen Hintergrund"/>
 			</node>
-			<node name="bookMenuStatusItem" value="Status item" toBeTranslated="true">
-				<node name="summaryOn" value="Show status item in the book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Hide status item" toBeTranslated="true"/>
+			<node name="bookMenuStatusItem" value="Status">
+				<node name="summaryOn" value="Im Buchmenü anzeigen"/>
+				<node name="summaryOff" value="Verstecken"/>
 			</node>
-			<node name="items" value="Menu items" toBeTranslated="true">
-				<node name="summary" value="Change items order" toBeTranslated="true"/>
-				<node name="bookMenuUpperSection" value="Book menu (upper section)" toBeTranslated="true"/>
-				<node name="bookMenuLowerSection" value="Book menu (lower section)" toBeTranslated="true"/>
-				<node name="toolbarOrMainMenu" value="Toolbar or main menu" toBeTranslated="true"/>
-				<node name="mainMenu" value="Main menu" toBeTranslated="true"/>
-				<node name="enabled" value="Enabled" toBeTranslated="true"/>
-				<node name="disabled" value="Disabled" toBeTranslated="true"/>
+			<node name="items" value="Menüpunkte">
+				<node name="summary" value="Reihenfolge ändern"/>
+				<node name="bookMenuUpperSection" value="Buchmenü (oberer Bereich)"/>
+				<node name="bookMenuLowerSection" value="Buchmenü (unterer Bereich)"/>
+				<node name="toolbarOrMainMenu" value="Symbolleiste oder Hauptmenü"/>
+				<node name="mainMenu" value="Hauptmenü"/>
+				<node name="enabled" value="Aktiviert"/>
+				<node name="disabled" value="Deaktiviert"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Zurück-Menü">
@@ -1079,16 +1079,16 @@
 			<node name="remove" value="Entfernen"/>
 		</node>
 		<node name="editTags" value="Schlagwörter">
-			<node name="addTag" value="Schlagwort hinzufügen"/>
-			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
-			<node name="removeTag" value="Schlagwort entfernen">
+			<node name="addTag" value="Hinzufügen"/>
+			<node name="editTag" value="Bearbeiten"/>
+			<node name="removeTag" value="Entfernen">
 				<node name="message" value="Schlagwort “%s” aus der Liste entfernen?"/>
 			</node>
 		</node>
 		<node name="editAuthors" value="Autoren">
-			<node name="addAuthor" value="Autor hinzufügen"/>
-			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
-			<node name="removeAuthor" value="Autor entfernen">
+			<node name="addAuthor" value="Hinzufügen"/>
+			<node name="editAuthor" value="Bearbeiten"/>
+			<node name="removeAuthor" value="Entfernen">
 				<node name="message" value="Autor “%s” aus der Liste entfernen?"/>
 			</node>
 		</node>
@@ -1107,13 +1107,13 @@
 			</node>
 			<node name="permissionDenied" value="Zugriff verweigert"/>
 		</node>
-		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+		<node name="missingPlugin" value="Plugin fehlt">
 			<node name="message" value="Plugin für %s Dateien ist nicht installiert. Jetzt installieren?"/>
 		</node>
-		<node name="licensing" value="Not licensed" toBeTranslated="true">
+		<node name="licensing" value="Nicht lizenziert">
 			<node name="message" value="%s ist nicht lizenziert. Jetzt im Google Play Store kaufen?"/>
 		</node>
-		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+		<node name="retryLicensing" value="Lizenzüberprüfung">
 			<node name="message" value="Die Lizenz %s kann nicht überprüft werden. Wieder versuchen?"/>
 		</node>
 	</node>
@@ -1224,18 +1224,18 @@
 		<node name="duration300" value="5 Minuten"/>
 	</node>
 	<node name="textSearchPopup">
-		<node name="findPrevious" value="Previous occurence" toBeTranslated="true"/>
-		<node name="findNext" value="Next occurence" toBeTranslated="true"/>
-		<node name="close" value="Close" toBeTranslated="true"/>
+		<node name="findPrevious" value="Vorher suchen"/>
+		<node name="findNext" value="Weitersuchen"/>
+		<node name="close" value="Schließen"/>
 	</node>
 	<node name="selectionPopup">
 		<node name="copyToClipboard" value="In die Zwischenablage kopieren"/>
-		<node name="share" value="Share text" toBeTranslated="true"/>
+		<node name="share" value="Text teilen"/>
 		<node name="openInDictionary" value="Im Wörterbuch nachschlagen"/>
-		<node name="translate" value="Translate" toBeTranslated="true"/>
+		<node name="translate" value="Übersetzen"/>
 		<!-- this is a verb: make a bookmark -->
-		<node name="bookmark" value="Bookmark" toBeTranslated="true"/>
-		<node name="close" value="Close" toBeTranslated="true"/>
+		<node name="bookmark" value="Lesezeichen hinzufügen"/>
+		<node name="close" value="Schließen"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="Unbekannter Fehler"/>
