@@ -654,7 +654,7 @@
 				<node name="sepia" value="Сепія"/>
 				<node name="wood" value="Деревина"/>
 				<node name="sand" value="Пісок"/>
-				<node name="hardpaper" value="Картон"/>
+				<node name="hardpaper" value="Грубий папір"/>
 			</node>
 			<node name="fillMode" value="Режим заповення">
 				<node name="tile" value="Плитка"/>
