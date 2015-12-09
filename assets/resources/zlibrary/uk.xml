@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Ukrainian zlibrary resources, by Dmytro Shevchenko, Nazariy Makarenko -->
+<!-- Ukrainian zlibrary resources, by Dmytro Shevchenko, Nazariy Makarenko, Max Lyashuk -->
 <resources>
 	<node name="dialog">
 		<node name="button">
 			<node name="ok" value="ОК"/>
-			<node name="cancel" value="Відмінити"/>
+			<node name="cancel" value="Скасувати"/>
 			<node name="yes" value="Так"/>
 			<node name="no" value="Ні"/>
 			<node name="apply" value="Застосувати"/>
@@ -12,7 +12,7 @@
 		<node name="networkError">
 			<node name="title" value="Помилка при роботі з мережею"/>
 			<node name="unknownErrorMessage" value="Невідома помилка"/>
-			<node name="operationTimedOutMessage" value="Відведений час вичерпаний"/>
+			<node name="operationTimedOutMessage" value="Відведений час вичерпано"/>
 			<node name="somethingWrongMessage" value="Помилка при роботі з&#10;%s"/>
 			<node name="couldntCreateDirectoryMessage" value="Не вдалося створити теку&#10;%s"/>
 			<node name="couldntCreateFileMessage" value="Не вдалося створити файл&#10;%s"/>
@@ -23,7 +23,7 @@
 			<node name="invalidURL" value="Неправильний URL"/>
 			<node name="hostCantBeReached" value="Сайт %s недоступний"/>
 			<node name="connectionRefused" value="З’єднання закрите сайтом&#10;%s"/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="Мережа недоступна"/>
 		</node>
 	</node>
 	<node name="color">
@@ -33,31 +33,31 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="арабська"/>
-		<node name="be" value="Belarusian" toBeTranslated="true"/>
-		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
-		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="be" value="білоруська"/>
+		<node name="bg" value="болгарська"/>
+		<node name="ca" value="каталонська"/>
 		<node name="cs" value="чеська"/>
-		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="da" value="данська"/>
 		<node name="de" value="німецька"/>
 		<node name="de-traditional" value="німецька (стара орфографія)"/>
 		<node name="el" value="грецька"/>
 		<node name="en" value="англійська"/>
-		<node name="en_US" value="English (US)" toBeTranslated="true"/>
+		<node name="en_US" value="англійська (США)"/>
 		<node name="eo" value="есперанто"/>
 		<node name="es" value="іспанська"/>
-		<node name="eu" value="Basque" toBeTranslated="true"/>
-		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="eu" value="баскська"/>
+		<node name="fa" value="перська"/>
 		<node name="fi" value="фінська"/>
 		<node name="fr" value="французька"/>
 		<node name="gl" value="галицька"/>
 		<node name="he" value="іврит"/>
 		<node name="hu" value="угорська"/>
-		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="hy" value="вірменська"/>
 		<node name="id" value="індонезійська"/>
 		<node name="it" value="італійська"/>
-		<node name="ja" value="Japanese" toBeTranslated="true"/>
-		<node name="ka" value="Georgian" toBeTranslated="true"/>
-		<node name="ko" value="Korean" toBeTranslated="true"/>
+		<node name="ja" value="японська"/>
+		<node name="ka" value="грузинська"/>
+		<node name="ko" value="корейська"/>
 		<node name="lt" value="литовська"/>
 		<node name="nb" value="норвезька"/>
 		<node name="nl" value="голландська"/>
@@ -65,7 +65,7 @@
 		<node name="pt" value="португальська"/>
 		<node name="ro" value="румунська"/>
 		<node name="ru" value="російська"/>
-		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sr" value="сербська"/>
 		<node name="sv" value="шведська"/>
 		<node name="ta" value="тамільська"/>
 		<node name="th" value="тайська"/>
@@ -73,11 +73,11 @@
 		<node name="uk" value="українська"/>
 		<node name="vi" value="в’єтнамська"/>
 		<node name="zh" value="китайська"/>
-		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
-		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="zh_TW" value="китайська (традиційна)"/>
+		<node name="any" value="будь-яка"/>
 		<node name="other" value="інша"/>
-		<node name="multi" value="Мультимовна"/>
-		<node name="system" value="System" toBeTranslated="true"/>
+		<node name="multi" value="мультимовна"/>
+		<node name="system" value="системна"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="увімкнути"/>
