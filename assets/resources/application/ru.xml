@@ -1111,7 +1111,7 @@
 			</node>
 			<node name="permissionDenied" value="Нет доступа"/>
 		</node>
-		<node name="missingPlugin" value="Отсутсвует модуль">
+		<node name="missingPlugin" value="Отсутствует модуль">
 			<node name="message" value="Модуль для чтения файлов %s не установлен. Установить прямо сейчас?"/>
 		</node>
 		<node name="licensing" value="Нет лицензии">
