@@ -1199,45 +1199,45 @@
 		<node name="percent" value="Кшталту: 125%"/>
 	</node>
 	<node name="duration">
-		<node name="duration1" value="1 second" toBeTranslated="true"/>
-		<node name="duration3" value="3 seconds" toBeTranslated="true"/>
-		<node name="duration5" value="5 seconds" toBeTranslated="true"/>
-		<node name="duration10" value="10 seconds" toBeTranslated="true"/>
-		<node name="duration20" value="20 seconds" toBeTranslated="true"/>
-		<node name="duration40" value="40 seconds" toBeTranslated="true"/>
-		<node name="duration60" value="1 minute" toBeTranslated="true"/>
-		<node name="duration300" value="5 minutes" toBeTranslated="true"/>
+		<node name="duration1" value="1 секунда"/>
+		<node name="duration3" value="3 секунди"/>
+		<node name="duration5" value="5 секунд"/>
+		<node name="duration10" value="10 секунд"/>
+		<node name="duration20" value="20 секунд"/>
+		<node name="duration40" value="40 секунд"/>
+		<node name="duration60" value="1 хвилина"/>
+		<node name="duration300" value="5 хвилин"/>
 	</node>
 	<node name="textSearchPopup">
-		<node name="findPrevious" value="Previous occurence" toBeTranslated="true"/>
-		<node name="findNext" value="Next occurence" toBeTranslated="true"/>
-		<node name="close" value="Close" toBeTranslated="true"/>
+		<node name="findPrevious" value="Попереднє співпадіння"/>
+		<node name="findNext" value="Наступну співпадіння"/>
+		<node name="close" value="Закрити"/>
 	</node>
 	<node name="selectionPopup">
 		<node name="copyToClipboard" value="Скопіювати до буфера"/>
-		<node name="share" value="Share text" toBeTranslated="true"/>
-		<node name="openInDictionary" value="Подивитись в словнику"/>
-		<node name="translate" value="Translate" toBeTranslated="true"/>
+		<node name="share" value="Поділитись текстом"/>
+		<node name="openInDictionary" value="Подивитись у словнику"/>
+		<node name="translate" value="Перекласти"/>
 		<!-- this is a verb: make a bookmark -->
-		<node name="bookmark" value="Bookmark" toBeTranslated="true"/>
-		<node name="close" value="Close" toBeTranslated="true"/>
+		<node name="bookmark" value="Закласти"/>
+		<node name="close" value="Закрити"/>
 	</node>
 	<node name="dictanErrors">
-		<node name="unknown" value="Unknown error" toBeTranslated="true"/>
-		<node name="noArticle" value="No article found for “%s”" toBeTranslated="true"/>
-		<node name="cannotOpenDictionary" value="Cannot open dictionary" toBeTranslated="true"/>
-		<node name="noDictionarySelected" value="Dictionary not selected; please adjust Dictan settings" toBeTranslated="true"/>
+		<node name="unknown" value="Невідома помилка"/>
+		<node name="noArticle" value="Жодної статті не знайдено за запитому “%s”"/>
+		<node name="cannotOpenDictionary" value="Невдається відкрити словник"/>
+		<node name="noDictionarySelected" value="Словника не обрано; будь ласка, перевірте налаштування"/>
 	</node>
-	<node name="premium" value="FBReader Premium Edition" toBeTranslated="true">
-		<node name="shortTitle" value="FBReader Premium" toBeTranslated="true"/>
-		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+	<node name="premium" value="FBReader Premium Edition">
+		<node name="shortTitle" value="FBReader Premium" />
+		<node name="conflict" value="Схоже встановлено як FBReader так і FBReader Premium. Яку версію ви хотіли б запустити?"/>
 	</node>
 	<node name="widget">
 		<node name="simple">
-			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
-			<node name="selectAction" value="Select action" toBeTranslated="true"/>
-			<node name="book" value="Read book" toBeTranslated="true"/>
-			<node name="library" value="Open library" toBeTranslated="true"/>
+			<node name="selectIcon" value="Оберіть піктограму віджета"/>
+			<node name="selectAction" value="Оберіть дію"/>
+			<node name="book" value="Читати книгу"/>
+			<node name="library" value="Відкрити бібліотеку"/>
 		</node>
 	</node>
 	<node name="dictionary">
