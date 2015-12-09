@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Ukrainian FBReaderJ resources, by Dmytro Shevchenko, Nazariy Makarenko -->
+<!-- Ukrainian FBReaderJ resources, by Dmytro Shevchenko, Nazariy Makarenko, Maksym Lyashuk -->
 <resources>
 	<node name="library" value="Бібліотека FBReader">
 		<node name="unknownAuthor" value="Автор не зазначений"/>
