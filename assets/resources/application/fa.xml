@@ -437,6 +437,10 @@
 				<node name="summaryOn" value="وقتي دستگاه در حالت خواب است صفحه نمايش به خواب نرود"/>
 				<node name="summaryOff" value="حتی در حالت شارژ هم صفحه نمایش خاموش باشد"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="متن">
 			<node name="summary" value="فونت، فاصله گذاري و ..."/>

@@ -438,6 +438,10 @@
 				<node name="summaryOn" value="기기가 충전중일때 화면 꺼짐을 방지합니다"/>
 				<node name="summaryOff" value="기기가 충전중이더라도 화면을 끄게 됩니다"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="텍스트">
 			<node name="summary" value="글꼴, 하이픈화(hyphenation) 및 기타"/>
