@@ -927,6 +927,8 @@
 			<node name="removeFromFavorites" value="从收藏列表中移除"/>
 			<node name="markAsRead" value="标记为已读"/>
 			<node name="markAsUnread" value="标记为未读"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">

@@ -942,6 +942,8 @@
 			<node name="removeFromFavorites" value="Buch aus der Favoritenliste löschen"/>
 			<node name="markAsRead" value="Als gelesen markieren"/>
 			<node name="markAsUnread" value="Als ungelesen markieren"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Gehe zur Seite"/>
 		<node name="plugin">

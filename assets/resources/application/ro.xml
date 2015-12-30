@@ -930,6 +930,8 @@
 			<node name="removeFromFavorites" value="Sterge din favorite"/>
 			<node name="markAsRead" value="Marcati ca citit"/>
 			<node name="markAsUnread" value="Marcati ca necitit"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Du-te la pagina"/>
 		<node name="plugin">
