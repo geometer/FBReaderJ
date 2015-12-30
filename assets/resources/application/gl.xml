@@ -428,6 +428,10 @@
 				<node name="summaryOn" value="Impedir que a pantalla se poña en modo suspendido se o dispositivo está en modo de carga"/>
 				<node name="summaryOff" value="Apagar a pantalla incluso se o dispositivo está en modo de carga"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Texto">
 			<node name="summary" value="Tipo de letra, guionizado, etc."/>

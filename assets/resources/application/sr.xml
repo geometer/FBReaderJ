@@ -438,6 +438,10 @@
 				<node name="summaryOn" value="Спречава екран да зацрни ако се уређај пуни."/>
 				<node name="summaryOff" value="Искључује екран ако се уређај пуни."/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Текст">
 			<node name="summary" value="Фонт, хифенација итд."/>

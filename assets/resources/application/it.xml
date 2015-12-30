@@ -430,6 +430,10 @@
 				<node name="summaryOn" value="Evita spegnimento automatico dello schermo se il dispositivo è in modalità di ricarica"/>
 				<node name="summaryOff" value="Spegni schermo anche se il dispositivo è in in modalità di ricarica"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Testo">
 			<node name="summary" value="Tipo di carattere, sillabazioni, etc."/>

@@ -443,6 +443,10 @@
 				<node name="summaryOn" value="არასდროს გამოირთოს ეკრანი, თუ კითხვა მიმდინარეობს დამუხტვის პროცესში"/>
 				<node name="summaryOff" value="გამოირთოს ეკრანი დამუხტვის რეჟიმშიც კი"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="ტექსტი">
 			<node name="summary" value="შრიფტები, გადატანები და ა.შ."/>

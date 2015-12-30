@@ -438,6 +438,10 @@
 				<node name="summaryOn" value="本体が充電モードなら画面がスリープにならないようにする"/>
 				<node name="summaryOff" value="本体が充電モードでも画面をスリープにする"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="本文">
 			<node name="summary" value="フォント、改行関連など"/>

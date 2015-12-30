@@ -431,6 +431,10 @@
 				<node name="summaryOn" value="Împiedicati modul stand-by, daca aparatul este în modul de încarcare"/>
 				<node name="summaryOff" value="Inchide ecran, chiar daca aparatul este în modul de încarcare"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Text">
 			<node name="summary" value="Font, hyphenations, etc."/>
