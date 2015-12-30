@@ -438,6 +438,10 @@
 				<node name="summaryOn" value="Voorkom uitschakelen scherm tijdens het opladen"/>
 				<node name="summaryOff" value="Schakel scherm uit, zelfs tijdens het opladen"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Tekst">
 			<node name="summary" value="Lettertype, Afbreken, etc."/>

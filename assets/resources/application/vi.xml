@@ -429,6 +429,10 @@
 				<node name="summaryOn" value="Ngăn màn hình tắt nếu máy đang sạc"/>
 				<node name="summaryOff" value="Tắt màn hình ngay cả khi máy đang sạc"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Chỉnh chữ">
 			<node name="summary" value="Kiểu chữ, tách chữ, v..v."/>

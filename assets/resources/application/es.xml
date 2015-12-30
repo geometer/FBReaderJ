@@ -444,6 +444,10 @@
 				<node name="summaryOn" value="Impedir que la pantalla se apague si el dispositivo se está cargando"/>
 				<node name="summaryOff" value="Apagar la pantalla incluso si el dispositivo se está cargando"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Texto">
 			<node name="summary" value="Fuente (tipo de letra), separación de sílabas, etc."/>
