@@ -436,6 +436,10 @@
 				<node name="summaryOn" value="منع إطفاء الشاشة"/>
 				<node name="summaryOff" value="إطفاء الشاشة حتى أثناء شحن البطارية"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="النص">
 			<node name="summary" value="الخطوط وغيرها"/>

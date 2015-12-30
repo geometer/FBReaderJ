@@ -428,6 +428,10 @@
 				<node name="summaryOn" value="ป้องกันการพักหน้าจอขณะชาร์ต"/>
 				<node name="summaryOff" value="พักหน้าจอขณะชาร์ต"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="ข้อความ">
 			<node name="summary" value="ตัวอักษร, ยัติภังค์, อื่นๆ"/>

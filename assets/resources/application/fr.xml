@@ -431,6 +431,10 @@
 				<node name="summaryOn" value="Pas de mise en veille lorsque la batterie est en charge"/>
 				<node name="summaryOff" value="Éteindre l'écran lorsque la batterie se recharge"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Texte">
 			<node name="summary" value="Polices, césures, etc."/>

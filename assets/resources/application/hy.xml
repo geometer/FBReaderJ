@@ -444,6 +444,10 @@
 				<node name="summaryOn" value="Երբեք չանջատել էկրանը, եթե մարտկոցը լիցքավորվում է"/>
 				<node name="summaryOff" value="Էկրանն անջատել անգամ լիցքավորման ժամանակ"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Գրվածք">
 			<node name="summary" value="Տառատեսակներ, տողադարձ և այլն"/>
