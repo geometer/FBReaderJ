@@ -442,6 +442,10 @@
 				<node name="summaryOn" value="Impedir ecrã de hibernação se o dispositivo estiver no modo de carregamento"/>
 				<node name="summaryOff" value="Desligar o ecrã, mesmo se o dispositivo estiver no modo de carregamento"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Texto">
 			<node name="summary" value="Tipos de letras, hifenizações, etc."/>

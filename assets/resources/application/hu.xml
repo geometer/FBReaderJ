@@ -428,6 +428,10 @@
 				<node name="summaryOn" value="Ne kapcsoljon ki a kijelző az akkumulátor töltésekor"/>
 				<node name="summaryOff" value="A kijelző automatikusan kikapcsol az akkumulátor töltésekor is"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Szöveg">
 			<node name="summary" value="Betűtípus, elválasztás stb."/>

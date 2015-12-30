@@ -437,6 +437,10 @@
 				<node name="summaryOn" value="Undgå at skærmen slukkes, hvis enheden lades op"/>
 				<node name="summaryOff" value="Sluk skærmen selvom enheden lades op"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Tekst">
 			<node name="summary" value="Skrifttype, bindestreg, osv."/>

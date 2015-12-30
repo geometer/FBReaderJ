@@ -428,6 +428,10 @@
 				<node name="summaryOn" value="如果设备处于充电模式则禁止屏幕进入睡眠状态"/>
 				<node name="summaryOff" value="如果设备处于充电模式则关闭屏幕"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="文字">
 			<node name="summary" value="字体, 断字等等。"/>
