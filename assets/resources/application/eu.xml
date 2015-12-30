@@ -438,6 +438,10 @@
 				<node name="summaryOn" value="Pantaila esekitzea eragotzi gailua kargatzen baldin badago"/>
 				<node name="summaryOff" value="Pantaila eseki gailua kargatzen baldin badago ere"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Testua">
 			<node name="summary" value="Letra-tipoa, puntuazioa, etab."/>

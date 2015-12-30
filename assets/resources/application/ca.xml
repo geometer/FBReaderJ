@@ -444,6 +444,10 @@
 				<node name="summaryOn" value="Impedir que s'apagui la pantalla quan el dispositiu s'estigui carregant"/>
 				<node name="summaryOff" value="Apagar la pantalla encara que el dispositiu s'estigui carregant"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Text">
 			<node name="summary" value="Font (tipus de letra), separació de síl·labes, etc."/>
