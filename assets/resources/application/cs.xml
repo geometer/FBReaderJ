@@ -447,6 +447,10 @@
 				<node name="summaryOn" value="Zabránit usínání displeje pokud je zařízení v režimu nabíjení"/>
 				<node name="summaryOff" value="Vypínat displej i když je zařízení v režimu nabíjení"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Text">
 			<node name="summary" value="Písmo, dělení slov atd."/>

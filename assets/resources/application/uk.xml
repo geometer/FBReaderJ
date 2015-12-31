@@ -428,6 +428,10 @@
 				<node name="summaryOn" value="Запобігати вимкненню екрану в режимі зарядки"/>
 				<node name="summaryOff" value="Вимикати екран в режимі зарядки"/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Текст">
 			<node name="summary" value="Шрифти, переноси, інше"/>
@@ -1099,7 +1103,7 @@
 			<node name="message" value="%s не ліцензовано. Придбати на Google Play зараз?"/>
 		</node>
 		<node name="retryLicensing" value="Перевірка ліцензії">
-			<node name="message" value="Помилка перевірки ліцензії %s. Спробувати знову?" />
+			<node name="message" value="Помилка перевірки ліцензії %s. Спробувати знову?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -1229,7 +1233,7 @@
 		<node name="noDictionarySelected" value="Словника не обрано; будь ласка, перевірте налаштування"/>
 	</node>
 	<node name="premium" value="FBReader Premium Edition">
-		<node name="shortTitle" value="FBReader Premium" />
+		<node name="shortTitle" value="FBReader Premium"/>
 		<node name="conflict" value="Схоже встановлено як FBReader так і FBReader Premium. Яку версію ви хотіли б запустити?"/>
 	</node>
 	<node name="widget">

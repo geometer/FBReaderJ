@@ -428,6 +428,10 @@
 				<node name="summaryOn" value="Μη απενεργοποίηση της οθόνης τν ώρα της φόρτωσης."/>
 				<node name="summaryOff" value="Απενεργοποίηση της οθόνης την ώρα της φόρτωσης."/>
 			</node>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="text" value="Εμφάνιση κειμένου">
 			<node name="summary" value="Σύνολο χαρακτήρων, χωρισμός συλλαβών, κτλ."/>
