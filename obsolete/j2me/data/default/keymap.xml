@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<keymap>
-	<binding key="&lt;Left&gt;" action="smallScrollBackward"/>
-	<binding key="&lt;Right&gt;" action="smallScrollForward"/>
-	<binding key="&lt;Down&gt;" action="largeScrollForward"/>
-	<binding key="&lt;Up&gt;" action="largeScrollBackward"/>
-	<binding key="&lt;Center&gt;" action="toggleFullscreen"/>
-</keymap>

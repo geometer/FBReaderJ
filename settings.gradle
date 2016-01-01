@@ -1,0 +1,4 @@
+include ':app', ':fileChooser', ':dragSortListView', ':fbreaderutils'
+
+project(':fileChooser').projectDir = new File('thirdParty/fileChooser')
+project(':dragSortListView').projectDir = new File('thirdParty/dragSortListView')
