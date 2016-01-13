@@ -283,8 +283,8 @@
 	</node>
 	<node name="menu">
 		<node name="installPremium" value="Instaleaza varianta Premium"/>
-		<node name="openPremium" value="Deschide FBReader Premium/>
-		<node name="premium" value="Dialog FBReader Premium/>
+		<node name="openPremium" value="Deschide FBReader Premium"/>
+		<node name="premium" value="Dialog FBReader Premium"/>
 		<node name="whatsnew" value="Ce este nou"/>
 		<node name="openStartScreen" value="Ecranul de start"/>
 		<node name="preferences" value="Setari"/>
@@ -779,7 +779,7 @@
 				<node name="always" value="Intotdeauna"/>
 				<node name="onError" value="Automat, daca traducerea automata esueaza"/>
 				<node name="ask" value="Intreaba daca traducerea onlinea esueaza"/>
-				<node name="never" value="Niciodata/>
+				<node name="never" value="Niciodata"/>
 			</node>
 			<node name="translationToastDuration" value="Cât timp pentru a afisa traducerea"/>
 			<node name="errorToastDuration" value="Cât timp pentru a afisa mesajul de eroare"/>
@@ -818,7 +818,7 @@
 				<node name="summaryOff" value="Nu ajusta culoarea imaginii"/>
 			</node>
 		</node>
-		<node name="menu" value="Meniu>
+		<node name="menu" value="Meniu">
 			<node name="summary" value="Configureaza meniul paginii principale"/>
 			<node name="backgroundCover" value="Foloseste coperta ca fundal">
 				<node name="summaryOn" value="Afiseaza coperta in meniul cartii"/>
@@ -1081,7 +1081,7 @@
 		</node>
 		<node name="editAuthors" value="Autori">
 			<node name="addAuthor" value="Adauga autor"/>
-			<node name="editAuthor" value="Editeaza autor/>
+			<node name="editAuthor" value="Editeaza autor"/>
 			<node name="removeAuthor" value="Sterge autor">
 				<node name="message" value="Sa sterg autorul “%s” din lista?"/>
 			</node>
@@ -1226,9 +1226,9 @@
 		<node name="copyToClipboard" value="Copiati în clipboard"/>
 		<node name="share" value="Share text" toBeTranslated="true"/>
 		<node name="openInDictionary" value="Deschide in dictionar"/>
-		<node name="translate" value="Tradu""/>
+		<node name="translate" value="Tradu"/>
 		<!-- this is a verb: make a bookmark -->
-		<node name="bookmark" value="Creaza un semn de carte/>
+		<node name="bookmark" value="Creaza un semn de carte"/>
 		<node name="close" value="Inchide"/>
 	</node>
 	<node name="dictanErrors">
