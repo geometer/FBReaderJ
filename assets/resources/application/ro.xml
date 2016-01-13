@@ -60,7 +60,7 @@
 			<node name="summary" value="Intregul sistem de fisiere a dispozitivului"/>
 		</node>
 		<node name="fileTreeCard" value="Cardul de memorie">
-			<node name="withIndex" value="Memory card No %s" toBeTranslated="true"/>
+			<node name="withIndex" value="Cardul de memorie Nr %s"/>
 			<node name="summary" value="Cardul de memorie introdus în aparat"/>
 		</node>
 		<node name="fileTreeLibrary" value="Biblioteca">
@@ -254,7 +254,7 @@
 	</node>
 	<node name="toast">
 		<node name="more" value="Mai mult"/>
-		<node name="offline" value="Offline" toBeTranslated="true"/>
+		<node name="offline" value="Deconectat"/>
 	</node>
 	<node name="cancelMenu">
 		<node name="library" value="Deschide libraria"/>
@@ -266,7 +266,7 @@
 		<node name="close" value="Inchide Aplicatia"/>
 	</node>
 	<node name="style" value="Stilul %s"/>
-	<node name="editStyle" value="Edit style" toBeTranslated="true">
+	<node name="editStyle" value="Editeaza stilul">
 		<node name="name" value="Numele stilului"/>
 		<node name="invisible" value="Invizibil">
 			<node name="summaryOn" value="Nu scoate in evidenta semnele de carte"/>
@@ -282,10 +282,10 @@
 		<node name="sharedFrom" value="Impartasit de la &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
-		<node name="installPremium" value="Upgrade to Premium" toBeTranslated="true"/>
-		<node name="openPremium" value="Open FBReader Premium" toBeTranslated="true"/>
-		<node name="premium" value="FBReader Premium dialog" toBeTranslated="true"/>
-		<node name="whatsnew" value="What's new" toBeTranslated="true"/>
+		<node name="installPremium" value="Instaleaza varianta Premium"/>
+		<node name="openPremium" value="Deschide FBReader Premium/>
+		<node name="premium" value="Dialog FBReader Premium/>
+		<node name="whatsnew" value="Ce este nou"/>
 		<node name="openStartScreen" value="Ecranul de start"/>
 		<node name="preferences" value="Setari"/>
 		<node name="bookInfo" value="Informatii despre carte"/>
@@ -293,7 +293,7 @@
 		<node name="toc" value="Cuprins"/>
 		<node name="day" value="Mod Zi"/>
 		<node name="night" value="Mod Noapte"/>
-		<node name="dayNight" value="Day/Night" toBeTranslated="true"/>
+		<node name="dayNight" value="Zi/Noapte"/>
 		<node name="yotaSwitchToBackScreen" value="Treci la ecranul din spate"/>
 		<node name="yotaSwitchToFrontScreen" value="Treci la ecranul din fata"/>
 		<node name="networkLibrary" value="Biblioteca din retea"/>
@@ -319,7 +319,7 @@
 		<node name="screenOrientationReverseLandscape" value="Orizontal (Peisaj) inversat"/>
 		<node name="increaseFont" value="Mareste"/>
 		<node name="decreaseFont" value="Micsoreaza"/>
-		<node name="changeFontSize" value="Zoom in/out" toBeTranslated="true"/>
+		<node name="changeFontSize" value="Mareste/Micsoreaza"/>
 		<node name="toggleFullscreen" value="Pe intreg ecranul"/>
 		<node name="bookmarks" value="Favorite"/>
 		<node name="help" value="Ajutor"/>
@@ -335,7 +335,7 @@
 		<node name="tags" value="Tag-uri"/>
 		<node name="series" value="Seria"/>
 	</node>
-	<node name="Preferences" value="FBReader settings" toBeTranslated="true">
+	<node name="Preferences" value="Setarile FBReader">
 		<node name="sync" value="Sincronizare">
 			<node name="summary" value="Setarile retelei de carti"/>
 			<node name="site" value="Citește mai multe despre sincronizare">
@@ -356,7 +356,7 @@
 			<node name="downloadCurrentBook" value="Descarca cartea curenta de pe server"/>
 			<node name="positions" value="Sincronizeaza pozitia ramasa la citit"/>
 			<node name="bookmarks" value="Sincronizeaza semnele de carte"/>
-			<node name="customShelves" value="Synchronise custom shelves" toBeTranslated="true"/>
+			<node name="customShelves" value="Sincronizeaza rafturile personalizate"/>
 			<node name="metainfo" value="Synchronise metainfo (titlu, tag-uri, etc.)"/>
 			<node name="changeCurrentBook" value="Schimba cartea curenta">
 				<node name="summaryOn" value="Deschide aceeasi carte pe toate dispozitivele"/>
@@ -431,9 +431,9 @@
 				<node name="summaryOn" value="Împiedicati modul stand-by, daca aparatul este în modul de încarcare"/>
 				<node name="summaryOff" value="Inchide ecran, chiar daca aparatul este în modul de încarcare"/>
 			</node>
-			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
-				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			<node name="enableBookMenuSwipeGesture" value="Activeaza modul glisare pentru meniul cartilor">
+				<node name="summaryOn" value="Glisati din marginea stanga spre interior pentru a deschide meniul cartilor"/>
+				<node name="summaryOff" value="Folositi butonul cu cele trei linii (“hamburger”) pentru a deschide meniul cartilor"/>
 			</node>
 		</node>
 		<node name="text" value="Text">
@@ -619,7 +619,7 @@
 			</node>
 		</node>
 		<node name="toast" value="Pop-ups" toBeTranslated="true">
-			<node name="summary" value="Footnote windows, etc." toBeTranslated="true"/>
+			<node name="summary" value="Ferestre pentru note de subsol, etc."/>
 			<node name="showFootnoteToast" value="Afișare text legat într-o fereastr?">
 				<node name="never" value="Niciodata"/>
 				<node name="footnotesOnly" value="Doar pentru notele de subsol"/>
@@ -627,7 +627,7 @@
 				<node name="allInternalLinks" value="Pentru toate link-urile interne"/>
 			</node>
 			<node name="footnoteToastDuration" value="Cât timp pentru a afișa link-ul"/>
-			<node name="fontSizePercent" value="Font size (percent from regular text)" toBeTranslated="true"/>
+			<node name="fontSizePercent" value="Marimea fontului (procent din cel normal)"/>
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Aplica/ignora valoride definite in CSS"/>
@@ -709,12 +709,12 @@
 				<node name="summaryOn" value="Arata favoritele curpinsului în bara de subsol"/>
 				<node name="summaryOff" value="Nu arata semne de cuprins în bara de subsol"/>
 			</node>
-			<node name="tocMarksMaxNumber" value="Maximum number of TOC marks to display" toBeTranslated="true"/>
-			<node name="showProgress" value="Show reading progress" toBeTranslated="true">
-				<node name="dontDisplay" value="Do not show" toBeTranslated="true"/>
-				<node name="asPages" value="As page number" toBeTranslated="true"/>
-				<node name="asPercentage" value="As percentage" toBeTranslated="true"/>
-				<node name="asPagesAndPercentage" value="As page number and percentage" toBeTranslated="true"/>
+			<node name="tocMarksMaxNumber" value="Numarul maxim de intrari ce se afiseaza in cuprins"/>
+			<node name="showProgress" value="Afiseaza progresul cititului">
+				<node name="dontDisplay" value="Nu afisa"/>
+				<node name="asPages" value="Ca numar de pagini"/>
+				<node name="asPercentage" value="Ca procent"/>
+				<node name="asPagesAndPercentage" value="Ca numar de pagini si ca procent"/>
 			</node>
 			<node name="showBattery" value="Afiseaza nivelul bateriei">
 				<node name="summaryOn" value="Afiseaza nivelul bateriei în subsol"/>
@@ -775,11 +775,11 @@
 			<node name="summary" value="Setari de traducere"/>
 			<node name="dictionary" value="Cautati un singur cuvant in"/>
 			<node name="translator" value="Traduce fraze prin"/>
-			<node name="translateOffline" value="Google Translate: use offline translator (if installed)" toBeTranslated="true">
-				<node name="always" value="Always" toBeTranslated="true"/>
-				<node name="onError" value="Automatically, if online translation fails" toBeTranslated="true"/>
-				<node name="ask" value="Ask if online translation fails" toBeTranslated="true"/>
-				<node name="never" value="Never" toBeTranslated="true"/>
+			<node name="translateOffline" value="Google Translate: folositi traducatorul fara conexiunea (daca este instalat)">
+				<node name="always" value="Intotdeauna"/>
+				<node name="onError" value="Automat, daca traducerea automata esueaza"/>
+				<node name="ask" value="Intreaba daca traducerea onlinea esueaza"/>
+				<node name="never" value="Niciodata/>
 			</node>
 			<node name="translationToastDuration" value="Cât timp pentru a afisa traducerea"/>
 			<node name="errorToastDuration" value="Cât timp pentru a afisa mesajul de eroare"/>
@@ -818,15 +818,15 @@
 				<node name="summaryOff" value="Nu ajusta culoarea imaginii"/>
 			</node>
 		</node>
-		<node name="menu" value="Menu" toBeTranslated="true">
-			<node name="summary" value="Configure main screen menu" toBeTranslated="true"/>
-			<node name="backgroundCover" value="Use book cover as background" toBeTranslated="true">
-				<node name="summaryOn" value="Show cover in the book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Keep background clear" toBeTranslated="true"/>
+		<node name="menu" value="Meniu>
+			<node name="summary" value="Configureaza meniul paginii principale"/>
+			<node name="backgroundCover" value="Foloseste coperta ca fundal">
+				<node name="summaryOn" value="Afiseaza coperta in meniul cartii"/>
+				<node name="summaryOff" value="Pastreaza fundalul curat"/>
 			</node>
-			<node name="bookMenuStatusItem" value="Status item" toBeTranslated="true">
-				<node name="summaryOn" value="Show status item in the book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Hide status item" toBeTranslated="true"/>
+			<node name="bookMenuStatusItem" value="Starea articolului">
+				<node name="summaryOn" value="Afiseaza starea articolului in meniul cartii"/>
+				<node name="summaryOff" value="Ascunde starea articolului"/>
 			</node>
 			<node name="items" value="Menu items" toBeTranslated="true">
 				<node name="summary" value="Change items order" toBeTranslated="true"/>
@@ -1072,16 +1072,16 @@
 			<node name="edit" value="Editare"/>
 			<node name="remove" value="Sterge"/>
 		</node>
-		<node name="editTags" value="Tags" toBeTranslated="true">
+		<node name="editTags" value="Etichete">
 			<node name="addTag" value="Adauga eticheta"/>
-			<node name="editTag" value="Edit tag" toBeTranslated="true"/>
+			<node name="editTag" value="Editeaza Eticheta"/>
 			<node name="removeTag" value="Sterge eticheta">
 				<node name="message" value="Sa sterg eticheta “%s” din lista?"/>
 			</node>
 		</node>
-		<node name="editAuthors" value="Authors" toBeTranslated="true">
+		<node name="editAuthors" value="Autori">
 			<node name="addAuthor" value="Adauga autor"/>
-			<node name="editAuthor" value="Edit author" toBeTranslated="true"/>
+			<node name="editAuthor" value="Editeaza autor/>
 			<node name="removeAuthor" value="Sterge autor">
 				<node name="message" value="Sa sterg autorul “%s” din lista?"/>
 			</node>
@@ -1101,13 +1101,13 @@
 			</node>
 			<node name="permissionDenied" value="Acces interzis"/>
 		</node>
-		<node name="missingPlugin" value="Missing plugin" toBeTranslated="true">
+		<node name="missingPlugin" value="Plugin lipsa">
 			<node name="message" value="Plugin-ul pentru fisierele e tip %s nu este instalat. Sa-l instalez acum?"/>
 		</node>
-		<node name="licensing" value="Not licensed" toBeTranslated="true">
+		<node name="licensing" value="Fara licenta">
 			<node name="message" value="%s nu este licențiat. Cumpărati acum pe Google Play?"/>
 		</node>
-		<node name="retryLicensing" value="Licence verification" toBeTranslated="true">
+		<node name="retryLicensing" value="Verificarea licentei">
 			<node name="message" value="Nu se poate verifica %s licenta. Incercati din nou?"/>
 		</node>
 	</node>
@@ -1218,35 +1218,35 @@
 		<node name="duration300" value="5 minute"/>
 	</node>
 	<node name="textSearchPopup">
-		<node name="findPrevious" value="Previous occurence" toBeTranslated="true"/>
-		<node name="findNext" value="Next occurence" toBeTranslated="true"/>
-		<node name="close" value="Close" toBeTranslated="true"/>
+		<node name="findPrevious" value="Aparitia precedenta"/>
+		<node name="findNext" value="Urmatoarea aparitie"/>
+		<node name="close" value="Inchide"/>
 	</node>
 	<node name="selectionPopup">
 		<node name="copyToClipboard" value="Copiati în clipboard"/>
 		<node name="share" value="Share text" toBeTranslated="true"/>
-		<node name="openInDictionary" value="Open in dictionar"/>
-		<node name="translate" value="Translate" toBeTranslated="true"/>
+		<node name="openInDictionary" value="Deschide in dictionar"/>
+		<node name="translate" value="Tradu""/>
 		<!-- this is a verb: make a bookmark -->
-		<node name="bookmark" value="Bookmark" toBeTranslated="true"/>
-		<node name="close" value="Close" toBeTranslated="true"/>
+		<node name="bookmark" value="Creaza un semn de carte/>
+		<node name="close" value="Inchide"/>
 	</node>
 	<node name="dictanErrors">
 		<node name="unknown" value="Eroare necunoscuta"/>
-		<node name="noArticle" value="Nu sau gasit articole pentru “%s”"/>
+		<node name="noArticle" value="Nu s-au gasit articole pentru “%s”"/>
 		<node name="cannotOpenDictionary" value="Nu se poate deschide dictionarul"/>
 		<node name="noDictionarySelected" value="Dictionar ne selectat; vă rugăm să ajustați setările Dictionar"/>
 	</node>
 	<node name="premium" value="FBReader Premium Edition">
-		<node name="shortTitle" value="FBReader Premium" toBeTranslated="true"/>
-		<node name="conflict" value="Both FBReader and FBReader Premium appear to be installed. Which one would you like to run?" toBeTranslated="true"/>
+		<node name="shortTitle" value="FBReader Premium"/>
+		<node name="conflict" value="Aveti instalate ambele aplicatii: FBReader si FBReader Premium. Pe care doriti sa o rulati?"/>
 	</node>
 	<node name="widget">
 		<node name="simple">
-			<node name="selectIcon" value="Select widget icon" toBeTranslated="true"/>
-			<node name="selectAction" value="Select action" toBeTranslated="true"/>
-			<node name="book" value="Read book" toBeTranslated="true"/>
-			<node name="library" value="Open library" toBeTranslated="true"/>
+			<node name="selectIcon" value="Alegeti icoana pentru widget"/>
+			<node name="selectAction" value="Alegeti actiunea"/>
+			<node name="book" value="Citeste cartea"/>
+			<node name="library" value="Deschide biblioteca"/>
 		</node>
 	</node>
 </resources>
