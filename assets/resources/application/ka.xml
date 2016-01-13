@@ -942,6 +942,8 @@
 			<node name="removeFromFavorites" value="რჩეულებიდან წაშლა"/>
 			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="გვერდზე"/>
 		<node name="plugin">
