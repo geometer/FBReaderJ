@@ -937,6 +937,8 @@
 			<node name="removeFromFavorites" value="Kendu gogokoetatik"/>
 			<node name="markAsRead" value="Markatu irakurria bezala"/>
 			<node name="markAsUnread" value="Markatu ez irakurria bezala"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Joan Orrira"/>
 		<node name="plugin">
