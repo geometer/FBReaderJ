@@ -943,6 +943,8 @@
 			<node name="removeFromFavorites" value="Ջնջել ընտրվածներից"/>
 			<node name="markAsRead" value="Նշել որպես ընթերցված"/>
 			<node name="markAsUnread" value="Նշել որպես չընթերցված"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Գնալ էջ"/>
 		<node name="plugin">

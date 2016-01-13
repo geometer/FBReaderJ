@@ -927,6 +927,8 @@
 			<node name="removeFromFavorites" value="Прибрати з улюблених"/>
 			<node name="markAsRead" value="Помітити як прочитане"/>
 			<node name="markAsUnread" value="Помітити як непрочитане"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="На сторінку"/>
 		<node name="plugin">
