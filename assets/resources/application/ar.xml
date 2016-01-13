@@ -935,6 +935,8 @@
 			<node name="removeFromFavorites" value="حذف من المفضلة"/>
 			<node name="markAsRead" value="تعليم كمقروء"/>
 			<node name="markAsUnread" value="تعليم كغير مقروء"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">

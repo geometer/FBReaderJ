@@ -937,6 +937,8 @@
 			<node name="removeFromFavorites" value="Remove from favourites"/>
 			<node name="markAsRead" value="Mark as read"/>
 			<node name="markAsUnread" value="Mark as unread"/>
+			<node name="plugin" value="Plugin"/>
+			<node name="premium" value="Premium"/>
 		</node>
 		<node name="gotoPage" value="Go to page"/>
 		<node name="plugin">

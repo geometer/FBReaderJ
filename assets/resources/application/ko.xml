@@ -937,6 +937,8 @@
 			<node name="removeFromFavorites" value="즐겨찾기에서 제거"/>
 			<node name="markAsRead" value="읽음으로 표시"/>
 			<node name="markAsUnread" value="읽지 않음으로 표시"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">
