@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Updated by aplicatii.romanesti@gmail.com, Jan 11 2016 -->
 <!-- Updated by girlea_alex@yahoo.com, Jun 21 of 2015 -->
 <!-- Updated by girlea_alex@yahoo.com, Jul 6 of 2014 -->
+<!-- Updated by aplicatii.romanesti@gmail.com, 2013 -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -43,7 +45,7 @@
 		<node name="de-traditional" value="Germana (traditionala)"/>
 		<node name="el" value="Greaca"/>
 		<node name="en" value="Engleza"/>
-		<node name="en_US" value="English (US)" toBeTranslated="true"/>
+		<node name="en_US" value="Engleza (US)"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spaniola"/>
 		<node name="eu" value="Basca"/>

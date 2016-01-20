@@ -928,6 +928,8 @@
 			<node name="removeFromFavorites" value="Xóa khỏi yêu thích"/>
 			<node name="markAsRead" value="Đánh dấu đã đọc"/>
 			<node name="markAsUnread" value="Đánh dấu chưa đọc"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Đến trang"/>
 		<node name="plugin">

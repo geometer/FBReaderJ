@@ -438,9 +438,9 @@
 				<node name="summaryOn" value="Prevent screen from sleeping while device is in charging mode"/>
 				<node name="summaryOff" value="Allow screen to sleep while device is in charging mode"/>
 			</node>
-			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
-				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu">
+				<node name="summaryOn" value="Swipe in from the left edge to open book menu"/>
+				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu"/>
 			</node>
 		</node>
 		<node name="text" value="Text">
@@ -937,6 +937,8 @@
 			<node name="removeFromFavorites" value="Remove from favorites"/>
 			<node name="markAsRead" value="Mark as read"/>
 			<node name="markAsUnread" value="Mark as unread"/>
+			<node name="plugin" value="Plugin"/>
+			<node name="premium" value="Premium"/>
 		</node>
 		<node name="gotoPage" value="Go to page"/>
 		<node name="plugin">
