@@ -943,6 +943,8 @@
 			<node name="removeFromFavorites" value="Премахни от избрани"/>
 			<node name="markAsRead" value="Отбележи като прочетено"/>
 			<node name="markAsUnread" value="Отбележи като непрочетено"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Страница"/>
 		<node name="plugin">
