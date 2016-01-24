@@ -176,6 +176,7 @@
 <!ENTITY upsih    "&#978;"> 
 <!ENTITY piv      "&#982;"> 
 <!ENTITY bull     "&#8226;"> 
+<!ENTITY bullet   "&#8226;"> 
 <!ENTITY hellip   "&#8230;"> 
 <!ENTITY prime    "&#8242;"> 
 <!ENTITY Prime    "&#8243;"> 
