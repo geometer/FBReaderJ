@@ -180,6 +180,7 @@
   <entity name="upsih" number="978"/>
   <entity name="piv" number="982"/>
   <entity name="bull" number="8226"/>
+  <entity name="bullet" number="8226"/>
   <entity name="hellip" number="8230"/>
   <entity name="prime" number="8242"/>
   <entity name="Prime" number="8243"/>
