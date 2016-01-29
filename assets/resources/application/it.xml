@@ -322,7 +322,7 @@
 		<node name="toggleFullscreen" value="Schermo intero"/>
 		<node name="bookmarks" value="Segnalibri"/>
 		<node name="help" value="Aiuto"/>
-		<node name="plugins" value="Istalla plugins"/>
+		<node name="plugins" value="Installa plugins"/>
 		<node name="gotoPageNumber" value="Vai a Pagina…"/>
 	</node>
 	<node name="BookInfo">
