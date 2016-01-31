@@ -23,7 +23,7 @@
 			<node name="invalidURL" value="无效网址"/>
 			<node name="hostCantBeReached" value="网站无法访问 %s"/>
 			<node name="connectionRefused" value="连接被拒绝&#10;%s"/>
-			<node name="networkNotAvailable" value="Network is not available" toBeTranslated="true"/>
+			<node name="networkNotAvailable" value="网络不可用"/>
 		</node>
 	</node>
 	<node name="color">
@@ -55,9 +55,9 @@
 		<node name="hy" value="亚美尼亚语"/>
 		<node name="id" value="印度语"/>
 		<node name="it" value="意大利语"/>
-		<node name="ja" value="Japanese" toBeTranslated="true"/>
+		<node name="ja" value="日语"/>
 		<node name="ka" value="格鲁吉亚语"/>
-		<node name="ko" value="Korean" toBeTranslated="true"/>
+		<node name="ko" value="韩语"/>
 		<node name="lt" value="立陶宛语"/>
 		<node name="nb" value="挪威语"/>
 		<node name="nl" value="荷兰语"/>
