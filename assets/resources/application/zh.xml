@@ -368,7 +368,7 @@
             <node name="downloadDir" value="存放已下载书籍的位置">
                 <node name="chooserTitle" value="书文存放位置"/>
             </node>
-            <node name="fontPath" value=搜索字体的位置">
+            <node name="fontPath" value="搜索字体的位置">
                 <node name="chooserTitle" value="字体存放位置"/>
             </node>
             <node name="tempDir" value="存放临时文件的位置">
