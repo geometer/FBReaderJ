@@ -28,6 +28,10 @@ ignored = [
     "scripts/"
 ]
 
+added = [
+    "docs/"
+]
+
 conversionMap = {
     #In AmbilWarna:
     #third-party/drag-sort-listview/library/
@@ -68,6 +72,8 @@ conversionMap = {
     "src/org/geometerplus/android/fbreader/libraryService/LibraryInterface.aidl" : "fBReaderJ/src/main/aidl/org/geometerplus/android/fbreader/libraryService/LibraryInterface.aidl",
     "src/org/geometerplus/android/fbreader/libraryService/PositionWithTimestamp.aidl" : "fBReaderJ/src/main/aidl/org/geometerplus/android/fbreader/libraryService/PositionWithTimestamp.aidl",
     "src/org/geometerplus/android/fbreader/network/BookDownloaderInterface.aidl" : "fBReaderJ/src/main/aidl/org/geometerplus/android/fbreader/network/BookDownloaderInterface.aidl",
+
+#src/com/paragon/dictionary/fbreader/OpenDictionaryActivity.java ? fbreader/app/src/main/java/com/paragon/dictionary/fbreader/OpenDictionaryActivity.java
 }
 
 
@@ -112,6 +118,9 @@ def convertToAndroidStudioPaths(line):
             deleteLine = True
             converted = deleteLineMarker
             print "IGNORED: \'" + firstPath + "\' is ignored"
+        elif firstPath in added:
+            converted = fullPath
+            print "ADDED: \'" + firstPath + "\' is added"
         else:
             print "FAIL: \'" + firstPath + "\' is not in map"
             sys.exit()
