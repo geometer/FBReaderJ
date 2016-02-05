@@ -25,11 +25,13 @@ ignored = [
     "ChangeLog",
     "VERSION",
     "AndroidManifest.xml.pattern",
-    "scripts/"
+    "scripts/",
+    "project.properties"
 ]
 
 added = [
-    "docs/"
+    "docs/",
+    "third-party/"
 ]
 
 conversionMap = {
@@ -73,6 +75,7 @@ conversionMap = {
     "src/org/geometerplus/android/fbreader/libraryService/PositionWithTimestamp.aidl" : "fBReaderJ/src/main/aidl/org/geometerplus/android/fbreader/libraryService/PositionWithTimestamp.aidl",
     "src/org/geometerplus/android/fbreader/network/BookDownloaderInterface.aidl" : "fBReaderJ/src/main/aidl/org/geometerplus/android/fbreader/network/BookDownloaderInterface.aidl",
 
+    "fbreader/app/" : "fBReaderJ/",
 #src/com/paragon/dictionary/fbreader/OpenDictionaryActivity.java ? fbreader/app/src/main/java/com/paragon/dictionary/fbreader/OpenDictionaryActivity.java
 }
 
@@ -98,6 +101,7 @@ def convertToAndroidStudioPaths(line):
     fullPath = a if b == "" else b
     splitPaths = fullPath.split('/')
     firstPath = splitPaths[0] + '/' if len(splitPaths) > 1 else splitPaths[0]
+    firstAndSecondPath = firstPath + (splitPaths[1] + '/') if len(splitPaths) > 1 else ''
 
     deleteLine = False
     converted = ""
@@ -110,6 +114,13 @@ def convertToAndroidStudioPaths(line):
             print "OK: \'" + firstPath + "\' is in map as " + conversionMap[firstPath]
             splitPaths[0] = conversionMap[firstPath][:-1] if len(splitPaths) > 1 else conversionMap[firstPath]
             converted = '/'.join(splitPaths)
+    # purposeful directory renaming in upstream (preparing for gradle build system 2c1d5c53e254a) discovered at 2/5/2016
+    elif firstAndSecondPath in conversionMap:
+        print "OK: \'" + firstAndSecondPath + "\' is in map as " + conversionMap[firstAndSecondPath] + "(narrowing procedure)"
+        # throw away the extra element
+        splitPaths = splitPaths[1:]
+        splitPaths[0] = conversionMap[firstAndSecondPath][:-1]
+        converted = '/'.join(splitPaths)
     else:
         if firstPath in unmoved:
             converted = fullPath
