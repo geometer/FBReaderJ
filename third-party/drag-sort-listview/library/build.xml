@@ -78,6 +78,17 @@
          in order to avoid having your file be overridden by tools such as "android update project"
     -->
     <!-- version-tag: 1 -->
+
+    <!-- because of this: https://code.google.com/p/android/issues/detail?id=33194, this target is needed to use jar.libs.dir -->
+    <target name="-pre-compile">
+        <echo>Custom pre-compile!</echo>
+        <path id="project.all.jars.path">
+            <fileset dir="${jar.libs.dir}">
+                <include name="*.jar"/>
+            </fileset>
+        </path>
+    </target>
+
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
 </project>
