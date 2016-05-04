@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
-import org.fbreader.util.NaturalOrderComparator;
+import group.pals.android.lib.ui.filechooser.utils.NaturalOrderComparator;
 import org.fbreader.util.Pair;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
