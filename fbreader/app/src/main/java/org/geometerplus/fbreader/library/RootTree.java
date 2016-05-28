@@ -33,6 +33,7 @@ public class RootTree extends LibraryTree {
 		//new ExternalViewTree(this);
 		new FavoritesTree(this);
 		new RecentBooksTree(this);
+		new RecentDownloadedBooksTree(this);
 		new AuthorListTree(this);
 		new TitleListTree(this);
 		new SeriesListTree(this);
