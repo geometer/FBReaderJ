@@ -4,7 +4,7 @@
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Ingolf Kübler 2011/07/03 -->
 <!-- Updated by Ingolf Kübler 2012/07/01 -->
-<!-- modified by Matthias Dill 2014-2015 -->
+<!-- modified by Matthias Dill 2014-2016 -->
 <resources>
 	<node name="library" value="FBReader Bibliothek">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
@@ -443,9 +443,9 @@
 				<node name="summaryOn" value="Bildschirm nicht abschalten auch wenn das Geräte aufgeladen wird"/>
 				<node name="summaryOff" value="Bildschirm abschalten auch wenn das Geräte aufgeladen wird"/>
 			</node>
-			<node name="enableBookMenuSwipeGesture" value="Enable swipe gesture for the book menu" toBeTranslated="true">
-				<node name="summaryOn" value="Swipe in from the left edge to open book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Use three-line (“hamburger”) button to open book menu" toBeTranslated="true"/>
+			<node name="enableBookMenuSwipeGesture" value="Aktiviere Wischgesten für das Buchmenü">
+				<node name="summaryOn" value="Von der linken Kante wischen um das Buchmenü zu öffnen"/>
+				<node name="summaryOff" value="Verwende den Menübutton (“3 Linien Hamburger”) um das Buchmenü zu öffnen"/>
 			</node>
 		</node>
 		<node name="text" value="Textdarstellung">
@@ -942,8 +942,8 @@
 			<node name="removeFromFavorites" value="Buch aus der Favoritenliste löschen"/>
 			<node name="markAsRead" value="Als gelesen markieren"/>
 			<node name="markAsUnread" value="Als ungelesen markieren"/>
-			<node name="plugin" value="Plugin" toBeTranslated="true"/>
-			<node name="premium" value="Premium" toBeTranslated="true"/>
+			<node name="plugin" value="Plugin"/>
+			<node name="premium" value="Premium"/>
 		</node>
 		<node name="gotoPage" value="Gehe zur Seite"/>
 		<node name="plugin">
