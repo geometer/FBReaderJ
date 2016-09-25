@@ -946,8 +946,8 @@
 			<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
 			<node name="markAsRead" value="Označit jako přečtené"/>
 			<node name="markAsUnread" value="Označit jako nepřečtené"/>
-			<node name="plugin" value="Plugin" toBeTranslated="true"/>
-			<node name="premium" value="Premium" toBeTranslated="true"/>
+			<node name="plugin" value="Doplněk"/>
+			<node name="premium" value="Premium"/>
 		</node>
 		<node name="gotoPage" value="Přejít na stránku"/>
 		<node name="plugin">
