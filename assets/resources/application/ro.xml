@@ -4,1249 +4,1249 @@
 <!-- Updated by aplicatii.romanesti@gmail.com, Nov 20 of 2014 -->
 <!-- Updated by girlea_alex@yahoo.com, Jun 21 of 2015 -->
 <resources>
-	<node name="library" value="Biblioteca">
-		<node name="unknownAuthor" value="Autor necunoscut"/>
-		<node name="booksWithNoTags" value="Carti fara etichete"/>
-		<node name="demo" value="esantion"/>
-		<node name="byAuthor" value="De catre autor">
-			<node name="summary" value="Carti sortate dupa autor"/>
-		</node>
-		<node name="byTitle" value="Dupa titlu">
-			<node name="summary" value="Carti sortate dupa titlu"/>
-		</node>
-		<node name="bySeries" value="Dupa serie">
-			<node name="summary" value="Carti sortate dupa serie"/>
-		</node>
-		<node name="byTag" value="Dupa tag">
-			<node name="summary" value="Carti sortate dupa tag"/>
-		</node>
-		<node name="recent" value="Recent">
-			<node name="summary" value="Carti deschise recent"/>
-		</node>
-		<node name="favorites" value="Favoritele mele">
-			<node name="summary" value="Cartile mele selectate"/>
-		</node>
-		<node name="chooseView" value="Alegeti vizualizarea"/>
-		<node name="wideCardsView" value="Carti mari"/>
-		<node name="smallCardsView" value="Carti mici"/>
-		<node name="tinyCardsView" value="Carti foarte mici"/>
-		<node name="coversView" value="Coperti"/>
-		<node name="oldView" value="Classic"/>
-		<node name="bookshelfView" value="Vizualizare raft">
-			<node name="summary" value="Comutați la vizualizarea de miniaturi"/>
-		</node>
-		<node name="found" value="S-au gasit">
-			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
-		</node>
-		<node name="sync" value="Sincronizare">
-			<node name="summary" value="Carti in ordinea starii sincronizarii"/>
-			<node name="sync-success" value="Sincronizare cu succes">
-				<node name="summary" value="Cartile incarcate pe server"/>
-			</node>
-			<node name="sync-failure" value="Sincronizare esuata">
-				<node name="summary" value="Cartile nu au fost incarcate pe server din cauza unor probleme"/>
-			</node>
-			<node name="sync-deleted" value="Sterse de pe server">
-				<node name="summary" value="Cartile nu mai sunt accesibile pe server"/>
-			</node>
-			<node name="sync-tosync" value="Sincronizarea nu s-a realizat inca">
-				<node name="summary" value="Carti care vor fi incarcate pe server"/>
-			</node>
-		</node>
-		<node name="fileTree" value="Listare sistem de fisiere">
-			<node name="summary" value="Cauta in sistemul de fisiere"/>
-		</node>
-		<node name="fileTreeRoot" value="Dispozitiv">
-			<node name="summary" value="Intregul sistem de fisiere a dispozitivului"/>
-		</node>
-		<node name="fileTreeCard" value="Cardul de memorie">
-			<node name="withIndex" value="Cardul de memorie Nr %s"/>
-			<node name="summary" value="Cardul de memorie introdus în aparat"/>
-		</node>
-		<node name="fileTreeLibrary" value="Biblioteca">
-			<node name="summary" value="Carti din directorul aplicatiei"/>
-		</node>
-		<node name="localSearch" value="Cautare locala"/>
-		<node name="rescan" value="Rescaneaza"/>
-		<node name="openBook" value="Deschide carte"/>
-		<node name="showBookInfo" value="Informatii despre carte"/>
-		<node name="shareBook" value="Impartaseste cartea"/>
-		<node name="deleteBook" value="Stergere cartea"/>
-		<node name="addToFavorites" value="Adauga la favorite"/>
-		<node name="removeFromFavorites" value="Sterge din favorite"/>
-		<node name="removeFromRecents" value="Eliminati din lista recenta"/>
-		<node name="markAsRead" value="Marcati ca citit"/>
-		<node name="markAsUnread" value="Marcati ca necitit"/>
-		<node name="deleteAll" value="Sterge pe toate"/>
-		<node name="uploadAgain" value="Incarca iarasi"/>
-		<node name="tryAgain" value="Incearca iarasi"/>
-	</node>
-	<node name="networkLibrary" value="Reteaua de biblioteci Online">
-		<node name="sync" value="Reteaua de carti FBReader®">
-			<node name="summary" value="Catalogul meu personal"/>
-		</node>
-		<node name="byAuthor" value="Dupa autor">
-			<node name="summary" value="Carti sortate dupa autor"/>
-		</node>
-		<node name="byTitle" value="Dupa titlu">
-			<node name="summary" value="Carti sortate dupa titlu"/>
-		</node>
-		<node name="byDate" value="Pâna la data de">
-			<node name="summary" value="Carti sortate dupa data de cumparare"/>
-		</node>
-		<node name="bySeries" value="Dupa serie">
-			<node name="summary" value="Carti sortate de serie"/>
-		</node>
-		<node name="search" value="Cautare">
-			<node name="summary" value="Cauta carti pe %s"/>
-			<node name="summaryAllCatalogs" value="Cauta carti în cataloage"/>
-			<node name="summaryInProgress" value="Cautare in derulare"/>
-		</node>
-		<node name="found" value="S-au gasit">
-			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
-		</node>
-		<node name="recent" value="Cataloage recente">
-			<node name="summary" value="Cataloage pe care le-ai vizitat recent"/>
-		</node>
-		<node name="openCatalog" value="Deschide catalogul"/>
-		<node name="networkSearch" value="Cautare"/>
-		<node name="showResults" value="Arata rezultatele"/>
-		<node name="showBooks" value="Afisati cartile"/>
-		<node name="download" value="Descarca"/>
-		<node name="read" value="Citeste copia locala"/>
-		<node name="delete" value="Stergere copia locala"/>
-		<node name="readDemo" value="Citeste esantion"/>
-		<node name="deleteDemo" value="Stergere esantion"/>
-		<node name="downloadDemo" value="Descarcati esantion"/>
-		<node name="buy" value="Cumpara (%s)"/>
-		<node name="addToBasket" value="Adauga la cos"/>
-		<node name="removeFromBasket" value="Eliminati din cos"/>
-		<node name="openBasket" value="Deschide cosul"/>
-		<node name="clearBasket" value="Goleste cosul"/>
-		<node name="buyAllBooks" value="Cumpara toate cartile"/>
-		<node name="openInBrowser" value="Deschide în browser"/>
-		<node name="stopLoading" value="Opriti încarcarea"/>
-		<node name="stopSearching" value="Opri cautarea"/>
-		<node name="signIn" value="Conectati-va în"/>
-		<node name="signOut" value="Deconectare (%s)"/>
-		<node name="signUp" value="Logare"/>
-		<node name="quickBuy" value="Cumpara rapid"/>
-		<node name="topup" value="Incarcati contul (în prezent: %s)"/>
-		<node name="topupTitle" value="Incarcati contul"/>
-		<node name="topupViaBrowser" value="Pagina deschis în browser"/>
-		<node name="authorisationMenuTitle" value="Alegeti actiunea"/>
-		<node name="topupSummary" value="În prezent: %s"/>
-		<node name="basket" value="Cos"/>
-		<node name="basketSummaryEmpty" value="Nicio carte"/>
-		<node name="basketSummaryCountOnly" value="%0 carti"/>
-		<node name="basketSummary" value="%0 carti (%1)"/>
-		<node name="alreadyDownloading" value="Cartea este în curs de descarcare"/>
-		<node name="alreadyDownloadingDemo" value="Esantionul este în curs de descarcare"/>
-		<node name="stoppingCatalogLoading" value="Oprirea încarcarii"/>
-		<node name="stoppingNetworkSearch" value="Oprirea cautarii"/>
-		<node name="editCustomCatalog" value="Editare catalog"/>
-		<node name="removeCustomCatalog" value="Eliminati catalog"/>
-		<node name="addCustomCatalog" value="Adauga catalog"/>
-		<node name="addCustomCatalogSummary" value="Adauga particularizate catalog OPDS manual"/>
-		<node name="disableCatalog" value="Dezactiveaza catalog"/>
-		<node name="confirmQuestions">
-			<node name="read" value="Doriti sa cititi copia locala?"/>
-			<node name="download" value="Doriti sa descarcati aceasta carte?"/>
-			<node name="readDemo" value="Nu doriti sa cititi esantion?"/>
-			<node name="downloadDemo" value="Doriti sa descarcati esantion?"/>
-			<node name="buy" value="Doriti sa cumparati aceasta carte? (%s)"/>
-			<node name="openInBrowser" value="Nu doriti sa deschideti acest catalog în browser?"/>
-		</node>
-		<node name="downloadingCatalogs" value="Descarcare cataloage"/>
-		<!-- used as notification title -->
-		<node name="searchingNetwork" value="Cauta pentru carti în retea"/>
-		<!-- used as notification title -->
-		<node name="addCatalog">
-			<node name="title" value="Adauga Catalog"/>
-			<node name="editUrl" value="Editeaza URL manual"/>
-		</node>
-		<node name="manageCatalogs" value="Gestionare registre">
-			<node name="summary" value="Configurare lista de registre"/>
-			<node name="enabled" value="Activat"/>
-			<node name="disabled" value="Dezactivat"/>
-		</node>
-		<node name="menu">
-			<node name="openRoot" value="Catalog radacina"/>
-			<node name="networkSearch" value="Reteaua de cautare"/>
-			<node name="reload" value="Reîncarca"/>
-			<node name="signIn" value="Conectati-va în"/>
-			<node name="signUp" value="Înscrieti-va"/>
-			<node name="signOut" value="Deconectare (%s)"/>
-			<node name="topup" value="Incarca cont"/>
-			<node name="addCustomCatalog" value="Adauga catalog"/>
-			<node name="refreshCatalogsList" value="Reîmprospatare cataloage"/>
-			<node name="manageCatalogs" value="Administreaza cataloagele"/>
-			<node name="clearBasket" value="Clar cos"/>
-			<node name="buyAllBooks" value="Cumpara toate cartile"/>
-		</node>
-	</node>
-	<node name="buyBook">
-		<node name="title" value="Cumpara cartea"/>
-		<node name="titleSeveralBooks" value="Cumpara carti"/>
-		<node name="confirm" value="Sunteti sigur ca doriti sa cumparati cartea &#10;“ %s”&#10;?"/>
-		<node name="confirmSeveralBooks" value="Sunteti sigur ca doriti sa cumparati %s carti?"/>
-		<node name="alreadyBought" value="Cartea este deja cumparata"/>
-		<node name="notAuthorised" value="Este necesara autorizatie"/>
-		<node name="noAccountInformation" value="Nu se poate incarca situatia contului"/>
-		<node name="unsufficientFunds" value="Costul este de %0 dar aveti disponibil doar %1"/>
-		<node name="zeroFunds" value="Costul este de %0"/>
-	</node>
-	<node name="bookInfo">
-		<node name="bookInfo" value="Cartea Info"/>
-		<node name="fileInfo" value="Informatii fisier"/>
-		<node name="description" value="Descriere"/>
-		<node name="noDescription" value="Nu este disponibila nicio descriere."/>
-		<node name="annotation" value="Adnotare"/>
-		<node name="title" value="Titlu:"/>
-		<node name="authors" value="Autori:"/>
-		<node name="series" value="Seria:"/>
-		<node name="indexInSeries" value="Index în serie:"/>
-		<node name="tags" value="Tag-uri:"/>
-		<node name="language" value="Limba:"/>
-		<node name="name" value="Nume:"/>
-		<node name="type" value="Tip:"/>
-		<node name="size" value="Dimensiune:"/>
-		<node name="time" value="Ultima modificare:"/>
-		<node name="sizeInBytes" value="%s octet (e)"/>
-		<node name="sizeInKiloBytes" value="%s kB"/>
-		<node name="catalog" value="Catalog:"/>
-		<node name="extraLinks" value="Link-uri utile"/>
-		<node name="menu">
-			<node name="edit" value="Editeaza"/>
-		</node>
-	</node>
-	<node name="bookDownloader">
-		<node name="downloadCompleteTicker" value="Cartea a fost descarcata"/>
-		<node name="downloadFailedTicker" value="Eroare descarcare carte"/>
-		<node name="downloadComplete" value="Descarcare completa"/>
-		<node name="downloadFailed" value="Descarcare esuata"/>
-		<node name="downloadStarted" value="Descarcarea cartii a inceput"/>
-		<node name="alreadyDownloading" value="Cartea deja se descarcata"/>
-		<node name="cannotCreateDirectory" value="Nu se poate crea directorul %s"/>
-		<node name="cannotCreateFile" value="Nu se poate crea fisierul %s"/>
-	</node>
-	<node name="tocView">
-		<node name="expandTree" value="Deschide arbore"/>
-		<node name="collapseTree" value="Inchide arbore"/>
-		<node name="readText" value="Cititi textul cartii"/>
-	</node>
-	<node name="bookmarksView">
-		<node name="thisBook" value="Aceasta carte"/>
-		<node name="allBooks" value="Toate cartile"/>
-		<node name="new" value="Marcaj nou"/>
-		<node name="openBook" value="Deschis"/>
-		<node name="editBookmark" value="Editeaza marcaj"/>
-		<node name="deleteBookmark" value="Sterge marcaj"/>
-		<node name="search" value="Cautare"/>
-	</node>
-	<node name="editBookmark">
-		<node name="text" value="Text"/>
-		<node name="style" value="Stil"/>
-		<node name="delete" value="Sterge"/>
-		<node name="deleteBookmark" value="Sterge marcaj"/>
-		<node name="saveText" value="Salvare text"/>
-		<node name="editStyle" value="Editeaza stilul…"/>
-	</node>
-	<node name="toast">
-		<node name="more" value="Mai mult"/>
-		<node name="offline" value="Deconectat"/>
-	</node>
-	<node name="cancelMenu">
-		<node name="library" value="Deschide libraria"/>
-		<node name="networkLibrary" value="Deschide libraria din retea"/>
-		<node name="previousBook" value="Deschide cartea anteriora"/>
-		<node name="returnTo" value="Înapoi la …"/>
-		<node name="back" value="Înapoi"/>
-		<node name="forward" value="Înainte"/>
-		<node name="close" value="Inchide Aplicatia"/>
-	</node>
-	<node name="style" value="Stilul %s"/>
-	<node name="editStyle" value="Editeaza stilul">
-		<node name="name" value="Numele stilului"/>
-		<node name="invisible" value="Invizibil">
-			<node name="summaryOn" value="Nu scoate in evidenta semnele de carte"/>
-			<node name="summaryOff" value="Scoate in evidenta semnele de carte"/>
-		</node>
-		<node name="bgColor" value="Culoarea de fond"/>
-	</node>
-	<node name="selection" value="Selectie">
-		<node name="quoteFrom" value="Citat de la %s"/>
-		<node name="textInBuffer" value="Copiat în clipboard:&#10;%s"/>
-	</node>
-	<node name="sharing">
-		<node name="sharedFrom" value="Impartasit de la &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
-	</node>
-	<node name="menu">
-		<node name="installPremium" value="Instaleaza varianta Premium"/>
-		<node name="openPremium" value="Deschide FBReader Premium"/>
-		<node name="premium" value="Dialog FBReader Premium"/>
-		<node name="whatsnew" value="Ce este nou"/>
-		<node name="openStartScreen" value="Ecranul de start"/>
-		<node name="preferences" value="Setari"/>
-		<node name="bookInfo" value="Informatii despre carte"/>
-		<node name="library" value="Biblioteca"/>
-		<node name="toc" value="Cuprins"/>
-		<node name="day" value="Mod Zi"/>
-		<node name="night" value="Mod Noapte"/>
-		<node name="dayNight" value="Zi/Noapte"/>
-		<node name="yotaSwitchToBackScreen" value="Treci la ecranul din spate"/>
-		<node name="yotaSwitchToFrontScreen" value="Treci la ecranul din fata"/>
-		<node name="networkLibrary" value="Biblioteca din retea"/>
-		<node name="navigate" value="Navigati">
-			<node name="toc" value="Cuprins"/>
-			<node name="gotoHome" value="Du-te la Start a documentului"/>
-			<node name="gotoSectionStart" value="Du-te la Inceputul textului"/>
-			<node name="gotoSectionEnd" value="Du-te la Sfârsitul textului"/>
-			<node name="nextTOCSection" value="Du-te la urmatoarea intrare din cuprins"/>
-			<node name="previousTOCSection" value="Du-te la urmatoarea anterioara din cuprins"/>
-			<node name="undo" value="Mergeti înapoi"/>
-			<node name="redo" value="Mergeti înainte"/>
-		</node>
-		<node name="shareBook" value="Impartaseste cartea"/>
-		<node name="search" value="Cauta"/>
-		<node name="rotate" value="Rotire ecran"/>
-		<node name="screenOrientation" value="Orientarea ecranului"/>
-		<node name="screenOrientationSystem" value="Sistem"/>
-		<node name="screenOrientationSensor" value="In functie de senzorul de rotatie"/>
-		<node name="screenOrientationPortrait" value="Portret"/>
-		<node name="screenOrientationLandscape" value="Orizontal (Peisaj)"/>
-		<node name="screenOrientationReversePortrait" value="Portret inversat"/>
-		<node name="screenOrientationReverseLandscape" value="Orizontal (Peisaj) inversat"/>
-		<node name="increaseFont" value="Mareste"/>
-		<node name="decreaseFont" value="Micsoreaza"/>
-		<node name="changeFontSize" value="Mareste/Micsoreaza"/>
-		<node name="toggleFullscreen" value="Pe intreg ecranul"/>
-		<node name="bookmarks" value="Favorite"/>
-		<node name="help" value="Ajutor"/>
-		<node name="plugins" value="Instaleaza plugin-uri"/>
-		<node name="gotoPageNumber" value="Du-te la pagina…"/>
-	</node>
-	<node name="BookInfo">
-		<node name="fileName" value="Nume de fisier"/>
-		<node name="title" value="Titlu"/>
-		<node name="language" value="Limba"/>
-		<node name="encoding" value="Encodare"/>
-		<node name="authors" value="Autori"/>
-		<node name="tags" value="Tag-uri"/>
-		<node name="series" value="Seria"/>
-	</node>
-	<node name="Preferences" value="Setarile FBReader">
-		<node name="sync" value="Sincronizare">
-			<node name="summary" value="Setarile retelei de carti"/>
-			<node name="site" value="Citește mai multe despre sincronizare">
-				<node name="url" value="https://books.fbreader.org/help.html"/>
-			</node>
-			<node name="enable" value="Activeaza sincronizarea">
-				<node name="summaryOn" value="Sincronizeaza-mi libraria cu serverul FBReader"/>
-				<node name="summaryOnWithAccount" value="Sincronizeaza-mi libraria ca %s"/>
-				<node name="summaryOff" value="Nu-mi sincroniza libraria cu serverul FBReader"/>
-			</node>
-			<node name="values">
-				<node name="always" value="Totdeauna"/>
-				<node name="viaWifi" value="Doar daca sunt conectat prin Wi-Fi"/>
-				<node name="never" value="Niciodata"/>
-			</node>
-			<node name="uploadAllBooks" value="Incarca toate cartile pe server"/>
-			<node name="downloadAllBooks" value="Descarca toate cartile de pe server"/>
-			<node name="downloadCurrentBook" value="Descarca cartea curenta de pe server"/>
-			<node name="positions" value="Sincronizeaza pozitia ramasa la citit"/>
-			<node name="bookmarks" value="Sincronizeaza semnele de carte"/>
-			<node name="customShelves" value="Sincronizeaza rafturile personalizate"/>
-			<node name="metainfo" value="Synchronise metainfo (titlu, tag-uri, etc.)"/>
-			<node name="changeCurrentBook" value="Schimba cartea curenta">
-				<node name="summaryOn" value="Deschide aceeasi carte pe toate dispozitivele"/>
-				<node name="summaryOff" value="Sincronizeaza doar pozitia, nu schimba automat cartea"/>
-			</node>
-		</node>
-		<node name="directories" value="Directoare">
-			<node name="summary" value="Directoare sa caute fisiere"/>
-			<node name="bookPath" value="Unde sa caut cartile">
-				<node name="chooserTitle" value="Directorul cu carti"/>
-			</node>
-			<node name="downloadDir" value="Unde sa stochez cartile descarcate">
-				<node name="chooserTitle" value="Directorul cu carti"/>
-			</node>
-			<node name="fontPath" value="Unde sa caut fonturile">
-				<node name="chooserTitle" value="Directorul cu fonturi"/>
-			</node>
-			<node name="tempDir" value="Unde sa pun fisierele temporare">
-				<node name="chooserTitle" value="Director fisiere temporare"/>
-			</node>
-		</node>
-		<node name="appearance" value="Aspect">
-			<node name="summary" value="Rotire, bara de stare"/>
-			<node name="language" value="Limba"/>
-			<node name="screenOrientation" value="Orientarea ecranului">
-				<node name="system" value="Sistem"/>
-				<node name="sensor" value="In functie de orientarea dispozitivului"/>
-				<node name="portrait" value="Portret"/>
-				<node name="landscape" value="Orizontal (Peisaj)"/>
-				<node name="reversePortrait" value="Portret inversat"/>
-				<node name="reverseLandscape" value="Orizontal (Peisaj) inversat"/>
-			</node>
-			<node name="autoOrientation" value="Rotire automata">
-				<node name="summaryOn" value="Ecranului se vor roti atunci când utilizatorul misca aparatul"/>
-				<node name="summaryOff" value="Ecranului nu se vor roti atunci când utilizatorul va misca aparatul"/>
-			</node>
-			<node name="showStatusBar" value="Arata bara de stare">
-				<node name="summaryOn" value="Afiseaza bara de stare arata în modul de citire"/>
-				<node name="summaryOff" value="Ascunde bara de stare în modul de citire"/>
-			</node>
-			<node name="showActionBar" value="Afiseaza bara de actiuni">
-				<node name="summaryOn" value="Afiseaza bara de actiuni in modul citire"/>
-				<node name="summaryOff" value="Ascunde bara de actiuni in modul citire"/>
-			</node>
-			<node name="showStatusBarWhenMenuIsActive" value="Arata bara de stare atunci când meniul este activ">
-				<node name="summaryOn" value="Arata bara de stare atunci când meniu devine activ"/>
-				<node name="summaryOff" value="Nu afisati bara de stare atunci când meniu devine activ"/>
-			</node>
-			<node name="fullscreenMode" value="Afiseaza pe tot ecranul">
-				<node name="summaryOn" value="Ascunde butoanele de navigare"/>
-				<node name="summaryOff" value="Afiseaza butoanele de navigare"/>
-			</node>
-			<node name="disableButtonLights" value="Dezactiveaza lumina butoanelor hardware în timpul lecturii">
-				<node name="summaryOn" value="Dezactiveaza lumina butonului (nu functioneaza pentru unele dispozitive)"/>
-				<node name="summaryOff" value="Nu dezactivati lumina butonului"/>
-			</node>
-			<node name="twoColumnView" value="Afiseaza pe doua coloane">
-				<node name="summaryOn" value="Afiseaza pe doua coloane doar cand dispozitivul este pe orizontala"/>
-				<node name="summaryOff" value="Afiseaza intotdeauna pe o coloana"/>
-			</node>
-			<node name="allowScreenBrightnessAdjustment" value="Reglarea luminozitatii ecranului">
-				<node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul partii stângi a ecranului"/>
-				<node name="summaryOff" value="Dezactivat"/>
-			</node>
-			<node name="dontTurnScreenOff" value="Împiedicati modul stand-by">
-				<node name="0" value="Mereu"/>
-				<node name="25" value="În timp ce nivelul bateriei este mai mare de 25 la suta"/>
-				<node name="50" value="În timp ce nivelul bateriei este mai mare de 50 la suta"/>
-				<node name="100" value="Niciodata"/>
-			</node>
-			<node name="dontTurnScreenOffDuringCharging" value="Împiedicati modul stand-by în timpul încarcarii">
-				<node name="summaryOn" value="Împiedicati modul stand-by, daca aparatul este în modul de încarcare"/>
-				<node name="summaryOff" value="Inchide ecran, chiar daca aparatul este în modul de încarcare"/>
-			</node>
-			<node name="enableBookMenuSwipeGesture" value="Activeaza modul glisare pentru meniul cartilor">
-				<node name="summaryOn" value="Glisati din marginea stanga spre interior pentru a deschide meniul cartilor"/>
-				<node name="summaryOff" value="Folositi butonul cu cele trei linii (“hamburger”) pentru a deschide meniul cartilor"/>
-			</node>
-		</node>
-		<node name="text" value="Text">
-			<node name="summary" value="Font, hyphenations, etc."/>
-			<node name="fontProperties" value="Proprietatile fonturilor">
-				<node name="summary" value="Optiuni de netezire a fonturilor"/>
-				<node name="antiAlias" value="Antialiasing">
-					<node name="summaryOn" value="Antialiasing este activat"/>
-					<node name="summaryOff" value="Antialiasing este dezactivat"/>
-				</node>
-				<node name="deviceKerning" value="Ajustare distanta intre caractere">
-					<node name="summaryOn" value="Ajustarea distantei intre caractere este activata"/>
-					<node name="summaryOff" value="Ajustarea distantei intre caractere este dezactivata"/>
-				</node>
-				<node name="dithering" value="Trecere graduala intre culori (dithering)">
-					<node name="summaryOn" value="Trecere graduala intre culori (dithering) este activata"/>
-					<node name="summaryOff" value="Trecere graduala intre culori (dithering) este dezactivata"/>
-				</node>
-				<node name="hinting" value="Alinierea fontului (hinting)">
-					<node name="summaryOn" value="Alinierea fontului (hinting) este activata"/>
-					<node name="summaryOff" value="Alinierea fontului (hinting) este dezactivata"/>
-				</node>
-				<node name="subpixel" value="Imbunatatire afisare font prin subpixel smoothing">
-					<node name="summaryOn" value="Imbunatatirea afisarii font prin subpixel smoothing este activata"/>
-					<node name="summaryOff" value="Imbunatatirea afisarii font prin subpixel smoothing este dezactivata"/>
-				</node>
-			</node>
-			<node name="font" value="Familia de fonturi">
-				<node name="inherit" value="&lt;neschimbat&gt;"/>
-			</node>
-			<node name="fontSize" value="Dimensiunea fontului"/>
-			<node name="fontStyle" value="Stilul fontului">
-				<node name="regular" value="Normal"/>
-				<node name="bold" value="Ingrosat"/>
-				<node name="italic" value="Cursiv"/>
-				<node name="boldItalic" value="Ingrosat Cursiv"/>
-			</node>
-			<node name="bold" value="Ingrosat">
-				<node name="bold" value="ingrosat"/>
-				<node name="normal" value="normal"/>
-				<node name="inherit" value="&lt;neschimbat&gt;"/>
-			</node>
-			<node name="italic" value="Cursiv">
-				<node name="italic" value="cursiv"/>
-				<node name="normal" value="normal"/>
-				<node name="inherit" value="&lt;neschimbat&gt;"/>
-			</node>
-			<node name="textDecoration" value="Decorarea textului">
-				<node name="inherit" value="&lt;neschimbat&gt;"/>
-				<node name="none" value="fara decorare"/>
-				<node name="underline" value="subliniat"/>
-				<node name="line-through" value="taiat"/>
-			</node>
-			<node name="lineSpacing" value="Spatiere linii">
-				<node name="inherit" value="&lt;neschimbat&gt;"/>
-			</node>
-			<node name="alignment" value="Aliniere">
-				<node name="left" value="Stânga"/>
-				<node name="right" value="Dreapta"/>
-				<node name="center" value="Centru"/>
-				<node name="justify" value="Aliniere stanga si dreapta"/>
-				<node name="inherit" value="&lt;neschimbat&gt;"/>
-			</node>
-			<node name="autoHyphenations" value="Despartire în silabe automata">
-				<node name="summaryOn" value="Despartire în silabe cuvinte în mod automat"/>
-				<node name="summaryOff" value="Nu despartiti în silabe cuvintele în mod automat"/>
-			</node>
-			<node name="allowHyphenations" value="Permiteti despartire în silabe">
-				<node name="auto" value="Desparte în silabe cuvintele"/>
-				<node name="none" value="nu desparti cuvintele în silabe"/>
-				<node name="inherit" value="&lt;neschimbat&gt;"/>
-			</node>
-			<node name="firstLineIndent" value="Aliniaza prima linie"/>
-			<node name="spaceBefore" value="Spatiu înainte"/>
-			<node name="spaceAfter" value="Spatiu dupa"/>
-			<node name="leftIndent" value="Aliniere stânga"/>
-			<node name="rightIndent" value="Aliniere dreapta"/>
-			<node name="verticalAlignment" value="Aliniere verticala"/>
-			<node name="more" value="Mai multe stiluri">
-				<node name="summary" value="Setari separate pentru titluri, epigrafe, etc"/>
-				<node name="Regular Paragraph" value="Paragraf normal">
-					<node name="summary" value=""/>
-				</node>
-				<node name="xhtml-tag-p" value="Paragraf EPub ">
-					<node name="summary" value="&lt;p&gt; continutul tagului XHTML"/>
-				</node>
-				<node name="Title" value="Titlu">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Section Title" value="Sectiunea titlu">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Poem Title" value="Poem titlul">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Subtitle" value="Subtitlu">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Annotation" value="Adnotare">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Epigraph" value="Epigraf">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Stanza" value="Strofa">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Verse" value="Verset">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Preformatted text" value="Text preformatat">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Image" value="Imagine">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Cite" value="Citat">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Author" value="Autor">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Date" value="Data">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Internal Hyperlink" value="Hyperlink intern">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Footnote" value="Nota de subsol">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Emphasis" value="Accent">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Strong" value="Puternic">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Subscript" value="Indice">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Superscript" value="Exponent">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Code" value="Cod">
-					<node name="summary" value=""/>
-				</node>
-				<node name="StrikeThrough" value="Taiat">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Italic" value="Cursiv">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Bold" value="Îngrosat">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Definition" value="Definitie">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Definition Description" value="Definitie Descriere">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Header 1" value="Antet 1">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Header 2" value="Antet 2">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Header 3" value="Antet 3">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Header 4" value="Antet 4">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Header 5" value="Antet 5">
-					<node name="summary" value=""/>
-				</node>
-				<node name="Header 6" value="Antet 6">
-					<node name="summary" value=""/>
-				</node>
-				<node name="External Hyperlink" value="Hyperlink extern">
-					<node name="summary" value=""/>
-				</node>
-			</node>
-		</node>
-		<node name="toast" value="Pop-ups" toBeTranslated="true">
-			<node name="summary" value="Ferestre pentru note de subsol, etc."/>
-			<node name="showFootnoteToast" value="Afișare text legat într-o fereastr?">
-				<node name="never" value="Niciodata"/>
-				<node name="footnotesOnly" value="Doar pentru notele de subsol"/>
-				<node name="footnotesAndSuperscripts" value="Pentru notele de subsol ?i link-uri"/>
-				<node name="allInternalLinks" value="Pentru toate link-urile interne"/>
-			</node>
-			<node name="footnoteToastDuration" value="Cât timp pentru a afișa link-ul"/>
-			<node name="fontSizePercent" value="Marimea fontului (procent din cel normal)"/>
-		</node>
-		<node name="css" value="CSS">
-			<node name="summary" value="Aplica/ignora valoride definite in CSS"/>
-			<node name="fontFamily" value="Familia de fonturi">
-				<node name="summaryOn" value="Foloseste familia de fonturi din CSS"/>
-				<node name="summaryOff" value="Ignora familia de fonturi din CSS"/>
-			</node>
-			<node name="fontSize" value="Marimea fontului">
-				<node name="summaryOn" value="Foloseste marimea fontului definita in CSS"/>
-				<node name="summaryOff" value="Ignora marimea fontului definita in CSS"/>
-			</node>
-			<node name="textAlignment" value="Alinierea textului">
-				<node name="summaryOn" value="Foloseste alinierea textului asa cum e definita in CSS"/>
-				<node name="summaryOff" value="Nu folosi alinierea textului asa cum e definita in CSS"/>
-			</node>
-			<node name="margins" value="Margini">
-				<node name="summaryOn" value="Foloseste marginile asa cum sunt definite in CSS"/>
-				<node name="summaryOff" value="Nu folosi marginile asa cum sunt definite in CSS"/>
-			</node>
-		</node>
-		<node name="colors" value="Culori si imagini de fundal">
-			<node name="summary" value="Setarile de culoare"/>
-			<node name="background" value="Fundal">
-				<node name="chooser">
-					<node name="solidColor" value="Culoare Uni…"/>
-					<node name="predefined" value="Textura predefinita…"/>
-					<node name="selectFile" value="Selecteaza fisier"/>
-				</node>
-				<node name="solidColor" value="Culoare uniforma"/>
-				<node name="leather" value="Piele"/>
-				<node name="sepia" value="Sepia"/>
-				<node name="wood" value="Lemn"/>
-				<node name="sand" value="Nisip"/>
-				<node name="hardpaper" value="Carton"/>
-			</node>
-			<node name="fillMode" value="Modul de umplere">
-				<node name="tile" value="Tigla"/>
-				<node name="tileMirror" value="Tigla in oglinda"/>
-				<node name="fullscreen" value="Intregul ecran"/>
-				<node name="stretch" value="Intinde pentru a acoperi intregul ecran"/>
-				<node name="tileVertically" value="Intinde orizontal, pune tip tigla pe vertical"/>
-				<node name="tileHorizontally" value="Intinde vertical, pune tip tigla pe orizontal"/>
-			</node>
-			<node name="selectionBackground" value="Selectie de fundal"/>
-			<node name="selectionForeground" value="Text selectat"/>
-			<node name="text" value="Text obisnuit"/>
-			<node name="hyperlink" value="Hyperlink Text"/>
-			<node name="hyperlinkVisited" value="Textul hyperlinkului vizitat"/>
-			<node name="highlightingForeground" value="Rezultatele cauratii"/>
-			<node name="highlightingBackground" value="Rezultatele cautarii in fundal"/>
-			<node name="footerOldStyle" value="Subsol (stil clasic)"/>
-			<node name="footerBackground" value="Fundal subsol"/>
-			<node name="footerForeground" value="Text subsol"/>
-			<node name="footerForegroundUnread" value="Linie subsol"/>
-		</node>
-		<node name="margins" value="Margini">
-			<node name="summary" value="Marginile textului"/>
-			<node name="left" value="Marginea din Stânga"/>
-			<node name="right" value="Marginea din dreapta"/>
-			<node name="top" value="Marginea de sus"/>
-			<node name="bottom" value="Marginea de jos"/>
-			<node name="spaceBetweenColumns" value="Spatiu intre coloane"/>
-		</node>
-		<node name="scrollBar" value="Indicator de progres">
-			<node name="summary" value="Setarile scrollbar &amp; subsol"/>
-			<node name="scrollbarType" value="Tip scrollbar">
-				<node name="hide" value="Ascunde"/>
-				<node name="show" value="Glisorul vertical"/>
-				<node name="showAsProgress" value="Bara verticala de progres"/>
-				<node name="showAsFooter" value="Subsol orizontal"/>
-				<node name="showAsFooterOldStyle" value="Subsol orizontal (stil clasic)"/>
-			</node>
-			<node name="footerHeight" value="înaltime subsol"/>
-			<node name="footerOldStyleColor" value="Culoare subsol (stil clasic)"/>
-			<node name="footerBackgroundColor" value="Culoare fundal subsol"/>
-			<node name="footerForegroundColor" value="Culoare text subsol"/>
-			<node name="footerForegroundUnreadColor" value="Culoare linie subsol "/>
-			<node name="tocMarks" value="Arata favoritele curpinsului">
-				<node name="summaryOn" value="Arata favoritele curpinsului în bara de subsol"/>
-				<node name="summaryOff" value="Nu arata semne de cuprins în bara de subsol"/>
-			</node>
-			<node name="tocMarksMaxNumber" value="Numarul maxim de intrari ce se afiseaza in cuprins"/>
-			<node name="showProgress" value="Afiseaza progresul cititului">
-				<node name="dontDisplay" value="Nu afisa"/>
-				<node name="asPages" value="Ca numar de pagini"/>
-				<node name="asPercentage" value="Ca procent"/>
-				<node name="asPagesAndPercentage" value="Ca numar de pagini si ca procent"/>
-			</node>
-			<node name="showBattery" value="Afiseaza nivelul bateriei">
-				<node name="summaryOn" value="Afiseaza nivelul bateriei în subsol"/>
-				<node name="summaryOff" value="Nu afisa nivelul bateriei în subsol"/>
-			</node>
-			<node name="showClock" value="Afisare ceas">
-				<node name="summaryOn" value="Afisare ceas în subsol"/>
-				<node name="summaryOff" value="Nu se arata ceasul în subsol"/>
-			</node>
-			<node name="font" value="Familia de fonturi"/>
-		</node>
-		<node name="scrolling" value="Defilare">
-			<node name="summary" value="Cum se face defilarea textului"/>
-			<node name="fingerScrolling" value="Defilare mod touch screen">
-				<node name="byTap" value="Dati pagina apasand cu degetul"/>
-				<node name="byFlick" value="Dati pagina trecand cu degetul"/>
-				<node name="byTapAndFlick" value="Dati pagina apasand sau trecand cu degetul"/>
-			</node>
-			<node name="enableDoubleTapDetection" value="Detectare atingere de doua ori ">
-				<node name="summaryOn" value="Atingeti de doua ori pentru a afisa dialogul de navigare / meniul"/>
-				<node name="summaryOff" value="Ignorati dubla atingere"/>
-			</node>
-			<node name="volumeKeys" value="Întoarceti pagina cu tastele de volum">
-				<node name="summaryOn" value="Utilizati tastele de volum pentru a întoarce paginile"/>
-				<node name="summaryOff" value="Pastrati tastele de volum pentru sunet"/>
-			</node>
-			<node name="invertVolumeKeys" value="Inversati directia tastelor de volum">
-				<node name="summaryOn" value="Mai tare (mai incet), tasta pentru pagina anterioara (urmatoare)"/>
-				<node name="summaryOff" value="Mai incet (mai tare), tasta pentru pagina urmatoare (anterioara) "/>
-			</node>
-			<node name="animation" value="Animatie">
-				<node name="none" value="Derulati fara animatie"/>
-				<node name="curl" value="Animatie la rotund"/>
-				<node name="slide" value="Animatie glisare"/>
-				<node name="slideOldStyle" value="Animatie slide (stil clasic)"/>
-				<node name="shift" value="Animatie mutare"/>
-			</node>
-			<node name="animationSpeed" value="Viteza de animatie">
-				<node name="fast" value="rapid"/>
-				<node name="slow" value="lent"/>
-			</node>
-			<node name="horizontal" value="Defilare orizontala">
-				<node name="summaryOn" value="Defilare orizontala de pagini"/>
-				<node name="summaryOff" value="Defilare verticala de pagini"/>
-			</node>
-		</node>
-		<node name="tapZones" value="Apasati zone">
-			<node name="summary" value="Actiunile la apasare deget"/>
-			<node name="tapZonesScheme" value="Design zone de apasare">
-				<node name="left_to_right" value="Defilare pagina de la stânga la dreapta"/>
-				<node name="right_to_left" value="Defilare pagina de la dreapta la stânga"/>
-				<node name="up" value="Defilare pagina de jos în sus"/>
-				<node name="down" value="Defilare pagina de sus în jos"/>
-				<node name="custom" value="Particularizate…"/>
-			</node>
-		</node>
-		<node name="dictionary" value="Dictionar &amp; traducator">
-			<node name="summary" value="Setari de traducere"/>
-			<node name="dictionary" value="Cautati un singur cuvant in"/>
-			<node name="translator" value="Traduce fraze prin"/>
-			<node name="translateOffline" value="Google Translate: folositi traducatorul fara conexiunea (daca este instalat)">
-				<node name="always" value="Intotdeauna"/>
-				<node name="onError" value="Automat, daca traducerea automata esueaza"/>
-				<node name="ask" value="Intreaba daca traducerea onlinea esueaza"/>
-				<node name="never" value="Niciodata"/>
-			</node>
-			<node name="translationToastDuration" value="Cât timp pentru a afisa traducerea"/>
-			<node name="errorToastDuration" value="Cât timp pentru a afisa mesajul de eroare"/>
-			<node name="sourceLanguage" value="Traducere din">
-				<node name="detect" value="Autodetectare limba"/>
-			</node>
-			<node name="targetLanguage" value="Tradu in">
-				<node name="any" value="toate limbile"/>
-			</node>
-			<node name="longTapAction" value="Atingere lunga pentru actiune">
-				<node name="doNothing" value="Apasând lung nu face nimic"/>
-				<node name="selectSingleWord" value="Apasând lung selecteaza un singur cuvânt"/>
-				<node name="startSelecting" value="Apasând lung initiaza selectarea"/>
-				<node name="openDictionary" value="Apasând lung selecteaza un singur cuvânt, la ridicarea degetului se deschide dictionarul"/>
-			</node>
-			<node name="navigateOverAllWords" value="Navigati peste toate cuvintele">
-				<node name="summaryOn" value="Tasta de navigare viziteaza toate cuvintele"/>
-				<node name="summaryOff" value="Tasta de navigare viziteaza numai hyperlink-uri"/>
-			</node>
-		</node>
-		<node name="images" value="Imagini">
-			<node name="summary" value="Setari afisare imagine"/>
-			<node name="backgroundColor" value="Culoare de fundal pentru a vizualizare imagini"/>
-			<node name="longTapAction" value="Actiune la apasare lunga">
-				<node name="doNothing" value="Apasând lung nu face nimic"/>
-				<node name="selectImage" value="Apasând lung selecteaza imaginea"/>
-				<node name="openImageView" value="Apasând lung se vizualizeaza imaginea"/>
-			</node>
-			<node name="fitImagesToScreen" value="Incadreaza imaginea pe ecran">
-				<node name="none" value="Niciuna"/>
-				<node name="covers" value="Numai acoperirea"/>
-				<node name="all" value="Toate"/>
-			</node>
-			<node name="matchBackground" value="Aliniaza cu intensiatea fundalului">
-				<node name="summaryOn" value="Ajusteaza culoarea imaginii in functie de fundal"/>
-				<node name="summaryOff" value="Nu ajusta culoarea imaginii"/>
-			</node>
-		</node>
-		<node name="menu" value="Meniu">
-			<node name="summary" value="Configureaza meniul paginii principale"/>
-			<node name="backgroundCover" value="Foloseste coperta ca fundal">
-				<node name="summaryOn" value="Afiseaza coperta in meniul cartii"/>
-				<node name="summaryOff" value="Pastreaza fundalul curat"/>
-			</node>
-			<node name="bookMenuStatusItem" value="Starea articolului">
-				<node name="summaryOn" value="Afiseaza starea articolului in meniul cartii"/>
-				<node name="summaryOff" value="Ascunde starea articolului"/>
-			</node>
-			<node name="items" value="Menu items" toBeTranslated="true">
-				<node name="summary" value="Change items order" toBeTranslated="true"/>
-				<node name="bookMenuUpperSection" value="Book menu (upper section)" toBeTranslated="true"/>
-				<node name="bookMenuLowerSection" value="Book menu (lower section)" toBeTranslated="true"/>
-				<node name="toolbarOrMainMenu" value="Toolbar or main menu" toBeTranslated="true"/>
-				<node name="mainMenu" value="Main menu" toBeTranslated="true"/>
-				<node name="enabled" value="Enabled" toBeTranslated="true"/>
-				<node name="disabled" value="Disabled" toBeTranslated="true"/>
-			</node>
-		</node>
-		<node name="cancelMenu" value="Anuleaza meniu">
-			<node name="summary" value="Lista actiunilor pentru butonul inapoi"/>
-			<node name="library" value="Librarie">
-				<node name="summaryOn" value="Afiseaza elementul 'deschide libraria'"/>
-				<node name="summaryOff" value="Nu afisa elementul 'deschide libraria'"/>
-			</node>
-			<node name="networkLibrary" value="Libraria din retea">
-				<node name="summaryOn" value="Afiseaza elementul 'deschide libraria din retea'"/>
-				<node name="summaryOff" value="Nu afiseaza elementul 'deschide libraria din retea'"/>
-			</node>
-			<node name="previousBook" value="Cartea anterioara">
-				<node name="summaryOn" value="Arata reveniti la cartea precedenta"/>
-				<node name="summaryOff" value="Nu arata reveniti la cartea precedenta"/>
-			</node>
-			<node name="positions" value="Ultimele 3 pozitii">
-				<node name="summaryOn" value="Arata articolele pentru ultimele 3 pozitii în carte"/>
-				<node name="summaryOff" value="Nu afisa elementele pentru ultimele 3 pozitii în carte"/>
-			</node>
-			<node name="backKeyAction" value="Actiunea tastei inapoi">
-				<node name="exit" value="Inchide Aplicatia"/>
-				<node name="goBack" value="Navigati înapoi"/>
-				<node name="cancelMenu" value="Arata meniul de anulare"/>
-			</node>
-			<node name="backKeyLongPressAction" value="Actiune pentru apasarea lunga a tastei inapoi">
-				<node name="exit" value="Inchide Aplicatia"/>
-				<node name="goBack" value="Navigati înapoi"/>
-				<node name="cancelMenu" value="Arata meniul de anulare"/>
-				<node name="none" value="Nicio actiune"/>
-			</node>
-		</node>
-		<node name="tips" value="Sfaturi">
-			<node name="summary" value="Setari sfaturi zilnice"/>
-			<node name="showTips" value="Afiseaza sfaturi">
-				<node name="summaryOn" value="Afiseaza sfaturi zilnice"/>
-				<node name="summaryOff" value="Nu afisa"/>
-			</node>
-		</node>
-		<node name="about" value="Despre FBReader">
-			<node name="summary" value="Informatii versiune, contacte"/>
-			<node name="version" value="Versiune"/>
-			<node name="site" value="Visitati website-ul nostru">
-				<node name="url" value="https://fbreader.org/"/>
-			</node>
-			<node name="email" value="Trimiteti-ne un e-mail">
-				<node name="url" value="mailto:contact@fbreader.org"/>
-			</node>
-			<node name="googleplus" value="Participa la comunitatea FBReader pe Google+">
-				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
-			</node>
-			<node name="twitter" value="Urmati-ne pe Twitter">
-				<node name="url" value="https://twitter.com/fbreader"/>
-			</node>
-			<node name="facebook" value="FBReader pe Facebook">
-				<node name="url" value="https://facebook.com/fbreader"/>
-			</node>
-			<node name="thirdParty" value="Biblioteci terțe părți"/>
-		</node>
-		<node name="eink" value="Ecran tip E-ink">
-			<node name="summary" value="Optiuni specifice ecranelor tip E-ink"/>
-			<node name="enableFastRefresh" value="Mod improspatare rapida">
-				<node name="summaryOn" value="Foloseste modul rapid (dar nu perfect) de improspatare a ecranului"/>
-				<node name="summaryOff" value="Foloseste modul complet (curat dar incet) de improspatare a ecranului"/>
-			</node>
-			<node name="interval" value="Numarul (intervalul) de improspatari rapide intre improspatarile complete"/>
-		</node>
-	</node>
-	<node name="dialog">
-		<node name="button">
-			<node name="noThanks" value="Nu, mersi"/>
-			<node name="install" value="Instaleaza"/>
-			<node name="update" value="Actualizati"/>
-			<node name="skip" value="Sari peste"/>
-			<node name="buy" value="Cumpara"/>
-			<node name="buyAndDownload" value="Cumpar si Descarca"/>
-			<node name="download" value="Descarca"/>
-			<node name="continue" value="Continua"/>
-			<node name="editUrl" value="Editati URL-ul"/>
-			<node name="tryAgain" value="Încercati din nou"/>
-			<node name="openBook" value="Citeste"/>
-			<node name="edit" value="Editeaza"/>
-			<node name="reloadInfo" value="Reîncarca"/>
-			<node name="shareBook" value="Impartaseste"/>
-			<node name="topup" value="Incarca"/>
-			<node name="pay" value="Plateste"/>
-			<node name="refresh" value="Actualizare"/>
-			<node name="authorise" value="Autorizeaza"/>
-			<node name="resetPosition" value="Reseteaza pozitia"/>
-			<node name="sendReport" value="Trimite raport"/>
-			<node name="addToFavorites" value="Adauga la favorite"/>
-			<node name="removeFromFavorites" value="Sterge din favorite"/>
-			<node name="markAsRead" value="Marcati ca citit"/>
-			<node name="markAsUnread" value="Marcati ca necitit"/>
-			<node name="plugin" value="Plugin" toBeTranslated="true"/>
-			<node name="premium" value="Premium" toBeTranslated="true"/>
-		</node>
-		<node name="gotoPage" value="Du-te la pagina"/>
-		<node name="plugin">
-			<node name="installTitle" value="Instalati plugin"/>
-			<node name="updateTitle" value="Actualizare plugin"/>
-			<node name="dontAskAgain" value="Nu întrebati din nou"/>
-		</node>
-		<node name="backgroundAuthentication">
-			<node name="message" value="Este necesara autentificarea"/>
-		</node>
-		<node name="missingDictionary" value="Disparut %s">
-			<node name="install" value="Instalare %s"/>
-			<node name="configure" value="Configurare traducere"/>
-			<node name="skip" value="Sari"/>
-		</node>
-		<node name="installDictionary">
-			<node name="title" value="Instalati dictionar"/>
-			<node name="message" value="Doriti sa instalati %s?"/>
-		</node>
-		<node name="deleteBookBox">
-			<node name="message" value="Fisierul cartii va fi sters ireversibil. Sunteti sigur?"/>
-		</node>
-		<node name="deleteMultipleBookBox">
-			<node name="title" value="Sterge cartile"/>
-			<node name="message" value="Fisierele cu carti %s vor fi sterse pentru totdeauna. Sunteti sigur?"/>
-		</node>
-		<node name="redownloadFileBox">
-			<node name="message" value="Fisierul exista deja. Doriti reincarcarea lui?"/>
-		</node>
-		<node name="litresUserRegistration">
-			<node name="title" value="Inregistrare utilizator"/>
-			<node name="login" value="Nume de utilizator"/>
-			<node name="password" value="Parola"/>
-			<node name="confirmPassword" value="Parola&#10;confirmare"/>
-			<node name="email" value="Email"/>
-		</node>
-		<node name="litresAutoSignIn">
-			<node name="title" value="Conectare"/>
-			<node name="email" value="Email"/>
-			<node name="actions">
-				<node name="title" value="Imposibil de a conecta cu acest email&#10;%s"/>
-				<node name="recover" value="Recuperare informații de cont"/>
-				<node name="signIn" value="Conectare manuala"/>
-				<node name="anotherEmail" value="Selectati un alt email"/>
-			</node>
-			<node name="signedIn" value="Sunteți conectat cu adresa de e-mail %s."/>
-			<node name="registrationSuccessful" value="Am creat un cont pentru dumneavoastră. Informații detaliate au fost trimise la %s."/>
-			<node name="passwordSent" value="Informațiile contului dvs. au fost trimise la %s. Vă rugăm să verificați email-ul."/>
-		</node>
-		<node name="waitMessage">
-			<node name="translating" value="Traducerea este in  progres…"/>
-			<node name="tryConnect" value="Incercare de conectare. Va rugam asteptati…"/>
-			<node name="downloadingBook" value="Descarcare carte %s"/>
-			<node name="search" value="Cautarea a inceput. Va rugam asteptati…"/>
-			<node name="loadInfo" value="Se incarca informatiile necesare. Va rugam asteptati…"/>
-			<node name="loadingBook" value="Se deschide cartea. Va rugam asteptati…"/>
-			<node name="loadingBookList" value="Deschiderea biblioteca. Va rugam asteptati…"/>
-			<node name="creatingBooksDatabase" value="Crearea bazei de date de carti. Va rugam asteptati…"/>
-			<node name="updatingBooksDatabase" value="Actualizarea bazei de date carti. Va rugam asteptati…"/>
-			<node name="loadingNetworkLibrary" value="Se deschide biblioteca. Va rugam asteptati…"/>
-			<node name="authentication" value="Autentificare. Va rugam asteptati…"/>
-			<node name="signOut" value="Iesire. Va rugam asteptati…"/>
-			<node name="purchaseBook" value="Se cumpara cartea. Va rugam asteptati…"/>
-			<node name="loadingCatalogInfo" value="Se incarca informatii despre catalog. Va rugam asteptati…"/>
-			<node name="loadingNetworkBookInfo" value="Se incarca informatii despre carte. Va rugam asteptati …"/>
-			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati…"/>
-			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati…"/>
-			<node name="initDRMEngine" value="Se incarca motorul DRM. Va rugam asteptati…"/>
-			<node name="acquireLicence" value="Preluam licenta. Va rugam asteptati…"/>
-			<node name="registerUser" value="Inregistrare cont nou. Asteptati va rog…"/>
-			<node name="autoSignIn" value="Conectare. Asteptati va rog…"/>
-			<node name="recoverPassword" value="Recuperare parola. Asteptati va rog…"/>
-		</node>
-		<node name="networkError">
-			<node name="internalError" value="Eroare interna la server"/>
-			<node name="purchaseNotEnoughMoney" value="Nu sunt suficienti bani"/>
-			<node name="purchaseMissingBook" value="Lipseste cartea"/>
-			<node name="purchaseAlreadyPurchased" value="Deja achizitionate"/>
-			<node name="bookNotPurchased" value="Cartea nu a fost cumparata"/>
-			<node name="downloadLimitExceeded" value="Ati depasit limita de descarcare"/>
-			<node name="noUserForEmail" value="Nici un utilizator nu a a fost înregistrat&#10;cu e-mail-ul specificat"/>
-			<node name="unsupportedOperation" value="Operatiune neacceptata"/>
-			<node name="notAnOPDS" value="Acesta nu este un catalog OPDS"/>
-			<node name="noRequiredInformation" value="Informatia solicitata nu exista în catalog"/>
-			<node name="cacheDirectoryError" value="Nu se poate crea un directorul de cache"/>
-			<node name="usernameAlreadyInUse" value="Nume utilizator deja în uz"/>
-			<node name="usernameNotSpecified" value="Numele de utilizator nu ar trebui să fie gol"/>
-			<node name="passwordNotSpecified" value="Parola nu trebuie să fie goala"/>
-			<node name="passwordsDoNotMatch" value="Cele două parole nu se potrivesc"/>
-			<node name="emailNotSpecified" value="Adresa de e-mail este necompletata"/>
-			<node name="emailAlreadyInUse" value="Adresa de e-mail este deja în uz"/>
-			<node name="invalidEMail" value="Adresa de e-mail este invalida"/>
-			<node name="tooManyRegistrations" value="Prea multe înregistrări de la adresa dumneavoastră de IP;&#10;vă rugăm să încercați din nou în câteva minute"/>
-		</node>
-		<node name="AuthenticationDialog">
-			<node name="title" value="Autentificare"/>
-			<node name="unencryptedWarning" value="Parola dvs. va fi trimisa necriptata"/>
-			<node name="login" value="Nume utilizator"/>
-			<node name="password" value="Parola"/>
-			<node name="loginIsEmpty" value="Numele utilizatorului trebuie sa nu fie gol"/>
-			<node name="register" value="Înscrieti-va"/>
-		</node>
-		<node name="CustomCatalogDialog">
-			<node name="title" value="Aplicatie: adauga catalog personalizat"/>
-			<node name="catalogTitle" value="Titlu"/>
-			<node name="catalogUrl" value="URL-ul"/>
-			<node name="catalogSummary" value="Rezumat"/>
-			<node name="catalogTitleExample" value="De ex: Proiectul Gutenberg catalog"/>
-			<node name="catalogUrlExample" value="De ex: http://m.gutenberg.org/"/>
-			<node name="catalogSummaryExample" value="De ex: carti din patrimoniul public"/>
-			<node name="titleIsEmpty" value="Titlul trebuie sa nu fie gol"/>
-			<node name="urlIsEmpty" value="URL-ul trebuie sa nu fie gol"/>
-			<node name="invalidUrl" value="Adresa URL invalida"/>
-			<node name="titleAlreadyExists" value="Titlu specificata este deja în uz"/>
-			<node name="siteAlreadyExists" value="Site-ul specificat este deja în uz"/>
-		</node>
-		<node name="languageFilterDialog">
-			<node name="title" value="Filtreaza limba"/>
-		</node>
-		<node name="tips">
-			<node name="title" value="Sfatul zilei"/>
-			<node name="initializationText" value="Doriti sa cititi zilnic sfaturi despre folosirea aplicatiei? Noile sfaturi sunt descarcate de pe site-ul aplicatiei. Se estimeaza un trafic de 1-2 kilobytes pe saptamana.&#10;&#10;Sa activeaz sfaturile?"/>
-			<node name="dontShowAgain" value="Nu-l mai repeta"/>
-			<node name="more" value="Urmatorul sfat"/>
-		</node>
-		<node name="screenHint">
-			<node name="message1" value="FBReader functioneaza in modul ecran complet implicit. O treime din ecran pentru a afisa controalele. Puteti schimba acest comportament in “Aparitie” sectiune de dialog Setari."/>
-			<node name="message2" value="Bine facut! Acum atingeti din nou al treilea centru pentru a ascunde comenzile si acest indiciul. Daca doriti sa pastrati comenzile de pe ecran in timpul citirii, selectati “Arata bara de actiune” optiune in “Aparitie” sectiune de dialog Setari."/>
-		</node>
-		<node name="folderList">
-			<node name="addFolder" value="Adauga dosar"/>
-			<node name="removeDialog" value="Sterge dosar">
-				<node name="message" value="Sterge “%s” din lista?"/>
-			</node>
-			<node name="duplicate" value="“%s” este in continuare in lista"/>
-		</node>
-		<node name="editList">
-			<node name="edit" value="Editare"/>
-			<node name="remove" value="Sterge"/>
-		</node>
-		<node name="editTags" value="Etichete">
-			<node name="addTag" value="Adauga eticheta"/>
-			<node name="editTag" value="Editeaza Eticheta"/>
-			<node name="removeTag" value="Sterge eticheta">
-				<node name="message" value="Sa sterg eticheta “%s” din lista?"/>
-			</node>
-		</node>
-		<node name="editAuthors" value="Autori">
-			<node name="addAuthor" value="Adauga autor"/>
-			<node name="editAuthor" value="Editeaza autor"/>
-			<node name="removeAuthor" value="Sterge autor">
-				<node name="message" value="Sa sterg autorul “%s” din lista?"/>
-			</node>
-		</node>
-		<node name="fileChooser">
-			<node name="root" value="Radacina"/>
-			<node name="newFolder" value="Dosar nou"/>
-			<node name="folderNameHint" value="Nume dosar"/>
-			<node name="menu">
-				<node name="origin" value="Origine"/>
-				<node name="reload" value="Reincarca"/>
-			</node>
-			<node name="sortBy" value="Sortare dupa">
-				<node name="name" value="Nume"/>
-				<node name="size" value="Marime"/>
-				<node name="date" value="Data"/>
-			</node>
-			<node name="permissionDenied" value="Acces interzis"/>
-		</node>
-		<node name="missingPlugin" value="Plugin lipsa">
-			<node name="message" value="Plugin-ul pentru fisierele e tip %s nu este instalat. Sa-l instalez acum?"/>
-		</node>
-		<node name="licensing" value="Fara licenta">
-			<node name="message" value="%s nu este licențiat. Cumpărati acum pe Google Play?"/>
-		</node>
-		<node name="retryLicensing" value="Verificarea licentei">
-			<node name="message" value="Nu se poate verifica %s licenta. Incercati din nou?"/>
-		</node>
-	</node>
-	<node name="errorMessage">
-		<node name="nativeCodeFailure" value="Eroare %s in codul nativ in timpul lecturii '%s'"/>
-		<node name="errorReadingFile" value="A apărut o eroare in timpul citirii '%s'"/>
-		<node name="errorReadingZip" value="A apărut o eroare în timpul extragerii '%s'"/>
-		<node name="pluginNotFound" value="Nu este plugin pentru '%s'"/>
-		<node name="unknownPluginType" value="Tip plugin necunoscut: %s"/>
-		<node name="fileNotFound" value="Fisierul nu a fost gasit: %s"/>
-		<node name="unsupportedEncryptionMethod" value="Fisierul %s este criptat cu metoda care nu este sustinuta de FBReader. Unele pagini nu pot fi citite"/>
-		<node name="opfFileNotFound" value="OPF nu se gaseste in %s"/>
-		<node name="unsupportedFileFormat" value="Formatul de fisier nu este acceptat pentru '%s'"/>
-		<node name="errorParsingRtf" value="Rtf eroare de analiza în: %s"/>
-		<node name="cannotRunAndroidMarket" value="Nu pot accesa Android Market. Va rugam instalati %s manual"/>
-		<node name="textNotFound" value="Nu exista nici un text adecvat în carte, îmi pare rau"/>
-		<node name="bookNotFound" value="Nu exista carti adecvate în biblioteca, îmi pare rau"/>
-		<node name="bookmarkNotFound" value="Nu exista marcaje adecvate, îmi pare rau"/>
-		<node name="cannotOpenBook" value="Nu pot deschide aceasta carte în acest moment, îmi pare rau"/>
-		<node name="dictionaryIsNotInstalled" value="Dictionarul nu este instalat, îmi pare rau"/>
-		<node name="permissionDenied" value="Permisiune refuzata, îmi pare rau"/>
-		<node name="noFavorites" value="Lista ta de favorite este goala, îmi pare rau"/>
-		<node name="noSeries" value="Nu exista carti in serie, ne pare rau"/>
-		<node name="emptyCatalog" value="Catalogul este gol, îmi pare rau"/>
-		<node name="emptyBasket" value="Cosul Dvs. este gol, îmi pare rau"/>
-		<node name="emptyNetworkSearchResults" value="Nu s-a gasit nici o carte"/>
-		<node name="videoServiceNotWorking" value="Servicii video nedisponibile, ne pare rau"/>
-		<node name="videoPlayerNotFound" value="Nu exista nici un player video instalat pe acest aparat, ne pare rau"/>
-		<node name="bookIsMissingTitle" value="Carte lipsa"/>
-		<node name="bookIsMissing" value="Cartea '%s' nu a fost gasita pe dispozitiv"/>
-		<node name="downloadFailed" value="Descarcare esuata"/>
-	</node>
-	<node name="external">
-		<node name="browser" value="Browser"/>
-		<node name="defaultBrowser" value="Browser prestabilit"/>
-	</node>
-	<node name="crash">
-		<node name="fixBooksDirectory">
-			<node name="title" value="Eroare in aplicatie"/>
-			<node name="text" value="FBReader director cache nu este accesibil pentru scriere. Poate ati uitat sa introduceti sau demonta cartela de memorie. Va rugam sa rezolva aceasta problema sau selectati un alt director."/>
-		</node>
-		<node name="missingNativeLibrary">
-			<node name="title" value="Problema in aplicatie"/>
-			<node name="text" value="Aplicatia nu gaseste librariile native. Poate nu a fost instalata corect. Daca erorare persista, va rugam reinstalati aplicatia"/>
-		</node>
-	</node>
-	<node name="error">
-		<node name="bookReading">
-			<node name="title" value="Problema FBReader"/>
-		</node>
-	</node>
-	<node name="links">
-		<node name="faqPage" value="https://fbreader.org/faq-page"/>
-	</node>
-	<node name="plugins" value="Instalare plugin-uri">
-		<node name="noMorePlugins" value="Nu avem, plugin-uri noi in acest moment, ne pare rau"/>
-		<node name="litres" value="LitRes">
-			<node name="summary" value="Librarie Rusa"/>
-		</node>
-		<node name="tts_plus" value="TTS+">
-			<node name="summary" value="Citit cu voce tare"/>
-		</node>
-		<node name="calibre_server_integration" value="Conexiune Calibre">
-			<node name="summary" value="Conectati server-ul Calibre in reteaua d-vs"/>
-		</node>
-		<node name="local_opds_scanner" value="OPDS Scanare locala">
-			<node name="summary" value="Uita-te pentru carti in reteaua locala"/>
-		</node>
-		<node name="bookshelf" value="Raft">
-			<node name="summary" value="Vizualizare librarie tip miniatura (Thumbnail)"/>
-		</node>
-		<node name="opds_server" value="Server OPDS">
-			<node name="summary" value="Serviti carti de pe dispozitivul dvs."/>
-		</node>
-		<node name="widgets" value="Widget-uri">
-			<node name="summary" value="Adaugati carti in ecranul de start"/>
-		</node>
-		<node name="pdf" value="PDF">
-			<node name="summary" value="Citire carti in formatul PDF"/>
-		</node>
-		<node name="djvu" value="DjVu">
-			<node name="summary" value="Citeste carti in format DjVu"/>
-		</node>
-		<node name="cbr" value="Cărți de benzi desenate">
-			<node name="summary" value="Citire cărți de benzi desenate (CBR, CBZ)"/>
-		</node>
-	</node>
-	<node name="drm">
-		<node name="encryptedSection" value="Sectiune criptata"/>
-	</node>
-	<node name="yota">
-		<node name="frontScreenMessage" value="Intoarceti aparatul pe pentru a citi cartea. Pentru a reveni textul la acest ecran, apasati butonul de mai jos."/>
-		<node name="frontScreenButton" value="Comutare la acest ecran"/>
-	</node>
-	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
-		<node name="percent" value="E.g.: 125%"/>
-	</node>
-	<node name="duration">
-		<node name="duration1" value="1 secunda"/>
-		<node name="duration3" value="3 secunde"/>
-		<node name="duration5" value="5 secunde"/>
-		<node name="duration10" value="10 secunde"/>
-		<node name="duration20" value="20 secunde"/>
-		<node name="duration40" value="40 secunde"/>
-		<node name="duration60" value="1 minuta"/>
-		<node name="duration300" value="5 minute"/>
-	</node>
-	<node name="textSearchPopup">
-		<node name="findPrevious" value="Aparitia precedenta"/>
-		<node name="findNext" value="Urmatoarea aparitie"/>
-		<node name="close" value="Inchide"/>
-	</node>
-	<node name="selectionPopup">
-		<node name="copyToClipboard" value="Copiati în clipboard"/>
-		<node name="share" value="Share text" toBeTranslated="true"/>
-		<node name="openInDictionary" value="Deschide in dictionar"/>
-		<node name="translate" value="Tradu"/>
-		<!-- this is a verb: make a bookmark -->
-		<node name="bookmark" value="Creaza un semn de carte"/>
-		<node name="close" value="Inchide"/>
-	</node>
-	<node name="dictanErrors">
-		<node name="unknown" value="Eroare necunoscuta"/>
-		<node name="noArticle" value="Nu s-au gasit articole pentru “%s”"/>
-		<node name="cannotOpenDictionary" value="Nu se poate deschide dictionarul"/>
-		<node name="noDictionarySelected" value="Dictionar ne selectat; vă rugăm să ajustați setările Dictionar"/>
-	</node>
-	<node name="premium" value="FBReader Premium Edition">
-		<node name="shortTitle" value="FBReader Premium"/>
-		<node name="conflict" value="Aveti instalate ambele aplicatii: FBReader si FBReader Premium. Pe care doriti sa o rulati?"/>
-	</node>
-	<node name="widget">
-		<node name="simple">
-			<node name="selectIcon" value="Alegeti icoana pentru widget"/>
-			<node name="selectAction" value="Alegeti actiunea"/>
-			<node name="book" value="Citeste cartea"/>
-			<node name="library" value="Deschide biblioteca"/>
-		</node>
-	</node>
+  <node name="library" value="Biblioteca">
+    <node name="unknownAuthor" value="Autor necunoscut"/>
+    <node name="booksWithNoTags" value="Cărti fără etichete"/>
+    <node name="demo" value="eșantion"/>
+    <node name="byAuthor" value="De către autor">
+      <node name="summary" value="Cărți sortate după autor"/>
+    </node>
+    <node name="byTitle" value="După titlu">
+      <node name="summary" value="Cărti sortate după titlu"/>
+    </node>
+    <node name="bySeries" value="După serie">
+      <node name="summary" value="Cărti sortate după serie"/>
+    </node>
+    <node name="byTag" value="Dupa tag">
+      <node name="summary" value="Cărți sortate după tag"/>
+    </node>
+    <node name="recent" value="Recent">
+      <node name="summary" value="Cărți deschise recent"/>
+    </node>
+    <node name="favorites" value="Favoritele mele">
+      <node name="summary" value="Cărțile mele favorite"/>
+    </node>
+    <node name="chooseView" value="Alegeti vizualizarea"/>
+    <node name="wideCardsView" value="Cărți mari"/>
+    <node name="smallCardsView" value="Cărți mici"/>
+    <node name="tinyCardsView" value="Cărți foarte mici"/>
+    <node name="coversView" value="Coperți"/>
+    <node name="oldView" value="Clssic"/>
+    <node name="bookshelfView" value="Vizualizare raft">
+      <node name="summary" value="Comutați la vizualizarea de miniaturi"/>
+    </node>
+    <node name="found" value="S-au găsit">
+      <node name="summary" value="Rezultatele căutării pentru: %s"/>
+    </node>
+    <node name="sync" value="Sincronizare">
+      <node name="summary" value="Cărți în ordinea starii sincronizarii"/>
+      <node name="sync-success" value="Sincronizare cu succes">
+        <node name="summary" value="Cărțile incarcate pe server"/>
+      </node>
+      <node name="sync-failure" value="Sincronizare esuata">
+        <node name="summary" value="Cărțile nu au fost încărcate pe server din cauza unor probleme"/>
+      </node>
+      <node name="sync-deleted" value="Sterse de pe server">
+        <node name="summary" value="Cărțile nu mai sunt accesibile pe server"/>
+      </node>
+      <node name="sync-tosync" value="Sincronizarea nu s-a realizat inca">
+        <node name="summary" value="Cărți care vor fi încărcate pe server"/>
+      </node>
+    </node>
+    <node name="fileTree" value="Listare sistem de fisiere">
+      <node name="summary" value="Caută în sistemul de fisiere"/>
+    </node>
+    <node name="fileTreeRoot" value="Dispozitiv">
+      <node name="summary" value="Intregul sistem de fisiere a dispozitivului"/>
+    </node>
+    <node name="fileTreeCard" value="Cardul de memorie">
+      <node name="withIndex" value="Cardul de memorie Nr %s"/>
+      <node name="summary" value="Cardul de memorie introdus în aparat"/>
+    </node>
+    <node name="fileTreeLibrary" value="Biblioteca">
+      <node name="summary" value="Cărțile din directorul aplicatiei"/>
+    </node>
+    <node name="localSearch" value="Cautăre locală"/>
+    <node name="rescan" value="Rescanează"/>
+    <node name="openBook" value="Deschide carte"/>
+    <node name="showBookInfo" value="Informații despre carte"/>
+    <node name="shareBook" value="Împartășește cartea"/>
+    <node name="deleteBook" value="Stergere cartea"/>
+    <node name="addToFavorites" value="Adaugă la favorite"/>
+    <node name="removeFromFavorites" value="Șterge din favorite"/>
+    <node name="removeFromRecents" value="Eliminati din lista recenta"/>
+    <node name="markAsRead" value="Marcati ca citit"/>
+    <node name="markAsUnread" value="Marcati ca necitit"/>
+    <node name="deleteAll" value="Șterge pe toate"/>
+    <node name="uploadAgain" value="încărca iarăși"/>
+    <node name="tryAgain" value="Încearcă iarăși"/>
+  </node>
+  <node name="networkLibrary" value="Rețeaua de biblioteci Online">
+    <node name="sync" value="Rețeaua de Cărți FBReader®">
+      <node name="summary" value="Catalogul meu personal"/>
+    </node>
+    <node name="byAuthor" value="Dupa autor">
+      <node name="summary" value="Cărți sortate după autor"/>
+    </node>
+    <node name="byTitle" value="Dupa titlu">
+      <node name="summary" value="Cărți sortate după titlu"/>
+    </node>
+    <node name="byDate" value="Pâna la data de">
+      <node name="summary" value="Cărți sortate după data de cumpărare"/>
+    </node>
+    <node name="bySeries" value="Dupa serie">
+      <node name="summary" value="Cărți sortate după serie"/>
+    </node>
+    <node name="search" value="Cautăre">
+      <node name="summary" value="Caută Cărți pe %s"/>
+      <node name="summaryAllCatalogs" value="Caută Cărți în cataloage"/>
+      <node name="summaryInProgress" value="Cautăre în derulare"/>
+    </node>
+    <node name="found" value="S-au gasit">
+      <node name="summary" value="Rezultatele Cautării pentru: %s"/>
+    </node>
+    <node name="recent" value="Cataloage recente">
+      <node name="summary" value="Cataloage pe care le-ai vizitat recent"/>
+    </node>
+    <node name="openCatalog" value="Deschide catalogul"/>
+    <node name="networkSearch" value="Cautăre"/>
+    <node name="showResults" value="Arată rezultatele"/>
+    <node name="showBooks" value="Afișați Cărțile"/>
+    <node name="download" value="Descarcă"/>
+    <node name="read" value="Citește copia locală"/>
+    <node name="delete" value="Ștergere copia locală"/>
+    <node name="readDemo" value="Citește eșantion"/>
+    <node name="deleteDemo" value="Ștergere eșantion"/>
+    <node name="downloadDemo" value="Descarcăti eșantion"/>
+    <node name="buy" value="Cumpară (%s)"/>
+    <node name="addToBasket" value="Adaugă la coș"/>
+    <node name="removeFromBasket" value="Eliminați din coș"/>
+    <node name="openBasket" value="Deschide coșul"/>
+    <node name="clearBasket" value="Goleste coșul"/>
+    <node name="buyAllBooks" value="Cumpară toate cărțile"/>
+    <node name="openInBrowser" value="Deschide în browser"/>
+    <node name="stopLoading" value="Opriți încărcarea"/>
+    <node name="stopSearching" value="Opriți cautărea"/>
+    <node name="signIn" value="Conectați-vă în"/>
+    <node name="signOut" value="Deconectare (%s)"/>
+    <node name="signUp" value="Logare"/>
+    <node name="quickBuy" value="Cumpară rapid"/>
+    <node name="topup" value="Încărcati contul (în prezent: %s)"/>
+    <node name="topupTitle" value="Încărcati contul"/>
+    <node name="topupViaBrowser" value="Pagină deschisă în browser"/>
+    <node name="authorisationMenuTitle" value="Alegeți actiunea"/>
+    <node name="topupSummary" value="În prezent: %s"/>
+    <node name="basket" value="Coș"/>
+    <node name="basketSummaryEmpty" value="Nicio carte"/>
+    <node name="basketSummaryCountOnly" value="%0 Cărți"/>
+    <node name="basketSummary" value="%0 Cărți (%1)"/>
+    <node name="alreadyDownloading" value="Cartea este în curs de descarcăre"/>
+    <node name="alreadyDownloadingDemo" value="Eșantionul este în curs de descarcăre"/>
+    <node name="stoppingCatalogLoading" value="Oprirea încărcării"/>
+    <node name="stoppingNetworkSearch" value="Oprirea cautării"/>
+    <node name="editCustomCatalog" value="Editare catalog"/>
+    <node name="removeCustomCatalog" value="Eliminați catalog"/>
+    <node name="addCustomCatalog" value="Adaugă catalog"/>
+    <node name="addCustomCatalogSummary" value="Adaugă particularizate catalog OPDS manual"/>
+    <node name="disableCatalog" value="Dezactivează catalog"/>
+    <node name="confirmQuestions">
+      <node name="read" value="Doriți să cititi copia locală?"/>
+      <node name="download" value="Doriți să descărcati aceasta carte?"/>
+      <node name="readDemo" value="Nu doriți să citiți un eșantion?"/>
+      <node name="downloadDemo" value="Doriti să descarcăti un eșantion?"/>
+      <node name="buy" value="Doriti sa Cumpărati această carte? (%s)"/>
+      <node name="openInBrowser" value="Nu doriți să deschideți acest catalog în browser?"/>
+    </node>
+    <node name="downloadingCatalogs" value="Descarcăre cataloage"/>
+    <!-- used as notification title -->
+    <node name="searchingNetwork" value="Caută cărți în rețea"/>
+    <!-- used as notification title -->
+    <node name="addCatalog">
+      <node name="title" value="Adaugă Catalog"/>
+      <node name="editUrl" value="Editează URL manual"/>
+    </node>
+    <node name="manageCatalogs" value="Gestionare registre">
+      <node name="summary" value="Configurare listă de registre"/>
+      <node name="enabled" value="Activat"/>
+      <node name="disabled" value="Dezactivat"/>
+    </node>
+    <node name="menu">
+      <node name="openRoot" value="Catalog rădăcină"/>
+      <node name="networkSearch" value="Rețeaua de cautăre"/>
+      <node name="reload" value="Reîncarcă"/>
+      <node name="signIn" value="Conectați-vă în"/>
+      <node name="signUp" value="Înscrieți-vă"/>
+      <node name="signOut" value="Deconectare (%s)"/>
+      <node name="topup" value="Încărcă cont"/>
+      <node name="addCustomCatalog" value="Adaugă catalog"/>
+      <node name="refreshCatalogsList" value="Reîmprospătare cataloage"/>
+      <node name="manageCatalogs" value="Administrează cataloagele"/>
+      <node name="clearBasket" value="Golește coșul"/>
+      <node name="buyAllBooks" value="Cumpără toate cărțile"/>
+    </node>
+  </node>
+  <node name="buyBook">
+    <node name="title" value="Cumpără cartea"/>
+    <node name="titleSeveralBooks" value="Cumpără cărți"/>
+    <node name="confirm" value="Sunteți sigur că doriți să cumparăti cartea &#10;“ %s”&#10;?"/>
+    <node name="confirmSeveralBooks" value="Sunteți sigur că doriți să cumpărați %s cărți?"/>
+    <node name="alreadyBought" value="Cartea este deja cumpărată"/>
+    <node name="notAuthorised" value="Este necesar să vă autorizați"/>
+    <node name="noAccountInformation" value="Nu se poate încărca situatia contului"/>
+    <node name="unsufficientFunds" value="Costul este de %0 dar aveți disponibili doar %1"/>
+    <node name="zeroFunds" value="Costul este de %0"/>
+  </node>
+  <node name="bookInfo">
+    <node name="bookInfo" value="Informații carte"/>
+    <node name="fileInfo" value="Informații fișier"/>
+    <node name="description" value="Descriere"/>
+    <node name="noDescription" value="Nu este disponibilă nicio descriere."/>
+    <node name="annotation" value="Adnotare"/>
+    <node name="title" value="Titlu:"/>
+    <node name="authors" value="Autori:"/>
+    <node name="series" value="Seria:"/>
+    <node name="indexInSeries" value="Index în serie:"/>
+    <node name="tags" value="Tag-uri:"/>
+    <node name="language" value="Limba:"/>
+    <node name="name" value="Nume:"/>
+    <node name="type" value="Tip:"/>
+    <node name="size" value="Dimensiune:"/>
+    <node name="time" value="Ultima modificare:"/>
+    <node name="sizeInBytes" value="%s octet (e)"/>
+    <node name="sizeInKiloBytes" value="%s kB"/>
+    <node name="catalog" value="Catalog:"/>
+    <node name="extraLinks" value="Link-uri utile"/>
+    <node name="menu">
+      <node name="edit" value="Editează"/>
+    </node>
+  </node>
+  <node name="bookDownloader">
+    <node name="downloadCompleteTicker" value="Cartea a fost descărcată"/>
+    <node name="downloadFailedTicker" value="Eroare descărcare carte"/>
+    <node name="downloadComplete" value="Descarcăre completa"/>
+    <node name="downloadFailed" value="Descărcare esuata"/>
+    <node name="downloadStarted" value="Descărcarea cărții a început"/>
+    <node name="alreadyDownloading" value="Cartea deja se descărcată"/>
+    <node name="cannotCreateDirectory" value="Nu se poate crea directorul %s"/>
+    <node name="cannotCreateFile" value="Nu se poate crea fișierul %s"/>
+  </node>
+  <node name="tocView">
+    <node name="expandTree" value="Deschide arbore"/>
+    <node name="collapseTree" value="Închide arbore"/>
+    <node name="readText" value="Citiți textul cărții"/>
+  </node>
+  <node name="bookmarksView">
+    <node name="thisBook" value="Aceasta carte"/>
+    <node name="allBooks" value="Toate cărțile"/>
+    <node name="new" value="Marcaj nou"/>
+    <node name="openBook" value="Deschis"/>
+    <node name="editBookmark" value="Editează marcaj"/>
+    <node name="deleteBookmark" value="Șterge marcaj"/>
+    <node name="search" value="Cautare"/>
+  </node>
+  <node name="editBookmark">
+    <node name="text" value="Text"/>
+    <node name="style" value="Stil"/>
+    <node name="delete" value="Șterge"/>
+    <node name="deleteBookmark" value="Șterge marcaj"/>
+    <node name="saveText" value="Salvare text"/>
+    <node name="editStyle" value="Editează stilul…"/>
+  </node>
+  <node name="toast">
+    <node name="more" value="Mai mult"/>
+    <node name="offline" value="Deconectat"/>
+  </node>
+  <node name="cancelMenu">
+    <node name="library" value="Deschide libraria"/>
+    <node name="networkLibrary" value="Deschide libraria din rețea"/>
+    <node name="previousBook" value="Deschide cartea anterioră"/>
+    <node name="returnTo" value="Înapoi la …"/>
+    <node name="back" value="Înapoi"/>
+    <node name="forward" value="Înainte"/>
+    <node name="close" value="Închide Aplicația"/>
+  </node>
+  <node name="style" value="Stilul %s"/>
+  <node name="editStyle" value="Editează stilul">
+    <node name="name" value="Numele stilului"/>
+    <node name="invisible" value="Invizibil">
+      <node name="summaryOn" value="Nu scoate în evidentă semnele de carte"/>
+      <node name="summaryOff" value="Scoate în evidentă semnele de carte"/>
+    </node>
+    <node name="bgColor" value="Culoarea de fundal"/>
+  </node>
+  <node name="selection" value="Selecție">
+    <node name="quoteFrom" value="Citat de la %s"/>
+    <node name="textInBuffer" value="Copiat în clipboard:&#10;%s"/>
+  </node>
+  <node name="sharing">
+    <node name="sharedFrom" value="Împartășit de la &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+  </node>
+  <node name="menu">
+    <node name="installPremium" value="Instalează varianta Premium"/>
+    <node name="openPremium" value="Deschide FBReader Premium"/>
+    <node name="premium" value="Dialog FBReader Premium"/>
+    <node name="whatsnew" value="Ce este nou"/>
+    <node name="openStartScreen" value="Ecranul de start"/>
+    <node name="preferences" value="Setări"/>
+    <node name="bookInfo" value="Informații despre carte"/>
+    <node name="library" value="Biblioteca"/>
+    <node name="toc" value="Cuprins"/>
+    <node name="day" value="Mod Zi"/>
+    <node name="night" value="Mod Noapte"/>
+    <node name="dayNight" value="Zi/Noapte"/>
+    <node name="yotaSwitchToBackScreen" value="Treci la ecranul din spate"/>
+    <node name="yotaSwitchToFrontScreen" value="Treci la ecranul din față"/>
+    <node name="networkLibrary" value="Biblioteca din rețea"/>
+    <node name="navigate" value="Navigați">
+      <node name="toc" value="Cuprins"/>
+      <node name="gotoHome" value="Du-te la începutul documentului"/>
+      <node name="gotoSectionStart" value="Du-te la începutul textului"/>
+      <node name="gotoSectionEnd" value="Du-te la sfârșitul textului"/>
+      <node name="nextTOCSection" value="Du-te la următoarea intrare din cuprins"/>
+      <node name="previousTOCSection" value="Du-te la intrarea anterioara din cuprins"/>
+      <node name="undo" value="Mergeți înapoi"/>
+      <node name="redo" value="Mergeți înainte"/>
+    </node>
+    <node name="shareBook" value="Împărtășește cartea"/>
+    <node name="search" value="Caută"/>
+    <node name="rotate" value="Rotire ecran"/>
+    <node name="screenOrientation" value="Orientarea ecranului"/>
+    <node name="screenOrientationSystem" value="Sistem"/>
+    <node name="screenOrientationSensor" value="În functie de senzorul de rotatie"/>
+    <node name="screenOrientationPortrait" value="Portret"/>
+    <node name="screenOrientationLandscape" value="Orizontal (Peisaj)"/>
+    <node name="screenOrientationReversePortrait" value="Portret inversat"/>
+    <node name="screenOrientationReverseLandscape" value="Orizontal (Peisaj) inversat"/>
+    <node name="increaseFont" value="Măreste"/>
+    <node name="decreaseFont" value="Micsorează"/>
+    <node name="changeFontSize" value="Măreste/Micsorează"/>
+    <node name="toggleFullscreen" value="Pe intreg ecranul"/>
+    <node name="bookmarks" value="Favorite"/>
+    <node name="help" value="Ajutor"/>
+    <node name="plugins" value="Instalează plugin-uri"/>
+    <node name="gotoPageNumber" value="Du-te la pagina…"/>
+  </node>
+  <node name="BookInfo">
+    <node name="fileName" value="Nume de fișier"/>
+    <node name="title" value="Titlul"/>
+    <node name="language" value="Limba"/>
+    <node name="encoding" value="Encodare"/>
+    <node name="authors" value="Autori"/>
+    <node name="tags" value="Tag-uri"/>
+    <node name="series" value="Seria"/>
+  </node>
+  <node name="Preferences" value="Setarile FBReader">
+    <node name="sync" value="Sincronizare">
+      <node name="summary" value="Setarile rețelei de cărți"/>
+      <node name="site" value="Citește mai multe despre sincronizare">
+        <node name="url" value="https://books.fbreader.org/help.html"/>
+      </node>
+      <node name="enable" value="Activează sincronizarea">
+        <node name="summaryOn" value="Sincronizeazp-mi libraria cu serverul FBReader"/>
+        <node name="summaryOnWithAccount" value="Sincronizează-mi libraria ca %s"/>
+        <node name="summaryOff" value="Nu-mi sincroniza libraria cu serverul FBReader"/>
+      </node>
+      <node name="values">
+        <node name="always" value="Totdeauna"/>
+        <node name="viaWifi" value="Doar dacă sunt conectat prin Wi-Fi"/>
+        <node name="never" value="Niciodată"/>
+      </node>
+      <node name="uploadAllBooks" value="Încarcă toate cărțile pe server"/>
+      <node name="downloadAllBooks" value="Descarcă toate cărțile de pe server"/>
+      <node name="downloadCurrentBook" value="Descarcă cartea curenta de pe server"/>
+      <node name="positions" value="Sincronizează pozitia ramasa la citit"/>
+      <node name="bookmarks" value="Sincronizează semnele de carte"/>
+      <node name="customShelves" value="Sincronizează rafturile personalizate"/>
+      <node name="metainfo" value="Sincronizează metainfo (titluri, tag-uri, etc.)"/>
+      <node name="changeCurrentBook" value="Schimbă cartea curentă">
+        <node name="summaryOn" value="Deschide aceeași carte pe toate dispozitivele"/>
+        <node name="summaryOff" value="Sincronizează doar poziția, nu schimba automat cartea"/>
+      </node>
+    </node>
+    <node name="directories" value="Directoare">
+      <node name="summary" value="Directoarele in case se caută fisiere"/>
+      <node name="bookPath" value="Unde să caut cărțile">
+        <node name="chooserTitle" value="Directorul cu cărți"/>
+      </node>
+      <node name="downloadDir" value="Unde să stochez cărțile descarcăte">
+        <node name="chooserTitle" value="Directorul cu cărți"/>
+      </node>
+      <node name="fontPath" value="Unde să caut fonturile">
+        <node name="chooserTitle" value="Directorul cu fonturi"/>
+      </node>
+      <node name="tempDir" value="Unde să pun fișierele temporare">
+        <node name="chooserTitle" value="Director fișiere temporare"/>
+      </node>
+    </node>
+    <node name="appearance" value="Aspect">
+      <node name="summary" value="Rotire, bară de stare"/>
+      <node name="language" value="Limba"/>
+      <node name="screenOrientation" value="Orientarea ecranului">
+        <node name="system" value="Sistem"/>
+        <node name="sensor" value="In functie de orientarea dispozitivului"/>
+        <node name="portrait" value="Portret"/>
+        <node name="landscape" value="Orizontal (Peisaj)"/>
+        <node name="reversePortrait" value="Portret inversat"/>
+        <node name="reverseLandscape" value="Orizontal (Peisaj) inversat"/>
+      </node>
+      <node name="autoOrientation" value="Rotire automată">
+        <node name="summaryOn" value="Ecranul se va roti când utilizatorul rotește aparatul"/>
+        <node name="summaryOff" value="Ecranul se va roti când utilizatorul rotește aparatul"/>
+      </node>
+      <node name="showStatusBar" value="Arată bara de stare">
+        <node name="summaryOn" value="Afisează bara de stare arata în modul de citire"/>
+        <node name="summaryOff" value="Ascunde bara de stare în modul de citire"/>
+      </node>
+      <node name="showActionBar" value="Afișează bara de actiuni">
+        <node name="summaryOn" value="Afișează bara de acțiuni în modul citire"/>
+        <node name="summaryOff" value="Ascunde bara de acțiuni în modul citire"/>
+      </node>
+      <node name="showStatusBarWhenMenuIsActive" value="Arată bara de stare atunci când meniul este activ">
+        <node name="summaryOn" value="Arată bara de stare atunci când meniu devine activ"/>
+        <node name="summaryOff" value="Nu afișați bara de stare atunci când meniul devine activ"/>
+      </node>
+      <node name="fullscreenMode" value="Afișează pe tot ecranul">
+        <node name="summaryOn" value="Ascunde butoanele de navigare"/>
+        <node name="summaryOff" value="Afișează butoanele de navigare"/>
+      </node>
+      <node name="disableButtonLights" value="Dezactivează lumina butoanelor hardware în timpul lecturii">
+        <node name="summaryOn" value="Dezactivează lumina butonului (nu functioneaă pe unele dispozitive)"/>
+        <node name="summaryOff" value="Nu dezactivați lumina butonului"/>
+      </node>
+      <node name="twoColumnView" value="Afișează pe două coloane">
+        <node name="summaryOn" value="Afișează pe două coloane doar când dispozitivul este pe orizontală"/>
+        <node name="summaryOff" value="Afișează intotdeauna pe o coloană"/>
+      </node>
+      <node name="allowScreenBrightnessAdjustment" value="Reglarea luminozității ecranului">
+        <node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul părții stângi a ecranului"/>
+        <node name="summaryOff" value="Dezactivat"/>
+      </node>
+      <node name="dontTurnScreenOff" value="Împiedicati modul stand-by">
+        <node name="0" value="Mereu"/>
+        <node name="25" value="În timp ce nivelul bateriei este mai mare de 25 la suta"/>
+        <node name="50" value="În timp ce nivelul bateriei este mai mare de 50 la suta"/>
+        <node name="100" value="Niciodată"/>
+      </node>
+      <node name="dontTurnScreenOffDuringCharging" value="Împiedicati modul stand-by în timpul încarcarii">
+        <node name="summaryOn" value="Împiedicati modul stand-by, daca aparatul este în modul de încarcare"/>
+        <node name="summaryOff" value="Închide ecran, chiar dacă aparatul este în modul de încarcare"/>
+      </node>
+      <node name="enableBookMenuSwipeGesture" value="Activează modul glisare pentru meniul cărților">
+        <node name="summaryOn" value="Glisati din marginea stanga spre interior pentru a deschide meniul cărților"/>
+        <node name="summaryOff" value="Folositi butonul cu cele trei linii (“hamburger”) pentru a deschide meniul cărților"/>
+      </node>
+    </node>
+    <node name="text" value="Text">
+      <node name="summary" value="Font, despărțire în silabe, etc."/>
+      <node name="fontProperties" value="Proprietățile fonturilor">
+        <node name="summary" value="Opțiuni de netezire a fonturilor"/>
+        <node name="antiAlias" value="Antialiasing">
+          <node name="summaryOn" value="Antialiasing este activat"/>
+          <node name="summaryOff" value="Antialiasing este dezactivat"/>
+        </node>
+        <node name="deviceKerning" value="Ajustarea distanței dintre caractere">
+          <node name="summaryOn" value="Ajustarea distanței dintre caractere este activată"/>
+          <node name="summaryOff" value="Ajustarea distanței dintre caractere este dezactivată"/>
+        </node>
+        <node name="dithering" value="Trecere graduală între culori (dithering)">
+          <node name="summaryOn" value="Trecere graduală între culori (dithering) este activată"/>
+          <node name="summaryOff" value="Trecere graduală între culori (dithering) este dezactivată"/>
+        </node>
+        <node name="hinting" value="Alinierea fontului (hinting)">
+          <node name="summaryOn" value="Alinierea fontului (hinting) este activată"/>
+          <node name="summaryOff" value="Alinierea fontului (hinting) este dezactivată"/>
+        </node>
+        <node name="subpixel" value="Îmbunatățire afișare font prin subpixel smoothing">
+          <node name="summaryOn" value="Îmbunatățirea afișării font prin subpixel smoothing este activată"/>
+          <node name="summaryOff" value="Îmbunatățirea afișării font prin subpixel smoothing este dezactivată"/>
+        </node>
+      </node>
+      <node name="font" value="Familia de fonturi">
+        <node name="inherit" value="&lt;neschimbat&gt;"/>
+      </node>
+      <node name="fontSize" value="Dimensiunea fontului"/>
+      <node name="fontStyle" value="Stilul fontului">
+        <node name="regular" value="Normal"/>
+        <node name="bold" value="Ingroșat"/>
+        <node name="italic" value="Cursiv"/>
+        <node name="boldItalic" value="Ingroșat Cursiv"/>
+      </node>
+      <node name="bold" value="Îngroșat">
+        <node name="bold" value="îngroșat"/>
+        <node name="normal" value="normal"/>
+        <node name="inherit" value="&lt;neschimbat&gt;"/>
+      </node>
+      <node name="italic" value="Cursiv">
+        <node name="italic" value="cursiv"/>
+        <node name="normal" value="normal"/>
+        <node name="inherit" value="&lt;neschimbat&gt;"/>
+      </node>
+      <node name="textDecoration" value="Decorarea textului">
+        <node name="inherit" value="&lt;neschimbat&gt;"/>
+        <node name="none" value="fără decorare"/>
+        <node name="underline" value="subliniat"/>
+        <node name="line-through" value="tăiat"/>
+      </node>
+      <node name="lineSpacing" value="Spatiere linii">
+        <node name="inherit" value="&lt;neschimbat&gt;"/>
+      </node>
+      <node name="alignment" value="Aliniere">
+        <node name="left" value="Stânga"/>
+        <node name="right" value="Dreapta"/>
+        <node name="center" value="Centru"/>
+        <node name="justify" value="Aliniere stânga și dreapta"/>
+        <node name="inherit" value="&lt;neschimbat&gt;"/>
+      </node>
+      <node name="autoHyphenations" value="Despărțire în silabe automata">
+        <node name="summaryOn" value="Despărțirea în silabe va fi automată"/>
+        <node name="summaryOff" value="Despărțirea în silabe nu va fi automată"/>
+      </node>
+      <node name="allowHyphenations" value="Permiteși despărțirea în silabe">
+        <node name="auto" value="Desparte în silabe cuvintele"/>
+        <node name="none" value="nu despărțiți cuvintele în silabe"/>
+        <node name="inherit" value="&lt;neschimbat&gt;"/>
+      </node>
+      <node name="firstLineIndent" value="Aliniază prima linie"/>
+      <node name="spaceBefore" value="Spatiu înainte"/>
+      <node name="spaceAfter" value="Spatiu după"/>
+      <node name="leftIndent" value="Aliniere stânga"/>
+      <node name="rightIndent" value="Aliniere dreapta"/>
+      <node name="verticalAlignment" value="Aliniere verticală"/>
+      <node name="more" value="Mai multe stiluri">
+        <node name="summary" value="Setări separate pentru titluri, epigrafe, etc"/>
+        <node name="Regular Paragraph" value="Paragraf normal">
+          <node name="summary" value=""/>
+        </node>
+        <node name="xhtml-tag-p" value="Paragraf EPub ">
+          <node name="summary" value="&lt;p&gt; continutul tagului XHTML"/>
+        </node>
+        <node name="Title" value="Titlu">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Section Title" value="Sectiunea titlu">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Poem Title" value="Poem titlul">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Subtitle" value="Subtitlu">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Annotation" value="Adnotare">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Epigraph" value="Epigraf">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Stanza" value="Strofa">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Verse" value="Verset">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Preformatted text" value="Text preformatat">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Image" value="Imagine">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Cite" value="Citat">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Author" value="Autor">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Date" value="Data">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Internal Hyperlink" value="Hyperlink intern">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Footnote" value="Notă de subsol">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Emphasis" value="Accent">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Strong" value="Puternic">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Subscript" value="Indice">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Superscript" value="Exponent">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Code" value="Cod">
+          <node name="summary" value=""/>
+        </node>
+        <node name="StrikeThrough" value="Tăiat">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Italic" value="Cursiv">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Bold" value="Îngroșat">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Definition" value="Definiție">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Definition Description" value="Definiție descriere">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 1" value="Antet 1">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 2" value="Antet 2">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 3" value="Antet 3">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 4" value="Antet 4">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 5" value="Antet 5">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 6" value="Antet 6">
+          <node name="summary" value=""/>
+        </node>
+        <node name="External Hyperlink" value="Hyperlink extern">
+          <node name="summary" value=""/>
+        </node>
+      </node>
+    </node>
+    <node name="toast" value="Pop-ups" toBeTranslated="true">
+      <node name="summary" value="Ferestre pentru notele de subsol, etc."/>
+      <node name="showFootnoteToast" value="Afișare text legat într-o fereastră?">
+        <node name="never" value="Niciodata"/>
+        <node name="footnotesOnly" value="Doar pentru notele de subsol"/>
+        <node name="footnotesAndSuperscripts" value="Pentru notele de subsol și link-uri"/>
+        <node name="allInternalLinks" value="Pentru toate link-urile interne"/>
+      </node>
+      <node name="footnoteToastDuration" value="Cât timp pentru a afișa link-ul"/>
+      <node name="fontSizePercent" value="Marimea fontului (procent din cel normal)"/>
+    </node>
+    <node name="css" value="CSS">
+      <node name="summary" value="Aplică/ignoră valoride definite în CSS"/>
+      <node name="fontFamily" value="Familia de fonturi">
+        <node name="summaryOn" value="Folosește familia de fonturi din CSS"/>
+        <node name="summaryOff" value="Ignora familia de fonturi din CSS"/>
+      </node>
+      <node name="fontSize" value="Marimea fontului">
+        <node name="summaryOn" value="Folosește marimea fontului definită în CSS"/>
+        <node name="summaryOff" value="Ignora marimea fontului definită în CSS"/>
+      </node>
+      <node name="textAlignment" value="Alinierea textului">
+        <node name="summaryOn" value="Folosește alinierea textului așa cum e definită în CSS"/>
+        <node name="summaryOff" value="Nu folosi alinierea textului așa cum e definită în CSS"/>
+      </node>
+      <node name="margins" value="Margini">
+        <node name="summaryOn" value="Folosește marginile așa cum sunt definite în CSS"/>
+        <node name="summaryOff" value="Nu folosi marginile așa cum sunt definite în CSS"/>
+      </node>
+    </node>
+    <node name="colors" value="Culori și imagini de fundal">
+      <node name="summary" value="Setările de culoare"/>
+      <node name="background" value="Fundal">
+        <node name="chooser">
+          <node name="solidColor" value="Culoare uniformă"/>
+          <node name="predefined" value="Textură predefinită…"/>
+          <node name="selectFile" value="Selectează fișier"/>
+        </node>
+        <node name="solidColor" value="Culoare uniformă"/>
+        <node name="leather" value="Piele"/>
+        <node name="sepia" value="Sepia"/>
+        <node name="wood" value="Lemn"/>
+        <node name="sand" value="Nisip"/>
+        <node name="hardpaper" value="Carton"/>
+      </node>
+      <node name="fillMode" value="Modul de umplere">
+        <node name="tile" value="Tiglă"/>
+        <node name="tileMirror" value="Tiglă în oglinda"/>
+        <node name="fullscreen" value="Întregul ecran"/>
+        <node name="stretch" value="Întinde pentru a acoperi întregul ecran"/>
+        <node name="tileVertically" value="Întinde orizontal, pune tip tiglă pe vertical"/>
+        <node name="tileHorizontally" value="Întinde vertical, pune tip tiglă pe orizontal"/>
+      </node>
+      <node name="selectionBackground" value="Selecție de fundal"/>
+      <node name="selectionForeground" value="Text selectat"/>
+      <node name="text" value="Text obișnuit"/>
+      <node name="hyperlink" value="Hyperlink Text"/>
+      <node name="hyperlinkVisited" value="Textul hyperlinkului vizitat"/>
+      <node name="highlightingForeground" value="Rezultatele cautării"/>
+      <node name="highlightingBackground" value="Rezultatele cautării în fundal"/>
+      <node name="footerOldStyle" value="Subsol (stil clasic)"/>
+      <node name="footerBackground" value="Fundal subsol"/>
+      <node name="footerForeground" value="Text subsol"/>
+      <node name="footerForegroundUnread" value="Linie subsol"/>
+    </node>
+    <node name="margins" value="Margini">
+      <node name="summary" value="Marginile textului"/>
+      <node name="left" value="Marginea din stânga"/>
+      <node name="right" value="Marginea din dreapta"/>
+      <node name="top" value="Marginea de sus"/>
+      <node name="bottom" value="Marginea de jos"/>
+      <node name="spaceBetweenColumns" value="Spatiu între coloane"/>
+    </node>
+    <node name="scrollBar" value="Indicator de progres">
+      <node name="summary" value="Setarile glisorului &amp; subsolului"/>
+      <node name="scrollbarType" value="Tip glisor">
+        <node name="hide" value="Ascunde"/>
+        <node name="show" value="Glisor vertical"/>
+        <node name="showAsProgress" value="Bara verticală de progres"/>
+        <node name="showAsFooter" value="Subsol orizontal"/>
+        <node name="showAsFooterOldStyle" value="Subsol orizontal (stil clasic)"/>
+      </node>
+      <node name="footerHeight" value="înaltime subsol"/>
+      <node name="footerOldStyleColor" value="Culoare subsol (stil clasic)"/>
+      <node name="footerBackgroundColor" value="Culoare fundal subsol"/>
+      <node name="footerForegroundColor" value="Culoare text subsol"/>
+      <node name="footerForegroundUnreadColor" value="Culoare linie subsol "/>
+      <node name="tocMarks" value="Arată favoritele curpinsului">
+        <node name="summaryOn" value="Arată favoritele curpinsului în bara de subsol"/>
+        <node name="summaryOff" value="Nu arata semne de cuprins în bara de subsol"/>
+      </node>
+      <node name="tocMarksMaxNumber" value="Numarul maxim de intrari ce se afișează în cuprins"/>
+      <node name="showProgress" value="Afișează progresul cititului">
+        <node name="dontDisplay" value="Nu afișa"/>
+        <node name="asPages" value="Ca număr de pagini"/>
+        <node name="asPercentage" value="Ca procent"/>
+        <node name="asPagesAndPercentage" value="Ca număr de pagini și ca procent"/>
+      </node>
+      <node name="showBattery" value="Afișează nivelul bateriei">
+        <node name="summaryOn" value="Afișează nivelul bateriei în subsol"/>
+        <node name="summaryOff" value="Nu afișa nivelul bateriei în subsol"/>
+      </node>
+      <node name="showClock" value="Afișare ceas">
+        <node name="summaryOn" value="Afișare ceas în subsol"/>
+        <node name="summaryOff" value="Nu se arată ceasul în subsol"/>
+      </node>
+      <node name="font" value="Familia de fonturi"/>
+    </node>
+    <node name="scrolling" value="Defilare">
+      <node name="summary" value="Cum se face defilarea textului"/>
+      <node name="fingerScrolling" value="Defilare mod touch screen">
+        <node name="byTap" value="Dați pagina apasând cu degetul"/>
+        <node name="byFlick" value="Dați pagina trecând cu degetul"/>
+        <node name="byTapAndFlick" value="Dați pagina apasând sau trecând cu degetul"/>
+      </node>
+      <node name="enableDoubleTapDetection" value="Detectare atingere de doua ori ">
+        <node name="summaryOn" value="Atingeți de doua ori pentru a afișa dialogul de navigare / meniul"/>
+        <node name="summaryOff" value="Ignorați dubla atingere"/>
+      </node>
+      <node name="volumeKeys" value="Întoarceți pagina cu tastele de volum">
+        <node name="summaryOn" value="Utilizați tastele de volum pentru a întoarce paginile"/>
+        <node name="summaryOff" value="Păstrați tastele de volum pentru sunet"/>
+      </node>
+      <node name="invertVolumeKeys" value="Inversați directia tastelor de volum">
+        <node name="summaryOn" value="Mai tare (mai incet), tasta pentru pagina anterioara (urmatoare)"/>
+        <node name="summaryOff" value="Mai incet (mai tare), tasta pentru pagina urmatoare (anterioara) "/>
+      </node>
+      <node name="animation" value="Animație">
+        <node name="none" value="Derulați fără animație"/>
+        <node name="curl" value="Animație la rotund"/>
+        <node name="slide" value="Animație glisare"/>
+        <node name="slideOldStyle" value="Animație slide (stil clasic)"/>
+        <node name="shift" value="Animație mutare"/>
+      </node>
+      <node name="animationSpeed" value="Viteza de animație">
+        <node name="fast" value="rapid"/>
+        <node name="slow" value="lent"/>
+      </node>
+      <node name="horizontal" value="Defilare orizontală">
+        <node name="summaryOn" value="Defilare orizontală de pagini"/>
+        <node name="summaryOff" value="Defilare verticală de pagini"/>
+      </node>
+    </node>
+    <node name="tapZones" value="Apasați zona">
+      <node name="summary" value="Acțiunile la apăsare deget"/>
+      <node name="tapZonesScheme" value="Design zone de apăsare">
+        <node name="left_to_right" value="Defilare pagina de la stânga la dreapta"/>
+        <node name="right_to_left" value="Defilare pagina de la dreapta la stânga"/>
+        <node name="up" value="Defilare pagină de jos în sus"/>
+        <node name="down" value="Defilare pagină de sus în jos"/>
+        <node name="custom" value="Particularizate…"/>
+      </node>
+    </node>
+    <node name="dictionary" value="Dictionar &amp; traducator">
+      <node name="summary" value="Setări de traducere"/>
+      <node name="dictionary" value="Cautăti un singur cuvant in"/>
+      <node name="translator" value="Tradu fraze prin"/>
+      <node name="translateOffline" value="Google Translate: folositi traducatorul fără conexiunea (dacă este instalat)">
+        <node name="always" value="Întotdeauna"/>
+        <node name="onError" value="Automat, dacă traducerea automată esueaza"/>
+        <node name="ask" value="Întreabă daca traducerea onlinea esueaza"/>
+        <node name="never" value="Niciodată"/>
+      </node>
+      <node name="translationToastDuration" value="Cât timp pentru a afișa traducerea"/>
+      <node name="errorToastDuration" value="Cât timp pentru a afișa mesajul de eroare"/>
+      <node name="sourceLanguage" value="Traducere din">
+        <node name="detect" value="Autodetectare limbă"/>
+      </node>
+      <node name="targetLanguage" value="Tradu in">
+        <node name="any" value="toate limbile"/>
+      </node>
+      <node name="longTapAction" value="Atingere lungă pentru actiune">
+        <node name="doNothing" value="Apasarea lungă nu face nimic"/>
+        <node name="selectSingleWord" value="Apasarea lungă selectează un singur cuvânt"/>
+        <node name="startSelecting" value="Apasarea lungă incepe selectarea"/>
+        <node name="openDictionary" value="Apasarea lungă selectează un singur cuvânt, iar la ridicarea degetului se deschide dictionarul"/>
+      </node>
+      <node name="navigateOverAllWords" value="Navigati peste toate cuvintele">
+        <node name="summaryOn" value="Tasta de navigare viziteaza toate cuvintele"/>
+        <node name="summaryOff" value="Tasta de navigare viziteaza numai hyperlink-uri"/>
+      </node>
+    </node>
+    <node name="images" value="Imagini">
+      <node name="summary" value="Setări afișare imagine"/>
+      <node name="backgroundColor" value="Culoarea de fundal pentru a vizualiza imagini"/>
+      <node name="longTapAction" value="Actiuni la apasarea lungă">
+        <node name="doNothing" value="Apasarea lungă nu face nimic"/>
+        <node name="selectImage" value="Apasarea lungă selectează imaginea"/>
+        <node name="openImageView" value="Apasarea lungă vizualizează imaginea"/>
+      </node>
+      <node name="fitImagesToScreen" value="Încadreaza imaginea pe ecran">
+        <node name="none" value="Niciuna"/>
+        <node name="covers" value="Numai acoperirea"/>
+        <node name="all" value="Toate"/>
+      </node>
+      <node name="matchBackground" value="Aliniază cu intensiatea fundalului">
+        <node name="summaryOn" value="Ajustează culoarea imaginii în functie de fundal"/>
+        <node name="summaryOff" value="Nu ajusta culoarea imaginii"/>
+      </node>
+    </node>
+    <node name="menu" value="Meniu">
+      <node name="summary" value="Configurează meniul paginii principale"/>
+      <node name="backgroundCover" value="Folosește coperta ca fundal">
+        <node name="summaryOn" value="Afișează coperta în meniul cărții"/>
+        <node name="summaryOff" value="Păstrează fundalul curat"/>
+      </node>
+      <node name="bookMenuStatusItem" value="Starea articolului">
+        <node name="summaryOn" value="Afișează starea articolului în meniul cărții"/>
+        <node name="summaryOff" value="Ascunde starea articolului"/>
+      </node>
+      <node name="items" value="Intrarile din meniu">
+        <node name="summary" value="Schimbă ordinea intrărilor"/>
+        <node name="bookMenuUpperSection" value="Meniul cărții (partea de sus)"/>
+        <node name="bookMenuLowerSection" value="Meniul cărții (partea de jos)"/>
+        <node name="toolbarOrMainMenu" value="Meniul de scule sau meniu principal"/>
+        <node name="mainMenu" value="Meniu principal"/>
+        <node name="enabled" value="Activat"/>
+        <node name="disabled" value="Dezactivat"/>
+      </node>
+    </node>
+    <node name="cancelMenu" value="Anulează meniu">
+      <node name="summary" value="Lista actiunilor pentru butonul înapoi"/>
+      <node name="library" value="Librarie">
+        <node name="summaryOn" value="Afișează elementul 'deschide libraria'"/>
+        <node name="summaryOff" value="Nu afișa elementul 'deschide libraria'"/>
+      </node>
+      <node name="networkLibrary" value="Libraria din rețea">
+        <node name="summaryOn" value="Afișează elementul 'deschide libraria din rețea'"/>
+        <node name="summaryOff" value="Nu afișa elementul 'deschide libraria din rețea'"/>
+      </node>
+      <node name="previousBook" value="Cartea anterioara">
+        <node name="summaryOn" value="Arată reveniți la cartea precedentă"/>
+        <node name="summaryOff" value="Nu arata reveniți la cartea precedentă"/>
+      </node>
+      <node name="positions" value="Ultimele 3 poziții">
+        <node name="summaryOn" value="Arată articolele pentru ultimele 3 poziții din carte"/>
+        <node name="summaryOff" value="Nu afișa elementele pentru ultimele 3 poziții din carte"/>
+      </node>
+      <node name="backKeyAction" value="Acțiunea tastei inapoi">
+        <node name="exit" value="Închide Aplicatia"/>
+        <node name="goBack" value="Navigați înapoi"/>
+        <node name="cancelMenu" value="Arată meniul de anulare"/>
+      </node>
+      <node name="backKeyLongPressAction" value="Acțiunea dorită pentru la apăsarea lungă a tastei inapoi">
+        <node name="exit" value="Închide Aplicatia"/>
+        <node name="goBack" value="Navigați înapoi"/>
+        <node name="cancelMenu" value="Arată meniul de anulare"/>
+        <node name="none" value="Nicio acțiune"/>
+      </node>
+    </node>
+    <node name="tips" value="Sfaturi">
+      <node name="summary" value="Setări sfaturi zilnice"/>
+      <node name="showTips" value="Afișează sfaturi">
+        <node name="summaryOn" value="Afișează sfaturi zilnice"/>
+        <node name="summaryOff" value="Nu afișa"/>
+      </node>
+    </node>
+    <node name="about" value="Despre FBReader">
+      <node name="summary" value="Informații versiune, contacte"/>
+      <node name="version" value="Versiune"/>
+      <node name="site" value="Visitati website-ul nostru">
+        <node name="url" value="https://fbreader.org/"/>
+      </node>
+      <node name="email" value="Trimiteți-ne un e-mail">
+        <node name="url" value="mailto:contact@fbreader.org"/>
+      </node>
+      <node name="googleplus" value="Participa la comunitatea FBReader pe Google+">
+        <node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+      </node>
+      <node name="twitter" value="Urmați-ne pe Twitter">
+        <node name="url" value="https://twitter.com/fbreader"/>
+      </node>
+      <node name="facebook" value="FBReader pe Facebook">
+        <node name="url" value="https://facebook.com/fbreader"/>
+      </node>
+      <node name="thirdParty" value="Biblioteci terțe părți"/>
+    </node>
+    <node name="eink" value="Ecran tip E-ink">
+      <node name="summary" value="Opțiuni specifice ecranelor tip E-ink"/>
+      <node name="enableFastRefresh" value="Mod împrospatare rapidă">
+        <node name="summaryOn" value="Folosește modul rapid (dar nu perfect) de împrospătare a ecranului"/>
+        <node name="summaryOff" value="Folosește modul complet (curat dar incet) de împrospătare a ecranului"/>
+      </node>
+      <node name="interval" value="Numarul (intervalul) de împrospătari rapide între împrospătarile complete"/>
+    </node>
+  </node>
+  <node name="dialog">
+    <node name="button">
+      <node name="noThanks" value="Nu, merci"/>
+      <node name="install" value="Instalează"/>
+      <node name="update" value="Actualizați"/>
+      <node name="skip" value="Sari peste"/>
+      <node name="buy" value="Cumpară"/>
+      <node name="buyAndDownload" value="Cumpără și descarcă"/>
+      <node name="download" value="Descarcă"/>
+      <node name="continue" value="Continuă"/>
+      <node name="editUrl" value="Editati URL-ul"/>
+      <node name="tryAgain" value="Încercați din nou"/>
+      <node name="openBook" value="Citește"/>
+      <node name="edit" value="Editează"/>
+      <node name="reloadInfo" value="Reîncară"/>
+      <node name="shareBook" value="Împărtășește"/>
+      <node name="topup" value="încărcă"/>
+      <node name="pay" value="Platește"/>
+      <node name="refresh" value="Actualizare"/>
+      <node name="authorise" value="Autorizează"/>
+      <node name="resetPosition" value="Resetează pozitia"/>
+      <node name="sendReport" value="Trimite raport"/>
+      <node name="addToFavorites" value="Adaugă la favorite"/>
+      <node name="removeFromFavorites" value="Șterge din favorite"/>
+      <node name="markAsRead" value="Marcați ca citit"/>
+      <node name="markAsUnread" value="Marcați ca necitit"/>
+      <node name="plugin" value="Plugin"/>
+      <node name="premium" value="Premium"/>
+    </node>
+    <node name="gotoPage" value="Du-te la pagina"/>
+    <node name="plugin">
+      <node name="installTitle" value="Instalați plugin"/>
+      <node name="updateTitle" value="Actualizare plugin"/>
+      <node name="dontAskAgain" value="Nu întrebați din nou"/>
+    </node>
+    <node name="backgroundAuthentication">
+      <node name="message" value="Este necesară autentificarea"/>
+    </node>
+    <node name="missingDictionary" value="Disparut %s">
+      <node name="install" value="Instalare %s"/>
+      <node name="configure" value="Configurare traducere"/>
+      <node name="skip" value="Sari"/>
+    </node>
+    <node name="installDictionary">
+      <node name="title" value="Instalați dictionar"/>
+      <node name="message" value="Doriți să instalați %s?"/>
+    </node>
+    <node name="deleteBookBox">
+      <node name="message" value="Fișierul cărții va fi șters ireversibil. Sunteți sigur?"/>
+    </node>
+    <node name="deleteMultipleBookBox">
+      <node name="title" value="Șterge cărțile"/>
+      <node name="message" value="Fișierele cu cărți %s vor fi șterse pentru totdeauna. Sunteți sigur?"/>
+    </node>
+    <node name="redownloadFileBox">
+      <node name="message" value="Fișierul există deja. Doriti reîncărcarea lui?"/>
+    </node>
+    <node name="litresUserRegistration">
+      <node name="title" value="Inregistrare utilizator"/>
+      <node name="login" value="Nume de utilizator"/>
+      <node name="password" value="Parola"/>
+      <node name="confirmPassword" value="Parola&#10;confirmare"/>
+      <node name="email" value="Email"/>
+    </node>
+    <node name="litresAutoSignIn">
+      <node name="title" value="Conectare"/>
+      <node name="email" value="Email"/>
+      <node name="actions">
+        <node name="title" value="Nu se poate face conectarea cu acest email&#10;%s"/>
+        <node name="recover" value="Recuperare informații de cont"/>
+        <node name="signIn" value="Conectare manuală"/>
+        <node name="anotherEmail" value="Selectați un alt email"/>
+      </node>
+      <node name="signedIn" value="Sunteți conectat cu adresa de e-mail %s."/>
+      <node name="registrationSuccessful" value="Am creat un cont pentru dumneavoastră. Informațiile detaliate au fost trimise la %s."/>
+      <node name="passwordSent" value="Informațiile contului dvs. au fost trimise la %s. Vă rugăm să verificați email-ul."/>
+    </node>
+    <node name="waitMessage">
+      <node name="translating" value="Traducerea este în curs…"/>
+      <node name="tryConnect" value="Se încearcă conectarea. Vă rugăm așteptați…"/>
+      <node name="downloadingBook" value="Se descarcă cartea %s"/>
+      <node name="search" value="Cautărea a inceput. Vă rugăm așteptați…"/>
+      <node name="loadInfo" value="Se încărca informatiile necesare. Vă rugăm așteptați…"/>
+      <node name="loadingBook" value="Se deschide cartea. Vă rugăm așteptați…"/>
+      <node name="loadingBookList" value="Se dechide biblioteca. Vă rugăm așteptați…"/>
+      <node name="creatingBooksDatabase" value="Se crează baza de date cu cărți. Vă rugăm așteptați…"/>
+      <node name="updatingBooksDatabase" value="Se actualizează baza de date cu cărți. Vă rugăm așteptați…"/>
+      <node name="loadingNetworkLibrary" value="Se deschide biblioteca. Vă rugăm așteptați…"/>
+      <node name="authentication" value="Autentificare pornită. Vă rugăm așteptați…"/>
+      <node name="signOut" value="Ieșire. Vă rugăm așteptați…"/>
+      <node name="purchaseBook" value="Se cumpară cartea. Vă rugăm așteptați…"/>
+      <node name="loadingCatalogInfo" value="Se încărcă informații despre catalog. Vă rugăm așteptați…"/>
+      <node name="loadingNetworkBookInfo" value="Se încărca informații despre carte. Vă rugăm așteptați …"/>
+      <node name="updatingCatalogsList" value="Actualizarea listei de cataloage. Vă rugăm așteptați…"/>
+      <node name="updatingAccountInformation" value="Se actualizează detaliile contului. Vă rugăm așteptați…"/>
+      <node name="initDRMEngine" value="Se încărcă motorul DRM. Vă rugăm așteptați…"/>
+      <node name="acquireLicence" value="Preluam licenta. Vă rugăm așteptați…"/>
+      <node name="registerUser" value="Înregistrare cont nou. Vă rugăm așteptați…"/>
+      <node name="autoSignIn" value="Conectare in curs. Vă rugăm așteptați…"/>
+      <node name="recoverPassword" value="Se recuperează parola. Vă rugăm așteptați…"/>
+    </node>
+    <node name="networkError">
+      <node name="internalError" value="Eroare internă pe server"/>
+      <node name="purchaseNotEnoughMoney" value="Nu sunt suficienți bani"/>
+      <node name="purchaseMissingBook" value="Lipsește cartea"/>
+      <node name="purchaseAlreadyPurchased" value="Deja achiziționate"/>
+      <node name="bookNotPurchased" value="Cartea nu a fost cumpărată"/>
+      <node name="downloadLimitExceeded" value="Ați depășit limita de descărcari"/>
+      <node name="noUserForEmail" value="Nici s-a găsit nici un utilizator înregistrat&#10;cu e-mail-ul specificat"/>
+      <node name="unsupportedOperation" value="Operatiune neacceptată"/>
+      <node name="notAnOPDS" value="Acesta nu este un catalog OPDS"/>
+      <node name="noRequiredInformation" value="Informația solicitată nu există în catalog"/>
+      <node name="cacheDirectoryError" value="Nu se poate crea un director de cache"/>
+      <node name="usernameAlreadyInUse" value="Nume utilizator deja în uz"/>
+      <node name="usernameNotSpecified" value="Numele de utilizator nu ar trebui să fie gol"/>
+      <node name="passwordNotSpecified" value="Parola nu trebuie să fie goală"/>
+      <node name="passwordsDoNotMatch" value="Cele două parole nu se potrivesc"/>
+      <node name="emailNotSpecified" value="Adresa de e-mail este necompletată"/>
+      <node name="emailAlreadyInUse" value="Adresa de e-mail este deja în uz"/>
+      <node name="invalidEMail" value="Adresa de e-mail este invalidă"/>
+      <node name="tooManyRegistrations" value="Prea multe înregistrări de la adresa dumneavoastră de IP;&#10;vă rugăm să încercați din nou în câteva minute"/>
+    </node>
+    <node name="AuthenticationDialog">
+      <node name="title" value="Autentificare"/>
+      <node name="unencryptedWarning" value="Parola dvs. va fi trimisă necriptată"/>
+      <node name="login" value="Nume utilizator"/>
+      <node name="password" value="Parola"/>
+      <node name="loginIsEmpty" value="Numele utilizatorului trebuie să nu fie gol"/>
+      <node name="register" value="Înscrieti-vă"/>
+    </node>
+    <node name="CustomCatalogDialog">
+      <node name="title" value="Aplicatie: Adaugă catalog personalizat"/>
+      <node name="catalogTitle" value="Titlu"/>
+      <node name="catalogUrl" value="URL-ul"/>
+      <node name="catalogSummary" value="Rezumat"/>
+      <node name="catalogTitleExample" value="De ex: Proiectul Gutenberg catalog"/>
+      <node name="catalogUrlExample" value="De ex: http://m.gutenberg.org/"/>
+      <node name="catalogSummaryExample" value="De ex: cărți gratuite din patrimoniul public"/>
+      <node name="titleIsEmpty" value="Titlul trebuie să nu fie gol"/>
+      <node name="urlIsEmpty" value="URL-ul trebuie să nu fie gol"/>
+      <node name="invalidUrl" value="Adresa URL invalida"/>
+      <node name="titleAlreadyExists" value="Titlul specificat este deja în uz"/>
+      <node name="siteAlreadyExists" value="Site-ul specificat este deja în uz"/>
+    </node>
+    <node name="languageFilterDialog">
+      <node name="title" value="Filtrează limba"/>
+    </node>
+    <node name="tips">
+      <node name="title" value="Sfatul zilei"/>
+      <node name="initializationText" value="Doriti să cititi zilnic sfaturi despre folosirea aplicatiei? Noile sfaturi sunt descărcate de pe site-ul aplicatiei. Se estimează un trafic de 1-2 kilobytes pe săptămână.&#10;&#10;Să activeaz sfaturile?"/>
+      <node name="dontShowAgain" value="Nu-l mai repeta"/>
+      <node name="more" value="Urmatorul sfat"/>
+    </node>
+    <node name="screenHint">
+      <node name="message1" value="FBReader functionează implicit în modulul ecran complet. Pe o treime din ecran de afișează controalele. Puteti schimba acest comportament în sectiunea “Apariție” din dialogul Setări."/>
+      <node name="message2" value="Bine facut! Acum atingeți din nou al treilea centru pentru a ascunde comenzile și acest indiciu. Daca doriți să păstrați comenzile de pe ecran în timpul citirii, selectati “Arată bara de actiune” în secțiunea “Aparitie” din dialogul Setari."/>
+    </node>
+    <node name="folderList">
+      <node name="addFolder" value="Adaugă dosar"/>
+      <node name="removeDialog" value="Șterge dosar">
+        <node name="message" value="Șterge “%s” din listă?"/>
+      </node>
+      <node name="duplicate" value="“%s” este în continuare în listă"/>
+    </node>
+    <node name="editList">
+      <node name="edit" value="Editare"/>
+      <node name="remove" value="Șterge"/>
+    </node>
+    <node name="editTags" value="Etichete">
+      <node name="addTag" value="Adaugă eticheta"/>
+      <node name="editTag" value="Editeaza Eticheta"/>
+      <node name="removeTag" value="Șterge eticheta">
+        <node name="message" value="Sa sterg eticheta “%s” din listă?"/>
+      </node>
+    </node>
+    <node name="editAuthors" value="Autori">
+      <node name="addAuthor" value="Adaugă autor"/>
+      <node name="editAuthor" value="Editează autor"/>
+      <node name="removeAuthor" value="Șterge autor">
+        <node name="message" value="Să sterg autorul “%s” din listă?"/>
+      </node>
+    </node>
+    <node name="fileChooser">
+      <node name="root" value="Radacina"/>
+      <node name="newFolder" value="Dosar nou"/>
+      <node name="folderNameHint" value="Nume dosar"/>
+      <node name="menu">
+        <node name="origin" value="Origine"/>
+        <node name="reload" value="Reîncărca"/>
+      </node>
+      <node name="sortBy" value="Sortare după">
+        <node name="name" value="Nume"/>
+        <node name="size" value="Marime"/>
+        <node name="date" value="Data"/>
+      </node>
+      <node name="permissionDenied" value="Acces interzis"/>
+    </node>
+    <node name="missingPlugin" value="Plugin lipsă">
+      <node name="message" value="Plugin-ul pentru fișierele e tip %s nu este instalat. Să-l instalez acum?"/>
+    </node>
+    <node name="licensing" value="Fară licentă">
+      <node name="message" value="%s nu este licențiat. Cumpărati acum pe Google Play?"/>
+    </node>
+    <node name="retryLicensing" value="Verificarea licentei">
+      <node name="message" value="Nu se poate verifica licenta %s. Încercați din nou?"/>
+    </node>
+  </node>
+  <node name="errorMessage">
+    <node name="nativeCodeFailure" value="Eroare %s în codulul nativ în timpul lecturii '%s'"/>
+    <node name="errorReadingFile" value="A apărut o eroare în timpul citirii '%s'"/>
+    <node name="errorReadingZip" value="A apărut o eroare în timpul extragerii '%s'"/>
+    <node name="pluginNotFound" value="Nu este plugin pentru '%s'"/>
+    <node name="unknownPluginType" value="Tip plugin necunoscut: %s"/>
+    <node name="fileNotFound" value="Fișierul nu a fost gasit: %s"/>
+    <node name="unsupportedEncryptionMethod" value="Fișierul %s este criptat cu o metodă nesuportată de FBReader. Unele pagini nu pot fi citite"/>
+    <node name="opfFileNotFound" value="OPF nu se gaseste în %s"/>
+    <node name="unsupportedFileFormat" value="Formatul de fișier nu este acceptat pentru '%s'"/>
+    <node name="errorParsingRtf" value="Rtf - eroare de analiză în: %s"/>
+    <node name="cannotRunAndroidMarket" value="Nu pot accesa Android Market. Vă rugăm instalați %s manual"/>
+    <node name="textNotFound" value="Nu există nici un text adecvat în carte, îmi pare rău"/>
+    <node name="bookNotFound" value="Nu există cărți adecvate în biblioteca, îmi pare raău"/>
+    <node name="bookmarkNotFound" value="Nu există marcaje adecvate, îmi pare rău"/>
+    <node name="cannotOpenBook" value="Nu pot deschide această carte în acest moment, îmi pare rău"/>
+    <node name="dictionaryIsNotInstalled" value="Dictionarul nu este instalat, îmi pare rău"/>
+    <node name="permissionDenied" value="Permisiune refuzată, îmi pare rău"/>
+    <node name="noFavorites" value="Lista ta de favorite este goală, îmi pare rău"/>
+    <node name="noSeries" value="Nu există cărți în serie, ne pare rău"/>
+    <node name="emptyCatalog" value="Catalogul este gol, îmi pare rău"/>
+    <node name="emptyBasket" value="Cosul Dvs. este gol, îmi pare rău"/>
+    <node name="emptyNetworkSearchResults" value="Nu s-a găsit nici o carte"/>
+    <node name="videoServiceNotWorking" value="Servicii video indisponibile, ne pare rău"/>
+    <node name="videoPlayerNotFound" value="Nu exista nici un player video instalat pe acest aparat, ne pare rău"/>
+    <node name="bookIsMissingTitle" value="Carte lipsă"/>
+    <node name="bookIsMissing" value="Cartea '%s' nu a fost gasită pe dispozitiv"/>
+    <node name="downloadFailed" value="Descarcăre esuată"/>
+  </node>
+  <node name="external">
+    <node name="browser" value="Browser"/>
+    <node name="defaultBrowser" value="Browser prestabilit"/>
+  </node>
+  <node name="crash">
+    <node name="fixBooksDirectory">
+      <node name="title" value="Eroare în aplicatie"/>
+      <node name="text" value="Directorul cache pentru aplicație nu este accesibil pentru scriere. Poate ați uitat să introduceți cardul de memorie. Vă rugăm să rezolvați această problemă sau selectați un alt director."/>
+    </node>
+    <node name="missingNativeLibrary">
+      <node name="title" value="Problemă în aplicatie"/>
+      <node name="text" value="Aplicatia nu gaseste librăriile native. Poate nu a fost instalaă corect. Daca erorare persistă, va rugăm reinstalați aplicația"/>
+    </node>
+  </node>
+  <node name="error">
+    <node name="bookReading">
+      <node name="title" value="Problema FBReader"/>
+    </node>
+  </node>
+  <node name="links">
+    <node name="faqPage" value="https://fbreader.org/faq-page"/>
+  </node>
+  <node name="plugins" value="Instalare plugin-uri">
+    <node name="noMorePlugins" value="Nu avem plugin-uri noi în acest moment, ne pare rău"/>
+    <node name="litres" value="LitRes">
+      <node name="summary" value="Librarie Rusa"/>
+    </node>
+    <node name="tts_plus" value="TTS+">
+      <node name="summary" value="Citit cu voce tare"/>
+    </node>
+    <node name="calibre_server_integration" value="Conexiune Calibre">
+      <node name="summary" value="Conectați server-ul Calibre în rețeaua d-vs"/>
+    </node>
+    <node name="local_opds_scanner" value="OPDS Scanare locală">
+      <node name="summary" value="Caută cărți în rețeaua locală"/>
+    </node>
+    <node name="bookshelf" value="Raft">
+      <node name="summary" value="Vizualizare librarie tip miniatura (Thumbnail)"/>
+    </node>
+    <node name="opds_server" value="Server OPDS">
+      <node name="summary" value="Serviți cărți de pe dispozitivul dvs."/>
+    </node>
+    <node name="widgets" value="Widget-uri">
+      <node name="summary" value="Adaugăti cărți în ecranul de start"/>
+    </node>
+    <node name="pdf" value="PDF">
+      <node name="summary" value="Citire cărți în formatul PDF"/>
+    </node>
+    <node name="djvu" value="DjVu">
+      <node name="summary" value="Citește cărți în format DjVu"/>
+    </node>
+    <node name="cbr" value="Cărți de benzi desenate">
+      <node name="summary" value="Citire cărți cu benzi desenate (CBR, CBZ)"/>
+    </node>
+  </node>
+  <node name="drm">
+    <node name="encryptedSection" value="Sectiune criptată"/>
+  </node>
+  <node name="yota">
+    <node name="frontScreenMessage" value="Întoarceti aparatul pe pentru a citi cartea. Pentru a reveni la acest ecran, apasati butonul de mai jos."/>
+    <node name="frontScreenButton" value="Comutare la acest ecran"/>
+  </node>
+  <node name="hint">
+    <node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%"/>
+    <node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
+    <node name="percent" value="E.g.: 125%"/>
+  </node>
+  <node name="duration">
+    <node name="duration1" value="o secundă"/>
+    <node name="duration3" value="3 secunde"/>
+    <node name="duration5" value="5 secunde"/>
+    <node name="duration10" value="10 secunde"/>
+    <node name="duration20" value="20 secunde"/>
+    <node name="duration40" value="40 secunde"/>
+    <node name="duration60" value="1 minut"/>
+    <node name="duration300" value="5 minute"/>
+  </node>
+  <node name="textSearchPopup">
+    <node name="findPrevious" value="Apariția precedenta"/>
+    <node name="findNext" value="Urmatoarea apariție"/>
+    <node name="close" value="Închide"/>
+  </node>
+  <node name="selectionPopup">
+    <node name="copyToClipboard" value="Copiați în clipboard"/>
+    <node name="share" value="Împărtășește textul"/>
+    <node name="openInDictionary" value="Deschide în dictionar"/>
+    <node name="translate" value="Tradu"/>
+    <!-- this is a verb: make a bookmark -->
+    <node name="bookmark" value="Crează un semn de carte"/>
+    <node name="close" value="Închide"/>
+  </node>
+  <node name="dictanErrors">
+    <node name="unknown" value="Eroare necunoscută"/>
+    <node name="noArticle" value="Nu s-au gasit articole pentru “%s”"/>
+    <node name="cannotOpenDictionary" value="Nu se poate deschide dictionarul"/>
+    <node name="noDictionarySelected" value="Dictionar neselectat; vă rugăm să ajustați setările dictionarului"/>
+  </node>
+  <node name="premium" value="FBReader Premium Edition">
+    <node name="shortTitle" value="FBReader Premium"/>
+    <node name="conflict" value="Aveți instalate mai multe aplicatii: FBReader și FBReader Premium. Pe care doriți să o rulati?"/>
+  </node>
+  <node name="widget">
+    <node name="simple">
+      <node name="selectIcon" value="Alegeți icoana pentru widget"/>
+      <node name="selectAction" value="Alegeți actiunea"/>
+      <node name="book" value="Citește cartea"/>
+      <node name="library" value="Deschide biblioteca"/>
+    </node>
+  </node>
 </resources>
