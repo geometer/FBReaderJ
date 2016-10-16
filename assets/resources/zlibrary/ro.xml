@@ -4,90 +4,90 @@
 <!-- Updated by girlea_alex@yahoo.com, Jul 6 of 2014 -->
 <!-- Updated by aplicatii.romanesti@gmail.com, 2013 -->
 <resources>
-	<node name="dialog">
-		<node name="button">
-			<node name="ok" value="Ok"/>
-			<node name="cancel" value="Anuleaza"/>
-			<node name="yes" value="Da"/>
-			<node name="no" value="Nu"/>
-			<node name="apply" value="Aplica"/>
-		</node>
-		<node name="networkError">
-			<node name="title" value="Eroare conexiune"/>
-			<node name="unknownErrorMessage" value="Eroare necunoscuta"/>
-			<node name="operationTimedOutMessage" value="Timpul alocat operatiunii a expirat"/>
-			<node name="somethingWrongMessage" value="Ceva nu a mers bine pentru&#10;%s"/>
-			<node name="couldntCreateDirectoryMessage" value="Crearea directorului &#10;%s a esuat"/>
-			<node name="couldntCreateFileMessage" value="Crearea fisierului &#10;%s a esuat"/>
-			<node name="couldntConnectMessage" value="Conexiunea la serverul &#10;%s a esuat"/>
-			<node name="couldntResolveHostMessage" value="Eroare DNS catre serverul &#10;%s"/>
-			<node name="authenticationFailed" value="Eroare autentificare"/>
-			<node name="unsupportedProtocol" value="Protocol neacceptat"/>
-			<node name="invalidURL" value="URL Invalid"/>
-			<node name="hostCantBeReached" value="Serverul %s&#10; nu poate fi contactat"/>
-			<node name="connectionRefused" value="Conexiunea a fost refuzata de &#10;%s"/>
-			<node name="networkNotAvailable" value="Reteaua nu este disponibila"/>
-		</node>
-	</node>
-	<node name="color">
-		<node name="red" value="Rosu"/>
-		<node name="green" value="Verde"/>
-		<node name="blue" value="Albastru"/>
-	</node>
-	<node name="language">
-		<node name="ar" value="Araba"/>
-		<node name="be" value="Belarusa"/>
-		<node name="bg" value="Bulgara"/>
-		<node name="ca" value="Catalana"/>
-		<node name="cs" value="Ceha"/>
-		<node name="da" value="Daneza"/>
-		<node name="de" value="Germana"/>
-		<node name="de-traditional" value="Germana (traditionala)"/>
-		<node name="el" value="Greaca"/>
-		<node name="en" value="Engleza"/>
-		<node name="en_US" value="Engleza (US)"/>
-		<node name="eo" value="Esperanto"/>
-		<node name="es" value="Spaniola"/>
-		<node name="eu" value="Basca"/>
-		<node name="fa" value="Persiana"/>
-		<node name="fi" value="Finlandeza"/>
-		<node name="fr" value="Franceza"/>
-		<node name="gl" value="Galiciana"/>
-		<node name="he" value="Ebraica"/>
-		<node name="hu" value="Ungara"/>
-		<node name="hy" value="Armeana"/>
-		<node name="id" value="Indoneziana"/>
-		<node name="it" value="Italiana"/>
-		<node name="ja" value="Japoneza"/>
-		<node name="ka" value="Georgiana"/>
-		<node name="ko" value="Koreana"/>
-		<node name="lt" value="Lituaniana"/>
-		<node name="nb" value="Norvegiana"/>
-		<node name="nl" value="Olandeza"/>
-		<node name="pl" value="Poloneaza"/>
-		<node name="pt" value="Portugheza"/>
-		<node name="ro" value="Româna"/>
-		<node name="ru" value="Rusa"/>
-		<node name="sr" value="Sirba"/>
-		<node name="sv" value="Suedeza"/>
-		<node name="ta" value="Tamila"/>
-		<node name="th" value="Tailandeza"/>
-		<node name="tr" value="Turca"/>
-		<node name="uk" value="Ucrainiana"/>
-		<node name="vi" value="Vietnameza"/>
-		<node name="zh" value="Chineza"/>
-		<node name="zh_TW" value="Chineza(traditionala)"/>
-		<node name="any" value="Oricare"/>
-		<node name="other" value="Altele"/>
-		<node name="multi" value="Mai multe limbi"/>
-		<node name="system" value="Sistem"/>
-	</node>
-	<node name="boolean3">
-		<node name="on" value="deschis"/>
-		<node name="off" value="inchis"/>
-		<node name="unchanged" value="neschimbat"/>
-	</node>
-	<node name="keyOptionView">
-		<node name="actionFor" value="Functionalitatea Tastei"/>
-	</node>
+  <node name="dialog">
+    <node name="button">
+      <node name="ok" value="Ok"/>
+      <node name="cancel" value="Anulează"/>
+      <node name="yes" value="Da"/>
+      <node name="no" value="Nu"/>
+      <node name="apply" value="Aplică"/>
+    </node>
+    <node name="networkError">
+      <node name="title" value="Eroare conexiune"/>
+      <node name="unknownErrorMessage" value="Eroare necunoscută"/>
+      <node name="operationTimedOutMessage" value="Timpul alocat operațiunii a expirat"/>
+      <node name="somethingWrongMessage" value="Ceva nu a mers bine pentru&#10;%s"/>
+      <node name="couldntCreateDirectoryMessage" value="Crearea directorului &#10;%s a eșuat"/>
+      <node name="couldntCreateFileMessage" value="Crearea fișierului &#10;%s a eșuat"/>
+      <node name="couldntConnectMessage" value="Conexiunea la serverul &#10;%s a eșuat"/>
+      <node name="couldntResolveHostMessage" value="Eroare DNS către serverul &#10;%s"/>
+      <node name="authenticationFailed" value="Eroare autentificare"/>
+      <node name="unsupportedProtocol" value="Protocol neacceptat"/>
+      <node name="invalidURL" value="URL Invalid"/>
+      <node name="hostCantBeReached" value="Serverul %s&#10; nu poate fi contactat"/>
+      <node name="connectionRefused" value="Conexiunea a fost refuzată de &#10;%s"/>
+      <node name="networkNotAvailable" value="Rețeaua nu este disponibilă"/>
+    </node>
+  </node>
+  <node name="color">
+    <node name="red" value="Roșu"/>
+    <node name="green" value="Verde"/>
+    <node name="blue" value="Albastru"/>
+  </node>
+  <node name="language">
+    <node name="ar" value="Arabă"/>
+    <node name="be" value="Belarusă"/>
+    <node name="bg" value="Bulgară"/>
+    <node name="ca" value="Catalană"/>
+    <node name="cs" value="Cehă"/>
+    <node name="da" value="Daneză"/>
+    <node name="de" value="Germană"/>
+    <node name="de-traditional" value="Germană (tradițională)"/>
+    <node name="el" value="Greacă"/>
+    <node name="en" value="Engleză"/>
+    <node name="en_US" value="Engleză (US)"/>
+    <node name="eo" value="Esperanto"/>
+    <node name="es" value="Spaniolă"/>
+    <node name="eu" value="Bască"/>
+    <node name="fa" value="Persiană"/>
+    <node name="fi" value="Finlandeză"/>
+    <node name="fr" value="Franceză"/>
+    <node name="gl" value="Galiciană"/>
+    <node name="he" value="Ebraică"/>
+    <node name="hu" value="Ungară"/>
+    <node name="hy" value="Armeană"/>
+    <node name="id" value="Indoneziană"/>
+    <node name="it" value="Italiană"/>
+    <node name="ja" value="Japoneză"/>
+    <node name="ka" value="Georgiană"/>
+    <node name="ko" value="Koreană"/>
+    <node name="lt" value="Lituaniană"/>
+    <node name="nb" value="Norvegiană"/>
+    <node name="nl" value="Olandeză"/>
+    <node name="pl" value="Poloneză"/>
+    <node name="pt" value="Portugheză"/>
+    <node name="ro" value="Română"/>
+    <node name="ru" value="Rusă"/>
+    <node name="sr" value="Sârbă"/>
+    <node name="sv" value="Suedeză"/>
+    <node name="ta" value="Tamilă"/>
+    <node name="th" value="Tailandeză"/>
+    <node name="tr" value="Turcă"/>
+    <node name="uk" value="Ucrainiană"/>
+    <node name="vi" value="Vietnameză"/>
+    <node name="zh" value="Chineză"/>
+    <node name="zh_TW" value="Chineză(tradițională)"/>
+    <node name="any" value="Oricare"/>
+    <node name="other" value="Altele"/>
+    <node name="multi" value="Mai multe limbi"/>
+    <node name="system" value="Sistem"/>
+  </node>
+  <node name="boolean3">
+    <node name="on" value="deschis"/>
+    <node name="off" value="închis"/>
+    <node name="unchanged" value="neschimbat"/>
+  </node>
+  <node name="keyOptionView">
+    <node name="actionFor" value="Funcționalitatea Tastei"/>
+  </node>
 </resources>
