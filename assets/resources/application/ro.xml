@@ -325,6 +325,7 @@
 		<node name="help" value="Ajutor"/>
 		<node name="plugins" value="Instalează plugin-uri"/>
 		<node name="gotoPageNumber" value="Du-te la pagina…"/>
+		<node name="readAloud" value="Read aloud…" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nume de fișier"/>
@@ -875,6 +876,20 @@
 				<node name="summaryOff" value="Nu afișa"/>
 			</node>
 		</node>
+		<node name="twitter" value="Twitter integration" toBeTranslated="true">
+			<node name="summary" value="How to tweet from FBReader" toBeTranslated="true"/>
+			<node name="enableTwitter" value="Enable tweets" toBeTranslated="true">
+				<node name="summaryOn" value="Show twitter link at end of book" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not show twitter link" toBeTranslated="true"/>
+			</node>
+			<node name="tweetText" value="Tweet text" toBeTranslated="true">
+				<node name="hint" value="Use %title% for the book title, %authors% for authors list" toBeTranslated="true"/>
+			</node>
+			<node name="coverInTweet" value="Add book cover to tweet" toBeTranslated="true">
+				<node name="summaryOn" value="Tweet text and book cover image" toBeTranslated="true"/>
+				<node name="summaryOff" value="Tweet text only" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="about" value="Despre FBReader">
 			<node name="summary" value="Informații versiune, contacte"/>
 			<node name="version" value="Versiune"/>
@@ -893,7 +908,24 @@
 			<node name="facebook" value="FBReader pe Facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
+			<node name="telegram" value="Add Telegram channel" toBeTranslated="true">
+				<node name="url" value="https://telegram.me/fbreader" toBeTranslated="true"/>
+			</node>
 			<node name="thirdParty" value="Biblioteci terțe părți"/>
+			<node name="development" value="Developer options" toBeTranslated="true">
+				<node name="summary" value="Use carefully ;)" toBeTranslated="true"/>
+				<node name="forceWebAuth" value="Force web authentication" toBeTranslated="true">
+					<node name="summaryOn" value="Use web auth even if Google services are available" toBeTranslated="true"/>
+					<node name="summaryOff" value="Use Google auth if available" toBeTranslated="true"/>
+				</node>
+				<node name="copyLogs" value="Copy log files" toBeTranslated="true">
+					<node name="summary" value="Copies *.log files to %s" toBeTranslated="true"/>
+				</node>
+				<node name="deleteLogs" value="Clear logs" toBeTranslated="true"/>
+				<node name="copyDatabase" value="Copy books database" toBeTranslated="true">
+					<node name="summary" value="Copies books.db file to %s" toBeTranslated="true"/>
+				</node>
+			</node>
 		</node>
 		<node name="eink" value="Ecran tip E-ink">
 			<node name="summary" value="Opțiuni specifice ecranelor tip E-ink"/>
@@ -903,6 +935,7 @@
 			</node>
 			<node name="interval" value="Numarul (intervalul) de împrospătari rapide între împrospătarile complete"/>
 		</node>
+		<node name="lockedOption" value="Install Premium Edition to unlock this option" toBeTranslated="true"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -1164,9 +1197,6 @@
 	</node>
 	<node name="plugins" value="Instalare plugin-uri">
 		<node name="noMorePlugins" value="Nu avem plugin-uri noi în acest moment, ne pare rău"/>
-		<node name="litres" value="LitRes">
-			<node name="summary" value="Librarie Rusa"/>
-		</node>
 		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="Citit cu voce tare"/>
 		</node>
@@ -1181,9 +1211,6 @@
 		</node>
 		<node name="opds_server" value="Server OPDS">
 			<node name="summary" value="Serviți cărți de pe dispozitivul dvs."/>
-		</node>
-		<node name="widgets" value="Widget-uri">
-			<node name="summary" value="Adaugăti cărți în ecranul de start"/>
 		</node>
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Citire cărți în formatul PDF"/>
@@ -1248,5 +1275,28 @@
 			<node name="book" value="Citește cartea"/>
 			<node name="library" value="Deschide biblioteca"/>
 		</node>
+	</node>
+	<node name="modifiedBook">
+		<node name="notification">
+			<node name="title" value="Modified book file" toBeTranslated="true"/>
+			<node name="message" value="File %s has been changed" toBeTranslated="true"/>
+		</node>
+		<node name="dialog">
+			<node name="title" value="%s modified" toBeTranslated="true"/>
+			<node name="message" value="File “%s” has been changed. Please choose an action from the list." toBeTranslated="true"/>
+			<node name="createNew" value="Create new book “%s” from the file" toBeTranslated="true"/>
+			<node name="linkExisting" value="Link the file to existing “%s”" toBeTranslated="true"/>
+			<node name="updateMetainfo" value="Link to the existing book, update metainfo from the file" toBeTranslated="true"/>
+			<node name="removeFromLibrary" value="Remove the file from the library" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="twitter">
+		<node name="link" value="Tweet what you have read!" toBeTranslated="true"/>
+		<node name="tweet" value="I've read “%title%” in @fbreader" toBeTranslated="true"/>
+		<node name="missingApp" value="Twitter app is not installed" toBeTranslated="true"/>
+	</node>
+	<node name="networkError">
+		<node name="noNetworkConnection" value="Network is not available. Please check your connection and try again" toBeTranslated="true"/>
+		<node name="syncServerFailure" value="Server connection failure. Please try again later" toBeTranslated="true"/>
 	</node>
 </resources>
