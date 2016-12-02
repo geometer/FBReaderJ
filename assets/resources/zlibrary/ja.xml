@@ -41,7 +41,7 @@
 		<node name="de-traditional" value="ドイツ語 (旧正書法)"/>
 		<node name="el" value="ギリシャ語"/>
 		<node name="en" value="英語"/>
-		<node name="en_US" value="English (US)" toBeTranslated="true"/>
+		<node name="en_US" value="英語 (米国)"/>
 		<node name="eo" value="エスペラント"/>
 		<node name="es" value="スペイン語"/>
 		<node name="eu" value="バスク語"/>
@@ -56,7 +56,7 @@
 		<node name="it" value="イタリア語"/>
 		<node name="ja" value="日本語"/>
 		<node name="ka" value="グルジア (ジョージア) 語"/>
-		<node name="ko" value="Korean" toBeTranslated="true"/>
+		<node name="ko" value="朝鮮語"/>
 		<node name="lt" value="リトアニア語"/>
 		<node name="nb" value="ノルウェー語"/>
 		<node name="nl" value="オランダ語"/>
