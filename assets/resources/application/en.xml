@@ -20,6 +20,9 @@
 		<node name="recent" value="Recent">
 			<node name="summary" value="Recently opened books"/>
 		</node>
+		<node name="recentDownloads" value="Recent Downloads">
+			<node name="summary" value="Recently downloaded books"/>
+		</node>
 		<node name="favorites" value="Favourites">
 			<node name="summary" value="My favourite books"/>
 		</node>
