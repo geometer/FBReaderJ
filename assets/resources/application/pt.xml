@@ -717,12 +717,12 @@
 				<node name="summaryOn" value="Mostrar marcas de índice na barra de rodapé"/>
 				<node name="summaryOff" value="Não mostrar marcas de índice na barra de rodapé"/>
 			</node>
-			<node name="tocMarksMaxNumber" value="Número máximo de marcas de índice a exibir" toBeTranslated="true"/>
+			<node name="tocMarksMaxNumber" value="Número máximo de marcas de índice a exibir"/>
 			<node name="showProgress" value="Exibir progresso da leitura">
 				<node name="dontDisplay" value="Não exibir"/>
 				<node name="asPages" value="Como número de página"/>
 				<node name="asPercentage" value="Como percentagem"/>
-				<node name="asPagesAndPercentage" value="As page number and percentage" toBeTranslated="true"/>
+				<node name="asPagesAndPercentage" value="Como número de página e percentagem"/>
 			</node>
 			<node name="showBattery" value="Mostrar nível de bateria">
 				<node name="summaryOn" value="Mostrar nível de bateria no rodapé"/>
@@ -792,7 +792,7 @@
 			<node name="translationToastDuration" value="Quanto tempo mostrar popup de tradução"/>
 			<node name="errorToastDuration" value="Quanto tempo mostrar mensagem de erro"/>
 			<node name="sourceLanguage" value="Traduzir a partir do">
-				<node name="detect" value="Detetar automaticamente a língua"/>
+				<node name="detect" value="Detetar automaticamente o idioma"/>
 			</node>
 			<node name="targetLanguage" value="Traduzir para">
 				<node name="any" value="Todos os idiomas"/>
@@ -827,12 +827,12 @@
 			</node>
 		</node>
 		<node name="menu" value="Menu">
-			<node name="summary" value="Configure main screen menu" toBeTranslated="true"/>
-			<node name="backgroundCover" value="Use book cover as background" toBeTranslated="true">
-				<node name="summaryOn" value="Show cover in the book menu" toBeTranslated="true"/>
-				<node name="summaryOff" value="Keep background clear" toBeTranslated="true"/>
+			<node name="summary" value="Configurar o menu do ecrã principal"/>
+			<node name="backgroundCover" value="Utilizar a capa como fundo">
+				<node name="summaryOn" value="Mostrar capa no menu do livro"/>
+				<node name="summaryOff" value="Manter o fundo limpo"/>
 			</node>
-			<node name="bookMenuStatusItem" value="Status item" toBeTranslated="true">
+			<node name="bookMenuStatusItem" value="Item de Estado">
 				<node name="summaryOn" value="Show status item in the book menu" toBeTranslated="true"/>
 				<node name="summaryOff" value="Hide status item" toBeTranslated="true"/>
 			</node>
@@ -866,7 +866,7 @@
 			</node>
 			<node name="backKeyAction" value="Ação da tecla voltar">
 				<node name="exit" value="Fechar o FBReader"/>
-				<node name="goBack" value="Ir de volta"/>
+				<node name="goBack" value="Navegar de volta"/>
 				<node name="cancelMenu" value="Mostrar menu de cancelar"/>
 			</node>
 			<node name="backKeyLongPressAction" value="Ação da tecla Voltar de forma contínua">
@@ -938,8 +938,8 @@
 			<node name="removeFromFavorites" value="Remover dos favoritos"/>
 			<node name="markAsRead" value="Marcar como lido"/>
 			<node name="markAsUnread" value="Marcar como não lido"/>
-			<node name="plugin" value="Plugin" toBeTranslated="true"/>
-			<node name="premium" value="Premium" toBeTranslated="true"/>
+			<node name="plugin" value="Plugin"/>
+			<node name="premium" value="Premium"/>
 		</node>
 		<node name="gotoPage" value="Ir para a página "/>
 		<node name="plugin">
