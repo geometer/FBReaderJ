@@ -937,6 +937,8 @@
 			<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
 			<node name="markAsRead" value="Markeer als gelezen"/>
 			<node name="markAsUnread" value="Markeer als ongelezen"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Ga naar pagina"/>
 		<node name="plugin">

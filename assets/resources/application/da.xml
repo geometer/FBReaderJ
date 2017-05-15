@@ -936,6 +936,8 @@
 			<node name="removeFromFavorites" value="Fjern fra foretrukne"/>
 			<node name="markAsRead" value="Marker som læst"/>
 			<node name="markAsUnread" value="Marker som ikke læst"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Go to page" toBeTranslated="true"/>
 		<node name="plugin">

@@ -937,6 +937,8 @@
 			<node name="removeFromFavorites" value="Прыбраць з упадабанага"/>
 			<node name="markAsRead" value="Пазначыць як прачытаную"/>
 			<node name="markAsUnread" value="Пазначыць як непрачытаную"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Перайсьці да старонкі"/>
 		<node name="plugin">

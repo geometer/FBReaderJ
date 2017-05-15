@@ -443,7 +443,7 @@
 				<node name="summaryOn" value="Никогда не выключать экран, если чтение происходит в режиме зарядки"/>
 				<node name="summaryOff" value="Выключать экран даже в режиме зарядки"/>
 			</node>
-				<node name="enableBookMenuSwipeGesture" value="Включить жест для левого меню">
+			<node name="enableBookMenuSwipeGesture" value="Включить жест для левого меню">
 				<node name="summaryOn" value="Движение пальцем от левого края к центру экрана открывает меню книги"/>
 				<node name="summaryOff" value="Меню книги открывается только нажатием на кнопку в левом верхнем углу экрана"/>
 			</node>
@@ -942,6 +942,8 @@
 			<node name="removeFromFavorites" value="Убрать из избранного"/>
 			<node name="markAsRead" value="Пометить как прочтённое"/>
 			<node name="markAsUnread" value="Пометить как непрочтённое"/>
+			<node name="plugin" value="Модуль"/>
+			<node name="premium" value="Premium"/>
 		</node>
 		<node name="gotoPage" value="На страницу"/>
 		<node name="plugin">

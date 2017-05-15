@@ -927,6 +927,8 @@
 			<node name="removeFromFavorites" value="Eltávolítás a kedvencek közül"/>
 			<node name="markAsRead" value="Megjelölés olvasottként"/>
 			<node name="markAsUnread" value="Megjelölés olvasatlanként"/>
+			<node name="plugin" value="Plugin" toBeTranslated="true"/>
+			<node name="premium" value="Premium" toBeTranslated="true"/>
 		</node>
 		<node name="gotoPage" value="Ugrás oldalszámra"/>
 		<node name="plugin">
