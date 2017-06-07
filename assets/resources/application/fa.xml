@@ -1046,7 +1046,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="خلاصه"/>
 			<node name="catalogTitleExample" value="بعنوان مثال: كاتالوگ پروژه ي گوتنبرگ"/>
-			<node name="catalogUrlExample" value="بعنوان مثال http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="بعنوان مثال https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="بعنوان مثال: دامنه كتاب هاي عمومي"/>
 			<node name="titleIsEmpty" value="عنوان نبايد خالي باشد"/>
 			<node name="urlIsEmpty" value="URL نبايد خالي باشد"/>

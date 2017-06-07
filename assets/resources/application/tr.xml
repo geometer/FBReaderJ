@@ -1047,7 +1047,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Özet"/>
 			<node name="catalogTitleExample" value="Örn: Project Gutenberg catalog"/>
-			<node name="catalogUrlExample" value="Örn: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="Örn: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="Örn: Public domain books"/>
 			<node name="titleIsEmpty" value="Başlık kısmı doldurulmalı"/>
 			<node name="urlIsEmpty" value="URL kısmı doldurulmalı"/>

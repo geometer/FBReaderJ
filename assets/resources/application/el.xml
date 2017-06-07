@@ -1045,7 +1045,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Περίληψη"/>
 			<node name="catalogTitleExample" value="π.χ.: Κατάλογος Gutenberg."/>
-			<node name="catalogUrlExample" value="π.χ.: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="π.χ.: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="π.χ.: Public Domain Books."/>
 			<node name="titleIsEmpty" value="Ο τίτλος δεν θα πρέπει να είναι κενός."/>
 			<node name="urlIsEmpty" value="Το URL δεν θα πρέπει να είναι κενό."/>

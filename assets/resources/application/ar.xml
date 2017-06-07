@@ -1045,7 +1045,7 @@
 			<node name="catalogUrl" value="الرابط"/>
 			<node name="catalogSummary" value="نبذة"/>
 			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalogue" toBeTranslated="true"/>
-			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/" toBeTranslated="true"/>
+			<node name="catalogUrlExample" value="E.g.: https://m.gutenberg.org/" toBeTranslated="true"/>
 			<node name="catalogSummaryExample" value="E.g.: Public domain books" toBeTranslated="true"/>
 			<node name="titleIsEmpty" value="العنوان يجب أن لا يكون فارغا"/>
 			<node name="urlIsEmpty" value="الرابط يجب ان لا يكون فارغا"/>
