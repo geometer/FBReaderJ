@@ -1037,7 +1037,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Opis"/>
 			<node name="catalogTitleExample" value="np.: katalog Project Gutenberg"/>
-			<node name="catalogUrlExample" value="np.: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="np.: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="np.: Książki z domeny publicznej"/>
 			<node name="titleIsEmpty" value="Nazwa nie może być pusta"/>
 			<node name="urlIsEmpty" value="URL nie może być pusty"/>

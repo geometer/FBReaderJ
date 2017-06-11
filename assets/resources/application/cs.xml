@@ -1056,7 +1056,7 @@
 			<node name="catalogUrl" value="Adresa"/>
 			<node name="catalogSummary" value="Stručný obsah"/>
 			<node name="catalogTitleExample" value="Např.: Katalog Projekt Gutenberg"/>
-			<node name="catalogUrlExample" value="Např.: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="Např.: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="Např.: Veřejné knihy"/>
 			<node name="titleIsEmpty" value="Název by neměl být prázdný"/>
 			<node name="urlIsEmpty" value="Adresa by neměla být prázdná"/>

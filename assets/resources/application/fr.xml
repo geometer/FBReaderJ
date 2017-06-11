@@ -1040,7 +1040,7 @@
 			<node name="catalogUrl" value="Adresse du catalogue sur le réseau"/>
 			<node name="catalogSummary" value="Description"/>
 			<node name="catalogTitleExample" value="Ex: Catalogue du project Gutenberg"/>
-			<node name="catalogUrlExample" value="Ex: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="Ex: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="Ex: Livres du domaine publique"/>
 			<node name="titleIsEmpty" value="Le titre ne devrait pas être vide"/>
 			<node name="urlIsEmpty" value="L'adresse ne doit pas être vide"/>

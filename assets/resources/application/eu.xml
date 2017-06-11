@@ -1047,7 +1047,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Laburpena"/>
 			<node name="catalogTitleExample" value="Adb.ez.: Gutenberg proiektuaren katalogoa"/>
-			<node name="catalogUrlExample" value="Adb.ez.: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="Adb.ez.: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="Adb.ez.: Domeinu publikoan dauden liburuak"/>
 			<node name="titleIsEmpty" value="Izenburuak ezin du hutsik egon"/>
 			<node name="urlIsEmpty" value="URL-ak ezin du hutsik egon"/>

@@ -1046,7 +1046,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Oversigt"/>
 			<node name="catalogTitleExample" value="F.eks.: Projekt Gutenberg katalog"/>
-			<node name="catalogUrlExample" value="F.eks.: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="F.eks.: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="F.eks.: Offentligt tilgængelige bøger"/>
 			<node name="titleIsEmpty" value="Titel må ikke være blank"/>
 			<node name="urlIsEmpty" value="URL må ikke være blank"/>

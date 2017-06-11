@@ -1053,7 +1053,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Resum"/>
 			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalogue" toBeTranslated="true"/>
-			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/" toBeTranslated="true"/>
+			<node name="catalogUrlExample" value="E.g.: https://m.gutenberg.org/" toBeTranslated="true"/>
 			<node name="catalogSummaryExample" value="E.g.: Public domain books" toBeTranslated="true"/>
 			<node name="titleIsEmpty" value="Title should not be blank" toBeTranslated="true"/>
 			<node name="urlIsEmpty" value="URL should not be empty" toBeTranslated="true"/>

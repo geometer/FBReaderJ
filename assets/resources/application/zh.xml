@@ -1037,7 +1037,7 @@
 			<node name="catalogUrl" value="书库网址"/>
 			<node name="catalogSummary" value="简介"/>
 			<node name="catalogTitleExample" value="例如: 古滕堡项目书库目录"/>
-			<node name="catalogUrlExample" value="例如: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="例如: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="例如: 公版图书"/>
 			<node name="titleIsEmpty" value="名称不能为空"/>
 			<node name="urlIsEmpty" value="书库网址不能为空"/>

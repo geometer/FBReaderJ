@@ -1048,7 +1048,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Resumo"/>
 			<node name="catalogTitleExample" value="Por exemplo: Catálogo Projeto Gutenberg"/>
-			<node name="catalogUrlExample" value="Por exemplo: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="Por exemplo: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="Ex.: livros de domínio público"/>
 			<node name="titleIsEmpty" value="O título não pode ficar vazio"/>
 			<node name="urlIsEmpty" value="O URL não pode ficar vazio"/>

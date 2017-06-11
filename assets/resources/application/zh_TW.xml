@@ -1037,7 +1037,7 @@
 			<node name="catalogUrl" value="網址"/>
 			<node name="catalogSummary" value="簡介"/>
 			<node name="catalogTitleExample" value="例如: Project Gutenberg catalog"/>
-			<node name="catalogUrlExample" value="例如: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="例如: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="例如: 公共書藉"/>
 			<node name="titleIsEmpty" value="請填上目錄名稱"/>
 			<node name="urlIsEmpty" value="請填上目錄網址"/>

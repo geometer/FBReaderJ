@@ -1047,7 +1047,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Beschrijving"/>
 			<node name="catalogTitleExample" value="Bijv.: Project Gutenberg catalogus"/>
-			<node name="catalogUrlExample" value="Bijv.: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="Bijv.: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="Bijv.: Public domain boeken"/>
 			<node name="titleIsEmpty" value="Titel kan niet leeg zijn"/>
 			<node name="urlIsEmpty" value="URL kan niet leeg zijn"/>

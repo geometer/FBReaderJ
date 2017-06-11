@@ -201,7 +201,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				if (TAG_BOOK == tag) {
 					myUrls.addInfo(new UrlInfo(
 						UrlInfo.Type.SingleEntry,
-						"http://data.fbreader.org/catalogs/litres2/full.php5?id=" + myBookId,
+						"https://data.fbreader.org/catalogs/litres2/full.php5?id=" + myBookId,
 						MimeType.APP_ATOM_XML_ENTRY
 					));
 					Books.add(new OPDSBookItem(

@@ -1037,7 +1037,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Leírás"/>
 			<node name="catalogTitleExample" value="Pl.: Project Gutenberg katalógus"/>
-			<node name="catalogUrlExample" value="Pl.: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="Pl.: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="Pl.: Ingyenes könyvek"/>
 			<node name="titleIsEmpty" value="A cím nem lehet üres"/>
 			<node name="urlIsEmpty" value="Az URL nem lehet üres"/>

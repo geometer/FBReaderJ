@@ -1038,7 +1038,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Tóm tắt"/>
 			<node name="catalogTitleExample" value="VD: Project Gutenberg catalog"/>
-			<node name="catalogUrlExample" value="VD: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="VD: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="VD: Public domain books"/>
 			<node name="titleIsEmpty" value="Tiêu đề không nên để trống"/>
 			<node name="urlIsEmpty" value="URL không nên để trống"/>
