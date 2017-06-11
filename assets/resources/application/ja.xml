@@ -1047,7 +1047,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="説明"/>
 			<node name="catalogTitleExample" value="例: Project Gutenberg カタログ"/>
-			<node name="catalogUrlExample" value="例: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="例: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="例: パブリックドメインの書籍"/>
 			<node name="titleIsEmpty" value="タイトルは空にできません"/>
 			<node name="urlIsEmpty" value="URL は空にできません"/>

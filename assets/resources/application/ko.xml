@@ -1047,7 +1047,7 @@
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="요약"/>
 			<node name="catalogTitleExample" value="예시: 프로젝트 구텐베르크 카탈로그"/>
-			<node name="catalogUrlExample" value="예시: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="예시: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="예시: 저작권 만료 도서"/>
 			<node name="titleIsEmpty" value="제목을 반드시 입력해야 합니다"/>
 			<node name="urlIsEmpty" value="URL을 반드시 입력해야 합니다"/>

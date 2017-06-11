@@ -1047,7 +1047,7 @@
 			<node name="catalogUrl" value="Адреса:"/>
 			<node name="catalogSummary" value="Опис:"/>
 			<node name="catalogTitleExample" value="Нпр.: каталог Пројекта Гутенберг."/>
-			<node name="catalogUrlExample" value="Нпр.: http://m.gutenberg.org."/>
+			<node name="catalogUrlExample" value="Нпр.: https://m.gutenberg.org."/>
 			<node name="catalogSummaryExample" value="Нпр.: књиге у јавном власништву."/>
 			<node name="titleIsEmpty" value="Наслов не сме бити празан."/>
 			<node name="urlIsEmpty" value="Адреса не сме бити празна."/>

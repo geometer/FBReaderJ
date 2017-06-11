@@ -1073,7 +1073,7 @@
 			<node name="catalogUrl" value="URL-ul"/>
 			<node name="catalogSummary" value="Rezumat"/>
 			<node name="catalogTitleExample" value="De ex: Proiectul Gutenberg catalog"/>
-			<node name="catalogUrlExample" value="De ex: http://m.gutenberg.org/"/>
+			<node name="catalogUrlExample" value="De ex: https://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="De ex: cărți gratuite din patrimoniul public"/>
 			<node name="titleIsEmpty" value="Titlul trebuie să nu fie gol"/>
 			<node name="urlIsEmpty" value="URL-ul trebuie să nu fie gol"/>
