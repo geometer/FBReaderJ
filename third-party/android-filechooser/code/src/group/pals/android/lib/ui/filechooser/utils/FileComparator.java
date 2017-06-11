@@ -13,7 +13,7 @@ import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 
 import java.util.Comparator;
 
-import org.fbreader.util.NaturalOrderComparator;
+import group.pals.android.lib.ui.filechooser.utils.NaturalOrderComparator;
 
 /**
  * {@link IFile} comparator.<br>
