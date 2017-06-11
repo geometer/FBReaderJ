@@ -1171,9 +1171,6 @@
 	</node>
 	<node name="plugins" value="プラグインをインストール">
 		<node name="noMorePlugins" value="現時点で新しいプラグインはありません。ご了承ください"/>
-		<node name="litres" value="LitRes">
-			<node name="summary" value="ロシアの書店"/>
-		</node>
 		<node name="tts_plus" value="TTS+">
 			<node name="summary" value="音声読み上げ"/>
 		</node>
@@ -1188,9 +1185,6 @@
 		</node>
 		<node name="opds_server" value="OPDS サーバ">
 			<node name="summary" value="本体の中の本を提供"/>
-		</node>
-		<node name="widgets" value="Widgets">
-			<node name="summary" value="本をホーム画面に追加"/>
 		</node>
 		<node name="pdf" value="PDF">
 			<node name="summary" value="PDF 形式の本を読む"/>
