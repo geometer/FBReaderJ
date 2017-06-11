@@ -1,4 +1,4 @@
-package org.fbreader.util;
+package group.pals.android.lib.ui.filechooser.utils;
 
 /*
  NaturalOrderComparator.java -- Perform 'natural order' comparisons of strings in Java.
