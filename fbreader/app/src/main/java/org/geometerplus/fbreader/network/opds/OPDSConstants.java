@@ -23,9 +23,9 @@ import org.geometerplus.fbreader.network.atom.ATOMConstants;
 
 interface OPDSConstants extends ATOMConstants {
 	// Feed level
-	String REL_BOOKSHELF = "https://data.fbreader.org/rel/bookshelf";
-	String REL_RECOMMENDATIONS = "https://data.fbreader.org/rel/recommendations";
-	String REL_TOPUP = "https://data.fbreader.org/rel/topup";
+	String REL_BOOKSHELF = "http://data.fbreader.org/rel/bookshelf";
+	String REL_RECOMMENDATIONS = "http://data.fbreader.org/rel/recommendations";
+	String REL_TOPUP = "http://data.fbreader.org/rel/topup";
 	//String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
 
 	// Entry level / catalog types
@@ -33,15 +33,15 @@ interface OPDSConstants extends ATOMConstants {
 
 	// Entry level / acquisition links
 	String REL_ACQUISITION_PREFIX = "http://opds-spec.org/acquisition";
-	String REL_FBREADER_ACQUISITION_PREFIX = "https://data.fbreader.org/acquisition";
+	String REL_FBREADER_ACQUISITION_PREFIX = "http://data.fbreader.org/acquisition";
 	String REL_ACQUISITION = "http://opds-spec.org/acquisition";
 	String REL_ACQUISITION_OPEN = "http://opds-spec.org/acquisition/open-access";
 	String REL_ACQUISITION_SAMPLE = "http://opds-spec.org/acquisition/sample";
 	String REL_ACQUISITION_BUY = "http://opds-spec.org/acquisition/buy";
 	//String REL_ACQUISITION_BORROW = "http://opds-spec.org/acquisition/borrow";
 	//String REL_ACQUISITION_SUBSCRIBE = "http://opds-spec.org/acquisition/subscribe";
-	String REL_ACQUISITION_CONDITIONAL = "https://data.fbreader.org/acquisition/conditional";
-	String REL_ACQUISITION_SAMPLE_OR_FULL = "https://data.fbreader.org/acquisition/sampleOrFull";
+	String REL_ACQUISITION_CONDITIONAL = "http://data.fbreader.org/acquisition/conditional";
+	String REL_ACQUISITION_SAMPLE_OR_FULL = "http://data.fbreader.org/acquisition/sampleOrFull";
 
 	// Entry level / other
 	String REL_IMAGE_PREFIX = "http://opds-spec.org/image";
@@ -54,9 +54,9 @@ interface OPDSConstants extends ATOMConstants {
 	String REL_REPLIES = "replies";
 
 	// Entry level / OPDS Link Relations
-	String REL_LINK_SIGN_IN = "https://data.fbreader.org/catalog/sign-in";
-	String REL_LINK_SIGN_OUT = "https://data.fbreader.org/catalog/sign-out";
-	String REL_LINK_SIGN_UP = "https://data.fbreader.org/catalog/sign-up";
-	String REL_LINK_TOPUP = "https://data.fbreader.org/catalog/refill-account";
-	String REL_LINK_RECOVER_PASSWORD = "https://data.fbreader.org/catalog/recover-password";
+	String REL_LINK_SIGN_IN = "http://data.fbreader.org/catalog/sign-in";
+	String REL_LINK_SIGN_OUT = "http://data.fbreader.org/catalog/sign-out";
+	String REL_LINK_SIGN_UP = "http://data.fbreader.org/catalog/sign-up";
+	String REL_LINK_TOPUP = "http://data.fbreader.org/catalog/refill-account";
+	String REL_LINK_RECOVER_PASSWORD = "http://data.fbreader.org/catalog/recover-password";
 }
