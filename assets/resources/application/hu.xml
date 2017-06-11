@@ -20,6 +20,9 @@
 		<node name="recent" value="Legutóbbi">
 			<node name="summary" value="Legutóbb megnyitott könyvek"/>
 		</node>
+		<node name="recentDownloads" value="Legújabb letöltések">
+			<node name="summary" value="Legutóbb letöltött könyvek"/>
+		</node>
 		<node name="favorites" value="Kedvencek">
 			<node name="summary" value="Kedvencnek jelölt könyveim"/>
 		</node>

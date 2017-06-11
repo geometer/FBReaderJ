@@ -39,6 +39,7 @@ public abstract class LibraryTree extends FBTree {
 	static final String ROOT_FOUND = "found";
 	static final String ROOT_FAVORITES = "favorites";
 	static final String ROOT_RECENT = "recent";
+	static final String ROOT_RECENT_DOWNLOADS = "recentDownloads";
 	static final String ROOT_BY_AUTHOR = "byAuthor";
 	static final String ROOT_BY_TITLE = "byTitle";
 	static final String ROOT_BY_SERIES = "bySeries";
