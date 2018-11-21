@@ -42,7 +42,7 @@
 		<node name="de-traditional" value="Německy (tradiční pravopis)"/>
 		<node name="el" value="Řecky"/>
 		<node name="en" value="Anglicky"/>
-		<node name="en_US" value="English (US)" toBeTranslated="true"/>
+		<node name="en_US" value="Anglicky (US)"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Španělsky"/>
 		<node name="eu" value="Baskicky"/>
@@ -57,7 +57,7 @@
 		<node name="it" value="Italsky"/>
 		<node name="ja" value="Japonsky"/>
 		<node name="ka" value="Gruzínsky"/>
-		<node name="ko" value="Korean" toBeTranslated="true"/>
+		<node name="ko" value="Korejsky"/>
 		<node name="lt" value="Litevsky"/>
 		<node name="nb" value="Norsky"/>
 		<node name="nl" value="Dánsky"/>
