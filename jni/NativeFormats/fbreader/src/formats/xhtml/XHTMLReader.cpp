@@ -294,6 +294,7 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 	std::string cssFilePath = reader.myPathPrefix + MiscUtil::decodeHtmlURL(href);
 	//ZLLogger::Instance().registerClass("CSS");
 	ZLLogger::Instance().println("CSS", "style file: " + cssFilePath);
+	cssFilePath = ZLStringUtil::replace(cssFilePath, ":", "/");
 	const ZLFile cssFile(cssFilePath);
 	cssFilePath = cssFile.path();
 	shared_ptr<StyleSheetParserWithCache> parser = reader.myFileParsers[cssFilePath];
