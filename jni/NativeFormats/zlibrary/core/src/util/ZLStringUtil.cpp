@@ -80,6 +80,14 @@ void ZLStringUtil::append(std::string &str, const std::vector<std::string> &text
 	}
 }
 
+std::string ZLStringUtil::replace(std::string &str, const std::string &strSrc, const std::string &strDst){
+	std::string::size_type position= str.find(strSrc);
+	if (position != std::string::npos){
+		str.replace(position,strSrc.length(),strDst);
+	}
+	return str;
+}
+
 void ZLStringUtil::stripWhiteSpaces(std::string &str) {
 	std::size_t counter = 0;
 	std::size_t length = str.length();

@@ -48,6 +48,8 @@ public:
 	static unsigned long parseHex(const std::string &str, int defaultValue);
 
 	static void asciiToLowerInline(std::string &asciiString);
+	
+	static std::string replace(std::string &str, const std::string &strSrc, const std::string &strDst);
 };
 
 #endif /* __ZLSTRINGUTIL_H__ */
