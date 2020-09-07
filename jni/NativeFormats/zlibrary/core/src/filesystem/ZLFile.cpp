@@ -37,6 +37,7 @@ ZLFile::ZLFile() : myMimeTypeIsUpToDate(true), myInfoIsFilled(true) {
 }
 
 ZLFile::ZLFile(const std::string &path, const std::string &mimeType) : myPath(path), myMimeType(mimeType), myMimeTypeIsUpToDate(!mimeType.empty()), myInfoIsFilled(false) {
+	myPath = ZLStringUtil::replace(myPath, ":./", ":");
 	ZLFSManager::Instance().normalize(myPath);
 	{
 		std::size_t index = ZLFSManager::Instance().findLastFileNameDelimiter(myPath);
